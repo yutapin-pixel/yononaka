@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S-Frontier 渋谷青山通り｜オフィス運用マニュアル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1117;
+    --paper: #f5f3ee;
+    --accent: #c8401a;
+    --accent2: #1a6cc8;
+    --muted: #6b6860;
+    --border: #d8d4cc;
+    --tag-bg: #ede9e0;
+    --card-bg: #ffffff;
+    --warn-bg: #fff4f1;
+    --warn-border: #c8401a;
+    --info-bg: #f0f6ff;
+    --info-border: #1a6cc8;
+    --ok-bg: #f0faf3;
+    --ok-border: #1a8c40;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 72px 5vw 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: 'S-FRONTIER';
+    position: absolute;
+    right: -20px;
+    bottom: -30px;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(80px, 14vw, 180px);
+    font-weight: 800;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -.01em;
+    margin-bottom: 20px;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: rgba(245,243,238,.55);
+    max-width: 520px;
+    line-height: 1.9;
+  }
+  .hero-meta {
+    margin-top: 32px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    font-size: 12px;
+    color: rgba(245,243,238,.5);
+    letter-spacing: .06em;
+  }
+  .hero-meta-item strong {
+    color: var(--paper);
+    font-weight: 500;
+  }
+
+  /* ── NAV ── */
+  .toc {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5vw;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .toc::-webkit-scrollbar { display: none; }
+  .toc a {
+    display: block;
+    padding: 16px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .toc a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 5vw; }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp .5s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .section-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .18em;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+  }
+
+  /* ── CARDS ── */
+  .cards { display: grid; gap: 16px; }
+  .cards.two { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px 28px;
+  }
+  .card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card p, .card li {
+    font-size: 13.5px;
+    color: #333;
+    line-height: 1.85;
+  }
+  .card ul { padding-left: 1.3em; }
+  .card ul li { margin-bottom: 4px; }
+
+  /* callout */
+  .callout {
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin: 20px 0;
+    font-size: 13.5px;
+    line-height: 1.85;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .callout .icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .callout.warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); }
+  .callout.info { background: var(--info-bg); border-left: 3px solid var(--info-border); }
+  .callout.ok   { background: var(--ok-bg);   border-left: 3px solid var(--ok-border); }
+  .callout strong { font-weight: 700; }
+
+  /* table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-top: 8px;
+  }
+  th {
+    background: var(--tag-bg);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: .06em;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.7;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--tag-bg); }
+
+  /* timeline */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px; top: 7px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .timeline-date {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .timeline-body { font-size: 13.5px; line-height: 1.8; color: #333; }
+  .timeline-body strong { font-weight: 700; color: var(--ink); }
+
+  /* member grid */
+  .members { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .member-tag {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .member-tag span { color: var(--muted); font-size: 10.5px; display: block; }
+
+  /* step */
+  .steps { counter-reset: step; display: grid; gap: 12px; }
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 22px;
+    counter-increment: step;
+  }
+  .step::before {
+    content: counter(step);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--border);
+    flex-shrink: 0;
+    line-height: 1;
+    min-width: 24px;
+  }
+  .step-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .step-content p  { font-size: 13.5px; color: #444; line-height: 1.8; }
+  .step-content a  { color: var(--accent2); word-break: break-all; }
+
+  /* pill */
+  .pill {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    padding: 2px 8px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .pill.blue { background: var(--accent2); }
+
+  /* footer */
+  footer {
+    padding: 40px 5vw;
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: .05em;
+  }
+  footer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container" style="padding:0;">
+    <p class="hero-label">SPIC Office Manual</p>
+    <h1>S-Frontier<br>渋谷青山通り<br>オフィス運用マニュアル</h1>
+    <p class="hero-sub">WeWork渋谷から新オフィスへの移転完了に伴い、<br>渋谷オフィス運営組合チャットの情報を集約した公式マニュアルです。<br>不明点は運営組合または総務（山田・中村）へ。</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">最終更新 <strong>2026年4月19日</strong></div>
+      <div class="hero-meta-item">作成 <strong>渋谷オフィス運営組合</strong></div>
+      <div class="hero-meta-item">承認 <strong>西守 穣</strong></div>
+    </div>
+  </div>
+</header>
+
+<!-- STICKY NAV -->
+<nav class="toc">
+  <a href="#overview">概要</a>
+  <a href="#access">入退室</a>
+  <a href="#floors">フロア案内</a>
+  <a href="#booking">会議室予約</a>
+  <a href="#rules">利用ルール</a>
+  <a href="#union">運営組合</a>
+  <a href="#contacts">連絡先</a>
+</nav>
+
+<main class="container">
+
+  <!-- 1. 概要 -->
+  <section class="section" id="overview">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>新オフィス概要</h2>
+    </div>
+
+    <div class="cards two">
+      <div class="card">
+        <h3>🏢 新オフィス</h3>
+        <p><strong>名称：</strong>S-Frontier 渋谷青山通り<br>
+        <strong>引き渡し：</strong>2026年4月13日（月）13:00<br>
+        <strong>利用開始：</strong>4月13日（月）13:00以降<br>
+        <strong>入退室：</strong>セキュリティカード必須</p>
+      </div>
+      <div class="card">
+        <h3>📦 旧オフィス（WeWork渋谷）</h3>
+        <p><strong>執務室明け渡し：</strong>2026年4月17日（金）14:00<br>
+        <strong>荷物搬出：</strong>4月15日（水）20:00〜<br>
+        <strong>キーカード返却期限：</strong>4月23日（木）まで<br>
+        　→ 総務 中村さんまたは山田まで</p>
+      </div>
+    </div>
+
+    <h3 style="font-size:14px; font-weight:700; margin:28px 0 14px;">移転スケジュール</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">4月13日（月）13:00</div>
+        <div class="timeline-body"><strong>新オフィス鍵・引き渡し</strong>　手続き担当：安齋さん・山田。この時点から利用可能。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">4月15日（水）20:00〜</div>
+        <div class="timeline-body"><strong>WeWork渋谷から全荷物搬出</strong>　引越し業者対応（当初の宅配便から変更）。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">4月16日（木）13:00</div>
+        <div class="timeline-body"><strong>各部・運営組合員＋荷解き人員</strong>が S-Frontier 玄関前に集合。荷解き＋施設説明実施。一般社員の入室は翌17日（金）以降。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">4月17日（金）〜</div>
+        <div class="timeline-body"><strong>全社員の新オフィス利用開始。</strong>WeWork渋谷執務室を14:00に明け渡し完了。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">4月23日（木）まで</div>
+        <div class="timeline-body"><strong>WeWork渋谷キーカードを返却。</strong>総務 中村または山田まで。返却後は管理簿シートに記入。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 入退室 -->
+  <section class="section" id="access">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>入退室・セキュリティカード</h2>
+    </div>
+
+    <div class="callout warn">
+      <span class="icon">⚠️</span>
+      <div><strong>入退室にはセキュリティカードが必須です。</strong><br>カードなしでは入室できません。受け取り前の方は受け渡し日程を確認してください。</div>
+    </div>
+
+    <div class="cards two" style="margin-top:20px;">
+      <div class="card">
+        <h3>🪪 カードの受け取り</h3>
+        <ul>
+          <li>初期発行：引越し担当者に <strong>4/16（木）</strong>渡し済み</li>
+          <li>追加発注分（計35枚）は順次配布</li>
+          <li>発行対象：旧WeWork渋谷キーカード保有者＋新規希望者</li>
+          <li>新規希望は管理簿シート A43セル以下に部署・氏名を記入</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📋 管理簿・返却</h3>
+        <ul>
+          <li>カード管理は「渋谷オフィスカード管理簿.xlsx（SharePoint）」で管理</li>
+          <li>WeWork渋谷キーカードは <strong>4/23（木）</strong>までに総務（中村 or 山田）へ返却</li>
+          <li>返却後は管理簿の【WeWork渋谷キーカード】シートに記入</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout info" style="margin-top:16px;">
+      <span class="icon">ℹ️</span>
+      <div>出社頻度が低い方はカード紛失リスクも考慮のうえ、発行申請を慎重にご検討ください。<br>
+      新規発行希望者は各部の運営組合員を通じて申請してください（全社掲示は行いません）。</div>
+    </div>
+  </section>
+
+  <!-- 3. フロア案内 -->
+  <section class="section" id="floors">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>フロア案内</h2>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>🏢 6F：スピック専有フロア（メインオフィス）</h3>
+        <ul>
+          <li>通常業務はこのフロアで実施</li>
+          <li>個室ブース（フォンブース）あり ── <strong>声が外に漏れます</strong></li>
+          <li>機密性の高い会話は必ず1Fブースを使用すること</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🌐 1F：共用ラウンジ・会議室・テレカンブース</h3>
+        <ul>
+          <li>入居者・同行者は自由に利用可（開放時間：平日・土日祝 7:00〜24:00）</li>
+          <li>会議室・テレカンブースは<strong>予約制</strong>（空いていても勝手に使用不可）</li>
+          <li>機密性が高い話はこちらを利用（6Fは音漏れあり）</li>
+          <li>飲食物の持ち込みは原則禁止（水分補給用飲料のみ可）</li>
+          <li>利用後のゴミは必ち帰りのこと</li>
+        </ul>
+        <div class="callout info" style="margin-top:12px; padding:12px 16px;">
+          <span class="icon">🕐</span>
+          <div>1F利用可能時間（予約枠）：<strong>8:00〜20:00</strong><br>
+          0:00〜7:00は利用不可。1入居者あたりの連続利用は<strong>2時間以内</strong>（30分単位）。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn" style="margin-top:16px;">
+      <span class="icon">🔊</span>
+      <div><strong>6Fの個室ブースは音漏れがあります。</strong><br>
+      経営陣・役職者を含む秘匿性のある内容を話す場合は、必ず1Fの個室ブース・会議室を使用してください。</div>
+    </div>
+  </section>
+
+  <!-- 4. 会議室予約 -->
+  <section class="section" id="booking">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>1F 会議室・テレカンブース予約方法</h2>
+    </div>
+
+    <div class="callout ok">
+      <span class="icon">🔗</span>
+      <div><strong>予約フォームURL：</strong><br>
+      <a href="https://l6h6k.hp.peraichi.com/" target="_blank" style="color:var(--accent2);">https://l6h6k.hp.peraichi.com/</a><br>
+      まず空室状況を確認してから予約してください。</div>
+    </div>
+
+    <div class="steps" style="margin-top:20px;">
+      <div class="step">
+        <div class="step-content">
+          <h4>空室確認</h4>
+          <p>予約フォームで希望日時の空室状況を確認する。受付は<strong>利用希望日の2週間前から前日まで</strong>。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>予約申込み</h4>
+          <p>フォームで申込み。利用時間は準備・片付けを含む時間で設定（8:00〜20:00の範囲）。30分単位で受付。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>利用・退室</h4>
+          <p>利用後はゴミをお持ち帰りのうえ、後の利用者のために速やかに退室。設備・備品を汚損・毀損した場合は直ちに申し出ること。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>キャンセル・変更</h4>
+          <p>予約フォームからキャンセル手続き後、再度申込み。都合によるキャンセルはフォームで登録すること。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn" style="margin-top:20px;">
+      <span class="icon">⚠️</span>
+      <div>
+        <strong>注意事項</strong><br>
+        • 2時間を超える連続利用は予約があっても<strong>固くお断り</strong>（入居者同士で譲り合いの精神で）<br>
+        • 過度な独占利用は注意喚起・場合によりアカウント停止となる場合あり<br>
+        • 定期的に使う場合も永久予約はできないため、<strong>都度2週間前に予約が必要</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 利用ルール -->
+  <section class="section" id="rules">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>オフィス利用ルール</h2>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>カテゴリ</th><th>ルール</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:700; white-space:nowrap;">座席確保</td>
+          <td>座れなくなる人が出ないよう、各部の運営組合員が出社管理の責任を持つ。出社予定の管理方法は今後運営組合で検討。</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700; white-space:nowrap;">入退出管理</td>
+          <td>Pマーク関連の入退出管理は運営組合員が交代で担当（予定）。セキュリティカード紛失時は速やかに総務へ報告。</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700; white-space:nowrap;">備品管理</td>
+          <td>備品の重複購入防止のため「渋谷オフィス備品購入リスト（管理簿）」で一元管理。追加購入が必要な場合はリストに追記のうえ運営組合員を通じて申請。</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700; white-space:nowrap;">郵便・宅配</td>
+          <td>郵便物・宅急便の受け取り・配布は運営組合員が担当。</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700; white-space:nowrap;">管理会社対応</td>
+          <td>管理会社等への問い合わせ窓口は運営組合（コーポレート：山田・中村が中心）。個人が直接問い合わせることは避けること。</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700; white-space:nowrap;">1F共用スペース</td>
+          <td>飲食物持ち込み禁止（水のみ可）。ゴミは必ず持ち帰る。大きな音を出す行為禁止。ペット禁止。</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700; white-space:nowrap;">音漏れ注意</td>
+          <td>6Fの個室ブースは防音が不十分。機密性のある会話は1F会議室・テレカンブースを使用。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 6. 運営組合 -->
+  <section class="section" id="union">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>渋谷オフィス運営組合</h2>
+    </div>
+
+    <p style="font-size:13.5px; color:#444; line-height:1.9; margin-bottom:24px;">
+      各部署から有志1〜2名が参加し、渋谷オフィスのより良い運営を担う委員会です。<br>
+      オブザーバーとして西守も参加。個人が直接問い合わせるのではなく、<strong>各部の組合員を窓口</strong>として連絡・相談すること。
+    </p>
+
+    <h3 style="font-size:14px; font-weight:700; margin-bottom:14px;">組合員一覧</h3>
+    <div class="members">
+      <div class="member-tag">菅野 裕揮<span>事業基盤本部（任期 前期〜）</span></div>
+      <div class="member-tag">若林 雄亮<span>事業基盤本部（任期 後期〜）</span></div>
+      <div class="member-tag">横山 うみ<span>コンシューマー本部（任期1年）</span></div>
+      <div class="member-tag">大竹 陽南香<span>コンシューマー本部（任期半年）</span></div>
+      <div class="member-tag">石田<span>ブランド開発・ブランド戦略室</span></div>
+      <div class="member-tag">佐藤 絵里子<span>グローバル事業本部</span></div>
+      <div class="member-tag">山田 伸子<span>コーポレート本部（総務）</span></div>
+      <div class="member-tag">中村<span>コーポレート本部（総務）</span></div>
+      <div class="member-tag">片峰 靖朗<span>ビジネス本部</span></div>
+      <div class="member-tag">下野 峻一<span>ビジネス本部</span></div>
+      <div class="member-tag">VOROBYEVA MARIA<span>ビジネス本部</span></div>
+      <div class="member-tag">五十嵐 夕里<span>PR室</span></div>
+      <div class="member-tag">竹内 真美<span>PR室</span></div>
+    </div>
+
+    <div class="callout info" style="margin-top:24px;">
+      <span class="icon">💡</span>
+      <div>
+        <strong>組合員の任期について</strong><br>
+        コンシューマー本部は半年ずつメンバーを重ねて引き継ぎしやすい運用（例：横山1年、大竹半年）。<br>
+        事業基盤は菅野が前期担当、後期から若林に交代予定。<br>
+        半期に1度程度、渋谷オフィスメンバーでの懇親会を実施予定。
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 連絡先 -->
+  <section class="section" id="contacts">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>問い合わせ・連絡先</h2>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>内容</th><th>窓口</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>セキュリティカードの受け取り・発行</td>
+          <td>総務：山田 伸子 / 中村（コーポレート本部）</td>
+        </tr>
+        <tr>
+          <td>WeWork渋谷キーカード返却</td>
+          <td>総務：中村または山田（4/23まで）</td>
+        </tr>
+        <tr>
+          <td>オフィス備品・設備に関する相談</td>
+          <td>各部の運営組合員 → 山田・中村へ</td>
+        </tr>
+        <tr>
+          <td>管理会社への問い合わせ</td>
+          <td>直接連絡せず、必ず組合員（山田・中村）経由で</td>
+        </tr>
+        <tr>
+          <td>出社管理・座席に関する相談</td>
+          <td>各部の運営組合員</td>
+        </tr>
+        <tr>
+          <td>1F会議室予約</td>
+          <td><a href="https://l6h6k.hp.peraichi.com/" target="_blank" style="color:var(--accent2);">https://l6h6k.hp.peraichi.com/</a></td>
+        </tr>
+        <tr>
+          <td>運営組合 全体チャット</td>
+          <td>Teams「🏢渋谷オフィス運営組合」チャット</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout ok" style="margin-top:24px;">
+      <span class="icon">✅</span>
+      <div>
+        <strong>マニュアルの更新について</strong><br>
+        本マニュアルはTeams「渋谷オフィス運営組合」チャットの情報をもとに随時更新します。<br>
+        変更・追加事項は運営組合員から各部メンバーへ周知してください。
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <strong>株式会社スピック</strong>　渋谷オフィス運営組合　2026年4月　|　不明点はTeams「🏢渋谷オフィス運営組合」チャットまで
+</footer>
+
+</body>
+</html>

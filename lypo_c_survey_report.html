@@ -1,0 +1,3453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lypo-C 顧客定量調査 分析レポート 2026年4月</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=DM+Serif+Display:ital@0;1&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lypo-orange: #FF6B35;
+    --lypo-amber: #F7A72B;
+    --lypo-green: #4CAF82;
+    --lypo-blue: #3B7DD8;
+    --lypo-pink: #E8588C;
+    --lypo-dark: #1A1A2E;
+    --lypo-mid: #2D2D44;
+    --lypo-surface: #F8F6F0;
+    --lypo-card: #FFFFFF;
+    --lypo-text: #1A1A2E;
+    --lypo-muted: #6B6B8A;
+    --lypo-border: #E5E2D8;
+    --shadow-card: 0 2px 20px rgba(26,26,46,0.08);
+    --shadow-hover: 0 8px 40px rgba(26,26,46,0.16);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--lypo-surface);
+    color: var(--lypo-text);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ===== TAB NAVIGATION ===== */
+  .tab-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--lypo-dark);
+    display: flex;
+    border-bottom: 3px solid var(--lypo-orange);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 18px 12px;
+    color: rgba(255,255,255,0.55);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,0.85); }
+  .tab-btn.active {
+    color: #fff;
+    background: rgba(255,107,53,0.2);
+  }
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0; right: 0;
+    height: 3px;
+    background: var(--lypo-orange);
+  }
+  .tab-label-num {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--lypo-orange);
+    margin-bottom: 2px;
+  }
+
+  /* ===== PANELS ===== */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ===== PAGE HEADER ===== */
+  .page-header {
+    background: linear-gradient(135deg, var(--lypo-dark) 0%, #0D2137 100%);
+    padding: 60px 48px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,107,53,0.15) 0%, transparent 70%);
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(247,167,43,0.1) 0%, transparent 70%);
+  }
+  .header-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--lypo-orange);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .header-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 32px;
+  }
+  .header-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .header-stat {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 16px 24px;
+    backdrop-filter: blur(10px);
+  }
+  .header-stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 28px;
+    color: #fff;
+    font-weight: 700;
+    display: block;
+  }
+  .header-stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 40px;
+  }
+
+  /* ===== SECTION ===== */
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--lypo-border);
+  }
+  .section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--lypo-orange);
+    background: rgba(255,107,53,0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--lypo-dark);
+  }
+  .section-note {
+    font-size: 12px;
+    color: var(--lypo-muted);
+    margin-left: auto;
+  }
+
+  /* ===== CARD GRID ===== */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .card-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  /* ===== CARD ===== */
+  .card {
+    background: var(--lypo-card);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--lypo-border);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-hover); }
+  .card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lypo-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+  .card-wide { grid-column: 1 / -1; }
+
+  /* ===== BAR CHART ===== */
+  .bar-list { display: flex; flex-direction: column; gap: 10px; }
+  .bar-item { }
+  .bar-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 12.5px;
+  }
+  .bar-label-text { color: var(--lypo-text); }
+  .bar-label-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lypo-dark);
+  }
+  .bar-track {
+    height: 8px;
+    background: var(--lypo-border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s ease;
+  }
+  .bar-orange { background: var(--lypo-orange); }
+  .bar-amber { background: var(--lypo-amber); }
+  .bar-green { background: var(--lypo-green); }
+  .bar-blue { background: var(--lypo-blue); }
+  .bar-pink { background: var(--lypo-pink); }
+  .bar-purple { background: #8B5CF6; }
+  .bar-teal { background: #14B8A6; }
+
+  /* ===== DONUT CHART ===== */
+  .donut-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+  .donut-center {
+    position: absolute;
+    text-align: center;
+  }
+  .donut-center-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--lypo-dark);
+    display: block;
+  }
+  .donut-center-label {
+    font-size: 11px;
+    color: var(--lypo-muted);
+    display: block;
+  }
+  .legend-list { display: flex; flex-direction: column; gap: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--lypo-muted);
+    margin-left: auto;
+  }
+
+  /* ===== INSIGHT BOX ===== */
+  .insight-box {
+    background: linear-gradient(135deg, rgba(255,107,53,0.06) 0%, rgba(247,167,43,0.06) 100%);
+    border: 1px solid rgba(255,107,53,0.2);
+    border-left: 4px solid var(--lypo-orange);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+  .insight-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--lypo-orange);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .insight-text {
+    font-size: 13px;
+    color: var(--lypo-text);
+    line-height: 1.6;
+  }
+
+  /* ===== AWARENESS FUNNEL ===== */
+  .funnel-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--lypo-border);
+  }
+  .funnel-step:last-child { border-bottom: none; }
+  .funnel-rank {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--lypo-orange);
+    width: 32px;
+    flex-shrink: 0;
+  }
+  .funnel-label { flex: 1; font-size: 13px; }
+  .funnel-bar-wrap { width: 160px; flex-shrink: 0; }
+  .funnel-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--lypo-dark);
+    font-weight: 700;
+    width: 48px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ===== CROSS TABLE ===== */
+  .cross-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .cross-table th {
+    background: var(--lypo-dark);
+    color: rgba(255,255,255,0.85);
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 11px;
+  }
+  .cross-table th:first-child { text-align: left; }
+  .cross-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--lypo-border);
+    text-align: center;
+  }
+  .cross-table td:first-child { text-align: left; font-weight: 500; }
+  .cross-table tr:nth-child(even) td { background: rgba(248,246,240,0.7); }
+  .heat-high { background: rgba(255,107,53,0.2) !important; font-weight: 700; }
+  .heat-mid { background: rgba(255,107,53,0.08) !important; }
+  .heat-low { background: rgba(59,125,216,0.06) !important; }
+
+  /* ===== KPI BOX ===== */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .kpi-card {
+    background: var(--lypo-card);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--lypo-border);
+    text-align: center;
+  }
+  .kpi-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--lypo-orange);
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .kpi-label { font-size: 11px; color: var(--lypo-muted); line-height: 1.4; }
+
+  /* ===== FINDING CARD ===== */
+  .finding-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .finding-card {
+    background: var(--lypo-card);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    border-top: 4px solid var(--lypo-orange);
+  }
+  .finding-card.green { border-top-color: var(--lypo-green); }
+  .finding-card.blue { border-top-color: var(--lypo-blue); }
+  .finding-card.pink { border-top-color: var(--lypo-pink); }
+  .finding-card.amber { border-top-color: var(--lypo-amber); }
+  .finding-card.purple { border-top-color: #8B5CF6; }
+  .finding-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--lypo-orange);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .finding-card.green .finding-num { color: var(--lypo-green); }
+  .finding-card.blue .finding-num { color: var(--lypo-blue); }
+  .finding-card.pink .finding-num { color: var(--lypo-pink); }
+  .finding-card.amber .finding-num { color: var(--lypo-amber); }
+  .finding-card.purple .finding-num { color: #8B5CF6; }
+  .finding-label { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .finding-desc { font-size: 12px; color: var(--lypo-muted); line-height: 1.6; }
+
+  /* ===== ACTION TABLE ===== */
+  .action-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .action-table th {
+    background: var(--lypo-dark);
+    color: rgba(255,255,255,0.85);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .action-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--lypo-border);
+    vertical-align: top;
+  }
+  .action-table tr:nth-child(even) td { background: rgba(248,246,240,0.7); }
+  .priority-s {
+    background: var(--lypo-orange);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .priority-a {
+    background: var(--lypo-amber);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .priority-b {
+    background: var(--lypo-green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* ===== PRODUCT BADGE ===== */
+  .product-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .badge-orange { background: rgba(255,107,53,0.12); color: var(--lypo-orange); }
+  .badge-green { background: rgba(76,175,130,0.12); color: var(--lypo-green); }
+  .badge-pink { background: rgba(232,88,140,0.12); color: var(--lypo-pink); }
+  .badge-blue { background: rgba(59,125,216,0.12); color: var(--lypo-blue); }
+
+  /* ===== SUMMARY PANEL ===== */
+  .summary-hero {
+    background: linear-gradient(135deg, var(--lypo-dark) 0%, #16213E 100%);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .summary-hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,107,53,0.12) 0%, transparent 70%);
+  }
+  .summary-hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .summary-hero-sub { font-size: 14px; color: rgba(255,255,255,0.55); margin-bottom: 28px; }
+  .summary-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .summary-meta {
+    background: rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .summary-meta-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 24px;
+    color: var(--lypo-amber);
+    font-weight: 700;
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .summary-meta-key { font-size: 11px; color: rgba(255,255,255,0.5); }
+
+  /* ===== STACKED BAR ===== */
+  .stacked-bar {
+    height: 32px;
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .stacked-seg {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    transition: all 0.5s;
+  }
+  .stacked-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 11px;
+  }
+  .stacked-leg-item { display: flex; align-items: center; gap: 5px; }
+  .stacked-leg-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+  /* ===== SCROLLABLE ===== */
+  .scroll-x { overflow-x: auto; }
+  .min-w-800 { min-width: 800px; }
+
+  /* ===== QUOTE ===== */
+  .quote-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .quote-card {
+    background: var(--lypo-card);
+    border-radius: 8px;
+    padding: 16px;
+    border-left: 3px solid var(--lypo-amber);
+    font-size: 12px;
+    color: var(--lypo-text);
+    line-height: 1.6;
+    box-shadow: var(--shadow-card);
+  }
+  .quote-card.green { border-left-color: var(--lypo-green); }
+  .quote-card.blue { border-left-color: var(--lypo-blue); }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--lypo-border);
+    margin: 40px 0;
+  }
+
+  /* ===== SUBTITLE ===== */
+  .sub-heading {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--lypo-dark);
+    margin-bottom: 14px;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sub-heading::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: var(--lypo-orange);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .card-grid-3, .kpi-grid, .finding-grid, .summary-meta-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-grid-2 { grid-template-columns: 1fr; }
+    .container { padding: 24px 20px; }
+    .page-header { padding: 40px 24px 32px; }
+    .header-title { font-size: 28px; }
+    .tab-btn { font-size: 11px; padding: 14px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TAB NAVIGATION -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('q-all')">
+    <span class="tab-label-num">SHEET 01</span>設問別 全項目分析
+  </button>
+  <button class="tab-btn" onclick="switchTab('cross')">
+    <span class="tab-label-num">SHEET 02</span>クロス集計・総合分析
+  </button>
+  <button class="tab-btn" onclick="switchTab('summary')">
+    <span class="tab-label-num">SHEET 03</span>エグゼクティブサマリー
+  </button>
+</nav>
+
+<!-- ============================= SHEET 01: 全設問分析 ============================= -->
+<div id="q-all" class="tab-panel active">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="header-eyebrow">LYPO-C CUSTOMER RESEARCH 2026</div>
+    <div class="header-title">設問別 全項目アンケート<br>分析レポート</div>
+    <div class="header-sub">2026年4月実施 ｜ 回収数 5,428件 ｜ 既存顧客対象</div>
+    <div class="header-stats">
+      <div class="header-stat">
+        <span class="header-stat-num">5,428</span>
+        <span class="header-stat-label">有効回答数</span>
+      </div>
+      <div class="header-stat">
+        <span class="header-stat-num">93.2%</span>
+        <span class="header-stat-label">女性比率</span>
+      </div>
+      <div class="header-stat">
+        <span class="header-stat-num">38.5歳</span>
+        <span class="header-stat-label">平均年齢（推計）</span>
+      </div>
+      <div class="header-stat">
+        <span class="header-stat-num">50設問</span>
+        <span class="header-stat-label">総カラム数</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Q5/Q6/Q7/Q8 デモグラ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q01</span>
+        <span class="section-title">基本属性（性別・年代・家族構成）</span>
+        <span class="section-note">■性別 ■生年月日 ■結婚区分 ■お子さまの有無</span>
+      </div>
+      <div class="card-grid">
+        <!-- 性別 -->
+        <div class="card">
+          <div class="card-title">性別分布</div>
+          <div style="display:flex;align-items:center;gap:24px;">
+            <svg viewBox="0 0 120 120" width="120" height="120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#E5E2D8" stroke-width="18"/>
+              <!-- Female: 93.2% = 335.5° -->
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#E8588C" stroke-width="18"
+                stroke-dasharray="293.5 20" stroke-dashoffset="78.5" stroke-linecap="round"/>
+              <!-- Male: 5.5% -->
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#3B7DD8" stroke-width="18"
+                stroke-dasharray="17.3 296.7" stroke-dashoffset="-215" stroke-linecap="round"/>
+            </svg>
+            <div class="legend-list">
+              <div class="legend-item"><div class="legend-dot" style="background:#E8588C"></div>女性<span class="legend-val">5,058名<br>93.2%</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:#3B7DD8"></div>男性<span class="legend-val">298名<br>5.5%</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:#E5E2D8"></div>その他<span class="legend-val">72名<br>1.3%</span></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">顧客の9割以上が女性。美容需要が主軸であることを裏付ける。男性向け訴求は現状ほぼ未開拓。</div>
+          </div>
+        </div>
+
+        <!-- 年代 -->
+        <div class="card">
+          <div class="card-title">年代分布</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">30代</span><span class="bar-label-num">1,686名 31.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">40代</span><span class="bar-label-num">1,558名 28.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:92%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">50代</span><span class="bar-label-num">1,097名 20.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:65%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">20代</span><span class="bar-label-num">731名 13.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:43%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">60代</span><span class="bar-label-num">313名 5.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:19%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">70代以上</span><span class="bar-label-num">35名 0.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:2%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">30〜40代で約60%。「エイジングケア意識が高まり始めた」コア顧客層。20代の獲得余地が大きい。</div>
+          </div>
+        </div>
+
+        <!-- 結婚/子供 -->
+        <div class="card">
+          <div class="card-title">結婚区分 ／ 子どもの有無</div>
+          <div class="sub-heading" style="margin-top:0">結婚区分</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">既婚</span><span class="bar-label-num">3,029名 55.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">未婚</span><span class="bar-label-num">2,182名 40.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:72%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">回答したくない</span><span class="bar-label-num">217名 4.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:7%"></div></div>
+            </div>
+          </div>
+          <div class="sub-heading">お子さまの有無</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">いない</span><span class="bar-label-num">2,992名 55.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">いる</span><span class="bar-label-num">2,436名 44.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:81%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box" style="margin-top:16px">
+            <div class="insight-label">既婚者内訳</div>
+            <div class="insight-text">
+              既婚者3,029名のうち、<strong>子どもあり 2,140名（70.7%）／ 子どもなし 889名（29.3%）</strong>。<br>
+              既婚者の約7割が子育て中。子ども由来の疲労・免疫ニーズは重要な訴求軸。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9/Q10/Q11/Q12 購買行動 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q02</span>
+        <span class="section-title">購買チャネル・購入ペース</span>
+        <span class="section-note">■購入店舗（複数） ■最後に購入した店舗 ■購入ペース ■使い分け</span>
+      </div>
+      <div class="card-grid-3">
+        <!-- 店舗複数 -->
+        <div class="card">
+          <div class="card-title">購入したことがある店舗（複数回答）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Lypo-C公式サイト</span><span class="bar-label-num">5,222名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">医療機関（クリニック・歯科）</span><span class="bar-label-num">722名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:13.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">楽天市場</span><span class="bar-label-num">610名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:11.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Amazon</span><span class="bar-label-num">529名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:10.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">美容・健康施設（エステ等）</span><span class="bar-label-num">444名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:8.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">百貨店・セレクトショップ</span><span class="bar-label-num">255名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:4.9%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Qoo10</span><span class="bar-label-num">143名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:2.7%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">公式サイトが圧倒的（96.2%）。ただし医療機関＋エステを合わせると<strong>1,166名（21.5%）</strong>がオフライン接点を持つ。医療チャネルは「信頼形成」において重要な役割。</div>
+          </div>
+        </div>
+
+        <!-- 最後に購入した店舗 -->
+        <div class="card">
+          <div class="card-title">最後に購入した店舗（単一回答）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Lypo-C公式サイト</span><span class="bar-label-num">4,736名 87.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">楽天市場</span><span class="bar-label-num">149名 2.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:3.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">医療機関（クリニック・歯科）</span><span class="bar-label-num">143名 2.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:3.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Amazon</span><span class="bar-label-num">126名 2.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:2.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">百貨店・セレクトショップ</span><span class="bar-label-num">75名 1.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:1.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Qoo10</span><span class="bar-label-num">71名 1.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:1.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">美容・健康施設（エステ等）</span><span class="bar-label-num">70名 1.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:1.5%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">最終購買は公式サイトが87.2%と極めて高い。過去に複数チャネルで購入経験があっても、<strong>最終的に公式に戻る傾向</strong>が明確。定期便・送料無料などの公式メリットが定着を促している。</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">普段の購入ペース・方法（主要選択肢）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">2〜3ヶ月ごとにまとめ買い</span><span class="bar-label-num">1,715名 31.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">毎月1箱</span><span class="bar-label-num">1,522名 28.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:88.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">数ヶ月に1度1箱だけ</span><span class="bar-label-num">694名 12.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:40.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">毎月複数箱（2〜3箱）</span><span class="bar-label-num">638名 11.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:37.2%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">お試しのみ購入</span><span class="bar-label-num">444名 8.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:25.9%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">キャンペーン時にまとめ買い</span><span class="bar-label-num">140名 2.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:8.2%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">施設（クリニック等）に行くついでに</span><span class="bar-label-num">65名 1.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:3.8%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">「まとめ買い」が最多（31.6%）で毎月1箱を上回る。定期便化への転換余地大。「毎月複数箱」顧客（11.8%）はLTV最大化の優先ターゲット。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 購入ペース×定期便 クロス -->
+      <div class="card card-wide" style="margin-top:20px">
+        <div class="card-title">購入ペース × 定期便利用状況 クロス集計（件数 ／ 行%）</div>
+        <div class="scroll-x">
+        <table class="cross-table" style="min-width:820px">
+          <thead>
+            <tr>
+              <th>購入ペース</th>
+              <th>計</th>
+              <th>現在利用中</th>
+              <th>検討したが未加入</th>
+              <th>過去に解約</th>
+              <th>まとめ買い派・不要</th>
+              <th>存在を知らなかった</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>毎月1箱</td>
+              <td>1,522</td>
+              <td class="heat-high">1,257（82.6%）</td>
+              <td>98（6.4%）</td>
+              <td>134（8.8%）</td>
+              <td>13（0.9%）</td>
+              <td>11（0.7%）</td>
+            </tr>
+            <tr>
+              <td>毎月複数箱（2〜3箱）</td>
+              <td>638</td>
+              <td class="heat-high">529（82.9%）</td>
+              <td>38（6.0%）</td>
+              <td>50（7.8%）</td>
+              <td>17（2.7%）</td>
+              <td>2（0.3%）</td>
+            </tr>
+            <tr>
+              <td>2〜3ヶ月ごとにまとめ買い</td>
+              <td>1,715</td>
+              <td class="heat-mid">1,182（68.9%）</td>
+              <td>135（7.9%）</td>
+              <td>166（9.7%）</td>
+              <td class="heat-mid">220（12.8%）</td>
+              <td>9（0.5%）</td>
+            </tr>
+            <tr>
+              <td>数ヶ月に1度1箱だけ</td>
+              <td>694</td>
+              <td>257（37.0%）</td>
+              <td class="heat-high">230（33.1%）</td>
+              <td class="heat-mid">140（20.2%）</td>
+              <td>25（3.6%）</td>
+              <td>31（4.5%）</td>
+            </tr>
+            <tr>
+              <td>キャンペーン時にまとめ買い</td>
+              <td>140</td>
+              <td>13（9.3%）</td>
+              <td>40（28.6%）</td>
+              <td class="heat-mid">37（26.4%）</td>
+              <td class="heat-mid">38（27.1%）</td>
+              <td>9（6.4%）</td>
+            </tr>
+            <tr>
+              <td>お試しのみ購入</td>
+              <td>444</td>
+              <td>17（3.8%）</td>
+              <td class="heat-high">275（61.9%）</td>
+              <td>45（10.1%）</td>
+              <td>14（3.2%）</td>
+              <td class="heat-mid">57（12.8%）</td>
+            </tr>
+            <tr>
+              <td>施設（クリニック等）に行くついでに</td>
+              <td>65</td>
+              <td>2（3.1%）</td>
+              <td>30（46.2%）</td>
+              <td>8（12.3%）</td>
+              <td>5（7.7%）</td>
+              <td>9（13.8%）</td>
+            </tr>
+            <tr>
+              <td>ギフト・もらいもの</td>
+              <td>35</td>
+              <td>2（5.7%）</td>
+              <td>8（22.9%）</td>
+              <td>6（17.1%）</td>
+              <td>0（0.0%）</td>
+              <td>4（11.4%）</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">KEY INSIGHT</div>
+          <div class="insight-text">
+            <strong>「毎月1箱」「毎月複数箱」はともに定期便利用率が約83%</strong>——この層はほぼ定期便で回っている。<br>
+            「2〜3ヶ月まとめ買い」の68.9%が定期便利用中という事実は、<strong>定期便の中に「2〜3ヶ月スキップ」を使っている人が相当数いる</strong>と推察される（購入頻度の自己認識と定期便設定のずれ）。<br>
+            「数ヶ月に1度」層の33.1%が「検討したが未加入」——定期便の「スキップ自由」「いつでも解約」を訴求すればこの層が最も転換しやすい。
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px">
+        <div class="card-title">購入店舗の使い分け状況</div>
+        <div class="stacked-bar" style="height:40px">
+          <div class="stacked-seg" style="width:76.1%;background:var(--lypo-orange);">76.1%</div>
+          <div class="stacked-seg" style="width:15.7%;background:var(--lypo-amber);">15.7%</div>
+          <div class="stacked-seg" style="width:6.6%;background:var(--lypo-green);">6.6%</div>
+          <div class="stacked-seg" style="width:1.6%;background:var(--lypo-border)"></div>
+        </div>
+        <div class="stacked-legend">
+          <div class="stacked-leg-item"><div class="stacked-leg-dot" style="background:var(--lypo-orange)"></div>基本的に同じ店舗（4,127名）</div>
+          <div class="stacked-leg-item"><div class="stacked-leg-dot" style="background:var(--lypo-amber)"></div>セール・ポイントで使い分け（851名）</div>
+          <div class="stacked-leg-item"><div class="stacked-leg-dot" style="background:var(--lypo-green)"></div>利便性で使い分け（356名）</div>
+          <div class="stacked-leg-item"><div class="stacked-leg-dot" style="background:var(--lypo-border)"></div>その他（94名）</div>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">INSIGHT</div>
+          <div class="insight-text">76%が「同じ店舗固定」。一度公式サイトに定着すると他チャネルに浮気しにくい。初回公式獲得の重要性が極めて高い。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q13/Q14 購入履歴 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q03</span>
+        <span class="section-title">累計購入量・定期便利用状況</span>
+      </div>
+      <div class="card-grid-2">
+        <div class="card">
+          <div class="card-title">累計購入箱数（自己申告）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">お試しのみ購入</span><span class="bar-label-num">361名 6.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:17.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">1箱</span><span class="bar-label-num">159名 2.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:7.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">2箱</span><span class="bar-label-num">277名 5.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:13.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">3〜4箱</span><span class="bar-label-num">631名 11.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:31.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">5〜6箱</span><span class="bar-label-num">596名 11.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:29.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">7〜10箱</span><span class="bar-label-num">699名 12.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:34.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">10〜50箱</span><span class="bar-label-num">2,035名 37.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">51〜100箱</span><span class="bar-label-num">496名 9.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:24.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">100箱以上</span><span class="bar-label-num">174名 3.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:8.5%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">定期便利用状況（アンケート回答）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">現在利用中（継続中）</span><span class="bar-label-num">3,325名 61.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">検討したが利用していない</span><span class="bar-label-num">899名 16.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:27.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">過去に利用していた（解約）</span><span class="bar-label-num">631名 11.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:19.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">まとめ買い派なので不要</span><span class="bar-label-num">342名 6.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:10.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">定期便の存在を知らなかった</span><span class="bar-label-num">138名 2.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:4.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ギフト・もらいもの中心</span><span class="bar-label-num">54名 1.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:1.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">対面購入派なので不要</span><span class="bar-label-num">39名 0.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:1.2%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">「検討したが利用していない」899名は定期便への転換最優先ターゲット。「定期便を知らなかった」138名は単純なコミュニケーション不足で即解決できる機会損失。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q15/Q16/Q17 認知・知識・イメージ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q04</span>
+        <span class="section-title">認知経路・商品知識・ブランドイメージ</span>
+      </div>
+      <div class="card-grid">
+        <div class="card" style="grid-column: span 2;">
+          <div class="card-title">Lypo-Cをどのように知りましたか？</div>
+          <div class="funnel-step">
+            <span class="funnel-rank">1</span>
+            <span class="funnel-label">有名人・インフルエンサーの紹介</span>
+            <div class="funnel-bar-wrap"><div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div></div>
+            <span class="funnel-count">1,950</span>
+          </div>
+          <div class="funnel-step">
+            <span class="funnel-rank">2</span>
+            <span class="funnel-label">身近な友人・家族の紹介</span>
+            <div class="funnel-bar-wrap"><div class="bar-track"><div class="bar-fill bar-amber" style="width:44.4%"></div></div></div>
+            <span class="funnel-count">866</span>
+          </div>
+          <div class="funnel-step">
+            <span class="funnel-rank">3</span>
+            <span class="funnel-label">医療機関や先生の紹介</span>
+            <div class="funnel-bar-wrap"><div class="bar-track"><div class="bar-fill bar-blue" style="width:35.7%"></div></div></div>
+            <span class="funnel-count">697</span>
+          </div>
+          <div class="funnel-step">
+            <span class="funnel-rank">4</span>
+            <span class="funnel-label">雑誌・Webの記事</span>
+            <div class="funnel-bar-wrap"><div class="bar-track"><div class="bar-fill bar-green" style="width:33.9%"></div></div></div>
+            <span class="funnel-count">661</span>
+          </div>
+          <div class="funnel-step">
+            <span class="funnel-rank">5</span>
+            <span class="funnel-label">SNS広告・公式投稿</span>
+            <div class="funnel-bar-wrap"><div class="bar-track"><div class="bar-fill bar-pink" style="width:25.9%"></div></div></div>
+            <span class="funnel-count">506</span>
+          </div>
+          <div class="funnel-step">
+            <span class="funnel-rank">6</span>
+            <span class="funnel-label">美容の専門家（エステ等）の紹介</span>
+            <div class="funnel-bar-wrap"><div class="bar-track"><div class="bar-fill bar-purple" style="width:25.3%"></div></div></div>
+            <span class="funnel-count">494</span>
+          </div>
+          <div class="funnel-step">
+            <span class="funnel-rank">7</span>
+            <span class="funnel-label">POPUPやイベント</span>
+            <div class="funnel-bar-wrap"><div class="bar-track"><div class="bar-fill bar-teal" style="width:7.9%"></div></div></div>
+            <span class="funnel-count">154</span>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">インフルエンサー経由が35.9%でダントツ1位。医療機関・友人・美容専門家を合わせた「人づて」は実質<strong>38.9%（2,057名）</strong>。口コミ・紹介が最強の獲得チャネル。SNS広告は5位（9.3%）にとどまる。</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Lypo-Cについて知っていること（複数回答）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">吸収率が高い</span><span class="bar-label-num">4,861名 89.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">美容に良い</span><span class="bar-label-num">4,718名 86.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:97.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">健康に良い</span><span class="bar-label-num">4,046名 74.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:83.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">疲労回復する</span><span class="bar-label-num">3,467名 63.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:71.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">免疫ケア</span><span class="bar-label-num">2,883名 53.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:59.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">リポソームカプセルテクノロジー</span><span class="bar-label-num">2,593名 47.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:53.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">高品質</span><span class="bar-label-num">2,203名 40.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:45.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">医師推奨</span><span class="bar-label-num">996名 18.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:20.5%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">ブランドイメージ（複数回答）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">効果が高そう</span><span class="bar-label-num">4,283名 78.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">美容向け</span><span class="bar-label-num">3,488名 64.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:81.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">信頼できる</span><span class="bar-label-num">3,482名 64.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:81.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">健康向け</span><span class="bar-label-num">2,683名 49.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:62.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">自己投資</span><span class="bar-label-num">2,632名 48.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:61.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">高級感</span><span class="bar-label-num">1,608名 29.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:37.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">お守り的</span><span class="bar-label-num">1,585名 29.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:37.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">日常使い</span><span class="bar-label-num">1,308名 24.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:30.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">医療に近い</span><span class="bar-label-num">891名 16.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:20.8%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q18-21 サブ商品認知 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q05</span>
+        <span class="section-title">サブブランド認知度（4商品）</span>
+      </div>
+      <div class="card-grid">
+        <!-- C+Cera -->
+        <div class="card">
+          <div class="card-title"><span class="product-badge badge-pink">Lypo-C C+Cera（ピンク）</span></div>
+          <div class="bar-list" style="margin-top:12px">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">詳しく知っている</span><span class="bar-label-num">507 9.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:19.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ある程度知っている</span><span class="bar-label-num">2,577 47.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">名前は聞いたことがある</span><span class="bar-label-num">1,593 29.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:61.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">知らなかった</span><span class="bar-label-num">751 13.8%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:29.1%;background:#6B6B8A"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">4商品中最高の認知率。「ある程度＋詳しく」で56.8%。4人に3人が知っている状態。</div>
+          </div>
+        </div>
+
+        <!-- CBD -->
+        <div class="card">
+          <div class="card-title"><span class="product-badge badge-blue">Lypo-C CBD</span></div>
+          <div class="bar-list" style="margin-top:12px">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">詳しく知っている</span><span class="bar-label-num">547 10.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:24.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ある程度知っている</span><span class="bar-label-num">2,241 41.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">名前は聞いたことがある</span><span class="bar-label-num">1,478 27.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:65.9%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">知らなかった</span><span class="bar-label-num">1,162 21.4%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:51.9%;background:#6B6B8A"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SKINBEAUTY -->
+        <div class="card">
+          <div class="card-title"><span class="product-badge badge-orange">Lypo-C SKINBEAUTY（美容液）</span></div>
+          <div class="bar-list" style="margin-top:12px">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">詳しく知っている</span><span class="bar-label-num">536 9.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:21.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ある程度知っている</span><span class="bar-label-num">2,465 45.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">名前は聞いたことがある</span><span class="bar-label-num">1,251 23.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:50.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">知らなかった</span><span class="bar-label-num">1,176 21.7%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:47.7%;background:#6B6B8A"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MINERALion -->
+        <div class="card">
+          <div class="card-title"><span class="product-badge badge-blue">MINERALion（青の鉄分）</span></div>
+          <div class="bar-list" style="margin-top:12px">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">詳しく知っている</span><span class="bar-label-num">527 9.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:23.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ある程度知っている</span><span class="bar-label-num">2,228 41.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">名前は聞いたことがある</span><span class="bar-label-num">1,173 21.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:52.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">知らなかった</span><span class="bar-label-num">1,500 27.6%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:67.3%;background:#6B6B8A"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">MINERALionが「知らなかった」最多（27.6%）。クロスセル余地は大きいが、認知拡大が先決。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q22/Q23/Q24/Q25/Q26 購買意思決定 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q06</span>
+        <span class="section-title">購買意思決定プロセス（技術認知〜比較〜不安〜解消〜決定打）</span>
+      </div>
+      <div class="card-grid-2">
+
+        <div class="card">
+          <div class="card-title">リポカプセルテクノロジーの購入意欲への影響</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">技術の優位性に納得して購入を決めた</span><span class="bar-label-num">2,899名 53.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">技術より「他者の勧めや体感」を重視した</span><span class="bar-label-num">973名 17.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:33.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">技術より医療機関での取り扱いを信頼した</span><span class="bar-label-num">874名 16.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:30.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">特に意識したことはない</span><span class="bar-label-num">583名 10.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:20.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ブランドの世界観・デザインに惹かれた</span><span class="bar-label-num">99名 1.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:3.4%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">過半数（53.4%）が技術で納得して購入。LPやコンテンツで「吸収率の科学的根拠」を訴求することが有効と裏付けられた。</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">初めて購入した際の比較対象（複数回答）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">比較なし（Lypo-C一択）</span><span class="bar-label-num">1,966名 36.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">一般的なビタミンCサプリ</span><span class="bar-label-num">2,255名 41.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:114.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">他のリポソーム型サプリ</span><span class="bar-label-num">1,162名 21.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:59.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">医薬品のビタミンC</span><span class="bar-label-num">819名 15.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:41.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">美容皮膚科での処方薬</span><span class="bar-label-num">637名 11.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:32.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">高濃度ビタミンC点滴</span><span class="bar-label-num">396名 7.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:20.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">高級スキンケア・美容液</span><span class="bar-label-num">378名 7.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:19.2%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">「比較なし一択」が36%。指名購入が強い。一方、「一般ビタミンCサプリ」比較が41.5%で最多——「普通のCとの差分」説明がLP最重要コンテンツ。</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">購入前の不安・ためらい（複数回答）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">価格が高い</span><span class="bar-label-num">4,083名 75.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">効果があるか</span><span class="bar-label-num">2,826名 52.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:69.2%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">味・飲みやすさ</span><span class="bar-label-num">2,250名 41.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:55.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">継続できるか</span><span class="bar-label-num">1,630名 30.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:39.9%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">自分に合うか</span><span class="bar-label-num">1,176名 21.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:28.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">品質が信頼できるか</span><span class="bar-label-num">833名 15.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:20.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">安全性</span><span class="bar-label-num">815名 15.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:19.9%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">不安はなかった</span><span class="bar-label-num">257名 4.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-border" style="width:6.3%;background:var(--lypo-border)"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">不安「価格高い」が75%で圧倒的。次いで「効果」「味」。LPでは①価格を正当化するROI訴求 ②試飲できる仕組み（サンプル・お試し）が最優先施策。</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">不安解消の決め手（複数回答）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">試さないと分からないと自己解決</span><span class="bar-label-num">3,309名 61.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">信頼できる人の言葉</span><span class="bar-label-num">1,394名 25.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:42.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">サンプルを試飲した</span><span class="bar-label-num">1,232名 22.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:37.2%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">お得なキャンペーン等が背中を押した</span><span class="bar-label-num">1,029名 19.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:31.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">商品について詳しく調べた</span><span class="bar-label-num">915名 16.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:27.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">クチコミを調べた</span><span class="bar-label-num">787名 14.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:23.8%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">「自己解決」61%——顧客は自ら納得して買う。一方、サンプル試飲（22.7%）＋キャンペーン（19%）で合計4割以上がプロモーションに背中を押された。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 最終決定打 -->
+      <div class="card" style="margin-top:20px">
+        <div class="card-title">最終的に購入を決めた決定打</div>
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">調べて成分・品質に納得したので</span><span class="bar-label-num">892名 16.4%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">信頼できる人の勧め（医師などによる一押し）</span><span class="bar-label-num">857名 15.8%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-blue" style="width:96.1%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">SNSの口コミ・雑誌など周囲の評判で</span><span class="bar-label-num">787名 14.5%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-pink" style="width:88.2%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">サンプルが良かったので</span><span class="bar-label-num">728名 13.4%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-green" style="width:81.6%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">キャンペーン・特典に惹かれた</span><span class="bar-label-num">575名 10.6%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-amber" style="width:64.5%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">身体のSOSに対処したい</span><span class="bar-label-num">458名 8.4%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-purple" style="width:51.3%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">以前から知っており、そろそろ買おうと思った</span><span class="bar-label-num">429名 7.9%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-teal" style="width:48.1%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">外的リスクを回避（紫外線・風邪等）</span><span class="bar-label-num">296名 5.5%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-orange" style="width:33.2%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">差し迫ったイベント（結婚式・旅行等）</span><span class="bar-label-num">236名 4.3%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-pink" style="width:26.5%"></div></div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">KEY INSIGHT</div>
+          <div class="insight-text">「成分・品質への自己納得」「信頼できる人の推薦」「口コミ・評判」がほぼ同率トップ3。この3つを束ねると<strong>46.7%（約半数）</strong>。「理性による納得」と「感情的な信頼」の両方が購買トリガーになっている。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q27/Q28/Q29/Q30 使用実態 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q07</span>
+        <span class="section-title">使用実態（使用商品・摂取量・投資意識・目的）</span>
+      </div>
+      <div class="card-grid-2">
+        <div class="card">
+          <div class="card-title">普段使っているLypo-C（複数回答）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Lypo-C VitaminC（オレンジ）</span><span class="bar-label-num">4,010名 73.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Lypo-C Vitamin C+D（緑）</span><span class="bar-label-num">2,596名 47.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:64.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">MINERALion（青の鉄分）</span><span class="bar-label-num">474名 8.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:11.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Lypo-C Vitamin C+Cera（ピンク）</span><span class="bar-label-num">462名 8.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:11.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Lypo-C SKINBEAUTY（美容液）</span><span class="bar-label-num">321名 5.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:8.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">Lypo-C CBD</span><span class="bar-label-num">200名 3.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:5.0%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">VCオレンジが圧倒的主力。C+Dが47.8%と2番手。ただしC+Cera/SKINBEAUTY/MINERALionは一桁%——認知はあるが購入率が低い。クロスセルの大きな余地。</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">1日平均摂取包数</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">1日1包</span><span class="bar-label-num">3,165名 58.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">1日2包</span><span class="bar-label-num">1,053名 19.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:33.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">1日3包以上</span><span class="bar-label-num">177名 3.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:5.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">不定期</span><span class="bar-label-num">380名 7.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:12.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">2〜3日に1包</span><span class="bar-label-num">325名 6.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:10.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">頓服（特別な時のみ）</span><span class="bar-label-num">284名 5.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:9.0%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">推奨の「1日3包」は<strong>3.3%しかいない</strong>。1包が主流（58%）。2包〜3包への教育コンテンツによりLTV向上の余地が大きい。</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">美容投資 vs 健康投資</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">美容・健康半分ずつ</span><span class="bar-label-num">2,744名 50.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">完全に美容</span><span class="bar-label-num">985名 18.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:35.9%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">どちらかといえば美容</span><span class="bar-label-num">843名 15.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:30.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">どちらかといえば健康</span><span class="bar-label-num">604名 11.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:22.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">完全に健康</span><span class="bar-label-num">252名 4.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:9.2%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">「美容寄り」（美容＋半々+美容寄り）= <strong>84.2%</strong>。健康一辺倒訴求は顧客マジョリティに響かない。美容と健康を統合した「ウェルネス美容」ポジション確立が重要。</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Lypo-Cを摂取している主な目的</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">攻めの美容（透明感アップ等）</span><span class="bar-label-num">1,541名 28.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">守りの美容（日焼けケア等）</span><span class="bar-label-num">1,375名 25.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:89.2%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">疲労・リカバリー</span><span class="bar-label-num">1,348名 24.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:87.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">健康促進（風邪予防）</span><span class="bar-label-num">972名 17.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:63.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">美容施術等の維持・補完</span><span class="bar-label-num">113名 2.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:7.3%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">トップ3（攻め美容・守り美容・疲労回復）が拮抗。ただし「疲労回復」は認知（63.9%）に比べ目的としての選択が3位にとどまる——疲労回復訴求はまだ「副次効果」と捉えられている。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q31/Q32/Q33 効果実感 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q08</span>
+        <span class="section-title">効果実感・体感変化</span>
+      </div>
+      <div class="card-grid-2">
+        <div class="card">
+          <div class="card-title">感じた具体的な変化（複数回答）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">体調の崩しにくさ</span><span class="bar-label-num">2,325名 42.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">肌の透明感・トーンアップ</span><span class="bar-label-num">2,158名 39.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:92.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">朝の目覚め・疲労感軽減</span><span class="bar-label-num">1,593名 29.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:68.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">化粧ノリ・質感向上</span><span class="bar-label-num">1,090名 20.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:46.9%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">精神的安心感</span><span class="bar-label-num">916名 16.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:39.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">変化なし</span><span class="bar-label-num">584名 10.8%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:25.1%;background:var(--lypo-border)"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">飲み忘れた時の不調の実感</span><span class="bar-label-num">431名 7.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:18.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">日焼けの引きの早さ</span><span class="bar-label-num">331名 6.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:14.2%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">花粉症が改善</span><span class="bar-label-num">192名 3.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:8.3%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">効果への実感度レベル</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">期待（なんとなく良い気がする）</span><span class="bar-label-num">2,213名 40.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">実感（飲まないと調子が違う）</span><span class="bar-label-num">1,180名 21.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:53.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">確信（生活に欠かせない）</span><span class="bar-label-num">909名 16.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:41.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">投資（未来のために必要）</span><span class="bar-label-num">655名 12.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:29.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">未実感（今のところ変化なし）</span><span class="bar-label-num">250名 4.6%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:11.3%;background:var(--lypo-border)"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">信頼（プロが言うから良いはず）</span><span class="bar-label-num">103名 1.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:4.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">執着（やめるのが不安）</span><span class="bar-label-num">102名 1.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:4.6%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">「実感＋確信」を合わせると<strong>38.4%</strong>が強い効果実感を持つ。この層がLTV・口コミの最大貢献層。「期待」40.8%を「実感」に引き上げるためのコンテンツ戦略が重要。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q33 フリーテキスト効果体感 -->
+      <div class="card" style="margin-top:20px">
+        <div class="card-title">効果を初めて体感したのはいつ？（フリーテキスト 代表的な声）</div>
+        <div class="quote-grid">
+          <div class="quote-card">「初めて飲んだ翌日に、髪の手触りが違うことに気がついたのが最初の衝撃でした。」</div>
+          <div class="quote-card">「飲み始めて2ヶ月後にクリニックで肌診断をしてもらった時、明らかに変化があった。」</div>
+          <div class="quote-card green">「3〜4日目に肌の透明感を感じた。朝起きやすくなった。」</div>
+          <div class="quote-card">「一度続けていたリポCDをやめたら、コロナにかかって、やっぱり違うと実感。」</div>
+          <div class="quote-card green">「飲み始めた7年前ごろ。風邪を引かなくなった。」</div>
+          <div class="quote-card blue">「子供が風邪を引いた時、妊娠中だったので1日2回飲んだところ、風邪をもらわなかった。」</div>
+          <div class="quote-card">「夜飲んで翌朝、肌が違った。」（多数）</div>
+          <div class="quote-card">「飲む日と飲まない日が全く違う。」</div>
+          <div class="quote-card blue">「昨年飲み続けた時と止めた時の花粉症の差に気づいた。」</div>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">INSIGHT</div>
+          <div class="insight-text">「翌日実感」「2〜3日後」「1ヶ月後」の3パターンが多数。即効性の声を広告クリエイティブに活用し、継続実感の声は定期便コミュニケーションへ。「飲まない日との差」がLTV維持に最強のメッセージ。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q34 他サプリ傾向分析 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q09</span>
+        <span class="section-title">Lypo-C以外に摂取しているサプリ・健康食品（フリーワード傾向分析）</span>
+        <span class="section-note">※フリーワード全件を傾向分類</span>
+      </div>
+
+      <!-- 概要KPI -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+        <div class="kpi-card">
+          <span class="kpi-num">70.3%</span>
+          <div class="kpi-label">何らか摂取あり<br><small>（3,816名）</small></div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-num">29.7%</span>
+          <div class="kpi-label">Lypo-Cのみ／摂取なし<br><small>（1,612名）</small></div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-num">2〜4種</span>
+          <div class="kpi-label">1人あたり平均<br>摂取サプリ数（推計）</div>
+        </div>
+      </div>
+
+      <div class="card-grid-2">
+
+        <!-- カテゴリ別バーチャート -->
+        <div class="card">
+          <div class="card-title">カテゴリ別摂取傾向（摂取あり3,816名を母数）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ビタミンB群（ビオチン含む）</span><span class="bar-label-num">305名 8.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">漢方・植物系（酵素・サジー等）</span><span class="bar-label-num">300名 7.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:98.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">亜鉛</span><span class="bar-label-num">293名 7.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:96.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">美容内服・処方薬系（シナール等）</span><span class="bar-label-num">279名 7.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:91.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">鉄分・ヘム鉄・葉酸</span><span class="bar-label-num">272名 7.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:89.2%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">青汁・緑黄色野菜系</span><span class="bar-label-num">238名 6.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:78.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">乳酸菌・腸活・ビフィズス菌</span><span class="bar-label-num">237名 6.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:77.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">マルチビタミン・マルチミネラル</span><span class="bar-label-num">180名 4.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:59.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">コラーゲン</span><span class="bar-label-num">179名 4.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:58.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">グルタチオン（美白・抗酸化）</span><span class="bar-label-num">156名 4.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:51.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">プロテイン</span><span class="bar-label-num">149名 3.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:48.9%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ビタミンD</span><span class="bar-label-num">147名 3.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:48.2%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">エクオール・大豆イソフラボン</span><span class="bar-label-num">130名 3.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:42.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">DHA・EPA・オメガ3</span><span class="bar-label-num">124名 3.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:40.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">マグネシウム</span><span class="bar-label-num">123名 3.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:40.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">アスタキサンチン</span><span class="bar-label-num">90名 2.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:29.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">NMN・抗老化系</span><span class="bar-label-num">87名 2.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:28.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ルテイン・目のサプリ</span><span class="bar-label-num">63名 1.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:20.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">iHerb・海外通販サプリ（利用者）</span><span class="bar-label-num">70名 1.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:23.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">コエンザイムQ10</span><span class="bar-label-num">40名 1.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:13.1%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分析・インサイト -->
+        <div class="card">
+          <div class="card-title">注目ブランド・成分 TOP（実名カウント）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">亜鉛（単体・複合含む）</span><span class="bar-label-num">292名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">コラーゲン（各ブランド含む）</span><span class="bar-label-num">176名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:60.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">プロテイン</span><span class="bar-label-num">149名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:51.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">グルタチオン</span><span class="bar-label-num">138名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:47.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">トラネキサム酸（美白処方薬）</span><span class="bar-label-num">124名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:42.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">DHC（ブランドとして利用）</span><span class="bar-label-num">150名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:51.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">エクオール（大塚製薬エクエル含む）</span><span class="bar-label-num">120名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:41.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">シナール（皮膚科処方含む）</span><span class="bar-label-num">115名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:39.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">青汁（各ブランド）</span><span class="bar-label-num">115名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:39.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">NMN（抗老化）</span><span class="bar-label-num">79名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:27.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ビオチン（美肌・髪）</span><span class="bar-label-num">81名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:27.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">葉酸（妊活・産前含む）</span><span class="bar-label-num">84名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:28.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ハイチオール（美白OTC）</span><span class="bar-label-num">60名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:20.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">ファンケル（ブランドとして利用）</span><span class="bar-label-num">55名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:18.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">iHerb（海外通販利用）</span><span class="bar-label-num">47名</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:16.1%"></div></div>
+            </div>
+          </div>
+
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">
+              亜鉛・コラーゲン・鉄分・ビタミンBなど<strong>「Lypo-Cが補完できない栄養素」を複数摂取しているマルチサプリユーザーが主流</strong>。これはクロスセルの強い根拠になる——MINERALion（鉄分）やC+Ceraへの自然な誘導動線を設計しやすい。<br>
+              グルタチオン（138名）・トラネキサム酸（124名）の多さは、<strong>美白・シミ対策に高い関心</strong>があることを示す。この層はSKINBEAUTYとの親和性が高い。<br>
+              エクオール（120名）はホルモン系ケアニーズを持つ40〜50代女性に集中していると推察。更年期ケア文脈でのLypo-C訴求に可能性がある。<br>
+              iHerb利用者（47名）は海外サプリに精通した高関与層で、成分・品質への目が厳しい反面、「良いものなら買う」確信層でもある。
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 傾向クラスター分析 -->
+      <div class="card card-wide" style="margin-top:20px">
+        <div class="card-title">摂取サプリから読み取れる顧客の「健康・美容ニーズ」クラスター</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:4px">
+          <div style="background:rgba(232,88,140,0.07);border:1px solid rgba(232,88,140,0.2);border-radius:8px;padding:16px">
+            <div style="font-size:11px;font-weight:700;color:var(--lypo-pink);letter-spacing:0.1em;margin-bottom:8px">CLUSTER 01</div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:8px">美白・シミ特化層</div>
+            <div style="font-size:11px;color:var(--lypo-muted);line-height:1.7">
+              グルタチオン・トラネキサム酸・ハイチオール・シナール・アスタキサンチンを組み合わせる。皮膚科処方と市販OTCを並行使用するケースも多い。Lypo-Cのビタミン訴求と高い親和性を持つ。<br>
+              <strong style="color:var(--lypo-pink)">推計：約250〜300名</strong>
+            </div>
+          </div>
+          <div style="background:rgba(76,175,130,0.07);border:1px solid rgba(76,175,130,0.2);border-radius:8px;padding:16px">
+            <div style="font-size:11px;font-weight:700;color:var(--lypo-green);letter-spacing:0.1em;margin-bottom:8px">CLUSTER 02</div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:8px">腸活・内側美容層</div>
+            <div style="font-size:11px;color:var(--lypo-muted);line-height:1.7">
+              乳酸菌・ビフィズス菌・酵素・ヤクルト1000・食物繊維を愛用。「腸から美肌」という思想を持ち、内側からの美容アプローチに積極的。継続意識が高く定期便との親和性が強い。<br>
+              <strong style="color:var(--lypo-green)">推計：約230〜250名</strong>
+            </div>
+          </div>
+          <div style="background:rgba(59,125,216,0.07);border:1px solid rgba(59,125,216,0.2);border-radius:8px;padding:16px">
+            <div style="font-size:11px;font-weight:700;color:var(--lypo-blue);letter-spacing:0.1em;margin-bottom:8px">CLUSTER 03</div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:8px">抗老化・先進系層</div>
+            <div style="font-size:11px;color:var(--lypo-muted);line-height:1.7">
+              NMN・レスベラトロール・CoQ10・グルタチオン・iHerb活用など先端成分を積極摂取。情報感度が高く、成分や研究データに基づいて選択。高単価サプリへの支出を厭わないハイLTV予備軍。<br>
+              <strong style="color:var(--lypo-blue)">推計：約150〜200名</strong>
+            </div>
+          </div>
+          <div style="background:rgba(247,167,43,0.07);border:1px solid rgba(247,167,43,0.2);border-radius:8px;padding:16px">
+            <div style="font-size:11px;font-weight:700;color:var(--lypo-amber);letter-spacing:0.1em;margin-bottom:8px">CLUSTER 04</div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:8px">ホルモン・女性特有ケア層</div>
+            <div style="font-size:11px;color:var(--lypo-muted);line-height:1.7">
+              エクオール・葉酸・鉄分・マグネシウム・漢方を組み合わせる。更年期・妊活・PMSなど女性ホルモンに関係するニーズが背景にある。40〜50代中心の高ロイヤリティ層と重なる可能性が高い。<br>
+              <strong style="color:var(--lypo-amber)">推計：約200〜250名</strong>
+            </div>
+          </div>
+        </div>
+        <div class="insight-box" style="margin-top:16px">
+          <div class="insight-label">クロスセル示唆</div>
+          <div class="insight-text">
+            CLUSTER 01（美白特化）→ <strong>SKINBEAUTY・C+Cera</strong>への誘導が最自然。CLUSTER 02（腸活）→ <strong>MINERALion（鉄＋腸内環境の文脈）</strong>。CLUSTER 03（抗老化）→ <strong>C+D・CBDなど機能性訴求強化品</strong>。CLUSTER 04（ホルモンケア）→ <strong>MINERALion（鉄不足×更年期）</strong>への訴求が刺さりやすい。
+          </div>
+        </div>
+      </div>
+
+      <!-- 代表的な声 -->
+      <div class="card card-wide" style="margin-top:20px">
+        <div class="card-title">フリーワード 代表的な回答（抜粋）</div>
+        <div class="quote-grid" style="grid-template-columns:repeat(3,1fr)">
+          <div class="quote-card">「グルタチオン、アスタキサンチン、コラーゲンペプチドなど。シミ対策と美白に力を入れています。」</div>
+          <div class="quote-card green">「エクオール、亜鉛、鉄分、葉酸等——ホルモンバランスを意識して複数飲んでいます。」</div>
+          <div class="quote-card blue">「NMN、還元型コエンザイムQ10、ナットウキナーゼ。抗老化目的で海外サプリも活用。」</div>
+          <div class="quote-card">「ヤクルト1000と乳酸菌サプリを組み合わせて腸内環境を整えています。」</div>
+          <div class="quote-card green">「シナールとトラネキサム酸は皮膚科で処方してもらっています。Lypo-Cとの相乗効果を期待して。」</div>
+          <div class="quote-card blue">「iHerbでグルタチオンやビタミンD、ビタミンEを取り寄せています。国内より成分量が多くて。」</div>
+          <div class="quote-card">「ファンケルのエクエル、えんきん、ディープチャージコラーゲンと組み合わせています。」</div>
+          <div class="quote-card green">「プロテインと青パパイヤ酵素、あおつぶが定番。腸活と筋肉量維持の両立を意識。」</div>
+          <div class="quote-card blue">「マグネシウム、ビタミンD、DHA——基本的な栄養素を食事で補えない分を補填する感覚。」</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q35/Q36 経済セグメント -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q10</span>
+        <span class="section-title">世帯年収・美容健康月次予算</span>
+      </div>
+      <div class="card-grid-2">
+        <div class="card">
+          <div class="card-title">世帯年収</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">400万円未満</span><span class="bar-label-num">774名 14.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:70.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">400万〜600万円未満</span><span class="bar-label-num">1,105名 20.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">600万〜800万円未満</span><span class="bar-label-num">788名 14.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:71.3%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">800万〜1,000万円未満</span><span class="bar-label-num">631名 11.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:57.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">1,000万〜1,500万円未満</span><span class="bar-label-num">695名 12.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:62.9%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">1,500万〜2,000万円未満</span><span class="bar-label-num">259名 4.8%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:23.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">2,000万円以上</span><span class="bar-label-num">203名 3.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:18.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">わからない</span><span class="bar-label-num">332名 6.1%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:30.0%;background:var(--lypo-border)"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">回答したくない</span><span class="bar-label-num">641名 11.8%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:58.0%;background:var(--lypo-border)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">美容・健康に使える月次自己予算</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">1万円未満</span><span class="bar-label-num">786名 14.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:30.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">1万円以上〜3万円未満</span><span class="bar-label-num">2,612名 48.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">3万円以上〜5万円未満</span><span class="bar-label-num">1,164名 21.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:44.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">5万円以上〜7万円未満</span><span class="bar-label-num">417名 7.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:16.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">7万円以上〜10万円未満</span><span class="bar-label-num">226名 4.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:8.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">10万円以上〜15万円未満</span><span class="bar-label-num">117名 2.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:4.5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">15万円以上</span><span class="bar-label-num">106名 2.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:4.1%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">月1〜3万円の「ミドル予算層」が主力（48.1%）。Lypo-C月8,000円はこの層にとって「予算の30〜50%」を占める。価格感の正当化施策が特に重要。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shopifyデータ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">Q11</span>
+        <span class="section-title">Shopify購買データ（連携分）</span>
+        <span class="section-note">※照合できなかった顧客の空欄を含む</span>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-num">¥141K</span>
+          <div class="kpi-label">平均LTV（累計売上）</div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-num">¥82K</span>
+          <div class="kpi-label">中央値LTV（累計売上）</div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-num">62.9%</span>
+          <div class="kpi-label">定期便アクティブ率<br><small>（Shopify照合済顧客）</small></div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-num">79.7%</span>
+          <div class="kpi-label">12Mアクティブ率</div>
+        </div>
+      </div>
+
+      <div class="card-grid-2">
+        <div class="card">
+          <div class="card-title">定期便ステータス（Shopify）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">アクティブ（継続中）</span><span class="bar-label-num">2,637名 48.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">一時停止（実質解約）</span><span class="bar-label-num">599名 11.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:22.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">解約済み</span><span class="bar-label-num">210名 3.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:8.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">データなし（照合不可等）</span><span class="bar-label-num">1,982名 36.5%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:75.2%;background:var(--lypo-border)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">累計売上帯（LTV分布）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">〜5千円</span><span class="bar-label-num">696名 12.8%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:43.7%;background:var(--lypo-border)"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">5千円超〜1万円</span><span class="bar-label-num">227名 4.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:14.2%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">1万円超〜2万円</span><span class="bar-label-num">272名 5.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:17.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">2万円超〜3万円</span><span class="bar-label-num">281名 5.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:17.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">3万円超〜5万円</span><span class="bar-label-num">447名 8.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:28.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">5万円超〜10万円</span><span class="bar-label-num">715名 13.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:44.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">10万円超〜30万円</span><span class="bar-label-num">1,594名 29.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">30万円超〜100万円</span><span class="bar-label-num">609名 11.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:38.2%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">100万円超〜200万円</span><span class="bar-label-num">25名 0.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:1.6%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">200万円超</span><span class="bar-label-num">1名 0.0%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:0.1%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">INSIGHT</div>
+            <div class="insight-text">「10万〜30万円帯」が最多（29.4%）。LTVで見ると100万円超顧客は26名と少ないが、平均LTVを大きく引き上げるロイヤル層。この層への特別施策が売上に与えるインパクト大。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+</div><!-- /tab-panel q-all -->
+
+<!-- ============================= SHEET 02: クロス集計・総合分析 ============================= -->
+<div id="cross" class="tab-panel">
+  <div class="page-header">
+    <div class="header-eyebrow">CROSS-ANALYSIS & COHORT</div>
+    <div class="header-title">クロス集計・<br>総合分析レポート</div>
+    <div class="header-sub">複数軸を掛け合わせた多角的な顧客インサイト</div>
+    <div class="header-stats">
+      <div class="header-stat"><span class="header-stat-num">9</span><span class="header-stat-label">クロス分析軸</span></div>
+      <div class="header-stat"><span class="header-stat-num">3</span><span class="header-stat-label">コホート視点</span></div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- クロス① 年代×認知経路 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">CROSS 01</span>
+        <span class="section-title">年代 × 認知経路</span>
+        <span class="section-note">どの世代が何で知るか</span>
+      </div>
+      <div class="card card-wide">
+        <div class="scroll-x">
+        <table class="cross-table min-w-800">
+          <thead>
+            <tr>
+              <th>年代</th>
+              <th>有名人・インフルエンサー</th>
+              <th>友人・家族</th>
+              <th>医療機関・先生</th>
+              <th>雑誌・Web記事</th>
+              <th>SNS広告</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>20代</td><td class="heat-high">377</td><td>119</td><td>48</td><td>75</td><td>85</td></tr>
+            <tr><td>30代</td><td class="heat-high">693</td><td>351</td><td>166</td><td>245</td><td>205</td></tr>
+            <tr><td>40代</td><td class="heat-high">540</td><td>257</td><td>248</td><td>213</td><td>133</td></tr>
+            <tr><td>50代</td><td class="heat-mid">243</td><td>115</td><td class="heat-mid">180</td><td>101</td><td>65</td></tr>
+            <tr><td>60代</td><td>69</td><td>21</td><td class="heat-mid">46</td><td>25</td><td>14</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">INSIGHT</div>
+          <div class="insight-text">
+            <strong>20〜40代</strong>：インフルエンサーが圧倒的な獲得チャネル（50歳以下の約35〜51%）。<br>
+            <strong>50〜60代</strong>：医療機関の重みが相対的に増す（40代では比率が逆転しはじめる）。<br>
+            →「年代別メディアプランニング」：若年層はインフルエンサー主体、50代以上は医療機関・雑誌リーチの強化が有効。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- クロス② 年代×効果実感 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">CROSS 02</span>
+        <span class="section-title">年代 × 効果実感度（%）</span>
+        <span class="section-note">どの年代が確信を持ちやすいか</span>
+      </div>
+      <div class="card card-wide">
+        <div class="scroll-x">
+        <table class="cross-table min-w-800">
+          <thead>
+            <tr>
+              <th>年代</th>
+              <th>確信（欠かせない）</th>
+              <th>実感（調子が違う）</th>
+              <th>期待（良い気がする）</th>
+              <th>未実感</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>20代</td><td>9.8%</td><td>18.2%</td><td class="heat-high">48.2%</td><td>7.9%</td></tr>
+            <tr><td>30代</td><td>13.5%</td><td>20.3%</td><td class="heat-mid">43.5%</td><td>5.2%</td></tr>
+            <tr><td>40代</td><td class="heat-mid">17.8%</td><td>23.2%</td><td>38.1%</td><td>3.8%</td></tr>
+            <tr><td>50代</td><td class="heat-high">22.1%</td><td>23.7%</td><td>34.5%</td><td>3.0%</td></tr>
+            <tr><td>60代</td><td class="heat-high">25.3%</td><td>22.7%</td><td>31.6%</td><td>3.5%</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">INSIGHT</div>
+          <div class="insight-text">
+            年齢が上がるほど「確信」層の比率が増加。60代では25.3%が「生活に欠かせない」と回答。<br>
+            一方、20代は「期待」止まりが48%——効果を感じる前に離脱するリスクが最も高い。<br>
+            →20〜30代向けには「初期体感を早める」コンテンツ（1日の飲み方、タイミング指南）が離脱防止に有効。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- クロス③ 定期便×効果実感 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">CROSS 03</span>
+        <span class="section-title">定期便ステータス × 効果実感度（%）</span>
+        <span class="section-note">解約した人・しない人の実感差</span>
+      </div>
+      <div class="card card-wide">
+        <div class="scroll-x">
+        <table class="cross-table min-w-800">
+          <thead>
+            <tr>
+              <th>定期便ステータス</th>
+              <th>確信（欠かせない）</th>
+              <th>実感（調子が違う）</th>
+              <th>期待（良い気がする）</th>
+              <th>未実感</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>現在利用中（継続中）</td><td class="heat-high">22.3%</td><td class="heat-high">26.2%</td><td>35.8%</td><td>2.6%</td></tr>
+            <tr><td>過去に利用（解約済み）</td><td>7.4%</td><td>14.8%</td><td class="heat-high">49.6%</td><td class="heat-mid">11.2%</td></tr>
+            <tr><td>検討したが利用していない</td><td>5.1%</td><td>12.6%</td><td class="heat-high">51.7%</td><td class="heat-mid">13.1%</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">KEY INSIGHT ⚡</div>
+          <div class="insight-text">
+            <strong>定期継続者の「確信＋実感」= 48.5%、解約者では22.2%</strong>。<br>
+            解約者の49.6%が「期待」止まり——効果を十分に体感できないまま離脱している可能性が高い。<br>
+            「検討したが未加入」層も類似傾向。<br>
+            →解約予兆段階での「効果実感コンテンツ配信」（飲み続けると変わる事例・体感タイムライン）が最も優先度の高いリテンション施策。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- クロス④ 認知経路×LTV -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">CROSS 04</span>
+        <span class="section-title">認知経路 × 平均LTV（累計売上）</span>
+        <span class="section-note">どこで知った顧客が最も長く買い続けるか</span>
+      </div>
+      <div class="card card-wide">
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">医療機関や先生の紹介</span><span class="bar-label-num">平均 ¥198,000（697名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-blue" style="width:100%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">美容の専門家（エステ等）の紹介</span><span class="bar-label-num">平均 ¥175,000（494名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-green" style="width:88%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">身近な友人・家族の紹介</span><span class="bar-label-num">平均 ¥162,000（866名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-amber" style="width:82%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">雑誌やWebの記事</span><span class="bar-label-num">平均 ¥152,000（661名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-orange" style="width:77%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">有名人・インフルエンサーの紹介</span><span class="bar-label-num">平均 ¥131,000（1,950名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-pink" style="width:66%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">SNS広告・公式投稿</span><span class="bar-label-num">平均 ¥112,000（506名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-purple" style="width:57%"></div></div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">KEY INSIGHT ⚡</div>
+          <div class="insight-text">
+            医療機関経由のLTVが最高（約¥198K）、SNS広告が最低（約¥112K）。<strong>その差は約1.77倍。</strong><br>
+            インフルエンサーは獲得数は最大だが、LTVは中位。「量×LTV」の最適化には医療・エステ経由顧客の拡大が鍵。<br>
+            →医療機関・エステへのB2Bプログラム強化（サンプリング、コミッション制度）はCPO効率とLTVを同時改善する最有力施策。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- クロス⑤ 購入目的×効果実感 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">CROSS 05</span>
+        <span class="section-title">摂取目的 × 効果実感度（%）</span>
+        <span class="section-note">どの目的層が最も効果を感じているか</span>
+      </div>
+      <div class="card card-wide">
+        <div class="scroll-x">
+        <table class="cross-table min-w-800">
+          <thead>
+            <tr>
+              <th>摂取目的</th>
+              <th>確信（欠かせない）</th>
+              <th>実感（調子が違う）</th>
+              <th>期待（良い気がする）</th>
+              <th>未実感</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>疲労・リカバリー</td><td class="heat-high">22.4%</td><td class="heat-high">26.8%</td><td>35.1%</td><td>3.1%</td></tr>
+            <tr><td>健康促進（風邪予防）</td><td class="heat-mid">20.1%</td><td class="heat-mid">24.5%</td><td>38.2%</td><td>4.2%</td></tr>
+            <tr><td>守りの美容（日焼けケア）</td><td>16.2%</td><td>20.7%</td><td class="heat-mid">42.5%</td><td>5.5%</td></tr>
+            <tr><td>攻めの美容（透明感アップ）</td><td>12.8%</td><td>19.3%</td><td class="heat-high">46.8%</td><td>6.2%</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">INSIGHT</div>
+          <div class="insight-text">
+            <strong>「疲労・リカバリー」目的層が最も効果実感が高い</strong>（確信+実感 = 49.2%）。<br>
+            逆に「攻めの美容」目的層は確信率が最低（12.8%）——美容効果は体感しにくいため「期待」止まりが多い。<br>
+            →攻め美容ユーザーへの「肌診断連携」「before/after体感コンテンツ」が効果実感を上げ、LTV向上に直結する可能性。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- クロス⑥ 投資タイプ×LTV -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">CROSS 06</span>
+        <span class="section-title">美容/健康投資タイプ × LTV</span>
+      </div>
+      <div class="card card-wide">
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">完全に健康</span><span class="bar-label-num">平均 ¥182,000 ／ 中央値 ¥98K（252名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-green" style="width:100%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">どちらかといえば健康</span><span class="bar-label-num">平均 ¥171,000 ／ 中央値 ¥95K（604名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-blue" style="width:94%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">美容・健康半分ずつ</span><span class="bar-label-num">平均 ¥146,000 ／ 中央値 ¥88K（2,744名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-amber" style="width:80%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">どちらかといえば美容</span><span class="bar-label-num">平均 ¥133,000 ／ 中央値 ¥76K（843名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-pink" style="width:73%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">完全に美容</span><span class="bar-label-num">平均 ¥118,000 ／ 中央値 ¥61K（985名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-orange" style="width:65%"></div></div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">INSIGHT</div>
+          <div class="insight-text">
+            <strong>「健康投資」意識が強い顧客のほうがLTVが高い</strong>（完全健康 vs 完全美容：差額約¥64K）。<br>
+            「美容」目的で入ってきた顧客を、「健康への気づき」を通じてLTVを上げるシナリオが有効。<br>
+            →CRMコンテンツで「体の中から変わる実感」を届け、美容→健康投資への意識転換を促す施策が有効。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- クロス⑦ 月予算×LTV -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">CROSS 07</span>
+        <span class="section-title">美容健康月次予算 × LTV</span>
+      </div>
+      <div class="card card-wide">
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">15万円以上</span><span class="bar-label-num">平均 ¥341,000（106名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">10万〜15万円未満</span><span class="bar-label-num">平均 ¥298,000（117名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-amber" style="width:87%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">7万〜10万円未満</span><span class="bar-label-num">平均 ¥259,000（226名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-green" style="width:76%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">5万〜7万円未満</span><span class="bar-label-num">平均 ¥218,000（417名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-blue" style="width:64%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">3万〜5万円未満</span><span class="bar-label-num">平均 ¥175,000（1,164名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-pink" style="width:51%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">1万〜3万円未満</span><span class="bar-label-num">平均 ¥127,000（2,612名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-purple" style="width:37%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">1万円未満</span><span class="bar-label-num">平均 ¥64,000（786名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill" style="width:19%;background:var(--lypo-border)"></div></div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">INSIGHT</div>
+          <div class="insight-text">
+            月予算とLTVに完全な正の相関。月予算5万円以上層（759名）のLTV平均は¥253K——全体平均の1.8倍。<br>
+            →「高予算層への特別VIPプログラム」（先行新商品オファー、上位プラン設計、バンドル提案）で高LTV顧客をさらに伸ばす施策に優先投資すべき。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- クロス⑧ 摂取量×効果実感 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">CROSS 08</span>
+        <span class="section-title">1日摂取包数 × 効果実感度</span>
+        <span class="section-note">多く飲む人ほど効果を実感しているか</span>
+      </div>
+      <div class="card card-wide">
+        <div class="scroll-x">
+        <table class="cross-table min-w-800">
+          <thead>
+            <tr>
+              <th>摂取量</th>
+              <th>確信（欠かせない）</th>
+              <th>実感（調子が違う）</th>
+              <th>期待（良い気がする）</th>
+              <th>未実感</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1日3包以上</td><td class="heat-high">31.6%</td><td class="heat-high">28.8%</td><td>23.7%</td><td>1.7%</td></tr>
+            <tr><td>1日2包</td><td class="heat-mid">23.5%</td><td class="heat-mid">26.4%</td><td>35.8%</td><td>2.3%</td></tr>
+            <tr><td>1日1包</td><td>14.2%</td><td>21.3%</td><td class="heat-mid">43.1%</td><td>4.8%</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">INSIGHT ⚡</div>
+          <div class="insight-text">
+            <strong>1日3包以上では確信+実感 = 60.4%、1包では35.5%</strong>。1.7倍の差。<br>
+            「3包飲もう」コミュニケーションは単なる売上アップではなく「顧客の効果実感・継続意向を高める」施策として正当化できる。<br>
+            →「1日3包体験キャンペーン」「まとめ買い＋2包目の習慣化」のCRM設計が重要。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- クロス⑨ 決定打×LTV -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">CROSS 09</span>
+        <span class="section-title">購入の決定打 × 平均LTV</span>
+        <span class="section-note">どんなきっかけで買った顧客が最も長続きするか</span>
+      </div>
+      <div class="card card-wide">
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">信頼できる人の勧め（医師など）</span><span class="bar-label-num">平均 ¥201,000（857名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-blue" style="width:100%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">調べて成分・品質に納得したので</span><span class="bar-label-num">平均 ¥187,000（892名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-orange" style="width:93%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">身体のSOSに対処したい</span><span class="bar-label-num">平均 ¥163,000（458名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-green" style="width:81%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">SNSの口コミ・評判で</span><span class="bar-label-num">平均 ¥152,000（787名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-pink" style="width:76%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">サンプルが良かったので</span><span class="bar-label-num">平均 ¥143,000（728名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-amber" style="width:71%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">キャンペーン・特典に惹かれた</span><span class="bar-label-num">平均 ¥108,000（575名）</span></div>
+            <div class="bar-track" style="height:12px"><div class="bar-fill bar-purple" style="width:54%"></div></div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">INSIGHT ⚡</div>
+          <div class="insight-text">
+            <strong>「信頼経由の購入者（医師推薦）」のLTVは「キャンペーン購入者」の約1.86倍</strong>。<br>
+            キャンペーンは獲得CPOを下げるが、LTVも下げる可能性がある。<br>
+            →「割引主体」のキャンペーン設計より「サンプル体験→信頼構築」のフローへ移行することで、同じ獲得コストで高LTV顧客を増やせる。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- クロス⑩ 最終注文日×離反分析 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">CROSS 10</span>
+        <span class="section-title">最終注文日からの経過日数 × 離反セグメント分析</span>
+        <span class="section-note">Shopifyデータ基準日：2026年3月31日</span>
+      </div>
+
+      <!-- 経過日数分布 -->
+      <div class="card card-wide" style="margin-bottom:20px">
+        <div class="card-title">経過日数分布 ― 顧客のどこに「離反リスク」があるか</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+          <div style="background:rgba(76,175,130,0.1);border:1px solid rgba(76,175,130,0.3);border-radius:10px;padding:18px;text-align:center">
+            <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--lypo-green);letter-spacing:0.15em;margin-bottom:6px">① アクティブ</div>
+            <div style="font-family:'Space Mono',monospace;font-size:26px;font-weight:700;color:var(--lypo-green)">3,424名</div>
+            <div style="font-size:12px;color:var(--lypo-muted);margin-top:4px">直近3ヶ月以内<br>63.1%</div>
+          </div>
+          <div style="background:rgba(247,167,43,0.1);border:1px solid rgba(247,167,43,0.3);border-radius:10px;padding:18px;text-align:center">
+            <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--lypo-amber);letter-spacing:0.15em;margin-bottom:6px">② 要注意</div>
+            <div style="font-family:'Space Mono',monospace;font-size:26px;font-weight:700;color:var(--lypo-amber)">516名</div>
+            <div style="font-size:12px;color:var(--lypo-muted);margin-top:4px">3〜6ヶ月経過<br>9.5%</div>
+          </div>
+          <div style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.3);border-radius:10px;padding:18px;text-align:center">
+            <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--lypo-orange);letter-spacing:0.15em;margin-bottom:6px">③ 休眠</div>
+            <div style="font-family:'Space Mono',monospace;font-size:26px;font-weight:700;color:var(--lypo-orange)">897名</div>
+            <div style="font-size:12px;color:var(--lypo-muted);margin-top:4px">6ヶ月〜1年経過<br>16.5%</div>
+          </div>
+          <div style="background:rgba(232,88,140,0.1);border:1px solid rgba(232,88,140,0.3);border-radius:10px;padding:18px;text-align:center">
+            <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--lypo-pink);letter-spacing:0.15em;margin-bottom:6px">④ 離反</div>
+            <div style="font-family:'Space Mono',monospace;font-size:26px;font-weight:700;color:var(--lypo-pink)">30名</div>
+            <div style="font-size:12px;color:var(--lypo-muted);margin-top:4px">1年超経過<br>0.6%</div>
+          </div>
+        </div>
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">〜1ヶ月以内</span><span class="bar-label-num">1,991名 40.9%</span></div>
+            <div class="bar-track" style="height:10px"><div class="bar-fill bar-green" style="width:100%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">1〜2ヶ月</span><span class="bar-label-num">840名 17.3%</span></div>
+            <div class="bar-track" style="height:10px"><div class="bar-fill bar-green" style="width:42.2%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">2〜3ヶ月</span><span class="bar-label-num">591名 12.1%</span></div>
+            <div class="bar-track" style="height:10px"><div class="bar-fill bar-green" style="width:29.7%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">3〜6ヶ月</span><span class="bar-label-num">516名 10.6%</span></div>
+            <div class="bar-track" style="height:10px"><div class="bar-fill bar-amber" style="width:25.9%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">6ヶ月〜1年 ⚠️ 最大の休眠ゾーン</span><span class="bar-label-num">899名 18.5%</span></div>
+            <div class="bar-track" style="height:10px"><div class="bar-fill bar-orange" style="width:45.2%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span class="bar-label-text">1年超</span><span class="bar-label-num">30名 0.6%</span></div>
+            <div class="bar-track" style="height:10px"><div class="bar-fill bar-pink" style="width:1.5%"></div></div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <div class="insight-label">INSIGHT</div>
+          <div class="insight-text">アクティブ層（3ヶ月以内）は全体の63.1%と健全だが、<strong>「6ヶ月〜1年」の休眠層が899名（16.5%）と最大の問題ゾーン</strong>。1年超の完全離反は30名と少ない。つまり「1年経つ前の6〜12ヶ月の段階」で手を打てれば離反を防げる構造。</div>
+        </div>
+      </div>
+
+      <!-- 4セグメント詳細クロス -->
+      <div class="card card-wide" style="margin-bottom:20px">
+        <div class="card-title">離反セグメント別 主要指標比較</div>
+        <div class="scroll-x">
+        <table class="cross-table" style="min-width:900px">
+          <thead>
+            <tr>
+              <th>指標</th>
+              <th style="color:#4CAF82">① アクティブ<br><small>3ヶ月以内 n=3,424</small></th>
+              <th style="color:#F7A72B">② 要注意<br><small>3〜6ヶ月 n=516</small></th>
+              <th style="color:#FF6B35">③ 休眠<br><small>6ヶ月〜1年 n=897</small></th>
+              <th style="color:#E8588C">④ 離反<br><small>1年超 n=30</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>平均LTV</strong></td>
+              <td class="heat-high">¥173,111</td>
+              <td class="heat-mid">¥124,988</td>
+              <td>¥30,145</td>
+              <td>¥59,590</td>
+            </tr>
+            <tr>
+              <td><strong>定期便「現在利用中」</strong></td>
+              <td class="heat-high">76.9%</td>
+              <td class="heat-mid">48.4%</td>
+              <td>10.5%</td>
+              <td>46.7%</td>
+            </tr>
+            <tr>
+              <td><strong>定期便「過去に解約」</strong></td>
+              <td>7.0%</td>
+              <td class="heat-mid">24.0%</td>
+              <td class="heat-high">21.5%</td>
+              <td class="heat-mid">23.3%</td>
+            </tr>
+            <tr>
+              <td><strong>効果「確信+実感」合計</strong></td>
+              <td class="heat-high">41.3%</td>
+              <td class="heat-mid">40.1%</td>
+              <td>26.4%</td>
+              <td>26.7%</td>
+            </tr>
+            <tr>
+              <td><strong>効果「期待」止まり</strong></td>
+              <td>38.9%</td>
+              <td>42.4%</td>
+              <td class="heat-high">45.4%</td>
+              <td class="heat-high">56.7%</td>
+            </tr>
+            <tr>
+              <td><strong>購入ペース「毎月1箱」</strong></td>
+              <td class="heat-high">34.7%</td>
+              <td>15.3%</td>
+              <td>9.8%</td>
+              <td>30.0%</td>
+            </tr>
+            <tr>
+              <td><strong>購入ペース「お試しのみ」</strong></td>
+              <td>2.2%</td>
+              <td>3.3%</td>
+              <td class="heat-high">33.7%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>摂取目的「攻めの美容」</strong></td>
+              <td>25.8%</td>
+              <td>26.2%</td>
+              <td class="heat-high">39.7%</td>
+              <td class="heat-mid">30.0%</td>
+            </tr>
+            <tr>
+              <td><strong>認知経路「SNS広告」</strong></td>
+              <td>8.6%</td>
+              <td>10.5%</td>
+              <td class="heat-high">18.1%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>決定打「キャンペーン」</strong></td>
+              <td>8.6%</td>
+              <td>12.8%</td>
+              <td class="heat-high">27.6%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>20代比率</strong></td>
+              <td>11.7%</td>
+              <td>14.5%</td>
+              <td class="heat-high">18.7%</td>
+              <td class="heat-mid">16.7%</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- 休眠顧客プロファイル -->
+      <div class="card-grid-2" style="margin-bottom:20px">
+        <div class="card">
+          <div class="card-title">③ 休眠層（6ヶ月〜1年）のプロフィール</div>
+          <div style="font-size:13px;line-height:1.9;color:var(--lypo-text);margin-bottom:16px">
+            休眠層（n=897）は全体の<strong>16.5%</strong>を占める最大の要介入セグメント。以下の特徴が浮かび上がる。
+          </div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">「お試しのみ購入」が購入ペース1位</span><span class="bar-label-num">33.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">決定打「キャンペーン」が1位</span><span class="bar-label-num">27.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-pink" style="width:81.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">摂取目的「攻めの美容」が突出</span><span class="bar-label-num">39.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">認知経路「SNS広告」が高い</span><span class="bar-label-num">18.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-blue" style="width:53.7%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">効果「期待」止まり</span><span class="bar-label-num">45.4%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-purple" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">定期便「検討したが未加入」</span><span class="bar-label-num">43.1%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-teal" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">20代比率がアクティブ比1.6倍</span><span class="bar-label-num">18.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:55.5%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">休眠顧客の典型像</div>
+            <div class="insight-text">
+              「SNS広告かキャンペーンを見て試しに1箱買ったが、透明感アップを期待していたものの実感が得られず、定期便にも入らないまま自然消滅」という購買ジャーニーが休眠の典型パターンと推察される。
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">アクティブ vs 休眠：決定打の構造的差異</div>
+          <div class="sub-heading" style="margin-top:0">① アクティブ層の決定打（上位6位）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">成分・品質に納得</span><span class="bar-label-num">17.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">信頼できる人の勧め</span><span class="bar-label-num">17.2%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:96.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">SNS口コミ・評判</span><span class="bar-label-num">14.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:82.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">サンプルが良かった</span><span class="bar-label-num">13.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:76.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">身体のSOSに対処したい</span><span class="bar-label-num">9.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:52.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">キャンペーン・特典</span><span class="bar-label-num">8.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-green" style="width:48.0%"></div></div>
+            </div>
+          </div>
+          <div class="sub-heading">③ 休眠層の決定打（上位6位）</div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">キャンペーン・特典 ⚠️ 1位</span><span class="bar-label-num">27.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-orange" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">SNS口コミ・評判</span><span class="bar-label-num">14.3%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:51.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">サンプルが良かった</span><span class="bar-label-num">12.7%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:46.0%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">信頼できる人の勧め</span><span class="bar-label-num">11.9%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:43.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">成分・品質に納得</span><span class="bar-label-num">10.6%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:38.4%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span class="bar-label-text">そろそろ買おうと思った</span><span class="bar-label-num">6.5%</span></div>
+              <div class="bar-track"><div class="bar-fill bar-amber" style="width:23.6%"></div></div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-label">KEY INSIGHT ⚡</div>
+            <div class="insight-text">
+              アクティブ層では「成分納得・信頼・口コミ」が決定打トップ3（計49.8%）。<br>
+              休眠層では<strong>「キャンペーン」が突出した1位（27.6%）</strong>で、アクティブ層の3.2倍。<br>
+              キャンペーン動機の購入者は<strong>価格が下がる間だけ買うチェリーピッカー型</strong>になりやすく、継続意欲が構造的に低い。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 施策示唆 -->
+      <div class="card card-wide">
+        <div class="card-title">離反防止・休眠復帰に向けた施策示唆</div>
+        <div class="scroll-x">
+        <table class="action-table">
+          <thead>
+            <tr>
+              <th width="90">対象セグ</th>
+              <th width="90">優先度</th>
+              <th>施策</th>
+              <th width="150">根拠</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>② 要注意<br><small>3〜6ヶ月</small></td>
+              <td><span class="priority-s">S</span></td>
+              <td><strong>定期便への転換オファー集中投下</strong><br><small>定期便加入率が76.9%→48.4%に急落するのがこのゾーン。「スキップ自由・いつでも解約可」を前面に出した定期便転換メール/LINE施策を3〜6ヶ月未購入者に展開する。</small></td>
+              <td>定期便利用中が76.9%→48.4%に急落</td>
+            </tr>
+            <tr>
+              <td>③ 休眠<br><small>6ヶ月〜1年</small></td>
+              <td><span class="priority-s">S</span></td>
+              <td><strong>「思い出させる」限定復帰オファー</strong><br><small>お試しのみ購入者33.7%・攻め美容目的39.7%が多い。「季節変わりの肌荒れ」「夏前の紫外線対策」などCEPに合わせたタイミングでパーソナルメール配信。割引ではなくサンプル同梱・体感促進にシフトする。</small></td>
+              <td>キャンペーン動機27.6%、割引依存リスク</td>
+            </tr>
+            <tr>
+              <td>③ 休眠<br><small>6ヶ月〜1年</small></td>
+              <td><span class="priority-a">A</span></td>
+              <td><strong>20代・攻め美容ユーザーへの「効果実感コンテンツ」強化</strong><br><small>休眠層の20代比率はアクティブ層の1.6倍（18.7%）。攻め美容目的が39.7%と最も高い。「飲み続けた人の肌変化タイムライン」「撮影前ルーティン」など、美容感度に刺さるコンテンツで再興味を喚起する。</small></td>
+              <td>20代18.7%・攻め美容39.7%が突出</td>
+            </tr>
+            <tr>
+              <td>全セグ</td>
+              <td><span class="priority-a">A</span></td>
+              <td><strong>キャンペーン設計の見直し：「値引き→体験」へのシフト</strong><br><small>キャンペーン動機の購入者はLTVが低く、休眠化率も高い。初回オファーを「割引率」ではなく「サンプル追加・体験型特典」に転換することで、高LTV顧客の比率を高める。</small></td>
+              <td>決定打「キャンペーン」→LTV¥108K（最低）</td>
+            </tr>
+            <tr>
+              <td>② 要注意</td>
+              <td><span class="priority-b">B</span></td>
+              <td><strong>「3〜6ヶ月で止まる人」の行動パターンをウォッチリストに追加</strong><br><small>定期便解約率が急増（7.0%→24.0%）するのが3〜6ヶ月ゾーン。初回購入後3ヶ月時点で「定期便未加入かつ2回目購入なし」のユーザーをアラートセグメントとして抽出し、早期介入フローを設ける。</small></td>
+              <td>定期解約率7.0%→24.0%に急増</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /tab cross -->
+
+<!-- ============================= SHEET 03: エグゼクティブサマリー ============================= -->
+<div id="summary" class="tab-panel">
+
+  <div class="container" style="padding-top:40px">
+
+    <!-- サマリーヒーロー -->
+    <div class="summary-hero">
+      <div class="header-eyebrow" style="color:var(--lypo-orange)">EXECUTIVE SUMMARY</div>
+      <div class="summary-hero-title">Lypo-C 顧客定量調査<br>エグゼクティブサマリー 2026.04</div>
+      <div class="summary-hero-sub">本調査は既存顧客のブランドグロースに向けた態度変容・行動変容のきっかけを探ることを目的とする</div>
+      <div class="summary-meta-grid">
+        <div class="summary-meta">
+          <span class="summary-meta-val">5,428</span>
+          <div class="summary-meta-key">有効回答数</div>
+        </div>
+        <div class="summary-meta">
+          <span class="summary-meta-val">2026.04</span>
+          <div class="summary-meta-key">調査実施月</div>
+        </div>
+        <div class="summary-meta">
+          <span class="summary-meta-val">既存顧客</span>
+          <div class="summary-meta-key">対象</div>
+        </div>
+        <div class="summary-meta">
+          <span class="summary-meta-val">¥141K</span>
+          <div class="summary-meta-key">平均LTV（公式サイト経由）</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPIサマリー -->
+    <div class="kpi-grid">
+      <div class="kpi-card"><span class="kpi-num">93.2%</span><div class="kpi-label">女性比率</div></div>
+      <div class="kpi-card"><span class="kpi-num">30-40代</span><div class="kpi-label">コア年代（59.8%）</div></div>
+      <div class="kpi-card"><span class="kpi-num">61.3%</span><div class="kpi-label">定期便利用中（アンケート）</div></div>
+      <div class="kpi-card"><span class="kpi-num">38.4%</span><div class="kpi-label">効果「実感＋確信」層</div></div>
+      <div class="kpi-card"><span class="kpi-num">35.9%</span><div class="kpi-label">認知がインフルエンサー経由</div></div>
+      <div class="kpi-card"><span class="kpi-num">75.2%</span><div class="kpi-label">購入前「価格が高い」不安</div></div>
+      <div class="kpi-card"><span class="kpi-num">46.7%</span><div class="kpi-label">決定打TOP3（納得・信頼・口コミ）</div></div>
+      <div class="kpi-card"><span class="kpi-num">¥198K</span><div class="kpi-label">医療機関経由の平均LTV</div></div>
+    </div>
+
+    <!-- 大目的別 主要発見 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">FINDING</span>
+        <span class="section-title">大目的別 主要発見（Top Insights）</span>
+      </div>
+
+      <div class="finding-grid">
+        <!-- 新規獲得 -->
+        <div class="finding-card">
+          <div class="finding-num">01</div>
+          <div class="finding-label">新規獲得の核心：「人づて」×「サンプル」</div>
+          <div class="finding-desc">
+            認知経路の1位はインフルエンサー（36%）。しかし<strong>LTVで見ると医療機関経由が最高（¥198K）</strong>、インフルエンサーは中位（¥131K）。「広く知らせる」と「良い顧客を獲る」は別の施策。
+            サンプル体験が不安解消トップ3に入り（22.7%）、決定打にも13.4%が挙げる。
+          </div>
+        </div>
+
+        <div class="finding-card green">
+          <div class="finding-num">02</div>
+          <div class="finding-label">CEP（Category Entry Point）の発見</div>
+          <div class="finding-desc">
+            購入決定打を見ると「身体のSOS」8.4%、「外的リスク回避（紫外線・風邪）」5.5%、「差し迫ったイベント」4.3%。<br>
+            <strong>「肌荒れした」「紫外線が増える季節」「結婚式前」「コロナにかかった」</strong>が独自のCEP。これらのタイミングに当たるキーワード広告・SNS配信強化が有効。
+          </div>
+        </div>
+
+        <div class="finding-card blue">
+          <div class="finding-num">03</div>
+          <div class="finding-label">クロスセルのボトルネック特定</div>
+          <div class="finding-desc">
+            C+Ceraは認知57%だが日常使用は8.5%。MINERALionは認知73%だが使用8.7%。<br>
+            <strong>「知っているが使っていない」ギャップが最大のクロスセル余地</strong>。<br>
+            購入阻害は「自分に必要か分からない」。ターゲット別パーソナル提案（例：鉄分不足女性×MINERALion）の設計が急務。
+          </div>
+        </div>
+
+        <div class="finding-card pink">
+          <div class="finding-num">04</div>
+          <div class="finding-label">顧客の9割が「美容」目的で入るが...</div>
+          <div class="finding-desc">
+            「美容寄り」84%。しかし効果実感が最も高いのは「疲労・リカバリー」目的層（確信+実感 49%）。<br>
+            美容目的で入った顧客に「体の変化」を気づかせる体験提供で、効果実感→LTV向上の好循環を生み出せる。
+          </div>
+        </div>
+
+        <div class="finding-card amber">
+          <div class="finding-num">05</div>
+          <div class="finding-label">推奨3包が3.3%しかいない衝撃</div>
+          <div class="finding-desc">
+            1日1包が58%で主流。推奨3包はわずか3.3%。<br>
+            <strong>2包に増やすだけで客単価は2倍</strong>。3包飲む人の効果確信率は1包の2.2倍（31.6% vs 14.2%）。<br>
+            摂取量アップは「売上のため」ではなく「顧客の体感向上のため」として正当化できる施策。
+          </div>
+        </div>
+
+        <div class="finding-card purple">
+          <div class="finding-num">06</div>
+          <div class="finding-label">解約者の49%が「期待どまり」で離脱</div>
+          <div class="finding-desc">
+            定期解約者の49.6%が効果実感は「期待（なんとなく良い気がする）」止まり。<br>
+            継続者の「確信+実感」48.5%に対し、解約者は22.2%。<br>
+            <strong>効果実感を育てる前に離脱している</strong>構造的問題。初回〜3ヶ月の集中CRM設計が最重要リテンション施策。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 態度変容・行動変容の方法論 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">METHODOLOGY</span>
+        <span class="section-title">態度変容・行動変容を起こすための方法論</span>
+        <span class="section-note">本調査の大目的への回答</span>
+      </div>
+
+      <!-- 前文 -->
+      <div class="card card-wide" style="margin-bottom:20px;background:linear-gradient(135deg,rgba(255,107,53,0.05) 0%,rgba(247,167,43,0.05) 100%);border:1px solid rgba(255,107,53,0.2)">
+        <div style="font-size:13px;line-height:1.9;color:var(--lypo-text)">
+          本調査の大目的は「Lypo-Cブランドのグロースに向けて、顧客の<strong>態度変容</strong>や<strong>行動変容</strong>のきっかけを探ること」である。<br>
+          態度変容（Attitude Change）とは「Lypo-Cへの認識・評価・好意度が変わること」、行動変容（Behavior Change）とは「購入・継続・推薦など実際の行動が変わること」を指す。<br>
+          両者は独立ではなく連鎖する。<strong>「知る→好きになる→欲しくなる→買う→続ける→薦める」</strong>というファネルの各段階に、それぞれ異なるアプローチが必要である。以下にアンケートデータに基づいた方法論パターンを示す。
+        </div>
+      </div>
+
+      <!-- 態度変容 3パターン -->
+      <div class="sub-heading" style="font-size:16px;margin-bottom:16px">
+        態度変容（Attitude Change）のパターン ― 「知らない・半信半疑」を「信頼・納得」へ変える
+      </div>
+      <div class="finding-grid" style="margin-bottom:32px">
+
+        <div class="finding-card blue">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--lypo-blue);letter-spacing:0.15em;margin-bottom:8px">PATTERN A-1</div>
+          <div class="finding-label">「権威による信頼付与」<br><small style="font-weight:400;color:var(--lypo-muted)">Credibility Transfer</small></div>
+          <div class="finding-desc" style="margin-top:12px">
+            <strong>方法：</strong>医師・エステティシャン・インフルエンサーなど「信頼できる第三者」の言葉を通じて、Lypo-Cへの評価を転換させる。<br><br>
+            <strong>根拠データ：</strong>購入の決定打として「信頼できる人の勧め」が2位（15.8%）、LTVでは医療機関経由が最高（¥198K）。不安解消の決め手でも「信頼できる人の言葉」が25.7%と2位。<br><br>
+            <strong>想定シナリオ：</strong>「半信半疑だったが医師に勧められて納得」という認識シフトが起きている。医療機関・専門家の推薦コンテンツを積極的に制作・配信することで、広告接触者の態度を「怪しい」→「安心」へ転換できる。
+          </div>
+        </div>
+
+        <div class="finding-card amber">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--lypo-amber);letter-spacing:0.15em;margin-bottom:8px">PATTERN A-2</div>
+          <div class="finding-label">「科学的根拠による納得化」<br><small style="font-weight:400;color:var(--lypo-muted)">Evidence-Based Persuasion</small></div>
+          <div class="finding-desc" style="margin-top:12px">
+            <strong>方法：</strong>リポソーム技術・吸収率・成分品質などの科学的説明で「なぜ高価格なのか」「なぜ他と違うのか」を理性的に納得させる。<br><br>
+            <strong>根拠データ：</strong>決定打1位が「成分・品質に納得」（16.4%）。リポカプセルテクノロジーが購入意欲に影響した層は53.4%。「吸収率が高い」認知率は89.6%とトップ。<br><br>
+            <strong>想定シナリオ：</strong>「価格が高い」という不安（75.2%）は、ROIの可視化（一般VCとの差分・吸収率の具体的な倍率）によって「高い理由に納得できた」へと態度が変わる。LP・動画コンテンツでの論理訴求が有効。
+          </div>
+        </div>
+
+        <div class="finding-card pink">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--lypo-pink);letter-spacing:0.15em;margin-bottom:8px">PATTERN A-3</div>
+          <div class="finding-label">「体感による確信化」<br><small style="font-weight:400;color:var(--lypo-muted)">Experience-Driven Conviction</small></div>
+          <div class="finding-desc" style="margin-top:12px">
+            <strong>方法：</strong>試飲・サンプル提供・お試しセットなど「実際に体で感じる」機会を提供し、頭ではなく感覚から態度を変える。<br><br>
+            <strong>根拠データ：</strong>不安解消の決め手として「サンプル試飲」22.7%、決定打でも「サンプルが良かった」13.4%。フリーテキストにも「翌朝の肌が違った」「飲んだ日と飲まない日の差を感じた」が多数。<br><br>
+            <strong>想定シナリオ：</strong>言葉では伝わらない「飲み始めてすぐの実感」をサンプリングで体験させることで、「半信半疑」→「これは本物かもしれない」という態度転換が起きる。サンプルはLTVの高い顧客を生む最もROIの高い施策の一つ。
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 行動変容 3パターン -->
+      <div class="sub-heading" style="font-size:16px;margin-bottom:16px">
+        行動変容（Behavior Change）のパターン ― 「態度の納得」を「実際の購入・継続・紹介」へ変える
+      </div>
+      <div class="finding-grid">
+
+        <div class="finding-card">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--lypo-orange);letter-spacing:0.15em;margin-bottom:8px">PATTERN B-1</div>
+          <div class="finding-label">「きっかけ設計」による初回購入の促進<br><small style="font-weight:400;color:var(--lypo-muted)">Trigger & Timing Design</small></div>
+          <div class="finding-desc" style="margin-top:12px">
+            <strong>方法：</strong>「欲しいとは思っていたが買っていなかった」層を、特定のタイミング（CEP）でキャッチし、背中を押す。<br><br>
+            <strong>根拠データ：</strong>決定打の「以前から知っており、そろそろ買おうと思った」が7.9%（429名）。「外的リスク回避（紫外線・風邪等）」5.5%、「身体のSOS」8.4%。不安解消で「お得なキャンペーンが背中を押した」が19%。<br><br>
+            <strong>想定シナリオ：</strong>「紫外線が気になり始める4月」「体調を崩した瞬間」「結婚式前の3ヶ月」などCEPに合わせたメッセージ配信・リターゲティングで、潜在関心層の行動を引き出す。「迷っている人が行動するタイミング」を設計することが鍵。
+          </div>
+        </div>
+
+        <div class="finding-card green">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--lypo-green);letter-spacing:0.15em;margin-bottom:8px">PATTERN B-2</div>
+          <div class="finding-label">「習慣化設計」による継続・LTV向上<br><small style="font-weight:400;color:var(--lypo-muted)">Habit Formation Design</small></div>
+          <div class="finding-desc" style="margin-top:12px">
+            <strong>方法：</strong>購入後の顧客が「毎日飲む習慣」「2包飲む習慣」を自然に身につけられるよう、飲み方教育・リマインダー・体感レポートを設計する。<br><br>
+            <strong>根拠データ：</strong>現状1包/日が58.3%で主流。3包以上はわずか3.3%。しかし1日3包層の「確信+実感」は60.4%で、1包層の35.5%の1.7倍。解約者の49.6%が「期待どまり」で離脱しており、効果実感を育てる前に行動が止まっている。<br><br>
+            <strong>想定シナリオ：</strong>初回購入後1〜3ヶ月のCRMシナリオで「今週の体感チェック」「2包で違いを感じる方法」を配信。飲む行動を「ルーティン化」させることで、解約前に効果実感が生まれ継続行動につながる。
+          </div>
+        </div>
+
+        <div class="finding-card purple">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:#8B5CF6;letter-spacing:0.15em;margin-bottom:8px">PATTERN B-3</div>
+          <div class="finding-label">「社会的証明」による紹介・拡散行動の誘発<br><small style="font-weight:400;color:var(--lypo-muted)">Social Proof Amplification</small></div>
+          <div class="finding-desc" style="margin-top:12px">
+            <strong>方法：</strong>「確信層」の体験談・口コミを可視化・拡散させ、それ自体が新たな顧客の態度変容と行動変容のトリガーになるループを作る。<br><br>
+            <strong>根拠データ：</strong>認知経路の「友人・家族の紹介」は866名（15.9%）でLTV¥162Kと高水準。SNS口コミが決定打の3位（14.5%）。「確信（生活に欠かせない）」層は909名おり、この層のUGC（ユーザー生成コンテンツ）が最も信頼性が高い。<br><br>
+            <strong>想定シナリオ：</strong>効果確信層に対してレビュー投稿・インフルエンサー転換・紹介プログラムへの参加を促す。「自分の体験を誰かの役に立てる」という動機設計が、受動的なファンを能動的な伝道者へと変える行動変容を生み出す。
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 変容の連鎖モデル -->
+      <div class="card card-wide" style="margin-top:24px;background:var(--lypo-dark);border:none">
+        <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--lypo-orange);letter-spacing:0.15em;margin-bottom:16px">CHANGE MODEL ― 態度変容→行動変容の連鎖構造</div>
+        <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;margin-bottom:20px">
+          <div style="background:rgba(255,107,53,0.2);border:1px solid rgba(255,107,53,0.4);border-radius:8px;padding:12px 16px;text-align:center;min-width:110px">
+            <div style="font-size:10px;color:var(--lypo-orange);font-weight:700;letter-spacing:0.1em">STAGE 1</div>
+            <div style="font-size:13px;color:#fff;font-weight:700;margin-top:4px">認知</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">インフルエンサー<br>医療機関・口コミ</div>
+          </div>
+          <div style="color:var(--lypo-orange);font-size:20px;padding:0 8px">→</div>
+          <div style="background:rgba(247,167,43,0.2);border:1px solid rgba(247,167,43,0.4);border-radius:8px;padding:12px 16px;text-align:center;min-width:110px">
+            <div style="font-size:10px;color:var(--lypo-amber);font-weight:700;letter-spacing:0.1em">STAGE 2</div>
+            <div style="font-size:13px;color:#fff;font-weight:700;margin-top:4px">態度変容</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">科学的納得<br>権威の信頼<br>体感での確信</div>
+          </div>
+          <div style="color:var(--lypo-orange);font-size:20px;padding:0 8px">→</div>
+          <div style="background:rgba(76,175,130,0.2);border:1px solid rgba(76,175,130,0.4);border-radius:8px;padding:12px 16px;text-align:center;min-width:110px">
+            <div style="font-size:10px;color:var(--lypo-green);font-weight:700;letter-spacing:0.1em">STAGE 3</div>
+            <div style="font-size:13px;color:#fff;font-weight:700;margin-top:4px">初回購入</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">CEPのタイミング<br>サンプル・キャンペーン</div>
+          </div>
+          <div style="color:var(--lypo-orange);font-size:20px;padding:0 8px">→</div>
+          <div style="background:rgba(59,125,216,0.2);border:1px solid rgba(59,125,216,0.4);border-radius:8px;padding:12px 16px;text-align:center;min-width:110px">
+            <div style="font-size:10px;color:var(--lypo-blue);font-weight:700;letter-spacing:0.1em">STAGE 4</div>
+            <div style="font-size:13px;color:#fff;font-weight:700;margin-top:4px">継続行動</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">習慣化CRM<br>摂取量アップ教育</div>
+          </div>
+          <div style="color:var(--lypo-orange);font-size:20px;padding:0 8px">→</div>
+          <div style="background:rgba(232,88,140,0.2);border:1px solid rgba(232,88,140,0.4);border-radius:8px;padding:12px 16px;text-align:center;min-width:110px">
+            <div style="font-size:10px;color:var(--lypo-pink);font-weight:700;letter-spacing:0.1em">STAGE 5</div>
+            <div style="font-size:13px;color:#fff;font-weight:700;margin-top:4px">確信・推薦</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">口コミ・UGC<br>紹介プログラム</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.8;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px">
+          <strong style="color:rgba(255,255,255,0.85)">重要な示唆：</strong>
+          本調査において最も大きなボトルネックは<strong style="color:var(--lypo-amber)">STAGE 3→4（初回購入から継続行動への移行）</strong>にある。解約者の49.6%が「期待」止まりで離脱しており、効果実感が生まれる前に行動が途切れている。態度変容は完了しているのに行動変容が定着しないという構造的課題であり、購入後1〜3ヶ月の「習慣化CRM」が最優先介入ポイントといえる。
+        </div>
+      </div>
+    </div>
+
+    <!-- 施策提言 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">ACTION</span>
+        <span class="section-title">施策提言（優先度付き）</span>
+      </div>
+      <div class="card card-wide">
+        <div class="scroll-x">
+        <table class="action-table">
+          <thead>
+            <tr>
+              <th width="80">優先度</th>
+              <th width="180">施策カテゴリ</th>
+              <th>施策内容</th>
+              <th width="120">根拠（設問）</th>
+              <th width="120">目標KPI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="priority-s">S</span></td>
+              <td>CRM・リテンション</td>
+              <td><strong>初回購入後1〜3ヶ月の「効果実感育成」CRMシナリオ設計</strong><br>
+                <small>「翌日実感」「1ヶ月変化」「飲まない日との差」の体験ガイドを段階的に配信。疲労回復など副次効果の気づきも提供</small></td>
+              <td>Q32/クロス03</td>
+              <td>F2転換率+5pt<br>解約率-2pt</td>
+            </tr>
+            <tr>
+              <td><span class="priority-s">S</span></td>
+              <td>新規獲得・LP</td>
+              <td><strong>LP最優先改善：「価格の正当化」「一般VCとの差分」「サンプル動線」の強化</strong><br>
+                <small>不安Top2「価格」「効果不明」を解消するストーリーをFV〜CVフローに組み込む</small></td>
+              <td>Q24/Q23/Q25</td>
+              <td>CVR+1.5pt<br>CPA-15%</td>
+            </tr>
+            <tr>
+              <td><span class="priority-s">S</span></td>
+              <td>LTV向上</td>
+              <td><strong>摂取量アップ施策「1日2包習慣化キャンペーン」設計</strong><br>
+                <small>定期便ユーザーへ2包体験セット提供＋体感レポートを実施。「顧客の体感向上」という大義名分で展開</small></td>
+              <td>Q28/クロス08</td>
+              <td>客単価+20%<br>確信層比率+5pt</td>
+            </tr>
+            <tr>
+              <td><span class="priority-a">A</span></td>
+              <td>チャネル戦略</td>
+              <td><strong>医療機関・エステへのB2Bプログラム強化</strong><br>
+                <small>現在13.2%が医療機関購入経験あり。LTV最高（¥198K）。医療機関向けサンプリング・紹介制度・ポスター提供を拡充</small></td>
+              <td>Q9/クロス04</td>
+              <td>医療経由獲得+20%<br>LTV向上</td>
+            </tr>
+            <tr>
+              <td><span class="priority-a">A</span></td>
+              <td>クロスセル</td>
+              <td><strong>MINERALion / C+Cera のパーソナル提案設計</strong><br>
+                <small>既存顧客へ「あなたに必要な理由」メッセージ付きオファー（例：疲労型→MION、美容型→C+Cera）</small></td>
+              <td>Q27/Q18-21</td>
+              <td>クロスセル率+3pt<br>ARPU+¥2,000</td>
+            </tr>
+            <tr>
+              <td><span class="priority-a">A</span></td>
+              <td>CEP獲得</td>
+              <td><strong>「紫外線シーズン前」「体調不良時」「ブライダル前」CEPへのタイミング広告</strong><br>
+                <small>3〜5月に紫外線CEP、秋冬に風邪予防CEP、年間通じて「イベント前」CEPでパーチェスタイミングを捉える</small></td>
+              <td>Q26/Q30</td>
+              <td>季節変動CVR+2pt<br>新規CPO-10%</td>
+            </tr>
+            <tr>
+              <td><span class="priority-b">B</span></td>
+              <td>定期便転換</td>
+              <td><strong>「定期便を知らなかった」138名へのシンプルな認知施策</strong><br>
+                <small>メルマガ・ステップメールで定期便のメリット（割引・送料・スキップ自由）を訴求</small></td>
+              <td>Q14</td>
+              <td>定期便加入率+1pt</td>
+            </tr>
+            <tr>
+              <td><span class="priority-b">B</span></td>
+              <td>コンテンツ戦略</td>
+              <td><strong>「健康投資」意識への転換コンテンツ設計</strong><br>
+                <small>美容目的入口から「体の中から変わる」体験を伝え、健康投資意識を育てる。（健康意識層のLTVは美容層の1.54倍）</small></td>
+              <td>クロス06</td>
+              <td>健康投資認識率+10pt<br>LTV中央値向上</td>
+            </tr>
+            <tr>
+              <td><span class="priority-b">B</span></td>
+              <td>VIPプログラム</td>
+              <td><strong>月予算5万円以上・高LTV顧客向けVIPプログラム設計</strong><br>
+                <small>新商品先行、複数商品バンドル特典、オフラインイベント招待等。高LTV顧客の維持＆アップグレード</small></td>
+              <td>クロス07</td>
+              <td>LTV200万円超顧客増加<br>解約率-1pt</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 逆説的発見 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">SURPRISE</span>
+        <span class="section-title">仮説を裏切る逆説的発見</span>
+      </div>
+      <div class="card-grid-3">
+        <div class="card">
+          <div class="sub-heading" style="margin-top:0">逆説①</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">「比較なし一択」が36%もいる</div>
+          <div style="font-size:12px;color:var(--lypo-muted);line-height:1.7">
+            通常、高価格商品は比較検討されるが、Lypo-Cは「信頼する人に勧められたから」という指名購入が36%。
+            競合との差分訴求より「推薦者を増やす」施策の優先度が高い可能性。
+          </div>
+        </div>
+        <div class="card">
+          <div class="sub-heading" style="margin-top:0">逆説②</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">美容目的ユーザーのLTVが最低</div>
+          <div style="font-size:12px;color:var(--lypo-muted);line-height:1.7">
+            美容訴求で獲得した顧客（顧客の84%）のLTVは健康目的より低い。
+            「美容」は入口として機能するが、「健康への気づき」が長期継続の鍵。入口と定着の訴求を分ける設計が必要。
+          </div>
+        </div>
+        <div class="card">
+          <div class="sub-heading" style="margin-top:0">逆説③</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">疲労回復は認知も目的も上位なのに効果実感も最高</div>
+          <div style="font-size:12px;color:var(--lypo-muted);line-height:1.7">
+            「疲労回復」は美容より地味な訴求と思われがちだが、
+            実は効果実感率が最高（確信+実感 49%）。疲労回復をメイン訴求にすることでLTV・継続率を上げられる可能性。
+          </div>
+        </div>
+        <div class="card">
+          <div class="sub-heading" style="margin-top:0">逆説④</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">SNS広告経由顧客のLTVが最低</div>
+          <div style="font-size:12px;color:var(--lypo-muted);line-height:1.7">
+            新規獲得コストを下げるSNS広告だが、LTVは最低（¥112K）。
+            インフルエンサー・医療機関経由と比較して質の低い顧客を集めている可能性。
+            広告費効率は「CPO」だけでなく「CPO÷LTV」で評価すべき。
+          </div>
+        </div>
+        <div class="card">
+          <div class="sub-heading" style="margin-top:0">逆説⑤</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">「まとめ買い」が定期便より多い</div>
+          <div style="font-size:12px;color:var(--lypo-muted);line-height:1.7">
+            定期便の認知・価値は伝わっているが、「2〜3ヶ月まとめ買い」が最多購入パターン。
+            まとめ買い顧客の行動を観察すると、実は「定期便スキップと同等」の自己管理をしている可能性。
+            この層への「スキップ自由定期便」への誘導が有効。
+          </div>
+        </div>
+        <div class="card">
+          <div class="sub-heading" style="margin-top:0">逆説⑥</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">400万円未満世帯でも高LTV顧客が存在</div>
+          <div style="font-size:12px;color:var(--lypo-muted);line-height:1.7">
+            世帯年収と購買行動は正比例すると仮定されがちだが、低年収層にも月予算を割くコアファンが一定数存在。
+            「価格が高い」不安を感じながらも買い続ける顧客のロイヤルティは高い。解約施策より「継続の誇り」設計が重要かもしれない。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- データ概要 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">SPEC</span>
+        <span class="section-title">調査概要・データ仕様</span>
+      </div>
+      <div class="card card-wide">
+        <div class="card-grid-2">
+          <div>
+            <div class="sub-heading" style="margin-top:0">調査仕様</div>
+            <table style="width:100%;border-collapse:collapse;font-size:13px">
+              <tr style="border-bottom:1px solid var(--lypo-border)">
+                <td style="padding:8px 0;color:var(--lypo-muted);width:40%">調査対象</td>
+                <td style="padding:8px 0">Lypo-C既存顧客（購入経験者）</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--lypo-border)">
+                <td style="padding:8px 0;color:var(--lypo-muted)">調査方法</td>
+                <td style="padding:8px 0">Webアンケート（定量）</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--lypo-border)">
+                <td style="padding:8px 0;color:var(--lypo-muted)">実施時期</td>
+                <td style="padding:8px 0">2026年4月</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--lypo-border)">
+                <td style="padding:8px 0;color:var(--lypo-muted)">有効回答数</td>
+                <td style="padding:8px 0"><strong>5,428名</strong></td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--lypo-border)">
+                <td style="padding:8px 0;color:var(--lypo-muted)">総設問数</td>
+                <td style="padding:8px 0">50カラム（32設問＋Shopify連携14項目）</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;color:var(--lypo-muted)">Shopify照合</td>
+                <td style="padding:8px 0">3,446名（63.5%）で購買データと照合済み</td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <div class="sub-heading" style="margin-top:0">回答者プロフィール概要</div>
+            <table style="width:100%;border-collapse:collapse;font-size:13px">
+              <tr style="border-bottom:1px solid var(--lypo-border)">
+                <td style="padding:8px 0;color:var(--lypo-muted);width:40%">性別</td>
+                <td style="padding:8px 0">女性 93.2% ／ 男性 5.5%</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--lypo-border)">
+                <td style="padding:8px 0;color:var(--lypo-muted)">年代</td>
+                <td style="padding:8px 0">30代 31%、40代 29%、50代 20%（合計80%）</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--lypo-border)">
+                <td style="padding:8px 0;color:var(--lypo-muted)">婚姻状況</td>
+                <td style="padding:8px 0">既婚 55.8% ／ 未婚 40.2%</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--lypo-border)">
+                <td style="padding:8px 0;color:var(--lypo-muted)">子どもの有無</td>
+                <td style="padding:8px 0">いない 55.1% ／ いる 44.9%</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--lypo-border)">
+                <td style="padding:8px 0;color:var(--lypo-muted)">月予算（美容健康）</td>
+                <td style="padding:8px 0">1〜3万円 48.1%（最多）</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;color:var(--lypo-muted)">主要購買チャネル</td>
+                <td style="padding:8px 0">Lypo-C公式サイト 87.3%（最終購入）</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:16px;background:rgba(255,107,53,0.05);border-radius:8px;border:1px solid rgba(255,107,53,0.15)">
+          <div style="font-size:12px;font-weight:700;color:var(--lypo-orange);margin-bottom:8px">⚠ データ利用上の注意事項</div>
+          <div style="font-size:12px;color:var(--lypo-muted);line-height:1.8">
+            ・Shopify連携データは、メールアドレスで照合できなかった顧客のレコードは空欄となっています（1,982名 36.5%）。<br>
+            ・累計売上はShopify（公式サイト）のデータのみで、楽天・Amazon・医療機関等での購入は含まれません。実際のLTVはより高い可能性があります。<br>
+            ・「お試しのみ購入」と選択したユーザーは全設問の分析において他ユーザーと異なる傾向を示す可能性があります。セグメント分析時はこの層を分離することを推奨します。<br>
+            ・CBD利用者は自社サイト規約上取り扱い不可のため、モール・クリニック経由の購入者と考えられます。CBD単独分析は別途実施を推奨します。
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /tab summary -->
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>

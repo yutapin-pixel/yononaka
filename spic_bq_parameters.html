@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>SPIC BigQuery パラメータ辞書</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #f8f7f5;
+    --surface: #ffffff;
+    --surface2: #f2f1ef;
+    --border: #e2e0dc;
+    --border2: #d0cdc8;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #d95f10;
+    --accent2: #e8763a;
+    --green: #16a34a;
+    --blue: #2563eb;
+    --yellow: #b45309;
+    --red: #dc2626;
+    --purple: #7c3aed;
+    --pink: #db2777;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ヘッダー */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    background: rgba(248,247,245,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .header h1 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--text);
+  }
+  .header h1 span { color: var(--accent); }
+  .header .sub {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .header .db-badge {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    background: #dcfce7;
+    border: 1px solid #86efac;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  /* レイアウト */
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 73px);
+  }
+
+  /* サイドナビ */
+  .sidenav {
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 73px;
+    height: calc(100vh - 73px);
+    overflow-y: auto;
+  }
+  .sidenav-section {
+    padding: 0 16px;
+    margin-bottom: 8px;
+  }
+  .sidenav-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 8px 4px;
+    display: block;
+  }
+  .sidenav a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .sidenav a:hover, .sidenav a.active {
+    color: var(--text);
+    background: var(--surface2);
+  }
+  .sidenav a .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .sidenav a .cnt {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    background: var(--surface2);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* メインコンテンツ */
+  .main {
+    padding: 32px 40px;
+    max-width: 960px;
+  }
+
+  /* セクション */
+  .section {
+    margin-bottom: 48px;
+    scroll-margin-top: 90px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .section-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+  .section-table-name {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    background: #dbeafe;
+    border: 1px solid #93c5fd;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  /* テーブル */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  thead th {
+    background: var(--surface2);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+
+  .id-cell {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .col-cell {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+  }
+  .type-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .type-INT64  { background: #ede9fe; color: var(--purple); border: 1px solid #c4b5fd; }
+  .type-STRING { background: #dbeafe; color: var(--blue);   border: 1px solid #93c5fd; }
+  .type-DATE   { background: #fef3c7; color: var(--yellow); border: 1px solid #fcd34d; }
+  .type-DATETIME { background: #fef3c7; color: var(--yellow); border: 1px solid #fcd34d; }
+  .type-FLOAT64{ background: #fce7f3; color: var(--pink);  border: 1px solid #f9a8d4; }
+  .type-TIMESTAMP{ background: #dcfce7; color: var(--green); border: 1px solid #86efac; }
+
+  .cnt-cell {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* タグバッジ */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .tag-tob    { background: #dbeafe; color: var(--blue);   border: 1px solid #93c5fd; }
+  .tag-toc    { background: #dcfce7; color: var(--green);  border: 1px solid #86efac; }
+  .tag-ex     { background: #fef3c7; color: var(--yellow); border: 1px solid #fcd34d; }
+  .tag-social { background: #fce7f3; color: var(--pink);   border: 1px solid #f9a8d4; }
+  .tag-other  { background: #f5f5f4; color: var(--muted);  border: 1px solid #d6d3d1; }
+  .tag-brand  { background: #fff0e8; color: var(--accent);  border: 1px solid #fdba74; }
+  .tag-warn   { background: #fee2e2; color: var(--red);     border: 1px solid #fca5a5; }
+  .tag-brand  { background: rgba(255,122,48,0.10); color: var(--accent); border: 1px solid rgba(255,122,48,0.2); }
+  .tag-warn   { background: rgba(248,113,113,0.10); color: var(--red);   border: 1px solid rgba(248,113,113,0.2); }
+
+  /* 注釈ボックス */
+  .note-box {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-top: 8px;
+  }
+  .note-box strong { color: var(--text); }
+  .note-box code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    background: #fff0e8;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* カラムリファレンスセクション */
+  .col-group { margin-bottom: 16px; }
+  .col-group-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    padding-left: 4px;
+    border-left: 2px solid var(--border2);
+  }
+
+  /* フィルタ用 */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .filter-bar input {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    outline: none;
+    width: 220px;
+  }
+  .filter-bar input:focus { border-color: var(--accent); }
+  .filter-bar input::placeholder { color: var(--muted); }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 32px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>SPIC <span>BigQuery</span> パラメータ辞書</h1>
+  <span class="sub">prod_dwh_oci — 分析条件パラメータ網羅リスト</span>
+  <span class="db-badge">spic-com-2025-apr-00</span>
+</div>
+
+<div class="layout">
+  <!-- サイドナビ -->
+  <nav class="sidenav">
+    <div class="sidenav-section">
+      <span class="sidenav-label">流通・チャネル</span>
+      <a href="#shops"><span class="dot" style="background:#60a5fa"></span>ショップ一覧<span class="cnt">46</span></a>
+      <a href="#shop-class"><span class="dot" style="background:#3dd68c"></span>ショップ分類</a>
+      <a href="#customer-type"><span class="dot" style="background:#a78bfa"></span>顧客種別<span class="cnt">3</span></a>
+    </div>
+    <div class="sidenav-section">
+      <span class="sidenav-label">商品・ブランド</span>
+      <a href="#goods-tag"><span class="dot" style="background:#FF7A30"></span>ブランドタグ<span class="cnt">22</span></a>
+      <a href="#goods-tax"><span class="dot" style="background:#fbbf24"></span>税率</a>
+    </div>
+    <div class="sidenav-section">
+      <span class="sidenav-label">受注・ステータス</span>
+      <a href="#order-status"><span class="dot" style="background:#f472b6"></span>受注ステータス<span class="cnt">6</span></a>
+      <a href="#cancel-type"><span class="dot" style="background:#f87171"></span>キャンセル種別<span class="cnt">12</span></a>
+      <a href="#payment"><span class="dot" style="background:#34d399"></span>支払方法<span class="cnt">34</span></a>
+      <a href="#delivery"><span class="dot" style="background:#93c5fd"></span>配送方法<span class="cnt">11</span></a>
+    </div>
+    <div class="sidenav-section">
+      <span class="sidenav-label">テーブル構造</span>
+      <a href="#columns-ro"><span class="dot" style="background:#60a5fa"></span>receive_order</a>
+      <a href="#columns-ror"><span class="dot" style="background:#a78bfa"></span>receive_order_row</a>
+      <a href="#columns-gm"><span class="dot" style="background:#FF7A30"></span>goods_master</a>
+      <a href="#columns-shop"><span class="dot" style="background:#3dd68c"></span>ne_master_shop</a>
+    </div>
+  </nav>
+
+  <!-- メイン -->
+  <main class="main">
+
+    <!-- ===== ショップ一覧 ===== -->
+    <section class="section" id="shops">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(96,165,250,0.1)">🏪</div>
+        <div>
+          <div class="section-title">ショップ一覧（ne_master_shop）</div>
+          <div class="section-desc">receive_order_shop_id でフィルタに使用。全46ショップ。</div>
+        </div>
+        <span class="section-table-name">ne_master_shop.shop_id</span>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>shop_id</th>
+            <th>shop_name</th>
+            <th>略称</th>
+            <th>分類</th>
+            <th>備考</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="id-cell">1</td><td>リポスフェリックショップYahoo</td><td>リポスYa</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">3</td><td>SPIC Yahoo!店</td><td>ヤフー店</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">4</td><td>SPIC EC店</td><td>EC店</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">5</td><td>リポスフェリックショップAmazon</td><td>Ama</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">6</td><td>リポスフェリック公式ショップ</td><td>リポス公式</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">7</td><td>点滴療法研究会</td><td>点滴療法</td><td><span class="tag tag-tob">toB</span></td><td>医療機関向け</td></tr>
+          <tr><td class="id-cell">8</td><td>Business</td><td>Biz</td><td><span class="tag tag-tob">toB</span></td><td>法人卸</td></tr>
+          <tr><td class="id-cell">9</td><td>Consumer</td><td>Con</td><td><span class="tag tag-other">社内</span></td><td>社内配布・サンプリング</td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">10</td><td>受注以外</td><td>受注以外</td><td><span class="tag tag-warn">除外</span></td><td>⚠️ 常に除外</td></tr>
+          <tr><td class="id-cell">11</td><td>LINE</td><td>LINE</td><td><span class="tag tag-toc">toC</span></td><td>LINE経由受注</td></tr>
+          <tr><td class="id-cell">12</td><td>エクスチェンジ</td><td>エクスチェ</td><td><span class="tag tag-tob">toB</span></td><td>交換・返品対応</td></tr>
+          <tr><td class="id-cell">13</td><td>Dressing公式ショップ</td><td>Dre公式</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">14</td><td>LPB公式ショップ</td><td>LPB公式</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">15</td><td>リポスフェリックショップ楽天市場</td><td>楽天</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">17</td><td>Lypo-C Official</td><td>LypoC</td><td><span class="tag tag-toc">toC</span></td><td>Shopify主力EC</td></tr>
+          <tr><td class="id-cell">18</td><td>SPICのコダワリ</td><td>コダワリ</td><td><span class="tag tag-tob">toB</span></td><td>最大toBチャネル</td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">19</td><td>Test Lypo-C公式</td><td>TestL</td><td><span class="tag tag-warn">除外</span></td><td>⚠️ 常に除外</td></tr>
+          <tr><td class="id-cell">20</td><td>ビジネス部</td><td>ビジネス</td><td><span class="tag tag-tob">toB</span></td><td></td></tr>
+          <tr><td class="id-cell">21</td><td>コンシューマー部</td><td>コンシュ</td><td><span class="tag tag-other">社内</span></td><td></td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">22</td><td>ブランドサービス部</td><td>ブラサー</td><td><span class="tag tag-warn">除外</span></td><td>⚠️ 常に除外</td></tr>
+          <tr><td class="id-cell">23</td><td>国際事業部</td><td>国際</td><td><span class="tag tag-tob">toB</span></td><td>海外向け</td></tr>
+          <tr><td class="id-cell">24</td><td>サクセスチーム部</td><td>サクセス</td><td><span class="tag tag-other">社内</span></td><td></td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">25</td><td>社販</td><td>社販</td><td><span class="tag tag-warn">除外</span></td><td>⚠️ 常に除外</td></tr>
+          <tr><td class="id-cell">26</td><td>Gym</td><td>Gym</td><td><span class="tag tag-tob">toB</span></td><td>ジム・スポーツ施設</td></tr>
+          <tr><td class="id-cell">27</td><td>Salon</td><td>Salon</td><td><span class="tag tag-tob">toB</span></td><td>サロン・エステ</td></tr>
+          <tr><td class="id-cell">28</td><td>EPW</td><td>EPW</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">29</td><td>Test Shopify</td><td>TeShp</td><td><span class="tag tag-warn">除外</span></td><td>⚠️ 常に除外</td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">30</td><td>社販（倉庫）</td><td>社販（倉庫）</td><td><span class="tag tag-warn">除外</span></td><td>⚠️ 常に除外</td></tr>
+          <tr><td class="id-cell">31</td><td>Lypo-Cショップ楽天市場</td><td>LPC楽天</td><td><span class="tag tag-toc">toC</span></td><td>主力モール</td></tr>
+          <tr><td class="id-cell">32</td><td>Lypo-CショップAmazon</td><td>LPCAm</td><td><span class="tag tag-toc">toC</span></td><td>主力モール</td></tr>
+          <tr><td class="id-cell">33</td><td>Lypo-CショップYahoo</td><td>LPCYa</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">34</td><td>リポスフェリックショップQoo10</td><td>Qoo10</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">35</td><td>Lypo-CショップQoo10</td><td>LPQ10</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">36</td><td>リポスフェリックauPAYマーケット</td><td>auPAY</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">37</td><td>Test Shopify</td><td>TeShp</td><td><span class="tag tag-warn">除外</span></td><td>⚠️ 常に除外</td></tr>
+          <tr><td class="id-cell">38</td><td>グローバル事業本部</td><td>グローバル</td><td><span class="tag tag-tob">toB</span></td><td>海外向け</td></tr>
+          <tr><td class="id-cell">39</td><td>Exclusive Shopify</td><td>New社販</td><td><span class="tag tag-toc">toC</span></td><td>招待制Shopify</td></tr>
+          <tr><td class="id-cell">40</td><td>LypoSpheric Official</td><td>リポスSH</td><td><span class="tag tag-toc">toC</span></td><td>LypoSpheric Shopify</td></tr>
+          <tr><td class="id-cell">41</td><td>Lypo-CショップauPAYマーケット</td><td>LPCAU</td><td><span class="tag tag-toc">toC</span></td><td></td></tr>
+          <tr><td class="id-cell">42</td><td>ビジネス部 担当注文</td><td>NEbbo</td><td><span class="tag tag-tob">toB</span></td><td></td></tr>
+          <tr><td class="id-cell">43</td><td>ビジネス発注サイト</td><td>btob</td><td><span class="tag tag-tob">toB</span></td><td>法人専用発注サイト</td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">44</td><td>グローバル事業本部（国内）</td><td>GLB国内</td><td><span class="tag tag-other">社内</span></td><td></td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">45</td><td>ブランド事業本部</td><td>ブランド部</td><td><span class="tag tag-warn">除外</span></td><td>⚠️ 常に除外</td></tr>
+          <tr><td class="id-cell">46</td><td>越境EC</td><td>越境EC</td><td><span class="tag tag-toc">toC</span></td><td>海外向けEC</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===== ショップ分類 ===== -->
+    <section class="section" id="shop-class">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(61,214,140,0.1)">🗂️</div>
+        <div>
+          <div class="section-title">ショップ分類（全クエリ共通）</div>
+          <div class="section-desc">集計目的に応じて必ずこの分類でフィルタする。</div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>分類</th><th>shop_id リスト</th><th>SQL条件</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-warn">除外（テスト/社販）</span></td>
+            <td class="id-cell">10, 19, 22, 25, 29, 30, 37, 45</td>
+            <td><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red)">NOT IN (10,19,22,25,29,30,37,45)</code></td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-tob">toB（法人・卸）</span></td>
+            <td class="id-cell">7, 8, 12, 18, 20, 23, 26, 27, 42, 43</td>
+            <td><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue)">IN (7,8,12,18,20,23,26,27,42,43)</code></td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-toc">toC（一般消費者）</span></td>
+            <td class="id-cell">上記2グループ以外すべて</td>
+            <td><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green)">NOT IN (toB ∪ 除外)</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note-box">
+        <strong>主要ショップメモ：</strong>
+        <code>17</code>=Lypo-C Official（Shopify主力）、
+        <code>18</code>=SPICのコダワリ（最大toB）、
+        <code>31</code>=楽天市場、
+        <code>32</code>=Amazon、
+        <code>39</code>=Exclusive Shopify（招待制）、
+        <code>9</code>=Consumer（社内配布/サンプリング）
+      </div>
+    </section>
+
+    <!-- ===== ブランドタグ ===== -->
+    <section class="section" id="goods-tag">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(255,122,48,0.1)">🏷️</div>
+        <div>
+          <div class="section-title">ブランドタグ（goods_master.goods_tag）</div>
+          <div class="section-desc">必ず TRIM() を適用。末尾スペース揺れあり。</div>
+        </div>
+        <span class="section-table-name">goods_master.goods_tag</span>
+      </div>
+      <table>
+        <thead><tr><th>goods_tag 値（TRIM後）</th><th>ブランド名</th><th>税率</th><th>BM</th><th>SKU数</th></tr></thead>
+        <tbody>
+          <tr><td class="id-cell">[Lypo-C]</td><td>Lypo-C VC</td><td><span class="tag tag-toc">8%</span></td><td>坪井</td><td class="cnt-cell">55</td></tr>
+          <tr><td class="id-cell">[Lypo-C for SPORTS]</td><td>Lypo-C for SPORTS (VC)</td><td><span class="tag tag-toc">8%</span></td><td>坪井</td><td class="cnt-cell">2</td></tr>
+          <tr><td class="id-cell">[Lypo-C C+D]</td><td>Lypo-C C+D</td><td><span class="tag tag-toc">8%</span></td><td>坪井</td><td class="cnt-cell">29</td></tr>
+          <tr><td class="id-cell">[Lypo-C for SPORTS C+D]</td><td>Lypo-C for SPORTS (C+D)</td><td><span class="tag tag-toc">8%</span></td><td>坪井</td><td class="cnt-cell">2</td></tr>
+          <tr><td class="id-cell">[Lypo-C C+D+K]</td><td>Lypo-C C+D+K</td><td><span class="tag tag-toc">8%</span></td><td>坪井</td><td class="cnt-cell">9</td></tr>
+          <tr><td class="id-cell">[Lypo-C C＋Cera]</td><td>C+Cera <span style="color:var(--yellow);font-size:10px">＋は全角U+FF0B</span></td><td><span class="tag tag-toc">8%</span></td><td>仲宗根</td><td class="cnt-cell">11</td></tr>
+          <tr><td class="id-cell">[Lypo-C CBD]</td><td>Lypo-C CBD</td><td><span class="tag tag-toc">8%</span></td><td>冨田</td><td class="cnt-cell">10</td></tr>
+          <tr><td class="id-cell">[Lypo-C SKINBEAUTY]</td><td>SKINBEAUTY</td><td><span class="tag tag-warn">10%</span></td><td>小林</td><td class="cnt-cell">21</td></tr>
+          <tr><td class="id-cell">[MINERALion]</td><td>MINERALion</td><td><span class="tag tag-toc">8%</span></td><td>宮崎</td><td class="cnt-cell">10</td></tr>
+          <tr><td class="id-cell">[Lypospheric]</td><td>LypoSpheric</td><td><span class="tag tag-toc">8%</span></td><td>柳澤</td><td class="cnt-cell">10</td></tr>
+          <tr><td class="id-cell">[Gelsome]</td><td>Gelsome</td><td><span class="tag tag-toc">8%</span></td><td>柳澤</td><td class="cnt-cell">3</td></tr>
+          <tr><td class="id-cell">[Lypo-C C+B]</td><td>C+B</td><td><span class="tag tag-toc">8%</span></td><td>森田</td><td class="cnt-cell">—</td></tr>
+          <tr><td class="id-cell">[化粧品]</td><td>LPB / 化粧品</td><td><span class="tag tag-warn">10%</span></td><td>—</td><td class="cnt-cell">53</td></tr>
+          <tr><td class="id-cell">[サプリメント]</td><td>サプリ（ブランド外）</td><td><span class="tag tag-toc">8%</span></td><td>—</td><td class="cnt-cell">12</td></tr>
+          <tr><td class="id-cell">[Biosyyd.]</td><td>Biosyyd.</td><td>—</td><td>—</td><td class="cnt-cell">7</td></tr>
+          <tr><td class="id-cell">[その他商品]</td><td>同梱物・販促品等</td><td>—</td><td>—</td><td class="cnt-cell">457</td></tr>
+          <tr><td class="id-cell">[その他業務]</td><td>業務系（施術・破損等）</td><td>—</td><td>—</td><td class="cnt-cell">45</td></tr>
+          <tr><td class="id-cell">[講習・コンサル]</td><td>研修・講習</td><td>—</td><td>—</td><td class="cnt-cell">10</td></tr>
+          <tr><td class="id-cell">[ロイヤリティ]</td><td>ロイヤリティ</td><td>—</td><td>—</td><td class="cnt-cell">2</td></tr>
+        </tbody>
+      </table>
+      <div class="note-box">
+        <strong>税抜計算の注意：</strong>÷1.1 一律は禁止。<code>CASE WHEN tax_rate > 0 THEN price / (1 + tax_rate/100.0) ELSE price END</code> で行レベル計算すること。96.5%が8%、3.4%が10%（SKINBEAUTY/LPB）。
+      </div>
+    </section>
+
+    <!-- ===== 顧客種別 ===== -->
+    <section class="section" id="customer-type">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(167,139,250,0.1)">👤</div>
+        <div>
+          <div class="section-title">顧客種別（receive_order_customer_type）</div>
+          <div class="section-desc">receive_order_customer_type_id / name</div>
+        </div>
+        <span class="section-table-name">receive_order</span>
+      </div>
+      <table>
+        <thead><tr><th>ID</th><th>名称</th><th>件数</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td class="id-cell">0</td><td>一般顧客</td><td class="cnt-cell">2,278,138</td><td>通常toC/toB</td></tr>
+          <tr><td class="id-cell">9</td><td>卸</td><td class="cnt-cell">8,282</td><td>卸売顧客</td></tr>
+          <tr><td class="id-cell">99</td><td>ブラック</td><td class="cnt-cell">2,054</td><td>要注意顧客</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===== 受注ステータス ===== -->
+    <section class="section" id="order-status">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(244,114,182,0.1)">📋</div>
+        <div>
+          <div class="section-title">受注ステータス（receive_order_order_status）</div>
+          <div class="section-desc">受注の処理状態。通常分析では全ステータスを対象にする。</div>
+        </div>
+        <span class="section-table-name">receive_order</span>
+      </div>
+      <table>
+        <thead><tr><th>ID</th><th>名称</th><th>件数</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td class="id-cell">50</td><td>出荷確定済（完了）</td><td class="cnt-cell">2,295,811</td><td>✅ 正常完了</td></tr>
+          <tr><td class="id-cell">40</td><td>納品書印刷済</td><td class="cnt-cell">3,127</td><td>出荷待ち</td></tr>
+          <tr><td class="id-cell">20</td><td>納品書印刷待ち</td><td class="cnt-cell">3,081</td><td>処理中</td></tr>
+          <tr><td class="id-cell">2</td><td>起票済(CSV/手入力)</td><td class="cnt-cell">24,426</td><td>処理中</td></tr>
+          <tr><td class="id-cell">1</td><td>受注メール取込済</td><td class="cnt-cell">3,706</td><td>処理中</td></tr>
+          <tr><td class="id-cell">0</td><td>取込情報不足</td><td class="cnt-cell">167</td><td>エラー</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===== キャンセル種別 ===== -->
+    <section class="section" id="cancel-type">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(248,113,113,0.1)">❌</div>
+        <div>
+          <div class="section-title">キャンセル種別（receive_order_cancel_type_id）</div>
+          <div class="section-desc">売上集計では必ず <code style="font-family:'JetBrains Mono',monospace;color:var(--green);font-size:11px">= 0</code> でフィルタする。</div>
+        </div>
+        <span class="section-table-name">receive_order</span>
+      </div>
+      <table>
+        <thead><tr><th>ID</th><th>意味</th><th>件数</th><th>集計対象</th></tr></thead>
+        <tbody>
+          <tr><td class="id-cell" style="color:var(--green)">0</td><td>正常（キャンセルなし）</td><td class="cnt-cell">2,288,474</td><td><span class="tag tag-toc">✅ 集計対象</span></td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">1</td><td>キャンセル</td><td class="cnt-cell">5,795</td><td><span class="tag tag-warn">除外</span></td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">2</td><td>返品</td><td class="cnt-cell">5</td><td><span class="tag tag-warn">除外</span></td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">5</td><td>（定義不明）</td><td class="cnt-cell">24,507</td><td><span class="tag tag-warn">除外</span></td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">14</td><td>（定義不明）</td><td class="cnt-cell">3,782</td><td><span class="tag tag-warn">除外</span></td></tr>
+          <tr><td class="id-cell" style="color:var(--red)">20</td><td>（定義不明）</td><td class="cnt-cell">7,705</td><td><span class="tag tag-warn">除外</span></td></tr>
+          <tr><td class="id-cell" style="color:var(--muted)">3,4,6,8,15,19</td><td>（定義不明・少数）</td><td class="cnt-cell">37</td><td><span class="tag tag-warn">除外</span></td></tr>
+        </tbody>
+      </table>
+      <div class="note-box">
+        <strong>明細行レベルのキャンセルも除外：</strong> <code>receive_order_row_cancel_flag = 0</code> も必ず併用すること。ヘッダーと明細の両方でフィルタが必要。
+      </div>
+    </section>
+
+    <!-- ===== 支払方法 ===== -->
+    <section class="section" id="payment">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(52,211,153,0.1)">💳</div>
+        <div>
+          <div class="section-title">支払方法（receive_order_payment_method）</div>
+          <div class="section-desc">チャネル特定・Shopify判定に有効。</div>
+        </div>
+        <span class="section-table-name">receive_order</span>
+      </div>
+      <table>
+        <thead><tr><th>ID</th><th>名称</th><th>件数</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td class="id-cell">0</td><td>クレジットカード</td><td class="cnt-cell">1,089,298</td><td></td></tr>
+          <tr><td class="id-cell">21</td><td>shopifypayments</td><td class="cnt-cell">698,162</td><td><span class="tag tag-toc">Shopify経由</span></td></tr>
+          <tr><td class="id-cell">1</td><td>代金引換</td><td class="cnt-cell">89,262</td><td></td></tr>
+          <tr><td class="id-cell">48</td><td>Amazonペイメント</td><td class="cnt-cell">52,951</td><td><span class="tag tag-other">Amazon Pay</span></td></tr>
+          <tr><td class="id-cell">59</td><td>Qoo10</td><td class="cnt-cell">50,255</td><td><span class="tag tag-other">Qoo10</span></td></tr>
+          <tr><td class="id-cell">85</td><td>ポイント全額支払い</td><td class="cnt-cell">43,077</td><td></td></tr>
+          <tr><td class="id-cell">16</td><td>amazonpayments</td><td class="cnt-cell">42,345</td><td><span class="tag tag-other">Amazon Pay（旧）</span></td></tr>
+          <tr><td class="id-cell">95</td><td>掛売</td><td class="cnt-cell">39,852</td><td><span class="tag tag-tob">toB掛売</span></td></tr>
+          <tr><td class="id-cell">72</td><td>PayPay残高等</td><td class="cnt-cell">37,145</td><td>Yahoo系</td></tr>
+          <tr><td class="id-cell">99</td><td>支払済</td><td class="cnt-cell">21,032</td><td></td></tr>
+          <tr><td class="id-cell">15</td><td>銀行振込前払い</td><td class="cnt-cell">17,753</td><td></td></tr>
+          <tr><td class="id-cell">32</td><td>コンビニ決済</td><td class="cnt-cell">16,439</td><td></td></tr>
+          <tr><td class="id-cell">67</td><td>請求書払い</td><td class="cnt-cell">15,048</td><td><span class="tag tag-tob">toB請求書</span></td></tr>
+          <tr><td class="id-cell">51</td><td>コンビニ決済GMOイプシロン</td><td class="cnt-cell">14,473</td><td></td></tr>
+          <tr><td class="id-cell">76</td><td>PayPayクレジット</td><td class="cnt-cell">12,174</td><td>Yahoo系</td></tr>
+          <tr><td class="id-cell">96</td><td>エクスチェンジ決済</td><td class="cnt-cell">7,278</td><td><span class="tag tag-other">社内交換</span></td></tr>
+          <tr><td class="id-cell">74</td><td>Paidy</td><td class="cnt-cell">7,058</td><td>後払い</td></tr>
+          <tr><td class="id-cell">61</td><td>スコア払い</td><td class="cnt-cell">7,874</td><td></td></tr>
+          <tr><td class="id-cell">71</td><td>楽天後払い</td><td class="cnt-cell">5,734</td><td>楽天系</td></tr>
+          <tr><td class="id-cell">70</td><td>楽天ペイ</td><td class="cnt-cell">3,651</td><td>楽天系</td></tr>
+          <tr><td class="id-cell">その他</td><td>36,35,46,20,90,60,47,80,65,68,73,33,31</td><td class="cnt-cell">少数</td><td></td></tr>
+        </tbody>
+      </table>
+      <div class="note-box">
+        <strong>Shopify判定ヒント：</strong> <code>payment_method_id = 21</code>（shopifypayments）または <code>shop_id IN (17, 39, 40)</code> の組み合わせでShopify経由受注を特定できる。
+      </div>
+    </section>
+
+    <!-- ===== 配送方法 ===== -->
+    <section class="section" id="delivery">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(147,197,253,0.1)">📦</div>
+        <div>
+          <div class="section-title">配送方法（receive_order_delivery）</div>
+          <div class="section-desc">海外発送・ネコポス等の絞り込みに使用。</div>
+        </div>
+        <span class="section-table-name">receive_order</span>
+      </div>
+      <table>
+        <thead><tr><th>ID</th><th>名称</th><th>件数</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td class="id-cell">20</td><td>ヤマト(発払い)B2v6</td><td class="cnt-cell">1,941,460</td><td>主力</td></tr>
+          <tr><td class="id-cell">28</td><td>ヤマト(ネコポス)</td><td class="cnt-cell">245,601</td><td>薄型・小型</td></tr>
+          <tr><td class="id-cell">21</td><td>ヤマト(コレクト)B2v6</td><td class="cnt-cell">89,208</td><td>代引き</td></tr>
+          <tr><td class="id-cell">22</td><td>ヤマト(DM便)B2v6</td><td class="cnt-cell">11,905</td><td>DM便</td></tr>
+          <tr><td class="id-cell">99</td><td>海外発送</td><td class="cnt-cell">145</td><td>海外向け</td></tr>
+          <tr><td class="id-cell">80</td><td>EMS</td><td class="cnt-cell">16</td><td>国際郵便</td></tr>
+          <tr><td class="id-cell">91</td><td>航空便</td><td class="cnt-cell">1</td><td>海外向け</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== カラムリファレンス: receive_order ===== -->
+    <section class="section" id="columns-ro">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(96,165,250,0.1)">📄</div>
+        <div>
+          <div class="section-title">テーブル構造: receive_order</div>
+          <div class="section-desc">受注ヘッダー。1受注 = 1行。</div>
+        </div>
+        <span class="section-table-name">receive_order</span>
+      </div>
+      <table>
+        <thead><tr><th>カラム名</th><th>型</th><th>用途・備考</th></tr></thead>
+        <tbody>
+          <tr><td class="col-cell">receive_order_shop_id</td><td><span class="type-badge type-INT64">INT64</span></td><td>ショップID ← <strong>最重要フィルタキー</strong></td></tr>
+          <tr><td class="col-cell">receive_order_id</td><td><span class="type-badge type-STRING">STRING</span></td><td>受注ID（主キー）</td></tr>
+          <tr><td class="col-cell">receive_order_date</td><td><span class="type-badge type-DATETIME">DATETIME</span></td><td>受注日時 ← 受注ベース集計に使用</td></tr>
+          <tr><td class="col-cell">receive_order_send_date</td><td><span class="type-badge type-DATETIME">DATETIME</span></td><td>出荷日時 ← <strong>出荷ベース・着地予測に使用</strong></td></tr>
+          <tr><td class="col-cell">receive_order_send_plan_date</td><td><span class="type-badge type-DATE">DATE</span></td><td>出荷予定日</td></tr>
+          <tr><td class="col-cell">receive_order_cancel_type_id</td><td><span class="type-badge type-INT64">INT64</span></td><td><strong>キャンセル種別 = 0 のみ集計対象</strong></td></tr>
+          <tr><td class="col-cell">receive_order_order_status_id</td><td><span class="type-badge type-INT64">INT64</span></td><td>受注ステータス</td></tr>
+          <tr><td class="col-cell">receive_order_payment_method_id</td><td><span class="type-badge type-INT64">INT64</span></td><td>支払方法ID</td></tr>
+          <tr><td class="col-cell">receive_order_payment_method_name</td><td><span class="type-badge type-STRING">STRING</span></td><td>支払方法名</td></tr>
+          <tr><td class="col-cell">receive_order_delivery_id</td><td><span class="type-badge type-INT64">INT64</span></td><td>配送方法ID</td></tr>
+          <tr><td class="col-cell">receive_order_delivery_name</td><td><span class="type-badge type-STRING">STRING</span></td><td>配送方法名</td></tr>
+          <tr><td class="col-cell">receive_order_customer_type_id</td><td><span class="type-badge type-INT64">INT64</span></td><td>顧客種別（0:一般 9:卸 99:ブラック）</td></tr>
+          <tr><td class="col-cell">receive_order_customer_id</td><td><span class="type-badge type-STRING">STRING</span></td><td>顧客ID（toCではほぼNULL）</td></tr>
+          <tr><td class="col-cell">receive_order_purchaser_tel</td><td><span class="type-badge type-STRING">STRING</span></td><td><strong>注文者TELハッシュ ← 本人ID推奨</strong></td></tr>
+          <tr><td class="col-cell">receive_order_consignee_tel</td><td><span class="type-badge type-STRING">STRING</span></td><td>配送先TELハッシュ（ギフト時は別人）</td></tr>
+          <tr><td class="col-cell">receive_order_consignee_address1</td><td><span class="type-badge type-STRING">STRING</span></td><td>配送先住所（TELがNULL時の代替）</td></tr>
+          <tr><td class="col-cell">receive_order_gift_flag</td><td><span class="type-badge type-INT64">INT64</span></td><td>ギフトフラグ（1=ギフト）</td></tr>
+          <tr><td class="col-cell">receive_order_total_amount</td><td><span class="type-badge type-INT64">INT64</span></td><td>税込合計金額（使用禁止：行レベル計算を使う）</td></tr>
+          <tr><td class="col-cell">receive_order_tax_amount</td><td><span class="type-badge type-INT64">INT64</span></td><td>⚠️ ほぼ全件0・使用禁止</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===== カラムリファレンス: receive_order_row ===== -->
+    <section class="section" id="columns-ror">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(167,139,250,0.1)">📑</div>
+        <div>
+          <div class="section-title">テーブル構造: receive_order_row</div>
+          <div class="section-desc">受注明細。売上金額計算は必ずこのテーブルを使う。</div>
+        </div>
+        <span class="section-table-name">receive_order_row</span>
+      </div>
+      <table>
+        <thead><tr><th>カラム名</th><th>型</th><th>用途・備考</th></tr></thead>
+        <tbody>
+          <tr><td class="col-cell">receive_order_row_receive_order_id</td><td><span class="type-badge type-STRING">STRING</span></td><td>受注IDへの外部キー（JOINキー）</td></tr>
+          <tr><td class="col-cell">receive_order_row_goods_id</td><td><span class="type-badge type-FLOAT64">FLOAT64</span></td><td>商品ID ← goods_masterとのJOINは CAST(…AS STRING)</td></tr>
+          <tr><td class="col-cell">receive_order_row_goods_name</td><td><span class="type-badge type-STRING">STRING</span></td><td>商品名（ブランド判別には使わない！goods_tagを使う）</td></tr>
+          <tr><td class="col-cell">receive_order_row_quantity</td><td><span class="type-badge type-INT64">INT64</span></td><td><strong>数量 ← 出荷本数集計はここ</strong></td></tr>
+          <tr><td class="col-cell">receive_order_row_unit_price</td><td><span class="type-badge type-INT64">INT64</span></td><td>単価（税込。税抜として使用禁止）</td></tr>
+          <tr><td class="col-cell">receive_order_row_sub_total_price</td><td><span class="type-badge type-INT64">INT64</span></td><td><strong>小計（税込）← 税抜計算のベース</strong></td></tr>
+          <tr><td class="col-cell">receive_order_row_tax_rate</td><td><span class="type-badge type-INT64">INT64</span></td><td><strong>税率（8 or 10 or 0）← 税抜計算の除数</strong></td></tr>
+          <tr><td class="col-cell">receive_order_row_cancel_flag</td><td><span class="type-badge type-INT64">INT64</span></td><td><strong>明細キャンセルフラグ = 0 のみ集計対象</strong></td></tr>
+          <tr><td class="col-cell">receive_order_row_returned_good_quantity</td><td><span class="type-badge type-INT64">INT64</span></td><td>良品返品数</td></tr>
+          <tr><td class="col-cell">receive_order_row_returned_bad_quantity</td><td><span class="type-badge type-INT64">INT64</span></td><td>不良品返品数</td></tr>
+        </tbody>
+      </table>
+      <div class="note-box">
+        <strong>JOINパターン（必須）：</strong><br>
+        <code>receive_order ro</code> → <code>receive_order_row ror ON ro.receive_order_id = ror.receive_order_row_receive_order_id</code><br>
+        → <code>goods_master gm ON CAST(ror.receive_order_row_goods_id AS STRING) = gm.goods_id</code>
+      </div>
+    </section>
+
+    <!-- ===== カラムリファレンス: goods_master ===== -->
+    <section class="section" id="columns-gm">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(255,122,48,0.1)">🛍️</div>
+        <div>
+          <div class="section-title">テーブル構造: goods_master（主要カラム）</div>
+          <div class="section-desc">ブランド判別・商品属性取得に使用。</div>
+        </div>
+        <span class="section-table-name">goods_master</span>
+      </div>
+      <table>
+        <thead><tr><th>カラム名</th><th>型</th><th>用途・備考</th></tr></thead>
+        <tbody>
+          <tr><td class="col-cell">goods_id</td><td><span class="type-badge type-STRING">STRING</span></td><td>商品ID（主キー・STRING型）</td></tr>
+          <tr><td class="col-cell">goods_name</td><td><span class="type-badge type-STRING">STRING</span></td><td>商品名</td></tr>
+          <tr><td class="col-cell">goods_tag</td><td><span class="type-badge type-STRING">STRING</span></td><td><strong>ブランド判別キー ← 必ずTRIM()適用</strong></td></tr>
+          <tr><td class="col-cell">goods_selling_price</td><td><span class="type-badge type-INT64">INT64</span></td><td>販売価格（税込）</td></tr>
+          <tr><td class="col-cell">goods_cost_price</td><td><span class="type-badge type-INT64">INT64</span></td><td>原価（現状全件0・未入力）</td></tr>
+          <tr><td class="col-cell">goods_tax_rate</td><td><span class="type-badge type-FLOAT64">FLOAT64</span></td><td>税率（8.0 or 10.0）</td></tr>
+          <tr><td class="col-cell">goods_status_name</td><td><span class="type-badge type-STRING">STRING</span></td><td>商品ステータス（現状ほぼ全件「新商品」）</td></tr>
+          <tr><td class="col-cell">goods_visible_flag</td><td><span class="type-badge type-INT64">INT64</span></td><td>表示フラグ（1=表示）</td></tr>
+          <tr><td class="col-cell">goods_first_time_sold_date</td><td><span class="type-badge type-DATE">DATE</span></td><td>初回販売日</td></tr>
+          <tr><td class="col-cell">goods_last_time_sold_date</td><td><span class="type-badge type-DATE">DATE</span></td><td>最終販売日</td></tr>
+          <tr><td class="col-cell">goods_jan_code</td><td><span class="type-badge type-FLOAT64">FLOAT64</span></td><td>JANコード（多くがNULL）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===== カラムリファレンス: ne_master_shop ===== -->
+    <section class="section" id="columns-shop">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(61,214,140,0.1)">🏬</div>
+        <div>
+          <div class="section-title">テーブル構造: ne_master_shop</div>
+          <div class="section-desc">ショップマスタ。shop_nameの取得に使用。</div>
+        </div>
+        <span class="section-table-name">ne_master_shop</span>
+      </div>
+      <table>
+        <thead><tr><th>カラム名</th><th>型</th><th>用途・備考</th></tr></thead>
+        <tbody>
+          <tr><td class="col-cell">shop_id</td><td><span class="type-badge type-INT64">INT64</span></td><td>ショップID（主キー）</td></tr>
+          <tr><td class="col-cell">shop_name</td><td><span class="type-badge type-STRING">STRING</span></td><td>ショップ名</td></tr>
+          <tr><td class="col-cell">shop_abbreviated_name</td><td><span class="type-badge type-STRING">STRING</span></td><td>略称</td></tr>
+          <tr><td class="col-cell">shop_deleted_flag</td><td><span class="type-badge type-INT64">INT64</span></td><td>削除フラグ（0=有効）</td></tr>
+          <tr><td class="col-cell">shop_type_id</td><td><span class="type-badge type-STRING">STRING</span></td><td>ショップ種別</td></tr>
+          <tr><td class="col-cell">shop_tax_name</td><td><span class="type-badge type-STRING">STRING</span></td><td>税設定名</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="note-box" style="margin-bottom:40px">
+      <strong>更新情報：</strong> 2026年4月28日時点の prod_dwh_oci スキーマに基づく。スキーマ変更時は再確認が必要。<br>
+      <strong>このファイルの使い方：</strong> Claudeに分析を依頼する際、「shop_id=18のtoB」「goods_tag=[Lypo-C SKINBEAUTY]のSKINBEAUTY」のように、このリストのID・値を直接指定することで精度の高いクエリが生成されます。
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // スクロールでサイドナビのアクティブ状態を更新
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.sidenav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-80px 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

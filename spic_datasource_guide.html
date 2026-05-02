@@ -91,6 +91,19 @@ body {
   border-radius: 4px;
   white-space: nowrap;
 }
+.header .related-link {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.header .related-link:hover { background: #fde8d8; border-color: var(--accent); }
 
 /* ===== サイドナビ ===== */
 .sidenav {
@@ -407,6 +420,7 @@ tbody tr:hover { background: #faf9f8; }
 <header class="header">
   <h1>SPIC <em>データソース辞書</em></h1>
   <span class="tagline">BM・分析担当向け｜利用可能なデータと活用ユースケース</span>
+  <a class="related-link" href="spic_bq_parameters.html">📊 BQパラメータ辞書</a>
   <span class="updated">2026年4月28日</span>
 </header>
 

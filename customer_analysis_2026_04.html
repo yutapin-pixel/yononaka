@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Lypo-C 月次顧客分析レポート | 2026年4月度</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--cdk:#5BC882;--cbd:#1B7A4A;
+  --ccera:#FF6B9D;--sb:#C4934A;--mi:#1E3A8A;--lypo:#FFB070;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0;max-width:1200px;margin:0 auto}
+.page-wrap{padding:24px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted)}
+.month-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 14px;border-radius:4px;font-size:13px;font-weight:700;margin-bottom:20px;letter-spacing:0.3px}
+.stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+thead th.c{text-align:center}
+tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid #f5f5f4;font-size:13px}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td.c{text-align:center}
+tbody tr:last-child td{border-bottom:none}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.tot td{border-top:2px solid var(--border)}
+tr.ogs{background:#fff8f0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600}
+.badge.a{background:#dcfce7;color:#15803d}.badge.b{background:#fef2f2;color:#dc2626}
+.badge.n{background:#eff6ff;color:#2563eb}.badge.w{background:#fff8f0;color:#92400e}
+/* 月次考察ボックス */
+.monthly-insight{background:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0284c7;border-radius:8px;padding:14px 18px;margin-top:12px;margin-bottom:20px;font-size:13px;line-height:1.9}
+.monthly-insight .mi-title{font-weight:700;font-size:12px;margin-bottom:6px;color:#0369a1;display:flex;align-items:center;gap:6px}
+.monthly-insight ul{padding-left:18px}.monthly-insight li{margin-bottom:5px}
+/* 注目ポイント */
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.9}
+.notes .nt{font-weight:700;font-size:12px;margin-bottom:6px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:4px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px}
+.chart-wrap canvas{max-height:280px}
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+/* TABS */
+.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;overflow-x:auto}
+.tab-btn{background:none;border:none;padding:10px 20px;font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+/* COHORT */
+.cohort-wrap{overflow-x:auto;margin-bottom:12px}
+.cohort-table{border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:700px}
+.cohort-table th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cohort-table th:first-child{text-align:left;min-width:90px}
+.cohort-table td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11px;line-height:1.4}
+.cohort-table td:first-child{text-align:left;font-weight:500;padding:5px 10px;font-size:12px}
+.cohort-table tr.ogs-row td:first-child{color:#92400e;font-weight:700}
+.cohort-table tr.highlight-row td{outline:2px solid var(--accent);outline-offset:-1px}
+/* INSIGHT CARDS */
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.insight-card .ic-num{font-size:30px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:-1px}
+.insight-card .ic-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.insight-card .ic-body{font-size:13px;color:var(--muted);line-height:1.7}
+.insight-card.positive .ic-num{color:var(--green)}
+.insight-card.negative .ic-num{color:var(--red)}
+.insight-card.warning .ic-num{color:#f59e0b}
+/* CRM */
+.crm-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px}
+.crm-card .crm-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.crm-card .crm-priority{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.crm-card .crm-priority.p1{background:#fef2f2;color:#dc2626}
+.crm-card .crm-priority.p2{background:#fff8f0;color:#92400e}
+.crm-card .crm-priority.p3{background:#eff6ff;color:#2563eb}
+.crm-card .crm-title{font-size:14px;font-weight:700}
+.crm-card .crm-body{font-size:13px;color:var(--muted);line-height:1.7}
+.crm-card .crm-kpi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:500}
+.crm-card .crm-update{font-size:11px;margin-top:6px;padding:4px 8px;background:#f0fdf4;border-radius:4px;color:#15803d;font-weight:500}
+/* KPI変化バッジ */
+.kpi-change{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;margin-left:6px}
+.kpi-change.up{background:#dcfce7;color:#15803d}
+.kpi-change.dn{background:#fef2f2;color:#dc2626}
+.kpi-change.flat{background:#f5f5f4;color:#78716c}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<div class="hdr">
+  <h1>🔬 Lypo-C 月次顧客分析レポート</h1>
+  <div class="meta">データ取得：2026年5月5日 ｜ Shopify公式（shop_id=17）｜ 転売業者除外済み</div>
+</div>
+<div class="month-badge">📅 2026年4月度</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('tab1',this)">① 基礎データ</button>
+  <button class="tab-btn" onclick="switchTab('tab2',this)">② 詳細分析</button>
+  <button class="tab-btn" onclick="switchTab('tab3',this)">③ 総まとめ・施策提言</button>
+</div>
+
+<!-- ===== TAB 1: 基礎データ ===== -->
+<div id="tab1" class="tab-pane active">
+
+  <div class="stitle">2026年4月 月次KPIサマリー<span style="font-size:12px;font-weight:400;background:#dcfce7;color:#15803d;padding:2px 7px;border-radius:3px;margin-left:8px">今月フォーカス</span></div>
+  <div class="sg4">
+    <div class="sc">
+      <div class="lb">2026年4月 売上（税抜）<span style="font-size:10px;font-weight:400;background:#eff6ff;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:4px">受注基準</span></div>
+      <div class="vl">¥215.5M</div>
+      <div class="sb"><span class="up">+5.2%</span> 前年同月比（2025-04：¥204.9M）<span class="kpi-change up">▲ 前月比+1.6%</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">2026年4月 受注件数</div>
+      <div class="vl">17,594件</div>
+      <div class="sb">平均注文単価（AOV：Average Order Value） <strong>¥12,251</strong> ｜ 前月（¥212.1M）比+1.6%</div>
+    </div>
+    <div class="sc">
+      <div class="lb">2026年4月 新規顧客数<span style="font-size:10px;font-weight:400;background:#eff6ff;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:4px">転売除外</span></div>
+      <div class="vl">1,024人</div>
+      <div class="sb"><span class="dn">▼4.3%</span> 前月比（2026-03：1,070人）｜ OGS後低迷継続</div>
+    </div>
+    <div class="sc">
+      <div class="lb">ACTIVE定期便<span style="font-size:10px;font-weight:400;background:#eff6ff;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:4px">Shopify定期契約</span></div>
+      <div class="vl">22,030件</div>
+      <div class="sb">ACTIVE率 <strong>43.5%</strong> ｜ 総契約 50,597件 <span class="kpi-change flat">→ 横ばい</span></div>
+    </div>
+  </div>
+  <div class="sg4" style="margin-top:8px">
+    <div class="sc">
+      <div class="lb">累計顧客数（全期間）</div>
+      <div class="vl">188,698人</div>
+      <div class="sb">リピート率 <span class="up"><strong>45.3%</strong></span>（2回以上）<span class="kpi-change flat">→ 横ばい</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">平均LTV（全顧客・累計）</div>
+      <div class="vl">¥51,836</div>
+      <div class="sb">中央値 ¥11,107 ｜ P80 ¥66,458 <span class="kpi-change up">▲ 前回比+49円</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">VC売上シェア（2026-04）<span style="font-size:10px;font-weight:400;background:#eff6ff;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:4px">受注基準</span></div>
+      <div class="vl" style="color:var(--vc)">52.4%</div>
+      <div class="sb"><span class="dn">▼13.7pt</span> 前年4月比（66.1%） <span class="kpi-change flat">→ 前月同水準</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">新ブランド売上（2026-04）<span style="font-size:10px;font-weight:400;background:#eff6ff;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:4px">受注基準</span></div>
+      <div class="vl" style="color:var(--ccera)">¥24.7M</div>
+      <div class="sb">SKINBEAUTY+MINERALion+C+Cera ｜ 全体11.5% <span class="kpi-change flat">→ 前月同水準</span></div>
+    </div>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 2026年4月度 KPIサマリー 考察</div>
+    <ul>
+      <li><strong>売上は前年比+5.2%・前月比+1.6%で微増基調を維持。</strong>ただしこれはリピート購買の底堅さに依存しており、新規獲得の回復（1,024人）は依然として不十分。「売れているが入り口が細い」状態が続く。</li>
+      <li><strong>AOV（平均注文単価）が¥12,251まで上昇。</strong>前年同期（¥10,378）比+18.0%と大幅増。C+Cera（高単価）・C+D（セット購買）の構成比向上が主因とみられる。これは収益性改善のポジティブシグナル。</li>
+      <li><strong>ACTIVE定期件数・ACTIVE率（43.5%）は横ばい。</strong>新規の定期申込と既存の解約が均衡した状態。1ヶ月定期の改善施策（PAUSE→ACTIVE復帰）が実行されているかの確認が必要。</li>
+      <li><strong>累計LTV¥51,836は前回比でほぼ横ばい（+¥49）。</strong>新規顧客が初回低LTVで流入する分、累積平均が下がりやすい構造のなか、横ばいを維持できているのは既存顧客のLTV継続増加を示す。</li>
+    </ul>
+  </div>
+
+  <!-- 月次売上推移グラフ -->
+  <div class="stitle">月次売上推移（2024年4月〜2026年4月）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">受注基準</span></div>
+  <div class="ssub">データソース：Shopify公式（shop_id=17）・税抜 ｜ 橙色ハイライト = OGSキャンペーン期間（2025年7〜9月）｜ 黄緑枠 = 今月（2026年4月）</div>
+  <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 月次売上推移 考察（2026年4月）</div>
+    <ul>
+      <li><strong>OGS特需（2025年7〜9月：¥300M超）後、平常運転へ完全移行。</strong>2026年1〜4月は¥208〜215M帯で安定。OGS前水準（¥205〜220M）と比較すると概ね同等であり、OGS後の急落からは回復している。</li>
+      <li><strong>2026年4月（¥215.5M）は直近6ヶ月で最高水準。</strong>2026年1月（¥208.8M）を底に緩やかな回復トレンドを描いており、ポートフォリオ多様化の効果が売上下支えに寄与していると解釈できる。</li>
+      <li><strong>注意：前年同月比+5.2%は一見良好だが、2025年4月（¥204.9M）がOGS前の比較的低い月であることに留意。</strong>より厳格な評価には2024年4月（¥218.8M）との比較も参照すべき（▲1.5%）。</li>
+    </ul>
+  </div>
+
+  <!-- ブランド別売上推移グラフ -->
+  <div class="stitle">ブランド別売上推移（2025年4月〜2026年4月）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">受注基準</span></div>
+  <div class="ssub">データソース：Shopify公式（shop_id=17）・税抜</div>
+  <div class="chart-wrap"><canvas id="chartBrand"></canvas></div>
+
+  <!-- ブランド別月次テーブル -->
+  <div class="stitle">ブランド別月次売上・直近6ヶ月（単位：百万円・税抜）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">受注基準</span></div>
+  <table>
+    <thead>
+      <tr><th>ブランド</th><th>2025-11</th><th>2025-12</th><th>2026-01</th><th>2026-02</th><th>2026-03</th><th style="background:#fff8e8">2026-04 ★今月</th><th>前月比</th><th>前年同月比</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot" style="background:var(--vc)"></span>Lypo-C VC</td>
+        <td>136.4</td><td>125.8</td><td>117.9</td><td>112.1</td><td>110.6</td>
+        <td style="background:#fff8e8;font-weight:700">113.0</td>
+        <td><span class="badge a">+2.2%</span></td>
+        <td><span class="badge b">−16.6%</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cd)"></span>C+D</td>
+        <td>79.2</td><td>94.8 <sup style="color:#92400e;font-weight:700;cursor:help" title="GE施策（12/1〜26）：C+D購入でVC試供品プレゼント。需要前倒し成分が大きく1月以降はベースラインに反落">★</sup></td>
+        <td>74.5</td><td>75.2</td><td>76.8</td>
+        <td style="background:#fff8e8;font-weight:700">77.6</td>
+        <td><span class="badge a">+1.0%</span></td>
+        <td><span class="badge a">+12.4%</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td>
+        <td>—</td><td>—</td><td>6.2</td><td>15.1</td><td>13.8</td>
+        <td style="background:#fff8e8;font-weight:700">15.3</td>
+        <td><span class="badge a">+10.9%</span></td>
+        <td><span class="badge n">新規</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td>
+        <td>5.6</td><td>7.0</td><td>5.5</td><td>5.7</td><td>5.9</td>
+        <td style="background:#fff8e8;font-weight:700">5.6</td>
+        <td><span class="badge b">−5.1%</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--mi)"></span>MINERALion</td>
+        <td>1.2</td><td>2.7</td><td>4.4</td><td>3.7</td><td>4.8</td>
+        <td style="background:#fff8e8;font-weight:700">3.9</td>
+        <td><span class="badge b">−19.2%</span></td>
+        <td>—</td>
+      </tr>
+      <tr class="tot">
+        <td>全体合計</td>
+        <td>222.7</td><td>230.6</td><td>208.8</td><td>212.1</td><td>212.1</td>
+        <td style="background:#fff0d8;font-weight:700">215.5</td>
+        <td><span class="badge a">+1.6%</span></td>
+        <td><span class="badge a">+5.2%</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="ssub" style="color:#92400e;margin-top:4px;margin-bottom:4px">★ GE施策（2025年12/1〜12/26）：C+D購入でVC試供品（VP 3包）プレゼント。2025-12のC+D売上が¥94.8Mに急騰後、2026年1〜4月は¥74〜77Mに正常化。需要の前倒し吸収であり、現水準がベースライン。</div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ブランド別売上 考察（2026年4月）</div>
+    <ul>
+      <li><strong>VC（¥113.0M）は前月比+2.2%と小幅反発。</strong>しかし前年同月比は▲16.6%と依然として大幅な実額縮小が続いている。月次変動の範囲内だが、¥110〜115Mのレンジが「新しいVC底値」として固定化しつつある可能性に注意が必要。坪井BMとVC顧客の離脱トレンド分析を早期に実施すべき。</li>
+      <li><strong>C+D（¥77.6M）は前月比+1.0%・前年比+12.4%で着実成長。</strong>GE施策（12月特需）の剥落後も¥74〜77M台で安定しており、C+Dのベースライン定着が確認できた。VCとの合算でも前年比で増収を確保しており、主力2品の役割分担が明確になってきた。</li>
+      <li><strong>C+Cera（¥15.3M）は発売4ヶ月目として優秀な水準を維持。</strong>2月（¥15.1M）と並ぶ高水準。ただし3月（¥13.8M）からの反発であり、±1〜2Mの月次ブレを伴いながらも¥13〜15Mレンジで推移している。「成長か横ばいか」の判断は今後2〜3ヶ月の動向次第。</li>
+      <li><strong>MINERALion（¥3.9M）は前月比▲19.2%と急減。</strong>3月（¥4.8M）から大幅な落ち込み。サンプリング施策（〜3月末）の終了により、施策起因の試用購買が剥落した可能性が高い。4月以降が「真の自発購買ベースライン」となる。4月の自発購買転換率は後述（1.8%）。</li>
+    </ul>
+  </div>
+
+  <!-- 定期便ヘルス -->
+  <div class="stitle">定期便コース別ヘルス（2026年5月5日時点）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">Shopify定期契約</span></div>
+  <div class="ssub">ACTIVE率 = ACTIVE件数 ÷ 合計契約件数（ACTIVE+PAUSED+CANCELLED）｜ 解約率 = CANCELLED ÷ 合計</div>
+  <table>
+    <thead><tr><th>コース</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>合計</th><th>ACTIVE率</th><th>解約率</th><th>前月比変化</th><th>評価</th></tr></thead>
+    <tbody>
+      <tr><td>1ヶ月</td><td>10,837</td><td>8,943</td><td>7,686</td><td>27,466</td><td><strong>39.5%</strong></td><td>28.0%</td><td class="c"><span class="badge n">微変動</span></td><td class="c"><span class="badge b">⚠ 要改善</span></td></tr>
+      <tr><td>2ヶ月</td><td>4,897</td><td>2,931</td><td>2,221</td><td>10,049</td><td><strong>48.7%</strong></td><td>22.1%</td><td class="c"><span class="badge n">微変動</span></td><td class="c"><span class="badge n">標準</span></td></tr>
+      <tr><td>3ヶ月</td><td>5,589</td><td>3,827</td><td>2,664</td><td>12,080</td><td><strong>46.3%</strong></td><td>22.1%</td><td class="c"><span class="badge n">微変動</span></td><td class="c"><span class="badge n">標準</span></td></tr>
+      <tr><td>28日 <span style="font-size:11px;color:var(--muted);font-weight:400">※SkinBeauty・C+Cera専用</span></td><td>707</td><td>158</td><td>143</td><td>1,008</td><td><strong>70.1%</strong></td><td>14.2%</td><td class="c"><span class="badge n">変化なし</span></td><td class="c"><span class="badge a">✓ 最良</span></td></tr>
+      <tr class="tot"><td>合計</td><td>22,030</td><td>15,859</td><td>12,714</td><td>50,603</td><td><strong>43.5%</strong></td><td>25.1%</td><td class="c">—</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 定期便ヘルス 考察（2026年4月）</div>
+    <ul>
+      <li><strong>全体ACTIVE率43.5%・1ヶ月定期39.5%は前月と変化なし。</strong>横ばいは改善していないことを意味するが、悪化もしていない。PAUSED顧客（8,943件）への再アクティベーション施策が実行されていれば、来月以降に数値改善が現れるはず。施策の有無を確認する。</li>
+      <li><strong>28日定期（70.1%）は引き続きトップパフォーマンスを維持。</strong>ただし件数が1,008件と全体の2%に過ぎず、全体ACTIVE率への貢献は限定的。この高ACTIVE率は28包/パック商品（SkinBeauty・C+Cera）の消費周期一致によるものであり、VC・C+D（30包）顧客には適用不可。施策設計の混同に注意。</li>
+      <li><strong>CANCELLED合計12,714件（25.1%）は引き続き要監視。</strong>前月からほぼ変化なし。解約理由データ（cancel_reason）の分析を定期的に実施し、「効果不満」「経済的理由」「飲み忘れ」などのカテゴリ別に対策を分けることが重要。</li>
+    </ul>
+  </div>
+
+  <!-- 新規顧客獲得推移グラフ -->
+  <div class="stitle">月次新規顧客獲得数（2024年4月〜2026年4月）</div>
+  <div class="ssub">転売業者除外済み ｜ 橙色 = OGSキャンペーン期間（2025年7〜9月）｜ データソース：Shopify公式（shop_id=17）・受注ベース</div>
+  <div class="chart-wrap"><canvas id="chartNewCust"></canvas></div>
+
+  <div class="stitle">月次新規顧客獲得数 ─ 通常スケール表示（直近トレンド確認用）</div>
+  <div class="ssub">縦軸を 0〜3,000人・500人刻みに固定 ｜ OGS月（2025年7〜9月）は数値が範囲外 ｜ 2026年4月（1,024人）をハイライト表示</div>
+  <div class="chart-wrap"><canvas id="chartNewCustNorm"></canvas></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 新規顧客獲得 考察（2026年4月）</div>
+    <ul>
+      <li><strong>2026年4月の新規獲得は1,024人で、OGS後8ヶ月連続の低迷（7ヶ月平均1,137人）をさらに下回る。</strong>OGS前水準（2024-04〜2025-06平均：1,910人）との乖離は▲46%に拡大。単純な季節変動・反動ではなく、構造的な獲得力の低下が進行している。</li>
+      <li><strong>1,024人は過去2年で最低水準に近づいている。</strong>前月（1,070人）からも▲4.3%。2026年前半に底を打って回復するシナリオが崩れつつある。新規獲得チャネルの抜本的な再設計を「最高優先課題」として経営アジェンダに上げる必要がある。</li>
+      <li><strong>なお、2026年4月は「昭和の日（4/29）」を含む5連休があり、購買行動の月内分布が不均一だった可能性がある。</strong>休日効果で一部需要が翌月にズレた可能性は排除できない。5月の新規獲得数と合わせて判断することを推奨。</li>
+    </ul>
+  </div>
+
+  <div class="notes">
+    <div class="nt">📌 基礎データ 総合注目ポイント（2026年4月度）</div>
+    <ul>
+      <li><strong>売上成長は維持されているが「既存顧客頼み」の構造がより鮮明に</strong> ─ YoY+5.2%を達成しているが、新規獲得1,024人はOGS前の▲46%。売上成長と獲得力の乖離が拡大しており、これが最大のリスク。2〜3年後の既存顧客自然減を補えるかが焦点。</li>
+      <li><strong>VC▲16.6%（YoY）は「Lypo-C依存度低下」戦略の裏返しだが、実額縮小への対策は必要</strong> ─ VC依存度の低下は戦略的に正しいが、実額で¥22M/月の縮小は他ブランドの伸び（C+D+¥8.5M、C+Cera+¥15.3M）でほぼ相殺されているに過ぎない。VC獲得の底打ちが急務。</li>
+      <li><strong>28日定期 ACTIVE率70.1%の高品質は「商品仕様との一致」が本質</strong> ─ 高ACTIVE率の理由は28包/パックのSkinBeauty・C+Cera専用設計。VC・C+D顧客への安易な「28日定期誘導施策」は商品消費サイクルと合わず逆効果。1ヶ月定期の改善はPAUSE→ACTIVE復帰と2〜3ヶ月定期アップグレードで対処すべき。</li>
+      <li><strong>OGS後の新規獲得低迷が8ヶ月目に突入（過去最低水準に近づく）</strong> ─ OGS前平均1,910人 → OGS後平均1,107人（4月含む8ヶ月平均）。新規獲得チャネル再設計を最優先施策として取り組む時期。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== TAB 2: 詳細分析 ===== -->
+<div id="tab2" class="tab-pane">
+
+  <div class="stitle">コホート継続率ヒートマップ<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">Shopify公式（shop_id=17）・受注基準</span></div>
+  <div class="ssub">M+0=初回月新規顧客数　M+1以降=該当月に再購入した顧客数（括弧内は継続率%）　★=OGSキャンペーン期間　灰色=未到達 ｜ <strong>今月更新：2026-03コホートのM+1（36.9%）確定、2026-04コホート新規追加</strong></div>
+  <div class="cohort-wrap">
+    <table class="cohort-table" id="cohortTable"></table>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 コホート分析 考察（2026年4月 新規確定データ）</div>
+    <ul>
+      <li><strong>2026年3月コホートのM+1継続率：36.9%（確定）。</strong>新規1,070人中395人が翌月（4月）に再購入。前月（2026-02コホートのM+1：39.8%）より▲2.9ptとやや低下。ただし通常コホート基準（33〜42%）の範囲内であり、コホート品質自体は依然健全。</li>
+      <li><strong>2026年2月コホートのM+2継続率：34.7%（確定）。</strong>1,202人中417人が2ヶ月後（4月）に購入。M+1（39.8%）からM+2で▲5.1ptの自然減は過去平均と同水準。定期離脱の「自然なペース」が維持されている。</li>
+      <li><strong>2026年4月コホート（1,024人）のM+1継続率は5月末に確定。</strong>来月のレポートで確認ポイントとなる。OGS後の低品質コホート（7〜9月：7〜13%）と比較した際の通常コホート品質の確認として活用する。</li>
+      <li><strong>OGS残存顧客（2025年7〜9月コホートのM+6以降継続者）は安定的な継続購買層として定着。</strong>48,376人の大規模獲得から真のロイヤル層が絞り込まれており、この層へのC+D・C+Ceraアップセルが高ROIの施策候補。</li>
+    </ul>
+  </div>
+
+  <!-- M+1継続率トレンド -->
+  <div class="stitle">M+1継続率の推移（通常月のみ・OGS期間除外）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">Shopify公式・受注基準</span></div>
+  <div class="ssub">点の色：緑=38%以上 / 橙=33-38% / 赤=33%未満 ｜ 最新確定値：2026-03コホートM+1 = 36.9%</div>
+  <div class="chart-wrap"><canvas id="chartRetention"></canvas></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 M+1継続率トレンド 考察（2026年4月）</div>
+    <ul>
+      <li><strong>2026年前半（1〜3月コホートM+1）は33〜40%のレンジを維持。</strong>2024年前半（31〜34%）から改善した水準が定着している。コホート品質の劣化は見られず、獲得単価が高くなったとしても「来た顧客の質」は高いことを示す。</li>
+      <li><strong>2025年10〜12月コホートのM+1（33〜37%）は回復期の数値として適切。</strong>OGS後の低品質コホート（7〜13%）からの回復が完了し、通常水準に戻った。新規顧客獲得数が少ないことが唯一の課題であり、品質ではなく「量」の問題に集約されている。</li>
+    </ul>
+  </div>
+
+  <!-- リピート回数別分布 -->
+  <div class="stitle">リピート回数別 顧客数・平均LTV分布<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">Shopify公式・受注累計</span></div>
+  <div class="sg2" style="margin-top:8px">
+    <table>
+      <thead><tr><th>購入回数</th><th>顧客数</th><th>構成比</th><th>平均LTV</th><th>前回比変化</th></tr></thead>
+      <tbody>
+        <tr><td>1回（初回のみ）</td><td>103,136</td><td>54.7%</td><td>¥6,035</td><td class="c"><span class="badge b">▼126</span></td></tr>
+        <tr><td>2回</td><td>20,703</td><td>11.0%</td><td>¥20,041</td><td class="c"><span class="badge b">▼7</span></td></tr>
+        <tr><td>3回</td><td>10,990</td><td>5.8%</td><td>¥34,508</td><td class="c"><span class="badge n">+1</span></td></tr>
+        <tr><td>4回</td><td>7,813</td><td>4.1%</td><td>¥47,736</td><td class="c"><span class="badge a">+3</span></td></tr>
+        <tr><td>5回</td><td>6,047</td><td>3.2%</td><td>¥60,003</td><td class="c"><span class="badge a">+44</span></td></tr>
+        <tr><td>6〜10回</td><td>17,495</td><td>9.3%</td><td>¥95,012</td><td class="c"><span class="badge a">+5,012</span></td></tr>
+        <tr><td>11〜20回</td><td>13,690</td><td>7.2%</td><td>¥184,924</td><td class="c"><span class="badge a">+19,924</span></td></tr>
+        <tr><td>21回以上</td><td>8,824</td><td>4.7%</td><td>¥389,293</td><td class="c"><span class="badge a">+109,293</span></td></tr>
+        <tr class="tot"><td>合計</td><td>188,698</td><td>100%</td><td>¥51,836</td><td class="c"><span class="badge a">+49</span></td></tr>
+      </tbody>
+    </table>
+    <div class="chart-wrap" style="margin-bottom:0"><canvas id="chartLTV"></canvas></div>
+  </div>
+
+  <div class="sg3" style="margin-top:12px">
+    <div class="sc">
+      <div class="lb">LTV中央値（P50）</div>
+      <div class="vl">¥11,107</div>
+      <div class="sb">平均¥51,836との乖離が大 → 上位少数が引き上げ</div>
+    </div>
+    <div class="sc">
+      <div class="lb">P80閾値（上位20%）</div>
+      <div class="vl">¥66,458</div>
+      <div class="sb">概ね6〜7回購入以上のライン <span class="kpi-change up">▲前回比+91円</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">2回目転換でのLTV増分</div>
+      <div class="vl">+¥14,006</div>
+      <div class="sb">¥6,035→¥20,041（+3.3倍）へジャンプ</div>
+    </div>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 リピート・LTV分布 考察（2026年4月）</div>
+    <ul>
+      <li><strong>高LTV層（6回以上）のLTVが顕著に増加。</strong>6〜10回層（+¥5,012）、11〜20回層（+¥19,924）、21回以上層（+¥109,293）と、上位層のLTVが継続的に積み上がっている。これはヘビーユーザーが複数ブランドを追加購入し、SPICとのエンゲージメントが深化していることを示す。</li>
+      <li><strong>1回限り顧客（103,136人・54.7%）のLTVが前回比▲126円と微減。</strong>新規1,024人が加わり、その多くが初回のみで留まることで平均LTVが若干下がっている。1回購入者の「2回目転換」が引き続き最重要レバー（LTV+3.3倍）であることに変わりはない。</li>
+      <li><strong>21回以上層のLTV¥389,293（前回比+¥109,293）は特筆すべき上昇。</strong>この層の顧客数（8,824人）は全体の4.7%だが、LTV積み上がりの主役。C+D・C+Cera等の追加ブランド購入が進んでいると推定。ブランドクロス購買データとの照合を推奨。</li>
+    </ul>
+  </div>
+
+  <!-- ブランドクロス購買分析 -->
+  <div class="stitle">ブランドクロス購買分析（全期間累計）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">Shopify公式・受注基準</span></div>
+  <div class="sg2" style="margin-top:8px">
+    <table>
+      <thead><tr><th>セグメント</th><th>顧客数</th><th>構成比</th><th>前回比</th><th>特徴</th></tr></thead>
+      <tbody>
+        <tr><td><span class="dot" style="background:var(--vc)"></span>VC単独</td><td>140,592</td><td>74.6%</td><td class="c"><span class="badge a">+7,052</span></td><td class="c"><span class="badge n">メイン入口層</span></td></tr>
+        <tr><td><span class="dot" style="background:var(--vc)"></span><span class="dot" style="background:var(--cd)"></span>VC+C+D両方</td><td>36,502</td><td>19.4%</td><td class="c"><span class="badge a">+188</span></td><td class="c"><span class="badge a">高LTV層</span></td></tr>
+        <tr><td><span class="dot" style="background:var(--cd)"></span>C+D単独</td><td>9,509</td><td>5.0%</td><td class="c"><span class="badge a">+978</span></td><td class="c"><span class="badge n">C+D先行型</span></td></tr>
+        <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera保有</td><td>2,664</td><td>—</td><td class="c"><span class="badge n">≈横ばい</span> <span style="font-size:10px;color:var(--muted)">※注1</span></td><td class="c"><span class="badge n">成長初期</span></td></tr>
+        <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion保有 <span style="font-size:11px;color:var(--muted);font-weight:400">※注2</span></td><td>22,614</td><td>—</td><td class="c"><span class="badge n">≈横ばい</span> <span style="font-size:10px;color:var(--muted)">※注1</span></td><td class="c"><span class="badge w">施策効果は別途分析</span></td></tr>
+        <tr class="tot"><td>C+D顧客中VC保有率</td><td>36,502 / 46,011</td><td><strong>79.3%</strong></td><td class="c">前回79.2%</td><td class="c">C+DはVC追加購入</td></tr>
+        <tr class="tot"><td>VC顧客中C+D保有率</td><td>36,502 / 177,594</td><td><strong>20.6%</strong></td><td class="c">前回20.4%</td><td class="c">C+Dへの移行余地</td></tr>
+      </tbody>
+    </table>
+    <div class="chart-wrap" style="margin-bottom:0"><canvas id="chartCross"></canvas></div>
+  </div>
+
+  <!-- MINERALion転換率 -->
+  <div class="sg3" style="margin-top:12px">
+    <div class="sc">
+      <div class="lb">MINERALion 参考：4月単月の再購買数 <span style="font-size:10px;font-weight:400;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;margin-left:4px">※注2・注3参照</span></div>
+      <div class="vl" style="color:var(--muted)">400人</div>
+      <div class="sb">2025年11月〜2026年3月購入者22,544人のうち4月に再購買 ｜ 単純比率1.8%（参考値）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">C+Cera 保有顧客数（累計）</div>
+      <div class="vl" style="color:var(--ccera)">2,664人</div>
+      <div class="sb">うちリピート購買753人（28.3%）｜ 平均LTV ¥19,842</div>
+    </div>
+    <div class="sc">
+      <div class="lb">VC→C+D保有移行余地</div>
+      <div class="vl">20.6%</div>
+      <div class="sb">VC単独140,592人が最大のアップセルターゲット</div>
+    </div>
+  </div>
+
+  <!-- 注記 -->
+  <div style="background:#f5f5f4;border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-top:4px;margin-bottom:16px;font-size:11px;color:var(--muted);line-height:1.8">
+    <strong>【データ注記】</strong><br>
+    ※注1：C+Cera・MINERALionの「前回比」は全期間累計のため本来は増加するはずの指標。今回の▲9・▲3という数字は、集計クエリ間の転売除外フィルタや微細なキャンセル処理差異によるもので、統計的に有意な変化ではない。実態は「ほぼ横ばい（変化なし）」と解釈すること。<br>
+    ※注2：「MINERALion保有22,614人」は厳密なサンプリング施策参加者数ではなく、2025年11月〜2026年3月にShopify公式（shop_id=17）でMINERALionの受注が発生した顧客のユニーク数。無償同梱・¥220試供・通常購入がすべて含まれており、サンプリング受取者の代理指標として使用している。<br>
+    ※注3：「4月単月の再購買数（1.8%）」は、サンプリング施策の効果を測る指標としては不完全。本来は受取月を初月とし、M+1・M+2・M+3の継続購買をコホート観点で追うべきもの（例：11月受取者は12月・1月・2月に購入したか）。4月だけを切り取った再購買率は過少評価になりやすい。MINERALionの施策効果の詳細評価は別途専用レポートで実施することを推奨。
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ブランドクロス購買・MINERALion 考察（2026年4月）</div>
+    <ul>
+      <li><strong>C+D顧客中VC保有率79.3%（前回79.2%）は「C+DはVC追加購入」という構造が変わっていないことを確認。</strong>VC→C+D乗り換えモデルではなく、「VC継続者がC+Dを追加する」モデルが定着。施策設計はこの実態に合わせたクロスセルアプローチ（VC継続者へのC+D追加提案）が正解。</li>
+      <li><strong>C+Cera保有顧客数は2,664人で前回比は誤差の範囲内（変化なし）。</strong>発売4ヶ月時点としては正常な推移。C+Ceraのリピート率28.3%はLTV成長ポテンシャルが十分にある水準。仲宗根BMとリピート購買促進策を優先検討すべき。</li>
+      <li><strong>MINERALion関連の数値（保有22,614人・4月再購買400人）は限られた条件での参考値。</strong>保有人数の定義・再購買率の算出方法ともに制約があり（※注2・注3参照）、施策効果の本格評価は別途専用レポートで行うことを推奨。本レポートでは「施策後の月次売上（¥3.9M）の推移を定点観測する」にとどめる。</li>
+    </ul>
+  </div>
+
+  <div class="notes">
+    <div class="nt">📌 詳細分析 総合注目ポイント（2026年4月度）</div>
+    <ul>
+      <li><strong>コホート品質は健全（M+1継続率36〜40%）だが、獲得数の絶対値が問題の本質</strong> ─ 来た顧客はリピートしているが、来る顧客数が足りない。顧客獲得コスト（CAC）と獲得後LTVの比率は良好だが、ファネルの入口が著しく細っている。</li>
+      <li><strong>高LTV層のLTVが継続上昇（21回以上層：¥389K）</strong> ─ ロイヤル顧客がSPICブランドへのエンゲージメントを深めていることのシグナル。この層へのVIP施策（C+D・C+Cera優先案内、コミュニティ形成）が高ROIを期待できる。</li>
+      <li><strong>MINERALionの施策効果評価は専用レポートで実施を推奨</strong> ─ 本レポートで参照した「4月再購買率1.8%」は集計定義に制約があり（※注2・注3参照）、施策の成否を判断できる指標ではない。本来はサンプリング受取月を起点としたコホート分析が必要。本レポートでは月次売上（¥3.9M）の推移のみを定点観測する。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== TAB 3: 総まとめ・施策提言 ===== -->
+<div id="tab3" class="tab-pane">
+
+  <div class="stitle">2026年4月度 月次総評 ─ 重要発見</div>
+
+  <div class="insight-grid">
+    <div class="insight-card positive">
+      <div class="ic-num">+5.2%</div>
+      <div class="ic-title">月次売上はYoY+5.2%・前月比+1.6%で安定成長を継続</div>
+      <div class="ic-body">¥215.5Mは直近6ヶ月で最高水準。AOVが¥12,251（前年比+18%）に上昇しており、C+Cera・C+Dの高単価構成比向上が収益性を改善している。「売上の質」は上がっているが、「入口の量」が課題。</div>
+    </div>
+    <div class="insight-card negative">
+      <div class="ic-num">1,024人</div>
+      <div class="ic-title">新規獲得がOGS後最低水準に肉薄（OGS前比▲46%）</div>
+      <div class="ic-body">8ヶ月連続低迷が続き、2026年4月は1,024人とほぼ最低水準。OGS前（平均1,910人）比でほぼ半減した状態が固定化しつつある。2〜3年後の既存顧客自然減を補填できなくなるリスクが現実味を帯びてきた。</div>
+    </div>
+    <div class="insight-card warning">
+      <div class="ic-num">¥3.9M</div>
+      <div class="ic-title">MINERALion：施策終了後の初月売上を記録（詳細評価は専用レポートで）</div>
+      <div class="ic-body">サンプリング施策（〜2026年3月末）終了後の初月として¥3.9Mを記録。施策効果の詳細評価（転換率・コホート継続）は集計定義の制約があり本レポートでは行わず、宮崎BMと専用レポートを別途作成して行うことを推奨。本レポートでは月次売上推移のみ定点観測する。</div>
+    </div>
+    <div class="insight-card positive">
+      <div class="ic-num">36.9%</div>
+      <div class="ic-title">2026-03コホートのM+1継続率が36.9%で通常水準を維持</div>
+      <div class="ic-body">OGS後（2025-10以降）の通常コホートM+1継続率は33〜40%レンジを維持。獲得数は少ないが、獲得した顧客は高品質にリピートしている。コホート品質の劣化はなし。</div>
+    </div>
+    <div class="insight-card negative">
+      <div class="ic-num">▲16.6%</div>
+      <div class="ic-title">VC月次売上は前年比▲16.6%・実額¥113M台で推移</div>
+      <div class="ic-body">¥113〜115Mが「VCの新しい基準値」として固定化しつつある。前年（¥135M）水準には戻っておらず、年間で見ると約¥260Mの実額縮小となる。C+Dの伸び（+¥8M/月）では相殺しきれていない。VC新規獲得とリピート強化が急務。</div>
+    </div>
+    <div class="insight-card positive">
+      <div class="ic-num">28.3%</div>
+      <div class="ic-title">C+Ceraのリピート購買率28.3%・平均LTV¥19,842は高品質</div>
+      <div class="ic-body">発売4ヶ月で2,664人獲得・753人がリピート購買（28.3%）。月次売上¥15.3M。美容×サプリという競合少ないポジションで着実に定着中。仲宗根BMの主力ブランドとして今後の重点投資候補。</div>
+    </div>
+  </div>
+
+  <!-- スコアカード -->
+  <div class="stitle">事業健全性スコアカード（2026年4月月次更新）</div>
+  <table>
+    <thead><tr><th>指標</th><th>今月値（2026-04）</th><th>前月値（2026-03）</th><th>ベンチマーク</th><th>評価</th><th>トレンド</th></tr></thead>
+    <tbody>
+      <tr><td>月次売上YoY成長率</td><td>+5.2%（¥215.5M）</td><td>+5.1%（¥212.1M）</td><td>+5%以上</td><td class="c"><span class="badge a">○</span></td><td class="c">→ 安定</td></tr>
+      <tr><td>月次新規顧客獲得数</td><td>1,024人</td><td>1,070人</td><td>1,900人（OGS前水準）</td><td class="c"><span class="badge b">✗</span></td><td class="c">↓ 低迷悪化</td></tr>
+      <tr><td>M+1継続率（前月コホート）</td><td>36.9%（2026-03コホート）</td><td>39.8%（2026-02コホート）</td><td>33〜42%</td><td class="c"><span class="badge a">○</span></td><td class="c">→ 正常範囲内</td></tr>
+      <tr><td>リピート率（2回以上）</td><td>45.3%（188,698人中）</td><td>45.3%</td><td>45%以上</td><td class="c"><span class="badge a">○</span></td><td class="c">→ 安定</td></tr>
+      <tr><td>ACTIVE定期件数</td><td>22,030件（ACTIVE率43.5%）</td><td>≈22,028件</td><td>ACTIVE率50%以上が理想</td><td class="c"><span class="badge b">△</span></td><td class="c">→ 横ばい</td></tr>
+      <tr><td>28日定期 ACTIVE率</td><td>70.1%</td><td>70.1%</td><td>70%以上維持</td><td class="c"><span class="badge a">○</span></td><td class="c">→ 安定</td></tr>
+      <tr><td>1ヶ月定期 ACTIVE率</td><td>39.5%</td><td>≈39.5%</td><td>50%以上が理想</td><td class="c"><span class="badge b">✗</span></td><td class="c">→ 改善なし</td></tr>
+      <tr><td>VC依存度</td><td>52.4%</td><td>52.2%</td><td>70%以下（目標達成済み）</td><td class="c"><span class="badge a">○</span></td><td class="c">↓ 健全低下</td></tr>
+      <tr><td>C+Cera月次売上</td><td>¥15.3M（発売4ヶ月目）</td><td>¥13.8M</td><td>年間¥180M目標→月¥15M</td><td class="c"><span class="badge a">○</span></td><td class="c">↑ 回復</td></tr>
+      <tr><td>MINERALion月次売上</td><td>¥3.9M（施策終了後初月）</td><td>¥4.8M</td><td>継続成長（専用レポートで評価）</td><td class="c"><span class="badge n">参考値</span></td><td class="c">初月ベースライン</td></tr>
+      <tr><td>平均LTV（全顧客）</td><td>¥51,836</td><td>≈¥51,787</td><td>継続上昇</td><td class="c"><span class="badge a">○</span></td><td class="c">↑ 微増</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CRM施策提言（月次更新） -->
+  <div class="stitle">CRM・プロモーション施策提言（2026年4月度 優先度更新）</div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p1">🔴 最高優先</span><span class="crm-title">① 新規獲得チャネルの抜本的再設計（8ヶ月目・緊急度上昇）</span></div>
+    <div class="crm-body">
+      OGS後8ヶ月間1,024〜1,422人/月の低迷が固定化。単純なリターゲティング強化では不十分と判断すべき段階に到達。<br>
+      ・定期便ファーストオファー（初回9,000円台）を主軸とするLP・広告改編<br>
+      ・OGS未体験の若年層（Instagram/TikTok）へのチャネル開拓<br>
+      ・インフルエンサー・UGCで「品質価値」を再定義（価格訴求からの脱却）<br>
+      ・「Lypo-Cとはなにか」を再定義するブランド認知施策（上位ファネルの強化）
+    </div>
+    <div class="crm-kpi">📊 KPI：月次新規顧客 1,500人以上回復（現状1,024人）</div>
+    <div class="crm-update">📅 4月度更新：1,024人はOGS後最低水準。従来の1,500人目標を一段階引き上げて1,900人回復（OGS前水準）を最終目標として設定する必要がある。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p3">🔵 中優先（詳細は別途専用レポートで）</span><span class="crm-title">② MINERALion：施策効果の本格評価は専用レポートへ</span></div>
+    <div class="crm-body">
+      4月の月次売上（¥3.9M）はサンプリング施策終了後の初月として定点観測の対象とする。ただし施策全体の効果評価（サンプリング→購買転換・コホート別継続率・CPA試算）は本レポートの集計定義では十分な精度が出ないため、宮崎BMと専用分析レポートを別途作成することを推奨する。<br>
+      本レポートで今後継続ウォッチする指標：<br>
+      ・MINERALionの月次売上推移（¥3〜5M帯で推移するか、成長するか）<br>
+      ・MINERALion保有顧客数の増加ペース（月次の純増数）
+    </div>
+    <div class="crm-kpi">📊 本レポートKPI：MINERALion月次売上の5月以降の推移（¥4M以上維持か）</div>
+    <div class="crm-update">📅 4月度：¥3.9Mを初月ベースラインとして記録。施策効果の詳細評価は専用レポートで。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p1">🔴 最高優先</span><span class="crm-title">③ 1回購入者103,136人の2回目転換強化</span></div>
+    <div class="crm-body">
+      2回目転換でLTV¥6K→¥20K（+3.3倍）。投資対効果は依然として全施策中最高。<br>
+      ・購入後30日：飲み方・効果実感ガイドのステップメール（2通）<br>
+      ・購入後45〜60日：定期便切り替えオファー（初回定期割引）<br>
+      ・消費ペース予測によるリマインドプッシュ（飲み切りタイミング通知）
+    </div>
+    <div class="crm-kpi">📊 KPI：2回以上購入率 45.3% → 50%（+8,700人の高LTV化）</div>
+    <div class="crm-update">📅 4月度更新：リピート率45.3%は横ばいで改善なし。ステップメールの配信状況・開封率・CVRを確認し、配信内容の改善を行う。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p2">🟠 高優先</span><span class="crm-title">④ 1ヶ月定期PAUSE顧客（8,943件）への再アクティベーション</span></div>
+    <div class="crm-body">
+      1ヶ月定期のPAUSE件数は8,943件で前月からほぼ変化なし。施策が未実施の可能性。<br>
+      ・PAUSE開始から30日・60日・90日のステップメール（「休止中ですか？」リマインド）<br>
+      ・復帰オファー：PAUSE解除で「次回1,000円OFF」または「2〜3ヶ月定期へのアップグレード割引」<br>
+      ・2ヶ月・3ヶ月定期への変更提案（ACTIVE率が48.7%/46.3%と1ヶ月比+9〜7pt）
+    </div>
+    <div class="crm-kpi">📊 KPI：1ヶ月定期PAUSE復帰率20%（+1,789件）・ACTIVE率39.5%→45%</div>
+    <div class="crm-update">📅 4月度更新：ACTIVE率39.5%は引き続き横ばい。PAUSE顧客への再アクティベーションメールが実際に配信されているか確認が急務。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p2">🟠 高優先</span><span class="crm-title">⑤ VC単独顧客140,592人へのC+Dクロスセル強化</span></div>
+    <div class="crm-body">
+      VC→C+D移行率20.6%（前回20.4%から+0.2pt）と改善幅は限定的。VC単独顧客がC+Dを追加することでLTVが約10%向上するモデルの実践。<br>
+      ・VC購入3〜4回目に「C+Dコンビネーション提案」メール<br>
+      ・VC×C+Dお試しセットの導線整備<br>
+      ・VC5回以上購入層（高ロイヤルティ）を優先ターゲット
+    </div>
+    <div class="crm-kpi">📊 KPI：VC→C+D保有率 20.6%→25%（+7,900人のC+D転換）</div>
+    <div class="crm-update">📅 4月度更新：20.6%（前月20.4%）で微増。C+Dへの自然移行は緩慢。積極的なクロスセル施策の投入を坪井BMと合意する。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p3">🔵 中優先</span><span class="crm-title">⑥ C+Ceraの定期転換率向上（リピート率28.3%をさらに引き上げ）</span></div>
+    <div class="crm-body">
+      C+Cera顧客2,664人のうちリピート購買者753人（28.3%）。月次売上は¥15.3Mで安定。<br>
+      ・初回購入者への「2ヶ月目継続応援メール」（使い切り直前のタイミング）<br>
+      ・28日定期コースへの誘導（SkinBeauty同様の高ACTIVE率が期待できる商品構造）<br>
+      ・C+Ceraのリピート継続率を月次で計測し、定期化目標値を設定
+    </div>
+    <div class="crm-kpi">📊 KPI：C+Ceraリピート率 28.3% → 40%（+315人のリピーター化）・定期転換数の計測開始</div>
+    <div class="crm-update">📅 4月度更新：初回計測値28.3%を確定。仲宗根BMとリピート率向上施策を今月中に立案。28日定期コースへの誘導が有効な可能性あり。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p3">🔵 中優先</span><span class="crm-title">⑦ OGS残存顧客へのVIPアップセル（M+6以降継続層へのアプローチ）</span></div>
+    <div class="crm-body">
+      2025年7〜9月コホートのM+6以降継続者は推計約2,382人。6ヶ月以上継続した強ロイヤル層。<br>
+      ・OGS残存顧客の抽出（M+9〜M+10継続者リスト）<br>
+      ・C+D・C+Ceraへのアップグレード特別オファー<br>
+      ・VIPメンバー招待・コミュニティ形成（口コミ創出）
+    </div>
+    <div class="crm-kpi">📊 KPI：OGS残存層のC+D転換率10%（+238人のLTV¥46K顧客獲得）</div>
+    <div class="crm-update">📅 4月度更新：OGS 2025-07コホートはM+9（2026年4月）を経過。継続購買継続者リストの抽出を実施し、アップセル施策の準備を開始する。</div>
+  </div>
+
+  <!-- 来月の注目指標 -->
+  <div class="stitle">📊 2026年5月度レポートで確認すべき指標</div>
+  <div class="notes">
+    <div class="nt">📌 次月モニタリングポイント</div>
+    <ul>
+      <li><strong>2026年4月コホートのM+1継続率（5月末に確定）</strong> ─ 1,024人の新規顧客が翌月（5月）にリピートしたかの確認。目標：33%以上（≈337人以上）。</li>
+      <li><strong>MINERALion 5月自発購買数</strong> ─ 4月の転換率1.8%から改善しているか。サンプリング後CRM（30日メール）の効果が5月売上に現れるはず。目標：700人以上（3%転換）。</li>
+      <li><strong>5月新規獲得数</strong> ─ 4月の1,024人がOGS後最低水準だとすれば、5月は反発するか・さらに低下するか。GW（4/26〜5/6）の購買行動の影響も考慮。</li>
+      <li><strong>1ヶ月定期ACTIVE率</strong> ─ PAUSE顧客への再アクティベーション施策が実行されていれば、5月時点のACTIVE率に反映されるはず。39.5%からの改善可否を確認。</li>
+      <li><strong>C+Cera月次売上（¥13〜15Mレンジ維持か）</strong> ─ 発売5ヶ月目としての継続成長を確認。¥15M超を継続できれば年間¥180M目標は射程圏内。</li>
+    </ul>
+  </div>
+
+  <div class="monthly-insight" style="margin-top:16px">
+    <div class="mi-title">💡 2026年4月度 総合考察（分析者コメント）</div>
+    <ul>
+      <li><strong>4月の総評：「売上の質は上がっているが、入口が深刻に細っている」。</strong>AOV上昇・コホート品質維持・既存LTV積み上がりはすべて良好。しかし新規獲得1,024人という数字は、事業の持続性に対して赤信号を点灯させている。既存顧客の自然減（解約・加齢）を補えなくなるまでのタイムラインを算出し、経営判断として新規獲得への投資増加を議論すべき。</li>
+      <li><strong>「Lypo-C依存度70%以下」の目標（IPO相当）は52.4%と大幅達成。</strong>しかしこれはVC実額縮小の裏返しでもある。「依存度低下」と「VC売上の絶対額維持」を同時に達成する必要があり、VC新規顧客獲得の強化は依存度目標と逆行しているとの誤解を避け、「VC実額維持＋他ブランド成長」というポートフォリオ戦略を明確化すべき。</li>
+      <li><strong>C+Ceraは「年間¥180M目標」に向け月次¥15.3Mで追随中。</strong>12ヶ月で¥180Mとすると月平均¥15Mが必要。3〜4月の実績（¥13.8M・¥15.3M）はほぼこの水準に合致。仲宗根BMの施策継続と定期コース拡充が鍵となる。</li>
+    </ul>
+  </div>
+
+</div><!-- /tab3 -->
+
+<div class="footer">
+  <span>【データソース】売上・受注・顧客分析：Shopify公式（shop_id=17）/ BigQuery prod_dwh_oci（shopify_orders, shopify_subscription_contracts）｜ 転売業者除外（distinct_ship_to &lt; 10）｜ 税抜（行レベル税率逆算）｜ テスト・社販除外</span>
+  <span>【集計基準】売上・LTV・コホート = 受注基準 ｜ データ取得日：2026-05-05 ｜ 対象月：2026年4月（2026-04-01〜2026-04-30）｜ spic-com-2025-apr-00</span>
+</div>
+</div><!-- /page-wrap -->
+
+<script>
+// ===== TAB SWITCHING =====
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===== DATA =====
+const allMonths = ['2024-04','2024-05','2024-06','2024-07','2024-08','2024-09','2024-10','2024-11','2024-12','2025-01','2025-02','2025-03','2025-04','2025-05','2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04'];
+const totalRev = [218.8,209.0,216.1,241.2,240.9,214.1,211.7,205.3,206.3,213.1,206.5,220.9,204.9,208.1,217.7,300.7,286.8,246.5,229.3,222.7,230.6,208.8,212.1,212.1,215.5];
+const newCusts = [7777,2352,2328,2904,2994,2162,1464,1621,1572,2259,1834,2235,1690,1908,2352,26251,15729,6396,1422,984,984,1273,1201,1070,1024];
+const isOGS   = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true,true,false,false,false,false,false,false,false];
+const isThis  = allMonths.map(m => m === '2026-04');
+
+const brandMonths = ['2025-04','2025-05','2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04'];
+const vcRev    = [135.4,139.6,146.2,226.8,206.5,168.3,146.8,136.4,125.8,117.9,112.1,110.6,113.0];
+const cdRev    = [69.1, 68.1, 71.1, 73.4, 76.5, 72.5, 75.2, 79.2, 94.8, 74.5, 75.2, 76.8, 77.6];
+const sbRev    = [0,    0,    0,    0,    3.4,  5.3,  7.0,  5.6,  7.0,  5.5,  5.7,  5.9,  5.6];
+const miRev    = [0,    0,    0,    0,    0,    0,    0,    1.2,  2.7,  4.4,  3.7,  4.8,  3.9];
+const ceraRev  = [0,    0,    0,    0,    0,    0,    0,    0,    0,    6.2,  15.1, 13.8, 15.3];
+
+// ===== COHORT DATA =====
+const cohortData = [
+  {m:'2024-04 *',  m0:7777,  m1:1211, m2:1226, m3:1201, m4:1087, m5:815,  m6:888,  note:true},
+  {m:'2024-05',    m0:2352,  m1:836,  m2:831,  m3:711,  m4:599,  m5:487,  m6:499},
+  {m:'2024-06',    m0:2328,  m1:860,  m2:810,  m3:646,  m4:597,  m5:476,  m6:520},
+  {m:'2024-07',    m0:2904,  m1:969,  m2:855,  m3:722,  m4:669,  m5:545,  m6:610},
+  {m:'2024-08',    m0:2994,  m1:984,  m2:914,  m3:761,  m4:676,  m5:561,  m6:640},
+  {m:'2024-09',    m0:2163,  m1:664,  m2:654,  m3:567,  m4:530,  m5:435,  m6:489},
+  {m:'2024-10',    m0:1464,  m1:504,  m2:500,  m3:467,  m4:408,  m5:332,  m6:359},
+  {m:'2024-11',    m0:1621,  m1:597,  m2:582,  m3:518,  m4:486,  m5:384,  m6:421},
+  {m:'2024-12',    m0:1572,  m1:578,  m2:562,  m3:519,  m4:443,  m5:361,  m6:409},
+  {m:'2025-01',    m0:2259,  m1:858,  m2:866,  m3:696,  m4:646,  m5:547,  m6:608},
+  {m:'2025-02',    m0:1834,  m1:740,  m2:715,  m3:642,  m4:564,  m5:480,  m6:517},
+  {m:'2025-03',    m0:2235,  m1:794,  m2:723,  m3:706,  m4:602,  m5:524,  m6:562},
+  {m:'2025-04',    m0:1690,  m1:657,  m2:625,  m3:576,  m4:526,  m5:436,  m6:430},
+  {m:'2025-05',    m0:1908,  m1:797,  m2:722,  m3:649,  m4:589,  m5:489,  m6:497},
+  {m:'2025-06',    m0:2352,  m1:929,  m2:836,  m3:721,  m4:618,  m5:543,  m6:550},
+  {m:'2025-07 ★', m0:26251, m1:1988, m2:1416, m3:1230, m4:1036, m5:909,  m6:1100, ogs:true},
+  {m:'2025-08 ★', m0:15729, m1:1416, m2:1179, m3:1032, m4:936,  m5:932,  m6:784,  ogs:true},
+  {m:'2025-09 ★', m0:6396,  m1:805,  m2:692,  m3:631,  m4:584,  m5:446,  m6:498,  ogs:true},
+  {m:'2025-10',    m0:1422,  m1:479,  m2:469,  m3:435,  m4:357,  m5:317,  m6:324},
+  {m:'2025-11',    m0:984,   m1:369,  m2:334,  m3:299,  m4:261,  m5:225,  m6:null},
+  {m:'2025-12',    m0:984,   m1:345,  m2:316,  m3:283,  m4:249,  m5:null, m6:null},
+  {m:'2026-01',    m0:1273,  m1:422,  m2:383,  m3:357,  m4:null, m5:null, m6:null},
+  {m:'2026-02',    m0:1202,  m1:478,  m2:417,  m3:null, m4:null, m5:null, m6:null},
+  {m:'2026-03',    m0:1070,  m1:395,  m2:null, m3:null, m4:null, m5:null, m6:null, newThisMonth:true},
+  {m:'2026-04 ★今月', m0:1024, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, thisMonth:true},
+];
+
+// ===== COHORT TABLE BUILD =====
+(function(){
+  const t = document.getElementById('cohortTable');
+  let html = '<thead><tr><th>コホート月</th><th>新規数</th><th>M+1</th><th>M+2</th><th>M+3</th><th>M+4</th><th>M+5</th><th>M+6</th></tr></thead><tbody>';
+  cohortData.forEach(row => {
+    const isOgsRow = !!row.ogs;
+    const isThis = !!row.thisMonth;
+    const isNew  = !!row.newThisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThis ? 'highlight-row' : '');
+    html += `<tr class="${rowClass}">`;
+    let labelSuffix = '';
+    if (isThis) labelSuffix = ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>';
+    if (isNew)  labelSuffix = ' <span style="font-size:10px;background:#bbf7d0;color:#15803d;padding:1px 4px;border-radius:2px">M+1確定</span>';
+    html += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    ['m1','m2','m3','m4','m5','m6'].forEach(k => {
+      const v = row[k];
+      if (v === null || v === undefined) {
+        html += '<td style="background:#f9f9f9;color:#ccc">—</td>';
+        return;
+      }
+      const pct = Math.round(v / row.m0 * 100);
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 40) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 35) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 30) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 20) { bg = '#fef3c7'; tc = '#92400e'; }
+      else if (pct >= 10) { bg = '#fed7aa'; tc = '#c2410c'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}</span></td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  t.innerHTML = html;
+})();
+
+// ===== CHARTS =====
+Chart.defaults.font.family = "'Noto Sans JP', sans-serif";
+
+// Revenue bar chart
+new Chart(document.getElementById('chartRevenue'), {
+  type: 'bar',
+  data: {
+    labels: allMonths,
+    datasets: [{
+      data: totalRev,
+      backgroundColor: allMonths.map((m,i) => isThis[i] ? 'rgba(255,122,48,0.8)' : isOGS[i] ? 'rgba(255,122,48,0.4)' : 'rgba(37,99,235,0.15)'),
+      borderColor: allMonths.map((m,i) => isThis[i] ? '#FF7A30' : isOGS[i] ? '#FF7A30' : '#2563eb'),
+      borderWidth: allMonths.map((m,i) => isThis[i] ? 2.5 : 1.5),
+      borderRadius: 3
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `¥${ctx.raw.toFixed(1)}M` } }
+    },
+    scales: {
+      y: { min: 150, ticks: { callback: v => `¥${v}M`, font: { size: 11 } }, grid: { color: '#f0eeec' } },
+      x: { ticks: { font: { size: 10 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// Brand stacked bar
+new Chart(document.getElementById('chartBrand'), {
+  type: 'bar',
+  data: {
+    labels: brandMonths,
+    datasets: [
+      { label: 'VC',         data: vcRev,   backgroundColor: '#FF7A3099', borderColor: '#FF7A30', borderWidth: 1, stack: 's' },
+      { label: 'C+D',        data: cdRev,   backgroundColor: '#7ED8A099', borderColor: '#7ED8A0', borderWidth: 1, stack: 's' },
+      { label: 'C+Cera',     data: ceraRev, backgroundColor: '#FF6B9D99', borderColor: '#FF6B9D', borderWidth: 1, stack: 's' },
+      { label: 'SKINBEAUTY', data: sbRev,   backgroundColor: '#C4934A99', borderColor: '#C4934A', borderWidth: 1, stack: 's' },
+      { label: 'MINERALion', data: miRev,   backgroundColor: '#1E3A8A99', borderColor: '#1E3A8A', borderWidth: 1, stack: 's' },
+    ]
+  },
+  options: {
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ¥${ctx.raw.toFixed(1)}M` } }
+    },
+    scales: {
+      y: { stacked: true, ticks: { callback: v => `¥${v}M`, font: { size: 11 } }, grid: { color: '#f0eeec' } },
+      x: { stacked: true, ticks: { font: { size: 10 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// New customer bar (full scale)
+new Chart(document.getElementById('chartNewCust'), {
+  type: 'bar',
+  data: {
+    labels: allMonths,
+    datasets: [{
+      data: newCusts,
+      backgroundColor: allMonths.map((m,i) => isThis[i] ? 'rgba(255,122,48,0.8)' : isOGS[i] ? 'rgba(255,122,48,0.5)' : 'rgba(22,163,74,0.3)'),
+      borderColor: allMonths.map((m,i) => isThis[i] ? '#FF7A30' : isOGS[i] ? '#FF7A30' : '#16a34a'),
+      borderWidth: allMonths.map((m,i) => isThis[i] ? 2.5 : 1.5),
+      borderRadius: 3
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.raw.toLocaleString()}人` } }
+    },
+    scales: {
+      y: { ticks: { font: { size: 11 } }, grid: { color: '#f0eeec' } },
+      x: { ticks: { font: { size: 10 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// New customer bar (normalized scale)
+new Chart(document.getElementById('chartNewCustNorm'), {
+  type: 'bar',
+  data: {
+    labels: allMonths,
+    datasets: [{
+      data: newCusts,
+      backgroundColor: allMonths.map((m,i) => isThis[i] ? 'rgba(255,122,48,0.8)' : isOGS[i] ? 'rgba(255,122,48,0.5)' : 'rgba(22,163,74,0.3)'),
+      borderColor: allMonths.map((m,i) => isThis[i] ? '#FF7A30' : isOGS[i] ? '#FF7A30' : '#16a34a'),
+      borderWidth: allMonths.map((m,i) => isThis[i] ? 2.5 : 1.5),
+      borderRadius: 3
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => {
+        const v = ctx.raw;
+        return v > 3000 ? `実値: ${v.toLocaleString()}人（軸超過）` : `${v.toLocaleString()}人`;
+      }}}
+    },
+    scales: {
+      y: {
+        min: 0, max: 3000,
+        ticks: { stepSize: 500, font: { size: 11 }, callback: v => `${v.toLocaleString()}人` },
+        grid: { color: '#f0eeec' }
+      },
+      x: { ticks: { font: { size: 10 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// M+1 retention trend (non-OGS)
+const retMonths = [], m1Rates = [];
+cohortData.forEach(row => {
+  if (!row.ogs && !row.thisMonth && row.m1 !== null && row.m1 !== undefined) {
+    retMonths.push(row.m.replace(' *','').replace(' M+1確定',''));
+    m1Rates.push(Math.round(row.m1 / row.m0 * 100));
+  }
+});
+new Chart(document.getElementById('chartRetention'), {
+  type: 'line',
+  data: {
+    labels: retMonths,
+    datasets: [{
+      data: m1Rates,
+      borderColor: '#2563eb',
+      backgroundColor: 'rgba(37,99,235,0.08)',
+      borderWidth: 2,
+      pointRadius: 5,
+      pointBackgroundColor: m1Rates.map((v,i) => i === m1Rates.length-1 ? '#FF7A30' : v >= 38 ? '#16a34a' : v >= 33 ? '#f59e0b' : '#dc2626'),
+      pointBorderColor: m1Rates.map((v,i) => i === m1Rates.length-1 ? '#FF7A30' : 'transparent'),
+      pointBorderWidth: 2,
+      fill: true, tension: 0.3
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `M+1継続率: ${ctx.raw}%` } } },
+    scales: {
+      y: { min: 0, max: 50, ticks: { callback: v => `${v}%`, font: { size: 11 } }, grid: { color: '#f0eeec' } },
+      x: { ticks: { font: { size: 10 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// LTV by order count (horizontal bar)
+new Chart(document.getElementById('chartLTV'), {
+  type: 'bar',
+  data: {
+    labels: ['1回','2回','3回','4回','5回','6〜10','11〜20','21回+'],
+    datasets: [{
+      data: [6035, 20041, 34508, 47736, 60003, 95012, 184924, 389293],
+      backgroundColor: ['#fecaca','#fed7aa','#fde68a','#bbf7d0','#86efac','#4ade80','#22c55e','#16a34a'],
+      borderRadius: 4
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `¥${ctx.raw.toLocaleString()}` } } },
+    scales: {
+      x: { ticks: { callback: v => `¥${(v/1000).toFixed(0)}K`, font: { size: 11 } } },
+      y: { ticks: { font: { size: 11 } } }
+    }
+  }
+});
+
+// Brand cross-purchase doughnut
+new Chart(document.getElementById('chartCross'), {
+  type: 'doughnut',
+  data: {
+    labels: ['VC単独 140,592人','VC+C+D両方 36,502人','C+D単独 9,509人','C+Cera保有 2,664人'],
+    datasets: [{
+      data: [140592, 36502, 9509, 2664],
+      backgroundColor: ['#FF7A3060','#7ED8A0','#C4934A60','#FF6B9D60'],
+      borderColor: ['#FF7A30','#7ED8A0','#C4934A','#FF6B9D'],
+      borderWidth: 2
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw.toLocaleString()}人` } }
+    }
+  }
+});
+</script>
+</body>
+</html>

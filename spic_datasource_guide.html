@@ -41,6 +41,10 @@
   --goods-bg: #fffbeb;
   --customer-color: #7c3aed;
   --customer-bg: #f5f3ff;
+  --shopify-cust-color: #0f766e;
+  --shopify-cust-bg: #f0fdfa;
+  --ne-cust-color: #64748b;
+  --ne-cust-bg: #f1f5f9;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -168,6 +172,8 @@ body {
 .tab-btn[data-tab="goods-other"].active { border-left-color: #78716c; color: #57534e; }
 
 .tab-btn[data-tab="customer"].active { border-left-color: var(--customer-color); color: var(--customer-color); }
+.tab-btn[data-tab="customer-shopify"].active { border-left-color: var(--shopify-cust-color); color: var(--shopify-cust-color); }
+.tab-btn[data-tab="customer-ne"].active { border-left-color: var(--ne-cust-color); color: var(--ne-cust-color); }
 
 .tab-btn[data-tab="ne"] .tab-count        { background: var(--ne-bg); color: var(--ne-color); }
 .tab-btn[data-tab="shopify"] .tab-count   { background: var(--shopify-bg); color: var(--shopify-color); }
@@ -179,6 +185,8 @@ body {
 .tab-btn[data-tab="goods-other"] .tab-count { background: #f5f5f4; color: #78716c; }
 
 .tab-btn[data-tab="customer"] .tab-count { background: var(--customer-bg); color: var(--customer-color); }
+.tab-btn[data-tab="customer-shopify"] .tab-count { background: var(--shopify-cust-bg); color: var(--shopify-cust-color); }
+.tab-btn[data-tab="customer-ne"] .tab-count { background: var(--ne-cust-bg); color: var(--ne-cust-color); }
 
 /* ===== コンテンツ ===== */
 .tab-content { display: none; }
@@ -411,6 +419,14 @@ tbody tr:hover { background: #faf9f8; }
 #tab-customer .source-hero  { background: var(--customer-bg); }
 #tab-customer .section-title::before { background: var(--customer-color); }
 #tab-customer .usecase-card { border-left: 3px solid var(--customer-color); }
+/* 顧客データ Shopifyサブセクション */
+#tab-customer .shopify-cust-hero { background: var(--shopify-cust-bg); border: 2px solid #99f6e4; border-radius: 10px; padding: 24px 28px; display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
+#tab-customer .shopify-cust-hero .section-title::before { background: var(--shopify-cust-color); }
+#tab-customer .shopify-cust-section .section-title::before { background: var(--shopify-cust-color); }
+#tab-customer .shopify-cust-section .usecase-card { border-left: 3px solid var(--shopify-cust-color); }
+/* 顧客データ NEサブセクション */
+#tab-customer .ne-cust-section .section-title::before { background: var(--ne-cust-color); }
+#tab-customer .ne-cust-section .usecase-card { border-left: 3px solid var(--ne-cust-color); }
 
 @media (max-width: 768px) {
   .sidenav { display: none; }
@@ -427,7 +443,7 @@ tbody tr:hover { background: #faf9f8; }
   <h1>SPIC <em>データソース辞書</em></h1>
   <span class="tagline">BM・分析担当向け｜利用可能なデータと活用ユースケース</span>
   <a class="related-link" href="spic_bq_parameters.html">📊 BQパラメータ辞書</a>
-  <span class="updated">2026年4月28日</span>
+  <span class="updated">2026年5月7日</span>
 </header>
 
 <!-- サイドナビ -->
@@ -440,14 +456,14 @@ tbody tr:hover { background: #faf9f8; }
     <span class="tab-icon">🛍️</span><span class="tab-label">Shopify受注詳細</span><span class="tab-count">86万</span>
   </button>
   <span class="sidenav-label">定期便・顧客</span>
+  <button class="tab-btn" data-tab="customer">
+    <span class="tab-icon">👥</span><span class="tab-label">顧客マスタ</span><span class="tab-count">Primary</span>
+  </button>
   <button class="tab-btn" data-tab="shopify">
     <span class="tab-icon">🔄</span><span class="tab-label">Shopify定期便</span><span class="tab-count">4</span>
   </button>
   <button class="tab-btn" data-tab="bcart">
     <span class="tab-icon">🏢</span><span class="tab-label">bcart（toB）</span><span class="tab-count">2</span>
-  </button>
-  <button class="tab-btn" data-tab="customer">
-    <span class="tab-icon">👤</span><span class="tab-label">顧客データ</span><span class="tab-count">New</span>
   </button>
   <span class="sidenav-label">在庫・商品</span>
   <button class="tab-btn" data-tab="stock">
@@ -1929,180 +1945,396 @@ tbody tr:hover { background: #faf9f8; }
 </script>
 
 <!-- ========================================
-     TAB 9: 顧客データ（toC_customers）
+     TAB 9: 顧客マスタ（2テーブル構成）
      ======================================== -->
 <div id="tab-customer" class="tab-content">
 <div class="content-wrap">
 
+  <!-- ページ見出し -->
   <div class="source-hero">
-    <div class="hero-icon">👤</div>
+    <div class="hero-icon">👥</div>
     <div>
-      <h2>顧客マスタ（toC_customers）</h2>
-      <p>2020年4月〜現在のtoCの全受注データを顧客単位に集約した分析用マスタテーブル。<strong>LTV・リピート頻度・ブランド別購買フラグ・離脱リスク（最終購入からの経過日数）</strong>を1顧客1行で管理。コホート分析・離脱検知・クロスセル施策の起点となる。</p>
+      <h2>顧客マスタ（2テーブル構成）</h2>
+      <p>分析目的に応じて2種類の顧客マスタを使い分ける。<strong>コホート・LTV・定期継続・施策効果はShopifyベース、モール横断の全社顧客数把握はNEベース</strong>を使う。</p>
       <div class="hero-meta">
-        <span class="hero-badge badge-purple">総顧客数: 423,062人</span>
-        <span class="hero-badge badge-purple">平均購入回数: 3.7回</span>
-        <span class="hero-badge badge-purple">平均LTV: ¥37,706</span>
-        <span class="hero-badge badge-gray">スナップショット: 2026-04-30</span>
+        <span class="hero-badge" style="background:#ccfbf1;color:#0f766e">🥇 Primary: shopify_customer_master（190,832人）</span>
+        <span class="hero-badge badge-gray">サブ: toC_customers（436,801人・全チャネル）</span>
+        <span class="hero-badge badge-gray">スナップショット: 2026-05-07</span>
       </div>
     </div>
   </div>
 
-  <div class="note note-green" style="margin-bottom:20px">
-    📍 <strong>保存場所：</strong> <code>spic-com-2025-apr-00.sandbox_nishimori.toC_customers</code>　スナップショット日: 2026-04-30　次回更新: 随時（手動 or バッチ）
-  </div>
-
-  <!-- ユースケース -->
+  <!-- 役割分担マップ -->
   <div class="section">
-    <div class="section-title">💡 主な分析ユースケース</div>
-    <div class="usecase-grid">
-      <div class="usecase-card">
-        <div class="uc-title">📊 LTVランキング・分布</div>
-        <div class="uc-body">total_ltvで顧客をランキング。上位X%が売上の何%を占めるかのパレート分析に活用。ブランド別LTV（ltv_vc, ltv_cd等）で主力ブランドのコアファン特定も可能。</div>
-        <div class="uc-fields">
-          <span class="field-tag">total_ltv</span>
-          <span class="field-tag">ltv_vc</span>
-          <span class="field-tag">ltv_cd</span>
-          <span class="field-tag">total_orders</span>
-        </div>
-      </div>
-      <div class="usecase-card">
-        <div class="uc-title">🚨 離脱リスク検知</div>
-        <div class="uc-body">days_since_lastで「最終購入から90日以上経過した顧客」を即時抽出。ブランド別・チャネル別に離脱リスク顧客数を把握し、BMへのアラート・NE管理画面での個別対応につなげる。</div>
-        <div class="uc-fields">
-          <span class="field-tag">days_since_last</span>
-          <span class="field-tag">last_order_date</span>
-          <span class="field-tag">main_channel</span>
-        </div>
-      </div>
-      <div class="usecase-card">
-        <div class="uc-title">🔀 ブランドクロスセル分析</div>
-        <div class="uc-body">has_vc=1 AND has_cd=0 の顧客（VC単品購入者）を抽出してC+Dへのアップセル対象として特定。ブランドフラグの組み合わせで細かいセグメント設計が可能。</div>
-        <div class="uc-fields">
-          <span class="field-tag">has_vc</span>
-          <span class="field-tag">has_cd</span>
-          <span class="field-tag">has_ccera</span>
-          <span class="field-tag">has_mineralion</span>
-        </div>
-      </div>
-      <div class="usecase-card">
-        <div class="uc-title">📅 リピート頻度分析</div>
-        <div class="uc-body">avg_days_between_ordersで「平均何日おきに購入しているか」を把握。30日以内の高頻度リピーターと90日超の低頻度購入者をセグメント分けし、コース設計や施策優先度に活用。</div>
-        <div class="uc-fields">
-          <span class="field-tag">avg_days_between_orders</span>
-          <span class="field-tag">total_orders</span>
-          <span class="field-tag">active_span_days</span>
-        </div>
-      </div>
-      <div class="usecase-card">
-        <div class="uc-title">🛒 チャネル別顧客プロファイル</div>
-        <div class="uc-body">main_channel（最多購入チャネル）別にLTV・リピート率・ブランド構成を比較。Amazon経由 vs Shopify公式 vs 楽天で顧客の質がどう違うかを定量化できる。</div>
-        <div class="uc-fields">
-          <span class="field-tag">main_channel</span>
-          <span class="field-tag">total_ltv</span>
-          <span class="field-tag">avg_order_value</span>
-        </div>
-      </div>
-      <div class="usecase-card">
-        <div class="uc-title">🆕 新規ブランド購入者の追跡</div>
-        <div class="uc-body">has_ccera=1 や has_mineralion=1 の顧客に絞り、初回購入日・リピート状況・他ブランドとの併買率を確認。新ブランド立ち上げKPIのモニタリングに活用。</div>
-        <div class="uc-fields">
-          <span class="field-tag">has_ccera</span>
-          <span class="field-tag">has_mineralion</span>
-          <span class="field-tag">first_order_date</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- テーブルスキーマ -->
-  <div class="section">
-    <div class="section-title">📋 テーブルスキーマ（全25カラム）</div>
+    <div class="section-title">🗺️ テーブル使い分けガイド</div>
     <table>
-      <thead><tr><th>カラム名</th><th>型</th><th>内容</th><th>備考</th></tr></thead>
+      <thead><tr><th>分析目的</th><th>使うテーブル</th><th>理由</th></tr></thead>
       <tbody>
-        <tr><td class="mono td-key">customer_tel_hash</td><td><span class="badge badge-purple">STRING</span></td><td>顧客識別子（purchaser_telのSHA-256ハッシュ）</td><td class="mono" style="font-size:11px">主キー。逆変換不可</td></tr>
-        <tr><td class="mono td-key">first_order_date</td><td><span class="badge badge-yellow">DATE</span></td><td>初回購入日</td><td class="mono" style="font-size:11px">コホート分析の軸</td></tr>
-        <tr><td class="mono td-key">last_order_date</td><td><span class="badge badge-yellow">DATE</span></td><td>最終購入日</td><td class="mono" style="font-size:11px">離脱リスク判定の基準</td></tr>
-        <tr><td class="mono td-key">days_since_last</td><td><span class="badge badge-blue">INTEGER</span></td><td>今日〜最終購入日の経過日数</td><td class="mono" style="font-size:11px">スナップショット時点。毎日更新で変動</td></tr>
-        <tr><td class="mono td-key">avg_days_between_orders</td><td><span class="badge badge-orange">FLOAT</span></td><td>平均購入間隔（日数）</td><td class="mono" style="font-size:11px">1回購入のみの場合はNULL</td></tr>
-        <tr><td class="mono td-key">total_orders</td><td><span class="badge badge-blue">INTEGER</span></td><td>累計受注件数（キャンセル除外）</td><td></td></tr>
-        <tr><td class="mono td-key">total_ltv</td><td><span class="badge badge-orange">FLOAT</span></td><td>全ブランド合計・税抜LTV（円）</td><td class="mono" style="font-size:11px">行レベル税率で計算</td></tr>
-        <tr><td class="mono td-key">avg_order_value</td><td><span class="badge badge-orange">FLOAT</span></td><td>平均購入単価（税抜）</td><td class="mono" style="font-size:11px">total_ltv ÷ total_orders</td></tr>
-        <tr><td class="mono td-key">main_channel</td><td><span class="badge badge-purple">STRING</span></td><td>最も多く購入したショップ名</td><td class="mono" style="font-size:11px">ne_master_shopのshop_name</td></tr>
-        <tr><td class="mono td-key">has_vc</td><td><span class="badge badge-blue">INTEGER</span></td><td>VC購入経験フラグ（1=あり）</td><td></td></tr>
-        <tr><td class="mono td-key">has_cd</td><td><span class="badge badge-blue">INTEGER</span></td><td>C+D購入経験フラグ</td><td></td></tr>
-        <tr><td class="mono td-key">has_cdk</td><td><span class="badge badge-blue">INTEGER</span></td><td>C+D+K購入経験フラグ</td><td></td></tr>
-        <tr><td class="mono td-key">has_ccera</td><td><span class="badge badge-blue">INTEGER</span></td><td>C+Cera購入経験フラグ</td><td></td></tr>
-        <tr><td class="mono td-key">has_cbd</td><td><span class="badge badge-blue">INTEGER</span></td><td>CBD購入経験フラグ</td><td></td></tr>
-        <tr><td class="mono td-key">has_skinbeauty</td><td><span class="badge badge-blue">INTEGER</span></td><td>SKINBEAUTY購入経験フラグ</td><td></td></tr>
-        <tr><td class="mono td-key">has_mineralion</td><td><span class="badge badge-blue">INTEGER</span></td><td>MINERALion購入経験フラグ</td><td></td></tr>
-        <tr><td class="mono td-key">ltv_vc</td><td><span class="badge badge-orange">FLOAT</span></td><td>VC購入金額累計（税抜）</td><td></td></tr>
-        <tr><td class="mono td-key">ltv_cd</td><td><span class="badge badge-orange">FLOAT</span></td><td>C+D購入金額累計（税抜）</td><td></td></tr>
-        <tr><td class="mono td-key">ltv_cdk</td><td><span class="badge badge-orange">FLOAT</span></td><td>C+D+K購入金額累計（税抜）</td><td></td></tr>
-        <tr><td class="mono td-key">ltv_ccera</td><td><span class="badge badge-orange">FLOAT</span></td><td>C+Cera購入金額累計（税抜）</td><td></td></tr>
-        <tr><td class="mono td-key">ltv_cbd</td><td><span class="badge badge-orange">FLOAT</span></td><td>CBD購入金額累計（税抜）</td><td></td></tr>
-        <tr><td class="mono td-key">ltv_skinbeauty</td><td><span class="badge badge-orange">FLOAT</span></td><td>SKINBEAUTY購入金額累計（税抜）</td><td></td></tr>
-        <tr><td class="mono td-key">ltv_mineralion</td><td><span class="badge badge-orange">FLOAT</span></td><td>MINERALion購入金額累計（税抜）</td><td></td></tr>
-        <tr><td class="mono td-key">snapshot_date</td><td><span class="badge badge-yellow">DATE</span></td><td>このテーブルを作成した日付</td><td class="mono" style="font-size:11px">days_since_lastの基準日</td></tr>
+        <tr style="background:#f0fdfa"><td>コホート分析・M+N継続率</td><td class="mono" style="color:#0f766e;font-weight:600">shopify_customer_master</td><td>初回有料日・施策タグが付与済み</td></tr>
+        <tr style="background:#f0fdfa"><td>LTV成長カーブ・期間別LTV</td><td class="mono" style="color:#0f766e;font-weight:600">shopify_customer_master</td><td>ltv_30d〜ltv_365dのタイムラプスカラムあり</td></tr>
+        <tr style="background:#f0fdfa"><td>定期継続ステージ・離脱率</td><td class="mono" style="color:#0f766e;font-weight:600">shopify_customer_master</td><td>max_subscription_count・is_teiki_customer</td></tr>
+        <tr style="background:#f0fdfa"><td>施策効果測定（OGS・GE等）</td><td class="mono" style="color:#0f766e;font-weight:600">shopify_customer_master</td><td>experienced_campaign_tagsに全施策履歴</td></tr>
+        <tr style="background:#f0fdfa"><td>獲得チャネル別LTV（web vs 定期）</td><td class="mono" style="color:#0f766e;font-weight:600">shopify_customer_master</td><td>first_source_nameカラム</td></tr>
+        <tr style="background:#f0fdfa"><td>初回購入ブランド別LTV比較</td><td class="mono" style="color:#0f766e;font-weight:600">shopify_customer_master</td><td>first_purchased_brandsカラム</td></tr>
+        <tr style="background:#f1f5f9"><td>全社toC顧客数（楽天/Yahoo/Qoo10含む）</td><td class="mono" style="color:#64748b;font-weight:600">toC_customers</td><td>全チャネル横断の名寄せ済み顧客DB</td></tr>
+        <tr style="background:#f1f5f9"><td>モール別顧客数・チャネル構成比</td><td class="mono" style="color:#64748b;font-weight:600">toC_customers</td><td>main_channelカラムで各モール別集計可</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- 実データサマリー -->
-  <div class="section">
-    <div class="section-title">📊 実データサマリー（2026-04-30時点）</div>
-    <div class="two-col">
+  <!-- ==========================================
+       SECTION A: Shopify顧客マスタ（Primary）
+       ========================================== -->
+  <div class="shopify-cust-section" style="margin-top:32px">
+
+    <div class="shopify-cust-hero">
+      <div class="hero-icon" style="font-size:28px;flex-shrink:0">🥇</div>
+      <div>
+        <h2 style="font-size:18px;font-weight:700;color:#0f766e;margin-bottom:6px">
+          shopify_customer_master
+          <span style="font-size:12px;font-weight:500;background:#99f6e4;color:#0f766e;border-radius:4px;padding:2px 8px;margin-left:8px">Primary・分析メイン</span>
+        </h2>
+        <p style="font-size:13px;color:#374151">Shopify公式（shop_id=17）の注文データから構築した顧客マスタ。<strong>初回購入ブランド・期間別LTV・定期継続回数・施策参加タグ</strong>を1顧客1行で管理。コホート分析・離脱検知・施策効果測定の起点となる。</p>
+        <div class="hero-meta" style="margin-top:10px">
+          <span class="hero-badge" style="background:#99f6e4;color:#0f766e">顧客数: 190,832人</span>
+          <span class="hero-badge" style="background:#99f6e4;color:#0f766e">全41カラム</span>
+          <span class="hero-badge badge-gray">スナップショット: 2026-05-07</span>
+          <span class="hero-badge badge-gray">処理コスト: 約1.46GB</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note note-green" style="margin-bottom:20px">
+      📍 <strong>保存場所：</strong> <code>spic-com-2025-apr-00.sandbox_nishimori.shopify_customer_master</code>　スナップショット日: 2026-05-07　次回更新: 月次推奨（手動 or バッチ）<br>
+      ⚠️ <strong>対象チャネル：</strong> Shopify公式（shop_id=17）のみ。楽天・Yahoo・Qoo10は含まない。全チャネル横断が必要な場合は下記 toC_customers を参照。
+    </div>
+
+    <!-- ユースケース -->
+    <div class="section">
+      <div class="section-title">💡 主な分析ユースケース</div>
+      <div class="usecase-grid">
+        <div class="usecase-card">
+          <div class="uc-title">📈 初回ブランド別LTV成長カーブ</div>
+          <div class="uc-body">first_purchased_brands × ltv_30d〜ltv_365dで「VCから入った顧客 vs C+Dから入った顧客」の長期LTV差を比較。新ブランド立ち上げ時の将来LTV予測に活用。</div>
+          <div class="uc-fields">
+            <span class="field-tag">first_purchased_brands</span>
+            <span class="field-tag">ltv_30d</span>
+            <span class="field-tag">ltv_90d</span>
+            <span class="field-tag">ltv_365d</span>
+          </div>
+        </div>
+        <div class="usecase-card">
+          <div class="uc-title">🔄 定期継続ステージ分析</div>
+          <div class="uc-body">max_subscription_countで定期継続回数を把握。「3回継続→離脱する顧客が多い」等のチャーンポイント特定と、各ステージのLTV比較に活用。</div>
+          <div class="uc-fields">
+            <span class="field-tag">max_subscription_count</span>
+            <span class="field-tag">is_teiki_customer</span>
+            <span class="field-tag">total_ltv</span>
+          </div>
+        </div>
+        <div class="usecase-card">
+          <div class="uc-title">🎯 施策参加顧客の効果測定</div>
+          <div class="uc-body">experienced_campaign_tagsで「OGS参加顧客のLTV」vs「施策未参加顧客のLTV」を比較。施策ROI算出・次回施策設計の根拠データとして活用。</div>
+          <div class="uc-fields">
+            <span class="field-tag">experienced_campaign_tags</span>
+            <span class="field-tag">total_ltv</span>
+            <span class="field-tag">ltv_90d</span>
+          </div>
+        </div>
+        <div class="usecase-card">
+          <div class="uc-title">🚀 獲得チャネル別LTV比較</div>
+          <div class="uc-body">first_source_nameで「web（単品初回）」vs「subscription_contract（定期初回）」の長期LTVを比較。広告・LP設計における定期誘導の優先度判断に活用。</div>
+          <div class="uc-fields">
+            <span class="field-tag">first_source_name</span>
+            <span class="field-tag">ltv_30d</span>
+            <span class="field-tag">ltv_365d</span>
+            <span class="field-tag">total_ltv</span>
+          </div>
+        </div>
+        <div class="usecase-card">
+          <div class="uc-title">💎 LTV帯別売上パレート</div>
+          <div class="uc-body">ltv_tierで顧客を10段階に区分し、上位X%の顧客が売上の何%を占めるかを可視化。tier7以上（¥30万超）の重要顧客へのCRM優先度設計に活用。</div>
+          <div class="uc-fields">
+            <span class="field-tag">ltv_tier</span>
+            <span class="field-tag">total_ltv</span>
+            <span class="field-tag">total_orders</span>
+          </div>
+        </div>
+        <div class="usecase-card">
+          <div class="uc-title">🔀 ブランドクロス購買分析</div>
+          <div class="uc-body">has_vc=1 AND has_cd=0 の顧客（VC単品購入者）を抽出してC+Dへのアップセル対象を特定。8ブランドフラグの組み合わせで細かいセグメント設計が可能。</div>
+          <div class="uc-fields">
+            <span class="field-tag">has_vc</span>
+            <span class="field-tag">has_cd</span>
+            <span class="field-tag">has_ccera</span>
+            <span class="field-tag">has_mineralion</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- スキーマ -->
+    <div class="section">
+      <div class="section-title">📋 テーブルスキーマ（全41カラム）</div>
+
+      <p style="font-size:12px;color:#64748b;margin-bottom:12px">※ 顧客キーは <code>customer_id</code>（ShopifyのハッシュID）。NEベースの <code>purchaser_tel</code> とは直接JOINできない。</p>
+
       <table>
-        <thead><tr><th>指標</th><th>値</th></tr></thead>
+        <thead><tr><th>グループ</th><th>カラム名</th><th>型</th><th>内容</th></tr></thead>
         <tbody>
-          <tr><td>総顧客数</td><td class="mono">423,062人</td></tr>
-          <tr><td>データ期間</td><td class="mono">2020/4/1 〜 2026/4/29</td></tr>
-          <tr><td>平均購入回数</td><td class="mono">3.7回/人</td></tr>
-          <tr><td>平均LTV（税抜）</td><td class="mono">¥37,706</td></tr>
-          <tr><td>VC購入経験者</td><td class="mono">266,026人（62.9%）</td></tr>
-          <tr><td>C+D購入経験者</td><td class="mono">65,208人（15.4%）</td></tr>
-          <tr><td>C+Cera購入経験者</td><td class="mono">3,022人（0.7%）</td></tr>
-          <tr><td>VC×C+D両方購入</td><td class="mono">46,265人（10.9%）</td></tr>
-        </tbody>
-      </table>
-      <table>
-        <thead><tr><th colspan="3">🚦 離脱リスク判定基準（暫定）</th></tr></thead>
-        <tbody>
-          <tr><td class="mono">0〜30日</td><td><span class="badge badge-green">🟢 アクティブ</span></td><td>不要</td></tr>
-          <tr><td class="mono">31〜60日</td><td><span class="badge badge-yellow">🟡 要注意</span></td><td>リマインドメール検討（NE経由）</td></tr>
-          <tr><td class="mono">61〜90日</td><td><span class="badge badge-orange">🟠 離脱疑い</span></td><td>BMへアラート・NE管理画面で個別確認</td></tr>
-          <tr><td class="mono">91日超</td><td><span class="badge badge-red">🔴 離脱</span></td><td>復帰施策 or チャーン確定として計上</td></tr>
+          <!-- 識別子 -->
+          <tr style="background:#f8fafc"><td rowspan="1" style="font-weight:600;vertical-align:top">識別子</td><td class="mono td-key">customer_id</td><td><span class="badge badge-purple">STRING</span></td><td>Shopify顧客ID（ハッシュ値・逆変換不可）</td></tr>
+          <!-- 初回注文 -->
+          <tr style="background:#f0fdfa"><td rowspan="4" style="font-weight:600;vertical-align:top;color:#0f766e">初回注文</td><td class="mono td-key">first_order_dt</td><td><span class="badge badge-yellow">DATE</span></td><td>最初の注文日（キャンセル除外・¥0含む）</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">first_paid_order_dt</td><td><span class="badge badge-yellow">DATE</span></td><td>最初の有料注文日。NULL = 有料注文なし（完全無料モニター等）</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">first_source_name</td><td><span class="badge badge-purple">STRING</span></td><td>初回有料注文チャネル。<code>web</code> / <code>subscription_contract</code> / <code>subscription_contract_checkout_one</code></td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">first_purchased_brands</td><td><span class="badge badge-purple">STRING</span></td><td>初回有料注文のブランド（複数可・カンマ区切り）。VC / C+D / MINERALion / Others / Unknown</td></tr>
+          <!-- 購買サマリー -->
+          <tr><td rowspan="6" style="font-weight:600;vertical-align:top">購買<br>サマリー</td><td class="mono td-key">total_orders</td><td><span class="badge badge-blue">INTEGER</span></td><td>累計受注件数（キャンセル除外）</td></tr>
+          <tr><td class="mono td-key">teiki_orders</td><td><span class="badge badge-blue">INTEGER</span></td><td>定期便受注件数</td></tr>
+          <tr><td class="mono td-key">web_orders</td><td><span class="badge badge-blue">INTEGER</span></td><td>通常単品受注件数（source_name = web）</td></tr>
+          <tr><td class="mono td-key">last_order_dt</td><td><span class="badge badge-yellow">DATE</span></td><td>最終注文日</td></tr>
+          <tr><td class="mono td-key">active_span_days</td><td><span class="badge badge-blue">INTEGER</span></td><td>初回〜最終注文の日数スパン</td></tr>
+          <tr><td class="mono td-key">days_since_last_order</td><td><span class="badge badge-blue">INTEGER</span></td><td>最終注文からの経過日数（テーブル作成日基準）</td></tr>
+          <!-- LTV -->
+          <tr style="background:#f0fdfa"><td rowspan="2" style="font-weight:600;vertical-align:top;color:#0f766e">LTV・AOV</td><td class="mono td-key">total_ltv</td><td><span class="badge badge-orange">FLOAT</span></td><td>累計LTV（税抜・円）= total_price − current_total_tax。送料¥220は含まない</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">avg_order_value</td><td><span class="badge badge-orange">FLOAT</span></td><td>平均注文単価（税抜）= total_ltv ÷ total_orders</td></tr>
+          <!-- ltv_tier -->
+          <tr><td rowspan="1" style="font-weight:600;vertical-align:top">売上帯</td><td class="mono td-key">ltv_tier</td><td><span class="badge badge-blue">INTEGER</span></td><td>0〜9の整数。0=¥5,000以下 / 5=¥50,001〜10万 / 7=¥30万〜100万 / 9=¥200万超</td></tr>
+          <!-- 期間別LTV -->
+          <tr style="background:#f0fdfa"><td rowspan="7" style="font-weight:600;vertical-align:top;color:#0f766e">期間別<br>LTV</td><td class="mono td-key">ltv_30d</td><td><span class="badge badge-orange">FLOAT</span></td><td>初回有料日から30日以内の累計税抜売上</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_60d</td><td><span class="badge badge-orange">FLOAT</span></td><td>同 60日以内</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_90d</td><td><span class="badge badge-orange">FLOAT</span></td><td>同 90日以内</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_120d</td><td><span class="badge badge-orange">FLOAT</span></td><td>同 120日以内</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_150d</td><td><span class="badge badge-orange">FLOAT</span></td><td>同 150日以内</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_180d</td><td><span class="badge badge-orange">FLOAT</span></td><td>同 180日以内</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_365d</td><td><span class="badge badge-orange">FLOAT</span></td><td>同 365日以内。ltv_30d ≤ ltv_60d ≤ … ≤ ltv_365d ≤ total_ltv が保証される</td></tr>
+          <!-- ブランドフラグ -->
+          <tr><td rowspan="8" style="font-weight:600;vertical-align:top">ブランド<br>購入フラグ</td><td class="mono td-key">has_vc</td><td><span class="badge badge-blue">INTEGER</span></td><td>Lypo-C Vitamin C 購入経験フラグ（1=あり）</td></tr>
+          <tr><td class="mono td-key">has_cd</td><td><span class="badge badge-blue">INTEGER</span></td><td>Lypo-C Vitamin C+D 購入経験フラグ</td></tr>
+          <tr><td class="mono td-key">has_cdk</td><td><span class="badge badge-blue">INTEGER</span></td><td>Lypo-C Vitamin C+D+K 購入経験フラグ</td></tr>
+          <tr><td class="mono td-key">has_ccera</td><td><span class="badge badge-blue">INTEGER</span></td><td>Lypo-C Vitamin C+Cera 購入経験フラグ</td></tr>
+          <tr><td class="mono td-key">has_mineralion</td><td><span class="badge badge-blue">INTEGER</span></td><td>MINERALion 購入経験フラグ（サンプリング受取も含む）</td></tr>
+          <tr><td class="mono td-key">has_skinbeauty</td><td><span class="badge badge-blue">INTEGER</span></td><td>SKINBEAUTY 購入経験フラグ</td></tr>
+          <tr><td class="mono td-key">has_sports</td><td><span class="badge badge-blue">INTEGER</span></td><td>Lypo-C for SPORTS 購入経験フラグ</td></tr>
+          <tr><td class="mono td-key">has_lpb</td><td><span class="badge badge-blue">INTEGER</span></td><td>Lypo-C プーラボーテ（LPB）購入経験フラグ</td></tr>
+          <!-- ブランド別LTV -->
+          <tr style="background:#f0fdfa"><td rowspan="8" style="font-weight:600;vertical-align:top;color:#0f766e">ブランド<br>別LTV</td><td class="mono td-key">ltv_vc</td><td><span class="badge badge-orange">FLOAT</span></td><td>VC 購入金額累計（税抜・円）</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_cd</td><td><span class="badge badge-orange">FLOAT</span></td><td>C+D 購入金額累計（税抜）</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_cdk</td><td><span class="badge badge-orange">FLOAT</span></td><td>C+D+K 購入金額累計（税抜）</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_ccera</td><td><span class="badge badge-orange">FLOAT</span></td><td>C+Cera 購入金額累計（税抜）</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_mineralion</td><td><span class="badge badge-orange">FLOAT</span></td><td>MINERALion 購入金額累計（税抜）。サンプルのみはltv_mineralion=0</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_skinbeauty</td><td><span class="badge badge-orange">FLOAT</span></td><td>SKINBEAUTY 購入金額累計（税抜）</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_sports</td><td><span class="badge badge-orange">FLOAT</span></td><td>Sports 購入金額累計（税抜）</td></tr>
+          <tr style="background:#f0fdfa"><td class="mono td-key">ltv_lpb</td><td><span class="badge badge-orange">FLOAT</span></td><td>LPB 購入金額累計（税抜）</td></tr>
+          <!-- 定期関連 -->
+          <tr><td rowspan="2" style="font-weight:600;vertical-align:top">定期関連</td><td class="mono td-key">max_subscription_count</td><td><span class="badge badge-blue">INTEGER</span></td><td>最大定期継続回数（tagsの subscription-count:N の最大値）。0=定期利用なし。最大64回（2026-05-07時点）</td></tr>
+          <tr><td class="mono td-key">is_teiki_customer</td><td><span class="badge badge-blue">INTEGER</span></td><td>定期便利用顧客フラグ（1=あり）</td></tr>
+          <!-- 施策タグ -->
+          <tr style="background:#f0fdfa"><td rowspan="1" style="font-weight:600;vertical-align:top;color:#0f766e">施策タグ</td><td class="mono td-key">experienced_campaign_tags</td><td><span class="badge badge-purple">STRING</span></td><td>その顧客が経験した施策タグ（カンマ区切り）。空文字=施策参加なし。OGS・GE・2502cp等が入る</td></tr>
+          <!-- スナップショット -->
+          <tr><td rowspan="1" style="font-weight:600;vertical-align:top">その他</td><td class="mono td-key">snapshot_date</td><td><span class="badge badge-yellow">DATE</span></td><td>テーブル作成日（days_since_last_orderの基準日）</td></tr>
         </tbody>
       </table>
     </div>
-  </div>
 
-  <!-- 除外条件 -->
-  <div class="section">
-    <div class="section-title">⚙️ データ定義・除外条件</div>
-    <table>
-      <thead><tr><th>除外条件</th><th>対象shop_id / 条件値</th><th>理由</th></tr></thead>
-      <tbody>
-        <tr><td>テスト・社販除外</td><td class="mono">10,19,22,25,29,30,37,45</td><td>全クエリ共通の必須除外</td></tr>
-        <tr><td>toB除外</td><td class="mono">7,8,12,18,20,23,26,27,42,43</td><td>個人顧客のみを対象とするため</td></tr>
-        <tr><td>Amazon除外</td><td class="mono">32, 5</td><td>tel固定値のため個人識別不能</td></tr>
-        <tr><td>キャンセル除外</td><td class="mono">cancel_type_id=0 AND cancel_flag=0</td><td>正常受注のみ</td></tr>
-        <tr><td>tel NULLを除外</td><td class="mono">purchaser_tel IS NOT NULL</td><td>識別不能な約0.6%を除外</td></tr>
-        <tr><td>転売業者フィルタ</td><td class="mono">distinct_ship_to &lt; 10</td><td>1つのtelから10件以上の異なる配送先へ発送しているアカウントを除外</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <!-- ブランド判別ロジック -->
+    <div class="section">
+      <div class="section-title">🏷️ ブランド判別ロジック（SKUベース・確定版 v5）</div>
+      <p style="font-size:12px;color:#64748b;margin-bottom:12px">shopify_ordersのline_items（JSON配列）の各アイテムSKUで判別。優先順位順に評価し、最初にマッチしたブランドを採用する。</p>
+      <table>
+        <thead><tr><th>優先度</th><th>ブランド</th><th>主なSKUパターン</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="mono">C+D</td><td class="mono" style="font-size:11px">511-* / 510-* / 512-* / 875511-* / 453511-* / 1005* / 9005* / 505 / 506 / 881-*（Sports C+D）</td></tr>
+          <tr><td>2</td><td class="mono">C+D+K</td><td class="mono" style="font-size:11px">110-* / 2981 / 3012〜3013 / 3025 / 1001101〜1001106</td></tr>
+          <tr><td>3</td><td class="mono">C+Cera</td><td class="mono" style="font-size:11px">106-* / 105-* / 1001052〜1001064 / 3014-* / 3015 / 3028</td></tr>
+          <tr><td>4</td><td class="mono">SKINBEAUTY</td><td class="mono" style="font-size:11px">121-* / 120-* / 123-* / SKB-* / 1001214 / 1001204 / 3009 / 3011</td></tr>
+          <tr><td>5</td><td class="mono">MINERALion</td><td class="mono" style="font-size:11px">130-* / 131-* / 3021 / 3016（¥220送料のみ） / 3022 / 1001304 / 4001301〜4001312</td></tr>
+          <tr><td>6</td><td class="mono">Sports</td><td class="mono" style="font-size:11px">880-* / 881-*（Lypo-C for SPORTS シリーズ）</td></tr>
+          <tr><td>7</td><td class="mono">LPB</td><td class="mono" style="font-size:11px">430-* / 985-* / 990-* / 988-* / 994-*</td></tr>
+          <tr><td>8</td><td class="mono">Others</td><td class="mono" style="font-size:11px">830-*（Stem-C）/ 503 / 504 / 8000*（イベントチケット）/ 7000611 / 7000612</td></tr>
+          <tr><td>9</td><td class="mono">VC</td><td class="mono" style="font-size:11px">875-* / 449-* / 453-* / 876-* / 2966〜2980 / 1004*（OGS VC含む） / 1008* / 2942 / 3023-* / 115 / 116</td></tr>
+        </tbody>
+      </table>
+      <div class="note note-yellow" style="margin-top:8px">
+        ⚠️ <strong>非対応ブランド（Shopify取扱なし）:</strong> CBD（100-*/101-*）・Gelsome・LypoSphericはShopify非取扱のためこのテーブルに含まれない。<br>
+        ⚠️ <strong>生年月日・性別・都道府県:</strong> BQには存在しない（カバー率0%・2026-05-07確認済み）。Shopify Admin側のデータはBQ未連携。
+      </div>
+    </div>
 
-  <div class="note note-blue">
-    🔗 <strong>BQで「できること」と「できないこと」：</strong><br>
-    ✅ LTV・リピート・コホート・離脱検知・ブランドクロス購買 → このテーブルで即実行可能<br>
-    ⚠️ 個人の氏名・メールアドレス → BQに存在しない（NE管理画面 or Shopify Adminで照会）<br>
-    ⚠️ 完全な名寄せ → ギフト注文で同一人物が複数telを持つ可能性あり（約1.6%）
-  </div>
-  <div class="note note-yellow" style="margin-top:8px">
-    🔄 <strong>テーブル更新について：</strong> このテーブルは静的スナップショット。<code>days_since_last</code> は作成日（snapshot_date）を基準に計算されており、時間が経つと実態とずれる。定期的な再作成（週次 or 月次バッチ）を推奨。再作成時はClaudeに「顧客マスタを更新して」と指示すれば <code>CREATE OR REPLACE TABLE</code> で即実行可能。
-  </div>
+    <!-- サンプルクエリ -->
+    <div class="section">
+      <div class="section-title">🔍 よく使うサンプルクエリ</div>
+      <div class="note note-blue" style="margin-bottom:12px">
+        💡 以下はすべて <code>spic-com-2025-apr-00.sandbox_nishimori.shopify_customer_master</code> を使用
+      </div>
+
+      <p style="font-size:13px;font-weight:600;margin-bottom:6px;color:#0f766e">① 初回ブランド別 LTV成長カーブ比較</p>
+      <pre style="background:#f1f5f9;padding:12px;border-radius:6px;font-size:11px;overflow-x:auto;margin-bottom:16px">SELECT
+  first_purchased_brands,
+  COUNT(*) AS customers,
+  ROUND(AVG(ltv_30d))   AS avg_ltv_30d,
+  ROUND(AVG(ltv_90d))   AS avg_ltv_90d,
+  ROUND(AVG(ltv_180d))  AS avg_ltv_180d,
+  ROUND(AVG(ltv_365d))  AS avg_ltv_365d,
+  ROUND(AVG(total_ltv)) AS avg_ltv_total
+FROM `spic-com-2025-apr-00.sandbox_nishimori.shopify_customer_master`
+WHERE first_purchased_brands IN ('VC', 'C+D', 'MINERALion', 'SKINBEAUTY', 'C+Cera')
+GROUP BY first_purchased_brands
+ORDER BY avg_ltv_total DESC</pre>
+
+      <p style="font-size:13px;font-weight:600;margin-bottom:6px;color:#0f766e">② 定期継続ステージ別 顧客数・LTV</p>
+      <pre style="background:#f1f5f9;padding:12px;border-radius:6px;font-size:11px;overflow-x:auto;margin-bottom:16px">SELECT
+  max_subscription_count AS teiki_stage,
+  COUNT(*) AS customers,
+  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 1) AS pct,
+  ROUND(AVG(total_ltv)) AS avg_ltv
+FROM `spic-com-2025-apr-00.sandbox_nishimori.shopify_customer_master`
+WHERE is_teiki_customer = 1
+GROUP BY teiki_stage
+ORDER BY teiki_stage</pre>
+
+      <p style="font-size:13px;font-weight:600;margin-bottom:6px;color:#0f766e">③ 施策参加有無別 LTV比較</p>
+      <pre style="background:#f1f5f9;padding:12px;border-radius:6px;font-size:11px;overflow-x:auto;margin-bottom:16px">SELECT
+  CASE
+    WHEN REGEXP_CONTAINS(experienced_campaign_tags, r'ogs_entry') THEN 'OGS参加'
+    WHEN REGEXP_CONTAINS(experienced_campaign_tags, r'ge_entry')  THEN 'GE参加'
+    WHEN experienced_campaign_tags = ''                           THEN '施策未参加'
+    ELSE 'その他施策参加'
+  END AS segment,
+  COUNT(*) AS customers,
+  ROUND(AVG(total_ltv))  AS avg_ltv,
+  ROUND(AVG(ltv_90d))    AS avg_ltv_90d
+FROM `spic-com-2025-apr-00.sandbox_nishimori.shopify_customer_master`
+GROUP BY segment
+ORDER BY avg_ltv DESC</pre>
+
+      <p style="font-size:13px;font-weight:600;margin-bottom:6px;color:#0f766e">④ LTV帯別 顧客数・売上パレート</p>
+      <pre style="background:#f1f5f9;padding:12px;border-radius:6px;font-size:11px;overflow-x:auto">SELECT
+  ltv_tier,
+  COUNT(*) AS customers,
+  ROUND(SUM(total_ltv) / 1000000, 1) AS total_ltv_m,
+  ROUND(AVG(total_ltv)) AS avg_ltv,
+  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 1) AS customer_pct,
+  ROUND(SUM(total_ltv) * 100.0 / SUM(SUM(total_ltv)) OVER(), 1) AS revenue_pct
+FROM `spic-com-2025-apr-00.sandbox_nishimori.shopify_customer_master`
+GROUP BY ltv_tier
+ORDER BY ltv_tier</pre>
+    </div>
+
+    <div class="note note-yellow">
+      🔄 <strong>テーブル更新について：</strong> <code>CREATE OR REPLACE TABLE</code> でフルスキャン再作成。月次実行推奨（処理コスト約1.46GB）。再作成時はClaudeに「shopify_customer_masterを更新して」と指示すれば即実行可能。
+    </div>
+
+  </div><!-- /shopify-cust-section -->
+
+  <!-- ==========================================
+       SECTION B: NEベース顧客マスタ（モール横断用）
+       ========================================== -->
+  <div class="ne-cust-section" style="margin-top:40px;border-top:2px dashed var(--border);padding-top:32px">
+
+    <div class="source-hero" style="background:#f1f5f9;border:1px solid #cbd5e1;">
+      <div class="hero-icon" style="font-size:28px;flex-shrink:0">🛒</div>
+      <div>
+        <h2 style="font-size:16px;font-weight:700;color:#475569;margin-bottom:6px">
+          toC_customers
+          <span style="font-size:12px;font-weight:500;background:#e2e8f0;color:#64748b;border-radius:4px;padding:2px 8px;margin-left:8px">モール横断分析用・用途限定</span>
+        </h2>
+        <p style="font-size:13px;color:#64748b">NEデータを元にした顧客DB。楽天・Yahoo・Qoo10・Shopify公式など<strong>全toCチャネルの顧客数・チャネル構成比の把握</strong>に使う。コホート・施策効果・LTV分析にはShopify顧客マスタを優先すること。</p>
+        <div class="hero-meta" style="margin-top:10px">
+          <span class="hero-badge" style="background:#e2e8f0;color:#64748b">総顧客数: 436,801人（全チャネル）</span>
+          <span class="hero-badge badge-gray">スナップショット: 2026-05-05</span>
+          <span class="hero-badge badge-gray">処理コスト: 約966MB</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note" style="border-left:3px solid #94a3b8;background:#f8fafc;margin:16px 0">
+      📌 <strong>用途の切り分け：</strong><br>
+      ✅ <strong>このテーブルを使う場面：</strong>「全社のtoC顧客は何人いるか」「楽天・Yahooユーザーのチャネル別顧客数」「Shopify公式以外のモール顧客の概算LTV」<br>
+      ❌ <strong>このテーブルを使わない場面：</strong> コホート分析・施策効果測定・定期継続分析・初回ブランド別LTV → <strong>上記 shopify_customer_master を使うこと</strong>
+    </div>
+
+    <div class="note note-green" style="margin-bottom:20px">
+      📍 <strong>保存場所：</strong> <code>spic-com-2025-apr-00.sandbox_nishimori.toC_customers</code>　スナップショット日: 2026-05-05
+    </div>
+
+    <!-- ユースケース（モール横断のみ） -->
+    <div class="section">
+      <div class="section-title">💡 主な分析ユースケース（全チャネル横断に限定）</div>
+      <div class="usecase-grid">
+        <div class="usecase-card">
+          <div class="uc-title">📊 全社toC顧客数・チャネル構成</div>
+          <div class="uc-body">楽天・Yahoo・Qoo10・Shopify公式など全チャネルの顧客数合計と構成比を把握。main_channel別に分解して「どのチャネルが主力か」を確認する。</div>
+          <div class="uc-fields">
+            <span class="field-tag">main_channel</span>
+            <span class="field-tag">customer_tel_hash</span>
+          </div>
+        </div>
+        <div class="usecase-card">
+          <div class="uc-title">🔀 チャネル横断ブランドクロス</div>
+          <div class="uc-body">楽天・Yahoo経由顧客がShopify公式でも購入しているかを確認。has_vc等のブランドフラグで全チャネル統合のクロス購買状況を把握する。</div>
+          <div class="uc-fields">
+            <span class="field-tag">has_vc</span>
+            <span class="field-tag">has_cd</span>
+            <span class="field-tag">main_channel</span>
+          </div>
+        </div>
+        <div class="usecase-card">
+          <div class="uc-title">🚨 離脱リスク検知（全チャネル）</div>
+          <div class="uc-body">days_since_lastで「最終購入から90日以上経過した全チャネル顧客」を抽出。Shopify定期便以外のモール顧客の離脱を把握する際に活用。</div>
+          <div class="uc-fields">
+            <span class="field-tag">days_since_last</span>
+            <span class="field-tag">last_order_date</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- スキーマ（簡略版） -->
+    <div class="section">
+      <div class="section-title">📋 テーブルスキーマ（全25カラム）</div>
+      <p style="font-size:12px;color:#64748b;margin-bottom:12px">※ 顧客キーは <code>customer_tel_hash</code>（purchaser_telのSHA-256ハッシュ）。Shopify顧客マスタの <code>customer_id</code> とは直接JOINできない。</p>
+      <table>
+        <thead><tr><th>カラム名</th><th>型</th><th>内容</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td class="mono td-key">customer_tel_hash</td><td><span class="badge badge-purple">STRING</span></td><td>顧客識別子（purchaser_telのSHA-256ハッシュ）</td><td class="mono" style="font-size:11px">主キー。逆変換不可</td></tr>
+          <tr><td class="mono td-key">first_order_date</td><td><span class="badge badge-yellow">DATE</span></td><td>初回購入日</td><td class="mono" style="font-size:11px">コホート分析の軸</td></tr>
+          <tr><td class="mono td-key">last_order_date</td><td><span class="badge badge-yellow">DATE</span></td><td>最終購入日</td><td class="mono" style="font-size:11px">離脱リスク判定の基準</td></tr>
+          <tr><td class="mono td-key">days_since_last</td><td><span class="badge badge-blue">INTEGER</span></td><td>スナップショット時点〜最終購入日の経過日数</td><td class="mono" style="font-size:11px">経時でずれる</td></tr>
+          <tr><td class="mono td-key">avg_days_between_orders</td><td><span class="badge badge-orange">FLOAT</span></td><td>平均購入間隔（日数）</td><td class="mono" style="font-size:11px">1回購入のみはNULL</td></tr>
+          <tr><td class="mono td-key">total_orders</td><td><span class="badge badge-blue">INTEGER</span></td><td>累計受注件数（キャンセル除外）</td><td></td></tr>
+          <tr><td class="mono td-key">total_ltv</td><td><span class="badge badge-orange">FLOAT</span></td><td>全ブランド合計・税抜LTV（円）</td><td class="mono" style="font-size:11px">行レベル税率で計算</td></tr>
+          <tr><td class="mono td-key">avg_order_value</td><td><span class="badge badge-orange">FLOAT</span></td><td>平均購入単価（税抜）</td><td class="mono" style="font-size:11px">total_ltv ÷ total_orders</td></tr>
+          <tr><td class="mono td-key">main_channel</td><td><span class="badge badge-purple">STRING</span></td><td>最も多く購入したショップ名</td><td class="mono" style="font-size:11px">ne_master_shopのshop_name</td></tr>
+          <tr><td class="mono td-key">has_vc / has_cd / has_cdk / has_ccera / has_cbd / has_skinbeauty / has_mineralion</td><td><span class="badge badge-blue">INTEGER</span></td><td>各ブランド購入経験フラグ（1/0）</td><td class="mono" style="font-size:11px">全チャネル横断</td></tr>
+          <tr><td class="mono td-key">ltv_vc / ltv_cd / ltv_cdk / ltv_ccera / ltv_cbd / ltv_skinbeauty / ltv_mineralion</td><td><span class="badge badge-orange">FLOAT</span></td><td>各ブランド購入金額累計（税抜）</td><td></td></tr>
+          <tr><td class="mono td-key">snapshot_date</td><td><span class="badge badge-yellow">DATE</span></td><td>テーブル作成日</td><td class="mono" style="font-size:11px">days_since_lastの基準日</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 除外条件 -->
+    <div class="section">
+      <div class="section-title">⚙️ データ定義・除外条件</div>
+      <table>
+        <thead><tr><th>除外条件</th><th>対象shop_id / 条件値</th><th>理由</th></tr></thead>
+        <tbody>
+          <tr><td>テスト・社販除外</td><td class="mono">10,19,22,25,29,30,37,45</td><td>全クエリ共通の必須除外</td></tr>
+          <tr><td>toB除外</td><td class="mono">7,8,12,18,20,23,26,27,42,43</td><td>個人顧客のみを対象とするため</td></tr>
+          <tr><td>Amazon除外</td><td class="mono">32, 5</td><td>tel固定値のため個人識別不能</td></tr>
+          <tr><td>キャンセル除外</td><td class="mono">cancel_type_id=0 AND cancel_flag=0</td><td>正常受注のみ</td></tr>
+          <tr><td>tel NULLを除外</td><td class="mono">purchaser_tel IS NOT NULL</td><td>識別不能な約0.6%を除外</td></tr>
+          <tr><td>転売業者フィルタ</td><td class="mono">distinct_ship_to &lt; 10</td><td>10件以上の異なる配送先へのアカウントを除外</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note note-yellow">
+      🔄 <strong>テーブル更新について：</strong> <code>CREATE OR REPLACE TABLE</code> でフルスキャン再作成。月次推奨。処理コスト約966MB。再作成時はClaudeに「顧客マスタ（toC_customers）を更新して」と指示すれば即実行可能。
+    </div>
+
+  </div><!-- /ne-cust-section -->
 
 </div>
 </div>

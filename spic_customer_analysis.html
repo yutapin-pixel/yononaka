@@ -150,7 +150,7 @@ tr.ogs{background:#fff8f0}
     <div class="sc">
       <div class="lb">ACTIVE定期便 <span style="font-size:10px;font-weight:400;background:#eff6ff;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:4px">Shopify定期契約</span></div>
       <div class="vl">22,028件</div>
-      <div class="sb">総契約 50,593件 ｜ ACTIVE率 43.5% ｜ <span style="font-size:11px;color:var(--muted)">※shopify_subscription_contractsのstatus=ACTIVE件数</span></div>
+      <div class="sb">Lypo-C定期便全体 FY2027末目標 27,000件まで <strong>+4,972件</strong> ｜ <span style="font-size:11px;color:var(--muted)">※shopify_subscription_contractsのstatus=ACTIVE件数（全コース合計）</span></div>
     </div>
     <div class="sc">
       <div class="lb">VC売上シェア（2026-04） <span style="font-size:10px;font-weight:400;background:#eff6ff;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:4px">受注基準</span></div>
@@ -189,15 +189,15 @@ tr.ogs{background:#fff8f0}
   <div class="ssub" style="color:#92400e;margin-top:4px;margin-bottom:16px">★ GE施策（GreenEnlightenment）2025年12/1〜12/26：C+D購入でVC試供品（VP 3包）がもれなくプレゼント。2025-12のC+D売上がベースライン比+20%超（¥79.2M→¥94.8M）に急騰したが、2026年1〜3月は¥74〜77Mへ反落。需要の前倒し成分が大きかったと判断。恒常的なC+D成長ではない。</div>
 
   <div class="stitle">定期便コース別ヘルス（2026年5月5日時点）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">Shopify定期契約</span></div>
-  <div class="ssub">データソース：shopify_subscription_contracts ｜ ACTIVE率 = ACTIVE件数 ÷ 合計契約件数（ACTIVE+PAUSED+CANCELLED）｜ 解約率 = CANCELLED ÷ 合計</div>
+  <div class="ssub">データソース：shopify_subscription_contracts ｜ PAUSED = 一時停止中（再アクティベーション対象） ｜ FY2027末目標：Lypo-C定期便ACTIVE 27,000件（全コース合計）</div>
   <table>
-    <thead><tr><th>コース</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>合計</th><th>ACTIVE率</th><th>解約率</th><th>評価</th></tr></thead>
+    <thead><tr><th>コース</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>合計</th><th>備考</th></tr></thead>
     <tbody>
-      <tr><td>1ヶ月</td><td>10,840</td><td>8,941</td><td>7,683</td><td>27,464</td><td><strong>39.5%</strong></td><td>28.0%</td><td class="c"><span class="badge b">⚠ 要改善</span></td></tr>
-      <tr><td>2ヶ月</td><td>4,895</td><td>2,930</td><td>2,221</td><td>10,046</td><td><strong>48.7%</strong></td><td>22.1%</td><td class="c"><span class="badge n">標準</span></td></tr>
-      <tr><td>3ヶ月</td><td>5,586</td><td>3,825</td><td>2,664</td><td>12,075</td><td><strong>46.3%</strong></td><td>22.1%</td><td class="c"><span class="badge n">標準</span></td></tr>
-      <tr><td>28日 <span style="font-size:11px;color:var(--muted);font-weight:400">※SkinBeauty・C+Cera専用</span></td><td>707</td><td>158</td><td>143</td><td>1,008</td><td><strong>70.1%</strong></td><td>14.2%</td><td class="c"><span class="badge a">✓ 最良</span></td></tr>
-      <tr class="tot"><td>合計</td><td>22,028</td><td>15,854</td><td>12,711</td><td>50,593</td><td><strong>43.5%</strong></td><td>25.1%</td><td></td></tr>
+      <tr><td>1ヶ月</td><td>10,840</td><td>8,941</td><td>7,683</td><td>27,464</td><td class="c"><span class="badge w">PAUSED 8,941件 → 再アクティベーション対象</span></td></tr>
+      <tr><td>2ヶ月</td><td>4,895</td><td>2,930</td><td>2,221</td><td>10,046</td><td class="c">—</td></tr>
+      <tr><td>3ヶ月</td><td>5,586</td><td>3,825</td><td>2,664</td><td>12,075</td><td class="c">—</td></tr>
+      <tr><td>28日 <span style="font-size:11px;color:var(--muted);font-weight:400">※SkinBeauty・C+Cera専用</span></td><td>707</td><td>158</td><td>143</td><td>1,008</td><td class="c"><span style="font-size:11px;color:var(--muted)">商品サイクル一致コース</span></td></tr>
+      <tr class="tot"><td>合計</td><td>22,028</td><td>15,854</td><td>12,711</td><td>50,593</td><td class="c"><span style="font-size:11px;color:var(--muted)">FY2027末目標まで +4,972件</span></td></tr>
     </tbody>
   </table>
 
@@ -214,7 +214,7 @@ tr.ogs{background:#fff8f0}
     <ul>
       <li><strong>売上成長は継続（YoY+6.7%）だが伸びのエンジンが変わった</strong> ─ OGS特需を含むが、2026年4月の前年比+5.2%（通常月比較）も健全。ただしVC実額が月-16%と減少しており、「成長」よりも「構造変化」の局面にある。</li>
       <li><strong>VC依存度が急速低下：66.1%→52.4%（1年で-14pt）</strong> ─ C+Ceraの急成長（¥0→¥15.3M/月・4ヶ月で）とSKINBEAUTY・MINERALionが新たな柱に。ポートフォリオ多様化は順調。</li>
-      <li><strong>28日定期が圧倒的に高品質（ACTIVE率70.1%）</strong> ─ ただしSkinBeauty・C+Cera専用コース（28包/パック商品に対応）であり、VC・C+D顧客（30包/パック）への誘導は不自然。高ACTIVE率の本質は「商品消費サイクルとの一致」。1ヶ月定期（ACTIVE率39.5%・PAUSED 8,941件）の改善は28日誘導ではなく、PAUSE中顧客への再アクティベーションと2〜3ヶ月定期へのアップグレード訴求が現実的。</li>
+      <li><strong>28日定期は商品サイクル一致コース（SkinBeauty・C+Cera専用）</strong> ─ VC・C+D顧客（30包/パック）への28日定期誘導は消費サイクルと合わず不自然。1ヶ月定期PAUSE中の8,941件はACTIVEへの復帰ターゲット。PAUSE→ACTIVE化と2〜3ヶ月定期へのアップグレード訴求がLypo-C定期便27,000件目標達成への現実的な打ち手。</li>
       <li><strong>OGS後の新規獲得が構造的に低迷（7ヶ月継続・-40%）</strong> ─ OGS前平均1,910人/月 → OGS後1,137人/月。一時的反動を超えており、最優先で対処が必要。</li>
     </ul>
   </div>
@@ -376,7 +376,7 @@ tr.ogs{background:#fff8f0}
       <tr><td>OGS後の新規獲得低迷（7ヶ月継続）</td><td class="c" style="color:var(--red);font-weight:700">高</td><td class="c">現在進行中</td><td class="c"><span class="badge b">最高優先</span></td></tr>
       <tr><td>VC売上実額の継続的減少（-16%）</td><td class="c" style="color:var(--red);font-weight:700">高</td><td class="c">6〜12ヶ月</td><td class="c"><span class="badge b">最高優先</span></td></tr>
       <tr><td>1回購入離脱54.7%（103K人の機会損失）</td><td class="c" style="color:#f59e0b;font-weight:700">中〜高</td><td class="c">恒常的</td><td class="c"><span class="badge w">高優先</span></td></tr>
-      <tr><td>1ヶ月定期 解約率28%（ACTIVE率39.5%）</td><td class="c" style="color:#f59e0b;font-weight:700">中</td><td class="c">恒常的</td><td class="c"><span class="badge w">高優先</span></td></tr>
+      <tr><td>1ヶ月定期 PAUSE・解約累積（PAUSE 8,941件・CANCELLED 7,683件）</td><td class="c" style="color:#f59e0b;font-weight:700">中</td><td class="c">恒常的</td><td class="c"><span class="badge w">高優先</span></td></tr>
       <tr><td>MINERALion LTV¥929での本格展開</td><td class="c" style="color:#f59e0b;font-weight:700">中</td><td class="c">3〜6ヶ月</td><td class="c"><span class="badge n">中優先</span></td></tr>
       <tr><td>C+Ceraの定期継続率（発売4ヶ月・要追跡）</td><td class="c" style="color:var(--green);font-weight:600">低〜中</td><td class="c">3ヶ月後</td><td class="c"><span class="badge n">中優先</span></td></tr>
     </tbody>
@@ -423,9 +423,9 @@ tr.ogs{background:#fff8f0}
       1ヶ月定期のPAUSE率は32.6%（8,941件）。PAUSE中は解約に至っていないため、タイミングと提案次第で復帰率を高められる。<br>
       ・PAUSE開始から30日・60日・90日のステップメール（「休止中ですか？」リマインド）<br>
       ・復帰オファー：PAUSE解除で「次回1,000円OFF」または「2〜3ヶ月定期へのアップグレード割引」<br>
-      ・2ヶ月・3ヶ月定期への変更提案（ACTIVE率が48.8%/46.3%と1ヶ月比+9〜7pt）
+      ・2ヶ月・3ヶ月定期への変更提案（2・3ヶ月定期のACTIVE件数は1ヶ月定期と比べ解約率が低い傾向）
     </div>
-    <div class="crm-kpi">📊 KPI：1ヶ月定期PAUSE復帰率20%（+1,788件のアクティブ定期回復）・ACTIVE率39.5%→45%</div>
+    <div class="crm-kpi">📊 KPI：1ヶ月定期PAUSE復帰 +1,800件以上・Lypo-C定期便ACTIVE件数（全コース合計）27,000件（FY2027末目標）への進捗</div>
   </div>
 
   <div class="crm-card">
@@ -457,8 +457,7 @@ tr.ogs{background:#fff8f0}
       <tr><td>売上YoY成長率</td><td>+6.7%（FY2026）</td><td>+10%以上</td><td class="c"><span class="badge n">△</span></td><td class="c">→ 横ばい</td></tr>
       <tr><td>M+1継続率</td><td>36〜40%（通常コホート）</td><td>33〜42%</td><td class="c"><span class="badge a">○</span></td><td class="c">↑ 改善中</td></tr>
       <tr><td>リピート率（2回以上）</td><td>45.3%</td><td>45%以上</td><td class="c"><span class="badge a">○</span></td><td class="c">→ 安定</td></tr>
-      <tr><td>28日定期 ACTIVE率</td><td>70.1%</td><td>70%以上</td><td class="c"><span class="badge a">○</span></td><td class="c">→ 安定</td></tr>
-      <tr><td>1ヶ月定期 ACTIVE率</td><td>39.5%</td><td>50%以上が理想</td><td class="c"><span class="badge b">✗</span></td><td class="c">→ 変化なし</td></tr>
+      <tr><td>Lypo-C定期便ACTIVE件数・全コース合計（FY2027末目標進捗）</td><td>22,028件（目標 27,000件）</td><td>27,000件（2027年3月末）</td><td class="c"><span class="badge w">△</span></td><td class="c">→ 要積み上げ</td></tr>
       <tr><td>月次新規顧客獲得（OGS後平均）</td><td>1,137人</td><td>1,900人（OGS前水準）</td><td class="c"><span class="badge b">✗</span></td><td class="c">↓ 低迷中</td></tr>
       <tr><td>VC依存度</td><td>52.4%</td><td>70%以下（目標達成済み）</td><td class="c"><span class="badge a">○</span></td><td class="c">↓ 健全低下</td></tr>
       <tr><td>C+Cera立ち上がり</td><td>¥15.3M/月（発売4ヶ月目）</td><td>年間¥180M目標</td><td class="c"><span class="badge a">○</span></td><td class="c">↑ 成長中</td></tr>

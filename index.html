@@ -4,164 +4,429 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>yononaka – 記事一覧</title>
+<title>yononaka – ポータル</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Noto Sans JP", sans-serif;
-    background: #f7f7f5;
-    color: #1a1a1a;
-    line-height: 1.8;
-    font-size: 16px;
-    min-height: 100vh;
-  }
-  header {
-    background: #1a1a1a;
-    color: #fff;
-    padding: 24px 32px;
-  }
-  header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-  }
-  header p {
-    font-size: 13px;
-    color: #aaa;
-    margin-top: 4px;
-  }
-  main {
-    max-width: 800px;
-    margin: 48px auto;
-    padding: 0 24px;
-  }
-  h2 {
-    font-size: 14px;
-    font-weight: 700;
-    color: #888;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 8px;
-  }
-  ul {
-    list-style: none;
-  }
-  ul li {
-    border-bottom: 1px solid #e8e8e8;
-  }
-  ul li a {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 18px 4px;
-    text-decoration: none;
-    color: #1a1a1a;
-    transition: background 0.15s;
-  }
-  ul li a:hover {
-    background: #f0f0ee;
-    padding-left: 12px;
-  }
-  .tag {
-    font-size: 11px;
-    font-weight: 700;
-    background: #e63946;
-    color: #fff;
-    padding: 2px 8px;
-    border-radius: 3px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .title {
-    font-size: 15px;
-    font-weight: 600;
-  }
-  footer {
-    text-align: center;
-    padding: 40px 0;
-    font-size: 12px;
-    color: #bbb;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f7f6f3;
+  --card: #ffffff;
+  --border: #e5e3de;
+  --text: #18181b;
+  --muted: #71717a;
+  --faint: #a1a1aa;
+  /* type colors */
+  --monthly: #EA6C00;
+  --weekly:  #c2410c;
+  --strategy:#6d28d9;
+  --survey:  #1d4ed8;
+  --analysis:#15803d;
+  --ref:     #475569;
+  --archive: #94a3b8;
+}
+
+body {
+  font-family: 'Noto Sans JP', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  background: #111;
+  color: #fff;
+  padding: 28px 40px;
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+header p {
+  font-size: 12px;
+  color: #888;
+  letter-spacing: 0.04em;
+}
+
+/* ── Layout ── */
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 24px 64px;
+}
+
+/* ── Section header ── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 44px 0 18px;
+}
+.section-label:first-child { margin-top: 0; }
+.section-label .bar {
+  width: 4px;
+  height: 20px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.section-label h2 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.section-label .count {
+  font-size: 11px;
+  color: var(--faint);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.section-desc {
+  font-size: 12px;
+  color: var(--muted);
+  margin: -10px 0 18px 14px;
+}
+
+/* ── Monthly report CARDS ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.rcard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+.rcard:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.09);
+  transform: translateY(-2px);
+}
+.rcard .top-bar {
+  height: 4px;
+  width: 100%;
+}
+.rcard .body {
+  padding: 16px 18px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rcard .period {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.rcard .rtitle {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  flex: 1;
+}
+.rcard .tag-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+/* coming-soon card */
+.rcard.soon {
+  opacity: 0.5;
+  pointer-events: none;
+  background: #f5f5f3;
+}
+.rcard.soon .rtitle { color: var(--muted); }
+
+/* ── Standard list (non-card sections) ── */
+.link-list {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.link-list a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  text-decoration: none;
+  color: var(--text);
+  border-bottom: 1px solid #f0ede8;
+  transition: background 0.12s;
+}
+.link-list a:last-child { border-bottom: none; }
+.link-list a:hover { background: #faf9f6; }
+.link-list .ltitle {
+  font-size: 14px;
+  font-weight: 600;
+  flex: 1;
+}
+.link-list .lsub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 1px;
+  font-weight: 400;
+}
+.link-list .arrow {
+  color: var(--faint);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* ── Badge / Tag ── */
+.tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.tag-monthly  { background: #fff0e6; color: var(--monthly); }
+.tag-weekly   { background: #fde8e0; color: var(--weekly);  }
+.tag-strategy { background: #ede9fe; color: var(--strategy);}
+.tag-survey   { background: #dbeafe; color: var(--survey);  }
+.tag-analysis { background: #dcfce7; color: var(--analysis);}
+.tag-ref      { background: #f1f5f9; color: var(--ref);     }
+.tag-brand    { background: #111;    color: #fff;            }
+
+/* ── Divider ── */
+.divider {
+  border: none;
+  border-top: 1px dashed var(--border);
+  margin: 52px 0 0;
+}
+
+/* ── Archive ── */
+.archive-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 24px 0 14px;
+}
+.archive-header span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.archive-header::before, .archive-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.link-list.archive a {
+  opacity: 0.65;
+  padding: 12px 20px;
+}
+.link-list.archive a:hover { opacity: 1; }
+.link-list.archive .ltitle { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  padding: 32px 0 48px;
+  font-size: 11px;
+  color: var(--faint);
+  letter-spacing: 0.04em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  header { padding: 20px 20px; flex-direction: column; gap: 4px; }
+  main { padding: 32px 16px 48px; }
+  .card-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .card-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
 <header>
   <h1>yononaka</h1>
-  <p>西守穣 – 案件ポータル</p>
+  <p>西守穣 – 社内分析ポータル</p>
 </header>
 
 <main>
-  <h2>Manuals</h2>
-  <ul>
-    <li>
-      <a href="shibuya_office/shibuya_office_manual.html">
-        <span class="tag">渋谷オフィス</span>
-        <span class="title">渋谷オフィス 運用マニュアル</span>
-      </a>
-    </li>
-  </ul>
 
-  <h2>Research</h2>
-  <ul>
-    <li>
-      <a href="customer_analysis_2026_04.html">
-        <span class="tag">月次レポート</span>
-        <span class="title">Lypo-C 月次顧客分析レポート（2026年4月度）</span>
-      </a>
-    </li>
-    <li>
-      <a href="lypo_c_survey_report.html">
-        <span class="tag">定量調査</span>
-        <span class="title">Lypo-C 定量調査結果レポート（2026年4月）</span>
-      </a>
-    </li>
-    <li>
-      <a href="spic_customer_analysis.html">
-        <span class="tag">顧客分析</span>
-        <span class="title">SPIC Shopify 顧客分析レポート FY2026</span>
-      </a>
-    </li>
-  </ul>
+  <!-- ══════════════════════════════════════
+       月次レポート（最重要・最上段）
+  ══════════════════════════════════════ -->
+  <div class="section-label">
+    <div class="bar" style="background:var(--monthly)"></div>
+    <h2>月次レポート</h2>
+    <span class="count">ブランド別・月次更新</span>
+  </div>
+  <p class="section-desc">最も閲覧頻度の高いドキュメント。ブランド別月次レポートと全ブランド統合週次レポートがここに追加されます。</p>
 
-  <h2>Tools</h2>
-  <ul>
-    <li>
-      <a href="spic_bq_parameters.html">
-        <span class="tag">BigQuery</span>
-        <span class="title">SPIC BigQuery パラメータ辞書</span>
-      </a>
-    </li>
-    <li>
-      <a href="spic_datasource_guide.html">
-        <span class="tag">データソース</span>
-        <span class="title">SPIC データソース辞書</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://www.notion.so/customer_master-Shopify-toC-350ed08f953781eb9a01c9d084829b0f" target="_blank" rel="noopener">
-        <span class="tag">顧客分析</span>
-        <span class="title">顧客データ分析リファレンス（Notion）</span>
-      </a>
-    </li>
-  </ul>
+  <div class="card-grid">
 
-  <h2>Articles</h2>
-  <ul>
-    <li>
-      <a href="walkerplus/index.html">
-        <span class="tag">ウォーカープラス</span>
-        <span class="title">花粉症の救世主はビタミンD!? 9割の医師が認める驚きの実力、摂取方法を紹介！（レプリカ）</span>
-      </a>
-    </li>
-  </ul>
+    <a class="rcard" href="customer_analysis_2026_04.html">
+      <div class="top-bar" style="background:var(--monthly)"></div>
+      <div class="body">
+        <div class="period">2026年4月度</div>
+        <div class="rtitle">Lypo-C<br>月次顧客分析レポート</div>
+        <div class="tag-row">
+          <span class="tag tag-monthly">月次</span>
+          <span class="tag tag-brand">Lypo-C</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- 週次レポート：準備中プレースホルダー -->
+    <div class="rcard soon">
+      <div class="top-bar" style="background:var(--weekly)"></div>
+      <div class="body">
+        <div class="period">準備中</div>
+        <div class="rtitle">全ブランド統合<br>週次レポート</div>
+        <div class="tag-row">
+          <span class="tag tag-weekly">週次</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════
+       戦略・予算
+  ══════════════════════════════════════ -->
+  <div class="section-label">
+    <div class="bar" style="background:var(--strategy)"></div>
+    <h2>戦略・予算</h2>
+  </div>
+
+  <div class="link-list">
+    <a href="fy2027_budget_process.html">
+      <div>
+        <div class="ltitle">FY2027 コンシューマー本部 予算策定プロセス</div>
+        <div class="lsub">チャネル配分・自社EC 4KPI分解・BigQuery実績根拠</div>
+      </div>
+      <span class="tag tag-strategy">FY2027予算</span>
+      <span class="arrow">›</span>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       定量調査
+  ══════════════════════════════════════ -->
+  <div class="section-label">
+    <div class="bar" style="background:var(--survey)"></div>
+    <h2>定量調査</h2>
+    <span class="count">アンケート分析・別軸</span>
+  </div>
+
+  <div class="link-list">
+    <a href="lypo_c_survey_report.html">
+      <div>
+        <div class="ltitle">Lypo-C 定量調査結果レポート（2026年4月）</div>
+        <div class="lsub">購入動機・継続理由・競合比較アンケート分析</div>
+      </div>
+      <span class="tag tag-survey">定量調査</span>
+      <span class="arrow">›</span>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       顧客分析
+  ══════════════════════════════════════ -->
+  <div class="section-label">
+    <div class="bar" style="background:var(--analysis)"></div>
+    <h2>顧客分析</h2>
+  </div>
+
+  <div class="link-list">
+    <a href="spic_customer_analysis.html">
+      <div>
+        <div class="ltitle">SPIC Shopify 顧客分析レポート FY2026</div>
+        <div class="lsub">コホート・LTV・ブランドクロス・定期便ヘルス 総合分析</div>
+      </div>
+      <span class="tag tag-analysis">顧客分析</span>
+      <span class="arrow">›</span>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       リファレンス
+  ══════════════════════════════════════ -->
+  <div class="section-label">
+    <div class="bar" style="background:var(--ref)"></div>
+    <h2>リファレンス</h2>
+    <span class="count">データ仕様・マニュアル</span>
+  </div>
+
+  <div class="link-list">
+    <a href="spic_bq_parameters.html">
+      <div>
+        <div class="ltitle">SPIC BigQuery パラメータ辞書</div>
+        <div class="lsub">フィルタ条件・テーブル定義・よく使うクエリ</div>
+      </div>
+      <span class="tag tag-ref">BQ辞書</span>
+      <span class="arrow">›</span>
+    </a>
+    <a href="spic_datasource_guide.html">
+      <div>
+        <div class="ltitle">SPIC データソース辞書</div>
+        <div class="lsub">テーブル一覧・shop_id対応・結合キー仕様</div>
+      </div>
+      <span class="tag tag-ref">データソース</span>
+      <span class="arrow">›</span>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       アーカイブ（用途完了・リンクは保持）
+  ══════════════════════════════════════ -->
+  <hr class="divider">
+
+  <div class="archive-header">
+    <span>Archive</span>
+  </div>
+  <p class="section-desc" style="margin-top:-8px">用途が完了したドキュメント。参照用にリンクを保持。</p>
+
+  <div class="link-list archive">
+    <a href="shibuya_office/shibuya_office_manual.html">
+      <div>
+        <div class="ltitle">渋谷オフィス 運用マニュアル</div>
+      </div>
+      <span class="tag tag-ref" style="opacity:0.5">マニュアル</span>
+      <span class="arrow">›</span>
+    </a>
+    <a href="walkerplus/index.html">
+      <div>
+        <div class="ltitle">花粉症の救世主はビタミンD!?（ウォーカープラス レプリカ）</div>
+      </div>
+      <span class="tag tag-ref" style="opacity:0.5">記事</span>
+      <span class="arrow">›</span>
+    </a>
+  </div>
+
 </main>
 
-<footer>
-  &copy; yononaka
-</footer>
+<footer>yononaka &nbsp;|&nbsp; noindex &nbsp;|&nbsp; internal use only</footer>
 
 </body>
 </html>

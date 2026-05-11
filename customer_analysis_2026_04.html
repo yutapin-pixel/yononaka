@@ -25,10 +25,10 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
 .stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
 .ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
-.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px;align-items:stretch}
 .sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
 .sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
-.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column}
 .sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
 .sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
 .sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
@@ -180,8 +180,6 @@ tr.ogs{background:#fff8f0}
       <div class="vl">22,003件</div>
       <div class="sb">FY2027末目標 27,000件まで <strong>+4,997件</strong> ｜ 総契約 72,605件 <span class="kpi-change dn">前月比▲33件</span></div>
     </div>
-  </div>
-  <div class="sg4" style="margin-top:8px">
     <div class="sc">
       <div class="lb">累計顧客数（全期間）</div>
       <div class="vl">190,832人</div>

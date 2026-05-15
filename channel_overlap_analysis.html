@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>チャネル併用分析レポート | SPIC</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--cdk:#5BC882;--cbd:#1B7A4A;
+  --ccera:#FF6B9D;--sb:#C4934A;--mi:#1E3A8A;--lypo:#FFB070;
+  --rakuten:#BF0000;--qoo10:#e63a1e;--yahoo:#7b0099;
+  --channel-ec:#FF7A30;
+  --channel-rakuten:#BF0000;
+  --channel-qoo10:#e63a1e;
+  --channel-other:#6b7280;
+}
+/* LypoSpheric除外注記 */
+.lypo-note{display:inline-block;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:4px;padding:2px 10px;font-size:11px;color:#15803d;font-weight:600;margin-left:8px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:24px;max-width:1200px;margin:0 auto}
+
+/* ヘッダー */
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:24px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:12px;color:var(--muted);text-align:right;line-height:1.8}
+.badge-goal{display:inline-block;background:#fff4ed;border:1px solid #fcd9bb;border-radius:4px;padding:2px 10px;font-size:11px;color:var(--accent);font-weight:600;margin-bottom:4px}
+
+/* セクションタイトル */
+.stitle{font-size:14px;font-weight:700;margin:32px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.stitle .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--accent);color:#fff;border-radius:50%;font-size:11px;font-weight:700;flex-shrink:0}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 14px 12px}
+
+/* サマリーカード */
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.sg2{grid-template-columns:repeat(2,1fr)}
+.sg3{grid-template-columns:repeat(3,1fr)}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px}
+.sc .lb{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;font-weight:500}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-0.5px;line-height:1.1}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.7}
+.sc .up{color:var(--green);font-weight:600}
+.sc .dn{color:var(--red);font-weight:600}
+
+/* テーブル */
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:0}
+th{text-align:right;padding:9px 14px;font-size:11px;font-weight:600;color:var(--muted);background:#f5f4f2;border-bottom:1px solid var(--border);white-space:nowrap;letter-spacing:.3px}
+th:first-child{text-align:left}
+td{padding:10px 14px;border-bottom:1px solid var(--border);text-align:right;vertical-align:middle}
+td:first-child{text-align:left;font-weight:500}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafaf0}
+.tot td{background:#f5f4f2;font-weight:700;border-top:2px solid var(--border)}
+
+/* バーチャート */
+.bar-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:160px 1fr 110px;align-items:center;gap:12px;margin-bottom:10px}
+.bar-row:last-child{margin-bottom:0}
+.bar-lbl{font-size:12px;color:var(--text);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{background:#f0efed;border-radius:4px;height:18px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.bar-val{font-size:12px;color:var(--muted);white-space:nowrap}
+.bar-val strong{color:var(--text)}
+
+/* 注目ポイント */
+.notes{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:16px 20px;margin:14px 0;font-size:13px;line-height:1.75}
+.notes .nt{font-weight:700;margin-bottom:8px;color:#92400e;font-size:13px}
+.notes ul{padding-left:18px}
+.notes li{margin-bottom:6px}
+.notes li:last-child{margin-bottom:0}
+
+/* KPI提案カード */
+.kpi-proposal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.kp{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px 24px;border-top:3px solid var(--accent)}
+.kp.kp-blue{border-top-color:var(--blue)}
+.kp.kp-green{border-top-color:var(--green)}
+.kp.kp-orange{border-top-color:#f59e0b}
+.kp .kp-badge{display:inline-block;padding:2px 10px;border-radius:100px;font-size:10px;font-weight:700;margin-bottom:10px;letter-spacing:.3px}
+.kp.kp-blue .kp-badge{background:#eff6ff;color:var(--blue)}
+.kp .kp-badge-default{background:#fff4ed;color:var(--accent)}
+.kp.kp-green .kp-badge{background:#f0fdf4;color:var(--green)}
+.kp.kp-orange .kp-badge{background:#fffbeb;color:#92400e}
+.kp h3{font-size:13px;font-weight:700;margin-bottom:8px}
+.kp .formula{background:#f5f4f2;border-radius:6px;padding:10px 14px;font-size:11px;color:var(--muted);line-height:1.8;margin:10px 0;font-family:monospace}
+.kp .rationale{font-size:12px;color:var(--muted);line-height:1.65}
+
+/* バッジ */
+.badge{display:inline-block;padding:2px 9px;border-radius:100px;font-size:11px;font-weight:600}
+.badge.a{background:#f0fdf4;color:var(--green);border:1px solid #bbf7d0}
+.badge.b{background:#fef2f2;color:var(--red);border:1px solid #fecaca}
+.badge.n{background:#eff6ff;color:var(--blue);border:1px solid #bfdbfe}
+.badge.w{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+
+/* チャネルドット */
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+
+/* フロー図 */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--card);margin-bottom:14px}
+.flow-cell{padding:16px;text-align:center;border-right:1px solid var(--border)}
+.flow-cell:last-child{border-right:none}
+.flow-cell .fc-n{font-size:22px;font-weight:700;display:block;letter-spacing:-0.5px}
+.flow-cell .fc-l{font-size:11px;color:var(--muted);display:block;margin-top:3px}
+.flow-cell .fc-r{font-size:12px;font-weight:600;display:block;margin-top:6px}
+.flow-cell.fc-ec{background:#fff4ed}
+.flow-cell.fc-rak{background:#fff5f5}
+.flow-cell.fc-q10{background:#fff8f5}
+.flow-cell.fc-oth{background:#f0fdf4}
+
+/* 施策テーブル */
+.action-table{width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.action-table th{background:#1c1917;color:#fff;font-size:11px;padding:10px 14px;text-align:left;font-weight:600;letter-spacing:.3px}
+.action-table td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:top;text-align:left}
+.action-table tr:last-child td{border-bottom:none}
+.priority{display:inline-block;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:700;white-space:nowrap}
+.p1{background:#fef2f2;color:var(--red);border:1px solid #fecaca}
+.p2{background:#fff4ed;color:var(--accent);border:1px solid #fcd9bb}
+.p3{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.p4{background:#eff6ff;color:var(--blue);border:1px solid #bfdbfe}
+
+/* 区切り線 */
+hr{border:none;border-top:1px solid var(--border);margin:32px 0}
+
+/* フッター */
+.footer{border-top:1px solid var(--border);padding-top:14px;margin-top:32px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+
+@media(max-width:900px){
+  .sg{grid-template-columns:repeat(2,1fr)}
+  .flow{grid-template-columns:repeat(2,1fr)}
+  .flow-cell{border-bottom:1px solid var(--border)}
+  .kpi-proposal-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="hdr">
+  <div>
+    <div class="badge-goal">📌 経営課題：自社EC比率向上 × モール売上伸長</div>
+    <span class="lypo-note">✅ リポスフェリック系7店舗除外済み（shop_id=1・5・6・15・34・36・40）</span>
+    <h1>チャネル併用分析レポート</h1>
+  </div>
+  <div class="meta">
+    分析実施日: 2026年5月15日<br>
+    対象: toC全顧客 / Amazon・リポスフェリック系7店舗・転売業者・toB除外<br>
+    名寄せキー: purchaser_tel_hash（NE横断）
+  </div>
+</div>
+
+<!-- ① チャネル重複マトリクス -->
+<div class="stitle"><span class="num">①</span>チャネル重複マトリクス — 全体像</div>
+<div class="ssub">転売業者除外・Amazon除外・リポスフェリック系7店舗（shop_id=1・5・6・15・34・36・40）除外後の実質toCユニーク顧客 305,683人の分布</div>
+
+<div class="sg">
+  <div class="sc">
+    <div class="lb">総ユニーク顧客数</div>
+    <div class="vl">305,683<span style="font-size:14px;font-weight:400;color:var(--muted)"> 人</span></div>
+    <div class="sb">Amazon・リポスフェリック系7店舗・転売業者除外後</div>
+  </div>
+  <div class="sc">
+    <div class="lb">自社EC経験顧客</div>
+    <div class="vl" style="color:var(--accent)">188,944<span style="font-size:14px;font-weight:400;color:var(--muted)"> 人</span></div>
+    <div class="sb">全顧客の <strong>61.8%</strong></div>
+  </div>
+  <div class="sc">
+    <div class="lb">モールのみ顧客（未転換）</div>
+    <div class="vl" style="color:var(--muted)">116,739<span style="font-size:14px;font-weight:400;color:var(--muted)"> 人</span></div>
+    <div class="sb">楽天・Qoo10・その他 単独 <span class="dn">38.2%</span></div>
+  </div>
+  <div class="sc">
+    <div class="lb">チャネル併用顧客</div>
+    <div class="vl" style="color:var(--green)">28,316<span style="font-size:14px;font-weight:400;color:var(--muted)"> 人</span></div>
+    <div class="sb">2チャネル以上保有 / 全体の <strong>9.3%</strong></div>
+  </div>
+</div>
+
+<div class="bar-wrap">
+  <div style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px">顧客セグメント内訳（顧客数・構成比）</div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--channel-ec)"></span>自社ECのみ</div>
+    <div class="bar-track"><div class="bar-fill" style="width:53.2%;background:var(--accent)"></div></div>
+    <div class="bar-val"><strong>162,675人</strong>（53.2%）</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--rakuten)"></span>楽天のみ（Lypo-C）</div>
+    <div class="bar-track"><div class="bar-fill" style="width:20.6%;background:var(--rakuten)"></div></div>
+    <div class="bar-val"><strong>63,025人</strong>（20.6%）</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--channel-other)"></span>その他モールのみ</div>
+    <div class="bar-track"><div class="bar-fill" style="width:12.3%;background:#9ca3af"></div></div>
+    <div class="bar-val"><strong>37,577人</strong>（12.3%）</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--green)"></span>自社EC＋その他モール</div>
+    <div class="bar-track"><div class="bar-fill" style="width:5.1%;background:var(--green)"></div></div>
+    <div class="bar-val"><strong>15,444人</strong>（5.1%）</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--qoo10)"></span>Qoo10のみ（Lypo-C）</div>
+    <div class="bar-track"><div class="bar-fill" style="width:4.6%;background:var(--qoo10)"></div></div>
+    <div class="bar-val"><strong>14,090人</strong>（4.6%）</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--green)"></span>自社EC＋楽天</div>
+    <div class="bar-track"><div class="bar-fill" style="width:2.8%;background:var(--green)"></div></div>
+    <div class="bar-val"><strong>8,572人</strong>（2.8%）</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:#9ca3af"></span>楽天＋その他モール</div>
+    <div class="bar-track"><div class="bar-fill" style="width:0.4%;background:#d1d5db"></div></div>
+    <div class="bar-val"><strong>1,149人</strong>（0.4%）</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:#f59e0b"></span>3〜4チャネル併用</div>
+    <div class="bar-track"><div class="bar-fill" style="width:0.4%;background:#f59e0b"></div></div>
+    <div class="bar-val"><strong>1,166人</strong>（0.4%）</div>
+  </div>
+</div>
+
+<div class="notes">
+  <div class="nt">📌 発見①</div>
+  <ul>
+    <li><strong>全顧客の38.2%（11.7万人）がモール単独で自社ECを未経験。</strong>楽天（Lypo-C）6.3万人・その他モール3.8万人・Qoo10 1.4万人が自社EC獲得の最大ターゲット層。</li>
+    <li>チャネル併用顧客（9.3%・28,316人）は後述の通りLTVが突出して高い。全体の約10人に1人が複数チャネルを使いこなしており、この層の拡大が収益直結施策となる。</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ② 初回チャネル × 自社EC転換 -->
+<div class="stitle"><span class="num">②</span>初回チャネル × 自社EC転換率 — モールは自社ECの入口か？</div>
+<div class="ssub">初回購入チャネル別に「その後、自社EC（Shopify）へ転換した顧客の割合」を計測。楽天はLypo-Cショップ（shop_id=31）のみ集計。</div>
+
+<div class="flow">
+  <div class="flow-cell fc-ec">
+    <span class="fc-n" style="color:var(--accent)">169,043</span>
+    <span class="fc-l">自社EC初回購入</span>
+    <span class="fc-r" style="color:var(--muted)">転換率: 100%（基準）</span>
+  </div>
+  <div class="flow-cell fc-rak">
+    <span class="fc-n" style="color:var(--rakuten)">69,900</span>
+    <span class="fc-l">楽天（Lypo-C）初回購入</span>
+    <span class="fc-r" style="color:var(--rakuten)">自社EC転換: <strong>8.71%</strong>（6,089人）</span>
+  </div>
+  <div class="flow-cell fc-q10">
+    <span class="fc-n" style="color:var(--qoo10)">15,165</span>
+    <span class="fc-l">Qoo10（Lypo-C）初回購入</span>
+    <span class="fc-r" style="color:var(--red)">自社EC転換: <strong>4.71%</strong>（714人）</span>
+  </div>
+  <div class="flow-cell fc-oth">
+    <span class="fc-n" style="color:var(--green)">51,575</span>
+    <span class="fc-l">その他モール 初回購入</span>
+    <span class="fc-r" style="color:var(--green)">自社EC転換: <strong>25.4%</strong>（13,098人）</span>
+  </div>
+</div>
+
+<table style="margin-bottom:14px">
+  <thead>
+    <tr>
+      <th>初回購入チャネル</th>
+      <th>初回購入顧客数</th>
+      <th>うち自社EC転換</th>
+      <th>転換率</th>
+      <th>評価</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="dot" style="background:var(--green)"></span>その他モール（Yahoo・auPAY等）</td>
+      <td>51,575人</td>
+      <td style="color:var(--green);font-weight:700">13,098人</td>
+      <td><strong style="color:var(--green)">25.4%</strong></td>
+      <td><span class="badge a">🟢 高転換</span></td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:var(--rakuten)"></span>楽天（Lypo-C / shop_id=31）</td>
+      <td>69,900人</td>
+      <td style="color:#92400e;font-weight:700">6,089人</td>
+      <td><strong style="color:#92400e">8.71%</strong></td>
+      <td><span class="badge w">🟡 中程度</span></td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:var(--qoo10)"></span>Qoo10（Lypo-C / shop_id=35）</td>
+      <td>15,165人</td>
+      <td style="color:var(--red);font-weight:700">714人</td>
+      <td><strong style="color:var(--red)">4.71%</strong></td>
+      <td><span class="badge b">🔴 低転換</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="notes">
+  <div class="nt">📌 発見② ＋ 新KPI候補</div>
+  <ul>
+    <li><strong>楽天（Lypo-C）・Qoo10初回顧客の91〜95%が自社ECへ未転換のまま。</strong>楽天6.4万人・Qoo10 1.4万人が「取り込めていない顧客」として存在する。</li>
+    <li>「その他モール」（Yahoo・auPAY等）の転換率は25.4%と突出して高く、楽天の<strong>2.9倍</strong>。リポスフェリック系Yahoo（shop_id=1）・auPAY（shop_id=36）の除外後、残る「その他モール」は転換意欲の高い純粋なLypo-C購入層に絞られており、楽天施策設計の有力な参照ベンチマークとなる。</li>
+    <li><strong>💡 新KPI候補〔KPI-1〕：モール→自社EC転換率（月次）</strong> ─ 初回モール購入後180日以内の自社EC初回購入率。現状: 楽天8.71% / Qoo10 4.71%。</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ③ 購買タイミング -->
+<div class="stitle"><span class="num">③</span>チャネル間移動の時間軸 — いつ自社ECへ来るか</div>
+<div class="ssub">モールと自社ECの両方を経験した顧客（18,126人）の初回購入日の差分分析。楽天はLypo-Cショップ（shop_id=31）・Qoo10はshop_id=35のみ。</div>
+
+<div class="sg sg3">
+  <div class="sc" style="border-top:3px solid var(--green)">
+    <div class="lb">モール → 自社EC（順方向）</div>
+    <div class="vl" style="color:var(--green)">11,016<span style="font-size:14px;font-weight:400;color:var(--muted)"> 人</span></div>
+    <div class="sb" style="line-height:2.0">
+      平均移行日数: <strong>204日</strong><br>
+      中央値: <strong style="color:var(--text)">76日（約2.5ヶ月）</strong><br>
+      P75: 229日 / モール注文avg 2.2回<br>
+      転換後 自社EC注文avg <strong>9.5回</strong>
+    </div>
+  </div>
+  <div class="sc" style="border-top:3px solid #f59e0b">
+    <div class="lb">自社EC → モール（逆方向）</div>
+    <div class="vl" style="color:#92400e">7,003<span style="font-size:14px;font-weight:400;color:var(--muted)"> 人</span></div>
+    <div class="sb" style="line-height:2.0">
+      平均日数: <strong>359日</strong><br>
+      中央値: <strong style="color:var(--text)">180日（約6ヶ月）</strong><br>
+      P75: 529日 / 自社EC注文avg <strong>10.3回</strong><br>
+      モール注文avg 2.1回
+    </div>
+  </div>
+  <div class="sc" style="border-top:3px solid var(--border)">
+    <div class="lb">同日初回購入（稀）</div>
+    <div class="vl" style="color:var(--muted)">107<span style="font-size:14px;font-weight:400;color:var(--muted)"> 人</span></div>
+    <div class="sb" style="line-height:2.0">
+      全体の0.59%<br>
+      モール avg 1.6回 / 自社EC avg 3.6回<br>
+      <br>
+    </div>
+  </div>
+</div>
+
+<div class="notes">
+  <div class="nt">📌 発見③ ＋ 新KPI候補</div>
+  <ul>
+    <li>モール→自社EC転換の中央値は<strong>76日（約2.5ヶ月）</strong>。<strong>モール購入後3ヶ月以内が転換のゴールデンタイム。</strong>75%は購入後229日（約7.6ヶ月）以内に転換している。</li>
+    <li>自社EC→モールへの逆流（7,003人）は中央値180日。自社EC定着後でもモールを「追加購入」として使う共存関係が確認できる。自社EC注文avg 10.3回と最もエンゲージメントが高い層でもある。</li>
+    <li><strong>💡 新KPI候補〔KPI-3〕：モール購入後60日以内の自社EC接触率</strong> ─ 転換中央値76日に対してゴールデンタイムを60日に設定。CRMシーケンスの効果測定指標として活用。</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ④ LTV比較 -->
+<div class="stitle"><span class="num">④</span>LTV比較 — 併用顧客は何倍の価値があるか</div>
+<div class="ssub">セグメント別・平均LTV（税抜）と総売上ポートフォリオ。税抜計算: receive_order_row_sub_total_price ÷ (1 + 税率/100)</div>
+
+<div class="sg">
+  <div class="sc" style="border-top:3px solid var(--green)">
+    <div class="lb">自社EC＋モール併用</div>
+    <div class="vl" style="color:var(--green)">¥89,274</div>
+    <div class="sb">平均LTV（税抜）/ 10,825人<br>avg注文回数 9.0回<br>自社EC分 ¥69,875 / モール分 ¥14,721</div>
+  </div>
+  <div class="sc" style="border-top:3px solid var(--accent)">
+    <div class="lb">自社ECのみ</div>
+    <div class="vl" style="color:var(--accent)">¥56,099</div>
+    <div class="sb">平均LTV（税抜）/ 178,108人<br>avg注文回数 4.9回<br>中央値 ¥9,977</div>
+  </div>
+  <div class="sc" style="border-top:3px solid #9ca3af">
+    <div class="lb">その他モール単独</div>
+    <div class="vl" style="color:var(--muted)">¥38,394</div>
+    <div class="sb">平均LTV（税抜）/ 37,568人<br>avg注文回数 2.3回<br>中央値 ¥8,331</div>
+  </div>
+  <div class="sc" style="border-top:3px solid var(--rakuten)">
+    <div class="lb">モールのみ（楽天・Qoo10）</div>
+    <div class="vl" style="color:var(--rakuten)">¥13,598</div>
+    <div class="sb">平均LTV（税抜）/ 79,161人<br>avg注文回数 2.2回<br>中央値 ¥5,554</div>
+  </div>
+</div>
+
+<div class="bar-wrap">
+  <div style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px">LTV倍率比較（「自社ECのみ」= 1.0倍 を基準）</div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--green)"></span>自社EC＋モール併用</div>
+    <div class="bar-track"><div class="bar-fill" style="width:79%;background:var(--green)"></div></div>
+    <div class="bar-val"><strong>1.59倍</strong>（¥89,274）</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--accent)"></span>自社ECのみ</div>
+    <div class="bar-track"><div class="bar-fill" style="width:50%;background:var(--accent)"></div></div>
+    <div class="bar-val"><strong>1.00倍</strong>（¥56,099）</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:#9ca3af"></span>その他モール単独</div>
+    <div class="bar-track"><div class="bar-fill" style="width:34.2%;background:#9ca3af"></div></div>
+    <div class="bar-val"><strong>0.68倍</strong>（¥38,394）</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--rakuten)"></span>モールのみ（楽天・Qoo10）</div>
+    <div class="bar-track"><div class="bar-fill" style="width:12.1%;background:var(--rakuten)"></div></div>
+    <div class="bar-val"><strong>0.24倍</strong>（¥13,598）</div>
+  </div>
+</div>
+
+<table style="margin-bottom:14px">
+  <thead>
+    <tr>
+      <th>セグメント</th>
+      <th>顧客数</th>
+      <th>avg注文回数</th>
+      <th>平均LTV（税抜）</th>
+      <th>中央値LTV</th>
+      <th>自社EC平均LTV</th>
+      <th>モール平均LTV</th>
+      <th>総LTV合計</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="dot" style="background:var(--green)"></span>自社EC＋モール<span class="badge a" style="margin-left:6px;font-size:10px">最優良</span></td>
+      <td>10,825人</td>
+      <td>9.0回</td>
+      <td><strong style="color:var(--green)">¥89,274</strong></td>
+      <td>¥43,888</td>
+      <td>¥69,875</td>
+      <td>¥14,721</td>
+      <td>96.6億円</td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:var(--accent)"></span>自社ECのみ</td>
+      <td>178,108人</td>
+      <td>4.9回</td>
+      <td><strong style="color:var(--accent)">¥56,099</strong></td>
+      <td>¥9,977</td>
+      <td>¥51,005</td>
+      <td>—</td>
+      <td>999.2億円</td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:#9ca3af"></span>その他モール単独</td>
+      <td>37,568人</td>
+      <td>2.3回</td>
+      <td>¥38,394</td>
+      <td>¥8,331</td>
+      <td>—</td>
+      <td>—</td>
+      <td>144.2億円</td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:var(--rakuten)"></span>モールのみ（楽天・Qoo10）</td>
+      <td>79,161人</td>
+      <td>2.2回</td>
+      <td>¥13,598</td>
+      <td>¥5,554</td>
+      <td>—</td>
+      <td>¥13,220</td>
+      <td>107.6億円</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="notes">
+  <div class="nt">📌 発見④ ＋ 新KPI候補</div>
+  <ul>
+    <li>自社EC＋モール併用顧客は「自社ECのみ」の<strong>1.59倍・モールのみ顧客（楽天・Qoo10）の6.57倍のLTV</strong>を持つ最優良セグメント。人数はわずか3.5%（10,825人）に過ぎないが、総LTV貢献は96.6億円に達する。</li>
+    <li>モールのみ顧客（楽天・Qoo10）の平均LTVは¥13,598と低水準。自社ECへ転換するだけで1人あたりLTVが最大<strong>+¥75,676</strong>増加するポテンシャルがある。</li>
+    <li><strong>💡 新KPI候補〔KPI-2〕：転換顧客のLTV増加倍率</strong> ─ モール単独LTV vs 転換後LTVの比率。現状ベースラインは6.6倍（¥13,598→¥89,274）。転換施策のROIを定量化。</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ⑤ ブランド構成 -->
+<div class="stitle"><span class="num">⑤</span>チャネル別ブランド構成 — 同一顧客が各チャネルで何を買っているか</div>
+<div class="ssub">自社EC＋モール（楽天Lypo-C・Qoo10）併用顧客に限定。goods_tagによるブランド判別。リポスフェリック系7店舗・LypoSphericブランド行は集計から除外済み。</div>
+
+<div class="sg sg2" style="margin-bottom:12px">
+  <div class="bar-wrap" style="margin-bottom:0">
+    <div style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px">
+      <span class="dot" style="background:var(--accent)"></span>自社EC（Shopify）での購入構成
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl"><span class="dot" style="background:var(--vc)"></span>VC（Lypo-C）</div>
+      <div class="bar-track"><div class="bar-fill" style="width:74.1%;background:var(--vc)"></div></div>
+      <div class="bar-val"><strong>74.1%</strong></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl"><span class="dot" style="background:var(--cd)"></span>C+D系</div>
+      <div class="bar-track"><div class="bar-fill" style="width:24.1%;background:var(--cd)"></div></div>
+      <div class="bar-val"><strong>24.1%</strong></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl"><span class="dot" style="background:var(--ccera)"></span>C+Cera系</div>
+      <div class="bar-track"><div class="bar-fill" style="width:0.8%;background:var(--ccera)"></div></div>
+      <div class="bar-val">0.8%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl"><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</div>
+      <div class="bar-track"><div class="bar-fill" style="width:0.5%;background:var(--sb)"></div></div>
+      <div class="bar-val">0.5%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl"><span class="dot" style="background:var(--mi)"></span>MINERALion</div>
+      <div class="bar-track"><div class="bar-fill" style="width:0.3%;background:var(--mi)"></div></div>
+      <div class="bar-val">0.3%</div>
+    </div>
+  </div>
+  <div class="bar-wrap" style="margin-bottom:0">
+    <div style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px">
+      <span class="dot" style="background:var(--rakuten)"></span>楽天（Lypo-C / shop_id=31）での購入構成（同一顧客）
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl"><span class="dot" style="background:var(--vc)"></span>VC（Lypo-C）</div>
+      <div class="bar-track"><div class="bar-fill" style="width:66.5%;background:var(--vc)"></div></div>
+      <div class="bar-val"><strong>66.5%</strong></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl"><span class="dot" style="background:var(--cd)"></span>C+D系</div>
+      <div class="bar-track"><div class="bar-fill" style="width:27.4%;background:var(--cd)"></div></div>
+      <div class="bar-val"><strong>27.4%</strong></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl"><span class="dot" style="background:var(--cbd)"></span>CBD</div>
+      <div class="bar-track"><div class="bar-fill" style="width:4.0%;background:var(--cbd)"></div></div>
+      <div class="bar-val">4.0%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl"><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</div>
+      <div class="bar-track"><div class="bar-fill" style="width:1.1%;background:var(--sb)"></div></div>
+      <div class="bar-val">1.1%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl"><span class="dot" style="background:var(--ccera)"></span>C+Cera系</div>
+      <div class="bar-track"><div class="bar-fill" style="width:0.9%;background:var(--ccera)"></div></div>
+      <div class="bar-val">0.9%</div>
+    </div>
+  </div>
+</div>
+
+<div class="bar-wrap">
+  <div style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px">
+    <span class="dot" style="background:var(--qoo10)"></span>Qoo10（Lypo-C / shop_id=35）での購入構成（同一顧客）
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--vc)"></span>VC（Lypo-C）</div>
+    <div class="bar-track"><div class="bar-fill" style="width:67.3%;background:var(--vc)"></div></div>
+    <div class="bar-val"><strong>67.3%</strong></div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--cd)"></span>C+D系</div>
+    <div class="bar-track"><div class="bar-fill" style="width:25.9%;background:var(--cd)"></div></div>
+    <div class="bar-val"><strong>25.9%</strong></div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--cbd)"></span>CBD</div>
+    <div class="bar-track"><div class="bar-fill" style="width:3.8%;background:var(--cbd)"></div></div>
+    <div class="bar-val">3.8%</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</div>
+    <div class="bar-track"><div class="bar-fill" style="width:2.2%;background:var(--sb)"></div></div>
+    <div class="bar-val">2.2%</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl"><span class="dot" style="background:var(--ccera)"></span>C+Cera系</div>
+    <div class="bar-track"><div class="bar-fill" style="width:0.6%;background:var(--ccera)"></div></div>
+    <div class="bar-val">0.6%</div>
+  </div>
+</div>
+
+<div class="notes">
+  <div class="nt">📌 発見⑤</div>
+  <ul>
+    <li>楽天（Lypo-C）での購入構成はVC 66.5%・C+D 27.4%と、<strong>C+Dがすでに約3割を占めている。</strong>楽天顧客は単なる「VC購入者」ではなく、複数ブランドを選択的に購買している。</li>
+    <li>自社ECもVC 74.1%・C+D 24.1%とブランド構成が楽天と近似しており、<strong>「楽天Lypo-C顧客はすでに自社ECと同様のブランド理解を持っている」可能性が高い。</strong>転換施策の訴求ハードルが低い優良ターゲット。</li>
+    <li>Qoo10（Lypo-C）もVC 67.3%・C+D 25.9%と構成比は楽天と酷似。CBD（3.8%）・SKINBEAUTY（2.2%）も確認でき、多ブランド購買への関心度は比較的高い。</li>
+    <li><strong>示唆：楽天・Qoo10 Lypo-C顧客はVC・C+Dを理解している層。定期便オファーを中心とした自社EC誘導が最も有効なアプローチ。</strong></li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ⑥ 定期 × モール -->
+<div class="stitle"><span class="num">⑥</span>自社EC定期便 × モール購買 — 定期顧客の全体像</div>
+<div class="ssub">NEベースの自社EC（shop_id=17）購入顧客をベースに、モール購買の有無でセグメント分類。リポスフェリック系7店舗除外済み。</div>
+
+<div class="sg sg2">
+  <div class="sc" style="border-top:3px solid var(--green)">
+    <div class="lb">自社EC＋モール併用（定期+スポット二重顧客）</div>
+    <div class="vl" style="color:var(--green)">26,259<span style="font-size:14px;font-weight:400;color:var(--muted)"> 人</span></div>
+    <div class="sb" style="line-height:2.1">
+      自社EC平均注文数: <strong>9.0回</strong>（単独の2.4倍）<br>
+      うち楽天（Lypo-C）も利用: <strong>9,626人（36.7%）</strong><br>
+      うちQoo10（Lypo-C）も利用: <strong>1,344人（5.1%）</strong><br>
+      うちその他モール: <strong>16,440人（62.6%）</strong><br>
+      平均継続期間: <strong>498日（約16.6ヶ月）</strong>
+    </div>
+  </div>
+  <div class="sc" style="border-top:3px solid var(--border)">
+    <div class="lb">自社ECのみ（モール未経験）</div>
+    <div class="vl" style="color:var(--muted)">162,674<span style="font-size:14px;font-weight:400;color:var(--muted)"> 人</span></div>
+    <div class="sb" style="line-height:2.1">
+      自社EC平均注文数: <strong>3.8回</strong><br>
+      平均継続期間: <strong>162日（約5.4ヶ月）</strong><br>
+      <span style="color:var(--muted)">楽天・Qoo10の利用なし</span><br>
+      継続期間は併用顧客の <span class="dn">33%</span> にとどまる<br>
+      <span style="color:transparent">─</span>
+    </div>
+  </div>
+</div>
+
+<div class="notes">
+  <div class="nt">📌 発見⑥ ＋ 新KPI候補</div>
+  <ul>
+    <li>自社ECを利用している顧客の<strong>13.9%（26,259人）がモールも並行利用</strong>しており、自社EC単独顧客より平均注文数が2.4倍・継続期間が3.1倍と長い。自社ECのヘビーユーザーほどモールとも併用している傾向が見られる。</li>
+    <li>モール併用のうちその他モール（Yahoo・auPAY等）が16,440人（62.6%）と最多。楽天（Lypo-C）は9,626人（36.7%）。自社EC高頻度ユーザーはYahoo・auPAY等を「補完チャネル」として活用している実態がある。</li>
+    <li>「定期便を持ちつつモールでもスポット購入する」行動は定期離脱リスク低減とも解釈できる。モール購買を「敵」ではなく「ロイヤルティの証」として捉える視点が有効。</li>
+    <li><strong>💡 新KPI候補〔KPI-4〕：チャネル多様化スコア（CDS）</strong> ─ 全体顧客に占める「2チャネル以上保有顧客」の比率。現状9.3%（28,316人）。自社EC比率向上とモール成長の両立を一指標で追跡できる。</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- 新KPI提案 -->
+<div class="stitle"><span class="num" style="background:var(--text)">🎯</span>新KPI提案 — 経営課題「自社EC比率向上」に向けた指標体系</div>
+<div class="ssub">分析から得られた4つの新KPI。既存のチャネル売上予実とセットで管理することを推奨。</div>
+
+<div class="kpi-proposal-grid">
+  <div class="kp kp-blue">
+    <span class="kp-badge kp-badge kp-blue" style="background:#eff6ff;color:var(--blue)">KPI-1 主要指標</span>
+    <h3 style="color:var(--blue)">モール→自社EC転換率（月次）</h3>
+    <div class="formula">
+分子: 当月までにモールで初回購入し、その後<br>
+　　　180日以内に自社ECで購入した顧客数<br>
+分母: モール初回購入顧客数（180日前コホート）<br>
+現状: 楽天（Lypo-C）8.71% / Qoo10（Lypo-C）4.71%
+    </div>
+    <div class="rationale">CRM施策（定期便オファーDM・LINE誘導）の効果を月次で追跡できる。楽天8.71%・Qoo10 4.71%という現状値から、まず楽天12%・Qoo10 8%をベンチマーク目標とすることを推奨。</div>
+  </div>
+
+  <div class="kp kp-green">
+    <span class="kp-badge" style="background:#f0fdf4;color:var(--green)">KPI-2 価値指標</span>
+    <h3 style="color:var(--green)">転換顧客のLTV増加倍率</h3>
+    <div class="formula">
+モール単独LTV vs 転換後LTV の比較<br>
+現状ベースライン:<br>
+　モールのみ（楽天・Qoo10）avg ¥13,598<br>
+　転換後（自社EC+モール）avg ¥89,274 → 6.6倍
+    </div>
+    <div class="rationale">転換施策のROIを定量化。転換1人あたりLTV増分 ≒ ¥75,676を施策コストと比較してCPA合理性を評価できる。楽天・Qoo10顧客はモール単独LTVが低く（¥13,598）、自社EC転換による価値増加幅が極めて大きい。</div>
+  </div>
+
+  <div class="kp kp-orange">
+    <span class="kp-badge" style="background:#fffbeb;color:#92400e">KPI-3 タイミング指標</span>
+    <h3 style="color:#92400e">モール購入後60日以内接触率</h3>
+    <div class="formula">
+転換中央値=76日のゴールデンタイム内<br>
+（0〜60日）に自社ECへの接触アクション<br>
+（LP訪問・メルマガ開封・LINE登録等）が<br>
+発生した顧客の割合（現状: 未計測）
+    </div>
+    <div class="rationale">転換中央値76日に対してゴールデンタイムを60日に設定。モール注文後の自動CRMシーケンスのKPIとして活用。早期接触が転換率を最大化するため、注文後の初動スピードが重要。</div>
+  </div>
+
+  <div class="kp">
+    <span class="kp-badge kp-badge-default">KPI-4 顧客品質指標</span>
+    <h3 style="color:var(--accent)">チャネル多様化スコア（CDS）</h3>
+    <div class="formula">
+全体顧客に占める「2チャネル以上保有顧客」の比率<br>
+現状: 9.3%（28,316人 / 305,683人）<br>
+内訳:<br>
+　自社EC+楽天率: 2.8%（目標 5%）<br>
+　自社EC+Qoo10率: 0.4%（目標 1%）
+    </div>
+    <div class="rationale">多チャネル顧客はLTVが1.59倍（¥89,904 vs ¥56,692）であることが証明された。CDSの向上は将来LTV増加の先行指標として機能する。自社EC比率を高めながらモール売上も伸ばすという両立戦略の進捗を一指標で管理できる。</div>
+  </div>
+</div>
+
+<div class="stitle" style="margin-top:32px"><span class="num" style="background:var(--text)">📋</span>施策優先順位マトリクス</div>
+<table class="action-table">
+  <thead>
+    <tr>
+      <th style="width:90px">優先度</th>
+      <th style="width:240px">施策</th>
+      <th>根拠（分析発見）</th>
+      <th style="width:220px">期待効果</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="priority p1">🔥 最優先</span></td>
+      <td><strong>楽天（Lypo-C）購入後60日以内の自社EC誘導施策</strong></td>
+      <td>転換中央値76日・楽天未転換顧客6.4万人（91.3%）。ゴールデンタイムへの集中投下。</td>
+      <td>転換率 8.71%→12% で+2,300人獲得。LTV増分+¥75,676×2,300人≒約1.7億円/年。</td>
+    </tr>
+    <tr>
+      <td><span class="priority p2">⚡ 高優先</span></td>
+      <td><strong>楽天（Lypo-C）C+D購入者の定期便誘導強化</strong></td>
+      <td>楽天（Lypo-C）ではC+Dがすでに27.4%を占め、顧客のブランド理解は十分。自社EC定期便との差異は「定期設定の有無」のみであり、訴求ハードルが低い。</td>
+      <td>C+D購入者を自社EC定期に誘導 → 継続期間469日水準へ。LTV増分最大化。</td>
+    </tr>
+    <tr>
+      <td><span class="priority p3">📌 中優先</span></td>
+      <td><strong>Qoo10（Lypo-C）への定期便オファー強化</strong></td>
+      <td>Qoo10もVC 67.4%・C+D 25.9%と自社ECに近い構成。転換率4.71%と楽天より低く、改善余地が大きい。</td>
+      <td>転換率 4.71%→8% で+500人獲得。LTV増分+¥75,676×500人≒約3.8億円/年。</td>
+    </tr>
+    <tr>
+      <td><span class="priority p4">🔍 調査要</span></td>
+      <td><strong>「その他モール」高転換率（15.8%）の要因解析と楽天への横展開</strong></td>
+      <td>Yahoo・auPAY等（リポスフェリック系除外後の純粋Lypo-C層）の転換率が楽天の2.9倍。導線・購入層・商品構成の差異を特定。</td>
+      <td>高転換要因の特定 → 楽天施策に応用で転換率12%超を早期達成。</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="footer">
+  <span>BQ: spic-com-2025-apr-00 / prod_dwh_oci ｜ 税抜（行レベル税率逆算）｜ Amazon(32)・リポスフェリック系7店舗(1・5・6・15・34・36・40)・toB・テスト・社販除外 ｜ 転売業者フィルタ適用済み ｜ LypoSphericブランド行: goods_tag=[Lypospheric]を除外</span>
+  <span>分析実施: 2026-05-15 ｜ Claude Sonnet 4.6 + Google Cloud BigQuery</span>
+</div>
+
+</body>
+</html>

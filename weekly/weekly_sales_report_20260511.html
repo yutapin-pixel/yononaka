@@ -56,7 +56,11 @@ td.dash-val{color:#bbb;text-align:center;}
 .insight-body ul li:last-child{border-bottom:none;}
 .itag{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
 .itag-ok{background:#dcfce7;color:#166534;}.itag-warn{background:#ffedd5;color:#9a3412;}.itag-bad{background:#fee2e2;color:#991b1b;}.itag-watch{background:#fef9c3;color:#854d0e;}.itag-ref{background:#dbeafe;color:#1e40af;}
-</style></head>
+
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 12px;margin-bottom:20px;width:80%;}
+.chart-wrap{position:relative;height:360px;width:100%;}
+</style><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
 <body><div class="container">
 <div class="hdr">
   <div><h1>2026年5月11日週 売上進捗シート</h1>
@@ -70,7 +74,8 @@ td.dash-val{color:#bbb;text-align:center;}
 </div>
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab(0)">📊 実績</button>
-  <button class="tab-btn" onclick="switchTab(1)">💬 考察</button>
+  <button class="tab-btn" onclick="switchTab(1)">📈 グラフ</button>
+  <button class="tab-btn" onclick="switchTab(2)">💬 考察</button>
 </div>
 <div class="tab-panel active" id="tab-0"><div class="stitle">① 全チャネル売上まとめ</div>
 <div class="ssub">NE受注日基準・税抜 ／ <strong style="color:#ff9900;">⚠️ Amazonのみ出荷日（send_date）基準</strong> ／ shop_id=9の¥0受注（無償提供）は除外済み</div>
@@ -232,7 +237,53 @@ td.dash-val{color:#bbb;text-align:center;}
 </tbody>
 </table></div>
 </div>
-<div class="tab-panel" id="tab-1"><div style="background:#fff8f3;border:1px solid #fdd;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#7a4010;">💡 <strong>考察タブ</strong>：週単位の上下より<strong>長めのトレンドで見てどう捉えるか</strong>を重視。まず実績タブを確認してから読むことを推奨。</div>
+<div class="tab-panel" id="tab-1"><div style="background:#fff8f3;border:1px solid #fdd;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#7a4010;">
+📈 <strong>グラフタブ</strong>：積み上げ棒グラフ（左軸: 売上）＋折れ線（右軸: 新規顧客数）。凡例クリックで項目の表示/非表示を切り替えられます。
+</div>
+<div class="stitle">① 全チャネル 週次推移</div>
+<div class="ssub">定期（Shopify）・都度（Shopify）・Amazon・楽天・Yahoo・Qoo10・ふるさと納税・LINEギフトの積み上げ</div>
+
+<div class="chart-card">
+  <div class="chart-wrap"><canvas id="chart_all"></canvas></div>
+</div>
+<div class="stitle">② Lypo-C VC 週次推移</div>
+<div class="ssub">goods_tag = [Lypo-C] / [Lypo-C for SPORTS]</div>
+
+<div class="chart-card">
+  <div class="chart-wrap"><canvas id="chart_vc"></canvas></div>
+</div>
+<div class="stitle">③ C+D 週次推移</div>
+<div class="ssub">goods_tag = [Lypo-C C+D]系</div>
+
+<div class="chart-card">
+  <div class="chart-wrap"><canvas id="chart_cd"></canvas></div>
+</div>
+<div class="stitle">④ CBD 週次推移</div>
+<div class="ssub">goods_tag = [Lypo-C CBD] ／ Shopify非扱い（定期/都度バーなし）</div>
+<div class="ssub">※ CBDはShopify取り扱いなしのため定期/都度バーは非表示</div>
+<div class="chart-card">
+  <div class="chart-wrap"><canvas id="chart_cbd"></canvas></div>
+</div>
+<div class="stitle">⑤ SkinBeauty 週次推移</div>
+<div class="ssub">goods_tag = [Lypo-C SKINBEAUTY]</div>
+
+<div class="chart-card">
+  <div class="chart-wrap"><canvas id="chart_skinbeauty"></canvas></div>
+</div>
+<div class="stitle">⑥ MINERALion 週次推移</div>
+<div class="ssub">goods_tag = [MINERALion]</div>
+
+<div class="chart-card">
+  <div class="chart-wrap"><canvas id="chart_mineralion"></canvas></div>
+</div>
+<div class="stitle">⑦ C+Cera 週次推移</div>
+<div class="ssub">goods_tag = [Lypo-C C＋Cera]（全角＋）</div>
+
+<div class="chart-card">
+  <div class="chart-wrap"><canvas id="chart_ccera"></canvas></div>
+</div>
+</div>
+<div class="tab-panel" id="tab-2"><div style="background:#fff8f3;border:1px solid #fdd;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#7a4010;">💡 <strong>考察タブ</strong>：週単位の上下より<strong>長めのトレンドで見てどう捉えるか</strong>を重視。まず実績タブを確認してから読むことを推奨。</div>
 <div class="stitle">① 全チャネル 考察</div>
 <div class="ssub">NE受注日基準・税抜 ／ <strong style="color:#ff9900;">⚠️ Amazonのみ出荷日（send_date）基準</strong></div>
 <div class="tbl-wrap"><table>
@@ -414,6 +465,932 @@ td.dash-val{color:#bbb;text-align:center;}
 <div class="insight-body open"><ul><li><span class="itag itag-ok">好材料</span><span>C+Cera全体は今週4,855,523円（前週比+2.1%）。28包が384箱と7週間で最高水準。平均注文単価も12,443円に回復（4/27週6,813円から大幅改善）。</span></li><li><span class="itag itag-ref">構造</span><span>4/20〜4/27週の7包急増（362・187個）は試し買いキャンペーンの影響と見られ、現在は54個に落ち着き通常水準へ回帰。Shopify定期1.64M/週の水準は維持。</span></li></ul></div>
 </div></div>
 </div><script>
+window.addEventListener("load", function(){
+
+new Chart(document.getElementById('chart_all'), {
+    type: 'bar',
+    data: {
+        labels: ['03/30', '04/06', '04/13', '04/20', '04/27', '05/04', '05/11'],
+        datasets: [
+            {
+            label: '定期注文（Shopify）',
+            data: [29847200, 34296587, 35291450, 37868238, 35038004, 37563756, 34996703],
+            backgroundColor: '#F4845F',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '都度購入（Shopify）',
+            data: [12554601, 12359767, 12767538, 15458066, 14843612, 13281765, 14995090],
+            backgroundColor: '#FAC49A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Amazon（出荷日基準）',
+            data: [29802022, 25626624, 19726232, 20170201, 28182812, 22126408, 20862188],
+            backgroundColor: '#F5C842',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '楽天',
+            data: [13569695, 11803801, 12450076, 13798627, 8964330, 13301087, 14616127],
+            backgroundColor: '#E05C8A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Yahoo',
+            data: [1694359, 1050040, 2349982, 1434098, 1068339, 2187179, 1717405],
+            backgroundColor: '#7B9FE0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Qoo10',
+            data: [1216875, 937117, 776674, 946461, 1687729, 1795767, 762231],
+            backgroundColor: '#5BC4C0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'ふるさと納税',
+            data: [6454419, 0, 0, 0, 5294654, 0, 0],
+            backgroundColor: '#82C985',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'LINEギフト',
+            data: [2064815, 0, 0, 0, 2057727, 0, 0],
+            backgroundColor: '#9B7FD4',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '新規顧客数（Shopify）',
+            data: [254, 212, 244, 285, 311, 311, 309],
+            type: 'line',
+            yAxisID: 'y2',
+            borderColor: '#1e40af',
+            backgroundColor: 'rgba(30,64,175,0.15)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#1e40af',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            fill: false,
+            tension: 0.3,
+            order: 1,
+            z: 10
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: { font: { size: 11, family: "'Noto Sans JP', sans-serif" }, padding: 12, boxWidth: 14 }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        if(ctx.dataset.yAxisID === 'y2') return ctx.dataset.label + ': ' + ctx.parsed.y + '人';
+                        const v = ctx.parsed.y;
+                        if(v === 0) return null;
+                        return ctx.dataset.label + ': ¥' + v.toLocaleString();
+                    },
+                    footer: function(items) {
+                        const total = items.filter(i => i.dataset.yAxisID === 'y').reduce((s,i) => s + i.parsed.y, 0);
+                        return '合計: ¥' + total.toLocaleString();
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                ticks: { font: { size: 11 }, color: '#57534e' },
+                grid: { display: false }
+            },
+            y: {
+                stacked: true,
+                position: 'left',
+                ticks: {
+                    font: { size: 10 },
+                    callback: function(v) { return '¥' + (v/1000000).toFixed(0) + 'M'; }
+                },
+                grid: { color: 'rgba(0,0,0,0.06)' }
+            },
+            y2: {
+                position: 'right',
+                grid: { drawOnChartArea: false },
+                ticks: {
+                    font: { size: 10 },
+                    color: '#1e40af',
+                    callback: function(v) { return v + '人'; }
+                },
+                title: { display: true, text: '新規顧客数', color: '#1e40af', font: { size: 11 } }
+            }
+        }
+    }
+});
+
+new Chart(document.getElementById('chart_vc'), {
+    type: 'bar',
+    data: {
+        labels: ['03/30', '04/06', '04/13', '04/20', '04/27', '05/04', '05/11'],
+        datasets: [
+            {
+            label: '定期注文（Shopify）',
+            data: [17184126, 18615943, 19365766, 20666031, 19841724, 20696179, 18569995],
+            backgroundColor: '#F4845F',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '都度購入（Shopify）',
+            data: [5537125, 5451701, 6208833, 7132497, 7135430, 7163739, 7436851],
+            backgroundColor: '#FAC49A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Amazon（出荷日基準）',
+            data: [17144576, 13888791, 10777166, 10874024, 16029016, 12745004, 11514026],
+            backgroundColor: '#F5C842',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '楽天',
+            data: [7416460, 6632089, 7019985, 7570991, 5095771, 7268222, 8167311],
+            backgroundColor: '#E05C8A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Yahoo',
+            data: [994106, 577848, 1455117, 893918, 603255, 1443471, 1114901],
+            backgroundColor: '#7B9FE0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Qoo10',
+            data: [736244, 611477, 499261, 633802, 1032457, 1089636, 562413],
+            backgroundColor: '#5BC4C0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'ふるさと納税',
+            data: [3295741, 0, 0, 0, 2825370, 0, 0],
+            backgroundColor: '#82C985',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'LINEギフト',
+            data: [1262938, 0, 0, 0, 1420879, 0, 0],
+            backgroundColor: '#9B7FD4',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '新規顧客数（Shopify）',
+            data: [135, 136, 163, 173, 176, 212, 217],
+            type: 'line',
+            yAxisID: 'y2',
+            borderColor: '#1e40af',
+            backgroundColor: 'rgba(30,64,175,0.15)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#1e40af',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            fill: false,
+            tension: 0.3,
+            order: 1,
+            z: 10
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: { font: { size: 11, family: "'Noto Sans JP', sans-serif" }, padding: 12, boxWidth: 14 }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        if(ctx.dataset.yAxisID === 'y2') return ctx.dataset.label + ': ' + ctx.parsed.y + '人';
+                        const v = ctx.parsed.y;
+                        if(v === 0) return null;
+                        return ctx.dataset.label + ': ¥' + v.toLocaleString();
+                    },
+                    footer: function(items) {
+                        const total = items.filter(i => i.dataset.yAxisID === 'y').reduce((s,i) => s + i.parsed.y, 0);
+                        return '合計: ¥' + total.toLocaleString();
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                ticks: { font: { size: 11 }, color: '#57534e' },
+                grid: { display: false }
+            },
+            y: {
+                stacked: true,
+                position: 'left',
+                ticks: {
+                    font: { size: 10 },
+                    callback: function(v) { return '¥' + (v/1000000).toFixed(0) + 'M'; }
+                },
+                grid: { color: 'rgba(0,0,0,0.06)' }
+            },
+            y2: {
+                position: 'right',
+                grid: { drawOnChartArea: false },
+                ticks: {
+                    font: { size: 10 },
+                    color: '#1e40af',
+                    callback: function(v) { return v + '人'; }
+                },
+                title: { display: true, text: '新規顧客数', color: '#1e40af', font: { size: 11 } }
+            }
+        }
+    }
+});
+
+new Chart(document.getElementById('chart_cd'), {
+    type: 'bar',
+    data: {
+        labels: ['03/30', '04/06', '04/13', '04/20', '04/27', '05/04', '05/11'],
+        datasets: [
+            {
+            label: '定期注文（Shopify）',
+            data: [10648226, 13325672, 12996004, 14172366, 12838808, 13951320, 13504256],
+            backgroundColor: '#F4845F',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '都度購入（Shopify）',
+            data: [4345486, 4335651, 4311357, 4724099, 4277836, 4162217, 4947189],
+            backgroundColor: '#FAC49A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Amazon（出荷日基準）',
+            data: [10572400, 10460392, 7860269, 8104335, 10528458, 8144231, 7943359],
+            backgroundColor: '#F5C842',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '楽天',
+            data: [4851916, 3910445, 4169830, 4904497, 3179404, 4622068, 4953278],
+            backgroundColor: '#E05C8A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Yahoo',
+            data: [482020, 395830, 704505, 347950, 325590, 539156, 482320],
+            backgroundColor: '#7B9FE0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Qoo10',
+            data: [351420, 278836, 171729, 256650, 460837, 527413, 157050],
+            backgroundColor: '#5BC4C0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'ふるさと納税',
+            data: [3055556, 0, 0, 0, 2278981, 0, 0],
+            backgroundColor: '#82C985',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'LINEギフト',
+            data: [733677, 0, 0, 0, 593448, 0, 0],
+            backgroundColor: '#9B7FD4',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '新規顧客数（Shopify）',
+            data: [70, 63, 57, 73, 61, 84, 72],
+            type: 'line',
+            yAxisID: 'y2',
+            borderColor: '#1e40af',
+            backgroundColor: 'rgba(30,64,175,0.15)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#1e40af',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            fill: false,
+            tension: 0.3,
+            order: 1,
+            z: 10
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: { font: { size: 11, family: "'Noto Sans JP', sans-serif" }, padding: 12, boxWidth: 14 }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        if(ctx.dataset.yAxisID === 'y2') return ctx.dataset.label + ': ' + ctx.parsed.y + '人';
+                        const v = ctx.parsed.y;
+                        if(v === 0) return null;
+                        return ctx.dataset.label + ': ¥' + v.toLocaleString();
+                    },
+                    footer: function(items) {
+                        const total = items.filter(i => i.dataset.yAxisID === 'y').reduce((s,i) => s + i.parsed.y, 0);
+                        return '合計: ¥' + total.toLocaleString();
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                ticks: { font: { size: 11 }, color: '#57534e' },
+                grid: { display: false }
+            },
+            y: {
+                stacked: true,
+                position: 'left',
+                ticks: {
+                    font: { size: 10 },
+                    callback: function(v) { return '¥' + (v/1000000).toFixed(0) + 'M'; }
+                },
+                grid: { color: 'rgba(0,0,0,0.06)' }
+            },
+            y2: {
+                position: 'right',
+                grid: { drawOnChartArea: false },
+                ticks: {
+                    font: { size: 10 },
+                    color: '#1e40af',
+                    callback: function(v) { return v + '人'; }
+                },
+                title: { display: true, text: '新規顧客数', color: '#1e40af', font: { size: 11 } }
+            }
+        }
+    }
+});
+
+new Chart(document.getElementById('chart_cbd'), {
+    type: 'bar',
+    data: {
+        labels: ['03/30', '04/06', '04/13', '04/20', '04/27', '05/04', '05/11'],
+        datasets: [
+            {
+            label: '定期注文（Shopify）',
+            data: [0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#F4845F',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '都度購入（Shopify）',
+            data: [0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#FAC49A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Amazon（出荷日基準）',
+            data: [552206, 404242, 197600, 424700, 366200, 277268, 364300],
+            backgroundColor: '#F5C842',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '楽天',
+            data: [421700, 520600, 356000, 399384, 221890, 295953, 428620],
+            backgroundColor: '#E05C8A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Yahoo',
+            data: [105600, 27900, 67100, 99600, 61100, 97300, 58100],
+            backgroundColor: '#7B9FE0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Qoo10',
+            data: [24485, 3000, 16600, 19600, 30710, 55292, 8300],
+            backgroundColor: '#5BC4C0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'ふるさと納税',
+            data: [91667, 0, 0, 0, 126667, 0, 0],
+            backgroundColor: '#82C985',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'LINEギフト',
+            data: [0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#9B7FD4',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '新規顧客数（Shopify）',
+            data: [0, 0, 0, 0, 0, 0, 0],
+            type: 'line',
+            yAxisID: 'y2',
+            borderColor: '#1e40af',
+            backgroundColor: 'rgba(30,64,175,0.15)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#1e40af',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            fill: false,
+            tension: 0.3,
+            order: 1,
+            z: 10
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: { font: { size: 11, family: "'Noto Sans JP', sans-serif" }, padding: 12, boxWidth: 14 }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        if(ctx.dataset.yAxisID === 'y2') return ctx.dataset.label + ': ' + ctx.parsed.y + '人';
+                        const v = ctx.parsed.y;
+                        if(v === 0) return null;
+                        return ctx.dataset.label + ': ¥' + v.toLocaleString();
+                    },
+                    footer: function(items) {
+                        const total = items.filter(i => i.dataset.yAxisID === 'y').reduce((s,i) => s + i.parsed.y, 0);
+                        return '合計: ¥' + total.toLocaleString();
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                ticks: { font: { size: 11 }, color: '#57534e' },
+                grid: { display: false }
+            },
+            y: {
+                stacked: true,
+                position: 'left',
+                ticks: {
+                    font: { size: 10 },
+                    callback: function(v) { return '¥' + (v/1000000).toFixed(0) + 'M'; }
+                },
+                grid: { color: 'rgba(0,0,0,0.06)' }
+            },
+            y2: {
+                position: 'right',
+                grid: { drawOnChartArea: false },
+                ticks: {
+                    font: { size: 10 },
+                    color: '#1e40af',
+                    callback: function(v) { return v + '人'; }
+                },
+                title: { display: true, text: '新規顧客数', color: '#1e40af', font: { size: 11 } }
+            }
+        }
+    }
+});
+
+new Chart(document.getElementById('chart_skinbeauty'), {
+    type: 'bar',
+    data: {
+        labels: ['03/30', '04/06', '04/13', '04/20', '04/27', '05/04', '05/11'],
+        datasets: [
+            {
+            label: '定期注文（Shopify）',
+            data: [660048, 849072, 954480, 883641, 787472, 788157, 922652],
+            backgroundColor: '#F4845F',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '都度購入（Shopify）',
+            data: [233820, 160926, 180774, 243744, 261120, 87346, 219369],
+            backgroundColor: '#FAC49A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Amazon（出荷日基準）',
+            data: [536960, 336639, 335113, 288323, 371853, 282045, 349559],
+            backgroundColor: '#F5C842',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '楽天',
+            data: [379711, 298294, 309349, 366639, 221059, 312449, 316217],
+            backgroundColor: '#E05C8A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Yahoo',
+            data: [38281, 26554, 0, 0, 11727, 23454, 23454],
+            backgroundColor: '#7B9FE0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Qoo10',
+            data: [58049, 3100, 23454, 17927, 55875, 55119, 11727],
+            backgroundColor: '#5BC4C0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'ふるさと納税',
+            data: [11455, 0, 0, 0, 63636, 0, 0],
+            backgroundColor: '#82C985',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'LINEギフト',
+            data: [68200, 0, 0, 0, 43400, 0, 0],
+            backgroundColor: '#9B7FD4',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '新規顧客数（Shopify）',
+            data: [3, 2, 3, 2, 3, 1, 2],
+            type: 'line',
+            yAxisID: 'y2',
+            borderColor: '#1e40af',
+            backgroundColor: 'rgba(30,64,175,0.15)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#1e40af',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            fill: false,
+            tension: 0.3,
+            order: 1,
+            z: 10
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: { font: { size: 11, family: "'Noto Sans JP', sans-serif" }, padding: 12, boxWidth: 14 }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        if(ctx.dataset.yAxisID === 'y2') return ctx.dataset.label + ': ' + ctx.parsed.y + '人';
+                        const v = ctx.parsed.y;
+                        if(v === 0) return null;
+                        return ctx.dataset.label + ': ¥' + v.toLocaleString();
+                    },
+                    footer: function(items) {
+                        const total = items.filter(i => i.dataset.yAxisID === 'y').reduce((s,i) => s + i.parsed.y, 0);
+                        return '合計: ¥' + total.toLocaleString();
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                ticks: { font: { size: 11 }, color: '#57534e' },
+                grid: { display: false }
+            },
+            y: {
+                stacked: true,
+                position: 'left',
+                ticks: {
+                    font: { size: 10 },
+                    callback: function(v) { return '¥' + (v/1000000).toFixed(0) + 'M'; }
+                },
+                grid: { color: 'rgba(0,0,0,0.06)' }
+            },
+            y2: {
+                position: 'right',
+                grid: { drawOnChartArea: false },
+                ticks: {
+                    font: { size: 10 },
+                    color: '#1e40af',
+                    callback: function(v) { return v + '人'; }
+                },
+                title: { display: true, text: '新規顧客数', color: '#1e40af', font: { size: 11 } }
+            }
+        }
+    }
+});
+
+new Chart(document.getElementById('chart_mineralion'), {
+    type: 'bar',
+    data: {
+        labels: ['03/30', '04/06', '04/13', '04/20', '04/27', '05/04', '05/11'],
+        datasets: [
+            {
+            label: '定期注文（Shopify）',
+            data: [176800, 268400, 307200, 351200, 224000, 345600, 356800],
+            backgroundColor: '#F4845F',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '都度購入（Shopify）',
+            data: [862800, 786600, 492000, 598800, 424800, 401000, 503200],
+            backgroundColor: '#FAC49A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Amazon（出荷日基準）',
+            data: [0, 58150, 58150, 40705, 127871, 40705, 104669],
+            backgroundColor: '#F5C842',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '楽天',
+            data: [6000, 63965, 104670, 127930, 46520, 157005, 116009],
+            backgroundColor: '#E05C8A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Yahoo',
+            data: [0, 11630, 11630, 11630, 5815, 46520, 11630],
+            backgroundColor: '#7B9FE0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Qoo10',
+            data: [0, 0, 11630, 11630, 26748, 16281, 5815],
+            backgroundColor: '#5BC4C0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'ふるさと納税',
+            data: [0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#82C985',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'LINEギフト',
+            data: [0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#9B7FD4',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '新規顧客数（Shopify）',
+            data: [15, 8, 6, 5, 4, 8, 8],
+            type: 'line',
+            yAxisID: 'y2',
+            borderColor: '#1e40af',
+            backgroundColor: 'rgba(30,64,175,0.15)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#1e40af',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            fill: false,
+            tension: 0.3,
+            order: 1,
+            z: 10
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: { font: { size: 11, family: "'Noto Sans JP', sans-serif" }, padding: 12, boxWidth: 14 }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        if(ctx.dataset.yAxisID === 'y2') return ctx.dataset.label + ': ' + ctx.parsed.y + '人';
+                        const v = ctx.parsed.y;
+                        if(v === 0) return null;
+                        return ctx.dataset.label + ': ¥' + v.toLocaleString();
+                    },
+                    footer: function(items) {
+                        const total = items.filter(i => i.dataset.yAxisID === 'y').reduce((s,i) => s + i.parsed.y, 0);
+                        return '合計: ¥' + total.toLocaleString();
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                ticks: { font: { size: 11 }, color: '#57534e' },
+                grid: { display: false }
+            },
+            y: {
+                stacked: true,
+                position: 'left',
+                ticks: {
+                    font: { size: 10 },
+                    callback: function(v) { return '¥' + (v/1000000).toFixed(0) + 'M'; }
+                },
+                grid: { color: 'rgba(0,0,0,0.06)' }
+            },
+            y2: {
+                position: 'right',
+                grid: { drawOnChartArea: false },
+                ticks: {
+                    font: { size: 10 },
+                    color: '#1e40af',
+                    callback: function(v) { return v + '人'; }
+                },
+                title: { display: true, text: '新規顧客数', color: '#1e40af', font: { size: 11 } }
+            }
+        }
+    }
+});
+
+new Chart(document.getElementById('chart_ccera'), {
+    type: 'bar',
+    data: {
+        labels: ['03/30', '04/06', '04/13', '04/20', '04/27', '05/04', '05/11'],
+        datasets: [
+            {
+            label: '定期注文（Shopify）',
+            data: [1178000, 1237500, 1668000, 1795000, 1346000, 1782500, 1643000],
+            backgroundColor: '#F4845F',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '都度購入（Shopify）',
+            data: [1575370, 1624889, 1574574, 2758926, 2744426, 1467463, 1888481],
+            backgroundColor: '#FAC49A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Amazon（出荷日基準）',
+            data: [995880, 478410, 497934, 438114, 759414, 637155, 586275],
+            backgroundColor: '#F5C842',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '楽天',
+            data: [499908, 378408, 490242, 429186, 199686, 645390, 634692],
+            backgroundColor: '#E05C8A',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Yahoo',
+            data: [74352, 10278, 111630, 81000, 60852, 37278, 27000],
+            backgroundColor: '#7B9FE0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'Qoo10',
+            data: [46677, 40704, 54000, 6852, 81102, 52026, 16926],
+            backgroundColor: '#5BC4C0',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'ふるさと納税',
+            data: [0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#82C985',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: 'LINEギフト',
+            data: [0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#9B7FD4',
+            stack: 'stack1',
+            yAxisID: 'y',
+            order: 2
+        },{
+            label: '新規顧客数（Shopify）',
+            data: [16, 12, 18, 44, 76, 24, 21],
+            type: 'line',
+            yAxisID: 'y2',
+            borderColor: '#1e40af',
+            backgroundColor: 'rgba(30,64,175,0.15)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#1e40af',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            fill: false,
+            tension: 0.3,
+            order: 1,
+            z: 10
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: { font: { size: 11, family: "'Noto Sans JP', sans-serif" }, padding: 12, boxWidth: 14 }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        if(ctx.dataset.yAxisID === 'y2') return ctx.dataset.label + ': ' + ctx.parsed.y + '人';
+                        const v = ctx.parsed.y;
+                        if(v === 0) return null;
+                        return ctx.dataset.label + ': ¥' + v.toLocaleString();
+                    },
+                    footer: function(items) {
+                        const total = items.filter(i => i.dataset.yAxisID === 'y').reduce((s,i) => s + i.parsed.y, 0);
+                        return '合計: ¥' + total.toLocaleString();
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                ticks: { font: { size: 11 }, color: '#57534e' },
+                grid: { display: false }
+            },
+            y: {
+                stacked: true,
+                position: 'left',
+                ticks: {
+                    font: { size: 10 },
+                    callback: function(v) { return '¥' + (v/1000000).toFixed(0) + 'M'; }
+                },
+                grid: { color: 'rgba(0,0,0,0.06)' }
+            },
+            y2: {
+                position: 'right',
+                grid: { drawOnChartArea: false },
+                ticks: {
+                    font: { size: 10 },
+                    color: '#1e40af',
+                    callback: function(v) { return v + '人'; }
+                },
+                title: { display: true, text: '新規顧客数', color: '#1e40af', font: { size: 11 } }
+            }
+        }
+    }
+});
+});
 function switchTab(idx){document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));}
 function toggleInsight(el){const body=el.parentElement.nextElementSibling;const chev=el.querySelector('.insight-chevron');const open=body.classList.contains('open');body.classList.toggle('open',!open);chev.classList.toggle('open',!open);}
 document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.insight-body').forEach(b=>b.classList.add('open'));document.querySelectorAll('.insight-chevron').forEach(c=>c.classList.add('open'));});

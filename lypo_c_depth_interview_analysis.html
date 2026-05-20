@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lypo-C デプスインタビュー 分析レポート</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f7f9;
+  --bg2: #ffffff;
+  --bg3: #f0f2f5;
+  --bg4: #e8ebf0;
+  --border: rgba(0,0,0,0.07);
+  --border2: rgba(0,0,0,0.13);
+  --accent: #b36a10;
+  --accent2: #8a5200;
+  --accent3: #2272a8;
+  --accent4: #2a7a30;
+  --accent5: #8040a0;
+  --text: #1a1a1a;
+  --text2: #4a4a4a;
+  --text3: #888888;
+  --grpB: #c0392b;
+  --grpC: #1a6fa0;
+  --grpA: #287a20;
+  --tag-low: #c0392b;
+  --tag-mid: #b07a00;
+  --tag-high: #287a20;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:"Noto Sans JP",sans-serif;font-weight:400;line-height:1.7;min-height:100vh;}
+/* HEADER */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(246,247,249,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border2);box-shadow:0 1px 8px rgba(0,0,0,0.06);}
+.header-inner{max-width:1400px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo-text{font-family:"Playfair Display",serif;font-size:1.1rem;color:var(--accent);letter-spacing:0.05em;}
+.logo-sub{font-size:0.68rem;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase;margin-top:2px;}
+.tab-nav{display:flex;gap:0;border:1px solid var(--border2);border-radius:8px;overflow:hidden;}
+.tab-btn{background:transparent;border:none;color:var(--text2);font-family:"Noto Sans JP",sans-serif;font-size:0.8rem;padding:10px 22px;cursor:pointer;transition:all 0.25s;letter-spacing:0.05em;white-space:nowrap;}
+.tab-btn:hover{background:var(--bg4);color:var(--text);}
+.tab-btn.active{background:var(--accent);color:#ffffff;font-weight:700;}
+.tab-btn:not(:last-child){border-right:1px solid var(--border2);}
+/* MAIN */
+.main{padding-top:64px;}
+.tab-panel{display:none;min-height:calc(100vh - 64px);}
+.tab-panel.active{display:block;}
+/* SECTION */
+.section{max-width:1400px;margin:0 auto;padding:48px 32px;}
+.section-title{font-family:"Playfair Display",serif;font-size:1.6rem;color:var(--accent);margin-bottom:8px;letter-spacing:0.02em;}
+.section-sub{color:var(--text3);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:32px;}
+/* GROUP BLOCK */
+.group-block{margin-bottom:60px;}
+.group-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:24px;padding:20px 24px;background:var(--bg3);border-radius:12px;border-left:4px solid;}
+.group-header.grpB{border-left-color:var(--grpB);}
+.group-header.grpC{border-left-color:var(--grpC);}
+.group-header.grpA{border-left-color:var(--grpA);}
+.group-badge{font-family:"Playfair Display",serif;font-size:2rem;font-weight:900;min-width:56px;}
+.group-badge.grpB{color:var(--grpB);}
+.group-badge.grpC{color:var(--grpC);}
+.group-badge.grpA{color:var(--grpA);}
+.group-info h2{font-size:1.05rem;font-weight:700;margin-bottom:6px;}
+.group-info p{font-size:0.82rem;color:var(--text2);line-height:1.6;}
+.group-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.meta-tag{font-size:0.7rem;padding:3px 10px;border-radius:20px;background:#e8ebf2;color:var(--text2);border:1px solid var(--border2);}
+/* TABLE */
+.interview-table{width:100%;border-collapse:collapse;background:var(--bg2);border-radius:12px;overflow:hidden;}
+.interview-table th{background:var(--bg4);padding:12px 14px;text-align:left;font-size:0.72rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:1px solid var(--border2);}
+.interview-table td{padding:14px 14px;font-size:0.82rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+.interview-table tr:last-child td{border-bottom:none;}
+.interview-table tr:hover td{background:var(--bg3);}
+.initial-badge{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;font-weight:700;font-size:0.8rem;flex-shrink:0;}
+.loyalty-bar{display:flex;gap:3px;}
+.loyalty-dot{width:10px;height:10px;border-radius:50%;background:#d0d4dc;}
+.loyalty-dot.filled-low{background:var(--tag-low);}
+.loyalty-dot.filled-mid{background:var(--tag-mid);}
+.loyalty-dot.filled-high{background:var(--tag-high);}
+.detail-btn{background:transparent;border:1px solid var(--border2);color:var(--text2);font-size:0.72rem;padding:5px 12px;border-radius:6px;cursor:pointer;transition:all 0.2s;font-family:"Noto Sans JP",sans-serif;white-space:nowrap;}
+.detail-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(179,106,16,0.05);}
+.status-badge{font-size:0.7rem;padding:2px 8px;border-radius:4px;font-weight:500;}
+.status-active{background:rgba(42,122,48,0.1);color:var(--accent4);}
+.status-pause{background:rgba(176,122,0,0.1);color:#8a6000;}
+.status-cancel{background:rgba(192,57,43,0.1);color:var(--tag-low);}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:2000;overflow-y:auto;padding:40px 16px;}
+.modal-overlay.open{display:flex;align-items:flex-start;justify-content:center;}
+.modal{background:var(--bg2);border-radius:16px;width:100%;max-width:780px;border:1px solid var(--border2);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.15);}
+.modal-header{padding:24px 28px;background:var(--bg4);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.modal-title{font-family:"Playfair Display",serif;font-size:1.3rem;color:var(--accent);}
+.modal-close{background:transparent;border:1px solid var(--border2);color:var(--text2);width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.modal-close:hover{border-color:var(--accent);color:var(--accent);}
+.modal-body{padding:28px;overflow-y:auto;max-height:72vh;}
+.modal-section{margin-bottom:24px;}
+.modal-section h3{font-size:0.72rem;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;font-weight:700;}
+.modal-table{width:100%;border-collapse:collapse;}
+.modal-table tr td:first-child{font-size:0.75rem;color:var(--text3);width:38%;padding:7px 0;vertical-align:top;}
+.modal-table tr td:last-child{font-size:0.82rem;color:var(--text);padding:7px 0 7px 8px;}
+.persona-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.persona-list li{font-size:0.82rem;color:var(--text2);padding:10px 14px;background:var(--bg3);border-radius:8px;line-height:1.65;border-left:2px solid var(--border);}
+.persona-list li strong{color:var(--text);display:block;margin-bottom:4px;}
+/* TAB 2 CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin-top:24px;}
+.persona-card{background:var(--bg2);border-radius:14px;padding:24px;border:1px solid var(--border);transition:all 0.25s;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.persona-card:hover{border-color:var(--border2);box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+.card-num{font-family:"Playfair Display",serif;font-size:2.2rem;font-weight:900;opacity:0.25;line-height:1;margin-bottom:8px;}
+.card-title{font-weight:700;font-size:1rem;margin-bottom:4px;color:var(--text);}
+.card-tag{font-size:0.68rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+.card-trait{font-size:0.8rem;color:var(--text2);margin-bottom:12px;line-height:1.6;}
+.card-ref{font-size:0.72rem;color:var(--text3);display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.ref-badge{padding:2px 8px;background:#e8f0f8;border:1px solid #c0d4e8;border-radius:4px;color:var(--accent3);}
+.card-strategy{font-size:0.78rem;color:var(--text);background:#fdf3e7;padding:10px 13px;border-radius:8px;border-left:2px solid var(--accent);line-height:1.6;}
+/* INSIGHT BOX */
+.insight-box{margin-top:24px;padding:20px 24px;background:#fdf6ee;border:1px solid #e8d0b0;border-radius:12px;border-left:3px solid var(--accent);}
+.insight-box h3{font-size:0.72rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;}
+.insight-box p{font-size:0.82rem;color:var(--text2);line-height:1.75;}
+.insight-box ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.insight-box li{font-size:0.82rem;color:var(--text2);padding-left:16px;position:relative;line-height:1.65;}
+.insight-box li::before{content:"→";position:absolute;left:0;color:var(--accent);}
+/* SECTION DIVIDER */
+.section-divider{height:1px;background:var(--border);margin:48px 0;}
+/* FINDING CARDS (tab3) */
+.finding-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;margin-top:24px;}
+.finding-card{background:var(--bg2);border-radius:14px;padding:24px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.finding-num{font-family:"Playfair Display",serif;font-size:3rem;font-weight:900;opacity:0.15;line-height:0.9;margin-bottom:10px;}
+.finding-title{font-weight:700;font-size:0.95rem;margin-bottom:10px;color:var(--accent2);}
+.finding-body{font-size:0.8rem;color:var(--text2);line-height:1.7;}
+/* PRIORITY TABLE */
+.priority-table{width:100%;border-collapse:collapse;margin-top:16px;}
+.priority-table th{padding:10px 14px;text-align:left;font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid var(--border2);background:var(--bg4);}
+.priority-table td{padding:12px 14px;font-size:0.82rem;border-bottom:1px solid var(--border);vertical-align:top;}
+.priority-badge{display:inline-block;font-size:0.7rem;padding:2px 8px;border-radius:4px;font-weight:700;}
+.p-s{background:rgba(179,106,16,0.12);color:var(--accent);}
+.p-a{background:rgba(34,114,168,0.1);color:var(--accent3);}
+.p-b{background:rgba(42,122,48,0.1);color:var(--accent4);}
+/* KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0;}
+.kpi-card{background:var(--bg2);border-radius:12px;padding:20px;border:1px solid var(--border);text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.kpi-val{font-family:"Playfair Display",serif;font-size:1.8rem;font-weight:700;color:var(--accent);margin-bottom:4px;}
+.kpi-label{font-size:0.72rem;color:var(--text3);}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--bg3);}
+::-webkit-scrollbar-thumb{background:#c0c8d4;border-radius:3px;}
+@media(max-width:768px){
+  .header-inner{padding:0 16px;}
+  .tab-btn{font-size:0.72rem;padding:8px 12px;}
+  .section{padding:32px 16px;}
+  .interview-table{font-size:0.75rem;}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div>
+      <div class="logo-text">Lypo-C デプスインタビュー</div>
+      <div class="logo-sub">Marketing Analysis Report 2026</div>
+    </div>
+    <nav class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab(0)">基本情報</button>
+      <button class="tab-btn" onclick="switchTab(1)">打ち手 &amp; ペルソナ</button>
+      <button class="tab-btn" onclick="switchTab(2)">総合評価</button>
+    </nav>
+  </div>
+</header>
+<main class="main">
+
+<!-- ===== TAB 1 ===== -->
+<section class="tab-panel active" id="tab0">
+<div class="section">
+  <div class="section-title">デプスインタビュー 基本情報</div>
+  <div class="section-sub">26名 ｜ 3グループ ｜ 2025〜2026年実施</div>
+
+  <!-- GROUP B -->
+  <div class="group-block">
+    <div class="group-header grpB">
+      <div class="group-badge grpB">B</div>
+      <div class="group-info">
+        <h2>2026年 ロイヤル解約顧客グループ（5名）</h2>
+        <p>LTV10万円以上の長期愛用者が公式サイト定期便を解約した理由を把握するためのインタビュー。実施：2026年3〜4月。インタビュアーの経験値が最も高い段階で実施されており、質問の深掘り度が高い。「Lypo-Cが嫌いで解約」ではないケースが大半。</p>
+        <div class="group-meta">
+          <span class="meta-tag">実施時期：2026年3〜4月</span>
+          <span class="meta-tag">対象：公式サイト定期解約のロイヤル顧客</span>
+          <span class="meta-tag">目的：解約理由の実態把握・復活施策の検討</span>
+        </div>
+      </div>
+    </div>
+    <table class="interview-table">
+      <thead>
+        <tr>
+          <th>イニシャル</th>
+          <th>年代</th>
+          <th>職業</th>
+          <th>性別</th>
+          <th>解約実態</th>
+          <th>購入状況</th>
+          <th>顧客らしさ</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(192,57,43,0.1);color:var(--grpB)">SN</span></td>
+          <td>40代</td>
+          <td>パート（元正社員）</td>
+          <td>女性</td>
+          <td>楽天へ移行（製品継続）</td>
+          <td><span class="status-badge status-active">継続購入中</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('sn_b')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(192,57,43,0.1);color:var(--grpB)">NY</span></td>
+          <td>34歳</td>
+          <td>法律事務所 IT部門</td>
+          <td>女性</td>
+          <td>都度買いへ移行（製品継続）</td>
+          <td><span class="status-badge status-active">継続購入中</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('ny')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(192,57,43,0.1);color:var(--grpB)">NS<small style="font-size:0.6rem">男</small></span></td>
+          <td>40歳</td>
+          <td>美容院FC本部 社長</td>
+          <td>男性</td>
+          <td>胃もたれで一時減量（製品好意維持）</td>
+          <td><span class="status-badge status-pause">在庫消化中・再開検討</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('ns_m')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(192,57,43,0.1);color:var(--grpB)">TY</span></td>
+          <td>40代</td>
+          <td>金融機関 マネージャー</td>
+          <td>女性</td>
+          <td>AIに指摘されiHerb移行検討中</td>
+          <td><span class="status-badge status-pause">在庫消化中</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('ty')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(192,57,43,0.1);color:var(--grpB)">UN</span></td>
+          <td>20代</td>
+          <td>スポーツメーカー EC担当</td>
+          <td>女性</td>
+          <td>花嫁美容予算終了・家計見直し</td>
+          <td><span class="status-badge status-cancel">現在休止（再購入意向あり）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('un')">詳細を見る</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GROUP C -->
+  <div class="group-block">
+    <div class="group-header grpC">
+      <div class="group-badge grpC">C</div>
+      <div class="group-info">
+        <h2>2026年 OGS引き上がりグループ（14名）</h2>
+        <p>2025年7〜9月に実施したOGSキャンペーン（Lypo-C VC 11包を送料¥220のみで提供）の参加者約45,000名のうち、有償購入（F2転換）に至った7.4%（約3,376名）へのインタビュー。実施：2026年4月。OGS参加者の現時点平均LTVは¥2,754と極めて低い。</p>
+        <div class="group-meta">
+          <span class="meta-tag">実施時期：2026年4月</span>
+          <span class="meta-tag">OGS新規取得：約45,000名</span>
+          <span class="meta-tag">有償F2転換率：7.4%</span>
+          <span class="meta-tag">現時点平均LTV：¥2,754</span>
+        </div>
+      </div>
+    </div>
+    <table class="interview-table">
+      <thead>
+        <tr>
+          <th>イニシャル</th>
+          <th>年代</th>
+          <th>職業</th>
+          <th>性別</th>
+          <th>主なパーソナリティ特徴</th>
+          <th>購入状況</th>
+          <th>顧客らしさ</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">AR</span></td>
+          <td>29歳</td>
+          <td>地方公務員</td>
+          <td>女性</td>
+          <td>健康・美容への高い自己投資意識。添加物へのこだわり強め</td>
+          <td><span class="status-badge status-active">ヤフーショッピングで継続</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('ar')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">AY</span></td>
+          <td>39歳</td>
+          <td>グループホームスタッフ</td>
+          <td>女性</td>
+          <td>X(Twitter)が情報軸。コスパ感度が高い。ふるさと納税活用</td>
+          <td><span class="status-badge status-pause">一時休止（在庫消化中）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('ay')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">HM</span></td>
+          <td>27歳</td>
+          <td>飲料メーカー 営業企画</td>
+          <td>女性</td>
+          <td>美容×健康の二軸。仕事繁忙期と健康意識が連動するサイクル型</td>
+          <td><span class="status-badge status-pause">一時停止（夏に再開意向）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('hm')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">IA</span></td>
+          <td>34歳</td>
+          <td>パート（パン屋）</td>
+          <td>女性</td>
+          <td>慎重派。肌の赤み消失・副鼻腔炎改善という具体的効果で継続</td>
+          <td><span class="status-badge status-active">継続中</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('ia')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">KM</span></td>
+          <td>44歳</td>
+          <td>スターバックス店長</td>
+          <td>女性</td>
+          <td>X・ChatGPT活用のアーリーアダプター。美容医療・デパコス層</td>
+          <td><span class="status-badge status-pause">単品・不定期購入</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('km')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">KY</span></td>
+          <td>37歳</td>
+          <td>電気施工管理 役員</td>
+          <td>男性</td>
+          <td>人づてが情報源。体感ベース判断。引越しあっても継続した高耐性ユーザー</td>
+          <td><span class="status-badge status-active">継続中（まとめ買いスタイル）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('ky')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">MR</span></td>
+          <td>39歳</td>
+          <td>インフルエンサー/モデル</td>
+          <td>女性</td>
+          <td>エビデンス重視・体感優先。家族全員インフルエンザでも自分だけかからない実績</td>
+          <td><span class="status-badge status-active">公式定期継続中</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('mr')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">MS</span></td>
+          <td>38歳</td>
+          <td>保育士パート</td>
+          <td>女性</td>
+          <td>「クソまずいけど飲む」スタンス。多忙な育児の中で体力維持目的で継続</td>
+          <td><span class="status-badge status-active">継続中（2ヶ月サイクル）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('ms')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">MY</span></td>
+          <td>29歳</td>
+          <td>主婦（元会社員・パート）</td>
+          <td>女性</td>
+          <td>X主軸のリサーチ型。美白目的入口でC+D定期購入へ発展</td>
+          <td><span class="status-badge status-active">継続中（C+D定期）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('my')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">NK<small style="font-size:0.6rem">64</small></span></td>
+          <td>64歳</td>
+          <td>パート（学童シッター）</td>
+          <td>女性</td>
+          <td>医師・専門家の権威を信頼する購買行動。効果実感は薄めだが継続意向あり</td>
+          <td><span class="status-badge status-active">継続中（2ヶ月サイクル・C+D）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('nk64')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">ON</span></td>
+          <td>56歳</td>
+          <td>派遣社員（秘書）</td>
+          <td>女性</td>
+          <td>体験優先の自律型。日本製への安心感でリポスフェリックから乗り換え</td>
+          <td><span class="status-badge status-active">継続中（3ヶ月サイクル）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('on')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">OY</span></td>
+          <td>32歳</td>
+          <td>フリーランスライター</td>
+          <td>女性</td>
+          <td>X+Google2段階調査。美容施術との組み合わせで高度活用。エビデンス重視</td>
+          <td><span class="status-badge status-active">継続中（VC/C+D使い分け）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('oy')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">ST</span></td>
+          <td>52歳</td>
+          <td>SE（システムエンジニア）</td>
+          <td>女性</td>
+          <td>健康＝美容哲学。15年以上のヨガ実践者。ナチュラル・オーガニック志向</td>
+          <td><span class="status-badge status-active">継続中（公式定期）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('st')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(26,111,160,0.1);color:var(--grpC)">YM</span></td>
+          <td>43歳</td>
+          <td>法務職（IT企業）</td>
+          <td>女性</td>
+          <td>論理的・計画的。90日管理アプリで継続判断。インフルエンサー非依存型</td>
+          <td><span class="status-badge status-active">継続中（定期）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('ym')">詳細を見る</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GROUP A -->
+  <div class="group-block">
+    <div class="group-header grpA">
+      <div class="group-badge grpA">A</div>
+      <div class="group-info">
+        <h2>2025年 購入利用調査グループ（7名）</h2>
+        <p>Lypo-Cの購入顧客が「なぜLypo-Cを買うのか」を理解するために実施した最初のインタビュー企画。実施：2025年7月。インタビュアー（西守）自身が「まだ発展途上だった」と評価しており、後続グループと比べ深掘り度にムラがある。田中みな実さんバズから2年以上経過した「最近の購入者」の実態把握が目的。</p>
+        <div class="group-meta">
+          <span class="meta-tag">実施時期：2025年7月</span>
+          <span class="meta-tag">目的：購入動機の定性的把握</span>
+          <span class="meta-tag">背景：田中みな実バズから2年経過後の新規層</span>
+        </div>
+      </div>
+    </div>
+    <table class="interview-table">
+      <thead>
+        <tr>
+          <th>イニシャル</th>
+          <th>年代</th>
+          <th>職業</th>
+          <th>性別</th>
+          <th>主なパーソナリティ特徴</th>
+          <th>購入状況</th>
+          <th>顧客らしさ</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(40,122,32,0.1);color:var(--grpA)">FK</span></td>
+          <td>24歳</td>
+          <td>音楽活動（自営業）</td>
+          <td>女性</td>
+          <td>田中みな実ファン型の憧れ購買。価格が最大障壁。美容皮膚科処方で代替中</td>
+          <td><span class="status-badge status-cancel">現在休止（再購入意向あり）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('fk')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(40,122,32,0.1);color:var(--grpA)">NE</span></td>
+          <td>30代後半</td>
+          <td>エンタメ企業 組織開発</td>
+          <td>女性</td>
+          <td>10年前からの筋金入りユーザー。専門家口コミ重視。定期手続きミスで一旦解約・再開意向</td>
+          <td><span class="status-badge status-pause">一旦解約→再開意向</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('ne')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(40,122,32,0.1);color:var(--grpA)">NK<small style="font-size:0.6rem">65</small></span></td>
+          <td>65歳</td>
+          <td>医療事務（パート）</td>
+          <td>女性</td>
+          <td>YouTube（田中みな実）経由で認知。健康寿命延伸が目標。価格が最大障壁</td>
+          <td><span class="status-badge status-pause">試用継続中（効果実感次第）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-mid"></div><div class="loyalty-dot"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('nk65')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(40,122,32,0.1);color:var(--grpA)">SM</span></td>
+          <td>30代後半</td>
+          <td>薬剤師</td>
+          <td>女性</td>
+          <td>幼少期からのビタミンC習慣。薬剤師の知識で成分選択。夫・愛犬にも投与</td>
+          <td><span class="status-badge status-active">継続購入中（VC+C+D）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('sm')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(40,122,32,0.1);color:var(--grpA)">SN</span></td>
+          <td>22歳</td>
+          <td>大学生・エステバイト</td>
+          <td>女性</td>
+          <td>22歳で突出した健康リテラシー。「広告のない会社を選ぶ」購買哲学。年50冊読書</td>
+          <td><span class="status-badge status-active">継続中（効果実感あり）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('sn_a')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(40,122,32,0.1);color:var(--grpA)">TT</span></td>
+          <td>43歳</td>
+          <td>公務員・保育士</td>
+          <td>女性</td>
+          <td>娘（22歳）からの紹介で家族全員に波及。疲労回復・免疫目的。同僚へ口コミ推薦実績あり</td>
+          <td><span class="status-badge status-active">継続中（家族分含む）</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('tt')">詳細を見る</button></td>
+        </tr>
+        <tr>
+          <td><span class="initial-badge" style="background:rgba(40,122,32,0.1);color:var(--grpA)">YJ</span></td>
+          <td>38歳</td>
+          <td>ウェディングコーディネーター</td>
+          <td>女性</td>
+          <td>リポスフェリックから乗り換え。サロン口コミが購入トリガー。疲労回復・健康比重が増加中</td>
+          <td><span class="status-badge status-active">継続中</span></td>
+          <td><div class="loyalty-bar"><div class="loyalty-dot filled-high"></div><div class="loyalty-dot filled-high"></div><div class="loyalty-dot"></div></div></td>
+          <td><button class="detail-btn" onclick="openModal('yj')">詳細を見る</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- LEGEND -->
+  <div style="margin-top:16px;padding:16px 20px;background:var(--bg2);border-radius:10px;border:1px solid var(--border);display:flex;flex-wrap:wrap;gap:20px;align-items:center;">
+    <span style="font-size:0.72rem;color:var(--text3);">【顧客らしさ凡例】</span>
+    <span style="display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--text2);">
+      <span class="loyalty-dot filled-high"></span><span class="loyalty-dot filled-high"></span><span class="loyalty-dot filled-high"></span> 高い（ブランド理解・継続意向・生活密着度が高い理想的顧客）
+    </span>
+    <span style="display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--text2);">
+      <span class="loyalty-dot filled-mid"></span><span class="loyalty-dot filled-mid"></span><span class="loyalty-dot"></span> 中程度（継続しているが価格・代替品への感度あり）
+    </span>
+    <span style="display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--text2);">
+      <span class="loyalty-dot filled-mid"></span><span class="loyalty-dot"></span><span class="loyalty-dot"></span> 低め（トライアル定着型・ライト層）
+    </span>
+  </div>
+
+</div>
+</section>
+
+<!-- ===== TAB 2 ===== -->
+<section class="tab-panel" id="tab1">
+<div class="section">
+  <div class="section-title">打ち手 &amp; ペルソナ像</div>
+  <div class="section-sub">インタビューデータから導き出した施策・ペルソナ設計</div>
+
+  <!-- ■■■ ブロック1: コアユーザー総合まとめ ■■■ -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:0.72rem;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">01 — Core User Profile</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:4px;">Lypo-Cを愛用してくださっている顧客 ── 3つのコアペルソナ</div>
+    <div style="font-size:0.82rem;color:var(--text3);">ブランドが「自分の心と体の管理に真剣な人」として大切にしたい理想的な顧客像</div>
+  </div>
+  <div class="card-grid">
+    <!-- Core 1 -->
+    <div class="persona-card">
+      <div class="card-num">01</div>
+      <div class="card-title">「納得して選ぶ」エビデンス型投資家</div>
+      <div class="card-tag">Core Persona A</div>
+      <div class="card-trait">成分・技術・エビデンスを自分で調べ、納得した上でLypo-Cに辿り着いた層。比較検討を経ているため「Lypo-Cである必要がある」という強い指名買い意識を持つ。リポソーム技術への理解度が高く、他者への伝道師になりやすい。複数製品ライン（VC・C+D・C+Cera等）への展開も積極的。</div>
+      <div class="card-ref">
+        <span class="ref-badge">OY</span><span class="ref-badge">NY</span><span class="ref-badge">MR</span><span class="ref-badge">SM</span><span class="ref-badge">NE</span><span class="ref-badge">YM</span><span class="ref-badge">SN（22歳）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>有効な施策：</strong>成分・技術コンテンツの充実化、リポソームサイエンス訴求、マルチプロダクト展開へのナッジ、ブランドアンバサダー候補として育成
+      </div>
+    </div>
+    <!-- Core 2 -->
+    <div class="persona-card">
+      <div class="card-num">02</div>
+      <div class="card-title">「体感が全て」ライフスタイル定着型</div>
+      <div class="card-tag">Core Persona B</div>
+      <div class="card-trait">詳細な成分より「飲んだら疲れが取れた」「翌朝の目覚めが変わった」という具体的な体感がLypo-C継続の核。朝のルーティンや生活習慣に自然に組み込んでおり、引越し・繁忙期があっても継続する高い粘着性がある。口コミ発信者になりやすく、職場・家族への波及効果が高い。</div>
+      <div class="card-ref">
+        <span class="ref-badge">MS</span><span class="ref-badge">TT</span><span class="ref-badge">KY</span><span class="ref-badge">IA</span><span class="ref-badge">AR</span><span class="ref-badge">YJ</span><span class="ref-badge">ST</span>
+      </div>
+      <div class="card-strategy">
+        <strong>有効な施策：</strong>「飲み続けた先の体感ストーリー」コンテンツ、1日2〜3包体験キャンペーン（1包より効果実感が鮮明になる）、家族シェアプラン・ファミリー割
+      </div>
+    </div>
+    <!-- Core 3 -->
+    <div class="persona-card">
+      <div class="card-num">03</div>
+      <div class="card-title">「憧れから入り、健康で残る」成長型</div>
+      <div class="card-tag">Core Persona C</div>
+      <div class="card-trait">最初は美容・インフルエンサー起点で入ってきたが、疲労回復・免疫向上といった健康効果を実感してから購入動機が深化。「美容目的だったのに健康になった」という発見がLypo-Cへのブランドロイヤルティを高める。目的の変化に伴い摂取量・製品ラインも拡張していく傾向がある。</div>
+      <div class="card-ref">
+        <span class="ref-badge">MY</span><span class="ref-badge">FK</span><span class="ref-badge">UN</span><span class="ref-badge">HM</span><span class="ref-badge">NE</span><span class="ref-badge">AY</span>
+      </div>
+      <div class="card-strategy">
+        <strong>有効な施策：</strong>「美容から健康へ」の段階的コミュニケーション設計、C+D移行促進（ビタミンD訴求）、効果実感を言語化するフォローメール設計
+      </div>
+    </div>
+  </div>
+  <div class="insight-box">
+    <h3>💡 考察 — コアユーザーから見えること</h3>
+    <ul>
+      <li>定量調査では目的の84%が「美容寄り」だが、実際にLTVが高く継続率が高い層は「健康目的」（LTV ¥173,000 vs 美容目的 ¥118,000 で約¥55,000差）。コアユーザーを深掘りすると「入口美容・着地健康」というパターンが頻出し、<strong>疲労回復訴求こそがLTVを引き上げる鍵</strong>である可能性が高い。</li>
+      <li>3タイプとも「Lypo-Cでなければならない」という指名買い意識を持っている。この指名性は「エビデンス」「体感の蓄積」「憧れの人が使っている」のいずれかのルートで形成される。どのルートで入っても最終的に<strong>体感が伴えば継続率は極めて高い</strong>。</li>
+      <li>1日1包（全体58%）にとどまる顧客が多い中、NSさん（男性・5年継続）は「3包飲むと圧倒的に違う」と発言。<strong>摂取量の最適化教育がコアユーザーの体感強化に直結</strong>するため、1日2包体験キャンペーン等の施策価値が高い。</li>
+    </ul>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ■■■ ブロック2: 新規顧客獲得 ■■■ -->
+  <div style="margin-bottom:16px;margin-top:8px;">
+    <div style="font-size:0.72rem;color:var(--accent3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">02 — New Customer Acquisition</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:4px;">新規顧客獲得にマッチするペルソナ像</div>
+    <div style="font-size:0.82rem;color:var(--text3);">これから出会うLypo-C候補層 ── 打ち手別3パターン</div>
+  </div>
+  <div class="card-grid">
+    <div class="persona-card">
+      <div class="card-num">01</div>
+      <div class="card-title">「専門家経由で安心して買う」信頼軸型</div>
+      <div class="card-tag">Acquisition Persona A</div>
+      <div class="card-trait">医師・皮膚科・エステサロン・薬剤師など、専門家の紹介がLypo-C購入の最大の決め手になる層。定量データで医療機関経由のLTVが¥201,000（全チャネル最高）であることと完全に一致する。「先生が勧めてくれたから」「信頼できる人が実証している」という文脈で購入決定が最も速く、価格への抵抗も低い。</div>
+      <div class="card-ref">
+        <span class="ref-badge">SM（薬剤師友人経由）</span><span class="ref-badge">YJ（サロン経由）</span><span class="ref-badge">NK64（皮膚科経由）</span><span class="ref-badge">NY（皮膚科経由）</span><span class="ref-badge">ST（クリニック経由）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>打ち手：</strong>toB施策の強化。エステサロン・美容クリニック・皮膚科・婦人科へのB2B展開。サロン・医療機関向けの販売員教育ツール、医療機関専用LP整備。サンプル提供の拡充。
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="card-num">02</div>
+      <div class="card-title">「憧れの人が使っているから」インフルエンサー感化型</div>
+      <div class="card-tag">Acquisition Persona B</div>
+      <div class="card-trait">田中みな実さんのような「調べ尽くした人が認めているなら安心」という信頼軸で動く層。インフルエンサー自体よりも「その人が本気で選んでいるか」という真剣さの伝わり方が重要。フォロワー数より信頼性・継続使用の実績訴求がキーになる。知ってから購入まで年単位のタイムラグがあることも多い（FK：2年後）。</div>
+      <div class="card-ref">
+        <span class="ref-badge">FK（田中みな実経由）</span><span class="ref-badge">UN（田中みな実+友人）</span><span class="ref-badge">MY（X経由）</span><span class="ref-badge">TT（娘経由→田中みな実）</span><span class="ref-badge">SN（NS女性）（田中みな実経由）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>打ち手：</strong>「本気の継続使用者」を可視化する発信設計（ビフォーアフターではなく長期使用者の声）。インフルエンサーの「推薦の深さ」を伝えるコンテンツ作り。SNS広告より長文のストーリー型コンテンツが有効。
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="card-num">03</div>
+      <div class="card-title">「疲れに限界を感じた」ライフイベント覚醒型</div>
+      <div class="card-tag">Acquisition Persona C</div>
+      <div class="card-trait">産後・育児多忙期・年齢変化・繁忙期など、「もうこの疲れどうにかしないと」というライフイベントをきっかけにサプリメントを初体験する層。それまでサプリに興味がなかったが、限界感が背中を押す。疲労回復という「即効性のある体感目的」で入るため、効果を実感しやすくF2転換率が高い可能性がある。</div>
+      <div class="card-ref">
+        <span class="ref-badge">MS（育児疲労）</span><span class="ref-badge">TT（疲労・免疫低下）</span><span class="ref-badge">IA（体力限界）</span><span class="ref-badge">NK64（加齢疲労）</span><span class="ref-badge">ON（加齢・疲労）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>打ち手：</strong>CEP（カテゴリー購入機会）設計。「年度末・春の疲れ」「育児始まった季節」「紫外線シーズン前」などタイミング訴求広告。疲労回復訴求の訴求軸強化（現在は美容寄りのため訴求軸の転換が必要）。
+      </div>
+    </div>
+  </div>
+  <div class="insight-box">
+    <h3>💡 考察 — 新規獲得で優先すべきこと</h3>
+    <ul>
+      <li>定量調査では認知経路1位がインフルエンサー（35.9%）であり、SNS広告経由のLTVが¥112,000と最低。<strong>「誰が言うか」と「どれほど本気か」の訴求のずれを修正することが急務</strong>。インフルエンサー経由でも「長期継続している本物のユーザー」に絞ることでLTV改善余地がある。</li>
+      <li>医療機関経由LTV ¥201,000（全チャネル最高）を考えると、<strong>toB施策（サロン・クリニック・薬局）への投資は最も効率的な新規獲得チャネル</strong>。既存のtoB施策を強化・拡大することが優先度S。</li>
+      <li>疲労回復訴求は全目的中最高の確信+実感率49%を誇る。現状のブランドコミュニケーションが美容寄りなのに対して、<strong>「入口美容、着地健康（疲労回復）」という二段階訴求設計への転換が必要</strong>。</li>
+    </ul>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ■■■ ブロック3: CRM クロスセル・継続率向上 ■■■ -->
+  <div style="margin-bottom:16px;margin-top:8px;">
+    <div style="font-size:0.72rem;color:var(--accent4);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">03 — CRM &amp; Cross-sell</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:4px;">CRM・クロスセル・継続率向上のペルソナ像</div>
+    <div style="font-size:0.82rem;color:var(--text3);">既存顧客のLTVを上げるための3パターン</div>
+  </div>
+  <div class="card-grid">
+    <div class="persona-card">
+      <div class="card-num">01</div>
+      <div class="card-title">「VC→C+Dへ移行できる」健康深耕型</div>
+      <div class="card-tag">CRM Persona A</div>
+      <div class="card-trait">VC（ビタミンCのみ）で定期購入しているが、ビタミンDの重要性を理解すればC+Dへの自然な移行が見込める層。注意点はNSさん（男性）が抱えていた「C+DにするとVCのビタミンC量が減るのでは」という誤解（実際はC+DもVCと同量のビタミンCを含有）。この誤解の解消とビタミンD訴求の強化が鍵。</div>
+      <div class="card-ref">
+        <span class="ref-badge">SM（C+D既に併用）</span><span class="ref-badge">NS男性（誤解あり）</span><span class="ref-badge">AY（ビタミンD知識あり）</span><span class="ref-badge">MY（C+Dへ移行済）</span><span class="ref-badge">SN女性（C+D移行済）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>打ち手：</strong>「C+DはVCのビタミンC量は変わらず、Dが追加される」という誤解解消コンテンツ。C+D同梱小冊子の改善。VC購入者へのC+Dサンプル同梱（ESS施策の横展開）。定量調査でVC→C+D移行者のLTV調査。
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="card-num">02</div>
+      <div class="card-title">「美容施術と組み合わせる」アクティブ美容型</div>
+      <div class="card-tag">CRM Persona B</div>
+      <div class="card-trait">美容皮膚科・美容クリニックへの通院を当然の習慣とし、Lypo-Cを施術の「前後」で集中摂取するなど戦略的に活用する層。C+Cera（セラミド）、Lypo-C CBD、MINERALionなど複数ラインへの展開可能性が最も高い。「同梱物・LINEを全て読む」情報吸収型でもあり、コンテンツマーケティングの受け皿になりやすい。</div>
+      <div class="card-ref">
+        <span class="ref-badge">OY（施術前後に集中摂取）</span><span class="ref-badge">NY（1日5本・全ライン購入）</span><span class="ref-badge">MR（皮膚科で成分指定）</span><span class="ref-badge">TY（美容クリニック移行中）</span><span class="ref-badge">KM（美容皮膚科月1〜2回）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>打ち手：</strong>「美容施術×Lypo-C」の活用ガイドコンテンツ作成。C+Ceraクロスセル訴求強化。Lypo-C CBD・MINERALionとのバンドル提案。美容医療ユーザー向けの特別LPページ。
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="card-num">03</div>
+      <div class="card-title">「まとめ買い・チャネル分散」自己管理型</div>
+      <div class="card-tag">CRM Persona C</div>
+      <div class="card-title" style="margin-top:8px">「まとめ買い・チャネル分散」自己管理型</div>
+      <div class="card-trait">公式定期便より「まとめ買い」「ふるさと納税」「楽天」など複数チャネルを比較・活用し、コストを最適化しながら継続する層。公式定期を解約してもLypo-C自体は継続していることが多く、LTV計算上は見えにくい優良顧客。公式サイトへの回帰促進が課題。</div>
+      <div class="card-ref">
+        <span class="ref-badge">AR（ヤフーショッピングまとめ買い）</span><span class="ref-badge">NY（複数チャネル活用）</span><span class="ref-badge">AY（ふるさと納税活用）</span><span class="ref-badge">SN女性（楽天移行）</span><span class="ref-badge">KM（単品不定期）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>打ち手：</strong>公式サイト定期便の価格優位性の明示。ポイント制度の強化。定期便の「一時停止」機能の周知（解約より一時停止を促す）。複数チャネル購入者の実態把握とLTV計算の見直し（楽天・モール含む実質LTV把握）。
+      </div>
+    </div>
+  </div>
+  <div class="insight-box">
+    <h3>💡 考察 — CRM施策で最も重要な気づき</h3>
+    <ul>
+      <li><strong>「解約＝離脱」という誤認がCRM施策を誤った方向に向けている。</strong> GROUP Bの5名中4名はブランドへの好意を維持しており、実態はチャネル移行・ペース調整・予算一時減少に過ぎない。「解約防止」より「チャネルを問わない継続確認」と「公式サイトへの回帰促進」が正しい目標設定。</li>
+      <li>1日1包（全体58%）という現状に対して、<strong>摂取量を増やすことがLTVと体感を同時に高める最短ルート</strong>。NSさん（男性）「3包飲むと圧倒的に違う」発言が示すように、1日2〜3包体験キャンペーンの展開が確信層比率の引き上げに直結する。</li>
+      <li>C+Dのクロスセルは最も成熟したCRM施策だが、「ビタミンC量が減る」誤解が普及の障壁。同梱物・LINEをきちんと読む顧客層（SN女性・NS男性・NY等）がいる一方、読まない顧客も多い。<strong>誤解解消の「小さな一文」を定期同梱物に追加するだけで転換率が上がる可能性がある。</strong></li>
+    </ul>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ■■■ ブロック4: 休眠顧客復活 ■■■ -->
+  <div style="margin-bottom:16px;margin-top:8px;">
+    <div style="font-size:0.72rem;color:var(--accent5);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">04 — Re-activation</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:4px;">休眠顧客の復活に使えるペルソナ像</div>
+    <div style="font-size:0.82rem;color:var(--text3);">解約・停止している顧客を呼び戻す3パターン</div>
+  </div>
+  <div class="card-grid">
+    <div class="persona-card">
+      <div class="card-num">01</div>
+      <div class="card-title">「予算が戻れば即復活」ライフステージ待機型</div>
+      <div class="card-tag">Re-activation Persona A</div>
+      <div class="card-trait">結婚・転職・収入変化などのライフステージイベントによって一時的に購買力が下がっているが、Lypo-Cへの愛着は高く「また買いたい」意向が明確な層。強引なリターゲティングは逆効果で、「あなたのことを待っています」という温かい待機メッセージが有効。ライフステージが好転した際の最初の「思い出しトリガー」設計が鍵。</div>
+      <div class="card-ref">
+        <span class="ref-badge">UN（花嫁予算終了・再購入意向あり）</span><span class="ref-badge">SN女性（収入変化→楽天移行）</span><span class="ref-badge">FK（収入増えたら再購入意向）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>打ち手：</strong>解約後30日・90日・180日のマイルストーンでさりげない「おかえりクーポン」。「また会う日まで」という温かいトーンのLINEメッセージ設計。高額CPAのリターゲティング広告より低コストのCRM接触を優先。
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="card-num">02</div>
+      <div class="card-title">「代替品を試して気づく」比較経験型</div>
+      <div class="card-tag">Re-activation Persona B</div>
+      <div class="card-trait">iHerb・医療機関等で安価な代替リポソームビタミンCを試したり、他のビタミンCサプリと比較した結果、「Lypo-Cの方がよかった」「体感が戻らない」と気づいて戻ってくる可能性が高い層。TYさんがiHerb検討中だが「体感が落ちたら戻ると思う」と示唆的な発言。比較経験が逆に指名性を強化するケースがある。</div>
+      <div class="card-ref">
+        <span class="ref-badge">TY（iHerb検討中・体感次第で戻る可能性）</span><span class="ref-badge">FK（美容皮膚科処方で代替中）</span><span class="ref-badge">NE（リポスフェリック離脱→Lypo-C戻り）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>打ち手：</strong>「Lypo-Cと市販ビタミンCの違い」「iHerb品との比較」AI検索対策コンテンツ整備（TYさんのChatGPT検索パターンへの対応）。体感が落ちた時の「戻りやすい入口」としての復活割引設計。
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="card-num">03</div>
+      <div class="card-title">「新商品が出たら戻る」好奇心・新情報型</div>
+      <div class="card-tag">Re-activation Persona C</div>
+      <div class="card-trait">Lypo-Cブランドへの関心は高く、新しい製品ライン・成分・効能情報が出るたびに反応する好奇心旺盛な層。「何か新しいものが出たら試したい」という探索モードにあり、情報が届けば再購入の起点になる。CBD・C+Ceraなど新製品への関心が特に高い。</div>
+      <div class="card-ref">
+        <span class="ref-badge">TY（Lypo-C CBD注目）</span><span class="ref-badge">KM（新情報に敏感）</span><span class="ref-badge">NS男性（新ラインへの興味あり）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>打ち手：</strong>解約顧客への新製品情報の定期配信（メール/LINE）。「あなたが休止中にリリースされたもの」という個別化メッセージ。VC単品解約者へのC+Cera・CBD試供品同梱提案。
+      </div>
+    </div>
+  </div>
+  <div class="insight-box">
+    <h3>💡 考察 — 休眠顧客アプローチの本質的な転換点</h3>
+    <ul>
+      <li>GROUP Bのインタビューが明示した最大の示唆は、<strong>「解約顧客の80%はブランド敵対者ではない」</strong>という事実。過度な解約防止施策や復帰を急かすメッセージは逆効果で、ブランドとの温かい関係を維持することが中長期的なLTV最大化に繋がる。</li>
+      <li>TYさん（金融機関マネージャー）が<strong>ChatGPTに「Lypo-Cへの月¥15,700の支出は高い、iHerbで代替可能」と指摘されてiHerb検討を始めた</strong>という事例は、AI検索時代の新しいリスクを示している。「AI家計見直し」という解約リスクに対するコンテンツ整備（iHerbとの比較・リポソーム品質の違いを説明するコンテンツ）が急務。</li>
+      <li>復帰施策において、<strong>プル型（待機・情報提供）とプッシュ型（リターゲティング・クーポン送付）のバランス設計が重要</strong>。予算回復待機型にはプル型、好奇心型・比較経験型にはプッシュ型が有効。一律のリターゲティングより顧客パターン別の施策設計が求められる。</li>
+    </ul>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ■■■ ブロック5: 積極獲得不要ペルソナ ■■■ -->
+  <div style="margin-bottom:16px;margin-top:8px;">
+    <div style="font-size:0.72rem;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">05 — Self-sustaining / Organic Growth</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:4px;">積極的な新規獲得活動が不要な自走型顧客</div>
+    <div style="font-size:0.82rem;color:var(--text3);">獲得コストをかけなくても自然流入・自然継続が期待できるペルソナ</div>
+  </div>
+  <div class="card-grid">
+    <div class="persona-card">
+      <div class="card-num">01</div>
+      <div class="card-title">「リアル口コミで自然流入」推薦連鎖型</div>
+      <div class="card-tag">Self-sustaining Persona A</div>
+      <div class="card-trait">職場・家族・友人への自発的な口コミがLypo-Cの新規顧客を自然に連れてくる伝道師型ユーザー。TT（保育士・同僚へ推薦）・SM（夫・友人・愛犬へ投与）・KY（友人経由で認知）・TT（娘から家族への波及）など。この層を大切にし、紹介しやすい環境（紹介コード・家族割等）を整えるだけでCPA負担なしに顧客が増える。</div>
+      <div class="card-ref">
+        <span class="ref-badge">TT（同僚・家族に推薦）</span><span class="ref-badge">SM（夫・犬にも投与）</span><span class="ref-badge">MS（周囲に紹介積極的）</span><span class="ref-badge">KY（友人経由で入ってきた）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>施策不要の理由：</strong>自ら広告塔となって新規流入を生み出している。必要なのは「紹介しやすい仕組み」（紹介コード・ギフト箱・家族割）の整備のみ。広告費不要で高LTV顧客を獲得できる最も効率的なチャネル。
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="card-num">02</div>
+      <div class="card-title">「Lypo-Cは別格」聖域化ロイヤル層</div>
+      <div class="card-tag">Self-sustaining Persona B</div>
+      <div class="card-trait">Lypo-Cを「やめたら老化が進む」「これだけは削れない」という聖域に位置づけた長期ロイヤル顧客。5年以上の継続（NS男性）、1日5本消費（NY）、10年以上の関与（NE）などが象徴的。価格上昇にも耐性があり、他チャネルに浮気しても最終的にはLypo-Cに戻る引力がある。獲得コストゼロで最高LTVを持つ最良の顧客セグメント。</div>
+      <div class="card-ref">
+        <span class="ref-badge">NS男性（5年継続・1日3本）</span><span class="ref-badge">NY（1日5本・全ライン）</span><span class="ref-badge">NE（10年以上）</span><span class="ref-badge">MR（家族全員インフルでも自分だけかからない）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>施策不要の理由：</strong>既に「Lypo-Cでなければならない」という強固な指名性を持っており、通常のマーケティング施策は不要。必要なのはVIP感のあるCRM（先行情報提供・サンプル優遇等）と、在庫切れ・注文トラブルの撲滅のみ。
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="card-num">03</div>
+      <div class="card-title">「情報発信者」インフルエンサー隣接層</div>
+      <div class="card-tag">Self-sustaining Persona C</div>
+      <div class="card-trait">SNSでの発信・影響力を持つか、またはリアルの人脈でオピニオンリーダー的存在として機能する層。OY（ライター・SNS発信）・MR（インフルエンサー・モデル）・SM（薬剤師として信頼源）など。自分の経験を発信する習慣があるため、自然と口コミが広がる。積極的にギフティングやPR依頼をする必要はなく、継続使用という事実だけで価値を持つ。</div>
+      <div class="card-ref">
+        <span class="ref-badge">MR（インフルエンサー・モデル）</span><span class="ref-badge">OY（フリーランスライター・SNS発信）</span><span class="ref-badge">SM（薬剤師・専門家発信）</span>
+      </div>
+      <div class="card-strategy">
+        <strong>施策不要の理由：</strong>能動的な発信習慣を持っており、使用経験が自然にコンテンツになる。積極PRより「使い続けてもらうこと」「良い体験を提供し続けること」がROI最大化の道。過度なPR依頼はブランドの自然な広がりを阻害するリスクがある。
+      </div>
+    </div>
+  </div>
+  <div class="insight-box">
+    <h3>💡 考察 — 「獲得しなくていい顧客」を守ることの意味</h3>
+    <ul>
+      <li>積極獲得不要な自走型顧客は、<strong>低CAC（顧客獲得コスト）・高LTV・高口コミ伝播率</strong>という3拍子が揃った最優良セグメント。彼女・彼らを通じて入ってくる新規顧客も同様の属性を持つ傾向がある（類は友を呼ぶ原則）。</li>
+      <li>逆説的だが、<strong>この層を「広告塔」として意識的に活用しようとする施策は逆効果</strong>になるリスクがある。OYさんがインフルエンサーへの過度な期待を「詳しくない人がなんとなく言っている」と評していたように、本物の伝道師は「使い続けている事実」から生まれる。管理しようとせず、体験を豊かにすることに注力する方が長期的に価値が高い。</li>
+      <li>紹介プログラム・家族割・VIPロイヤルティ制度など、<strong>既存の自走型顧客が「もっと周りに広めやすくなる環境整備」に投資することが、広告費より高いROIをもたらす</strong>可能性が高い。</li>
+    </ul>
+  </div>
+
+</div>
+</section>
+
+<!-- ===== TAB 3 ===== -->
+<section class="tab-panel" id="tab2">
+<div class="section">
+  <div class="section-title">総合評価</div>
+  <div class="section-sub">26名のデプスインタビューと定量調査N=5,428から導き出したLypo-Cブランドへの戦略的示唆</div>
+
+  <!-- KPI概要 -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-val">26名</div>
+      <div class="kpi-label">デプスインタビュー総数</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">5,428名</div>
+      <div class="kpi-label">定量調査有効回答数</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">¥141,000</div>
+      <div class="kpi-label">顧客平均LTV（公式サイト）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">¥201,000</div>
+      <div class="kpi-label">医療機関経由LTV（最高）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">7.4%</div>
+      <div class="kpi-label">OGS F2転換率</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">49%</div>
+      <div class="kpi-label">疲労回復の確信+実感率（全目的中最高）</div>
+    </div>
+  </div>
+
+  <!-- 重要発見カード -->
+  <div style="margin:40px 0 16px;">
+    <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--accent2);margin-bottom:8px;">7つの重要発見</div>
+    <div style="font-size:0.8rem;color:var(--text3);">デプスインタビューと定量データの統合分析から得られた最重要インサイト</div>
+  </div>
+  <div class="finding-grid">
+    <div class="finding-card">
+      <div class="finding-num">01</div>
+      <div class="finding-title">「疲労回復」こそが最強の継続・LTV向上訴求軸</div>
+      <div class="finding-body">疲労目的の確信+実感率は49%（全目的中最高）、LTV ¥173,000（美容目的 ¥118,000 より¥55,000高）。デプスインタビューでも「疲れにくくなった」「翌朝が変わった」という体感が最も強い継続動機として登場する。現状の美容寄りのブランドコミュニケーションを「入口美容・着地健康（疲労回復）」の二段階設計に転換することがLTV最大化の最短ルート。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">02</div>
+      <div class="finding-title">「解約＝離脱」という誤認がCRM施策を狂わせている</div>
+      <div class="finding-body">GROUP Bの5名中4名は製品への好意を維持したまま定期を解約していた。実態は「楽天移行」「ペース不一致」「ライフステージ変化による一時休止」であり、完全離脱はTY（iHerb検討）1名のみ。「解約防止」施策より「どのチャネルでも継続してくれているか」「戻ってきやすい環境を作れているか」という視点でのCRM設計が必要。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">03</div>
+      <div class="finding-title">OGSキャンペーンは「想定外の顧客層」を取り込んでいた</div>
+      <div class="finding-body">OGS参加者の現時点平均LTV ¥2,754は通常LTV ¥141,000の約1/50。14名のインタビューで見えたのは「体感はあっても価格感度が高く離脱しやすい」「定期便を習慣化する動機が薄い」など、理想顧客像とのミスマッチ。大量獲得キャンペーンのROI検証と、価格感度が低い「真剣層」を引き寄せる施策設計への転換が必要。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">04</div>
+      <div class="finding-title">医療機関・エステサロン経由顧客は圧倒的にLTVが高い</div>
+      <div class="finding-body">医療機関・医師推薦経由の平均LTV ¥201,000（全チャネル最高）、SNS広告経由 ¥112,000（全チャネル最低）という¥89,000の差は大きい。デプスインタビューでもSM（薬剤師友人経由）・YJ（サロン経由）・NY（皮膚科経由）など高ロイヤルユーザーの多くが専門家経由で入っている。toB施策への投資拡大が最も効率的な新規獲得チャネルとして立証されている。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">05</div>
+      <div class="finding-title">「AI家計見直し」という新しい解約リスクが出現</div>
+      <div class="finding-body">TYさん（金融機関マネージャー）がChatGPTに「家計を見直して」と指示した結果、「Lypo-Cへの月¥15,700は高い、iHerbで代替可能」と提案されiHerb移行を検討。AI検索が購買意思決定に介入する新しいリスクパターン。「iHerb vs Lypo-C」「リポソームビタミンCの品質差」など、AIが参照するような比較コンテンツ・SEO対策が急務。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">06</div>
+      <div class="finding-title">男性顧客・男性発信は未開拓の有望セグメント</div>
+      <div class="finding-body">定量調査で女性93.2%・男性5.5%という偏りに対し、NS（男性・5年継続・3包飲み・美容院FC経営）・KY（男性・継続・疲労回復目的）というロイヤル男性ユーザーが存在。NSさんは「男性の美容院経営者として、外見維持は仕事のブランドに直結する」と明言。男性向けの疲労回復・パフォーマンス維持という訴求軸でのアプローチが拡大余地として大きい。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">07</div>
+      <div class="finding-title">「1日1包」主流が効果実感と継続率の最大障壁</div>
+      <div class="finding-body">全体の58%が1日1包（推奨3包はわずか3.3%）。NSさん「3包飲むと圧倒的に違う」、YJさん「疲れた日は2包飲む」など、摂取量増加が体感強化に直結するケースが複数。1包だと効果実感が薄くなり継続率が下がるリスクがある。1日2包体験キャンペーン・「疲れた日は2包」という使い方の啓発が、体感確信層の比率引き上げに直結する。</div>
+    </div>
+  </div>
+
+  <!-- 優先打ち手テーブル -->
+  <div style="margin:40px 0 16px;">
+    <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--accent2);margin-bottom:8px;">優先度別アクションロードマップ</div>
+    <div style="font-size:0.8rem;color:var(--text3);">デプスインタビューの示唆から導き出した施策優先度</div>
+  </div>
+  <table class="priority-table">
+    <thead>
+      <tr>
+        <th>優先度</th>
+        <th>施策カテゴリ</th>
+        <th>具体的アクション</th>
+        <th>根拠となる発見</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="priority-badge p-s">S</span></td>
+        <td>訴求軸の転換</td>
+        <td>「入口美容・着地健康（疲労回復）」の二段階コミュニケーション設計。LP・広告クリエイティブの改修。</td>
+        <td>疲労目的LTV¥173K vs 美容目的¥118K。確信+実感率49%（全目的最高）</td>
+      </tr>
+      <tr>
+        <td><span class="priority-badge p-s">S</span></td>
+        <td>AI検索対策</td>
+        <td>「iHerb vs Lypo-C」「リポソーム品質の違い」「リポソームビタミンCの科学」等のコンテンツ整備。AI推薦に対応できるSEO・E-E-A-T対策。</td>
+        <td>TYさんのChatGPT指摘→iHerb移行検討という具体的な新型解約リスク</td>
+      </tr>
+      <tr>
+        <td><span class="priority-badge p-a">A</span></td>
+        <td>toB施策強化</td>
+        <td>医療機関・エステサロン・皮膚科・薬局へのB2B展開拡大。サンプル提供・教育ツール整備。</td>
+        <td>医療機関経由LTV ¥201K。インタビュー内でも専門家経由の高ロイヤル顧客が多数</td>
+      </tr>
+      <tr>
+        <td><span class="priority-badge p-a">A</span></td>
+        <td>摂取量最適化教育</td>
+        <td>1日2包体験キャンペーン。「疲れた日は2包」という使い方の啓発。同梱物・LINEへの追記。</td>
+        <td>1日1包58%・推奨3包3.3%のギャップ。NSさん「3包で圧倒的に違う」</td>
+      </tr>
+      <tr>
+        <td><span class="priority-badge p-a">A</span></td>
+        <td>推薦連鎖の仕組み化</td>
+        <td>紹介プログラム（紹介コード・紹介クーポン）の正式設計。ギフト箱・家族割の整備。</td>
+        <td>TT・SM・MSなど自発的口コミ推薦者の存在。紹介経由顧客は高LTV傾向</td>
+      </tr>
+      <tr>
+        <td><span class="priority-badge p-a">A</span></td>
+        <td>C+D誤解の解消</td>
+        <td>「C+DはVCのビタミンC量は変わらない」という誤解解消の一文を定期同梱物に追加。</td>
+        <td>NSさんの「C+Dにするとビタミンが減る」という誤解。同梱物を読む顧客層の存在</td>
+      </tr>
+      <tr>
+        <td><span class="priority-badge p-b">B</span></td>
+        <td>男性向けセグメント開拓</td>
+        <td>「疲労回復・パフォーマンス維持」を軸にした男性向けコンテンツ・チャネルの試験展開。</td>
+        <td>NS男性（5年継続）・KY（継続）という男性ロイヤルの実在。全体5.5%の潜在拡大余地</td>
+      </tr>
+      <tr>
+        <td><span class="priority-badge p-b">B</span></td>
+        <td>プル型CRM設計</td>
+        <td>解約後マイルストーン接触（30日/90日/180日）。「おかえりクーポン」のトーン設計（温かく・急がせない）。</td>
+        <td>GROUP B 80%がブランド好意維持のまま解約。強引なリターゲティングは逆効果</td>
+      </tr>
+      <tr>
+        <td><span class="priority-badge p-b">B</span></td>
+        <td>定期便「一時停止」の周知</td>
+        <td>解約フロー内での一時停止オプションの強調。「解約しなくても一時停止できます」のUX改善。</td>
+        <td>消費ペース不一致・ライフステージ変化による「仮解約」が多い実態</td>
+      </tr>
+      <tr>
+        <td><span class="priority-badge p-b">B</span></td>
+        <td>OGSキャンペーン設計の見直し</td>
+        <td>次回の大型トライアルキャンペーンでは「220円払える意欲＋購入動機の明確化」を入口条件に。価格感度ではなく健康意識感度でフィルタリング。</td>
+        <td>OGS参加者平均LTV ¥2,754（全体平均の約1/50）。理想顧客層とのミスマッチ</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ブランド戦略との整合 -->
+  <div style="margin:40px 0 16px;">
+    <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--accent2);margin-bottom:8px;">ブランド戦略との整合性評価</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;">
+    <div style="background:#f4faf4;border-radius:12px;padding:20px;border:1px solid #c0dcc0;border-left:3px solid var(--accent4);">
+      <div style="font-size:0.72rem;color:var(--accent4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">✓ 整合している点</div>
+      <div style="font-size:0.82rem;color:var(--text2);line-height:1.7;">「自分の心と体の管理に真剣な人」という理想顧客像は、SM・NE・OY・MR・NY・STなどのハイロイヤルユーザーに明確に体現されている。「憧れから入り、真剣に継続する」という理想的な顧客ファネルも、多くのインタビューで確認できた。「いつかはLypo-C」という憧憬を持ちながら予算調整して戻ってくるUN・FKのような顧客の存在も戦略の方向性を支持する。</div>
+    </div>
+    <div style="background:#fdf4f4;border-radius:12px;padding:20px;border:1px solid #e0c0c0;border-left:3px solid var(--tag-low);">
+      <div style="font-size:0.72rem;color:var(--tag-low);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">△ 要注意・ギャップがある点</div>
+      <div style="font-size:0.82rem;color:var(--text2);line-height:1.7;">OGSキャンペーンで取り込まれた一部の顧客は「自分の心と体の管理に真剣な人」像とのミスマッチが見られた。「量を集めること」と「理想顧客を獲得すること」は必ずしも一致しない。また、SNS広告経由のLTV最低という事実は、「憧れのブランド」という戦略方向性には合致するが、広告投資の効率という観点では課題がある。</div>
+    </div>
+    <div style="background:#fffbf5;border-radius:12px;padding:20px;border:1px solid #e0d0b8;border-left:3px solid var(--accent);">
+      <div style="font-size:0.72rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">→ 戦略的提言</div>
+      <div style="font-size:0.82rem;color:var(--text2);line-height:1.7;">「量の獲得」より「質の獲得」へのシフト。医療機関・サロン経由という「信頼の連鎖」チャネルへの集中投資。一方で「憧れ→体感→健康→ロイヤル」という理想的なファネルを可視化し、各段階に適切なコミュニケーションを設計することで、ブランドが目指す「憧れ」と事業KPIを両立させることができる。</div>
+    </div>
+  </div>
+
+  <!-- 最後の総括メッセージ -->
+  <div style="margin:40px 0 0;padding:28px 32px;background:linear-gradient(135deg,#ffffff,var(--bg3));border-radius:16px;border:1px solid var(--border2);">
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--accent);margin-bottom:16px;">分析者コメント</div>
+    <div style="font-size:0.85rem;color:var(--text2);line-height:1.85;">
+      26名のデプスインタビューと5,428名の定量調査を総合すると、Lypo-Cというブランドが持つ本質的な強さは「一度体感した人がやめられない」という<strong style="color:var(--text)">体感粘着性の高さ</strong>にある。NSさんの「5年間Lypo-C一択」、NYさんの「1日5本中毒者みたいに飲む」、NEさんの「10年以上前から知っている」という発言は、この粘着性の強さを象徴している。<br><br>
+      一方で、この粘着性を生み出す「疲労回復の体感」が十分に伝わっていない顧客層、1日1包にとどまり効果実感が薄い顧客層、価格を理由に躊躇している潜在層という3つの<strong style="color:var(--text)">未開拓領域</strong>が明確に見えた。<br><br>
+      打ち手の方向性は明快だ。<strong style="color:var(--accent)">「疲労回復」という最強の訴求軸に本気で投資する</strong>こと、<strong style="color:var(--accent)">医療機関・サロンという高LTVチャネルを拡大する</strong>こと、<strong style="color:var(--accent)">1日2包体験で確信層を増やす</strong>こと、そして<strong style="color:var(--accent)">AI検索時代の新型解約リスクに備えるコンテンツ整備</strong>。これら4点を同時進行させることで、Lypo-Cは次の成長フェーズへ確実に移行できる。
+    </div>
+    <div style="margin-top:16px;font-size:0.72rem;color:var(--text3);">本レポートは2026年5月 ｜ 株式会社スピック コンシューマー本部 デプスインタビュー分析プロジェクト</div>
+  </div>
+
+</div>
+</section>
+
+<!-- ===== MODALS ===== -->
+</main>
+
+<!-- Modal SN(B女性) -->
+<div class="modal-overlay" id="modal_sn_b">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">SNさん ｜ 2026年ロイヤル解約顧客</div><button class="modal-close" onclick="closeModal('sn_b')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>40代</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>パート（事務）／元正社員</td></tr><tr><td>家族構成</td><td>夫・息子3人（現在4人暮らし）</td></tr><tr><td>居住地</td><td>静岡県</td></tr><tr><td>Lypo-C利用歴</td><td>約2年（公式サイト定期→解約→楽天で継続中）</td></tr><tr><td>現在の購入状況</td><td>公式定期は解約。楽天でC+Dを継続購入中</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>健康メイン・美容はプラスアルファという価値観</strong>購買目的を問われると「健康メインで、美容もあったらいいな」と即答。田中みな実さんへの憧れより「健康になれるのかな」という実用目的が先行する。</li>
+<li><strong>田中みな実さんの「調べ尽くした人が言うなら安心」という信頼構造で購入決定</strong>「田中みな実が飲んでるお水も一時期買って飲んでた」と発言。彼女の言葉がエビデンスになっている。</li>
+<li><strong>悪い口コミから先に見るリスク回避型の慎重な購買スタイル</strong>楽天・公式サイト・@cosmeなど複数サイトの口コミを確認し、「悪い口コミをまず見て自分のチェックポイントに当てはまらないか確認する」行動パターン。</li>
+<li><strong>楽天ヘビーユーザー</strong>ポイント・マラソン・5のつく日を積極活用。楽天は「本物かな」という信頼感もある。</li>
+<li><strong>収入変化が購買行動に直結するライフステージ型顧客</strong>正社員→パート転換で収入減少したことが公式定期解約の動機。製品への不満ではない。</li>
+<li><strong>同梱物・LINEメッセージをきちんと読む顧客</strong>宮城さんが制作したビタミンCビタミンDブックを読んでC+Dへ乗り換えるきっかけになった。</li>
+</ul></div>
+<div style="padding:12px;background:var(--bg3);border-radius:8px;border-left:2px solid var(--grpB);font-size:0.78rem;color:var(--text2);">※ファイル名「NS」表記だが実際のイニシャルは「SN」（女性）。名前の順序が逆になっている。</div>
+</div></div></div>
+
+<!-- Modal NY -->
+<div class="modal-overlay" id="modal_ny">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">NYさん ｜ 2026年ロイヤル解約顧客</div><button class="modal-close" onclick="closeModal('ny')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>34歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>法律事務所・IT部門（コンサル的役割）</td></tr><tr><td>家族構成</td><td>パートナーと同居</td></tr><tr><td>居住地</td><td>東京都</td></tr><tr><td>Lypo-C利用歴</td><td>2022年頃〜（皮膚科で認知→定期→都度買いで継続中）</td></tr><tr><td>現在の購入状況</td><td>公式サイト＋ダブルクリニック（通販クリニック）で都度買い継続。1日平均5本消費</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>喫煙によるビタミンC消耗を「補填」する目的で開始した補填型健康意識ユーザー</strong>看護師に美肌効果として勧められたが、自身の動機は「タバコで失われるビタミンCを補う」という防衛的・実用的目的が先行。</li>
+<li><strong>SPICのマルチプロダクトヘビーユーザー</strong>VC・C+D・C+Cera・Lypo-C CBDを現在のスタメンとして使用。「MINERALionがあれば足りない」と自ら言及するほど製品ラインへの関与度が高い。</li>
+<li><strong>パンフレット・同梱物・メール・LINEをすべて読む情報吸収型</strong>リポソーム構造のイラストを鮮明に記憶している。今回のインタビューも「LINE来た瞬間ノリで応募した」というほど接触率が高い。</li>
+<li><strong>定期便を解約した理由は消費ペースの不規則さ</strong>製品への不満・経済的理由ではなく「飲む量が日によって違くて定期のペースが合わない」ことが主因。実態はチャネル変更。</li>
+</ul></div>
+</div></div></div>
+
+<!-- Modal NS(男性) -->
+<div class="modal-overlay" id="modal_ns_m">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">NS（男性）さん ｜ 2026年ロイヤル解約顧客</div><button class="modal-close" onclick="closeModal('ns_m')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>40歳</td></tr><tr><td>性別</td><td>男性</td></tr><tr><td>職業</td><td>美容院フランチャイズ本部・二代目社長（17店舗）</td></tr><tr><td>家族構成</td><td>妻（元看護師・専業主婦）、小学4年・小学2年の子2人の4人家族</td></tr><tr><td>居住地</td><td>埼玉県</td></tr><tr><td>Lypo-C利用歴</td><td>約5年（田中みな実より前から。女性スタッフの勧めで開始）</td></tr><tr><td>現在の購入状況</td><td>在庫消化中（1日1本ペース）、定期再開検討中</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>「一石二鳥」を好む合理的・コスパ志向の健康投資家</strong>「健康にもいいし美容にもいい」という複合的な価値に強く惹かれる。「ライフスタイルにバチッとはまって苦なく継続できるもの以外は全部通り過ぎてきた」という哲学。</li>
+<li><strong>30代後半から「劣化防止」を主目的にシフトした現状維持型ユーザー</strong>美容院経営で常に鏡を見る仕事柄、外見の維持が仕事上のブランドに直結するという実利的な動機も強い。</li>
+<li><strong>5年間Lypo-C一択で他商品への浮気なし</strong>Amazonでも購入可能と知っていたが、定期便の価格優位性と品質信頼から公式一択。「やめたら老化が進む」という損失回避の恐怖が継続の大きな動力。</li>
+<li><strong>C+Dへの誤解あり</strong>「C+DにするとVCのビタミンC量が減るのでは」という誤解があった。VCがベースでプラスアルファという商品構造が正しく伝わっていなかったことが確認された重要ポイント。</li>
+<li><strong>同梱物・LINEを実際に読み込み、製品知識を深めていた顧客</strong>ビタミンCとビタミンDの効果認識は同封の冊子＋X検索から形成されている。</li>
+</ul></div>
+</div></div></div>
+
+<!-- Modal TY -->
+<div class="modal-overlay" id="modal_ty">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">TYさん ｜ 2026年ロイヤル解約顧客</div><button class="modal-close" onclick="closeModal('ty')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>40代</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>金融機関・営業寄り企画職・マネージャー</td></tr><tr><td>家族構成</td><td>一人暮らし（猫3匹）</td></tr><tr><td>居住地</td><td>東京都</td></tr><tr><td>Lypo-C利用歴</td><td>約2年（2024年〜。定期便でVC＋C+Dを各朝夜1本ずつ）</td></tr><tr><td>現在の購入状況</td><td>2月末に公式定期解約。在庫消化中。iHerb移行を検討中</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>論理的に徹底調査してから導入、入れたら放置型</strong>導入時は製造過程・コスト構造・技術的裏付けまで全て読み込んで納得してから購入を決める。一度「効果あり」と判断したら毎月の固定費扱いにしてほったらかしにする傾向がある。</li>
+<li><strong>AI活用の先端ユーザー。ChatGPT・Gemini・Claudeを使い分け</strong>今回の解約もAI（ChatGPT）から「Lypo-Cへの月15,700円の支出は高い、iHerbで代替可能」とサジェストされたことがきっかけ。</li>
+<li><strong>公式サイト一択の信頼重視型購買</strong>口に入れるものは偽物リスクを避けるため公式サイトでしか買わない主義。</li>
+<li><strong>CBDの熱心なユーザーでLypo-C CBDに強い興味</strong>コスメキッチンで3年以上CBD（高濃度オイル）を定期購入しており、メンタルケア・感情コントロール目的で使用。SPICのCBD製品にはリリース時から注目。</li>
+</ul></div>
+<div style="padding:12px;background:rgba(192,57,43,0.06);border-radius:8px;border-left:2px solid var(--tag-low);font-size:0.78rem;color:var(--text2);">⚠ AI家計見直しによる解約という新型リスクの最初の事例。「iHerb vs Lypo-C」コンテンツ整備が急務。</div>
+</div></div></div>
+
+<!-- Modal UN -->
+<div class="modal-overlay" id="modal_un">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">UNさん ｜ 2026年ロイヤル解約顧客</div><button class="modal-close" onclick="closeModal('un')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>20代</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>スポーツメーカー・EC担当（正社員・転職して半年）</td></tr><tr><td>家族構成</td><td>同い年の夫と2人暮らし（子どもなし）</td></tr><tr><td>居住地</td><td>神奈川県</td></tr><tr><td>Lypo-C利用歴</td><td>約1年（花嫁美容として結婚式半年前〜結婚式後半年間）</td></tr><tr><td>現在の購入状況</td><td>Lypo-C購入なし。再購入意向あり（予算捻出次第）</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>花嫁美容を起点に購入を決断した、田中みな実ファン型の憧れ購買ユーザー</strong>知ってから購入まで年単位のタイムラグがあったが、結婚式という明確なゴールが一歩を踏み出すトリガーに。田中みな実さんへの信頼が購入の根幹にあり、比較検討なしにLypo-C一択で決断。</li>
+<li><strong>夫婦共同予算でサプリを管理する家計連動型の購買スタイル</strong>夫がLypo-Cの味を受け付けなかったことが解約を加速させた要因の一つ。共同予算に入れられる商品かどうかが継続判断の大きな軸。</li>
+<li><strong>再購入意向は明確にあり</strong>「自分の中で一番はLypo-Cという認識」「自分の予算が増えたら定期購入したい」と明言。製品への信頼は維持されている。</li>
+</ul></div>
+</div></div></div>
+
+<!-- OGSグループのモーダル（代表的なもの） -->
+<!-- Modal OY -->
+<div class="modal-overlay" id="modal_oy">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">OYさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('oy')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>32歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>フリーランスライター（クリニック紹介記事中心）</td></tr><tr><td>家族構成</td><td>一人暮らし</td></tr><tr><td>居住地</td><td>大阪府</td></tr><tr><td>Lypo-C利用歴</td><td>2024年夏（10万人体験キャンペーン）から開始。約9ヶ月以上</td></tr><tr><td>定期購入状況</td><td>継続中（VC単体・C+D を状況により使い分け）</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>美容施術ヘビーユーザー・情報収集の精鋭層</strong>キュアジェット（コンタクトモード）など攻めの施術を定期的に受けており、施術の前後に集中摂取するなどLypo-Cを美容医療の補助ツールとして高度に活用。韓国へも施術のために渡航する行動派。</li>
+<li><strong>エビデンス重視の論理的購買者</strong>「なんとなく白くなります」レベルの訴求には手を出さない。技術的背景・吸収のロジックを自分なりに理解してから購入する。自身の理解度は10段階で7程度。</li>
+<li><strong>X（旧Twitter）を情報基地とするリサーチャー</strong>一次情報の収集はXが最多。インスタグラムは視覚的情報の享受に使い、能動的な調べものにはX、さらにGoogleで入り口を作るという使い分けを行う。</li>
+<li><strong>学生時代に栄養学を勉強した素地あり</strong>ビタミンD・鉄・カリウムなど複数の栄養素の意味を理解しながらサプリを組み合わせている。</li>
+<li><strong>「推しはLypo-C」と他者にも明言できる支持者</strong>一度効果を実感すると公式サイト・クリニックのキャンペーン・体験キャンペーンを巧みに使って継続。</li>
+</ul></div>
+</div></div></div>
+
+<!-- Modal MS -->
+<div class="modal-overlay" id="modal_ms">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">MSさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('ms')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>38歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>保育士パート（週3程度）</td></tr><tr><td>家族構成</td><td>夫・子供2人（小学5年・小学2年）の4人家族</td></tr><tr><td>居住地</td><td>福岡市内</td></tr><tr><td>Lypo-C利用歴</td><td>2025年夏（お試しから開始）、約半年〜継続中</td></tr><tr><td>定期購入状況</td><td>継続中（2ヶ月サイクル、最近は毎日飲むように）</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>子育て・仕事・習い事の付き添いで多忙な「家が回らないと困るお母さん」タイプ</strong>自分への投資は後回しにしてきたが、体力の限界を感じたことで初めてサプリメントを選択した。</li>
+<li><strong>「クソまずいけど飲む」スタンス</strong>まずさを承知のうえで効果を優先する合理的な判断軸がある。費用は自分の稼ぎから捻出。夫はサプリ否定派だが気にせず購入。7000円台を「高いけど自分への投資」として正当化できている。</li>
+<li><strong>口が達者でオープン。周囲への紹介行動も積極的</strong>インタビュー中も自発的に情報をどんどん開示。信頼できる人の発信に影響を受けやすいが自分の体感・納得がなければ購入には至らない慎重さも持つ。</li>
+</ul></div>
+</div></div></div>
+
+<!-- Modal KY -->
+<div class="modal-overlay" id="modal_ky">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">KYさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('ky')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>37歳</td></tr><tr><td>性別</td><td>男性</td></tr><tr><td>職業</td><td>電気施工管理・役員</td></tr><tr><td>家族構成</td><td>一人暮らし（実家：川崎）</td></tr><tr><td>居住地</td><td>東京都</td></tr><tr><td>Lypo-C利用歴</td><td>2024年夏のOGSキャンペーン（220円）から継続中</td></tr><tr><td>定期購入状況</td><td>継続中（公式サイトで購入、まとめ買いスタイル）</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>情報収集は人頼み、調べは深追いしない型</strong>健康・美容・スキンケアいずれも「リアルの友人が使っていた」をきっかけに取り入れるパターンが多く、SNS広告やYouTuberの推薦より身近な人の実体験を重視する。</li>
+<li><strong>合理的・省エネ志向</strong>楽天ほぼ一択（Amazonは未契約）、まとめ買いで再購入の手間を省く。昼食は職場の電子レンジで蒸し野菜を温めるなど、効率化・コスト最適化を自然に実践。</li>
+<li><strong>健康への関心は「守り型」ではなく「パフォーマンス維持型」</strong>サプリへの期待は「疲労回復・リカバリー」であり、欠乏を補う意識より質の高い状態を維持する戦略的投資として位置づけている。</li>
+<li><strong>ライフイベント（引越し）があっても継続した高耐性ユーザー</strong>冷蔵庫用ストッカーを引越しで捨てても常温保存に切り替えて継続。習慣が生活に自然に組み込まれている。</li>
+</ul></div>
+</div></div></div>
+
+<!-- Group A モーダル -->
+<!-- Modal NE -->
+<div class="modal-overlay" id="modal_ne">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">NEさん ｜ 2025年購入利用調査</div><button class="modal-close" onclick="closeModal('ne')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>30代後半</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>会社員・エンターテインメント企業 組織開発担当</td></tr><tr><td>家族構成</td><td>夫と2人暮らし（DINK）</td></tr><tr><td>居住地</td><td>神奈川県横浜市</td></tr><tr><td>Lypo-C初認知</td><td>約10年前（友人からの口コミ）</td></tr><tr><td>継続状況</td><td>定期便を一旦解約（手続きミスによる）→再開意向あり</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>10年以上前からLypo-Cを知っていた筋金入りのリポソームビタミンC理解者</strong>美容意識の高い友人からビタミンCの摂取方法について熱弁を受け、当初はサンプルで試飲。リポスフェリック（海外品）を経て、今春「比較せずにLypo-C一択」で再購入。</li>
+<li><strong>信頼できる人からの情報のみを購買に活用するリテラシー高型ユーザー</strong>ジムのトレーナー・エステサロン・身近な専門家からの口コミのみを購買判断に使用。SNSは知らない人の発信から購入したことはない。</li>
+<li><strong>サプリメントは厳選主義の長期継続型</strong>メインのE3Live（3年以上）、Lypo-C、CBD等を状況に応じて使用。添加物への抵抗感からDHC・ファンケルなど国産の安価サプリは避け、輸入品を選ぶ傾向。</li>
+<li><strong>心と体を不可分なセットとして捉えるマインドフルネス型の健康観</strong>登山（月1ノルマ）・パーソナルトレーニング（週1）・ヨガ（自宅、3日に1回）という複合的な運動習慣。</li>
+<li><strong>食の自給志向が高く、味噌・醤油・梅干しを自作する発酵食品マニア</strong>腸活も「自分で作った味噌を食べるから不要」という立場。</li>
+</ul></div>
+</div></div></div>
+
+<!-- Modal NK65 -->
+<div class="modal-overlay" id="modal_nk65">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">NK（65歳）さん ｜ 2025年購入利用調査</div><button class="modal-close" onclick="closeModal('nk65')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>65歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>医療事務（パート・週5〜6日）</td></tr><tr><td>家族構成</td><td>1人暮らし（両親を5年前に看取り、独居）</td></tr><tr><td>居住地</td><td>兵庫県西宮市</td></tr><tr><td>Lypo-C認知経路</td><td>田中みな実さんのYouTube → 広告でも表示されるようになり購入</td></tr><tr><td>継続状況</td><td>1箱目を消化中。効果実感が継続のカギ。価格が最大の障壁</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>「健康寿命を延ばすこと」が最大の目標。1人暮らしゆえに切実な健康意識</strong>両親を看取り独居となった5年前を境に、スキンケアへの支出を減らし健康投資にシフト。「85歳まで健康でいたい」という具体的なビジョン。</li>
+<li><strong>情報収集はYouTube中心。テレビなし・InstagramなしのYouTube完結型</strong>アルゴリズムで流れてくる情報を吸収するスタイル。Lypo-CもラクトロンもYouTube広告経由で知った。</li>
+<li><strong>「高いけど、効果がはっきりしたら続ける」という条件付き継続意向</strong>月のサプリ合計が2万円になることへの負担感が大きく、Lypo-Cを継続するには効果実感が必須条件。疲れへの効果を最優先に求める。</li>
+</ul></div>
+</div></div></div>
+
+<!-- Modal SM -->
+<div class="modal-overlay" id="modal_sm">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">SMさん ｜ 2025年購入利用調査</div><button class="modal-close" onclick="closeModal('sm')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>30代後半</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>薬剤師（処方箋薬局勤務）</td></tr><tr><td>家族構成</td><td>夫と2人暮らし（＋ウエストハイランドホワイトテリア1頭）</td></tr><tr><td>居住地</td><td>大阪府</td></tr><tr><td>Lypo-C購入時期</td><td>2025年春（フォトウェディングを機に）</td></tr><tr><td>継続状況</td><td>継続購入中。夫・愛犬にも飲ませている。VC単独＋C+D併用</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>子供の頃からビタミンC習慣がある筋金入りのビタミンCユーザー</strong>祖母がシナールや武田薬品のビタミンCを持参して飲ませる家庭環境で育ち、常にテーブルの上にビタミンCがある生活を続けてきた。</li>
+<li><strong>薬剤師の知識を活かした成分ベースの購買スタイル</strong>ビタミンDの血中濃度測定・骨粗しょう症の予防・妊活目的でC+Dを選択。メーカー名より成分量・配合内容を重視し値段で選ばない。</li>
+<li><strong>「実証済みの知人の口コミ」のみを購買トリガーにする慎重型</strong>別県在住の薬剤師の同級生（美容投資を惜しまず実際に結果を出している人）の推薦が決め手。</li>
+<li><strong>家族への愛情がLypo-Cの継続動機</strong>夫には「吸収の仕組みが普通のビタミンCと違う」と説明して勧め、愛犬にも少量与えている。</li>
+</ul></div>
+</div></div></div>
+
+<!-- Modal TT -->
+<div class="modal-overlay" id="modal_tt">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">TTさん ｜ 2025年購入利用調査</div><button class="modal-close" onclick="closeModal('tt')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>43歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>公務員・保育士</td></tr><tr><td>家族構成</td><td>夫・子ども2人（大学生22歳・高校生16歳）・親御さんとの6人暮らし</td></tr><tr><td>居住地</td><td>東京都（23区外）</td></tr><tr><td>Lypo-C認知経路</td><td>大学生の長女からの紹介（長女が田中みな実さん経由で知り家族に勧めた）</td></tr><tr><td>継続状況</td><td>継続中。長女・次女にも飲ませており消費ペースが早い</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>娘（大学生・美容オタク）が情報のアンテナとなり、家族全体に波及したLypo-Cユーザー</strong>TTさん自身はSNSをほぼ見ない・美容雑誌も買わないタイプだが、長女が田中みな実さん経由でLypo-Cを知り、ChatGPTに確認して納得し、母に勧めた。</li>
+<li><strong>健康目的が主、美容はおまけ型</strong>「疲れない」「免疫が上がる」という内側からのアプローチを最重視。「中からとか自分でできることをやりたい」というスタンス。</li>
+<li><strong>Lypo-Cは朝のルーティンに組み込んで継続成功</strong>「朝起きたら歯ブラシして口をゆすいでから飲む」という朝のルーティンに組み込めたため継続中。「逆に飲まないと気持ち悪い」レベルに定着。</li>
+<li><strong>同僚への口コミ推薦実績あり</strong>職場で体調を崩しやすい同僚に「高いけど効果がある」と訴求して推薦。C+Dも購入済みで次女のメンタルサポート・免疫強化目的で使用中。</li>
+</ul></div>
+</div></div></div>
+
+<!-- Modal YJ -->
+<div class="modal-overlay" id="modal_yj">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">YJさん ｜ 2025年購入利用調査</div><button class="modal-close" onclick="closeModal('yj')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>38歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>ウェディング会社・前撮りコーディネーター</td></tr><tr><td>家族構成</td><td>夫と2人暮らし（子どもなし）</td></tr><tr><td>居住地</td><td>兵庫県（神戸）</td></tr><tr><td>前製品</td><td>リポスフェリック（約2年間）→ Lypo-Cに移行</td></tr><tr><td>移行のきっかけ</td><td>通っているシミケアサロンのお姉さんの勧め</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>「入口は美容、気づいたら健康」型のビタミンCユーザー</strong>もともと美容目的でリポスフェリックを始めたが、疲労回復・翌朝の目覚めの良さという健康効果を実感してから、健康目的の比重が増している。</li>
+<li><strong>信頼できる人からの口コミが購買の最大トリガー</strong>「友利新先生のYouTube」「仲良くしているヘアメイクさん」「通っているシミケアサロンのお姉さん」の3つが情報の軸。リポスフェリックもLypo-Cへの移行もサロンのお姉さん経由。</li>
+<li><strong>スキンケアに月換算3万5千円相当を投資する美容リテラシー高めの層</strong>ドラッグストアからデパコスまで混在させ、ブランドではなく成分・効果で選ぶスタイル。iHerbも使いこなす。</li>
+<li><strong>リポソーム技術への安心感と信頼をすでに持っている顧客</strong>コスメデコルテのリポソームシリーズが好きで、リポソームという仕組み自体への好意的な先入観がある。リポソームブックを読んで確信が深まった。</li>
+</ul></div>
+</div></div></div>
+
+<!-- Modal FK -->
+<div class="modal-overlay" id="modal_fk">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">FKさん ｜ 2025年購入利用調査</div><button class="modal-close" onclick="closeModal('fk')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>24歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>音楽活動（自営業）＋芸能養成所</td></tr><tr><td>家族構成</td><td>1人暮らし</td></tr><tr><td>居住地</td><td>神奈川県</td></tr><tr><td>Lypo-C初認知</td><td>約2年前（田中みな実さんのSNS経由）</td></tr><tr><td>継続状況</td><td>現在は継続していない（価格理由）。美容皮膚科処方のビタミン剤で代替中。「今も欲しい」と再購入意向あり</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>田中みな実さんをきっかけに美容へのこだわりが深まった、デパコス移行済みの24歳ユーザー</strong>田中みな実さんの影響と収入増加を機にカネボウ（小田切ヒロさん紹介）を中心としたデパコスラインに移行。Lypo-Cも田中みな実さんの発信で認知し、その後美容皮膚科で購入。</li>
+<li><strong>価格が継続の最大障壁</strong>デパコス中心のスキンケアは継続しつつ、その枠外のLypo-Cは「高い」という判断で継続を断念。「今も欲しい」「自分の収入が上がれば」という再購入意向は明確。</li>
+<li><strong>Lypo-C継続のカギは価格か収入。比較検討はしておらず、Lypo-C一択の指名買い</strong>他のリポソームビタミンCとの比較は一度もしていない。田中みな実さんへの信頼と過去の体験がそのままLypo-C指名につながっている。</li>
+</ul></div>
+</div></div></div>
+
+<!-- OGS残りのモーダル（シンプル版） -->
+<div class="modal-overlay" id="modal_ar">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">ARさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('ar')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>29歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>地方公務員（正社員）</td></tr><tr><td>居住地</td><td>神奈川県川崎市</td></tr><tr><td>Lypo-C利用歴</td><td>約3年前（田中みな実さん契機）→OGS経由→現在ヤフーショッピングでまとめ買い</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>健康・美容への高い自己投資意識</strong>SK-IIをライン使いし、美容・健康にはお金を惜しまない一方、「取り入れるもの」にこだわる。食生活の自己評価85点・魚中心の健康的な自炊を実践。</li>
+<li><strong>添加物・成分への強いこだわり</strong>サプリ選定の最重要基準が「添加物の少なさ」。食事で補える栄養素のサプリは不要と判断し解約するなど、成分・必要性を論理的に評価する。</li>
+<li><strong>アクティブかつ計画的な生活スタイル</strong>中学からの硬式テニス継続、ゴルフ開始、ジム通いと多趣味・行動的。外でスポーツをするため日焼け対策が美容の軸となっている。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_ay">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">AYさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('ay')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>39歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>グループホームスタッフ（業務委託・週約20時間）</td></tr><tr><td>居住地</td><td>都内</td></tr><tr><td>Lypo-C利用歴</td><td>認知：約2〜3年前（X経由）→ メルカリで試用 → 公式OGSで220円 → 定期購入開始</td></tr><tr><td>定期購入状況</td><td>一時休止中（ふるさと納税で入手した在庫消化のため）</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>コスパ感度が極めて高い情報収集型ユーザー</strong>ドラッグストアでの店頭確認→その場でネット最安値検索、在庫品アウトレットサイトの常時チェック、ふるさと納税の活用など生活全般にわたって「賢く買う」行動を習慣化している。</li>
+<li><strong>X（旧Twitter）が情報の主軸（8割）</strong>インフルエンサー発信→X拡散という経路で商品・成分情報を認知・判断する。ビタミンD不足、セラミドとバリア機能など専門的な健康トピックもXで吸収。</li>
+<li><strong>体感から継続意欲を得るタイプ</strong>飲み始めてすぐの「顔色の明るさ」「シワ・乾燥の改善感覚」「体の疲れが楽」という実感が購買継続の根拠。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_hm">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">HMさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('hm')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>27歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>飲料メーカー 営業企画</td></tr><tr><td>居住地</td><td>宮城県（仙台市外）</td></tr><tr><td>Lypo-C利用歴</td><td>約半年前（220円トライアルから）、現在一時停止中</td></tr><tr><td>定期購入状況</td><td>解約済み（一時停止）／夏季に再開意向あり</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>美容×健康の二軸でビタミンCを捉えている合理型</strong>美容（シミ・混合肌ケア）6割・健康（免疫維持）4割の目的比率を自分で言語化できる。</li>
+<li><strong>仕事繁忙期と健康意識が連動するサイクル型ユーザー</strong>年末〜年度末の繁忙期に「風邪をひけない」プレッシャーが高まりLypo-Cを積極摂取。現在は仕事が落ち着き「健康だから不要」と判断して停止。夏の紫外線シーズンには美容目的で再開意向。</li>
+<li><strong>インフルエンサー・著名人起点で認知し、口コミ量で最終決断するタイプ</strong>田中みな実さんのリポスト経由でLypo-Cを認知。購入意思決定には「一般人のリアルな口コミが多数あること」を重視。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_ia">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">IAさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('ia')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>34歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>パート（パン屋 接客・調理補助）</td></tr><tr><td>居住地</td><td>千葉県千葉市中央区</td></tr><tr><td>Lypo-C利用歴</td><td>約10ヶ月（2024年夏〜）</td></tr><tr><td>定期購入状況</td><td>継続中</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>試してから決める慎重派</strong>口コミを端から端まで読む習慣があり、怪しいブログ口コミは見抜く。お試しセットや低価格スタートに非常に弱く、そこから継続に移行するパターンが定着している。</li>
+<li><strong>効果実感が継続の絶対条件</strong>「肌の赤みが消えた」「副鼻腔炎がなくなった」「Lypo-Cを切らしたら風邪をひいた」という具体的な体験が継続の軸。</li>
+<li><strong>ブランド信頼と飲みやすさで選択</strong>リポスフェリックとLypo-Cを比較検討。見た目のドロッとした質感に不安を感じてLypo-Cを選択。「高いお金を出して飲めなかったら困る」という実用的判断。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_km">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">KMさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('km')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>44歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>スターバックスコーヒージャパン 店長</td></tr><tr><td>居住地</td><td>北海道 札幌市</td></tr><tr><td>Lypo-C利用歴</td><td>2024年夏ごろ（十周年記念キャンペーン）から不定期継続購入</td></tr><tr><td>定期購入状況</td><td>定期購入なし（単品買い・不定期）</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>情報収集力の高いアーリーアダプター</strong>X（Twitter）を主な情報源として使い、ChatGPTやGoogleも駆使して自分で調べて判断する。PRや口コミサイトへの不信感が強く、SNSのオーガニックな「つぶやき」を信頼する。</li>
+<li><strong>美容医療・デパコス利用の美容意識高め層</strong>コスメデコルテ・SK-II・ランコム・ポーラなどデパコスを愛用し、美容皮膚科に月1〜2回通う。</li>
+<li><strong>コストと価値のバランスを常に意識する合理的消費者</strong>Lypo-Cを「毎日飲みたいがランニングコストが課題」と率直に述べ、シナール等の美容皮膚科処方薬で日常をカバーしてLypo-Cを特別な日やお守り的に使用する使い分けをしている。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_mr">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">MRさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('mr')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>39歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>フリーランス（インフルエンサー／モデル／販売店店長）</td></tr><tr><td>家族構成</td><td>既婚・5人家族（子供3人）</td></tr><tr><td>居住地</td><td>東京都</td></tr><tr><td>定期購入状況</td><td>継続中（公式定期購入）</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>エビデンス重視の成分研究家</strong>皮膚科で自ら成分を指定して処方を受け、iHerbやAmazonで独自に調達。サプリの目的・効果が不明になったら即脱落させる合理的な選別基準を持つ。</li>
+<li><strong>体感優先の継続判断</strong>「家族全員インフルエンザになっても自分だけならない」という積み重ねた体感がLypo-C継続の核。</li>
+<li><strong>行動力・多動型</strong>警察官→モデル→インフルエンサー→販売店店長と、常に何かをしていないと気が済まない性格。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_my">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">MYさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('my')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>29歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>主婦（週1回パート）</td></tr><tr><td>居住地</td><td>神奈川県・武蔵小杉</td></tr><tr><td>Lypo-C利用歴</td><td>2023年頃に楽天で単発購入→2024年7月頃に公式キャンペーン経由で定期購入開始（C+Dに切替）</td></tr><tr><td>定期購入状況</td><td>継続中（C+D）</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>情報収集はXが主軸</strong>インスタ・TikTokは使っておらず、XとYouTubeが情報源。Xは1日4〜5時間使用し、株取引情報をメインに美容・健康情報もキャッチする。</li>
+<li><strong>慎重なリサーチ型購買者</strong>バズ投稿を見ても即買いせず、複数投稿をX検索で確認したり、コスメ系はアットコスメを参照するなどクロスチェックをする。</li>
+<li><strong>美容への関心が健康と並走</strong>初回購入の動機は「美白効果」。スキンケアはデパコスとドラッグストア・韓国コスメを使い分け。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_nk64">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">NK（64歳）さん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('nk64')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>64歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>パート（学童シッター）</td></tr><tr><td>居住地</td><td>大阪府</td></tr><tr><td>Lypo-C利用歴</td><td>約3年前に皮膚科で知り一度断念。2025年7月のOGSキャンペーンで再購入</td></tr><tr><td>定期購入状況</td><td>継続中（2ヶ月サイクル・C+D）</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>医師・専門家の権威を信頼する購買行動</strong>スキンケアもサプリも皮膚科で紹介されたものを選ぶ傾向が強く、「先生が肌を見て判断してくれるから確実」という言語化が象徴的。</li>
+<li><strong>効果を自覚しにくいタイプ、しかし継続意向はある</strong>「少しの変化はあまり分からない人間」と自己認識。効果実感はほぼないが「みんながいいと言うから我慢して続けてみようか」というかたちで継続中。</li>
+<li><strong>コスト感覚は合理的・中程度</strong>スキンケアには化粧水1本（2ヶ月分）1万円台を出せるが、2〜3万円は「使えない」と感じる。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_on">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">ONさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('on')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>56歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>派遣社員（秘書業務）</td></tr><tr><td>家族構成</td><td>息子（18歳）・母親との3人暮らし</td></tr><tr><td>居住地</td><td>東京都下（多摩地区）</td></tr><tr><td>Lypo-C利用歴</td><td>2024年夏ごろ（OGSキャンペーンで初回購入）から継続中</td></tr><tr><td>定期購入状況</td><td>継続中（3ヶ月サイクル）</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>情報より体験優先の自律型消費者</strong>口コミや技術詳細をあまり調べず「試してダメなら止める」スタンス。友人の推薦や自分の感覚で判断する。</li>
+<li><strong>品質と安心感を重視する実用主義者</strong>リポスフェリックからLypo-Cへの乗り換えも「日本製・国内正規品への安心感」が主動機。</li>
+<li><strong>健康・美容意識は中程度でマイペース</strong>精進料理を自炊したり配信エクササイズを週3回行うなど意識はあるが、飲み会・外食も多い。プロペトのみで化粧品代を大幅削減するなど独自のやり方を選ぶ。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_st">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">STさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('st')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>52歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>システムエンジニア（SE）・一般職</td></tr><tr><td>家族構成</td><td>単身（実家：東京都日野市）</td></tr><tr><td>居住地</td><td>東京都</td></tr><tr><td>Lypo-C利用歴</td><td>2年以上（クリニックで購入開始、その後公式サイト定期購入へ移行）</td></tr><tr><td>定期購入状況</td><td>継続中</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>健康＝美容という哲学を持つ人物</strong>「美容と健康は別ではなくイコール」という考え方で、外見より内側の健康を重視。サプリも化粧品も「余計なものでない・ナチュラル」であることを重視する。</li>
+<li><strong>15年以上継続するアシュタンガヨガ実践者</strong>座り仕事（SE）の反動として始め、今や歯磨きと同等のルーティン。自己内省・コンディション管理に使っている。</li>
+<li><strong>直感・体感を信じるファースト購買スタイル</strong>口コミを「惑わされる」と感じ、まず試してみて体が反応したら続ける。</li>
+<li><strong>コスメキッチンのヘビーユーザー</strong>ナチュラル・オーガニック志向で化粧品を選ぶ。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_ym">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">YMさん ｜ OGS引き上がりグループ</div><button class="modal-close" onclick="closeModal('ym')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>43歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>IT企業の法務（管理職・専門職）</td></tr><tr><td>家族構成</td><td>一人暮らし（実家は名古屋）</td></tr><tr><td>居住地</td><td>東京都23区西側</td></tr><tr><td>Lypo-C利用歴</td><td>2025年8月（十周年キャンペーン）から継続中（約9ヶ月）</td></tr><tr><td>定期購入状況</td><td>継続中</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>論理的・計画的な健康管理者</strong>「サプリは3ヶ月試さないとわからない」という原則を持ち、カウントアプリで90日管理してから継続判断する。漢方医の知識を実生活に落とし込む合理的思考。</li>
+<li><strong>インフルエンサー非依存型の情報収集者</strong>インフルエンサーを「そんなに詳しくない」と評価し、公式LP・広告ページを自分でじっくり読んで判断する。</li>
+<li><strong>能動的に動かず環境を整える生活習慣設計者</strong>リモートワーク中に出社日を意図的に設けて体を動かす、早めに夕食を摂って12時間以上の空腹時間を作るなど無理のない仕組みで健康行動を習慣化している。</li>
+</ul></div>
+</div></div></div>
+
+<div class="modal-overlay" id="modal_sn_a">
+<div class="modal">
+<div class="modal-header"><div class="modal-title">SN（22歳）さん ｜ 2025年購入利用調査</div><button class="modal-close" onclick="closeModal('sn_a')">✕</button></div>
+<div class="modal-body">
+<div class="modal-section"><h3>顧客情報サマリー</h3>
+<table class="modal-table"><tr><td>年齢</td><td>22歳</td></tr><tr><td>性別</td><td>女性</td></tr><tr><td>職業</td><td>大学4年生（エステサロン・薬局等でアルバイト掛け持ち）</td></tr><tr><td>家族構成</td><td>両親・弟・妹との5人暮らし（東京都・実家）</td></tr><tr><td>居住地</td><td>東京都</td></tr><tr><td>継続状況</td><td>継続中。朝一番・空腹時に飲む習慣が定着。効果実感あり・継続意向強い</td></tr></table></div>
+<div class="modal-section"><h3>パーソナリティ要約</h3>
+<ul class="persona-list">
+<li><strong>22歳にして美容・健康の自己研鑽を積み重ねた、同世代から突出した健康リテラシー保有者</strong>高校2年のコロナ禍に読書習慣が生まれ、栄養学・美容・心理学・ハーブ等を年間50冊以上読破。バイト先エステサロンの社長との出会いが「広告費のない会社の商品を選ぶ」という独自の購買哲学のきっかけになった。</li>
+<li><strong>「根本から改善する」思想を持つインナーケア優先型</strong>美容医療の存在は知りながらも「Lypo-Cのように根本から改善してくれるものの方が健康的でいい」と明言。</li>
+<li><strong>「広告がない会社を選ぶ」という購買哲学</strong>成分の実含有量・会社の理念を自分で調べてから購入するスタイル。口コミは参考にするが検索で裏付けを取ってから購入に至る。</li>
+<li><strong>朝5〜6時起き・日光浴・ジョギング・読書という朝のルーティンが継続中</strong>Lypo-Cも「朝一番・空腹時・30分後に食事」という最適な飲み方を自分で調べて実践。</li>
+</ul></div>
+</div></div></div>
+
+<!-- JAVASCRIPT -->
+<script>
+function switchTab(idx){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openModal(id){
+  const el=document.getElementById('modal_'+id);
+  if(el){el.classList.add('open');document.body.style.overflow='hidden';}
+}
+function closeModal(id){
+  const el=document.getElementById('modal_'+id);
+  if(el){el.classList.remove('open');document.body.style.overflow='';}
+}
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',function(e){if(e.target===this){const id=this.id.replace('modal_','');closeModal(id);}});
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.open').forEach(o=>{const id=o.id.replace('modal_','');closeModal(id);});}
+});
+</script>
+</body>
+</html>

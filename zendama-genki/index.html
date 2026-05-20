@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>善玉元気 キャラクター案 | VTuberアイコン検討</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark:   #2d6a4f;
+    --green-mid:    #52b788;
+    --green-light:  #d8f3dc;
+    --amber:        #c9903a;
+    --amber-light:  #fdf3e3;
+    --cream:        #fafaf5;
+    --text:         #1e1e1e;
+    --text-sub:     #555;
+    --border:       #d0e8d8;
+    --radius:       12px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  /* ======= HEADER ======= */
+  .site-header {
+    background: var(--green-dark);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .site-header .logo {
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+  .site-header .tagline {
+    font-size: 12px;
+    color: #a8d8b9;
+    margin-top: 2px;
+  }
+
+  /* ======= HERO ======= */
+  .hero {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+    color: #fff;
+    padding: 56px 24px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 800;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: 14px;
+    color: #c8ecd4;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* ======= RULE BOX ======= */
+  .rule-box {
+    background: var(--amber-light);
+    border-left: 4px solid var(--amber);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 32px auto;
+    max-width: 860px;
+  }
+  .rule-box h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--amber);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .rule-box table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .rule-box th {
+    background: var(--amber);
+    color: #fff;
+    padding: 7px 12px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .rule-box td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #e8d5b0;
+    vertical-align: top;
+  }
+  .rule-box tr:last-child td { border-bottom: none; }
+  .rule-box tr:nth-child(even) td { background: #fffaf2; }
+
+  /* ======= SECTION ======= */
+  .section {
+    max-width: 960px;
+    margin: 48px auto;
+    padding: 0 16px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-badge {
+    background: var(--green-dark);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .section-badge.amber { background: var(--amber); }
+  .section-title {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 800;
+    color: var(--green-dark);
+  }
+  .section-desc {
+    font-size: 13px;
+    color: var(--text-sub);
+    margin-top: 6px;
+  }
+
+  /* ======= GRID ======= */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+  }
+  .grid.grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  @media (max-width: 700px) {
+    .grid.grid-5 { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .grid, .grid.grid-5 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ======= CARD ======= */
+  .card {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    overflow: hidden;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+  }
+  .card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+  }
+  .card-body {
+    padding: 10px 12px 12px;
+  }
+  .card-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--green-mid);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .card-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 2px 0 3px;
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-size: 11px;
+    color: var(--text-sub);
+    line-height: 1.5;
+  }
+
+  /* ======= DIVIDER ======= */
+  .divider {
+    max-width: 960px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+  .divider hr {
+    border: none;
+    border-top: 1px dashed var(--border);
+    margin: 8px 0 0;
+  }
+
+  /* ======= DEEPEN INTRO ======= */
+  .deepen-intro {
+    background: var(--green-light);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: var(--green-dark);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .deepen-intro .icon { font-size: 22px; flex-shrink: 0; }
+
+  /* ======= FOOTER ======= */
+  footer {
+    background: var(--green-dark);
+    color: #a8d8b9;
+    text-align: center;
+    padding: 28px 16px;
+    font-size: 12px;
+    margin-top: 64px;
+  }
+  footer strong { color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div>
+    <div class="logo">善玉元気 🌿</div>
+    <div class="tagline">腸活アカウント キャラクター検討ページ（社内資料）</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>VTuber風キャラクター案<br>「善玉（ぜんた）」</h1>
+  <p>30代女性をメインターゲットに、日本の男性VTuber・男性アイドルグループをイメージしたキャラクターデザイン案。猫耳×黒縁メガネが特徴。</p>
+</section>
+
+<!-- RULE BOX -->
+<div style="max-width:960px; margin:0 auto; padding:0 16px;">
+  <div class="rule-box">
+    <h2>📋 キャラクター設計ルール</h2>
+    <table>
+      <tr><th>項目</th><th>設定</th></tr>
+      <tr><td>ターゲット</td><td>30代女性（腸活に関心がある層）</td></tr>
+      <tr><td>参照イメージ</td><td>にじさんじ・ホロスターズ系男性VTuber / SixTONES・INI系男性アイドル</td></tr>
+      <tr><td>共通デザイン要素</td><td>猫耳 ／ 黒縁メガネ ／ 白シャツ ／ 緑の葉モチーフブローチ</td></tr>
+      <tr><td>カラーパレット</td><td>セージグリーン・エメラルド・アンバー・クリームをベースに各タイプで調整</td></tr>
+      <tr><td>用途</td><td>X（Twitter）アカウントのメインアイコン</td></tr>
+      <tr><td>生成ツール</td><td>Imagen 4（Google Gemini API）</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- =========================================
+     SECTION 1: 基本10タイプ
+     ========================================= -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-badge">STEP 1</span>
+    <div>
+      <div class="section-title">基本10タイプ</div>
+      <div class="section-desc">髪色・背景・表情の方向性を10パターンで探索したファーストラウンド</div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <img src="images/icon_zenta_01_cool.png" alt="クール型">
+      <div class="card-body">
+        <div class="card-num">No.01</div>
+        <div class="card-name">クール型</div>
+        <div class="card-desc">ダークセージグリーン髪<br>細フレーム眼鏡<br>ティール背景</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/icon_zenta_02_fresh.png" alt="爽やか型">
+      <div class="card-body">
+        <div class="card-num">No.02</div>
+        <div class="card-name">爽やか型</div>
+        <div class="card-desc">ライトシーフォーム髪<br>丸眼鏡<br>スカイブルー背景</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/icon_zenta_03_gentle.png" alt="優しい型">
+      <div class="card-body">
+        <div class="card-num">No.03</div>
+        <div class="card-name">優しい型</div>
+        <div class="card-desc">ソフトミント髪<br>ワイヤーフレーム眼鏡<br>クリーム背景</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/icon_zenta_04_mysterious.png" alt="ミステリアス型">
+      <div class="card-body">
+        <div class="card-num">No.04</div>
+        <div class="card-name">ミステリアス型</div>
+        <div class="card-desc">ダークフォレストグリーン<br>パープル混じり<br>半月眼鏡</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/icon_zenta_05_prince.png" alt="王子様型">
+      <div class="card-body">
+        <div class="card-num">No.05 ⭐</div>
+        <div class="card-name">王子様型</div>
+        <div class="card-desc">エメラルドグリーン<br>ゴールドフレーム眼鏡<br>ゴールド背景</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/icon_zenta_06_intellectual.png" alt="知的型">
+      <div class="card-body">
+        <div class="card-num">No.06 ⭐</div>
+        <div class="card-name">知的型</div>
+        <div class="card-desc">オリーブグリーン<br>黒縁眼鏡<br>思索的な表情</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/icon_zenta_07_sweet.png" alt="甘い型">
+      <div class="card-body">
+        <div class="card-num">No.07</div>
+        <div class="card-name">甘い型</div>
+        <div class="card-desc">パステルミント<br>ほんのりピンク頬<br>ピンク×ミント背景</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/icon_zenta_08_active.png" alt="活発型">
+      <div class="card-body">
+        <div class="card-num">No.08 ⭐</div>
+        <div class="card-name">活発型</div>
+        <div class="card-desc">黄緑髪<br>ライムグリーン背景<br>元気な笑顔</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/icon_zenta_09_healing.png" alt="癒し型">
+      <div class="card-body">
+        <div class="card-num">No.09</div>
+        <div class="card-name">癒し型</div>
+        <div class="card-desc">セージ×アンバーハイライト<br>穏やかな表情<br>モス背景</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/icon_zenta_10_genki.png" alt="元気型">
+      <div class="card-body">
+        <div class="card-num">No.10</div>
+        <div class="card-name">元気型</div>
+        <div class="card-desc">ビビッドグリーン<br>カラフル眼鏡<br>ポップなイエロー背景</div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- =========================================
+     SECTION 2: 深掘り共通イントロ
+     ========================================= -->
+<section class="section" style="margin-bottom:8px;">
+  <div class="deepen-intro">
+    <span class="icon">🔍</span>
+    <div>
+      <strong>⭐ 特に反響が良かった3タイプを深掘り</strong><br>
+      基本10タイプの中で評価が高かった <strong>No.05 王子様型</strong> / <strong>No.06 知的型</strong> / <strong>No.08 活発型</strong> について、
+      それぞれ10パターンのバリエーションを追加生成しました。同じ方向性の中で表情・ポーズ・細部の違いを比較できます。
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     SECTION 3: 05 王子様型 深掘り
+     ========================================= -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-badge amber">STEP 2 — No.05</span>
+    <div>
+      <div class="section-title">王子様型 — 10バリエーション</div>
+      <div class="section-desc">エメラルドグリーン髪 × ゴールド背景。大人っぽい色気と品格が特徴。</div>
+    </div>
+  </div>
+  <div class="grid grid-5">
+    <div class="card"><img src="images/icon_05_prince_1.png" alt="王子様型 v1"><div class="card-body"><div class="card-num">No.05-01</div></div></div>
+    <div class="card"><img src="images/icon_05_prince_2.png" alt="王子様型 v2"><div class="card-body"><div class="card-num">No.05-02</div></div></div>
+    <div class="card"><img src="images/icon_05_prince_3.png" alt="王子様型 v3"><div class="card-body"><div class="card-num">No.05-03</div></div></div>
+    <div class="card"><img src="images/icon_05_prince_4.png" alt="王子様型 v4"><div class="card-body"><div class="card-num">No.05-04</div></div></div>
+    <div class="card"><img src="images/icon_05_prince_5.png" alt="王子様型 v5"><div class="card-body"><div class="card-num">No.05-05</div></div></div>
+    <div class="card"><img src="images/icon_05_prince_6.png" alt="王子様型 v6"><div class="card-body"><div class="card-num">No.05-06</div></div></div>
+    <div class="card"><img src="images/icon_05_prince_7.png" alt="王子様型 v7"><div class="card-body"><div class="card-num">No.05-07</div></div></div>
+    <div class="card"><img src="images/icon_05_prince_8.png" alt="王子様型 v8"><div class="card-body"><div class="card-num">No.05-08</div></div></div>
+    <div class="card"><img src="images/icon_05_prince_9.png" alt="王子様型 v9"><div class="card-body"><div class="card-num">No.05-09</div></div></div>
+    <div class="card"><img src="images/icon_05_prince_10.png" alt="王子様型 v10"><div class="card-body"><div class="card-num">No.05-10</div></div></div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- =========================================
+     SECTION 4: 06 知的型 深掘り
+     ========================================= -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-badge amber">STEP 2 — No.06</span>
+    <div>
+      <div class="section-title">知的型 — 10バリエーション</div>
+      <div class="section-desc">オリーブグリーン髪 × ベージュ背景。「腸活の専門家」感と思索的な知性が特徴。</div>
+    </div>
+  </div>
+  <div class="grid grid-5">
+    <div class="card"><img src="images/icon_06_intellectual_1.png" alt="知的型 v1"><div class="card-body"><div class="card-num">No.06-01</div></div></div>
+    <div class="card"><img src="images/icon_06_intellectual_2.png" alt="知的型 v2"><div class="card-body"><div class="card-num">No.06-02</div></div></div>
+    <div class="card"><img src="images/icon_06_intellectual_3.png" alt="知的型 v3"><div class="card-body"><div class="card-num">No.06-03</div></div></div>
+    <div class="card"><img src="images/icon_06_intellectual_4.png" alt="知的型 v4"><div class="card-body"><div class="card-num">No.06-04</div></div></div>
+    <div class="card"><img src="images/icon_06_intellectual_5.png" alt="知的型 v5"><div class="card-body"><div class="card-num">No.06-05</div></div></div>
+    <div class="card"><img src="images/icon_06_intellectual_6.png" alt="知的型 v6"><div class="card-body"><div class="card-num">No.06-06</div></div></div>
+    <div class="card"><img src="images/icon_06_intellectual_7.png" alt="知的型 v7"><div class="card-body"><div class="card-num">No.06-07</div></div></div>
+    <div class="card"><img src="images/icon_06_intellectual_8.png" alt="知的型 v8"><div class="card-body"><div class="card-num">No.06-08</div></div></div>
+    <div class="card"><img src="images/icon_06_intellectual_9.png" alt="知的型 v9"><div class="card-body"><div class="card-num">No.06-09</div></div></div>
+    <div class="card"><img src="images/icon_06_intellectual_10.png" alt="知的型 v10"><div class="card-body"><div class="card-num">No.06-10</div></div></div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- =========================================
+     SECTION 5: 08 活発型 深掘り
+     ========================================= -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-badge amber">STEP 2 — No.08</span>
+    <div>
+      <div class="section-title">活発型 — 10バリエーション</div>
+      <div class="section-desc">ライムイエロー髪 × グリーン背景。明るい笑顔で「推し」として刺さりやすいタイプ。</div>
+    </div>
+  </div>
+  <div class="grid grid-5">
+    <div class="card"><img src="images/icon_08_active_1.png" alt="活発型 v1"><div class="card-body"><div class="card-num">No.08-01</div></div></div>
+    <div class="card"><img src="images/icon_08_active_2.png" alt="活発型 v2"><div class="card-body"><div class="card-num">No.08-02</div></div></div>
+    <div class="card"><img src="images/icon_08_active_3.png" alt="活発型 v3"><div class="card-body"><div class="card-num">No.08-03</div></div></div>
+    <div class="card"><img src="images/icon_08_active_4.png" alt="活発型 v4"><div class="card-body"><div class="card-num">No.08-04</div></div></div>
+    <div class="card"><img src="images/icon_08_active_5.png" alt="活発型 v5"><div class="card-body"><div class="card-num">No.08-05</div></div></div>
+    <div class="card"><img src="images/icon_08_active_6.png" alt="活発型 v6"><div class="card-body"><div class="card-num">No.08-06</div></div></div>
+    <div class="card"><img src="images/icon_08_active_7.png" alt="活発型 v7"><div class="card-body"><div class="card-num">No.08-07</div></div></div>
+    <div class="card"><img src="images/icon_08_active_8.png" alt="活発型 v8"><div class="card-body"><div class="card-num">No.08-08</div></div></div>
+    <div class="card"><img src="images/icon_08_active_9.png" alt="活発型 v9"><div class="card-body"><div class="card-num">No.08-09</div></div></div>
+    <div class="card"><img src="images/icon_08_active_10.png" alt="活発型 v10"><div class="card-body"><div class="card-num">No.08-10</div></div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>善玉元気 キャラクター検討資料</strong><br>
+  社内用・非公開 ／ Generated with Imagen 4 (Google Gemini API) + Claude Code
+</footer>
+
+</body>
+</html>

@@ -523,8 +523,8 @@
     <th class="col-name">商品名</th>
     <th class="col-price" data-sort="price">単価 ▲</th>
     <th class="col-cnt" data-sort="cnt">累計受注数</th>
-    <th class="col-first">初売日</th>
-    <th class="col-last">最終売日</th>
+    <th class="col-first">初回販売日</th>
+    <th class="col-last">最終販売日</th>
     <th class="col-tag">NEタグ</th>
   </tr>
 </thead>
@@ -816,7 +816,7 @@ function renderRows(data) {
     const aDisc = isDiscontinued(a) ? 1 : 0;
     const bDisc = isDiscontinued(b) ? 1 : 0;
     if (aDisc !== bDisc) return aDisc - bDisc;
-    return b.cnt - a.cnt;
+    return a.sku.localeCompare(b.sku, 'ja');
   });
 
   sorted.forEach((d) => {

@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Shopify＆NE統合商品マスタ</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #f8f9fc;
+    --bg2: #ffffff;
+    --bg3: #f1f4f9;
+    --border: #dde2ec;
+    --border-light: #b8c2d8;
+    --text: #1a2035;
+    --text-muted: #5a6585;
+    --text-dim: #a0aec0;
+    --accent: #3b6ef0;
+    --accent2: #0ea5e9;
+    --accent-glow: rgba(59,110,240,0.10);
+    --vc: #d97706;
+    --cd: #059669;
+    --cdk: #10b981;
+    --ccera: #7c3aed;
+    --skin: #db2777;
+    --mineral: #ea580c;
+    --sports: #0284c7;
+    --lpb: #374151;
+    --others: #6b7280;
+    --zero: #94a3b8;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Noto Sans JP', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 13px;
+    min-height: 100vh;
+  }
+
+  /* ヘッダー */
+  .header {
+    background: linear-gradient(135deg, #ffffff 0%, #f4f7ff 50%, #eef2ff 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 32px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .header-title-block {}
+
+  .header-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .header-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .header-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .stat-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .stat-chip .num {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-chip .lbl {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* コントロール */
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 12px 32px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+    max-width: 360px;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 7px 10px 7px 30px;
+    font-size: 12px;
+    font-family: var(--sans);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-dim); }
+
+  .filter-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 5px 11px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: var(--sans);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover { border-color: var(--border-light); color: var(--text); }
+
+  .filter-btn.active {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .filter-btn[data-brand="VC"].active { border-color: var(--vc); color: var(--vc); background: rgba(251,191,36,0.1); }
+  .filter-btn[data-brand="C+D"].active { border-color: var(--cd); color: var(--cd); background: rgba(52,211,153,0.1); }
+  .filter-btn[data-brand="C+Cera"].active { border-color: var(--ccera); color: var(--ccera); background: rgba(167,139,250,0.1); }
+  .filter-btn[data-brand="SKINBEAUTY"].active { border-color: var(--skin); color: var(--skin); background: rgba(244,114,182,0.1); }
+  .filter-btn[data-brand="MINERALion"].active { border-color: var(--mineral); color: var(--mineral); background: rgba(251,146,60,0.1); }
+  .filter-btn[data-brand="Sports"].active { border-color: var(--sports); color: var(--sports); background: rgba(56,189,248,0.1); }
+  .filter-btn[data-brand="LPB"].active { border-color: var(--lpb); color: var(--lpb); background: rgba(55,65,81,0.08); }
+  .filter-btn[data-brand="Others"].active { border-color: var(--others); color: var(--others); background: rgba(156,163,175,0.1); }
+
+  /* 件数表示 */
+  .result-bar {
+    padding: 8px 32px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .result-count { color: var(--accent); font-family: var(--mono); font-weight: 600; }
+
+  /* テーブル */
+  .table-wrap {
+    overflow-x: auto;
+    padding: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  thead { position: sticky; top: 0; z-index: 10; }
+
+  thead th {
+    background: var(--bg2);
+    border-bottom: 2px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    white-space: nowrap;
+    user-select: none;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+
+  thead th:hover { color: var(--text); }
+  thead th.sort-asc::after { content: ' ↑'; color: var(--accent); }
+  thead th.sort-desc::after { content: ' ↓'; color: var(--accent); }
+
+  /* カラム幅 */
+  .col-no     { width: 44px; text-align: center; }
+  .col-brand  { width: 100px; }
+  .col-type   { width: 90px; }
+  .col-sku    { width: 180px; }
+  .col-name   { width: auto; min-width: 280px; }
+  .col-price  { width: 90px; text-align: right; }
+  .col-cnt    { width: 90px; text-align: right; }
+  .col-first  { width: 100px; text-align: center; }
+  .col-last   { width: 100px; text-align: center; }
+  .col-tag    { width: 130px; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+
+  tbody tr:hover { background: rgba(59,110,240,0.04); }
+
+  tbody td {
+    padding: 8px 12px;
+    vertical-align: middle;
+    line-height: 1.45;
+  }
+
+  /* セクション区切り */
+  tr.section-header td {
+    background: linear-gradient(90deg, rgba(59,110,240,0.07) 0%, transparent 60%);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    border-top: 2px solid var(--border-light);
+    cursor: default;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+
+  tr.section-header:hover { background: linear-gradient(90deg, rgba(59,110,240,0.10) 0%, transparent 60%); }
+
+  /* 行番号 */
+  td.col-no {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  /* ブランドバッジ */
+  .brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .brand-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .brand-VC        { color: #92400e; background: rgba(217,119,6,0.10); }
+  .brand-CD        { color: #065f46; background: rgba(5,150,105,0.10); }
+  .brand-CDK       { color: #064e3b; background: rgba(16,185,129,0.10); }
+  .brand-CCera     { color: #4c1d95; background: rgba(124,58,237,0.10); }
+  .brand-SKINBEAUTY{ color: #9d174d; background: rgba(219,39,119,0.10); }
+  .brand-MINERALion{ color: #7c2d12; background: rgba(234,88,12,0.10); }
+  .brand-Sports    { color: #075985; background: rgba(2,132,199,0.10); }
+  .brand-LPB       { color: #1f2937; background: rgba(55,65,81,0.08); }
+  .brand-Others    { color: #374151; background: rgba(107,114,128,0.09); }
+
+  /* 商品タイプバッジ */
+  .type-badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .type-定期    { background: rgba(59,110,240,0.10); color: #2451c8; border: 1px solid rgba(59,110,240,0.25); }
+  .type-都度    { background: rgba(5,150,105,0.10); color: #047857; border: 1px solid rgba(5,150,105,0.25); }
+  .type-ギフト  { background: rgba(219,39,119,0.10); color: #be185d; border: 1px solid rgba(219,39,119,0.22); }
+  .type-プレゼント { background: rgba(124,58,237,0.10); color: #6d28d9; border: 1px solid rgba(124,58,237,0.22); }
+  .type-PRESS   { background: rgba(180,130,0,0.10); color: #b45309; border: 1px solid rgba(180,130,0,0.22); }
+  .type-ノベルティ { background: rgba(100,116,139,0.10); color: #475569; border: 1px solid rgba(100,116,139,0.22); }
+  .type-other   { background: rgba(100,116,139,0.08); color: #64748b; border: 1px solid rgba(100,116,139,0.18); }
+
+  /* SKU */
+  .sku-code {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    word-break: break-all;
+  }
+
+  /* 商品名 */
+  .item-name {
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.5;
+    word-break: break-all;
+  }
+
+  /* 価格 */
+  .price-cell {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .price-normal { color: var(--text); }
+  .price-zero   { color: var(--zero); }
+
+  /* 受注数 */
+  .cnt-cell {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .cnt-bar-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .cnt-bar {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--accent);
+    opacity: 0.5;
+    max-width: 60px;
+    min-width: 2px;
+  }
+
+  /* 日付 */
+  .date-cell {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* NEタグ */
+  .ne-tag {
+    font-size: 11px;
+    color: var(--text-muted);
+    word-break: break-all;
+  }
+
+  /* 廃止行（最終販売日2024年以前） */
+  tr.row-discontinued {
+    background: #f3f4f6;
+  }
+  tr.row-discontinued:hover {
+    background: #eaecf0;
+  }
+  tr.row-discontinued td {
+    opacity: 0.65;
+  }
+  tr.row-discontinued .item-name {
+    color: #6b7280;
+  }
+  tr.row-discontinued .sku-code {
+    color: #9ca3af;
+  }
+  .date-discontinued {
+    color: #9ca3af !important;
+  }
+
+  /* 非表示 */
+  tr.hidden { display: none; }
+
+  /* スクロールバー */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg3); }
+  ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+  /* フッター */
+  .footer {
+    padding: 16px 32px;
+    background: var(--bg3);
+    border-top: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-title-block">
+      <div class="header-label">SPIC Internal · Shopify × NE</div>
+      <div class="header-title">統合商品マスタ</div>
+      <div class="header-meta">spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master &nbsp;|&nbsp; 生成: 2026-05-25</div>
+    </div>
+    <div class="header-stats">
+      <div class="stat-chip">
+        <span class="num" id="stat-total">202</span>
+        <span class="lbl">Total SKUs</span>
+      </div>
+      <div class="stat-chip">
+        <span class="num" id="stat-brands">8</span>
+        <span class="lbl">Brands</span>
+      </div>
+      <div class="stat-chip">
+        <span class="num" id="stat-orders">—</span>
+        <span class="lbl">Total Orders</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="SKU・商品名・ブランドで検索...">
+  </div>
+  <div class="filter-group" id="brandFilters">
+    <button class="filter-btn active" data-brand="ALL">ALL</button>
+    <button class="filter-btn" data-brand="VC">VC</button>
+    <button class="filter-btn" data-brand="C+D">C+D</button>
+    <button class="filter-btn" data-brand="C+Cera">C+Cera</button>
+    <button class="filter-btn" data-brand="SKINBEAUTY">SKINBEAUTY</button>
+    <button class="filter-btn" data-brand="MINERALion">MINERALion</button>
+    <button class="filter-btn" data-brand="Sports">Sports</button>
+    <button class="filter-btn" data-brand="LPB">LPB</button>
+    <button class="filter-btn" data-brand="Others">Others</button>
+  </div>
+  <div class="filter-group">
+    <button class="filter-btn active" data-type="ALL" id="typeAll">全タイプ</button>
+    <button class="filter-btn" data-type="定期">定期</button>
+    <button class="filter-btn" data-type="都度">都度</button>
+    <button class="filter-btn" data-type="ギフト">ギフト</button>
+    <button class="filter-btn" data-type="プレゼント">プレゼント</button>
+  </div>
+</div>
+
+<div class="result-bar">
+  表示件数: <span class="result-count" id="resultCount">202</span> 件
+</div>
+
+<div class="table-wrap">
+<table id="mainTable">
+<colgroup>
+  <col class="col-no">
+  <col class="col-brand">
+  <col class="col-type">
+  <col class="col-sku">
+  <col class="col-name">
+  <col class="col-price">
+  <col class="col-cnt">
+  <col class="col-first">
+  <col class="col-last">
+  <col class="col-tag">
+</colgroup>
+<thead>
+  <tr>
+    <th class="col-no">#</th>
+    <th class="col-brand">ブランド</th>
+    <th class="col-type">タイプ</th>
+    <th class="col-sku">SKU</th>
+    <th class="col-name">商品名</th>
+    <th class="col-price" data-sort="price">単価 ▲</th>
+    <th class="col-cnt" data-sort="cnt">累計受注数</th>
+    <th class="col-first">初売日</th>
+    <th class="col-last">最終売日</th>
+    <th class="col-tag">NEタグ</th>
+  </tr>
+</thead>
+<tbody id="tableBody">
+</tbody>
+</table>
+</div>
+
+<div class="footer">
+  ※ 本ファイルはSPIC社内用途限定。noindex設定済み。データ取得: BigQuery spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master
+</div>
+
+<script>
+// ===== データ（BigQueryから取得・ソート済み） =====
+const RAW = [
+  // VC - 単価あり（order_cnt降順）
+  {sku:"875-teiki",name:"【定期購入】Lypo-C Vitamin C 1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:7500,cnt:198404,first:"2022-01-01",last:"2026-05-26"},
+  {sku:"875-set",name:"Lypo-C(30包入)  1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7776,cnt:97544,first:"2022-01-01",last:"2026-05-26"},
+  {sku:"875-teiki-2",name:"【定期購入】Lypo-C Vitamin C 2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:14800,cnt:72346,first:"2022-01-01",last:"2026-05-26"},
+  {sku:"1004496",name:"【10万人モニター】 Lypo-C Vitamin C 11包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:2999,cnt:45250,first:"2025-07-17",last:"2025-10-01"},
+  {sku:"875-teiki-3",name:"【定期購入】Lypo-C(30包入)  3箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:21300,cnt:34248,first:"2022-01-01",last:"2026-05-26"},
+  {sku:"875-set-2",name:"Lypo-C(30包入)  2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:15000,cnt:20304,first:"2022-01-01",last:"2026-05-20"},
+  {sku:"453-teiki",name:"【定期購入】Lypo-C Vitamin C (90包入) 1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:21300,cnt:14865,first:"2022-06-21",last:"2026-05-25"},
+  {sku:"875-teiki-4",name:"【定期購入】Lypo-C Vitamin C 4箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:28400,cnt:14774,first:"2022-01-01",last:"2026-05-25"},
+  {sku:"875-set-3",name:"Lypo-C(30包入)  3箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:21600,cnt:13934,first:"2022-01-01",last:"2026-05-19"},
+  {sku:"875-set-a",name:"Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7500,cnt:12150,first:"2024-02-05",last:"2026-05-25"},
+  {sku:"449-set",name:"Lypo-C(11包入) 1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:2999,cnt:11707,first:"2022-01-01",last:"2026-05-25"},
+  {sku:"449-set-980",name:"【TVCM連動企画商品】Lypo-C Vitamin C 11包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:980,cnt:9752,first:"2024-03-23",last:"2024-06-01"},
+  {sku:"875-set-4",name:"Lypo-C(30包入)  4箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:28800,cnt:9144,first:"2022-01-01",last:"2026-05-22"},
+  {sku:"leisure-freegift-449",name:"この夏のゲンキとキレイをつくる【夏のレジャー用】Lypo-C Vitamin C 11包入 - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:2999,cnt:9141,first:"2024-07-22",last:"2024-10-01"},
+  {sku:"875-set-b",name:"Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7200,cnt:8759,first:"2024-02-05",last:"2026-05-26"},
+  {sku:"449-1-cottongift-bs-ac",name:"【定期便ご利用者様限定】ギフト Lypo-C(11包入)+コットン巾着（カード：GIFT FOR YOU） - Lypo-C 11包×1箱 / GIFT FOR YOU",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:4370,first:"2023-09-01",last:"2023-09-21"},
+  {sku:"453-teiki2",name:"【定期購入】Lypo-C Vitamin C (90包入 ＋ 30包入) セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:28400,cnt:3577,first:"2022-06-21",last:"2026-05-25"},
+  {sku:"449-1-freegift-bs",name:"【ギフト】Lypo-C Vitamin C(11包入)＋オーガンジー巾着",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:2999,cnt:2842,first:"2023-08-22",last:"2026-05-24"},
+  {sku:"875-set-c",name:"【LINE連携クーポン適用済み】Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7276,cnt:896,first:"2025-07-17",last:"2025-09-22"},
+  {sku:"449-1-summer-egift",name:"【ギフト】Lypo-C Vitamin C(11包入)+オーガンジー巾着 eギフト専用商品",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:2999,cnt:682,first:"2024-07-21",last:"2024-10-01"},
+  {sku:"875-set-vp-mar",name:"【3包特典付】Lypo-C(30包入)  1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7776,cnt:446,first:"2022-03-17",last:"2023-04-01"},
+  {sku:"875-teiki-pr",name:"【定期購入】Lypo-C Vitamin C 1箱 PRESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:6220,cnt:444,first:"2022-01-08",last:"2026-05-15"},
+  {sku:"875-1-freegift-bs",name:"【ギフト】Lypo-C Vitamin C(30包入)＋オーガンジー巾着",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:7776,cnt:351,first:"2023-08-22",last:"2026-05-11"},
+  {sku:"875-set-pr",name:"Lypo-C(30包入) PRESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"PRESS",price:6220,cnt:351,first:"2022-01-14",last:"2026-03-18"},
+  {sku:"1008751-set",name:"Lypo-C(30包入)  1箱 【横浜銀行 行員さま向け限定】",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:5832,cnt:238,first:"2023-06-02",last:"2023-10-17"},
+  {sku:"birthday-cottongift-449",name:"【ギフト】Lypo-C バースデーギフト （Vitamin CまたはVitamin C+D）ラッピング付き - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:192,first:"2024-06-02",last:"2026-05-21"},
+  {sku:"449-set-prezent-b-1",name:"【プレゼント】 Lypo-C Vitamin C 11包入 B",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:2999,cnt:191,first:"2025-02-14",last:"2025-04-01"},
+  {sku:"449-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)＋コットン巾着 - GIFT FOR YOU",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:170,first:"2023-08-22",last:"2026-05-25"},
+  {sku:"875-set-2-vp",name:"【3包特典付】Lypo-C(30包入) 2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:15000,cnt:165,first:"2022-02-17",last:"2022-03-01"},
+  {sku:"Xmas-cottongift-875",name:"【クリスマス期間限定】Lypo-Cギフト  30包入（Vitamin CまたはVitamin C+D） - Lypo-C VitaminC 30包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:117,first:"2023-12-07",last:"2025-12-20"},
+  {sku:"449-1-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)＋コットン巾着 - Thank you!",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:116,first:"2023-08-23",last:"2026-05-21"},
+  {sku:"453-teiki-press",name:"【定期購入】Lypo-C Vitamin C (90包入) 1箱 PRESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:18660,cnt:97,first:"2022-07-12",last:"2026-05-20"},
+  {sku:"Xmas-cottongift-449",name:"【クリスマス期間限定】Lypo-Cギフト 11包入（Vitamin CまたはVitamin C+D）ラッピング付 - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:73,first:"2023-12-09",last:"2025-12-24"},
+  {sku:"449-1-cottongift-cong",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)＋コットン巾着 - Congratulations!",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:70,first:"2023-08-23",last:"2026-05-04"},
+  {sku:"birthday-cottongift-875",name:"【ギフト】Lypo-C バースデーギフト 30包入 （Vitamin CまたはVitamin C＋D）＋コットン巾着 - Lypo-C VitaminC 30包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:67,first:"2024-06-01",last:"2026-05-01"},
+  {sku:"449-1-cottongift-wish",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)＋コットン巾着 - Best wishes on your special day",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:67,first:"2023-08-23",last:"2026-05-23"},
+  {sku:"875-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)＋コットン巾着 - Lypo-C(30包入) 1箱 / GIFT FOR YOU",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:63,first:"2023-08-23",last:"2026-04-24"},
+  {sku:"sun-freegift-449",name:"【期間限定】Lypo-C SUN and FUNギフト＋オーガンジー巾着（Vitamin CまたはVitamin C+D） - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:2999,cnt:59,first:"2024-07-14",last:"2025-08-29"},
+  {sku:"Xmas-cottongift-875-1",name:"【クリスマス期間限定:3包付】Lypo-Cギフト  30包入（Vitamin CまたはVitamin C+D） - Lypo-C VitaminC 30包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:7776,cnt:56,first:"2023-12-22",last:"2023-12-26"},
+  {sku:"875-set-cc",name:"【C.Cの日:応募者限定!!】Lypo-C(30包入)  1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7500,cnt:54,first:"2022-03-25",last:"2022-05-01"},
+  {sku:"birthday-cottongift-449510",name:"【ギフト】Lypo-C バースデーギフト 11包入（Vitamin CまたはVitamin C＋D）＋コットン巾着 - Lypo-C Vitamin C+D 11包入１箱+Lypo-C Vitamin C 11包入1箱/MIX2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:6774,cnt:47,first:"2024-05-31",last:"2026-04-18"},
+  {sku:"mother-cottongift-449",name:"【期間限定】Lypo-C母の日ギフト  （Vitamin CまたはVitamin C＋D）ハンドタオル付 - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:46,first:"2024-04-17",last:"2026-05-10"},
+  {sku:"mother-cottongift-449510",name:"【期間限定】Lypo-C母の日ギフト  （Vitamin CまたはVitamin C＋D）ハンドタオル付 - Lypo-C Vitamin C+D 11包入１箱+Lypo-C Vitamin C 11包入1箱/MIX2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:6774,cnt:44,first:"2024-04-21",last:"2026-05-07"},
+  {sku:"875-set-mmore3",name:"【#CGift】Lypo-C(30包入)  1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7500,cnt:34,first:"2022-05-14",last:"2022-06-01"},
+  {sku:"875-1-cottongift-wish",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)＋コットン巾着 - Lypo-C(30包入) 1箱 / Best wishes on your special day",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:33,first:"2023-08-22",last:"2026-05-02"},
+  {sku:"875-1-cottongift-cong",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)+コットン巾着 - Lypo-C(30包入) 1箱 / Congratulations!",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:31,first:"2023-08-23",last:"2026-03-07"},
+  {sku:"875-first",name:"【THE FIRST VITAMIN C】Lypo-C(30包入)",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7276,cnt:27,first:"2022-01-02",last:"2023-06-15"},
+  {sku:"875-1-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)＋コットン巾着 - Lypo-C(30包入) 1箱 / Thank you!",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:26,first:"2023-08-22",last:"2026-05-07"},
+  {sku:"875-set-vp-bwj",name:"BWJブース来場者限定セット【3包特典付】Lypo-C(30包入) 1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7776,cnt:26,first:"2022-05-17",last:"2022-07-01"},
+  {sku:"birthday-cottongift-511875",name:"【ギフト】Lypo-C バースデーギフト 30包入 （Vitamin CまたはVitamin C＋D）＋コットン巾着 - Lypo-C Vitamin C+D 30包入１箱+Lypo-C Vitamin C 30包入1箱/MIX2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:17070,cnt:21,first:"2024-10-20",last:"2026-05-15"},
+  {sku:"453-teiki2-press",name:"【定期購入】Lypo-C(90包入) + Lypo-C(30包入) セット PRESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:24880,cnt:19,first:"2022-07-12",last:"2024-01-30"},
+  {sku:"mother-cottongift-875",name:"【期間限定】Lypo-C母の日ギフト  （Vitamin CまたはVitamin C＋D）ハンドタオル付 - Lypo-C VitaminC 30包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:19,first:"2024-04-26",last:"2026-05-08"},
+  {sku:"Xmas-cottongift-511875",name:"【クリスマス期間限定】Lypo-Cギフト  30包入（Vitamin CまたはVitamin C+D） - Lypo-C Vitamin C+D 30包入１箱+Lypo-C Vitamin C 30包入1箱/MIX2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:17070,cnt:17,first:"2023-12-14",last:"2024-12-23"},
+  {sku:"Xmas-cottongift-449-1",name:"【クリスマス期間限定】Lypo-Cギフト  11包入（Vitamin CまたはVitamin C+D） - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:2999,cnt:14,first:"2023-12-22",last:"2023-12-25"},
+  {sku:"449-1-cottongift-sun",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)＋コットン巾着 - SUN and FUN",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:14,first:"2023-08-23",last:"2026-05-18"},
+  {sku:"875-2-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)+コットン巾着 - Lypo-C(30包入) 2箱セット / GIFT FOR YOU",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:15330,cnt:10,first:"2023-08-23",last:"2025-07-26"},
+  {sku:"875-1-cottongift-sun",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)＋コットン巾着 - Lypo-C(30包入) 1箱 / SUN and FUN",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:10,first:"2023-08-23",last:"2026-04-09"},
+  {sku:"sun-freegift-875",name:"【期間限定】Lypo-C SUN and FUNギフト＋オーガンジー巾着（Vitamin CまたはVitamin C+D） - Lypo-C VitaminC 30包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:7776,cnt:9,first:"2024-08-11",last:"2025-08-18"},
+  {sku:"1008755",name:"【インタビュー謝礼】Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7776,cnt:8,first:"2025-06-14",last:"2025-08-09"},
+  {sku:"875-2-cottongift-wish",name:"【選べるギフトカード付】Lypo-C(30包入)+コットン巾着 - Lypo-C(30包入) 2箱セット / Best wishes on your special day",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:15330,cnt:8,first:"2023-08-23",last:"2024-05-16"},
+  {sku:"father-cottongift-875",name:"【数量限定】Lypo-C父の日ギフト  （Vitamin CまたはVitamin C+D）ハンドタオル付 - Lypo-C VitaminC 30包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:7,first:"2025-05-17",last:"2025-06-15"},
+  {sku:"875-2-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)+コットン巾着 - Lypo-C(30包入) 2箱セット / Thank you!",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:15330,cnt:6,first:"2023-08-22",last:"2026-03-09"},
+  {sku:"Xmas-cottongift-511875-1",name:"【クリスマス期間限定:3包付】Lypo-Cギフト  30包入（Vitamin CまたはVitamin C+D） - Lypo-C Vitamin C+D 30包入１箱+Lypo-C Vitamin C 30包入1箱/MIX2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:16740,cnt:5,first:"2023-12-22",last:"2023-12-25"},
+  {sku:"Xmas-cottongift-449510",name:"【クリスマス期間限定】Lypo-Cギフト 11包入（Vitamin CまたはVitamin C+D）ラッピング付 - Lypo-C Vitamin C+D 11包入１箱+Lypo-C Vitamin C 11包入1箱/MIX2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:6444,cnt:5,first:"2024-11-30",last:"2024-12-09"},
+  {sku:"father-cottongift-449",name:"【数量限定】Lypo-C父の日ギフト  （Vitamin CまたはVitamin C+D）ハンドタオル付 - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:5,first:"2024-05-24",last:"2024-06-10"},
+  {sku:"875-2-cottongift-cong",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)+コットン巾着 - Lypo-C(30包入) 2箱セット / Congratulations!",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:15330,cnt:5,first:"2023-08-23",last:"2025-08-05"},
+  {sku:"father-cottongift-449510",name:"【数量限定】Lypo-C父の日ギフト  （Vitamin CまたはVitamin C+D）ハンドタオル付 - Lypo-C Vitamin C+D 11包入１箱+Lypo-C Vitamin C 11包入1箱/MIX2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:6774,cnt:4,first:"2025-05-20",last:"2025-06-15"},
+  {sku:"mother-cottongift-511875",name:"【期間限定】Lypo-C母の日ギフト  （Vitamin CまたはVitamin C＋D）ハンドタオル付 - Lypo-C Vitamin C+D 30包入１箱+Lypo-C Vitamin C 30包入1箱/MIX2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:17070,cnt:3,first:"2024-05-06",last:"2026-04-26"},
+  {sku:"875-2-cottongift-sun",name:"【選べるギフトカード付】Lypo-C(30包入)+コットン巾着 - Lypo-C(30包入) 2箱セット / SUN and FUN",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:15330,cnt:2,first:"2023-08-23",last:"2023-11-04"},
+  {sku:"1302-set",name:"Lypo-Capsule Vitamin C (3 Box)",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:20833,cnt:1,first:"2022-09-23",last:"2022-09-23"},
+  // VC - 単価0円（order_cnt降順）
+  {sku:"2968-prezent",name:"【10周年感謝プレゼント】 Lypo-C Vitamin C 3包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:17842,first:"2025-02-27",last:"2025-04-10"},
+  {sku:"2968-prezent-1",name:"【初回購入者限定】Lypo-C Vitamin C 3包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:17774,first:"2025-04-01",last:"2026-05-26"},
+  {sku:"snow-festival-2024",name:"【2024さっぽろ雪まつり出展記念】フリートライアルセット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:0,cnt:8039,first:"2024-02-07",last:"2024-03-18"},
+  {sku:"449-set-prezent-b",name:"【プレゼント】 Lypo-C Vitamin C 11包入 A",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:4920,first:"2025-02-28",last:"2026-05-25"},
+  {sku:"2979",name:"Lypo-C RUN KIT",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:0,cnt:40,first:"2025-03-10",last:"2025-04-05"},
+  {sku:"449-set-prezent",name:"【プレゼント】Lypo-C Vitamin C 11包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:36,first:"2024-07-20",last:"2024-10-06"},
+  // C+D - 単価あり
+  {sku:"511-teiki",name:"【定期購入】Lypo-C Vitamin C＋D 1箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:8500,cnt:88287,first:"2023-09-23",last:"2026-05-26"},
+  {sku:"875511-teiki-1-1",name:"【定期購入】Lypo-C Vitamin C 1箱 & C＋D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:15900,cnt:31381,first:"2023-09-23",last:"2026-05-26"},
+  {sku:"511-set",name:"Lypo-C Vitamin C＋D 30包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:8964,cnt:29710,first:"2023-09-23",last:"2026-05-26"},
+  {sku:"511-teiki-2",name:"【定期購入】Lypo-C Vitamin C＋D 2箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:17000,cnt:25124,first:"2023-09-23",last:"2026-05-26"},
+  {sku:"511-teiki-3",name:"【定期購入】Lypo-C Vitamin C＋D 3箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:24600,cnt:12635,first:"2023-09-23",last:"2026-05-26"},
+  {sku:"511-set-a",name:"Lypo-C Vitamin C＋D 30包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:8650,cnt:7916,first:"2024-02-05",last:"2026-05-25"},
+  {sku:"511-set-b",name:"Lypo-C Vitamin C＋D 30包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:8300,cnt:6798,first:"2024-02-05",last:"2026-05-25"},
+  {sku:"511-teiki-4",name:"【定期購入】Lypo-C Vitamin C＋D 4箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:32800,cnt:5617,first:"2023-09-23",last:"2026-05-26"},
+  {sku:"875511-teiki-2-1",name:"【定期購入】Lypo-C Vitamin C 2箱 & C＋D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:22398,cnt:4886,first:"2023-09-23",last:"2026-05-26"},
+  {sku:"875511-teiki-2-2",name:"【定期購入】Lypo-C Vitamin C 2箱 & C＋D 2箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:30600,cnt:4129,first:"2023-09-23",last:"2026-05-25"},
+  {sku:"510-set",name:"Lypo-C Vitamin C＋D 11包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:3445,cnt:3195,first:"2023-09-23",last:"2026-05-25"},
+  {sku:"875511-teiki-1-2",name:"【定期購入】Lypo-C Vitamin C 1箱 & C＋D 2箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:23499,cnt:2701,first:"2023-09-23",last:"2026-05-25"},
+  {sku:"875511-teiki-3-1",name:"【定期購入】Lypo-C Vitamin C 3箱 & C＋D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:29496,cnt:1201,first:"2023-09-24",last:"2026-05-25"},
+  {sku:"875511-teiki-1-3",name:"【定期購入】Lypo-C Vitamin C 1箱 & C＋D 3箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:31700,cnt:594,first:"2023-09-23",last:"2026-05-24"},
+  {sku:"453511-teiki-1-1",name:"【定期購入】Lypo-C Vitamin C(90包入) 1箱 & C＋D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:29496,cnt:565,first:"2023-09-23",last:"2026-05-25"},
+  {sku:"511-teiki-press",name:"【定期購入】Lypo-C Vitamin C＋D 1箱 PRESS",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:7171,cnt:473,first:"2023-09-29",last:"2026-05-21"},
+  {sku:"510-1-freegift-bs",name:"【ギフト】Lypo-C Vitamin C+D(11包入)＋オーガンジー巾着",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3445,cnt:289,first:"2023-10-03",last:"2026-05-12"},
+  {sku:"511-1-freegift-bs",name:"【ギフト】Lypo-C Vitamin C+D(30包入)＋オーガンジー巾着",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:8964,cnt:233,first:"2023-10-03",last:"2026-05-09"},
+  {sku:"511-set-press",name:"Lypo-C Vitamin C+D 30包入 PRESS",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"PRESS",price:7171,cnt:196,first:"2023-09-23",last:"2026-02-28"},
+  {sku:"Xmas-cottongift-510",name:"【クリスマス期間限定】Lypo-Cギフト 11包入（Vitamin CまたはVitamin C+D）ラッピング付 - Lypo-C Vitamin C+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:54,first:"2023-12-04",last:"2025-12-23"},
+  {sku:"Xmas-cottongift-511",name:"【クリスマス期間限定】Lypo-Cギフト  30包入（Vitamin CまたはVitamin C+D） - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:52,first:"2023-12-09",last:"2025-12-21"},
+  {sku:"510-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C＋D(11包入)＋コットン巾着 - GIFT FOR YOU",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:51,first:"2023-10-03",last:"2026-04-24"},
+  {sku:"510-1-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C＋D(11包入)＋コットン巾着 - Thank you!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:43,first:"2023-10-28",last:"2026-05-20"},
+  {sku:"511-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C＋D(30包入)＋コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱 / GIFT FOR YOU",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:41,first:"2023-10-03",last:"2026-04-19"},
+  {sku:"mother-cottongift-510",name:"【期間限定】Lypo-C母の日ギフト  （Vitamin CまたはVitamin C＋D）ハンドタオル付 - Lypo-C VitaminC+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:34,first:"2024-04-26",last:"2026-05-11"},
+  {sku:"birthday-cottongift-510",name:"【ギフト】Lypo-C バースデーギフト 11包入（Vitamin CまたはVitamin C＋D）＋コットン巾着 - Lypo-C VitaminC+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:33,first:"2024-06-15",last:"2026-05-13"},
+  {sku:"mother-cottongift-511",name:"【期間限定】Lypo-C母の日ギフト  （Vitamin CまたはVitamin C＋D）ハンドタオル付 - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:22,first:"2024-05-02",last:"2026-05-10"},
+  {sku:"511-1-cottongift-wish",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱 / Best wishes on your special day",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:20,first:"2024-01-22",last:"2026-02-05"},
+  {sku:"510-1-cottongift-cong",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(11包入)+コットン巾着 - Congratulations!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:20,first:"2023-10-03",last:"2026-03-04"},
+  {sku:"birthday-cottongift-511",name:"【ギフト】Lypo-C バースデーギフト 30包入 （Vitamin CまたはVitamin C+D）ラッピング付き - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:18,first:"2024-07-01",last:"2026-03-28"},
+  {sku:"510-1-cottongift-wish",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(11包入)+コットン巾着 - Best wishes on your special day",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:16,first:"2024-02-13",last:"2026-02-23"},
+  {sku:"511-1-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C＋D(30包入)＋コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱 / Thank you!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:15,first:"2023-11-17",last:"2026-05-18"},
+  {sku:"881-set",name:"Lypo-C for SPORTS (C＋D 30包入)",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:11124,cnt:15,first:"2025-12-12",last:"2026-05-25"},
+  {sku:"Xmas-cottongift-511-1",name:"【クリスマス期間限定:3包付】Lypo-Cギフト  30包入（Vitamin CまたはVitamin C+D） - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:8964,cnt:14,first:"2023-12-22",last:"2023-12-26"},
+  {sku:"511-1-cottongift-cong",name:"【選べるギフトカード付】Lypo-C Vitamin C＋D(30包入)＋コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱 / Congratulations!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:14,first:"2023-10-03",last:"2026-05-13"},
+  {sku:"sun-freegift-510",name:"【期間限定】Lypo-C SUN and FUNギフト＋オーガンジー巾着（Vitamin CまたはVitamin C+D） - Lypo-C VitaminC+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3445,cnt:11,first:"2024-07-13",last:"2025-08-28"},
+  {sku:"sun-freegift-511",name:"【期間限定】Lypo-C SUN and FUNギフト＋オーガンジー巾着（Vitamin CまたはVitamin C+D） - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:8964,cnt:10,first:"2024-07-27",last:"2025-08-25"},
+  {sku:"511-875-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱+Lypo-C Vitamin C(30包入) 1箱　2種セット / GIFT FOR YOU",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:17070,cnt:9,first:"2023-10-03",last:"2025-11-25"},
+  {sku:"881-set-3",name:"Lypo-C for SPORTS (C＋D 30包入)",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:10368,cnt:8,first:"2025-12-19",last:"2026-04-16"},
+  {sku:"511-2-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 2箱セット / GIFT FOR YOU",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:17630,cnt:7,first:"2023-10-03",last:"2026-02-15"},
+  {sku:"511-875-cottongift-wish",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱+Lypo-C Vitamin C(30包入) 1箱　2種セット / Best wishes on your special day",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:17070,cnt:6,first:"2023-10-08",last:"2025-06-17"},
+  {sku:"father-cottongift-510",name:"【数量限定】Lypo-C父の日ギフト  （Vitamin CまたはVitamin C+D）ハンドタオル付 - Lypo-C VitaminC+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:3,first:"2024-05-26",last:"2025-05-18"},
+  {sku:"881-set-2",name:"Lypo-C for SPORTS (C＋D 30包入)",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:10800,cnt:3,first:"2026-03-11",last:"2026-05-18"},
+  {sku:"510-1-cottongift-sun",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(11包入)+コットン巾着 - SUN and FUN",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:3,first:"2024-02-13",last:"2025-09-27"},
+  {sku:"father-cottongift-511",name:"【数量限定】Lypo-C父の日ギフト  （Vitamin CまたはVitamin C+D）ハンドタオル付 - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:3,first:"2024-05-29",last:"2025-06-11"},
+  {sku:"511-1-cottongift-sun",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱 / SUN and FUN",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:2,first:"2024-01-25",last:"2024-02-07"},
+  {sku:"9005103",name:"【ギフト】Lypo-C SKINBEAUTY ファースト グロウエッセンス 7 PURE DROPS KIT＋Lypo-C C+D 11包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:6855,cnt:2,first:"2025-12-11",last:"2025-12-13"},
+  {sku:"511-2-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 2箱セット / Thank you!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:17630,cnt:2,first:"2023-12-11",last:"2024-12-21"},
+  {sku:"511-875-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱+Lypo-C Vitamin C(30包入) 1箱　2種セット / Thank you!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:17070,cnt:2,first:"2024-02-17",last:"2024-06-22"},
+  {sku:"Xmas-cottongift-510-1",name:"【クリスマス期間限定】Lypo-Cギフト  11包入（Vitamin CまたはVitamin C+D） - Lypo-C Vitamin C+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3445,cnt:1,first:"2023-12-22",last:"2023-12-22"},
+  {sku:"511-875-cottongift-cong",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱+Lypo-C Vitamin C(30包入) 1箱　2種セット / Congratulations!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:17070,cnt:1,first:"2023-10-03",last:"2023-10-03"},
+  {sku:"511-2-cottongift-cong",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 2箱セット / Congratulations!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:17630,cnt:1,first:"2023-10-03",last:"2023-10-03"},
+  {sku:"511-875-cottongift-sun",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱+Lypo-C Vitamin C(30包入) 1箱　2種セット / SUN and FUN",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:17070,cnt:1,first:"2025-08-26",last:"2025-08-26"},
+  // C+D - 単価0円
+  {sku:"510-set-prezent",name:"【プレゼント】Lypo-C Vitamin C＋D 11包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:10502,first:"2024-03-28",last:"2026-05-25"},
+  {sku:"3031",name:"【プレゼント】Lypo-C C+D バージンパック（3包）",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:3839,first:"2026-04-27",last:"2026-05-26"},
+  {sku:"3018",name:"【初回購入者限定】Lypo-C Vitamin C＋D 3包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:2575,first:"2025-10-10",last:"2026-02-12"},
+  {sku:"3027",name:"【プレゼント】Lypo-C Vitamin C＋D 4包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:1856,first:"2025-11-27",last:"2026-01-05"},
+  {sku:"3024",name:"【初回購入者限定B】Lypo-C Vitamin C＋D 3包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:1151,first:"2026-02-12",last:"2026-05-26"},
+  // C+Cera - 単価あり
+  {sku:"106-teiki",name:"【定期購入】Lypo-C Vitamin C＋Cera 1箱",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:12960,cnt:1385,first:"2026-02-16",last:"2026-05-26"},
+  {sku:"106-pre",name:"【先行予約特典付き】Lypo-C Vitamin C＋Cera 28包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13460,cnt:998,first:"2026-01-14",last:"2026-02-13"},
+  {sku:"106-set",name:"Lypo-C Vitamin C＋Cera 28包入 (for staff)",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13460,cnt:783,first:"2026-02-16",last:"2026-05-25"},
+  {sku:"105-set",name:"Lypo-C Vitamin C＋Cera 7包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:3700,cnt:695,first:"2026-02-09",last:"2026-05-25"},
+  {sku:"106-teiki-2",name:"【定期購入】Lypo-C Vitamin C＋Cera 2箱セット",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:25380,cnt:250,first:"2026-02-16",last:"2026-05-25"},
+  {sku:"106-set-2",name:"Lypo-C Vitamin C＋Cera 28包",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13150,cnt:175,first:"2026-02-16",last:"2026-05-25"},
+  {sku:"106-set-3",name:"Lypo-C Vitamin C＋Cera 28包",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:12920,cnt:117,first:"2026-02-17",last:"2026-05-25"},
+  {sku:"106-teiki-3",name:"【定期購入】Lypo-C Vitamin C＋Cera 3箱セット",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:37260,cnt:96,first:"2026-02-18",last:"2026-05-25"},
+  {sku:"106-pre-2",name:"【先行予約特典付き】Lypo-C Vitamin C＋Cera 28包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13150,cnt:56,first:"2026-01-15",last:"2026-02-16"},
+  {sku:"106-pre-3",name:"【先行予約特典付き】Lypo-C Vitamin C＋Cera 28包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:12920,cnt:33,first:"2026-01-15",last:"2026-02-13"},
+  {sku:"106-teiki-4",name:"【定期購入】Lypo-C Vitamin C＋Cera 4箱セット",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:49680,cnt:16,first:"2026-02-20",last:"2026-05-23"},
+  // C+Cera - 単価0円
+  {sku:"1001055",name:"【プレゼント】Lypo-C Vitamin C＋Cera 7包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:0,cnt:15,first:"2026-05-12",last:"2026-05-18"},
+  // SKINBEAUTY - 単価あり
+  {sku:"121",name:"【先行予約販売】Lypo-C SKINBEAUTY PURE VC ファースト グロウエッセンス 28包入",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:12320,cnt:1715,first:"2025-08-19",last:"2026-05-25"},
+  {sku:"123-teiki",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス レフィル（30包）",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:11458,cnt:1091,first:"2025-12-22",last:"2026-05-26"},
+  {sku:"120",name:"Lypo-C SKINBEAUTY ファーストグロウエッセンス 7 PURE DROPS KIT (7包)",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:3410,cnt:607,first:"2025-10-03",last:"2026-05-24"},
+  {sku:"121-set-A",name:"【数量限定】SKINBEAUTY発売記念セット Ritual Glow Set",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:22176,cnt:572,first:"2025-10-03",last:"2026-01-29"},
+  {sku:"3009",name:"Lypo-C SKINBEAUTY FIRST KIT (3包)",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:1500,cnt:332,first:"2025-10-10",last:"2025-10-13"},
+  {sku:"875121-set",name:"【数量限定】SKINBEAUTY発売記念セット Experience C Set",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:18216,cnt:299,first:"2025-10-03",last:"2025-12-22"},
+  {sku:"123-teiki-2",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス レフィル（30包）2箱セット",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:22176,cnt:270,first:"2025-12-18",last:"2026-05-25"},
+  {sku:"121-teiki",name:"【定期購入】 Lypo-C SKINBEAUTY ファースト グロウエッセンス 28包",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:11458,cnt:213,first:"2025-12-31",last:"2026-05-25"},
+  {sku:"121-teiki-2",name:"【定期購入】 Lypo-C SKINBEAUTY ファースト グロウエッセンス 28包  2箱セット",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:22176,cnt:58,first:"2025-12-28",last:"2026-05-23"},
+  {sku:"9001203",name:"【ギフト】Lypo-C SKINBEAUTY ファースト グロウエッセンス 7 PURE DROPS KIT",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:3410,cnt:16,first:"2025-12-11",last:"2026-05-08"},
+  {sku:"9011203",name:"【数量限定】Lypo-C母の日ギフト Lypo-C SKINBEAUTY ファースト グロウエッセンス 7 PURE DROPS KIT",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:3410,cnt:12,first:"2026-04-18",last:"2026-05-08"},
+  {sku:"123-teiki-press",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス レフィル（30包）PRESS",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:9856,cnt:7,first:"2026-01-07",last:"2026-04-03"},
+  {sku:"121-set-press",name:"Lypo-C SKINBEAUTY ファースト グロウエッセンス 28包 PRESS",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"PRESS",price:9856,cnt:4,first:"2025-11-02",last:"2026-03-18"},
+  {sku:"9004493",name:"【ギフト】Lypo-C SKINBEAUTY ファースト グロウエッセンス 7 PURE DROPS KIT＋Lypo-C VC 11包入",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:6409,cnt:3,first:"2025-12-18",last:"2026-01-06"},
+  {sku:"121-teiki-press",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス（28包）PRESS",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:9856,cnt:1,first:"2026-01-16",last:"2026-01-16"},
+  // SKINBEAUTY - 単価0円
+  {sku:"3020",name:"【プレゼント】Lypo-C SKINBEAUTY ファーストグロウエッセンス FIRST KIT (3包)",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"プレゼント",price:0,cnt:6771,first:"2026-01-08",last:"2026-03-03"},
+  {sku:"SKB-set-1",name:"【予約特典】Lypo-C トータルビューティケアセット",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"プレゼント",price:0,cnt:792,first:"2025-08-19",last:"2025-10-01"},
+  {sku:"3001205",name:"【プレゼント】Lypo-C SKINBEAUTY ファーストグロウエッセンス 7 PURE DROPS KIT (7包)",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"プレゼント",price:0,cnt:164,first:"2026-01-08",last:"2026-05-26"},
+  // MINERALion - 単価あり
+  {sku:"130-set",name:"MINERALion 30包入",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5832,cnt:2300,first:"2025-11-26",last:"2026-05-25"},
+  {sku:"130-teiki",name:"【定期購入】MINERALion 1箱",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:5616,cnt:480,first:"2026-03-06",last:"2026-05-25"},
+  {sku:"130-teiki-2",name:"【定期購入】MINERALion 2箱セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:10800,cnt:141,first:"2026-03-06",last:"2026-05-25"},
+  {sku:"130-set-2",name:"MINERALion 30包",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5616,cnt:133,first:"2026-03-06",last:"2026-05-25"},
+  {sku:"130-teiki-3",name:"【定期購入】MINERALion 3箱セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:15552,cnt:49,first:"2026-03-06",last:"2026-05-26"},
+  {sku:"130-teiki-4",name:"【定期購入】MINERALion 4箱セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:20304,cnt:45,first:"2026-03-06",last:"2026-05-19"},
+  {sku:"130-set-4",name:"MINERALion 30包",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5292,cnt:43,first:"2026-03-06",last:"2026-05-23"},
+  {sku:"130-set-3",name:"MINERALion 30包",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5400,cnt:39,first:"2026-03-06",last:"2026-05-25"},
+  // MINERALion - 単価0円
+  {sku:"3021",name:"【プレゼント】MINERALion 4包入",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"プレゼント",price:0,cnt:19768,first:"2025-11-26",last:"2026-02-01"},
+  {sku:"3016",name:"MINERALionトライアル4包セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:0,cnt:2965,first:"2026-01-08",last:"2026-04-02"},
+  // Sports - 単価あり
+  {sku:"880-set-3",name:"Lypo-C for SPORTS (VC 30包入)",brand:"Sports",ne_tag:"[Lypo-C for SPORTS]",ptype:"都度",price:9288,cnt:28,first:"2025-10-06",last:"2026-05-22"},
+  {sku:"880-set",name:"Lypo-C for SPORTS (VC 30包入)",brand:"Sports",ne_tag:"[Lypo-C for SPORTS]",ptype:"都度",price:9936,cnt:24,first:"2025-09-05",last:"2026-05-25"},
+  {sku:"880-set-2",name:"Lypo-C for SPORTS (VC 30包入)",brand:"Sports",ne_tag:"[Lypo-C for SPORTS]",ptype:"都度",price:9612,cnt:14,first:"2025-09-05",last:"2026-04-13"},
+  // LPB - 単価あり
+  {sku:"985-set",name:"VCトリカプセルエッセンス",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:670,first:"2022-01-05",last:"2026-05-22"},
+  {sku:"430-set",name:"リヴァイタライズディープセラム",brand:"LPB",ne_tag:null,ptype:"都度",price:18700,cnt:446,first:"2022-01-01",last:"2026-05-01"},
+  {sku:"990-set",name:"プロテクトファンデーション SPF50+/PA++++ - ライトオークル",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:53,first:"2022-01-04",last:"2023-04-03"},
+  {sku:"994-set",name:"セラムファンデーション - ベージュ",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:31,first:"2022-01-10",last:"2023-04-03"},
+  {sku:"988-set",name:"プロテクトファンデーション SPF50+/PA+++ - ダークオークル",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:1,first:"2022-02-03",last:"2022-02-03"},
+  {sku:"996-set",name:"セラムファンデーション - ピンクナチュラル",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:1,first:"2022-02-14",last:"2022-02-14"},
+  {sku:"992-set",name:"セラムファンデーション - オークル",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:1,first:"2022-03-26",last:"2022-03-26"},
+  // Others - 単価あり
+  {sku:"503",name:"Lypo-C インナー＆アウターケアセット",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:29500,cnt:125,first:"2022-07-11",last:"2023-01-02"},
+  {sku:"830-1",name:"Stem-C（ステム・シー） - 1箱(単品)",brand:"Others",ne_tag:null,ptype:"都度",price:16956,cnt:50,first:"2024-11-29",last:"2026-05-12"},
+  {sku:"504",name:"SPIC40周年 メモリアルセット",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:20000,cnt:40,first:"2022-07-23",last:"2022-12-31"},
+  {sku:"830-2",name:"Stem-C（ステム・シー） - 2箱セット",brand:"Others",ne_tag:null,ptype:"都度",price:32616,cnt:27,first:"2024-10-20",last:"2026-05-23"},
+  {sku:"8000006",name:"Lypo-C コラボワークショップ サウンドバス体験",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:5000,cnt:26,first:"2022-06-30",last:"2022-07-18"},
+  {sku:"8000008",name:"【8/9(金)開催】VITAMIN CHARGE PARTY at NIGHT チケット",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:3300,cnt:21,first:"2024-07-25",last:"2024-07-28"},
+  {sku:"8000007",name:"Lypo-C コラボワークショップ 効きマッチャ体験",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:3500,cnt:20,first:"2022-06-30",last:"2022-07-18"},
+  {sku:"830-4",name:"Stem-C（ステム・シー） - 4箱セット",brand:"Others",ne_tag:null,ptype:"都度",price:62424,cnt:18,first:"2025-01-14",last:"2026-05-22"},
+  {sku:"8000009",name:"【8/9(金)開催】Lypo-C×山賀琴子さんコラボイベント チケット",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:3300,cnt:18,first:"2024-07-25",last:"2024-07-30"},
+  {sku:"830-3",name:"Stem-C（ステム・シー） - 3箱セット",brand:"Others",ne_tag:null,ptype:"都度",price:46872,cnt:15,first:"2024-12-29",last:"2026-04-26"},
+  {sku:"8000005",name:"Lypo-C コラボワークショップ What's コンブチャ？",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:3500,cnt:9,first:"2022-06-30",last:"2022-07-14"},
+  // Others - 単価0円
+  {sku:"7000631",name:"Lypo-Cストッカー（グレー×イエロー）",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:43961,first:"2024-11-01",last:"2026-05-26"},
+  {sku:"7000632",name:"【既存定期】Lypo-Cストッカー同梱レター",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:18548,first:"2024-11-01",last:"2025-12-16"},
+  {sku:"7000611",name:"2024トリカプセルサンクスレター",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:231,first:"2024-07-17",last:"2024-09-12"},
+  {sku:"7000612",name:"2024トリカプセル三つ折りパンフレット",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:231,first:"2024-07-17",last:"2024-09-12"},
+  {sku:"5010003-kit",name:"ザ ファースト ビタミンC",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:74,first:"2022-01-01",last:"2022-07-02"},
+  {sku:"3000-1",name:"Re:charge Set",brand:"Others",ne_tag:null,ptype:"都度",price:0,cnt:16,first:"2024-10-28",last:"2025-02-28"},
+  {sku:"502",name:"3日分のLypo-C無料サンプル",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:1,first:"2022-03-15",last:"2022-03-15"},
+];
+
+// ブランドカラークラスマッピング
+const brandClass = {
+  'VC': 'brand-VC', 'C+D': 'brand-CD', 'C+D+K': 'brand-CDK',
+  'C+Cera': 'brand-CCera', 'SKINBEAUTY': 'brand-SKINBEAUTY',
+  'MINERALion': 'brand-MINERALion', 'Sports': 'brand-Sports',
+  'LPB': 'brand-LPB', 'Others': 'brand-Others'
+};
+const brandDotColor = {
+  'VC': '#d97706', 'C+D': '#059669', 'C+D+K': '#10b981',
+  'C+Cera': '#7c3aed', 'SKINBEAUTY': '#db2777',
+  'MINERALion': '#ea580c', 'Sports': '#0284c7',
+  'LPB': '#374151', 'Others': '#6b7280'
+};
+const brandOrder = ['VC','C+D','C+D+K','C+Cera','SKINBEAUTY','MINERALion','Sports','LPB','Others'];
+
+// 最大受注数（バーの基準）
+const maxCnt = Math.max(...RAW.map(d => d.cnt));
+
+// 統計
+const totalOrders = RAW.reduce((s,d) => s + d.cnt, 0);
+document.getElementById('stat-orders').textContent = totalOrders.toLocaleString();
+
+function typeClass(t) {
+  if (!t) return 'type-other';
+  if (t === '定期') return 'type-定期';
+  if (t === '都度') return 'type-都度';
+  if (t === 'ギフト') return 'type-ギフト';
+  if (t === 'プレゼント') return 'type-プレゼント';
+  if (t === 'PRESS') return 'type-PRESS';
+  if (t.includes('ノベルティ') || t.includes('チケット')) return 'type-ノベルティ';
+  return 'type-other';
+}
+
+// 最終販売日が2024年末以前かどうか判定
+function isDiscontinued(d) {
+  if (!d.last) return false;
+  return d.last <= '2024-12-31';
+}
+
+function renderRows(data) {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  let rowNum = 0;
+  let currentBrand = null;
+  let currentZone = null; // 'paid' or 'zero'
+  let currentDisc = null; // false or true (discontinued)
+
+  // ソート：各ブランド×zone内で、廃止品を末尾に
+  const sorted = [...data].sort((a, b) => {
+    const aBrand = brandOrder.indexOf(a.brand) === -1 ? 99 : brandOrder.indexOf(a.brand);
+    const bBrand = brandOrder.indexOf(b.brand) === -1 ? 99 : brandOrder.indexOf(b.brand);
+    if (aBrand !== bBrand) return aBrand - bBrand;
+    const aZone = a.price > 0 ? 0 : 1;
+    const bZone = b.price > 0 ? 0 : 1;
+    if (aZone !== bZone) return aZone - bZone;
+    const aDisc = isDiscontinued(a) ? 1 : 0;
+    const bDisc = isDiscontinued(b) ? 1 : 0;
+    if (aDisc !== bDisc) return aDisc - bDisc;
+    return b.cnt - a.cnt;
+  });
+
+  sorted.forEach((d) => {
+    const zone = d.price > 0 ? 'paid' : 'zero';
+    const disc = isDiscontinued(d);
+    const brandChanged = d.brand !== currentBrand;
+    const zoneChanged  = zone !== currentZone;
+    const discChanged  = disc !== currentDisc;
+
+    // セクションヘッダー
+    if (brandChanged || zoneChanged || discChanged) {
+      const tr = document.createElement('tr');
+      tr.className = 'section-header';
+      const dot = brandDotColor[d.brand] || '#9ca3af';
+      let label = '';
+      if (brandChanged) {
+        label = `<span style="color:${dot}">■</span> ${d.brand}`;
+      }
+      if (zone === 'zero') {
+        label += (label ? '  ·  ' : '') + `<span style="color:var(--zero);font-weight:400">¥0 SKU（無償配布・プレゼント等）</span>`;
+      } else if (zoneChanged && !brandChanged && !disc) {
+        label += `<span style="color:var(--accent);font-weight:400">有償SKU</span>`;
+      }
+      if (disc && (brandChanged || zoneChanged || discChanged)) {
+        label += (label ? '  ·  ' : '') + `<span style="color:#9ca3af;font-weight:400;font-size:10px;">⚑ 販売終了（最終販売日 2024年以前）</span>`;
+      }
+      tr.innerHTML = `<td colspan="10" style="padding-left:16px;">${label}</td>`;
+      tbody.appendChild(tr);
+      currentBrand = d.brand;
+      currentZone  = zone;
+      currentDisc  = disc;
+    }
+
+    rowNum++;
+    const tr = document.createElement('tr');
+    tr.dataset.brand = d.brand;
+    tr.dataset.ptype = d.ptype;
+    tr.dataset.sku = d.sku.toLowerCase();
+    tr.dataset.name = d.name.toLowerCase();
+    if (disc) tr.classList.add('row-discontinued');
+
+    const barW = Math.max(2, Math.round((d.cnt / maxCnt) * 60));
+
+    tr.innerHTML = `
+      <td class="col-no">${rowNum}</td>
+      <td class="col-brand"><span class="brand-badge ${brandClass[d.brand] || 'brand-Others'}">
+        <span class="brand-dot" style="background:${brandDotColor[d.brand]||'#9ca3af'}"></span>${d.brand}
+      </span></td>
+      <td class="col-type"><span class="type-badge ${typeClass(d.ptype)}">${d.ptype||'—'}</span></td>
+      <td class="col-sku"><span class="sku-code">${d.sku}</span></td>
+      <td class="col-name"><span class="item-name">${d.name}</span></td>
+      <td class="col-price"><span class="price-cell ${d.price > 0 ? 'price-normal':'price-zero'}">
+        ${d.price > 0 ? '¥' + d.price.toLocaleString() : '¥0'}
+      </span></td>
+      <td class="col-cnt">
+        <div class="cnt-bar-wrap">
+          <span style="width:${barW}px;height:3px;border-radius:2px;background:${brandDotColor[d.brand]||'#5b8ef0'};opacity:${disc?0.2:0.45};display:inline-block;"></span>
+          <span class="cnt-cell" style="color:${disc?'#b0b8c8':brandDotColor[d.brand]||'#374151'}">${d.cnt.toLocaleString()}</span>
+        </div>
+      </td>
+      <td class="col-first"><span class="date-cell">${d.first||'—'}</span></td>
+      <td class="col-last"><span class="date-cell ${disc?'date-discontinued':''}">${d.last||'—'}</span></td>
+      <td class="col-tag"><span class="ne-tag">${d.ne_tag||'—'}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('resultCount').textContent = rowNum;
+}
+
+// フィルタ状態
+let activeBrand = 'ALL';
+let activeType  = 'ALL';
+let searchText  = '';
+
+function applyFilter() {
+  const filtered = RAW.filter(d => {
+    const bOk = activeBrand === 'ALL' || d.brand === activeBrand;
+    const tOk = activeType  === 'ALL' || d.ptype === activeType;
+    const q   = searchText.trim().toLowerCase();
+    const sOk = !q || d.sku.toLowerCase().includes(q) || d.name.toLowerCase().includes(q) || d.brand.toLowerCase().includes(q);
+    return bOk && tOk && sOk;
+  });
+  renderRows(filtered);
+}
+
+// ブランドフィルタ
+document.getElementById('brandFilters').addEventListener('click', e => {
+  const btn = e.target.closest('[data-brand]');
+  if (!btn) return;
+  document.querySelectorAll('#brandFilters .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeBrand = btn.dataset.brand;
+  applyFilter();
+});
+
+// タイプフィルタ
+document.querySelectorAll('[data-type]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-type]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeType = btn.dataset.type;
+    applyFilter();
+  });
+});
+
+// 検索
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchText = e.target.value;
+  applyFilter();
+});
+
+// 初期描画
+renderRows(RAW);
+</script>
+</body>
+</html>

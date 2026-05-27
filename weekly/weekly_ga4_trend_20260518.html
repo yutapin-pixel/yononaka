@@ -115,7 +115,8 @@ table.pg-tbl th.pg-num-col, table.pg-tbl td.pg-num-col{width:150px !important;mi
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab(0)">📊 GoogleAnalytics</button>
   <button class="tab-btn" onclick="switchTab(1)">🔍 SearchConsole</button>
-  <button class="tab-btn" onclick="switchTab(2)">📋 ウェブアクセスまとめ</button>
+  <button class="tab-btn" onclick="switchTab(2)">📱 SocialInsight</button>
+  <button class="tab-btn" onclick="switchTab(3)">📋 ウェブアクセスまとめ</button>
 </div>
 
 <!-- ============================================================ -->
@@ -1559,19 +1560,555 @@ table.pg-tbl th.pg-num-col, table.pg-tbl td.pg-num-col{width:150px !important;mi
 </ul></div>
 </div>
 
+
+
 </div><!-- /tab-2 -->
+
+<!-- ============================================================ -->
+<!-- TAB 3: SocialInsight -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-3">
+
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+  <div class="stitle" style="margin:0;">📱 5/18週 SNS言及・フォロワーレポート</div>
+  <span class="badge" style="background:#e1306c;">Instagram</span>
+  <span class="badge" style="background:#1da1f2;">Twitter/X</span>
+  <span class="badge" style="background:#555;">Social Insight</span>
+</div>
+<div class="ssub" style="margin-bottom:20px;">Social Insight キーワード監視・アカウントファン数分析｜2026年5月18日（月）〜5月24日（日）</div>
+
+<!-- KPIサマリーカード -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
+  <div style="background:#fff;border:1px solid #e7e5e4;border-radius:10px;padding:14px 16px;border-top:3px solid #e1306c;">
+    <div style="font-size:11px;color:#78716c;margin-bottom:4px;">Lypo-C Twitter言及数（5/18週）</div>
+    <div style="font-size:22px;font-weight:700;color:#1c1917;">144</div>
+    <div style="font-size:12px;color:#78716c;margin-top:4px;">前週比 <span style="color:#dc2626;font-weight:600;">▼19.3%</span>（前週179）</div>
+  </div>
+  <div style="background:#fff;border:1px solid #e7e5e4;border-radius:10px;padding:14px 16px;border-top:3px solid #e1306c;">
+    <div style="font-size:11px;color:#78716c;margin-bottom:4px;">Lypo-C Instagram言及数（5/18週）</div>
+    <div style="font-size:22px;font-weight:700;color:#1c1917;">21</div>
+    <div style="font-size:12px;color:#78716c;margin-top:4px;">前週比 <span style="color:#dc2626;font-weight:600;">▼12.5%</span>（前週24）</div>
+  </div>
+  <div style="background:#fff;border:1px solid #e7e5e4;border-radius:10px;padding:14px 16px;border-top:3px solid #1da1f2;">
+    <div style="font-size:11px;color:#78716c;margin-bottom:4px;">@lypocapsule フォロワー数（5/24）</div>
+    <div style="font-size:22px;font-weight:700;color:#1c1917;">27,739</div>
+    <div style="font-size:12px;color:#78716c;margin-top:4px;">週次変化 <span style="color:#dc2626;font-weight:600;">▼32人</span>（5/18: 27,771）</div>
+  </div>
+  <div style="background:#fff;border:1px solid #e7e5e4;border-radius:10px;padding:14px 16px;border-top:3px solid #e1306c;">
+    <div style="font-size:11px;color:#78716c;margin-bottom:4px;">@lypo_c_official IGフォロワー数（5/24）</div>
+    <div style="font-size:22px;font-weight:700;color:#1c1917;">31,346</div>
+    <div style="font-size:12px;color:#78716c;margin-top:4px;">週次変化 <span style="color:#16a34a;font-weight:600;">▲123人</span>（5/18: 31,223）</div>
+  </div>
+</div>
+
+<!-- ① キーワード別SNS言及数サマリー（Twitter） -->
+<div class="stitle">① キーワード別 SNS言及数 週次サマリー（Twitter）</div>
+<div class="ssub">単位：件／週　※重複除去済み　※横軸ヒートマップ：各指標行の中央値基準（10件未満・10万未満は対象外）<br>
+<span style="display:inline-flex;gap:16px;margin-top:4px;">
+  <span><span style="display:inline-block;width:10px;height:10px;background:#1da1f2;border-radius:2px;margin-right:4px;vertical-align:middle;"></span>投稿数（RT込）：プレスリリース等で大量RTされた場合に急増</span>
+  <span><span style="display:inline-block;width:10px;height:10px;background:#0f6b99;border-radius:2px;margin-right:4px;vertical-align:middle;"></span>投稿数（RT除）：自発的口コミの実態</span>
+  <span><span style="display:inline-block;width:10px;height:10px;background:#f97316;border-radius:2px;margin-right:4px;vertical-align:middle;"></span>リーチ数：推定閲覧数（インフルエンサー露出の検知指標）</span>
+</span>
+<span style="display:block;margin-top:4px;color:#78716c;font-size:11px;">※ 破線より下の一般ワード（ビタミンC・セラミド）は参考値としてRT除のみ掲載。</span>
+</div>
+<div class="tbl-wrap"><table id="si_tw_table" style="font-size:12px;">
+<colgroup>
+  <col style="width:14%"><col style="width:4%">
+  <col><col><col><col><col><col><col><col>
+  <col style="width:7%"><col style="width:7%">
+</colgroup>
+<thead><tr>
+  <th style="text-align:left;">キーワード</th>
+  <th style="font-size:11px;color:#78716c;font-weight:500;">指標</th>
+  <th>2026/03/23<br><small>〜03/29</small></th>
+  <th>2026/03/30<br><small>〜04/05</small></th>
+  <th>2026/04/06<br><small>〜04/12</small></th>
+  <th>2026/04/13<br><small>〜04/19</small></th>
+  <th>2026/04/20<br><small>〜04/26</small></th>
+  <th>2026/04/27<br><small>〜05/03</small></th>
+  <th>2026/05/04<br><small>〜05/10</small></th>
+  <th>2026/05/11<br><small>〜05/17</small></th>
+  <th class="latest-wk">2026/05/18<br><small>〜05/24</small></th>
+  <th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody id="si_tw_tbody">
+  <!-- Lypo-C系 -->
+  <tr data-vals="114,140,135,112,342,209,176,138,144" data-prev="138" data-cur="144">
+    <td rowspan="3" style="text-align:left;font-weight:700;vertical-align:middle;border-right:2px solid #e7e5e4;">Lypo-C系（主力）</td>
+    <td style="font-size:11px;color:#1da1f2;white-space:nowrap;font-weight:600;">RT込</td>
+    <td>114</td><td>140</td><td>135</td><td>112</td><td>342</td><td>209</td><td>176</td><td>138</td>
+    <td style="font-weight:700;">144</td><td></td>
+  </tr>
+  <tr data-vals="75,104,107,80,102,144,117,101,104" data-prev="101" data-cur="104">
+    <td style="font-size:11px;color:#0f6b99;white-space:nowrap;font-weight:600;">RT除</td>
+    <td>75</td><td>104</td><td>107</td><td>80</td><td>102</td><td>144</td><td>117</td><td>101</td>
+    <td style="font-weight:700;">104</td><td></td>
+  </tr>
+  <tr data-vals="555860,600682,2339922,2254123,1192995,1026228,740762,376053,840993" data-prev="376053" data-cur="840993" data-unit="reach">
+    <td style="font-size:11px;color:#f97316;white-space:nowrap;font-weight:600;">リーチ</td>
+    <td>556K</td><td>601K</td><td>2.3M</td><td>2.3M</td><td>1.2M</td><td>1.0M</td><td>741K</td><td>376K</td>
+    <td style="font-weight:700;">841K</td><td></td>
+  </tr>
+
+  <!-- リポスフェリック -->
+  <tr style="border-top:2px solid #e7e5e4;" data-vals="1,3,1,4,4,5,2,5,4" data-prev="5" data-cur="4">
+    <td rowspan="3" style="text-align:left;font-weight:700;vertical-align:middle;border-right:2px solid #e7e5e4;">リポスフェリック（競合）</td>
+    <td style="font-size:11px;color:#1da1f2;white-space:nowrap;font-weight:600;">RT込</td>
+    <td>1</td><td>3</td><td>1</td><td>4</td><td>4</td><td>5</td><td>2</td><td>5</td>
+    <td style="font-weight:700;">4</td><td></td>
+  </tr>
+  <tr data-vals="0,2,1,4,3,5,2,5,4" data-prev="5" data-cur="4">
+    <td style="font-size:11px;color:#0f6b99;white-space:nowrap;font-weight:600;">RT除</td>
+    <td>0</td><td>2</td><td>1</td><td>4</td><td>3</td><td>5</td><td>2</td><td>5</td>
+    <td style="font-weight:700;">4</td><td></td>
+  </tr>
+  <tr data-vals="0,4930,42,16497,2767,14558,37,865,37" data-prev="865" data-cur="37" data-unit="reach">
+    <td style="font-size:11px;color:#f97316;white-space:nowrap;font-weight:600;">リーチ</td>
+    <td>0</td><td>5K</td><td>0</td><td>16K</td><td>3K</td><td>15K</td><td>0</td><td>1K</td>
+    <td style="font-weight:700;">0</td><td></td>
+  </tr>
+
+  <!-- SKINBEAUTY -->
+  <tr style="border-top:2px solid #e7e5e4;" data-vals="7,3,3,0,2,2,1,1,0" data-prev="1" data-cur="0">
+    <td rowspan="3" style="text-align:left;font-weight:700;vertical-align:middle;border-right:2px solid #e7e5e4;">SKINBEAUTY</td>
+    <td style="font-size:11px;color:#1da1f2;white-space:nowrap;font-weight:600;">RT込</td>
+    <td>7</td><td>3</td><td>3</td><td>0</td><td>2</td><td>2</td><td>1</td><td>1</td>
+    <td style="font-weight:700;">0</td><td></td>
+  </tr>
+  <tr data-vals="0,3,3,0,1,2,0,1,0" data-prev="1" data-cur="0">
+    <td style="font-size:11px;color:#0f6b99;white-space:nowrap;font-weight:600;">RT除</td>
+    <td>0</td><td>3</td><td>3</td><td>0</td><td>1</td><td>2</td><td>0</td><td>1</td>
+    <td style="font-weight:700;">0</td><td></td>
+  </tr>
+  <tr data-vals="2144,10544,210882,0,28043,46078,0,0,0" data-prev="0" data-cur="0" data-unit="reach">
+    <td style="font-size:11px;color:#f97316;white-space:nowrap;font-weight:600;">リーチ</td>
+    <td>2K</td><td>11K</td><td>211K</td><td>0</td><td>28K</td><td>46K</td><td>0</td><td>0</td>
+    <td style="font-weight:700;">0</td><td></td>
+  </tr>
+
+  <!-- C+Cera -->
+  <tr style="border-top:2px solid #e7e5e4;" data-vals="1,7,1,0,2,0,1,0,2" data-prev="0" data-cur="2">
+    <td rowspan="3" style="text-align:left;font-weight:700;vertical-align:middle;border-right:2px solid #e7e5e4;">C+Cera</td>
+    <td style="font-size:11px;color:#1da1f2;white-space:nowrap;font-weight:600;">RT込</td>
+    <td>1</td><td>7</td><td>1</td><td>0</td><td>2</td><td>0</td><td>1</td><td>0</td>
+    <td style="font-weight:700;">2</td><td></td>
+  </tr>
+  <tr data-vals="1,7,1,0,1,0,1,0,2" data-prev="0" data-cur="2">
+    <td style="font-size:11px;color:#0f6b99;white-space:nowrap;font-weight:600;">RT除</td>
+    <td>1</td><td>7</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td>
+    <td style="font-weight:700;">2</td><td></td>
+  </tr>
+  <tr data-vals="0,2031,171,0,27752,0,18,0,2" data-prev="0" data-cur="2" data-unit="reach">
+    <td style="font-size:11px;color:#f97316;white-space:nowrap;font-weight:600;">リーチ</td>
+    <td>0</td><td>2K</td><td>0</td><td>0</td><td>28K</td><td>0</td><td>0</td><td>0</td>
+    <td style="font-weight:700;">0</td><td></td>
+  </tr>
+
+  <!-- ミネラリオン -->
+  <tr style="border-top:2px solid #e7e5e4;" data-vals="8,6,3,1,0,1,4,15,14" data-prev="15" data-cur="14">
+    <td rowspan="3" style="text-align:left;font-weight:700;vertical-align:middle;border-right:2px solid #e7e5e4;">ミネラリオン</td>
+    <td style="font-size:11px;color:#1da1f2;white-space:nowrap;font-weight:600;">RT込</td>
+    <td>8</td><td>6</td><td>3</td><td>1</td><td>0</td><td>1</td><td>4</td><td>15</td>
+    <td style="font-weight:700;">14</td><td></td>
+  </tr>
+  <tr data-vals="3,5,3,0,0,1,4,9,3" data-prev="9" data-cur="3">
+    <td style="font-size:11px;color:#0f6b99;white-space:nowrap;font-weight:600;">RT除</td>
+    <td>3</td><td>5</td><td>3</td><td>0</td><td>0</td><td>1</td><td>4</td><td>9</td>
+    <td style="font-weight:700;">3</td><td></td>
+  </tr>
+  <tr data-vals="682,330,1128,0,0,607,15115,59269,5797" data-prev="59269" data-cur="5797" data-unit="reach">
+    <td style="font-size:11px;color:#f97316;white-space:nowrap;font-weight:600;">リーチ</td>
+    <td>682</td><td>330</td><td>1K</td><td>0</td><td>0</td><td>607</td><td>15K</td><td>59K</td>
+    <td style="font-weight:700;">6K</td><td></td>
+  </tr>
+
+</tbody>
+  <!-- 一般ワード（参考：RT除のみ・破線区切り） -->
+  <tr style="border-top:3px dashed #d1d5db;" data-vals="5640,4966,4416,4822,4579,4156,3521,4284,3557" data-prev="4284" data-cur="3557">
+    <td style="text-align:left;font-weight:700;vertical-align:middle;border-right:2px solid #e7e5e4;color:#78716c;">ビタミンC（カテゴリ）<br><small style="font-weight:400;font-size:10px;">一般ワード・RT除のみ</small></td>
+    <td style="font-size:11px;color:#0f6b99;white-space:nowrap;font-weight:600;">RT除</td>
+    <td>5,640</td><td>4,966</td><td>4,416</td><td>4,822</td><td>4,579</td><td>4,156</td><td>3,521</td><td>4,284</td><td style="font-weight:700;">3,557</td><td></td>
+  </tr>
+  <tr style="border-top:2px solid #e7e5e4;" data-vals="1781,1496,2938,1599,1342,1278,921,1096,906" data-prev="1096" data-cur="906">
+    <td style="text-align:left;font-weight:700;vertical-align:middle;border-right:2px solid #e7e5e4;color:#78716c;">セラミド（カテゴリ）<br><small style="font-weight:400;font-size:10px;">一般ワード・RT除のみ</small></td>
+    <td style="font-size:11px;color:#0f6b99;white-space:nowrap;font-weight:600;">RT除</td>
+    <td>1,781</td><td>1,496</td><td>2,938</td><td>1,599</td><td>1,342</td><td>1,278</td><td>921</td><td>1,096</td><td style="font-weight:700;">906</td><td></td>
+  </tr>
+</tbody></table></div>
+
+<!-- ①考察 -->
+<div class="insight-wrap">
+<div class="insight-header">
+  <span><span style="margin-right:6px;">💬</span><span class="insight-label">① Twitter言及数 考察（5/18週）</span></span>
+</div>
+<div class="insight-body"><ul>
+  <li><span class="itag itag-ok">好材料</span><span><strong>Lypo-C自発口コミ（RT除外）は104件と前週比+3件でほぼ横ばい維持</strong>。RT込みが344→144と見かけ上急減したのは4/20週に起きた大量RT（342件中RTが240件超）の反動であり、実際の自発口コミは安定している。RT込みの増減だけ見ると誤解を招くケース。</span></li>
+  <li><span class="itag itag-ok">好材料</span><span><strong>Lypo-Cリーチ数が376K→841K と+124%回復</strong>。投稿件数は変わっていないがリーチが倍増しており、フォロワー数の多いアカウントによる言及が今週あったことを示す。インフルエンサー・まとめアカウント等の露出がある可能性。</span></li>
+  <li><span class="itag itag-warn">注視</span><span><strong>ビタミンCカテゴリのRT除外（3,557件）は5月以降の低水準が継続</strong>。RTスパイクが3月末（23,022件）にあったが自発口コミ（4,966件）はむしろ安定しており、カテゴリ全体の自発投稿は緩やかな下降トレンド。健康情報コンテンツのSNS熱量が落ち着いてきている。</span></li>
+  <li><span class="itag itag-ref">参考</span><span><strong>セラミドカテゴリは4/6週にRT込み20,881件・リーチ77Mの巨大スパイク</strong>があったが、RT除外は2,938件にとどまる。少数の影響力の大きいアカウントによる拡散で、C+Ceraへの実際の口コミ言及（同週1件）との乖離が大きい。カテゴリ認知と自社ブランド指名の橋渡しが引き続き課題。</span></li>
+</ul></div>
+</div>
+
+<!-- ② キーワード別 Instagram言及数 -->
+<div class="stitle">② キーワード別 SNS言及数 週次サマリー（Instagram）</div>
+<div class="ssub">単位：件／週　※Instagram投稿数　※横軸ヒートマップ：各行の中央値基準（10件未満は対象外）</div>
+<div class="tbl-wrap"><table id="si_ig_table"><thead><tr>
+  <th style="text-align:left;">キーワード</th>
+  <th>2026/03/23<br><small>〜03/29</small></th>
+  <th>2026/03/30<br><small>〜04/05</small></th>
+  <th>2026/04/06<br><small>〜04/12</small></th>
+  <th>2026/04/13<br><small>〜04/19</small></th>
+  <th>2026/04/20<br><small>〜04/26</small></th>
+  <th>2026/04/27<br><small>〜05/03</small></th>
+  <th>2026/05/04<br><small>〜05/10</small></th>
+  <th>2026/05/11<br><small>〜05/17</small></th>
+  <th class="latest-wk">2026/05/18<br><small>〜05/24</small></th>
+  <th class="latest-wk">前週比</th>
+</tr></thead><tbody id="si_ig_tbody">
+  <tr data-vals="14,13,14,32,35,25,24,24,21" data-prev="24" data-cur="21">
+    <td style="text-align:left;font-weight:600;">Lypo-C系（主力）</td>
+    <td>14</td><td>13</td><td>14</td><td>32</td><td>35</td><td>25</td><td>24</td><td>24</td>
+    <td style="font-weight:700;">21</td><td></td>
+  </tr>
+  <tr data-vals="1599,1617,1415,1631,1843,2050,1487,1303,1347" data-prev="1303" data-cur="1347">
+    <td style="text-align:left;font-weight:600;">ビタミンC（カテゴリ）</td>
+    <td>1,599</td><td>1,617</td><td>1,415</td><td>1,631</td><td>1,843</td><td>2,050</td><td>1,487</td><td>1,303</td>
+    <td style="font-weight:700;">1,347</td><td></td>
+  </tr>
+  <tr data-vals="828,851,689,878,869,987,705,609,696" data-prev="609" data-cur="696">
+    <td style="text-align:left;font-weight:600;">セラミド（カテゴリ）</td>
+    <td>828</td><td>851</td><td>689</td><td>878</td><td>869</td><td>987</td><td>705</td><td>609</td>
+    <td style="font-weight:700;">696</td><td></td>
+  </tr>
+  <tr data-vals="0,1,0,1,3,2,1,1,1" data-prev="1" data-cur="1">
+    <td style="text-align:left;font-weight:600;">C+Cera</td>
+    <td>0</td><td>1</td><td>0</td><td>1</td><td>3</td><td>2</td><td>1</td><td>1</td>
+    <td style="font-weight:700;">1</td><td></td>
+  </tr>
+  <tr data-vals="0,0,1,2,0,0,2,2,1" data-prev="2" data-cur="1">
+    <td style="text-align:left;font-weight:600;">SKINBEAUTY</td>
+    <td>0</td><td>0</td><td>1</td><td>2</td><td>0</td><td>0</td><td>2</td><td>2</td>
+    <td style="font-weight:700;">1</td><td></td>
+  </tr>
+</tbody></table></div>
+
+<!-- ②考察 -->
+<div class="insight-wrap">
+<div class="insight-header">
+  <span><span style="margin-right:6px;">💬</span><span class="insight-label">② Instagram言及数 考察（5/18週）</span></span>
+</div>
+<div class="insight-body"><ul>
+  <li><span class="itag itag-warn">注視</span><span><strong>Lypo-C Instagram言及（21件）は4/20週（35件）をピークに減少傾向</strong>。CTW施策（セラミド訴求）が始まっているにもかかわらず、C+Ceraの専用言及はほぼゼロ水準。「Lypo-C」本体キーワードでの紹介投稿が大半を占め、新ラインの訴求浸透が課題。</span></li>
+  <li><span class="itag itag-ok">好材料</span><span><strong>セラミドカテゴリIG投稿が▲14.3%と反発（609→696件）</strong>。5/4〜5/11週の低水準から回復し、春夏スキンケアへの関心が戻ってきている。C+Ceraのコンテンツ強化でカテゴリ需要を取り込める局面。</span></li>
+  <li><span class="itag itag-ref">参考</span><span>Instagram全体のビタミンC投稿（1,347件）はTwitterに比べて安定している。コンテンツ型投稿（レシピ・美容ルーティン）が定常的に生産されており、週次変動が小さいInstagramの特性が表れている。</span></li>
+</ul></div>
+</div>
+
+<!-- ③ Lypo-C日別言及数グラフ（2週分） -->
+<div class="stitle">③ Lypo-C系 日別SNS言及数推移（5/11〜5/24）</div>
+<div class="ssub">Twitter投稿数（RT含む）とカテゴリ比較の日別推移</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+  <div style="background:#fff;border:1px solid #e7e5e4;border-radius:8px;padding:16px;">
+    <div style="font-size:12px;font-weight:700;margin-bottom:10px;color:#1c1917;">📊 Lypo-C Twitter日別言及数</div>
+    <div class="chart-wrap"><canvas id="si_chart_tw"></canvas></div>
+  </div>
+  <div style="background:#fff;border:1px solid #e7e5e4;border-radius:8px;padding:16px;">
+    <div style="font-size:12px;font-weight:700;margin-bottom:10px;color:#1c1917;">📸 カテゴリ比較：Twitter日別言及数</div>
+    <div class="chart-wrap"><canvas id="si_chart_cat"></canvas></div>
+  </div>
+</div>
+
+<!-- ④ 自社SNSアカウント フォロワー推移 -->
+<div class="stitle">④ 自社SNSアカウント フォロワー数推移（週次）</div>
+<div class="ssub">各アカウントの週末（日曜）フォロワー数｜8週分</div>
+<div class="tbl-wrap"><table><thead><tr>
+  <th style="text-align:left;">アカウント</th><th>SNS</th>
+  <th>2026/03/29</th>
+  <th>2026/04/05</th>
+  <th>2026/04/12</th>
+  <th>2026/04/19</th>
+  <th>2026/04/26</th>
+  <th>2026/05/03</th>
+  <th>2026/05/10</th>
+  <th>2026/05/17</th>
+  <th class="latest-wk">2026/05/24<br><small>（最新）</small></th>
+  <th class="latest-wk">前週比</th>
+</tr></thead><tbody>
+  <tr>
+    <td style="text-align:left;font-weight:600;">@lypocapsule</td>
+    <td><span style="background:#1da1f2;color:#fff;padding:1px 5px;border-radius:3px;font-size:11px;">Twitter</span></td>
+    <td>28,152</td><td>27,943</td><td>27,435</td><td>27,685</td><td>28,007</td><td>27,958</td><td>27,909</td><td>27,782</td>
+    <td style="font-weight:700;">27,739</td>
+    <td style="background:#fee2e2;color:#991b1b;">▼43</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;font-weight:600;">@Lypospheric_JP</td>
+    <td><span style="background:#1da1f2;color:#fff;padding:1px 5px;border-radius:3px;font-size:11px;">Twitter</span></td>
+    <td>14,648</td><td>14,350</td><td>13,745</td><td>14,071</td><td>14,451</td><td>14,486</td><td>14,450</td><td>14,396</td>
+    <td style="font-weight:700;">14,359</td>
+    <td style="background:#fee2e2;color:#991b1b;">▼37</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;font-weight:600;">@lypo_c_official</td>
+    <td><span style="background:#e1306c;color:#fff;padding:1px 5px;border-radius:3px;font-size:11px;">Instagram</span></td>
+    <td>30,788</td><td>30,752</td><td>30,785</td><td>30,865</td><td>31,056</td><td>31,160</td><td>31,182</td><td>31,221</td>
+    <td style="font-weight:700;">31,346</td>
+    <td style="background:#dcfce7;color:#166534;">▲125</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;font-weight:600;">@lypo_spheric_official</td>
+    <td><span style="background:#e1306c;color:#fff;padding:1px 5px;border-radius:3px;font-size:11px;">Instagram</span></td>
+    <td>2,035</td><td>2,035</td><td>2,034</td><td>2,030</td><td>2,030</td><td>2,025</td><td>2,023</td><td>2,023</td>
+    <td style="font-weight:700;">2,026</td>
+    <td style="background:#dcfce7;color:#166534;">▲3</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;font-weight:600;">@lypo_c_skinbeauty</td>
+    <td><span style="background:#e1306c;color:#fff;padding:1px 5px;border-radius:3px;font-size:11px;">Instagram</span></td>
+    <td>1,039</td><td>1,053</td><td>1,060</td><td>1,066</td><td>1,069</td><td>1,075</td><td>1,073</td><td>1,069</td>
+    <td style="font-weight:700;">1,070</td>
+    <td style="background:#f0f0f0;color:#666;">▲1</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;font-weight:600;">@mineralion_</td>
+    <td><span style="background:#e1306c;color:#fff;padding:1px 5px;border-radius:3px;font-size:11px;">Instagram</span></td>
+    <td>980</td><td>971</td><td>967</td><td>978</td><td>975</td><td>972</td><td>969</td><td>961</td>
+    <td style="font-weight:700;">960</td>
+    <td style="background:#fee2e2;color:#991b1b;">▼1</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;font-weight:600;">@lypoc_official</td>
+    <td><span style="background:#000;color:#fff;padding:1px 5px;border-radius:3px;font-size:11px;">TikTok</span></td>
+    <td>286</td><td>286</td><td>285</td><td>285</td><td>285</td><td>284</td><td>283</td><td>283</td>
+    <td style="font-weight:700;">283</td>
+    <td style="background:#f0f0f0;color:#666;">±0</td>
+  </tr>
+</tbody></table></div>
+
+<!-- ④考察 -->
+<div class="insight-wrap">
+<div class="insight-header">
+  <span><span style="margin-right:6px;">💬</span><span class="insight-label">④ フォロワー数 考察（5/18週）</span></span>
+</div>
+<div class="insight-body"><ul>
+  <li><span class="itag itag-ok">好材料</span><span><strong>@lypo_c_official IGフォロワー +125人/週は直近ベストペース</strong>。4/20週（+167人）以来の高成長週。ESS施策期間の4/20週〜5/4週に集中的にフォロワーが積み上がり（30,752→31,160）、その後も月次+100人超を維持している。</span></li>
+  <li><span class="itag itag-warn">注視</span><span><strong>@lypocapsule（Twitter）は緩やかな減少が継続</strong>。3/23週の28,190から5/24の27,739まで約8週で▼451人減。5月以降も週▼30〜40人ペースで漸減中。Twitter（X）全体のアクティブユーザー動向と照らし合わせた評価が必要。</span></li>
+  <li><span class="itag itag-bad">課題</span><span><strong>@lypo_c_skinbeauty（IG 1,070人）・@mineralion_（IG 960人）は低水準横ばい</strong>。新ブランド専用アカウントとして成長投資が必要なフェーズにもかかわらず、週次変化がほぼゼロ。投稿頻度増・クロスPRで認知拡大を図るべき局面。</span></li>
+  <li><span class="itag itag-ref">参考</span><span>@lypo_spheric_official（リポスフェリック競合IG 2,026人）は安定横ばい。フォロワー・言及ともに停滞傾向が続いており、現時点では脅威度は低い。</span></li>
+</ul></div>
+</div>
+
+<!-- ⑤ フォロワー推移グラフ -->
+<div class="stitle">⑤ 自社SNSアカウント フォロワー推移グラフ（週別・8週）</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+  <div style="background:#fff;border:1px solid #e7e5e4;border-radius:8px;padding:16px;">
+    <div style="font-size:12px;font-weight:700;margin-bottom:10px;color:#1c1917;">📱 Instagram フォロワー推移（主要3アカウント）</div>
+    <div class="chart-wrap"><canvas id="si_chart_ig_fan"></canvas></div>
+  </div>
+  <div style="background:#fff;border:1px solid #e7e5e4;border-radius:8px;padding:16px;">
+    <div style="font-size:12px;font-weight:700;margin-bottom:10px;color:#1c1917;">🐦 Twitter フォロワー推移（2アカウント）</div>
+    <div class="chart-wrap"><canvas id="si_chart_tw_fan"></canvas></div>
+  </div>
+</div>
+
+<!-- ⑥ 総括考察 -->
+<div class="stitle">⑥ SNS総括：5/18週の3大トピック</div>
+
+<div class="insight-wrap" style="margin-top:10px;">
+<div class="insight-header" style="background:#eff4ff;">
+  <span><span style="margin-right:6px;">1️⃣</span><span class="insight-label" style="color:#1e40af;">IG公式アカウントが堅調成長継続、一方Twitterは漸減</span></span>
+</div>
+<div class="insight-body"><ul>
+  <li><span class="itag itag-ok">好材料</span><span>@lypo_c_official（Instagram）は週+125人ペースを維持し、直近8週の累計は+558人増（30,788→31,346）。ESS施策と同時期に実施された投稿強化が功を奏している。</span></li>
+  <li><span class="itag itag-warn">注視</span><span>@lypocapsule（Twitter）は週▼30〜40人ペースで減少が止まっていない。Instagram重心のSNS運用戦略は正しい方向性であり、TikTokアカウント（@lypoc_official 283人）は現状では影響力が限定的で、コンテンツ投資の優先度を見直す必要がある。</span></li>
+</ul></div>
+</div>
+
+<div class="insight-wrap" style="margin-top:12px;">
+<div class="insight-header" style="background:#f0fdf4;">
+  <span><span style="margin-right:6px;">2️⃣</span><span class="insight-label" style="color:#166534;">Lypo-C言及数はCTW施策にもかかわらず微減傾向</span></span>
+</div>
+<div class="insight-body"><ul>
+  <li><span class="itag itag-bad">課題</span><span>CTW（C+Cera Trial Week）が5/13〜開始されたにもかかわらず、Lypo-C系Twitter言及は前週比▼19%。C+Cera専用ハッシュタグキャンペーンやUGC促進施策（投稿プレゼント等）を並走させることで、購買と口コミの相乗効果を狙うべきタイミング。</span></li>
+  <li><span class="itag itag-ref">推奨</span><span>SCでの「C+Cera」関連検索増加（シーセラ・セラミドビタミン）との整合性を確認し、SEO×SNSの統合戦略を立案することを推奨。</span></li>
+</ul></div>
+</div>
+
+<div class="insight-wrap" style="margin-top:12px;">
+<div class="insight-header" style="background:#fff7ed;">
+  <span><span style="margin-right:6px;">3️⃣</span><span class="insight-label" style="color:#9a3412;">セラミドカテゴリIG投稿の回復でC+Cera訴求の好機</span></span>
+</div>
+<div class="insight-body"><ul>
+  <li><span class="itag itag-ok">好材料</span><span>セラミドカテゴリのInstagram投稿が▲14.3%回復（609→696件）。春から初夏へのスキンケア移行期にセラミド関心が再上昇しており、このタイミングでC+Ceraを打ち出すことは市場の流れに沿っている。</span></li>
+  <li><span class="itag itag-ref">参考</span><span>@lypo_c_official での「セラミド×ビタミンC」軸の投稿強化と #セラミド タグを絡めたリーチ拡大が期待できる。競合の「セラミド」高関心は4/8〜4/9週がピークで現在は落ち着いており、積極的にコンテンツ投資できる環境。</span></li>
+</ul></div>
+</div>
+
+</div><!-- /tab-3 -->
+
 
 
 </div><!-- /container -->
 
+
+
+
 <script>
 function switchTab(n){
-  document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===n));
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
-
+  const panels = document.querySelectorAll('.tab-panel');
+  const btns = document.querySelectorAll('.tab-btn');
+  panels.forEach(p => p.classList.remove('active'));
+  btns.forEach(b => b.classList.remove('active'));
+  // ボタン順：0=GA4(tab-0), 1=SC(tab-1), 2=SI(tab-3), 3=まとめ(tab-2)
+  const panelIds = ['tab-0','tab-1','tab-3','tab-2'];
+  document.getElementById(panelIds[n]).classList.add('active');
+  btns[n].classList.add('active');
+  if(n===2 && !window.siChartsRendered){ renderSiCharts(); window.siChartsRendered=true; }
 }
 
-// ===== Search Console Charts =====
+// ===== SocialInsight: 横軸ヒートマップ適用 =====
+function applySiRowHeatmap(tbodyId) {
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  const rows = tbody.querySelectorAll('tr');
+  rows.forEach(row => {
+    const rawVals = (row.getAttribute('data-vals') || '').split(',').map(Number);
+    if (!rawVals[0] && rawVals.length === 1) return; // data-vals なし行はスキップ
+    const isReach = row.getAttribute('data-unit') === 'reach';
+    // リーチ行: 10万未満の場合スキップ、投稿数行: 10件未満スキップ
+    const threshold = isReach ? 100000 : 10;
+    const sorted = [...rawVals.slice(0,8)].sort((a,b)=>a-b);
+    const median = sorted.length % 2 === 0
+      ? (sorted[sorted.length/2-1] + sorted[sorted.length/2]) / 2
+      : sorted[Math.floor(sorted.length/2)];
+    if (median < threshold) return;
+
+    // 指標ラベル列（td[0]がrowspanキーワード名 or 指標ラベル）を判定
+    const allCells = Array.from(row.querySelectorAll('td'));
+    // rowspanを持つキーワード名セルを除いて、データセルの開始インデックスを求める
+    let dataStart = 0;
+    for (let i = 0; i < allCells.length; i++) {
+      if (allCells[i].getAttribute('rowspan')) { dataStart = 2; break; } // キーワード名+指標ラベル
+      if (allCells[i].style.fontSize === '11px' || allCells[i].style.color) { dataStart = i + 1; break; }
+    }
+    // rowspanなし行（指標ラベルが先頭）
+    if (dataStart === 0) dataStart = 1;
+
+    const dataCells = allCells.slice(dataStart, dataStart + 8);
+    const latestCell = allCells[dataStart + 8];
+    const diffCell   = allCells[dataStart + 9];
+
+    function getColor(v) {
+      if (v < threshold) return { bg:'', color:'' };
+      const ratio = median > 0 ? (v - median) / median : 0;
+      if      (ratio >  1.0) return { bg:'#16a34a', color:'#ffffff' };
+      else if (ratio >  0.25) return { bg:'#86efac', color:'#14532d' };
+      else if (ratio >  0.10) return { bg:'#dcfce7', color:'#166534' };
+      else if (ratio < -0.25) return { bg:'#fca5a5', color:'#7f1d1d' };
+      else if (ratio < -0.10) return { bg:'#fee2e2', color:'#991b1b' };
+      return { bg:'', color:'' };
+    }
+
+    dataCells.forEach((cell, i) => {
+      const { bg, color } = getColor(rawVals[i]);
+      if (bg) { cell.style.background = bg; cell.style.color = color; }
+    });
+    if (latestCell) {
+      const { bg, color } = getColor(rawVals[8]);
+      if (bg) { latestCell.style.background = bg; latestCell.style.color = color; }
+    }
+    if (diffCell) {
+      const prev = Number(row.getAttribute('data-prev') || 0);
+      const cur  = Number(row.getAttribute('data-cur')  || 0);
+      if (prev < threshold) { diffCell.textContent = '—'; diffCell.style.color='#78716c'; return; }
+      const pct = prev > 0 ? (cur - prev) / prev : 0;
+      const sign = pct >= 0 ? '▲' : '▼';
+      diffCell.textContent = sign + Math.abs(Math.round(pct*1000)/10) + '%';
+      diffCell.style.fontWeight = '600';
+      const { bg, color } = getColor(cur);
+      if (bg) { diffCell.style.background = bg; diffCell.style.color = color; }
+      else {
+        // 前週比だけ色付け（増減方向）
+        if      (pct >  1.0) { diffCell.style.background='#16a34a'; diffCell.style.color='#ffffff'; }
+        else if (pct >  0.25) { diffCell.style.background='#86efac'; diffCell.style.color='#14532d'; }
+        else if (pct >  0.10) { diffCell.style.background='#dcfce7'; diffCell.style.color='#166534'; }
+        else if (pct < -0.25) { diffCell.style.background='#fca5a5'; diffCell.style.color='#7f1d1d'; }
+        else if (pct < -0.10) { diffCell.style.background='#fee2e2'; diffCell.style.color='#991b1b'; }
+      }
+    }
+  });
+}
+
+// ===== SocialInsight Charts =====
+function renderSiCharts(){
+  // 横軸ヒートマップ適用
+  applySiRowHeatmap('si_tw_tbody');
+  applySiRowHeatmap('si_ig_tbody');
+
+  const SI_DATES14 = ['5/11','5/12','5/13','5/14','5/15','5/16','5/17','5/18','5/19','5/20','5/21','5/22','5/23','5/24'];
+  const SI_TW_LYPOC = [26,16,23,18,21,26,8,30,27,16,20,15,16,20];
+  const SI_TW_VITC  = [2858,3869,1997,1545,2931,1748,1220,1433,1386,1591,1257,1342,1240,945];
+  const SI_TW_CERA  = [513,299,230,224,272,360,342,298,344,191,335,211,315,447];
+
+  new Chart(document.getElementById('si_chart_tw').getContext('2d'),{
+    type:'bar',
+    data:{labels:SI_DATES14,datasets:[
+      {label:'Twitter言及数（Lypo-C）',data:SI_TW_LYPOC,backgroundColor:'rgba(29,161,242,0.7)',borderColor:'#1da1f2',borderWidth:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom'}},
+      scales:{y:{beginAtZero:true,title:{display:true,text:'件数'}}}}
+  });
+
+  new Chart(document.getElementById('si_chart_cat').getContext('2d'),{
+    type:'line',
+    data:{labels:SI_DATES14,datasets:[
+      {label:'ビタミンC（カテゴリ）',data:SI_TW_VITC,borderColor:'#f59e0b',backgroundColor:'transparent',fill:false,borderWidth:2,pointRadius:3},
+      {label:'セラミド（カテゴリ）',  data:SI_TW_CERA,borderColor:'#8b5cf6',backgroundColor:'transparent',fill:false,borderWidth:2,pointRadius:3}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom'}},
+      scales:{y:{beginAtZero:true,title:{display:true,text:'件数'},ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v}}}}
+  });
+
+  const FAN_DATES  = ['3/29','4/5','4/12','4/19','4/26','5/3','5/10','5/17','5/24'];
+  const IG_LYPOC   = [30788,30752,30785,30865,31056,31160,31182,31221,31346];
+  const IG_SKINB   = [1039,1053,1060,1066,1069,1075,1073,1069,1070];
+  const IG_MINERAL = [980,971,967,978,975,972,969,961,960];
+  const TW_LYPOCAP = [28152,27943,27435,27685,28007,27958,27909,27782,27739];
+  const TW_LYPOSPH = [14648,14350,13745,14071,14451,14486,14450,14396,14359];
+
+  new Chart(document.getElementById('si_chart_ig_fan').getContext('2d'),{
+    type:'line',
+    data:{labels:FAN_DATES,datasets:[
+      {label:'@lypo_c_official', data:IG_LYPOC,  borderColor:'#e1306c',backgroundColor:'rgba(225,48,108,0.08)',fill:true, borderWidth:2.5,pointRadius:4,yAxisID:'y'},
+      {label:'@lypo_c_skinbeauty',data:IG_SKINB, borderColor:'#f97316',backgroundColor:'transparent',fill:false,borderWidth:2,pointRadius:3,borderDash:[5,3],yAxisID:'y2'},
+      {label:'@mineralion_',    data:IG_MINERAL,borderColor:'#0ea5e9',backgroundColor:'transparent',fill:false,borderWidth:2,pointRadius:3,borderDash:[5,3],yAxisID:'y2'}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom'}},
+      scales:{
+        y: {position:'left', title:{display:true,text:'@lypo_c_official'},beginAtZero:false,ticks:{callback:v=>v.toLocaleString()}},
+        y2:{position:'right',title:{display:true,text:'他アカウント'},   beginAtZero:false,grid:{drawOnChartArea:false}}
+      }}
+  });
+
+  new Chart(document.getElementById('si_chart_tw_fan').getContext('2d'),{
+    type:'line',
+    data:{labels:FAN_DATES,datasets:[
+      {label:'@lypocapsule',    data:TW_LYPOCAP,borderColor:'#1da1f2',backgroundColor:'rgba(29,161,242,0.08)',fill:true, borderWidth:2.5,pointRadius:4,yAxisID:'y'},
+      {label:'@Lypospheric_JP',data:TW_LYPOSPH,borderColor:'#64748b',backgroundColor:'transparent',fill:false,borderWidth:2,pointRadius:3,borderDash:[4,4],yAxisID:'y2'}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom'}},
+      scales:{
+        y: {position:'left', title:{display:true,text:'@lypocapsule'},   beginAtZero:false,ticks:{callback:v=>v.toLocaleString()}},
+        y2:{position:'right',title:{display:true,text:'@Lypospheric_JP'},beginAtZero:false,grid:{drawOnChartArea:false}}
+      }}
+  });
+}
+
+
 function renderScCharts(){
   if(!document.getElementById('sc_chart_imp_cl')) return;
   const SC_DATES = ['5/11','5/12','5/13','5/14','5/15','5/16','5/17','5/18','5/19','5/20','5/21','5/22','5/23','5/24'];

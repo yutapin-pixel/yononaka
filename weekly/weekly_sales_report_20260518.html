@@ -103,6 +103,7 @@ td.latest-week.heat1{background:#fee2e2 !important;color:#991b1b !important;}
   <button class="tab-btn" onclick="switchTab(1)">📈 グラフ</button>
   <button class="tab-btn" onclick="switchTab(2)">💬 考察</button>
   <button class="tab-btn" onclick="switchTab(3)">📊 実績（文字大）</button>
+  <button class="tab-btn" onclick="switchTab(4)">📋 予実管理</button>
 </div>
 <div class="tab-panel active" id="tab-0">
 <div class="stitle">① 全チャネル売上まとめ</div><div class="ssub">NE受注日基準・税抜 ／ 全チャネル（Amazon含む）受注日（order_date）統一</div><div class="tbl-wrap"><table><thead><tr>
@@ -818,6 +819,119 @@ td.latest-week.heat1{background:#fee2e2 !important;color:#991b1b !important;}
 </tbody></table></div>
 
 </div>
+
+
+
+
+
+<div class="tab-panel" id="tab-4">
+<div class="stitle">予実管理 ｜ 当月累計 売上まとめ</div>
+<div class="ssub">集計期間：2026年5月1日〜5月24日（経過24日 ／ 月全体31日）　実績：BigQuery直接取得（NE受注日基準・税抜）</div>
+
+<div style="background:#f0f6ff;border:1px solid #bae6fd;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:12px;color:#0c4a6e;line-height:1.9;">
+  <strong>📌 算出ロジック</strong><br>
+  <strong>① 当月累計実績</strong>：<code>spic-core.public.ne_order_items</code> から 2026-05-01〜2026-05-24 を受注日ベースで直接集計。<br>
+  <strong>② Shopify定期/都度</strong>：<code>shopify_sku_brand_master.product_type</code> にSKU単位でJOINし、<code>product_type = '定期'</code> の行を含む注文を定期と判定（ナレッジ正式仕様）。NE×Shopify JOINで未マッチの注文（全体の約0.3%）は定期/都度比率で按分。<br>
+  <strong>③ 予算按分</strong>：月次予算（KPIダッシュボード FY2027）× 経過日数(24) ÷ 月間日数(31)。<br>
+  <strong>④ 着地予測</strong>：当月累計実績 ÷ 24日 × 31日（現在のペースが月末まで続いた場合の予測値）。<br>
+  <strong>⑤ 着地達成率</strong>：着地予測 ÷ 月次予算 × 100。<br>
+  達成率凡例：☀️≥105%　🌤 95〜105%　⛅ 85〜95%　🌧 60〜85%　⛈&lt;60%
+</div>
+
+<div class="tbl-wrap"><table>
+<thead><tr>
+  <th class="label-col">項目</th>
+  <th class="latest-wk">当月累計実績<br><small>5/1〜5/24（BQ実測）</small></th>
+  <th>予算按分<br><small>月次×24÷31</small></th>
+  <th>累計差額</th>
+  <th>進捗達成率</th>
+  <th>着地予測<br><small>÷24×31</small></th>
+  <th>着地達成率<br><small>vs月次予算</small></th>
+</tr></thead>
+<tbody>
+<tr>
+  <td class="label-col">Shopify 計</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">173,503,831</td>
+  <td style="text-align:right;">205,238,710<br><small style="color:var(--muted);font-size:10px;">月次×24÷31</small></td>
+  <td style="text-align:right;"><span style="color:#dc2626;font-weight:600;">▼31,734,879</span></td>
+  <td style="text-align:right;"><span style="color:#dc2626;">🌧 84.5%</span></td>
+  <td style="text-align:right;font-weight:600;">224,109,115</td>
+  <td style="text-align:right;"><span style="color:#dc2626;">🌧 84.5%</span></td>
+</tr><tr style="opacity:0.8;">
+  <td class="label-col indent" style="font-size:12px;">└ 定期注文売上（product_type判定）<br><small style="color:#aaa;">※NE×Shopify JOIN実測 + 未マッチ分（約0.3%）を比率按分</small></td>
+  <td class="latest-week" style="text-align:right;font-size:12px;">135,220,477</td>
+  <td colspan="5" style="text-align:center;font-size:11px;color:#bbb;">—</td>
+</tr><tr style="opacity:0.8;">
+  <td class="label-col indent" style="font-size:12px;">└ 都度購入売上（product_type判定）<br><small style="color:#aaa;">※NE×Shopify JOIN実測 + 未マッチ分（約0.3%）を比率按分</small></td>
+  <td class="latest-week" style="text-align:right;font-size:12px;">38,283,354</td>
+  <td colspan="5" style="text-align:center;font-size:11px;color:#bbb;">—</td>
+</tr><tr>
+  <td class="label-col">Amazon</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">85,608,108</td>
+  <td style="text-align:right;">90,779,904<br><small style="color:var(--muted);font-size:10px;">月次×24÷31</small></td>
+  <td style="text-align:right;"><span style="color:#dc2626;font-weight:600;">▼5,171,796</span></td>
+  <td style="text-align:right;"><span style="color:#b45309;">⛅ 94.3%</span></td>
+  <td style="text-align:right;font-weight:600;">110,577,140</td>
+  <td style="text-align:right;"><span style="color:#b45309;">⛅ 94.3%</span></td>
+</tr><tr>
+  <td class="label-col">楽天</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">38,374,953</td>
+  <td style="text-align:right;">59,519,950<br><small style="color:var(--muted);font-size:10px;">月次×24÷31</small></td>
+  <td style="text-align:right;"><span style="color:#dc2626;font-weight:600;">▼21,144,997</span></td>
+  <td style="text-align:right;"><span style="color:#dc2626;">🌧 64.5%</span></td>
+  <td style="text-align:right;font-weight:600;">49,567,648</td>
+  <td style="text-align:right;"><span style="color:#dc2626;">🌧 64.5%</span></td>
+</tr><tr>
+  <td class="label-col">Yahoo</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">5,473,199</td>
+  <td style="text-align:right;">2,471,673<br><small style="color:var(--muted);font-size:10px;">月次×24÷31</small></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:600;">▲3,001,526</span></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 221.4%</span></td>
+  <td style="text-align:right;font-weight:600;">7,069,549</td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 221.4%</span></td>
+</tr><tr>
+  <td class="label-col">Qoo10</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">4,481,025</td>
+  <td style="text-align:right;">1,597,893<br><small style="color:var(--muted);font-size:10px;">月次×24÷31</small></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:600;">▲2,883,132</span></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 280.4%</span></td>
+  <td style="text-align:right;font-weight:600;">5,787,991</td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 280.4%</span></td>
+</tr><tr>
+  <td class="label-col">ふるさと納税</td>
+  <td class="latest-week" style="text-align:right;"><span style="color:#bbb;">月末集計</span></td>
+  <td style="text-align:right;">6,102,553<br><small style="color:var(--muted);font-size:10px;">月次×24÷31</small></td>
+  <td colspan="4" style="text-align:center;color:#bbb;font-size:11px;">月末集計後に確定</td>
+</tr><tr>
+  <td class="label-col">LINEギフト</td>
+  <td class="latest-week" style="text-align:right;"><span style="color:#bbb;">月末集計</span></td>
+  <td style="text-align:right;">3,537,101<br><small style="color:var(--muted);font-size:10px;">月次×24÷31</small></td>
+  <td colspan="4" style="text-align:center;color:#bbb;font-size:11px;">月末集計後に確定</td>
+</tr><tr>
+  <td class="label-col">その他</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">2,025,048</td>
+  <td style="text-align:right;">1,281,249<br><small style="color:var(--muted);font-size:10px;">月次×24÷31</small></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:600;">▲743,799</span></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 158.1%</span></td>
+  <td style="text-align:right;font-weight:600;">2,615,687</td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 158.1%</span></td>
+</tr><tr class="total-row">
+  <td class="label-col">合計</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">309,466,164</td>
+  <td style="text-align:right;font-weight:700;">370,529,032<br><small style="color:var(--muted);font-size:10px;">月次×24÷31</small></td>
+  <td style="text-align:right;font-weight:700;"><span style="color:#dc2626;font-weight:600;">▼61,062,868</span></td>
+  <td style="text-align:right;font-weight:700;"><span style="color:#dc2626;">🌧 83.5%</span></td>
+  <td style="text-align:right;font-weight:700;">399,727,128</td>
+  <td style="text-align:right;font-weight:700;"><span style="color:#dc2626;">🌧 83.5%</span></td>
+</tr>
+</tbody>
+</table></div>
+<div class="ssub">※ ふるさと納税・LINEギフトはshop_id=21の月末締め計上のため、5月分は月末確定まで0円表示。</div>
+<div class="ssub">※ 週報実績はNE受注日ベース、予算はNE出荷ベース。集計基準の相違による構造的乖離あり。</div>
+<div class="ssub">※ 予算出典：KPIダッシュボード FY2027予実管理 &gt; 2026年5月列。参照ナレッジ：reference_fy2027_budget_weekly.md</div>
+</div>
+
+
 <script>
 function switchTab(n){document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===n));document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===n));}
 function toggleInsight(h){const b=h.nextElementSibling,c=h.querySelector('.insight-chevron');b.classList.toggle('open');c.classList.toggle('open');}

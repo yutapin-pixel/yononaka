@@ -400,17 +400,28 @@ footer {
       </div>
     </a>
 
-    <a class="rcard" href="SPIC_kpi_dashboard.html" target="_blank" rel="noopener">
-      <div class="top-bar" style="background:var(--monthly)"></div>
-      <div class="body">
-        <div class="period">2026年4月度</div>
-        <div class="rtitle">Lypo-C<br>売上予実KPIシート</div>
+    <!-- GA4週次トレンドカード -->
+    <div class="rcard weekly-card">
+      <div class="top-bar" style="background:var(--weekly)"></div>
+      <a class="weekly-latest" href="weekly/weekly_ga4_trend_20260518.html" target="_blank" rel="noopener">
+        <div class="period">
+          2026年5月18日週
+          <span class="new-badge">NEW</span>
+        </div>
+        <div class="rtitle">Lypo-C<br>週次Webアクセス分析シート</div>
         <div class="tag-row">
-          <span class="tag tag-monthly">月次</span>
+          <span class="tag tag-weekly">週報</span>
           <span class="tag tag-brand">Lypo-C</span>
         </div>
+      </a>
+      <div class="weekly-toggle" onclick="toggleWeeklyGa4(this)">
+        <span>過去の週報</span>
+        <span class="toggle-chevron">▾</span>
       </div>
-    </a>
+      <div class="weekly-archive">
+        <div class="weekly-archive-empty">過去のレポートはまだありません</div>
+      </div>
+    </div>
 
     <!-- 週報カード：最新リンク＋過去週トグル -->
     <div class="rcard weekly-card">
@@ -449,6 +460,14 @@ footer {
   </div>
 
   <div class="link-list">
+    <a href="SPIC_kpi_dashboard.html" target="_blank" rel="noopener">
+      <div>
+        <div class="ltitle">Lypo-C 売上予実KPIシート</div>
+        <div class="lsub">月次売上・予実比較・KPI進捗ダッシュボード</div>
+      </div>
+      <span class="tag tag-monthly">月次</span>
+      <span class="arrow">›</span>
+    </a>
     <a href="fy2027_budget_process.html" target="_blank" rel="noopener">
       <div>
         <div class="ltitle">FY2027 コンシューマー本部 予算策定プロセス</div>
@@ -608,6 +627,17 @@ footer {
 <footer>yononaka &nbsp;|&nbsp; noindex &nbsp;|&nbsp; internal use only</footer>
 
 <script>
+function toggleWeeklyGa4(btn) {
+  var archive = btn.nextElementSibling;
+  var isOpen = btn.classList.contains('open');
+  if (isOpen) {
+    btn.classList.remove('open');
+    archive.style.display = 'none';
+  } else {
+    btn.classList.add('open');
+    archive.style.display = 'block';
+  }
+}
 function toggleWeekly(btn) {
   var archive = btn.nextElementSibling;
   var isOpen = btn.classList.contains('open');

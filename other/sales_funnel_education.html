@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>売上を上げる本質 ― 認知・興味関心・購入のファネル設計</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap');
+
+  :root {
+    --bg: #f8f7f4;
+    --bg-card: #ffffff;
+    --bg-card2: #f2f1ee;
+    --border: rgba(0,0,0,0.08);
+    --border-accent: rgba(0,0,0,0.18);
+    --text-primary: #1a1917;
+    --text-secondary: #5a5850;
+    --text-muted: #9a9890;
+    --accent: #9a7240;
+    --accent2: #3a6fa8;
+    --accent3: #2a8a60;
+    --accent-soft: rgba(154,114,64,0.08);
+    --accent2-soft: rgba(58,111,168,0.08);
+    --accent3-soft: rgba(42,138,96,0.08);
+    --danger: #b04040;
+    --danger-soft: rgba(176,64,64,0.07);
+    --r-sm: 6px;
+    --r-md: 12px;
+    --r-lg: 20px;
+    --sans: 'Noto Sans JP', sans-serif;
+    --serif: 'Noto Serif JP', serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── COVER ─── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 80px 10vw;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(154,114,64,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 30%;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(58,111,168,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover-tag {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid rgba(201,169,110,0.25);
+    border-radius: 100px;
+    padding: 4px 14px;
+    margin-bottom: 32px;
+    display: inline-block;
+  }
+  .cover h1 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 20px;
+    max-width: 760px;
+  }
+  .cover h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .cover .sub {
+    font-size: 17px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin-bottom: 48px;
+    line-height: 1.8;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cover-meta-item span:first-child {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .cover-meta-item span:last-child {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 10vw;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--text-muted);
+  }
+
+  /* ─── LAYOUT ─── */
+  .wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  section {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  /* ─── SECTION HEADER ─── */
+  .sec-num {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sec-num::after {
+    content: '';
+    flex: 0 0 30px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+  h2.sec-title {
+    font-family: var(--serif);
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  .sec-desc {
+    color: var(--text-secondary);
+    font-size: 15px;
+    margin-bottom: 48px;
+    max-width: 640px;
+    line-height: 1.8;
+  }
+
+  /* ─── PRINCIPLE BOX ─── */
+  .principle {
+    background: var(--accent-soft);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: var(--r-lg);
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .principle::before {
+    content: '"';
+    position: absolute;
+    top: 12px; left: 20px;
+    font-family: var(--serif);
+    font-size: 80px;
+    color: var(--accent);
+    opacity: 0.20;
+    line-height: 1;
+  }
+  .principle p {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.5;
+    position: relative;
+  }
+
+  /* ─── CARDS ─── */
+  .card-grid {
+    display: grid;
+    gap: 16px;
+  }
+  .card-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 640px) {
+    .card-grid.cols-2, .card-grid.cols-3 { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border-accent); }
+
+  .card-icon {
+    width: 40px; height: 40px;
+    border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  .icon-gold { background: var(--accent-soft); color: var(--accent); }
+  .icon-blue { background: var(--accent2-soft); color: var(--accent2); }
+  .icon-green { background: var(--accent3-soft); color: var(--accent3); }
+  .icon-red { background: var(--danger-soft); color: var(--danger); }
+
+  .card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+  .card p, .card li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+  .card ul { padding-left: 16px; }
+  .card ul li { margin-bottom: 4px; }
+
+  /* ─── FUNNEL VISUAL ─── */
+  .funnel-wrap {
+    margin: 48px 0;
+  }
+  .funnel-stage {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 4px;
+    gap: 16px;
+    position: relative;
+  }
+  .funnel-bar-wrap {
+    flex: 1;
+  }
+  .funnel-bar {
+    border-radius: var(--r-sm);
+    display: flex;
+    align-items: center;
+    padding: 18px 24px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: filter 0.2s;
+  }
+  .funnel-bar:hover { filter: brightness(1.1); }
+  .funnel-bar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+  .funnel-label {
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .funnel-sub {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+  .funnel-pct {
+    font-size: 22px;
+    font-weight: 300;
+    opacity: 0.6;
+  }
+  .funnel-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 18px;
+    padding: 4px 0;
+  }
+
+  .stage-awareness {
+    background: linear-gradient(90deg, rgba(154,114,64,0.15), rgba(154,114,64,0.04));
+    border: 1px solid rgba(154,114,64,0.25);
+    color: var(--accent);
+    width: 100%;
+  }
+  .stage-interest {
+    background: linear-gradient(90deg, rgba(58,111,168,0.15), rgba(58,111,168,0.04));
+    border: 1px solid rgba(58,111,168,0.25);
+    color: var(--accent2);
+    width: 70%;
+  }
+  .stage-purchase {
+    background: linear-gradient(90deg, rgba(42,138,96,0.15), rgba(42,138,96,0.04));
+    border: 1px solid rgba(42,138,96,0.25);
+    color: var(--accent3);
+    width: 40%;
+  }
+
+  .funnel-side-note {
+    position: absolute;
+    right: -240px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 220px;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-left: 1px solid var(--border);
+    padding-left: 12px;
+  }
+  @media (max-width: 800px) { .funnel-side-note { display: none; } }
+
+  /* ─── RECOGNITION TABLE ─── */
+  .rec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 32px 0;
+  }
+  .rec-table th {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+  .rec-table td {
+    padding: 16px 16px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+  .rec-table td:first-child {
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .rec-table tr:last-child td { border-bottom: none; }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    border-radius: 100px;
+    padding: 2px 10px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .badge-gold { background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(201,169,110,0.2); }
+  .badge-blue { background: var(--accent2-soft); color: var(--accent2); border: 1px solid rgba(124,159,212,0.2); }
+
+  /* ─── STEP LIST ─── */
+  .step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: 28px;
+    border-left: 1px solid var(--border);
+    margin: 32px 0;
+  }
+  .step {
+    padding: 24px 0 24px 24px;
+    position: relative;
+  }
+  .step::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 28px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1.5px solid var(--text-muted);
+  }
+  .step.active::before {
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+  .step-num {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .step h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+  .step p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  /* ─── HIGHLIGHT BOX ─── */
+  .highlight {
+    border-radius: var(--r-md);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-left: 3px solid;
+  }
+  .highlight-gold {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+  .highlight-blue {
+    background: var(--accent2-soft);
+    border-color: var(--accent2);
+  }
+  .highlight-green {
+    background: var(--accent3-soft);
+    border-color: var(--accent3);
+  }
+  .highlight-red {
+    background: var(--danger-soft);
+    border-color: var(--danger);
+  }
+  .highlight .label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .highlight-gold .label { color: var(--accent); }
+  .highlight-blue .label { color: var(--accent2); }
+  .highlight-green .label { color: var(--accent3); }
+  .highlight-red .label { color: var(--danger); }
+  .highlight p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+  .highlight strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  /* ─── CEP DIAGRAM ─── */
+  .cep-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+  @media (max-width: 560px) { .cep-grid { grid-template-columns: 1fr; } }
+  .cep-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 20px 24px;
+  }
+  .cep-scene {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.08em;
+  }
+  .cep-arrow {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .cep-arrow::after {
+    content: '→';
+    font-size: 16px;
+    color: var(--accent);
+  }
+  .cep-product {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* ─── PERSONA CARD ─── */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+  }
+  .persona-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 24px;
+  }
+  .persona-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+  .persona-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .persona-card .desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .persona-card .kw {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .kw span {
+    font-size: 11px;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 2px 10px;
+    color: var(--text-muted);
+  }
+
+  /* ─── CHECKLIST ─── */
+  .checklist {
+    list-style: none;
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .checklist li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .check-icon {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    margin-top: 1px;
+  }
+  .check-yes { background: var(--accent3-soft); color: var(--accent3); }
+  .check-no  { background: var(--danger-soft);  color: var(--danger); }
+  .check-q   { background: var(--accent-soft);  color: var(--accent); font-weight: 700; }
+
+  /* ─── TABLE OF CONTENTS ─── */
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 28px 32px;
+    margin: 48px 0;
+  }
+  .toc h3 {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .toc ol {
+    list-style: none;
+    counter-reset: toc;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .toc li {
+    counter-increment: toc;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 15px;
+  }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-size: 11px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .toc li a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .toc li a:hover { color: var(--text-primary); }
+
+  /* ─── ACTION TABLE ─── */
+  .action-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 32px 0;
+  }
+  .action-table thead tr {
+    background: var(--bg-card);
+  }
+  .action-table th {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 400;
+    border: 1px solid var(--border);
+  }
+  .action-table td {
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.7;
+  }
+  .action-table td:first-child {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .action-table tbody tr:nth-child(odd) {
+    background: rgba(0,0,0,0.015);
+  }
+  .action-table tbody tr:hover {
+    background: var(--bg-card2);
+  }
+
+  /* ─── FINAL MESSAGE ─── */
+  .final-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 48px;
+    text-align: center;
+    margin-top: 48px;
+  }
+  .final-card h2 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--accent);
+  }
+  .final-card p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 48px 32px;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+
+
+  /* ─── ANNOTATION MARK ─── */
+  mark {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-weight: 500;
+  }
+
+  /* ─── PULL QUOTE ─── */
+  blockquote {
+    border-left: 2px solid var(--accent);
+    padding: 4px 20px;
+    margin: 24px 0;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-family: var(--serif);
+  }
+
+  /* ─── AIDMA FLOW ─── */
+  .aidma-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 32px 0 12px;
+    overflow-x: auto;
+    padding: 4px 0;
+  }
+  .aidma-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 16px 18px;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+  .aidma-step.aidma-highlight {
+    background: var(--accent-soft);
+    border-color: rgba(154,114,64,0.35);
+    box-shadow: 0 0 0 3px rgba(154,114,64,0.1);
+  }
+  .aidma-letter {
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--text-muted);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .aidma-step.aidma-highlight .aidma-letter { color: var(--accent); }
+  .aidma-word { font-size: 11px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+  .aidma-ja  { font-size: 10px; color: var(--text-muted); }
+  .aidma-connector {
+    flex-shrink: 0;
+    width: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 18px;
+  }
+
+  /* ─── RECOGNITION STAIRCASE ─── */
+  .staircase {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin: 32px 0;
+    height: 210px;
+  }
+  .stair-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .stair-bar {
+    width: 100%;
+    border-radius: var(--r-sm) var(--r-sm) 0 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 14px;
+    position: relative;
+  }
+  .stair-bar-1 { height: 80px; background: var(--accent2-soft); border: 1px solid rgba(58,111,168,0.2); }
+  .stair-bar-2 { height: 135px; background: var(--accent-soft); border: 1px solid rgba(154,114,64,0.25); }
+  .stair-bar-3 {
+    height: 185px;
+    background: linear-gradient(180deg, rgba(42,138,96,0.15) 0%, rgba(42,138,96,0.06) 100%);
+    border: 1px solid rgba(42,138,96,0.3);
+    border-bottom: 3px solid var(--accent3);
+  }
+  .stair-icon { font-size: 22px; }
+  .stair-badge {
+    position: absolute; top: 10px; right: 8px;
+    font-size: 10px; background: var(--accent3); color: white;
+    border-radius: 100px; padding: 2px 8px; font-weight: 700;
+  }
+  .stair-label { font-size: 13px; font-weight: 700; margin-top: 8px; color: var(--text-primary); text-align: center; }
+  .stair-sub { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 4px; line-height: 1.6; padding: 0 4px; }
+
+  /* ─── CONSIDERATION SET ─── */
+  .consideration-wrap {
+    display: flex;
+    gap: 16px;
+    margin: 32px 0;
+    flex-wrap: wrap;
+  }
+  .consideration-head {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 20px 24px;
+  }
+  .consideration-title {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .brand-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: var(--r-sm);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .brand-pill.rank-1 { background: rgba(42,138,96,0.12); color: var(--accent3); }
+  .brand-pill.rank-2 { background: rgba(58,111,168,0.10); color: var(--accent2); }
+  .brand-pill.rank-3 { background: var(--bg-card2); color: var(--text-secondary); }
+  .brand-pill.rank-x { background: var(--danger-soft); color: var(--danger); }
+  .brand-rank { font-size: 11px; width: 28px; flex-shrink: 0; opacity: 0.7; }
+
+  /* ─── CEP HUB ─── */
+  .cep-hub-wrap {
+    margin: 32px 0 8px;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+  }
+  .cep-hub-wrap svg { max-width: 100%; }
+
+  /* ─── TARGETING COMPARE ─── */
+  .targeting-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+  @media (max-width: 560px) { .targeting-compare { grid-template-columns: 1fr; } }
+  .targeting-box {
+    border-radius: var(--r-lg);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .targeting-box.bad  { background: var(--danger-soft); border: 1px solid rgba(176,64,64,0.15); }
+  .targeting-box.good { background: var(--accent3-soft); border: 1px solid rgba(42,138,96,0.2); }
+  .targeting-box-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; }
+  .targeting-box.bad .targeting-box-label  { color: var(--danger); }
+  .targeting-box.good .targeting-box-label { color: var(--accent3); }
+  .targeting-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
+  .targeting-desc  { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; }
+  .scatter-dots { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.hit  { background: var(--accent3); }
+  .dot.miss { background: rgba(0,0,0,0.1); }
+
+  /* ─── BUDGET FLOW ─── */
+  .budget-flow { margin: 32px 0; }
+  .budget-flow-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; }
+  .budget-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+  .budget-need { width: 70px; flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--text-muted); text-align: right; }
+  .budget-alt {
+    font-size: 12px; padding: 5px 12px; border-radius: 100px; border: 1px solid; white-space: nowrap;
+  }
+  .budget-alt.current { background: var(--bg-card2); border-color: var(--border); color: var(--text-muted); }
+  .budget-alt.target  { background: var(--accent3-soft); border-color: rgba(42,138,96,0.35); color: var(--accent3); font-weight: 700; }
+  .budget-arrow { text-align: center; padding: 4px 0; font-size: 12px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ COVER ═══════════════════ -->
+<div class="cover">
+  <div class="cover-tag">マーケティング基礎 講義資料</div>
+  <h1>売上を上げる<em>本質</em><br>ファネル設計の原則</h1>
+  <p class="sub">
+    知られていないものは、絶対に買われない。<br>
+    認知・興味関心・購入の構造を理解し、すべてのレイヤーに施策を設計せよ。
+  </p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span>対象</span>
+      <span>ブランドマネージャー・チャネル担当者</span>
+    </div>
+    <div class="cover-meta-item">
+      <span>カテゴリ</span>
+      <span>マーケティング戦略 / 顧客獲得</span>
+    </div>
+    <div class="cover-meta-item">
+      <span>レベル</span>
+      <span>基礎〜中級</span>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll to read</div>
+</div>
+
+<!-- ═══════════════════ WRAPPER START ═══════════════════ -->
+<div class="wrapper">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>目次</h3>
+    <ol>
+      <li><a href="#sec1">売上が上がらない本当の理由</a></li>
+      <li><a href="#sec2">認知の二層構造 ― 認知と想起</a></li>
+      <li><a href="#sec3">3段ファネルの全体像</a></li>
+      <li><a href="#sec4">各レイヤーの役割と施策の棚卸し</a></li>
+      <li><a href="#sec5">カテゴリーエントリーポイントという考え方</a></li>
+      <li><a href="#sec6">ペルソナが先、認知施策は後</a></li>
+      <li><a href="#sec7">代替品思考 ― 予算はどこから奪うか</a></li>
+      <li><a href="#sec8">今日から使えるチェックリスト</a></li>
+    </ol>
+  </div>
+
+  <!-- ═══ 01 ═══ -->
+  <section id="sec1">
+    <div class="sec-num">01</div>
+    <h2 class="sec-title">売上が上がらない本当の理由</h2>
+    <p class="sec-desc">
+      売上が伸び悩む現場では、往々にして「もっと良い広告文を作ろう」「LPを改善しよう」という施策が議論される。しかし、その前に問うべき根本がある。
+    </p>
+
+    <div class="principle">
+      <p>知らないものが買われることは、絶対に起きない。</p>
+    </div>
+
+    <p style="font-size:15px; color:var(--text-secondary); line-height:1.9; margin-bottom:24px;">
+      これは30〜40年前からマーケティングの世界で明らかになっている事実だ。<br>
+      AIDMA（Attention・Interest・Desire・Memory・Action）という古典的フレームワークも、最初の一歩は必ず<mark>Attention（注意・認知）</mark>から始まる。
+    </p>
+
+    <div class="aidma-flow">
+      <div class="aidma-step aidma-highlight">
+        <div class="aidma-letter">A</div>
+        <div class="aidma-word">Attention</div>
+        <div class="aidma-ja">注意・認知</div>
+      </div>
+      <div class="aidma-connector">→</div>
+      <div class="aidma-step">
+        <div class="aidma-letter">I</div>
+        <div class="aidma-word">Interest</div>
+        <div class="aidma-ja">興味・関心</div>
+      </div>
+      <div class="aidma-connector">→</div>
+      <div class="aidma-step">
+        <div class="aidma-letter">D</div>
+        <div class="aidma-word">Desire</div>
+        <div class="aidma-ja">欲求</div>
+      </div>
+      <div class="aidma-connector">→</div>
+      <div class="aidma-step">
+        <div class="aidma-letter">M</div>
+        <div class="aidma-word">Memory</div>
+        <div class="aidma-ja">記憶</div>
+      </div>
+      <div class="aidma-connector">→</div>
+      <div class="aidma-step">
+        <div class="aidma-letter">A</div>
+        <div class="aidma-word">Action</div>
+        <div class="aidma-ja">行動・購入</div>
+      </div>
+    </div>
+    <p style="font-size:12px; color:var(--text-muted); text-align:center; margin-bottom:24px;">
+      ▲ 最初のステップ <strong style="color:var(--accent);">Attention（認知）</strong> がなければ、その先のプロセスは一切機能しない
+    </p>
+
+    <div class="highlight highlight-red">
+      <div class="label">よくある誤解</div>
+      <p>
+        「良いLPさえ作れば売れる」「CRMを強化すれば売上が上がる」——これらはすべて、<strong>ファネルの後半だけを磨く行為</strong>だ。認知がなければ後半のファネルに人は流れてこない。いくら磨いても、枯渇する一方になる。
+      </p>
+    </div>
+
+    <div class="highlight highlight-gold">
+      <div class="label">本質的な問い</div>
+      <p>
+        自社商品を<strong>まだ知らない人</strong>が圧倒的に多い状況で、既存顧客へのCRMだけを行っていないか？ 新規顧客の流入なくして、売上の継続的な成長はあり得ない。
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ 02 ═══ -->
+  <section id="sec2">
+    <div class="sec-num">02</div>
+    <h2 class="sec-title">認知の二層構造 ― 認知と想起</h2>
+    <p class="sec-desc">
+      「認知している」という状態には、実は深さがある。単に「知っている」だけでは不十分で、重要なのは<mark>想起される</mark>かどうかだ。
+    </p>
+
+    <div class="staircase">
+      <div class="stair-item">
+        <div class="stair-bar stair-bar-1">
+          <div class="stair-icon">👁️</div>
+        </div>
+        <div class="stair-label">認知</div>
+        <div class="stair-sub">「知っている」<br>最低条件</div>
+      </div>
+      <div class="stair-item">
+        <div class="stair-bar stair-bar-2">
+          <div class="stair-icon">🔍</div>
+        </div>
+        <div class="stair-label">助成想起</div>
+        <div class="stair-sub">選択肢を見れば<br>「あ、知ってる」</div>
+      </div>
+      <div class="stair-item">
+        <div class="stair-bar stair-bar-3">
+          <div class="stair-icon">⭐</div>
+          <div class="stair-badge">目標</div>
+        </div>
+        <div class="stair-label">純粋想起</div>
+        <div class="stair-sub">ニーズが生まれた瞬間<br>自然と思い出す</div>
+      </div>
+    </div>
+    <p style="font-size:12px; color:var(--text-muted); text-align:center; margin:-16px 0 32px;">
+      ▲ 認知の深さには段階がある。マーケターが目指すのは「純粋想起」
+    </p>
+
+    <table class="rec-table">
+      <thead>
+        <tr>
+          <th>概念</th>
+          <th>定義</th>
+          <th>例</th>
+          <th>重要度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>認知</td>
+          <td>その商品やブランドの存在を知っている状態。「言われれば知ってる」も含む。</td>
+          <td>「そういえば聞いたことがある」</td>
+          <td><span class="badge badge-blue">最低条件</span></td>
+        </tr>
+        <tr>
+          <td>助成想起</td>
+          <td>選択肢を提示されたときに「知っている」と認識できる状態。</td>
+          <td>「次の中で知っているものを選べ」と言われて選べる</td>
+          <td><span class="badge badge-blue">中間段階</span></td>
+        </tr>
+        <tr>
+          <td>純粋想起</td>
+          <td>ニーズが発生した瞬間に、選択肢なしで自然に思い出される状態。</td>
+          <td>「ビタミンCサプリといえば？」で即座に思い浮かぶ</td>
+          <td><span class="badge badge-gold">目指すべき状態</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight highlight-gold">
+      <div class="label">マーケターが目指すべきゴール</div>
+      <p>
+        顧客が「〇〇が欲しい」と思った瞬間に、<strong>引き出しの最上段</strong>に自社商品が入っていること。これが純粋想起だ。ビタミンCサプリ市場でいえば、「ビタミンCといえば◯◯」と反射的に思い浮かぶブランドになることが、認知施策の最終目標になる。
+      </p>
+    </div>
+
+    <blockquote>
+      「ビタミンCが必要だと思ったお客さんが、だったら◯◯を買おうと——その引き出しの中にすぐ出てくるところに自社商品がいてくれないと、買ってもらえない。」
+    </blockquote>
+
+    <p style="font-size:15px; color:var(--text-secondary); line-height:1.9; margin-top:24px;">
+      さらに、純粋想起には「想起集合（Consideration Set）」という概念がある。お客さんの頭の中にあるカテゴリの候補リストだ。例えばビタミンCサプリのカテゴリには、ファンケル・DHCなど複数ブランドが並んでいる。自社がその集合に<mark>入れているか</mark>を常に意識する必要がある。
+    </p>
+
+    <div class="consideration-wrap">
+      <div class="consideration-head">
+        <div class="consideration-title">顧客の脳内 ― ビタミンCサプリの想起集合（例）</div>
+        <div class="brand-pill rank-1"><span class="brand-rank">1位</span> ファンケル</div>
+        <div class="brand-pill rank-2"><span class="brand-rank">2位</span> DHC</div>
+        <div class="brand-pill rank-3"><span class="brand-rank">3位</span> NOW Foods</div>
+        <div class="brand-pill rank-x"><span class="brand-rank">圏外</span> 自社ブランド（未認知）</div>
+      </div>
+      <div style="flex:1; min-width:200px; display:flex; align-items:center;">
+        <div style="width:100%;">
+          <div class="highlight highlight-red" style="margin:0 0 12px;">
+            <div class="label">圏外の問題</div>
+            <p>顧客がサプリを選ぶ瞬間、自社が頭に浮かばない。どれだけ良い商品でも<strong>存在しないも同然</strong>。</p>
+          </div>
+          <div class="highlight highlight-gold" style="margin:0;">
+            <div class="label">目標</div>
+            <p>繰り返し適切な文脈で露出し、<strong>想起集合の中に入ること</strong>が認知施策の第一目標。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 03 ═══ -->
+  <section id="sec3">
+    <div class="sec-num">03</div>
+    <h2 class="sec-title">3段ファネルの全体像</h2>
+    <p class="sec-desc">
+      認知・興味関心・購入の3段階。シンプルに見えるが、多くの現場では後半レイヤーにしかリソースが投入されていない。
+    </p>
+
+    <div class="funnel-wrap">
+      <div class="funnel-stage">
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar stage-awareness">
+            <div class="funnel-bar-inner">
+              <div>
+                <div class="funnel-label">認知</div>
+                <div class="funnel-sub">Awareness ― 存在を知っている人</div>
+              </div>
+              <div class="funnel-pct">100%</div>
+            </div>
+          </div>
+        </div>
+        <div style="position:relative; width:220px; display:none;" class="side-note-col"></div>
+      </div>
+
+      <div style="text-align:left; padding:6px 12px;">
+        <span style="font-size:12px; color:var(--text-muted);">▼ 認知→興味関心への移行施策が必要</span>
+      </div>
+
+      <div class="funnel-stage">
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar stage-interest" style="width:70%">
+            <div class="funnel-bar-inner">
+              <div>
+                <div class="funnel-label">興味関心</div>
+                <div class="funnel-sub">Interest ― 調べ始めている人</div>
+              </div>
+              <div class="funnel-pct">約50%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:left; padding:6px 12px;">
+        <span style="font-size:12px; color:var(--text-muted);">▼ 興味関心→確信への移行施策が必要</span>
+      </div>
+
+      <div class="funnel-stage">
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar stage-purchase" style="width:40%">
+            <div class="funnel-bar-inner">
+              <div>
+                <div class="funnel-label">購入</div>
+                <div class="funnel-sub">Purchase ― 実際に買う人</div>
+              </div>
+              <div class="funnel-pct">約5〜10%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-grid cols-3">
+      <div class="card">
+        <div class="card-icon icon-gold">認</div>
+        <h3>認知レイヤー</h3>
+        <p>主に自社サイト外での活動が中心。インフルエンサー・PR・SNS広告・タイアップなどで「知ってもらう」ことに注力する。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-blue">興</div>
+        <h3>興味関心レイヤー</h3>
+        <p>商品の選び方・比較・成分情報など、お客さんが自発的に調べる段階。検索・コンテンツ・SNS・CRMが機能する領域。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-green">購</div>
+        <h3>購入レイヤー</h3>
+        <p>自社ECサイト・LP・カートの設計が直接影響する。CVR改善・決済導線・トライアル設計などが施策の中心になる。</p>
+      </div>
+    </div>
+
+    <div class="highlight highlight-red">
+      <div class="label">警告</div>
+      <p>
+        既存顧客へのメルマガやLINEは、<strong>購入〜リピートレイヤーの施策</strong>に過ぎない。1回施策を打てば次第に効果は半減する。なぜなら、1度興味を持ち試した人は2回目に同じ施策に反応しにくいからだ。新規顧客の流入がなければ、CRMだけでは売上は必ず頭打ちになる。
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ 04 ═══ -->
+  <section id="sec4">
+    <div class="sec-num">04</div>
+    <h2 class="sec-title">各レイヤーの役割と施策の棚卸し</h2>
+    <p class="sec-desc">
+      まず現状の施策がどのレイヤーに属するかを整理し、抜けているレイヤーを発見することが最初のアクションだ。
+    </p>
+
+    <div class="card-grid cols-2" style="margin-bottom:32px;">
+      <div class="card">
+        <div class="card-icon icon-red">⚠</div>
+        <h3>「担当者不在」が最大のリスク</h3>
+        <p>「誰かやってるだろう」という状態が認知レイヤーを空白にする。施策棚卸しでレイヤーごとに担当者を明記することが第一歩。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-gold">認</div>
+        <h3>認知レイヤーのオーナーを決める</h3>
+        <p>ブランドマネージャー・PR室が主役。「まだ知らない人に届ける」施策の責任者が明確なチームだけが認知を獲得できる。</p>
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+      <span style="font-size:13px; font-weight:700; color:var(--text-primary);">施策レイヤー × 担当組織の対応表</span>
+    </div>
+
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th>レイヤー</th>
+          <th>担当できる組織・チャネル</th>
+          <th>代表的な施策例</th>
+          <th>よくある落とし穴</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>認知</td>
+          <td>ブランド戦略室・PR室・ブランドマネージャー</td>
+          <td>インフルエンサータイアップ・PR・SNS広告・YouTubeタイアップ・法人経由の導線</td>
+          <td>ペルソナ不在のまま「広く認知を取りに行く」→コスト対効果が最悪になる</td>
+        </tr>
+        <tr>
+          <td>興味関心</td>
+          <td>ブランドマネージャー・コンシューマー本部</td>
+          <td>SEOコンテンツ・比較記事・成分解説動画・CRM（認知→興味のブリッジ）</td>
+          <td>自社サイトだけで解決しようとする→カテゴリを知らない人にはリーチできない</td>
+        </tr>
+        <tr>
+          <td>購入</td>
+          <td>コンシューマー本部（チャネル担当）</td>
+          <td>LP改善・CVR最適化・トライアル設計・カート離脱対策・決済導線</td>
+          <td>ここだけを磨き続けて流入施策を後回しにする→早期に枯渇</td>
+        </tr>
+        <tr>
+          <td>リピート</td>
+          <td>コンシューマー本部・CRM担当</td>
+          <td>メルマガ・LINE・定期便フォロー・NPS改善・摂取習慣づくり</td>
+          <td>同一施策の繰り返し→反応率が逓減する。新規流入がないと維持困難</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight highlight-gold">
+      <div class="label">自己点検のための問い</div>
+      <p>
+        自分が担当している商品において、<strong>今月実施している施策は何レイヤーのものか？</strong> すべてのレイヤーに何らかのアクションが検討されているか？ 抜けているレイヤーがあるとしたら、それは誰がカバーするのか？
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ 05 ═══ -->
+  <section id="sec5">
+    <div class="sec-num">05</div>
+    <h2 class="sec-title">カテゴリーエントリーポイント（CEP）という考え方</h2>
+    <p class="sec-desc">
+      単に「商品名を認知させる」だけでは不十分だ。<mark>どんな場面・状況で思い出してもらえるか</mark>まで設計するのが、カテゴリーエントリーポイント（CEP）の発想だ。
+    </p>
+
+    <div class="principle">
+      <p>「◯◯する時に」と一緒に商品名を紐付けて記憶させることで、初めて想起が機能する。</p>
+    </div>
+
+    <div class="cep-hub-wrap">
+      <svg width="520" height="330" viewBox="0 0 520 330" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- spokes -->
+        <line x1="260" y1="165" x2="120" y2="55"  stroke="#e0d0bc" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <line x1="260" y1="165" x2="400" y2="55"  stroke="#e0d0bc" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <line x1="260" y1="165" x2="60"  y2="185" stroke="#e0d0bc" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <line x1="260" y1="165" x2="460" y2="185" stroke="#e0d0bc" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <line x1="260" y1="165" x2="148" y2="288" stroke="#e0d0bc" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <line x1="260" y1="165" x2="372" y2="288" stroke="#e0d0bc" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <!-- center -->
+        <circle cx="260" cy="165" r="52" fill="rgba(154,114,64,0.10)" stroke="rgba(154,114,64,0.45)" stroke-width="2"/>
+        <text x="260" y="158" text-anchor="middle" font-size="13" font-weight="700" fill="#9a7240" font-family="Noto Sans JP,sans-serif">あなたの</text>
+        <text x="260" y="176" text-anchor="middle" font-size="13" font-weight="700" fill="#9a7240" font-family="Noto Sans JP,sans-serif">商品</text>
+        <!-- node 1 -->
+        <rect x="38" y="28" width="164" height="54" rx="10" fill="rgba(58,111,168,0.08)" stroke="rgba(58,111,168,0.28)" stroke-width="1.5"/>
+        <text x="120" y="50" text-anchor="middle" font-size="11" fill="#3a6fa8" font-family="Noto Sans JP,sans-serif">疲れを感じる</text>
+        <text x="120" y="67" text-anchor="middle" font-size="11" fill="#3a6fa8" font-family="Noto Sans JP,sans-serif">夜の帰り道に</text>
+        <!-- node 2 -->
+        <rect x="318" y="28" width="164" height="54" rx="10" fill="rgba(42,138,96,0.08)" stroke="rgba(42,138,96,0.28)" stroke-width="1.5"/>
+        <text x="400" y="50" text-anchor="middle" font-size="11" fill="#2a8a60" font-family="Noto Sans JP,sans-serif">美容が気になる</text>
+        <text x="400" y="67" text-anchor="middle" font-size="11" fill="#2a8a60" font-family="Noto Sans JP,sans-serif">朝のルーティンに</text>
+        <!-- node 3 -->
+        <rect x="0"   y="158" width="120" height="54" rx="10" fill="rgba(154,114,64,0.08)" stroke="rgba(154,114,64,0.28)" stroke-width="1.5"/>
+        <text x="60" y="180" text-anchor="middle" font-size="11" fill="#9a7240" font-family="Noto Sans JP,sans-serif">PMSで気分が</text>
+        <text x="60" y="197" text-anchor="middle" font-size="11" fill="#9a7240" font-family="Noto Sans JP,sans-serif">乱れる時に</text>
+        <!-- node 4 -->
+        <rect x="400" y="158" width="120" height="54" rx="10" fill="rgba(176,64,64,0.07)" stroke="rgba(176,64,64,0.25)" stroke-width="1.5"/>
+        <text x="460" y="180" text-anchor="middle" font-size="11" fill="#b04040" font-family="Noto Sans JP,sans-serif">ストレスで</text>
+        <text x="460" y="197" text-anchor="middle" font-size="11" fill="#b04040" font-family="Noto Sans JP,sans-serif">余裕がない日に</text>
+        <!-- node 5 -->
+        <rect x="60"  y="263" width="176" height="54" rx="10" fill="rgba(58,111,168,0.07)" stroke="rgba(58,111,168,0.22)" stroke-width="1.5"/>
+        <text x="148" y="285" text-anchor="middle" font-size="11" fill="#3a6fa8" font-family="Noto Sans JP,sans-serif">眠れない夜に</text>
+        <text x="148" y="302" text-anchor="middle" font-size="11" fill="#3a6fa8" font-family="Noto Sans JP,sans-serif">試してみたい</text>
+        <!-- node 6 -->
+        <rect x="284" y="263" width="176" height="54" rx="10" fill="rgba(42,138,96,0.07)" stroke="rgba(42,138,96,0.22)" stroke-width="1.5"/>
+        <text x="372" y="285" text-anchor="middle" font-size="11" fill="#2a8a60" font-family="Noto Sans JP,sans-serif">トレーニング後の</text>
+        <text x="372" y="302" text-anchor="middle" font-size="11" fill="#2a8a60" font-family="Noto Sans JP,sans-serif">リカバリーに</text>
+      </svg>
+    </div>
+    <p style="font-size:12px; color:var(--text-muted); text-align:center; margin:-4px 0 32px;">
+      ▲ 商品は1つでも、顧客の「入口シーン（CEP）」は複数設計できる。シーンが多いほど想起機会が増える。
+    </p>
+
+    <p style="font-size:15px; color:var(--text-secondary); line-height:1.9; margin-bottom:32px;">
+      たとえば「ビタミンCサプリ」という言葉だけを認知させても、顧客にとって「自分ごと」にはならない。「<strong>疲れた時に飲むビタミンC</strong>」「<strong>美容が気になる時に選ぶビタミンC</strong>」というように、<mark>状況・文脈と商品がセットになって記憶される</mark>ことが重要だ。
+    </p>
+
+    <div class="cep-grid">
+      <div class="cep-card">
+        <div class="cep-scene">▸ シーン設計の例</div>
+        <div class="cep-arrow">「なんか眠れないな…」</div>
+        <div class="cep-product">→ 〇〇を飲もう</div>
+      </div>
+      <div class="cep-card">
+        <div class="cep-scene">▸ シーン設計の例</div>
+        <div class="cep-arrow">「PMSで気分が乱れる時期…」</div>
+        <div class="cep-product">→ 〇〇でケアしよう</div>
+      </div>
+      <div class="cep-card">
+        <div class="cep-scene">▸ シーン設計の例</div>
+        <div class="cep-arrow">「ストレスで余裕がない日に」</div>
+        <div class="cep-product">→ 〇〇をとるようにしている</div>
+      </div>
+      <div class="cep-card">
+        <div class="cep-scene">▸ シーン設計の例</div>
+        <div class="cep-arrow">「トレーニング後のリカバリーに」</div>
+        <div class="cep-product">→ 〇〇を取り入れている</div>
+      </div>
+    </div>
+
+    <div class="highlight highlight-blue">
+      <div class="label">CEPを設計する際の問い</div>
+      <p>
+        ① 自社商品を「どんな時に飲む（使う）もの」として伝えたいか？<br>
+        ② そのシーンは、ターゲット顧客が<strong>実際に経験する</strong>リアルなシーンか？<br>
+        ③ そのシーンと商品がセットになった<strong>メッセージ</strong>は、すでにコミュニケーションに落とし込まれているか？
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ 06 ═══ -->
+  <section id="sec6">
+    <div class="sec-num">06</div>
+    <h2 class="sec-title">ペルソナが先、認知施策は後</h2>
+    <p class="sec-desc">
+      「幅広く認知を広げよう」——この発想は、予算に余裕がある大企業だけに許された戦略だ。リソースが限られているなら、<mark>誰に届けるかを先に決める</mark>ことが絶対条件になる。
+    </p>
+
+    <div class="targeting-compare">
+      <div class="targeting-box bad">
+        <div class="targeting-box-label">✗ 避けるべきアプローチ</div>
+        <div class="targeting-title">「とにかく幅広く」</div>
+        <div class="targeting-desc">ペルソナ不在のまま多くの人へ。コストは膨らみ、本当に買ってくれる層に届かない。CPO悪化・LTV低下。</div>
+        <div class="scatter-dots">
+          <div class="dot miss"></div><div class="dot miss"></div><div class="dot miss"></div><div class="dot miss"></div>
+          <div class="dot miss"></div><div class="dot hit"></div><div class="dot miss"></div><div class="dot miss"></div>
+          <div class="dot miss"></div><div class="dot miss"></div><div class="dot hit"></div><div class="dot miss"></div>
+          <div class="dot miss"></div><div class="dot miss"></div><div class="dot miss"></div><div class="dot miss"></div>
+          <div class="dot hit"></div><div class="dot miss"></div><div class="dot miss"></div><div class="dot miss"></div>
+        </div>
+        <p style="font-size:12px; color:var(--danger); margin-top:12px; font-weight:500;">20発撃って3発しか当たらない</p>
+      </div>
+      <div class="targeting-box good">
+        <div class="targeting-box-label">✓ 推奨するアプローチ</div>
+        <div class="targeting-title">「ペルソナを絞って届ける」</div>
+        <div class="targeting-desc">「この人なら絶対買う」という人が見ているメディアに集中投資。ファンが生まれ、口コミが広がる。</div>
+        <div class="scatter-dots">
+          <div class="dot miss"></div><div class="dot hit"></div><div class="dot hit"></div><div class="dot hit"></div>
+          <div class="dot hit"></div><div class="dot hit"></div><div class="dot miss"></div><div class="dot hit"></div>
+          <div class="dot hit"></div><div class="dot hit"></div><div class="dot miss"></div><div class="dot hit"></div>
+        </div>
+        <p style="font-size:12px; color:var(--accent3); margin-top:12px; font-weight:500;">12発撃って9発当たる → CPO改善・LTV向上</p>
+      </div>
+    </div>
+
+    <div class="step-list">
+      <div class="step active">
+        <div class="step-num">STEP 01</div>
+        <h3>ペルソナを具体化する</h3>
+        <p>「この人だったら絶対買う」という確信が持てるまでペルソナを詳細化する。年齢・職業・収入感・ライフスタイル・悩み・情報源まで落とし込む。「体に真剣に向き合っている人」では広すぎる。「月4万のパーソナルトレーニングに通い、スリープトラッカーを使い、睡眠の質を気にしている30代会社員」くらいまで落とす。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 02</div>
+        <h3>そのペルソナが見ているメディアを特定する</h3>
+        <p>ペルソナが明確になると、その人が普段どんなYouTubeを見て、どんなインフルエンサーをフォローし、どんなコミュニティに属しているかが絞れる。似た悩みを持つ人々は、同じ情報源を見ている可能性が高い。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 03</div>
+        <h3>その媒体に接点を作る（ゲリラ戦）</h3>
+        <p>大予算はなくとも、フォロワー数万人規模の「ミニ影響力者」との協力関係から始められる。「このインフルエンサーに紹介してもらったら100人買ってくれた」という実績が積み上がれば、同種のインフルエンサーを月1回発掘するモデルが成立する。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 04</div>
+        <h3>小さな池で勝ってから広げる</h3>
+        <p>ニッチなブランドは、まずコアなファンを50人・100人単位で確実に獲得する池を見つけることが先決だ。太平洋を狙ってもリソースが分散するだけ。「ここにいる人には必ず刺さる」という池を次々と開拓していくことが現実的な成長戦略になる。</p>
+      </div>
+    </div>
+
+    <div class="highlight highlight-red">
+      <div class="label">やってはいけない認知施策</div>
+      <p>
+        ペルソナ不在のまま「とにかく多くの人に知ってもらおう」と安価な試供品をばらまく施策は、確かに認知を広げる。しかし、<strong>自社商品の価値を理解して買い続けてくれる層</strong>には届かない可能性が高い。認知獲得コストが増大するだけで、CPO・LTVはむしろ悪化することが多い。
+      </p>
+    </div>
+
+    <div style="margin-top:32px;">
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px; letter-spacing:0.08em; text-transform:uppercase;">ペルソナ設計の視点例</p>
+      <div class="persona-grid">
+        <div class="persona-card">
+          <div class="persona-icon" style="background:var(--accent-soft); color:var(--accent);">🏋</div>
+          <h3>ストイックな健康投資家</h3>
+          <div class="desc">パーソナルトレーニング・ピラティスなどに月数万円をかけ、自分のコンディション管理を趣味・習慣にしている人。成分・品質にこだわる。</div>
+          <div class="kw"><span>健康意識高</span><span>成分重視</span><span>継続購買</span></div>
+        </div>
+        <div class="persona-card">
+          <div class="persona-icon" style="background:var(--accent2-soft); color:var(--accent2);">🌙</div>
+          <h3>睡眠・疲労に悩む働き世代</h3>
+          <div class="desc">仕事や育児でストレスが慢性化し、睡眠の質・日中のパフォーマンスに課題を感じている30〜40代。既存の睡眠グッズや薬に満足しきれていない人。</div>
+          <div class="kw"><span>睡眠ニーズ</span><span>代替品探し中</span><span>高可処分所得</span></div>
+        </div>
+        <div class="persona-card">
+          <div class="persona-icon" style="background:var(--accent3-soft); color:var(--accent3);">✨</div>
+          <h3>内側からの美容追求者</h3>
+          <div class="desc">高価格帯スキンケアや美容医療に投資しており、「飲む美容」という概念を探索し始めた人。成分・リポソーム技術に知識がある。</div>
+          <div class="kw"><span>美容投資層</span><span>成分リテラシー高</span><span>LTV高</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 07 ═══ -->
+  <section id="sec7">
+    <div class="sec-num">07</div>
+    <h2 class="sec-title">代替品思考 ― 予算はどこから奪うか</h2>
+    <p class="sec-desc">
+      顧客は自社競合から乗り換えてくるとは限らない。<mark>今その悩みを別の手段で解消しようとしているお客さん</mark>の財布から予算をいただく視点が、新規獲得戦略の核になる。
+    </p>
+
+    <p style="font-size:15px; color:var(--text-secondary); line-height:1.9; margin-bottom:32px;">
+      例えば「睡眠を改善したい」というニーズを持つ顧客は、今どんな方法でそのニーズに応えようとしているか？ その人たちに「サプリ（自社商品）という選択肢がある」と知らせ、自社を選んでもらう必要がある。
+    </p>
+
+    <div class="budget-flow">
+      <div class="budget-flow-title">「睡眠を改善したい」というお客さんの財布の使い道（現状）</div>
+      <div class="budget-row">
+        <div class="budget-need">今は…</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <span class="budget-alt current">リカバリーウェア</span>
+          <span class="budget-alt current">睡眠枕</span>
+          <span class="budget-alt current">GABAサプリ</span>
+          <span class="budget-alt current">睡眠アプリ</span>
+          <span class="budget-alt current">運動・ジム</span>
+          <span class="budget-alt current">ドラッグストア睡眠薬</span>
+        </div>
+      </div>
+      <div class="budget-arrow">↓ &nbsp;自社商品という「選択肢」を認知させ、財布の一部を獲得する</div>
+      <div class="budget-row">
+        <div class="budget-need">理想は…</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <span class="budget-alt current">既存の代替品（継続）</span>
+          <span class="budget-alt target">自社サプリ ✓ 追加</span>
+        </div>
+      </div>
+    </div>
+
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th>ニーズ</th>
+          <th>今使っている代替手段（競合）</th>
+          <th>自社商品に乗り換えてもらう際の壁</th>
+          <th>刺さる訴求ポイント</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>睡眠改善</td>
+          <td>リカバリーウェア・睡眠枕・サプリ（GABA等）・運動・ドラッグストア睡眠薬</td>
+          <td>カテゴリが違うため「なぜサプリ？」の説得が必要。価格帯の高さも障壁。</td>
+          <td>「別の方法でも眠れなかった人へ」という切り口。今の方法への不満解消。</td>
+        </tr>
+        <tr>
+          <td>ストレス・メンタル</td>
+          <td>瞑想・運動・嗜好品（エナドリ・タバコ等）・低価格の気分転換</td>
+          <td>代替手段の単価が低い。高額商品への切り替えハードルが高い。</td>
+          <td>「根本的にケアする」という長期的視点の訴求。習慣としての位置づけ。</td>
+        </tr>
+        <tr>
+          <td>美容・美白</td>
+          <td>高価格スキンケア（外用）・美容医療・サプリ（コラーゲン等）</td>
+          <td>外用スキンケアとの違いを説明する必要がある。</td>
+          <td>「外から塗っても届かない。内側からアプローチする」という差別化。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight highlight-blue">
+      <div class="label">実践的フレームワーク</div>
+      <p>
+        ①「この商品を買ってくれるお客さんは、今どんな手段で同じ悩みを解消しようとしているか」をリストアップする。<br>
+        ②「その中で、今の方法に不満を持っている人（＝スイッチャー予備軍）」を特定する。<br>
+        ③「その人たちが自社商品に出会うタイミング・場所」を設計し、そこに接点を作る。
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ 08 ═══ -->
+  <section id="sec8">
+    <div class="sec-num">08</div>
+    <h2 class="sec-title">今日から使えるチェックリスト</h2>
+    <p class="sec-desc">
+      以下の問いに答えることで、自担当ブランドのファネル設計の現状と課題が明確になる。
+    </p>
+
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:20px; letter-spacing:0.08em; text-transform:uppercase;">▸ ペルソナ・ターゲット設計</p>
+    <ul class="checklist">
+      <li>
+        <span class="check-icon check-q">?</span>
+        「この人だったら絶対買う」と確信を持って言えるペルソナ像が、チーム内で共有されているか？
+      </li>
+      <li>
+        <span class="check-icon check-q">?</span>
+        そのペルソナが「今どんな手段で悩みを解消しているか」を具体的に言えるか？
+      </li>
+      <li>
+        <span class="check-icon check-q">?</span>
+        ペルソナが日常的に見ているメディア・インフルエンサー・コミュニティを特定できているか？
+      </li>
+    </ul>
+
+    <hr class="divider">
+
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:20px; letter-spacing:0.08em; text-transform:uppercase;">▸ ファネル施策の網羅性</p>
+    <ul class="checklist">
+      <li>
+        <span class="check-icon check-q">?</span>
+        認知レイヤー（まだ知らない人に届ける）の施策が、今月何か実施・計画されているか？
+      </li>
+      <li>
+        <span class="check-icon check-q">?</span>
+        興味関心レイヤー（知っているが検討中の人を動かす）への施策は何か用意されているか？
+      </li>
+      <li>
+        <span class="check-icon check-q">?</span>
+        購入レイヤー（サイト来訪〜カート完了）に障壁はないか、最後に確認したのはいつか？
+      </li>
+    </ul>
+
+    <hr class="divider">
+
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:20px; letter-spacing:0.08em; text-transform:uppercase;">▸ カテゴリーエントリーポイント</p>
+    <ul class="checklist">
+      <li>
+        <span class="check-icon check-q">?</span>
+        自担当商品が「どんな時に飲む（使う）もの」であるか、メッセージとして明確になっているか？
+      </li>
+      <li>
+        <span class="check-icon check-q">?</span>
+        そのCEPメッセージが、広告・LP・SNS・インフルエンサー投稿などに一貫して反映されているか？
+      </li>
+    </ul>
+
+    <hr class="divider">
+
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:20px; letter-spacing:0.08em; text-transform:uppercase;">▸ 組織・役割分担</p>
+    <ul class="checklist">
+      <li>
+        <span class="check-icon check-q">?</span>
+        認知レイヤーの仕事を「誰が」「具体的にどんなアクションで」担っているか、把握できているか？
+      </li>
+      <li>
+        <span class="check-icon check-q">?</span>
+        自分のチームが今月やった施策が、すべて購入・リピートレイヤーだけに偏っていないか？
+      </li>
+    </ul>
+
+    <!-- Final card -->
+    <div class="final-card">
+      <h2>マーケターの仕事とは何か</h2>
+      <p>
+        自らKPIを設定し、ファネルの全レイヤーに施策を設計し、数値でボトルネックを特定する。<br>
+        「認知がない→買われない」という原則から逆算して、今何が足りないかを常に自問することが、マーケターとしての基本姿勢だ。<br><br>
+        <strong style="color:var(--accent);">知られていないものは選ばれない。まず知ってもらうことが、すべての起点だ。</strong>
+      </p>
+    </div>
+  </section>
+
+</div><!-- /wrapper -->
+
+<footer>
+  © 株式会社スピック — マーケティング教育資料 / 社内共有用
+</footer>
+
+
+</body>
+</html>

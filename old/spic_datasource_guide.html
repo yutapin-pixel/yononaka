@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>SPIC データソース辞書</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg: #f8f7f5;
+  --surface: #ffffff;
+  --surface2: #f2f1ef;
+  --border: #e2e0dc;
+  --border2: #d0cdc8;
+  --text: #1c1917;
+  --muted: #78716c;
+  --accent: #d95f10;
+  --green: #15803d;
+  --blue: #1d4ed8;
+  --yellow: #92400e;
+  --red: #b91c1c;
+  --purple: #6d28d9;
+  --pink: #be185d;
+
+  /* タブカラー */
+  --ne-color: #1d4ed8;
+  --ne-bg: #eff6ff;
+  --shopify-color: #15803d;
+  --shopify-bg: #f0fdf4;
+  --bcart-color: #6d28d9;
+  --bcart-bg: #f5f3ff;
+  --stock-color: #92400e;
+  --stock-bg: #fffbeb;
+  --windsor-color: #be185d;
+  --windsor-bg: #fdf2f8;
+  --shopifyorder-color: #0f766e;
+  --shopifyorder-bg: #f0fdfa;
+  --goods-color: #b45309;
+  --goods-bg: #fffbeb;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ===== ヘッダー ===== */
+.header {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  padding: 16px 24px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 300;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 56px;
+}
+.header h1 {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text);
+  white-space: nowrap;
+}
+.header h1 em { color: var(--accent); font-style: normal; }
+.header .tagline {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.header .updated {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* ===== サイドナビ ===== */
+.sidenav {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  bottom: 0;
+  width: 200px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 200;
+  padding: 16px 0 32px;
+}
+.sidenav-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 16px 4px;
+  display: block;
+}
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  white-space: nowrap;
+  transition: all 0.12s;
+  width: 100%;
+  text-align: left;
+}
+.tab-btn:hover { color: var(--text); background: var(--surface2); }
+.tab-btn.active { color: var(--text); font-weight: 700; background: var(--surface2); }
+.tab-btn .tab-icon { font-size: 14px; flex-shrink: 0; }
+.tab-btn .tab-label { flex: 1; }
+.tab-btn .tab-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 8px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.tab-btn[data-tab="ne"].active        { border-left-color: var(--ne-color); color: var(--ne-color); }
+.tab-btn[data-tab="shopify"].active   { border-left-color: var(--shopify-color); color: var(--shopify-color); }
+.tab-btn[data-tab="bcart"].active     { border-left-color: var(--bcart-color); color: var(--bcart-color); }
+.tab-btn[data-tab="stock"].active     { border-left-color: var(--stock-color); color: var(--stock-color); }
+.tab-btn[data-tab="windsor"].active   { border-left-color: var(--windsor-color); color: var(--windsor-color); }
+.tab-btn[data-tab="shopifyorder"].active { border-left-color: var(--shopifyorder-color); color: var(--shopifyorder-color); }
+.tab-btn[data-tab="goods"].active     { border-left-color: var(--goods-color); color: var(--goods-color); }
+.tab-btn[data-tab="goods-other"].active { border-left-color: #78716c; color: #57534e; }
+
+.tab-btn[data-tab="ne"] .tab-count        { background: var(--ne-bg); color: var(--ne-color); }
+.tab-btn[data-tab="shopify"] .tab-count   { background: var(--shopify-bg); color: var(--shopify-color); }
+.tab-btn[data-tab="bcart"] .tab-count     { background: var(--bcart-bg); color: var(--bcart-color); }
+.tab-btn[data-tab="stock"] .tab-count     { background: var(--stock-bg); color: var(--stock-color); }
+.tab-btn[data-tab="windsor"] .tab-count   { background: var(--windsor-bg); color: var(--windsor-color); }
+.tab-btn[data-tab="shopifyorder"] .tab-count { background: #ccfbf1; color: var(--shopifyorder-color); }
+.tab-btn[data-tab="goods"] .tab-count     { background: #fef3c7; color: var(--goods-color); }
+.tab-btn[data-tab="goods-other"] .tab-count { background: #f5f5f4; color: #78716c; }
+
+/* ===== コンテンツ ===== */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.page-body {
+  margin-top: 56px;
+  margin-left: 200px;
+}
+
+.content-wrap {
+  max-width: 1000px;
+  padding: 28px 36px 60px;
+}
+
+/* ===== ソースヒーロー ===== */
+.source-hero {
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+.source-hero .hero-icon { font-size: 40px; line-height: 1; flex-shrink: 0; }
+.source-hero h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.source-hero p { font-size: 13px; line-height: 1.8; }
+.source-hero .hero-meta {
+  margin-top: 10px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.hero-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* ===== セクション ===== */
+.section { margin-bottom: 36px; }
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+/* ===== テーブル ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+thead th {
+  background: var(--surface2);
+  padding: 8px 14px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+tbody td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #f5f4f2;
+  vertical-align: top;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #faf9f8; }
+.mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.td-key { font-weight: 600; }
+
+/* ===== バッジ系 ===== */
+.badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-blue   { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
+.badge-green  { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.badge-red    { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+.badge-yellow { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.badge-purple { background: #ede9fe; color: #6d28d9; border: 1px solid #c4b5fd; }
+.badge-gray   { background: #f5f5f4; color: #57534e; border: 1px solid #d6d3d1; }
+.badge-orange { background: #fff0e8; color: #c2410c; border: 1px solid #fdba74; }
+.badge-pink   { background: #fdf2f8; color: #be185d; border: 1px solid #f9a8d4; }
+
+/* ===== ノートボックス ===== */
+.note {
+  border-radius: 7px;
+  padding: 12px 16px;
+  font-size: 12.5px;
+  line-height: 1.85;
+  margin-top: 8px;
+  border-left: 3px solid;
+}
+.note strong { font-weight: 700; }
+.note code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.note-blue   { background: #eff6ff; border-left-color: #3b82f6; color: #1e3a5f; }
+.note-blue code { background: #dbeafe; }
+.note-green  { background: #f0fdf4; border-left-color: #22c55e; color: #14532d; }
+.note-green code { background: #dcfce7; }
+.note-yellow { background: #fffbeb; border-left-color: #f59e0b; color: #78350f; }
+.note-yellow code { background: #fef3c7; }
+.note-red    { background: #fff5f5; border-left-color: #ef4444; color: #7f1d1d; }
+.note-red code { background: #fee2e2; }
+.note-purple { background: #f5f3ff; border-left-color: #8b5cf6; color: #4c1d95; }
+.note-purple code { background: #ede9fe; }
+.note-pink   { background: #fdf2f8; border-left-color: #ec4899; color: #831843; }
+.note-pink code { background: #fce7f3; }
+
+/* ===== ユースケースカード ===== */
+.usecase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.usecase-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.usecase-card .uc-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.usecase-card .uc-body {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+.usecase-card .uc-fields {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.field-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  color: var(--muted);
+}
+
+/* ===== 2カラムグリッド ===== */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ===== タブ別カラーテーマ適用 ===== */
+/* NE系 */
+#tab-ne .source-hero    { background: var(--ne-bg); }
+#tab-ne .section-title::before { background: var(--ne-color); }
+#tab-ne .usecase-card   { border-left: 3px solid var(--ne-color); }
+
+/* Shopify系 */
+#tab-shopify .source-hero  { background: var(--shopify-bg); }
+#tab-shopify .section-title::before { background: var(--shopify-color); }
+#tab-shopify .usecase-card { border-left: 3px solid var(--shopify-color); }
+
+/* bcart系 */
+#tab-bcart .source-hero    { background: var(--bcart-bg); }
+#tab-bcart .section-title::before { background: var(--bcart-color); }
+#tab-bcart .usecase-card   { border-left: 3px solid var(--bcart-color); }
+
+/* 在庫系 */
+#tab-stock .source-hero    { background: var(--stock-bg); }
+#tab-stock .section-title::before { background: var(--stock-color); }
+#tab-stock .usecase-card   { border-left: 3px solid var(--stock-color); }
+
+/* Windsor系 */
+#tab-windsor .source-hero  { background: var(--windsor-bg); }
+#tab-windsor .section-title::before { background: var(--windsor-color); }
+#tab-windsor .usecase-card { border-left: 3px solid var(--windsor-color); }
+
+/* Shopify受注 */
+#tab-shopifyorder .source-hero  { background: var(--shopifyorder-bg); }
+#tab-shopifyorder .section-title::before { background: var(--shopifyorder-color); }
+#tab-shopifyorder .usecase-card { border-left: 3px solid var(--shopifyorder-color); }
+
+/* 商品マスタ */
+#tab-goods .source-hero  { background: var(--goods-bg); }
+#tab-goods .section-title::before { background: var(--goods-color); }
+#tab-goods .usecase-card { border-left: 3px solid var(--goods-color); }
+
+@media (max-width: 768px) {
+  .sidenav { display: none; }
+  .page-body { margin-left: 0; }
+  .content-wrap { padding: 20px; }
+  .two-col { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header class="header">
+  <h1>SPIC <em>データソース辞書</em></h1>
+  <span class="tagline">BM・分析担当向け｜利用可能なデータと活用ユースケース</span>
+  <span class="updated">2026年4月28日</span>
+</header>
+
+<!-- サイドナビ -->
+<nav class="sidenav">
+  <span class="sidenav-label">受注・売上</span>
+  <button class="tab-btn active" data-tab="ne">
+    <span class="tab-icon">🛒</span><span class="tab-label">NE受注データ</span><span class="tab-count">5</span>
+  </button>
+  <button class="tab-btn" data-tab="shopifyorder">
+    <span class="tab-icon">🛍️</span><span class="tab-label">Shopify受注詳細</span><span class="tab-count">86万</span>
+  </button>
+  <span class="sidenav-label">定期便・顧客</span>
+  <button class="tab-btn" data-tab="shopify">
+    <span class="tab-icon">🔄</span><span class="tab-label">Shopify定期便</span><span class="tab-count">4</span>
+  </button>
+  <button class="tab-btn" data-tab="bcart">
+    <span class="tab-icon">🏢</span><span class="tab-label">bcart（toB）</span><span class="tab-count">2</span>
+  </button>
+  <span class="sidenav-label">在庫・商品</span>
+  <button class="tab-btn" data-tab="stock">
+    <span class="tab-icon">📦</span><span class="tab-label">在庫データ</span><span class="tab-count">6</span>
+  </button>
+  <button class="tab-btn" data-tab="goods">
+    <span class="tab-icon">🏷️</span><span class="tab-label">商品マスタ</span><span class="tab-count">主力</span>
+  </button>
+  <button class="tab-btn" data-tab="goods-other">
+    <span class="tab-icon">📋</span><span class="tab-label">商品マスタ（その他）</span><span class="tab-count">他</span>
+  </button>
+  <span class="sidenav-label">デジタル</span>
+  <button class="tab-btn" data-tab="windsor">
+    <span class="tab-icon">📊</span><span class="tab-label">デジタル広告</span><span class="tab-count">Windsor</span>
+  </button>
+</nav>
+
+<div class="page-body">
+
+<!-- ========================================
+     TAB 1: NE受注データ
+     ======================================== -->
+<div id="tab-ne" class="tab-content active">
+<div class="content-wrap">
+
+  <div class="source-hero">
+    <div class="hero-icon">🛒</div>
+    <div>
+      <h2>ネクストエンジン（NE）受注データ</h2>
+      <p>全チャネルの受注・出荷を一元管理するSPICの基幹データ。楽天・Amazon・Yahoo・Shopify・toB卸売すべての注文がここに集約される。<strong>売上集計・ブランド分析・着地予測はすべてこのデータが正</strong>（GA4・FB計測より優先）。</p>
+      <div class="hero-meta">
+        <span class="hero-badge badge-blue">受注数: 約233万件</span>
+        <span class="hero-badge badge-green">明細行: 約457万件</span>
+        <span class="hero-badge badge-gray">更新: 準リアルタイム</span>
+        <span class="hero-badge badge-orange">BQプロジェクト: spic-com-2025-apr-00 / prod_dwh_oci</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ユースケース -->
+  <div class="section">
+    <div class="section-title">💡 主な分析ユースケース</div>
+    <div class="usecase-grid">
+      <div class="usecase-card">
+        <div class="uc-title">📈 ブランド別売上集計</div>
+        <div class="uc-body">日次・月次・期間指定でブランドごとの売上・出荷本数を集計。受注ベースと出荷ベースを切り替えられる。</div>
+        <div class="uc-fields">
+          <span class="field-tag">goods_tag</span>
+          <span class="field-tag">receive_order_send_date</span>
+          <span class="field-tag">sub_total_price</span>
+          <span class="field-tag">tax_rate</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">🏪 チャネル別売上分解</div>
+        <div class="uc-body">Shopify公式・Amazon・楽天・toB卸などチャネルごとの売上構成比・成長率を把握。</div>
+        <div class="uc-fields">
+          <span class="field-tag">receive_order_shop_id</span>
+          <span class="field-tag">shop_name</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">🎯 月内着地予測</div>
+        <div class="uc-body">出荷MTDを曜日指数（DOW）で補正し、月末着地を予測。予算比の天気マークを算出。</div>
+        <div class="uc-fields">
+          <span class="field-tag">receive_order_send_date</span>
+          <span class="field-tag">DAYOFWEEK</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">👥 顧客リピート分析</div>
+        <div class="uc-body">purchaser_tel（ハッシュ）を顧客IDとしてリピート回数・LTV・離脱リスク（最終購入日）を分析。</div>
+        <div class="uc-fields">
+          <span class="field-tag">receive_order_purchaser_tel</span>
+          <span class="field-tag">receive_order_date</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">🔀 ブランドクロス購買</div>
+        <div class="uc-body">VCユーザーがC+Dを一緒に買っているか等、ブランド間のクロス購買パターンを把握。</div>
+        <div class="uc-fields">
+          <span class="field-tag">purchaser_tel</span>
+          <span class="field-tag">goods_tag</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">📦 SKU別出荷本数</div>
+        <div class="uc-body">goods_id単位で出荷本数を集計。サイズ別・容量別の需要把握や生産計画に活用。</div>
+        <div class="uc-fields">
+          <span class="field-tag">goods_id</span>
+          <span class="field-tag">quantity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- テーブル説明 -->
+  <div class="section">
+    <div class="section-title">📋 テーブル構成</div>
+    <table>
+      <thead><tr><th>テーブル名</th><th>行数</th><th>役割</th><th>よく使うカラム</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono td-key">receive_order</td>
+          <td><span class="badge badge-blue">233万件</span></td>
+          <td>受注ヘッダー。1受注=1行。日付・ショップ・支払・顧客情報</td>
+          <td class="mono" style="font-size:11px">shop_id, receive_order_date, send_date, cancel_type_id, purchaser_tel</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">receive_order_row</td>
+          <td><span class="badge badge-blue">457万件</span></td>
+          <td>受注明細。1明細=1行。<strong>売上金額はここで計算</strong></td>
+          <td class="mono" style="font-size:11px">goods_id, quantity, sub_total_price, tax_rate, cancel_flag</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">goods_master</td>
+          <td><span class="badge badge-gray">826件</span></td>
+          <td>商品マスタ。ブランド判別はgoods_tagで行う</td>
+          <td class="mono" style="font-size:11px">goods_id, goods_name, goods_tag, selling_price, tax_rate</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">ne_master_shop</td>
+          <td><span class="badge badge-gray">46件</span></td>
+          <td>ショップマスタ。shop_idから店舗名を取得</td>
+          <td class="mono" style="font-size:11px">shop_id, shop_name, shop_abbreviated_name</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">ne_master_stock</td>
+          <td><span class="badge badge-yellow">46万件</span></td>
+          <td>NE管理の在庫履歴。引当・フリー在庫数の推移</td>
+          <td class="mono" style="font-size:11px">stock_goods_id, stock_quantity, stock_free_quantity</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 重要パラメータ -->
+  <div class="section">
+    <div class="section-title">🔑 分析指示に使える主要パラメータ</div>
+    <div class="two-col">
+      <div>
+        <table>
+          <thead><tr><th colspan="3">ショップ分類（channel）</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-red">除外</span></td><td class="mono">10,19,22,25,29,30,37,45</td><td>テスト・社販</td></tr>
+            <tr><td><span class="badge badge-blue">toB</span></td><td class="mono">7,8,12,18,20,23,26,27,42,43</td><td>法人・卸売</td></tr>
+            <tr><td><span class="badge badge-green">toC</span></td><td class="mono">上記以外すべて</td><td>一般消費者</td></tr>
+          </tbody>
+        </table>
+        <div style="height:10px"></div>
+        <table>
+          <thead><tr><th>主要ショップ</th><th>ID</th><th>チャネル</th></tr></thead>
+          <tbody>
+            <tr><td>Lypo-C Official (Shopify)</td><td class="mono">17</td><td><span class="badge badge-green">toC</span></td></tr>
+            <tr><td>SPICのコダワリ (最大toB)</td><td class="mono">18</td><td><span class="badge badge-blue">toB</span></td></tr>
+            <tr><td>Amazon</td><td class="mono">32</td><td><span class="badge badge-green">toC</span></td></tr>
+            <tr><td>楽天市場</td><td class="mono">31</td><td><span class="badge badge-green">toC</span></td></tr>
+            <tr><td>Yahoo!</td><td class="mono">33</td><td><span class="badge badge-green">toC</span></td></tr>
+            <tr><td>Qoo10</td><td class="mono">35</td><td><span class="badge badge-green">toC</span></td></tr>
+            <tr><td>Exclusive Shopify</td><td class="mono">39</td><td><span class="badge badge-green">toC</span></td></tr>
+            <tr><td>Consumer (社内配布)</td><td class="mono">9</td><td><span class="badge badge-gray">社内</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th>ブランドタグ (goods_tag)</th><th>ブランド名</th><th>税率</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">[Lypo-C]</td><td>VC</td><td><span class="badge badge-green">8%</span></td></tr>
+            <tr><td class="mono">[Lypo-C C+D]</td><td>C+D</td><td><span class="badge badge-green">8%</span></td></tr>
+            <tr><td class="mono">[Lypo-C C+D+K]</td><td>C+D+K</td><td><span class="badge badge-green">8%</span></td></tr>
+            <tr><td class="mono">[Lypo-C C＋Cera]</td><td>C+Cera ※＋全角</td><td><span class="badge badge-green">8%</span></td></tr>
+            <tr><td class="mono">[Lypo-C CBD]</td><td>CBD</td><td><span class="badge badge-green">8%</span></td></tr>
+            <tr><td class="mono">[Lypo-C SKINBEAUTY]</td><td>SKINBEAUTY</td><td><span class="badge badge-red">10%</span></td></tr>
+            <tr><td class="mono">[MINERALion]</td><td>MINERALion</td><td><span class="badge badge-green">8%</span></td></tr>
+            <tr><td class="mono">[Lypospheric]</td><td>LypoSpheric</td><td><span class="badge badge-green">8%</span></td></tr>
+            <tr><td class="mono">[Gelsome]</td><td>Gelsome</td><td><span class="badge badge-green">8%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="note note-yellow" style="margin-top:12px">
+      <strong>⚠️ 税抜計算の鉄則：</strong> <code>sub_total_price</code>は税込格納。÷1.1一律は禁止。行レベルの<code>tax_rate</code>（8%または10%）で逆算すること。<code>receive_order_tax_amount</code>はほぼ全件0のため使用禁止。
+    </div>
+  </div>
+
+  <!-- キャンセルフィルタ -->
+  <div class="section">
+    <div class="section-title">🚫 必須フィルタ（全クエリ共通）</div>
+    <table>
+      <thead><tr><th>フィルタ</th><th>条件値</th><th>意味</th></tr></thead>
+      <tbody>
+        <tr><td>ヘッダーキャンセル除外</td><td class="mono">receive_order_cancel_type_id = 0</td><td>0のみが正常受注。それ以外はキャンセル・返品</td></tr>
+        <tr><td>明細キャンセル除外</td><td class="mono">receive_order_row_cancel_flag = 0</td><td>明細単位のキャンセル除外。ヘッダーと両方必要</td></tr>
+        <tr><td>テスト・社販除外</td><td class="mono">shop_id NOT IN (10,19,22,25,29,30,37,45)</td><td>テスト注文・社内社販を除外</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<!-- ========================================
+     TAB 2: Shopify定期便
+     ======================================== -->
+<div id="tab-shopify" class="tab-content">
+<div class="content-wrap">
+
+  <div class="source-hero">
+    <div class="hero-icon">🔄</div>
+    <div>
+      <h2>Shopify 定期便データ</h2>
+      <p>lypo-c.shopのShopifyから連携される定期購読データ。5万件の定期契約・31万件の請求試行履歴が蓄積されており、<strong>定期継続率・解約理由・請求失敗率の分析が可能</strong>。BM向けの定期便KPI分析の主要データソース。</p>
+      <div class="hero-meta">
+        <span class="hero-badge badge-green">定期契約: 5万件</span>
+        <span class="hero-badge badge-green">アクティブ: 22,046件</span>
+        <span class="hero-badge badge-yellow">一時停止: 15,752件</span>
+        <span class="hero-badge badge-red">解約済: 12,583件</span>
+        <span class="hero-badge badge-gray">請求履歴: 31万件</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ユースケース -->
+  <div class="section">
+    <div class="section-title">💡 主な分析ユースケース</div>
+    <div class="usecase-grid">
+      <div class="usecase-card">
+        <div class="uc-title">📉 定期解約率・継続率</div>
+        <div class="uc-body">契約ステータス別件数・解約率の推移。初回契約月コホートで継続率を追跡。</div>
+        <div class="uc-fields">
+          <span class="field-tag">status</span>
+          <span class="field-tag">created_at</span>
+          <span class="field-tag">cancelled_at</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">💬 解約理由分析</div>
+        <div class="uc-body">「商品が余っている」「高いから」等の解約理由別件数。BMの打ち手設計に直結。</div>
+        <div class="uc-fields">
+          <span class="field-tag">cancel_reason</span>
+          <span class="field-tag">cancel_extra_text</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">📅 コース別契約分布</div>
+        <div class="uc-body">1ヶ月・2ヶ月・3ヶ月コースの分布。コース別の解約率比較も可能。</div>
+        <div class="uc-fields">
+          <span class="field-tag">billing_policy_interval_count</span>
+          <span class="field-tag">billing_policy_interval</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">⚠️ 請求失敗モニタリング</div>
+        <div class="uc-body">決済失敗・リトライ回数の把握。支払い方法切れによる強制解約の予防に活用。</div>
+        <div class="uc-fields">
+          <span class="field-tag">billing_attempts</span>
+          <span class="field-tag">paid_at</span>
+          <span class="field-tag">cancelled_at</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">📦 ブランド別定期分布</div>
+        <div class="uc-body">lines_listのSKUからブランド別の定期契約数・解約数を集計。VC vs C+D比較など。</div>
+        <div class="uc-fields">
+          <span class="field-tag">lines_list（JSON）</span>
+          <span class="field-tag">sku</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">🗓️ 次回請求日予測</div>
+        <div class="uc-body">アクティブ契約のnext_billing_dateを集計し、来月の定期便出荷予測・売上見込みに活用。</div>
+        <div class="uc-fields">
+          <span class="field-tag">next_billing_date</span>
+          <span class="field-tag">status = ACTIVE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- テーブル説明 -->
+  <div class="section">
+    <div class="section-title">📋 テーブル構成</div>
+    <table>
+      <thead><tr><th>テーブル名</th><th>行数</th><th>役割</th><th>よく使うカラム</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono td-key">shopify_subscription_contracts</td>
+          <td><span class="badge badge-green">5万件</span></td>
+          <td>定期契約の本体。1契約=1行。ステータス・解約理由・コース情報</td>
+          <td class="mono" style="font-size:11px">id, status, cancel_reason, billing_policy_interval_count, next_billing_date, lines_list</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">shopify_subscription_billing_attempts</td>
+          <td><span class="badge badge-green">31万件</span></td>
+          <td>定期便の請求試行履歴。成功・失敗・リトライを記録</td>
+          <td class="mono" style="font-size:11px">subscription_contract_id, order_id, paid_at, cancelled_at, amount</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">shopify_subscription_customers</td>
+          <td><span class="badge badge-green">5.8万件</span></td>
+          <td>定期便顧客マスタ。顧客IDとランク情報（rank_nameは現状NULL）</td>
+          <td class="mono" style="font-size:11px">id, gid, created_at</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">shopify_orders</td>
+          <td><span class="badge badge-green">86万件</span></td>
+          <td>Shopify全受注。定期便・単品どちらも含む。source_nameで区別可能</td>
+          <td class="mono" style="font-size:11px">id, source_name, financial_status, discount_codes, tags, created_at, line_items</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 主要パラメータ -->
+  <div class="section">
+    <div class="section-title">🔑 分析指示に使える主要パラメータ</div>
+    <div class="two-col">
+      <div>
+        <table>
+          <thead><tr><th colspan="3">契約ステータス（status）</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-green">ACTIVE</span></td><td>22,046件</td><td>継続中（課金対象）</td></tr>
+            <tr><td><span class="badge badge-yellow">PAUSED</span></td><td>15,752件</td><td>一時停止中</td></tr>
+            <tr><td><span class="badge badge-red">CANCELLED</span></td><td>12,583件</td><td>解約済み</td></tr>
+          </tbody>
+        </table>
+        <div style="height:10px"></div>
+        <table>
+          <thead><tr><th colspan="3">配送コース（billing_policy_interval_count）</th></tr></thead>
+          <tbody>
+            <tr><td>1ヶ月コース</td><td class="mono">MONTH / 1</td><td>27,385件（54%）</td></tr>
+            <tr><td>2ヶ月コース</td><td class="mono">MONTH / 2</td><td>10,006件（20%）</td></tr>
+            <tr><td>3ヶ月コース</td><td class="mono">MONTH / 3</td><td>12,018件（24%）</td></tr>
+            <tr><td>28日コース</td><td class="mono">DAY / 28</td><td>972件（2%）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th colspan="2">解約理由（cancel_reason）— 実データ</th></tr></thead>
+          <tbody>
+            <tr><td>商品が余っている</td><td class="mono">3,489件</td></tr>
+            <tr><td>高いから</td><td class="mono">3,410件</td></tr>
+            <tr><td>他のサプリメントを試すから</td><td class="mono">1,820件</td></tr>
+            <tr><td>実感や変化が感じられない</td><td class="mono">1,158件</td></tr>
+            <tr><td>美味しくない/味が苦手</td><td class="mono">782件</td></tr>
+            <tr><td>特典が期待はずれだった</td><td class="mono">396件</td></tr>
+          </tbody>
+        </table>
+        <div style="height:10px"></div>
+        <table>
+          <thead><tr><th colspan="2">受注種別（source_name / shopify_orders）</th></tr></thead>
+          <tbody>
+            <tr><td>通常単品購入</td><td class="mono">web</td></tr>
+            <tr><td>定期便（自動更新）</td><td class="mono">subscription_contract</td></tr>
+            <tr><td>定期便（初回）</td><td class="mono">subscription_contract_checkout_one</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="note note-green" style="margin-top:12px">
+      <strong>💡 lines_listについて：</strong> JSON形式でSKU・商品名・金額・コース名が入っている。「どのブランドの定期便を解約したか」を分析する際はこのフィールドをパースする必要がある。Claudeに「定期便のブランド別解約数を調べて」と指示すれば自動的に処理する。
+    </div>
+    <div class="note note-blue" style="margin-top:8px">
+      <strong>🔗 NEデータとの紐付け：</strong> <code>shopify_orders.id</code> ↔ NEの <code>receive_order</code> は直接JOINできないが、<code>shopify_subscription_billing_attempts.order_id</code> 経由でShopify注文IDを取得し、NEのshop_id=17（Lypo-C Official）の受注と照合できる。
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ========================================
+     TAB 3: bcart（toB）
+     ======================================== -->
+<div id="tab-bcart" class="tab-content">
+<div class="content-wrap">
+
+  <div class="source-hero">
+    <div class="hero-icon">🏢</div>
+    <div>
+      <h2>bcart（toB顧客・法人受注）データ</h2>
+      <p>SPICのコダワリ（shop_id=18）等のtoB向けECシステム「bcart」から連携されるデータ。<strong>法人顧客の会社名・受注履歴・アンケート回答</strong>が含まれる。NE受注データのtoB顧客名取得に不可欠。</p>
+      <div class="hero-meta">
+        <span class="hero-badge badge-purple">顧客マスタ: 3,960社</span>
+        <span class="hero-badge badge-purple">toB受注: 58,753件</span>
+        <span class="hero-badge badge-gray">主要用途: 法人顧客名の取得</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ユースケース -->
+  <div class="section">
+    <div class="section-title">💡 主な分析ユースケース</div>
+    <div class="usecase-grid">
+      <div class="usecase-card">
+        <div class="uc-title">🏭 法人顧客別売上ランキング</div>
+        <div class="uc-body">会社名付きでtoB顧客の売上・注文数を集計。どの法人がどのブランドを多く買っているかを把握。</div>
+        <div class="uc-fields">
+          <span class="field-tag">comp_name</span>
+          <span class="field-tag">pref</span>
+          <span class="field-tag">consignee_tel JOIN</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">📍 都道府県別toB分布</div>
+        <div class="uc-body">法人顧客の所在地分布。地域別の営業強化エリア特定に活用。</div>
+        <div class="uc-fields">
+          <span class="field-tag">pref</span>
+          <span class="field-tag">comp_name</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">📋 toB顧客の継続・離脱</div>
+        <div class="uc-body">最終発注日からの経過日数（days_since_last）で法人顧客の離脱リスクを検知。</div>
+        <div class="uc-fields">
+          <span class="field-tag">ordered_at</span>
+          <span class="field-tag">comp_name</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- テーブル説明 -->
+  <div class="section">
+    <div class="section-title">📋 テーブル構成</div>
+    <table>
+      <thead><tr><th>テーブル名</th><th>行数</th><th>役割</th><th>よく使うカラム</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono td-key">bcart_customers</td>
+          <td><span class="badge badge-purple">3,960件</span></td>
+          <td>toB顧客マスタ。<strong>会社名・都道府県</strong>の取得に使用</td>
+          <td class="mono" style="font-size:11px">tel, comp_name, pref, department, status</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">bcart_orders</td>
+          <td><span class="badge badge-purple">58,753件</span></td>
+          <td>bcart受注履歴。支払方法・アンケート回答・発注金額</td>
+          <td class="mono" style="font-size:11px">customer_id, ordered_at, total_price, payment, status, enquete1〜5</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- JOINパターン -->
+  <div class="section">
+    <div class="section-title">🔗 会社名を取得するJOINパターン</div>
+    <div class="note note-purple">
+      <strong>重要：</strong> <code>receive_order.receive_order_customer_id</code> → <code>bcart_customers.id</code> の直接JOINは<strong>toB主要ショップ（shop_id=18等）でほぼNULL</strong>のため機能しない。<br>
+      代わりに <strong><code>receive_order_consignee_tel = bcart_customers.tel</code></strong>（どちらもハッシュ値）でJOINすることで会社名が取得できる。
+    </div>
+    <div style="height:10px"></div>
+    <table>
+      <thead><tr><th>取得できる情報</th><th>カラム名</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td>会社名・店舗名</td><td class="mono">bcart_customers.comp_name</td><td>NULL or 空文字の顧客も存在（個人名登録のtoB）</td></tr>
+        <tr><td>都道府県</td><td class="mono">bcart_customers.pref</td><td>所在地分析に使用</td></tr>
+        <tr><td>部署名</td><td class="mono">bcart_customers.department</td><td>未入力が多い</td></tr>
+        <tr><td>顧客ステータス</td><td class="mono">bcart_customers.status</td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="note note-yellow" style="margin-top:10px">
+      <strong>⚠️ アンケート項目（enquete1〜5）について：</strong> bcart_ordersに存在するが、現状はほぼ空文字。活用実績なし。将来的にアンケートを設計して取得する際の受け皿として存在している。
+    </div>
+  </div>
+
+  <!-- 支払い方法 -->
+  <div class="section">
+    <div class="section-title">💳 bcart受注の支払方法（実データ）</div>
+    <table>
+      <thead><tr><th>支払方法</th><th>ステータス</th><th>件数</th></tr></thead>
+      <tbody>
+        <tr><td>カスタム2（掛払い）</td><td>完了</td><td class="mono">12,393件</td></tr>
+        <tr><td>自社掛払い</td><td>完了</td><td class="mono">11,458件</td></tr>
+        <tr><td>代金引換</td><td>完了</td><td class="mono">8,742件</td></tr>
+        <tr><td>銀行振込</td><td>完了</td><td class="mono">7,651件</td></tr>
+        <tr><td>クレジット</td><td>完了</td><td class="mono">5,893件</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<!-- ========================================
+     TAB 4: 在庫データ
+     ======================================== -->
+<div id="tab-stock" class="tab-content">
+<div class="content-wrap">
+
+  <div class="source-hero">
+    <div class="hero-icon">📦</div>
+    <div>
+      <h2>在庫データ（KLOGI倉庫・NE在庫）</h2>
+      <p>三松倉庫（KLOGI）・Amazon・BM 2Fの在庫状況をロット・賞味期限単位で管理。<strong>欠品リスクの早期検知・廃棄ロスのモニタリング・在庫回転率分析</strong>に活用できる。現状は未活用だが大きな分析余地がある。</p>
+      <div class="hero-meta">
+        <span class="hero-badge badge-yellow">統合在庫: 51万件</span>
+        <span class="hero-badge badge-yellow">KLOGI在庫: 48万件</span>
+        <span class="hero-badge badge-gray">NE在庫: 46万件</span>
+        <span class="hero-badge badge-gray">在庫サマリ: 102SKU</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ユースケース -->
+  <div class="section">
+    <div class="section-title">💡 主な分析ユースケース</div>
+    <div class="usecase-grid">
+      <div class="usecase-card">
+        <div class="uc-title">⚠️ 賞味期限切れリスク検知</div>
+        <div class="uc-body">expire_dateが近いロットの在庫数を抽出。廃棄ロス防止のための早期アラートに活用。</div>
+        <div class="uc-fields">
+          <span class="field-tag">expire_date</span>
+          <span class="field-tag">days_of_expire</span>
+          <span class="field-tag">current_stock</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">📉 欠品リスクモニタリング</div>
+        <div class="uc-body">現在庫÷日次出荷数で「何日分の在庫があるか」を算出。欠品予測・発注トリガーに活用。</div>
+        <div class="uc-fields">
+          <span class="field-tag">stock_free_quantity</span>
+          <span class="field-tag">stock_goods_id</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">🏭 倉庫別在庫分布</div>
+        <div class="uc-body">三松倉庫・Amazon・BM倉庫ごとの在庫分布。ロケーション別の良品/B品/不良品比率も把握可能。</div>
+        <div class="uc-fields">
+          <span class="field-tag">stock_location</span>
+          <span class="field-tag">quality_name</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">📊 ロット別在庫トレース</div>
+        <div class="uc-body">ロット番号ごとの在庫推移。品質問題発生時のトレーサビリティにも活用できる。</div>
+        <div class="uc-fields">
+          <span class="field-tag">lot_number</span>
+          <span class="field-tag">inventory_date</span>
+          <span class="field-tag">product_id</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- テーブル説明 -->
+  <div class="section">
+    <div class="section-title">📋 テーブル構成</div>
+    <table>
+      <thead><tr><th>テーブル名</th><th>行数</th><th>役割</th><th>よく使うカラム</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono td-key">integ_stock</td>
+          <td><span class="badge badge-yellow">51万件</span></td>
+          <td>統合在庫（KLOGI倉庫＋Amazon）。ロット・賞味期限・在庫ロケーション別の日次スナップショット</td>
+          <td class="mono" style="font-size:11px">product_id, product_name, expire_date, current_stock, lot_number, stock_location, quality_name, days_of_expire</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">klogi_stock</td>
+          <td><span class="badge badge-yellow">48万件</span></td>
+          <td>三松倉庫（KLOGI）の在庫詳細。integ_stockと重複するが賞味期限の有効期間（valid_period）が付加</td>
+          <td class="mono" style="font-size:11px">product_id, product_name, expire_date, current_stock, lot_number, valid_period, days_of_expire</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">ne_master_stock</td>
+          <td><span class="badge badge-gray">46万件</span></td>
+          <td>NE管理の在庫マスタ。引当・フリー・欠品数をSKU単位で管理</td>
+          <td class="mono" style="font-size:11px">stock_goods_id, stock_quantity, stock_free_quantity, stock_allocation_quantity, stock_out_quantity</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">stock_info</td>
+          <td><span class="badge badge-gray">102件</span></td>
+          <td>SKU別の現在庫サマリ（最新スナップショット）</td>
+          <td class="mono" style="font-size:11px">product_id, product_name</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">stock_product2tag / stock_tags</td>
+          <td><span class="badge badge-gray">186/19件</span></td>
+          <td>在庫商品のタグ分類マスタ</td>
+          <td class="mono" style="font-size:11px">product_id, tag_id, name</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 在庫ロケーション -->
+  <div class="section">
+    <div class="section-title">🗂️ 在庫ロケーション・品質区分</div>
+    <div class="two-col">
+      <table>
+        <thead><tr><th>ロケーション（stock_location）</th><th>件数</th></tr></thead>
+        <tbody>
+          <tr><td>三松倉庫（KLOGI委託先）</td><td class="mono">約479,000件</td></tr>
+          <tr><td>Amazon（FBA）</td><td class="mono">約23,000件</td></tr>
+          <tr><td>BM 2F（社内倉庫）</td><td class="mono">約9,100件</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead><tr><th>品質区分（quality_name）</th><th>件数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-green">良品</span></td><td class="mono">369,194件</td></tr>
+          <tr><td><span class="badge badge-yellow">B品（外装傷等）</span></td><td class="mono">83,622件</td></tr>
+          <tr><td><span class="badge badge-red">不良品</span></td><td class="mono">26,368件</td></tr>
+          <tr><td><span class="badge badge-gray">D品</span></td><td class="mono">48件</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note note-yellow" style="margin-top:12px">
+      <strong>💡 活用ヒント：</strong> 「あるブランドの在庫が何日分あるか」は <code>stock_free_quantity（NE）</code> ÷ 直近30日の日次平均出荷数（NE受注データ）で算出可能。Claudeに「VCの在庫日数を計算して」と指示すれば自動でクロス集計する。
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ========================================
+     TAB 5: Windsor.ai（デジタル広告）
+     ======================================== -->
+<div id="tab-windsor" class="tab-content">
+<div class="content-wrap">
+
+  <div class="source-hero">
+    <div class="hero-icon">📊</div>
+    <div>
+      <h2>デジタル・広告データ（Windsor.ai）</h2>
+      <p>GA4・Facebook広告・Search ConsoleのデータをMCP経由で直接取得できる。<strong>広告ROASの検証・SEO順位トレンド・サイトCVRの監視</strong>に活用。売上の「正」はBQのNEデータだが、流入・CVRの分析はこちらが主役。</p>
+      <div class="hero-meta">
+        <span class="hero-badge badge-pink">GA4: lypo-c.shop</span>
+        <span class="hero-badge badge-pink">Facebook広告: Lypo-C公式</span>
+        <span class="hero-badge badge-pink">Search Console: lypo-c.shop</span>
+        <span class="hero-badge badge-gray">データラグ: SC=2〜3日 / GA4=翌日</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ユースケース -->
+  <div class="section">
+    <div class="section-title">💡 主な分析ユースケース</div>
+    <div class="usecase-grid">
+      <div class="usecase-card">
+        <div class="uc-title">📱 チャネル別CVR分析</div>
+        <div class="uc-body">オーガニック・広告・メール等のチャネル別にセッション数・CVRを比較。どの流入が最も購入につながっているか。</div>
+        <div class="uc-fields">
+          <span class="field-tag">default_channel_group</span>
+          <span class="field-tag">sessions</span>
+          <span class="field-tag">session_conversion_rate</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">💰 Facebook広告ROAS</div>
+        <div class="uc-body">広告費対売上比率（ROAS）をキャンペーン・広告セット・クリエイティブ別に比較。予算配分の最適化に活用。</div>
+        <div class="uc-fields">
+          <span class="field-tag">spend</span>
+          <span class="field-tag">action_values_purchase</span>
+          <span class="field-tag">campaign_name</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">🔍 SEO検索順位モニタリング</div>
+        <div class="uc-body">ブランドキーワード・ノンブランドキーワードの検索順位・CTRを週次で比較。検索流入の変化を早期検知。</div>
+        <div class="uc-fields">
+          <span class="field-tag">query</span>
+          <span class="field-tag">position</span>
+          <span class="field-tag">branded_vs_nonbranded</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">🛍️ LP別コンバージョン改善</div>
+        <div class="uc-body">ランディングページごとのCVR・直帰率を比較。どのページが購買につながりやすいかを特定。</div>
+        <div class="uc-fields">
+          <span class="field-tag">landing_page</span>
+          <span class="field-tag">session_conversion_rate</span>
+          <span class="field-tag">bounce_rate</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">📈 広告費×受注クロス検証</div>
+        <div class="uc-body">Facebook広告費（Windsor）とNE受注数（BQ）を日次で突合。広告効果の過大評価を防ぐ。</div>
+        <div class="uc-fields">
+          <span class="field-tag">spend（FB）</span>
+          <span class="field-tag">receive_order（NE）</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">🆕 新規/リピート比率</div>
+        <div class="uc-body">新規ユーザー vs リピートユーザーのセッション・CVR・売上貢献を比較。LTV施策の優先度判断に活用。</div>
+        <div class="uc-fields">
+          <span class="field-tag">newusers</span>
+          <span class="field-tag">first_time_purchasers</span>
+          <span class="field-tag">total_purchasers</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GA4フィールド -->
+  <div class="section">
+    <div class="section-title">📱 GA4（lypo-c.shop）— よく使うフィールド</div>
+    <div class="two-col">
+      <table>
+        <thead><tr><th>フィールド名</th><th>内容</th></tr></thead>
+        <caption style="font-size:11px;color:var(--muted);text-align:left;padding:4px 0">ディメンション（軸）</caption>
+        <tbody>
+          <tr><td class="mono">date</td><td>日付</td></tr>
+          <tr><td class="mono">default_channel_group</td><td>チャネル（Organic / Paid Social等）</td></tr>
+          <tr><td class="mono">source_medium</td><td>流入元（google / cpc等）</td></tr>
+          <tr><td class="mono">landing_page</td><td>ランディングページURL</td></tr>
+          <tr><td class="mono">devicecategory</td><td>デバイス（desktop / mobile）</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead><tr><th>フィールド名</th><th>内容</th></tr></thead>
+        <caption style="font-size:11px;color:var(--muted);text-align:left;padding:4px 0">指標（メトリクス）</caption>
+        <tbody>
+          <tr><td class="mono">sessions</td><td>セッション数</td></tr>
+          <tr><td class="mono">session_conversion_rate</td><td>購入CVR（セッション単位）</td></tr>
+          <tr><td class="mono">ecommerce_purchases</td><td>EC購入数</td></tr>
+          <tr><td class="mono">purchase_revenue</td><td>売上（税込・参考値）</td></tr>
+          <tr><td class="mono">first_time_purchasers</td><td>初回購入者数</td></tr>
+          <tr><td class="mono">newusers</td><td>新規ユーザー数</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Facebook広告フィールド -->
+  <div class="section">
+    <div class="section-title">📣 Facebook広告 — よく使うフィールド</div>
+    <div class="two-col">
+      <table>
+        <thead><tr><th>フィールド名</th><th>内容</th></tr></thead>
+        <caption style="font-size:11px;color:var(--muted);text-align:left;padding:4px 0">ディメンション</caption>
+        <tbody>
+          <tr><td class="mono">date</td><td>日付</td></tr>
+          <tr><td class="mono">campaign_name</td><td>キャンペーン名</td></tr>
+          <tr><td class="mono">adset_name</td><td>広告セット名</td></tr>
+          <tr><td class="mono">ad_name</td><td>広告クリエイティブ名</td></tr>
+          <tr><td class="mono">publisher_platform</td><td>配信面（facebook / instagram）</td></tr>
+          <tr><td class="mono">age / gender</td><td>年齢層・性別</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead><tr><th>フィールド名</th><th>内容</th></tr></thead>
+        <caption style="font-size:11px;color:var(--muted);text-align:left;padding:4px 0">指標</caption>
+        <tbody>
+          <tr><td class="mono">spend</td><td>広告費（円）</td></tr>
+          <tr><td class="mono">impressions</td><td>インプレッション数</td></tr>
+          <tr><td class="mono">clicks / ctr</td><td>クリック数・CTR</td></tr>
+          <tr><td class="mono">actions_purchase</td><td>購入数（FB計測）</td></tr>
+          <tr><td class="mono">action_values_purchase</td><td>購入売上（FB計測・税込）</td></tr>
+          <tr><td class="mono">website_purchase_roas…</td><td>ROAS</td></tr>
+          <tr><td class="mono">cost_per_action_type_purchase</td><td>CPA（購入単価）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Search Console -->
+  <div class="section">
+    <div class="section-title">🔍 Search Console（lypo-c.shop）— よく使うフィールド</div>
+    <table>
+      <thead><tr><th>フィールド名</th><th>内容</th><th>活用場面</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">query</td><td>検索クエリ</td><td>どのキーワードで流入しているか</td></tr>
+        <tr><td class="mono">clicks / impressions</td><td>クリック数・表示回数</td><td>SEO流入量の把握</td></tr>
+        <tr><td class="mono">ctr</td><td>クリック率</td><td>タイトル・メタ改善の効果測定</td></tr>
+        <tr><td class="mono">position</td><td>平均掲載順位</td><td>検索順位変動のモニタリング</td></tr>
+        <tr><td class="mono">branded_vs_nonbranded</td><td>ブランド/非ブランド分類</td><td>ブランド認知 vs 新規獲得比率</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 重要注意事項 -->
+  <div class="section">
+    <div class="section-title">⚠️ データ利用時の重要注意点</div>
+    <div class="note note-red">
+      <strong>売上数値の優先順位：</strong> BQ（NEデータ）＞ GA4 ＞ Facebook計測。GA4のpurchase_revenueは税込・トラッキング誤差あり。FBのaction_values_purchaseはアトリビューション重複あり（7d_click+1d_viewがデフォルト）。財務用の売上は必ずBQを使う。
+    </div>
+    <div class="note note-yellow" style="margin-top:8px">
+      <strong>Search Consoleのデータラグ：</strong> データ確定まで2〜3日のラグがある。直近2日分は参考値として扱う。
+    </div>
+    <div class="note note-pink" style="margin-top:8px">
+      <strong>FB広告アトリビューション：</strong> デフォルトは「7日クリック＋1日ビュー」。厳格に評価する場合は「1日クリックのみ」に変更して比較する。
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ========================================
+     TAB 6: Shopify受注詳細
+     ======================================== -->
+<div id="tab-shopifyorder" class="tab-content">
+<div class="content-wrap">
+
+  <div class="source-hero">
+    <div class="hero-icon">🛍️</div>
+    <div>
+      <h2>Shopify受注詳細（shopify_orders）</h2>
+      <p>lypo-c.shopのShopifyから連携される全受注データ（86万件）。NEデータと異なり、<strong>クーポンコード・タグ・流入元UTM・決済方法・返金情報</strong>などマーケティング文脈の情報が豊富。定期便と単品の区別、キャンペーン効果測定に不可欠なデータソース。</p>
+      <div class="hero-meta">
+        <span class="hero-badge" style="background:#ccfbf1;color:#0f766e;border:1px solid #99f6e4">全受注: 864,137件</span>
+        <span class="hero-badge badge-green">支払済: 852,440件</span>
+        <span class="hero-badge badge-yellow">返金済: 4,749件</span>
+        <span class="hero-badge badge-gray">更新: 準リアルタイム</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ユースケース -->
+  <div class="section">
+    <div class="section-title">💡 主な分析ユースケース</div>
+    <div class="usecase-grid">
+      <div class="usecase-card">
+        <div class="uc-title">🎫 クーポン効果測定</div>
+        <div class="uc-body">discount_codesから利用クーポンコード・割引額・利用件数を集計。キャンペーンROI評価に活用。</div>
+        <div class="uc-fields">
+          <span class="field-tag">discount_codes</span>
+          <span class="field-tag">total_discounts</span>
+          <span class="field-tag">source_name</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">🔄 定期便 vs 単品の分解</div>
+        <div class="uc-body">source_nameで定期便（自動更新/初回）と通常単品を区別。定期比率・金額構成を把握。</div>
+        <div class="uc-fields">
+          <span class="field-tag">source_name</span>
+          <span class="field-tag">total_price</span>
+          <span class="field-tag">created_at</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">📍 流入元×購買の紐付け</div>
+        <div class="uc-body">landing_siteのUTMパラメータを解析し、Google広告・LINE・Facebook等どの流入が購買につながったかを把握。</div>
+        <div class="uc-fields">
+          <span class="field-tag">landing_site</span>
+          <span class="field-tag">referring_site</span>
+          <span class="field-tag">utm_source</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">🏷️ タグ別顧客セグメント</div>
+        <div class="uc-body">tagsフィールドに付与された「初回購入」「F1-2024」等のラベルで顧客を分類。施策対象者の絞り込みに活用。</div>
+        <div class="uc-fields">
+          <span class="field-tag">tags</span>
+          <span class="field-tag">customer_id</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">💴 返金・キャンセル分析</div>
+        <div class="uc-body">refunded/voided件数・返金額の推移。ブランド別・クーポン別の返金率を算出。</div>
+        <div class="uc-fields">
+          <span class="field-tag">financial_status</span>
+          <span class="field-tag">cancelled_at</span>
+          <span class="field-tag">cancel_reason</span>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="uc-title">💳 決済方法別分析</div>
+        <div class="uc-body">Shopify Payments・Amazon Pay・コンビニ後払い等の決済方法別件数・金額。決済体験改善の基礎データ。</div>
+        <div class="uc-fields">
+          <span class="field-tag">payment_gateway_names</span>
+          <span class="field-tag">financial_status</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主要フィールド -->
+  <div class="section">
+    <div class="section-title">🔑 主要フィールド一覧</div>
+    <table>
+      <thead><tr><th>フィールド名</th><th>型</th><th>内容・活用方法</th><th>実値例</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono td-key">id</td>
+          <td><span class="badge badge-blue">STRING</span></td>
+          <td>Shopify受注ID（ハッシュ）。subscription_billing_attemptsとJOIN可能</td>
+          <td class="mono" style="font-size:10px">e144f889c6...</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">created_at</td>
+          <td><span class="badge badge-yellow">DATETIME</span></td>
+          <td>受注日時。日次・月次集計の軸として使用</td>
+          <td class="mono" style="font-size:10px">2022-09-17T05:17:16</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">source_name</td>
+          <td><span class="badge badge-blue">STRING</span></td>
+          <td><strong>定期便 vs 単品の判定キー</strong>。下表参照</td>
+          <td class="mono" style="font-size:10px">web / subscription_contract</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">financial_status</td>
+          <td><span class="badge badge-blue">STRING</span></td>
+          <td>支払状態。paid/refunded/voided等。返金分析に使用</td>
+          <td class="mono" style="font-size:10px">paid / refunded</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">fulfillment_status</td>
+          <td><span class="badge badge-blue">STRING</span></td>
+          <td>出荷状態。fulfilledで出荷完了。NULLは未出荷</td>
+          <td class="mono" style="font-size:10px">fulfilled / null</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">total_price</td>
+          <td><span class="badge badge-purple">INT64</span></td>
+          <td>税込合計金額（円）。NEのsub_total_priceと異なり税込で格納</td>
+          <td class="mono" style="font-size:10px">14800</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">total_discounts</td>
+          <td><span class="badge badge-purple">INT64</span></td>
+          <td>クーポン等の割引合計額（円）</td>
+          <td class="mono" style="font-size:10px">2999</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">discount_codes</td>
+          <td><span class="badge badge-blue">STRING(JSON)</span></td>
+          <td>利用クーポンコード・割引額・割引タイプ。JSON配列形式</td>
+          <td class="mono" style="font-size:10px">[{"code":"OGS2025_11","amount":"2999"}]</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">tags</td>
+          <td><span class="badge badge-blue">STRING</span></td>
+          <td>受注に付与されたShopifyタグ。顧客セグメント・キャンペーン判定に使用</td>
+          <td class="mono" style="font-size:10px">初回購入, F1-2024, ogs_entry</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">landing_site</td>
+          <td><span class="badge badge-blue">STRING</span></td>
+          <td>購入前の最初のランディングURL。UTMパラメータを含む</td>
+          <td class="mono" style="font-size:10px">/collections/...?utm_source=LINE</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">referring_site</td>
+          <td><span class="badge badge-blue">STRING</span></td>
+          <td>参照元サイトURL</td>
+          <td class="mono" style="font-size:10px">https://google.com/...</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">payment_gateway_names</td>
+          <td><span class="badge badge-blue">STRING(JSON)</span></td>
+          <td>決済方法。shopify_payments / amazon_payments / 代金引換 等</td>
+          <td class="mono" style="font-size:10px">["shopify_payments"]</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">cancel_reason</td>
+          <td><span class="badge badge-blue">STRING</span></td>
+          <td>キャンセル理由（cancelled_atがある場合）</td>
+          <td class="mono" style="font-size:10px">customer / fraud</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">customer_id</td>
+          <td><span class="badge badge-blue">STRING</span></td>
+          <td>ShopifyのカスタマーID（ハッシュ）。subscription_customersとJOIN可</td>
+          <td class="mono" style="font-size:10px">5efa6a95...</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">line_items</td>
+          <td><span class="badge badge-blue">STRING(JSON)</span></td>
+          <td>購入明細（SKU・商品名・数量・金額）。JSON配列。ブランド別集計はSKUを解析</td>
+          <td class="mono" style="font-size:10px">[{"sku":"875-teiki","quantity":1,...}]</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">note / note_attributes</td>
+          <td><span class="badge badge-blue">STRING</span></td>
+          <td>備考欄・注文属性（配送時間指定など）</td>
+          <td class="mono" style="font-size:10px">【新規定期】</td>
+        </tr>
+        <tr>
+          <td class="mono td-key">buyer_accepts_marketing</td>
+          <td><span class="badge badge-purple">INT64</span></td>
+          <td>メルマガ受信同意フラグ（1=同意）。メール配信対象者の絞り込みに使用</td>
+          <td class="mono" style="font-size:10px">1 / 0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- パラメータ実値 -->
+  <div class="section">
+    <div class="section-title">📊 パラメータ実値（実データベース）</div>
+    <div class="two-col">
+      <div>
+        <table>
+          <thead><tr><th colspan="3">source_name — 受注種別</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">web</td><td>通常単品購入</td><td class="mono" style="text-align:right">401,735件</td></tr>
+            <tr><td class="mono">subscription_contract</td><td>定期便（自動更新）</td><td class="mono" style="text-align:right">376,350件</td></tr>
+            <tr><td class="mono">subscription_contract_checkout_one</td><td>定期便（初回）</td><td class="mono" style="text-align:right">72,644件</td></tr>
+            <tr><td class="mono">shopify_draft_order</td><td>ドラフト受注（手動）</td><td class="mono" style="text-align:right">18件</td></tr>
+          </tbody>
+        </table>
+        <div style="height:10px"></div>
+        <table>
+          <thead><tr><th colspan="2">financial_status — 支払状態</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-green">paid</span> 支払完了</td><td class="mono" style="text-align:right">852,440件</td></tr>
+            <tr><td><span class="badge badge-yellow">pending</span> 支払待ち</td><td class="mono" style="text-align:right">5,169件</td></tr>
+            <tr><td><span class="badge badge-red">refunded</span> 全額返金</td><td class="mono" style="text-align:right">4,749件</td></tr>
+            <tr><td><span class="badge badge-gray">voided</span> 無効化</td><td class="mono" style="text-align:right">1,734件</td></tr>
+            <tr><td><span class="badge badge-yellow">partially_refunded</span> 一部返金</td><td class="mono" style="text-align:right">44件</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th colspan="2">payment_gateway_names — 決済方法（上位）</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">shopify_payments</td><td class="mono" style="text-align:right">720,951件</td></tr>
+            <tr><td class="mono">amazon_payments</td><td class="mono" style="text-align:right">49,064件</td></tr>
+            <tr><td>代金引換</td><td class="mono" style="text-align:right">18,012件</td></tr>
+            <tr><td>コンビニ決済（GMOイプシロン）</td><td class="mono" style="text-align:right">11,772件</td></tr>
+            <tr><td>PayPay決済</td><td class="mono" style="text-align:right">5,385件</td></tr>
+            <tr><td>あと払い（ペイディ）</td><td class="mono" style="text-align:right">5,085件</td></tr>
+            <tr><td>コンビニ後払い（スコア）</td><td class="mono" style="text-align:right">4,496件</td></tr>
+            <tr><td>銀行振込前払い</td><td class="mono" style="text-align:right">2,954件</td></tr>
+          </tbody>
+        </table>
+        <div style="height:10px"></div>
+        <table>
+          <thead><tr><th colspan="2">tagsの主要値（実データ）</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">F1-2024, ogs_entry</td><td class="mono" style="text-align:right">44,285件</td></tr>
+            <tr><td class="mono">初回購入</td><td class="mono" style="text-align:right">30,979件</td></tr>
+            <tr><td class="mono">100nmMiracle: 500</td><td class="mono" style="text-align:right">26,553件</td></tr>
+            <tr><td class="mono">F1-2024</td><td class="mono" style="text-align:right">16,609件</td></tr>
+            <tr><td class="mono">F2-2024</td><td class="mono" style="text-align:right">6,964件</td></tr>
+            <tr><td class="mono">VC_f1 / CD_f1</td><td class="mono" style="text-align:right">1,752 / 1,113件</td></tr>
+            <tr><td class="mono">MION_trial_get</td><td class="mono" style="text-align:right">1,400件</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- UTM流入元 -->
+  <div class="section">
+    <div class="section-title">📡 landing_site UTM流入元（上位）</div>
+    <table>
+      <thead><tr><th>utm_source</th><th>utm_medium</th><th>件数</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">google</td><td class="mono">cpc</td><td class="mono">65,790</td><td>Google検索広告</td></tr>
+        <tr><td class="mono">LINE</td><td class="mono">social</td><td class="mono">23,283</td><td>LINE（リッチメッセージ等）</td></tr>
+        <tr><td class="mono">line_menu</td><td class="mono">line</td><td class="mono">21,676</td><td>LINEリッチメニュー</td></tr>
+        <tr><td class="mono">yahoo</td><td class="mono">cpc</td><td class="mono">16,119</td><td>Yahoo!検索広告</td></tr>
+        <tr><td class="mono">shopify_email</td><td class="mono">email</td><td class="mono">13,512</td><td>Shopifyメール配信</td></tr>
+        <tr><td class="mono">google</td><td class="mono">product_sync</td><td class="mono">12,682</td><td>Googleショッピング</td></tr>
+        <tr><td class="mono">gsa</td><td class="mono">search</td><td class="mono">9,172</td><td>Google検索（オーガニック）</td></tr>
+        <tr><td class="mono">facebook</td><td class="mono">display</td><td class="mono">8,146</td><td>Facebook広告</td></tr>
+        <tr><td class="mono">gdn</td><td class="mono">display</td><td class="mono">3,096</td><td>Googleディスプレイ広告</td></tr>
+        <tr><td class="mono">Instagram</td><td class="mono">social</td><td class="mono">1,164</td><td>Instagram</td></tr>
+        <tr><td>（UTMなし）</td><td>—</td><td class="mono">200,115</td><td>ダイレクト流入 or UTM未設定</td></tr>
+      </tbody>
+    </table>
+    <div class="note note-blue" style="margin-top:10px">
+      <strong>💡 クーポンの主要コード（実データ）：</strong>
+      <code>OGS2025_11</code>（46,258件・¥2,999割引）、
+      <code>100nmMiracle</code>（35,236件・¥500割引）、
+      <code>LYPOCSUMMERGIFT2024</code>（9,083件・¥2,999割引）、
+      <code>teikigift11</code>（4,370件・¥3,329割引）
+    </div>
+    <div class="note note-yellow" style="margin-top:8px">
+      <strong>⚠️ NEデータとの違い：</strong> shopify_ordersのtotal_priceは<strong>税込金額</strong>。NEのsub_total_priceも税込だが、ブランド別の正確な税抜売上集計はNEデータの行レベル税率計算を使うこと。Shopifyデータはマーケティング分析（クーポン・流入・タグ）専用と割り切るのが実務的。
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ========================================
+     TAB 7: 商品マスタ（主力ブランド）
+     ======================================== -->
+<div id="tab-goods" class="tab-content">
+<div class="content-wrap">
+
+  <div class="source-hero">
+    <div class="hero-icon">🏷️</div>
+    <div>
+      <h2>商品マスタ — 主力ブランド商品</h2>
+      <p>VC・C+D・C+D+K・C+Cera・CBD・SKINBEAUTY・MINERALion・for SPORTS の全SKU網羅。<strong>ブランド判別の正はgoods_tag（TRIM必須）</strong>。商品名でのブランド判別は禁止。</p>
+      <div class="hero-meta">
+        <span class="hero-badge" style="background:#fef9c3;color:#b45309;border:1px solid #fcd34d">全SKU: 826件</span>
+        <span class="hero-badge badge-green">主力ブランド: 約200件</span>
+        <span class="hero-badge badge-red">税率: 8%（サプリ）/ 10%（SKINBEAUTY）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- VC -->
+  <div class="section">
+    <div class="section-title">🟠 Lypo-C VC — goods_tag: [Lypo-C] / [Lypo-C for SPORTS]　税率: 8%　BM: 坪井</div>
+    <table>
+      <thead><tr><th>goods_id</th><th>商品名</th><th>定価(税込)</th><th>初回販売日</th><th>最終販売日</th><th>累計受注件数</th></tr></thead>
+      <tbody>
+        <tr style="background:#fff8f0"><td class="mono">875</td><td>Lypo-C Vitamin C 30包入</td><td class="mono">¥7,200</td><td class="mono">2015-07-14</td><td class="mono">2026-04-28</td><td class="mono" style="text-align:right">625,870件</td></tr>
+        <tr style="background:#fff8f0"><td class="mono">876</td><td>Lypo-C Vitamin C 28包入</td><td class="mono">¥7,200</td><td class="mono">2025-01-21</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">58,086件</td></tr>
+        <tr style="background:#fff8f0"><td class="mono">449</td><td>Lypo-C Vitamin C 11包入</td><td class="mono">¥2,777</td><td class="mono">2020-06-04</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">144,416件</td></tr>
+        <tr><td class="mono">449-1</td><td>Lypo-C(11包)/ネコポス</td><td class="mono">¥2,777</td><td class="mono">2020-06-04</td><td class="mono">2020-11-13</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">457</td><td>Lypo-C(11包入)</td><td class="mono">¥2,777</td><td class="mono">2020-06-04</td><td class="mono">2020-09-13</td><td class="mono" style="text-align:right">1,113件</td></tr>
+        <tr><td class="mono">453</td><td>Lypo-C Vitamin C 90包入</td><td class="mono">¥20,000</td><td class="mono">2020-05-25</td><td class="mono">2026-04-28</td><td class="mono" style="text-align:right">33,539件</td></tr>
+        <tr><td class="mono">2966</td><td>Lypo-C Vitamin C 120包</td><td class="mono">¥26,667</td><td class="mono">2020-02-22</td><td class="mono">2024-05-10</td><td class="mono" style="text-align:right">1,073件</td></tr>
+        <tr><td class="mono">2967</td><td>Lypo-C Vitamin C 30包入（セット品）</td><td class="mono">¥7,200</td><td class="mono">2022-09-13</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">1,755件</td></tr>
+        <tr><td class="mono">2976</td><td>Lypo-C Vitamin C（60包）</td><td class="mono">¥13,889</td><td class="mono">2024-05-30</td><td class="mono">2026-04-22</td><td class="mono" style="text-align:right">204件</td></tr>
+        <tr><td class="mono">2977</td><td>Lypo-C Vitamin C（120包）</td><td class="mono">¥26,667</td><td class="mono">2024-05-30</td><td class="mono">2025-02-17</td><td class="mono" style="text-align:right">1件</td></tr>
+        <tr><td class="mono">2978</td><td>Lypo-C Vitamin C（90包）</td><td class="mono">¥20,000</td><td class="mono">2025-02-20</td><td class="mono">2025-07-01</td><td class="mono" style="text-align:right">73件</td></tr>
+        <tr><td class="mono">2968</td><td>Lypo-C Vitamin C バージンパック</td><td class="mono">¥0</td><td class="mono">2020-04-22</td><td class="mono">2026-04-28</td><td class="mono" style="text-align:right">78,630件</td></tr>
+        <tr><td class="mono">2942</td><td>Lypo-C Vitamin C 分包（バラ）</td><td class="mono">¥0</td><td class="mono">2023-09-02</td><td class="mono">2026-04-24</td><td class="mono" style="text-align:right">180件</td></tr>
+        <tr><td class="mono">2980</td><td>Lypo-C Vitamin C（100包）</td><td class="mono">¥0</td><td class="mono">2025-08-28</td><td class="mono">2025-12-25</td><td class="mono" style="text-align:right">18件</td></tr>
+        <tr><td class="mono">2979</td><td>Lypo-C RUN KIT</td><td class="mono">¥0</td><td class="mono">2025-03-10</td><td class="mono">2025-04-05</td><td class="mono" style="text-align:right">40件</td></tr>
+        <tr><td class="mono">3023</td><td>Lypo-C Vitamin C バージンパック（3包）</td><td class="mono">¥0</td><td class="mono">2026-01-15</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">45件</td></tr>
+        <tr><td class="mono">3023-set</td><td>【バリア×Cチャージセット】Lypo-C VC（3包入）</td><td class="mono">¥0</td><td class="mono">2026-01-13</td><td class="mono">2026-04-24</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">115</td><td>Lypo-C ウェルネスリチュアルセット</td><td class="mono">¥0</td><td class="mono">2026-04-01</td><td class="mono">2026-04-24</td><td class="mono" style="text-align:right">4件</td></tr>
+        <tr><td class="mono">116</td><td>Lypo-C スターターセット</td><td class="mono">¥0</td><td class="mono">2026-04-01</td><td class="mono">2026-04-24</td><td class="mono" style="text-align:right">3件</td></tr>
+        <tr><td class="mono">1004490</td><td>Lypo-C Vitamin C 11包入</td><td class="mono">¥2,777</td><td class="mono">2023-07-04</td><td class="mono">2026-01-09</td><td class="mono" style="text-align:right">185件</td></tr>
+        <tr style="background:#fff8f0"><td class="mono">1004491</td><td>Lypo-C Vitamin C 11包入［Amazon］</td><td class="mono">¥2,777</td><td class="mono">2021-09-02</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">131,432件</td></tr>
+        <tr><td class="mono">1004492</td><td>Lypo-C Vitamin C 11包入</td><td class="mono">¥2,777</td><td class="mono">2020-11-09</td><td class="mono">2024-08-31</td><td class="mono" style="text-align:right">244件</td></tr>
+        <tr><td class="mono">1004493</td><td>Lypo-C Vitamin C 11包入</td><td class="mono">¥2,777</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">1004494</td><td>Lypo-C Vitamin C 11包入</td><td class="mono">¥2,777</td><td class="mono">2020-11-17</td><td class="mono">2026-02-27</td><td class="mono" style="text-align:right">16件</td></tr>
+        <tr><td class="mono">1004495</td><td>Lypo-C Vitamin C 11包入</td><td class="mono">¥2,777</td><td class="mono">2024-10-25</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">6,124件</td></tr>
+        <tr><td class="mono">1004496</td><td>【10万人モニター】Lypo-C VC 11包入</td><td class="mono">¥0</td><td class="mono">2025-07-09</td><td class="mono">2026-01-29</td><td class="mono" style="text-align:right">46,327件</td></tr>
+        <tr><td class="mono">1004499</td><td>Lypo-C Vitamin C（11包入）+コットン巾着</td><td class="mono">¥2,777</td><td class="mono">2025-12-26</td><td class="mono">2026-03-31</td><td class="mono" style="text-align:right">3件</td></tr>
+        <tr><td class="mono">1004531</td><td>Lypo-C Vitamin C 90包入 社販用</td><td class="mono">¥20,000</td><td class="mono">2022-06-28</td><td class="mono">2024-05-07</td><td class="mono" style="text-align:right">3件</td></tr>
+        <tr><td class="mono">1004532</td><td>Lypo-C Vitamin C 90包入</td><td class="mono">¥20,000</td><td class="mono">2020-11-04</td><td class="mono">2024-06-05</td><td class="mono" style="text-align:right">34件</td></tr>
+        <tr><td class="mono">1004534</td><td>Lypo-C Vitamin C 90包入</td><td class="mono">¥20,000</td><td class="mono">2020-12-28</td><td class="mono">2023-02-28</td><td class="mono" style="text-align:right">7件</td></tr>
+        <tr><td class="mono">1004535</td><td>Lypo-C Vitamin C 90包入</td><td class="mono">¥20,000</td><td class="mono">2024-11-06</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">528件</td></tr>
+        <tr><td class="mono">1008751</td><td>Lypo-C Vitamin C 30包入</td><td class="mono">¥7,200</td><td class="mono">2023-05-16</td><td class="mono">2024-12-13</td><td class="mono" style="text-align:right">272件</td></tr>
+        <tr><td class="mono">1008752</td><td>Lypo-C Vitamin C 30包入</td><td class="mono">¥7,200</td><td class="mono">2020-11-04</td><td class="mono">2026-01-19</td><td class="mono" style="text-align:right">602件</td></tr>
+        <tr><td class="mono">1008754</td><td>Lypo-C Vitamin C 30包入</td><td class="mono">¥7,200</td><td class="mono">2020-11-17</td><td class="mono">2026-02-27</td><td class="mono" style="text-align:right">176件</td></tr>
+        <tr><td class="mono">1008755</td><td>Lypo-C Vitamin C 30包入</td><td class="mono">¥7,200</td><td class="mono">2025-06-10</td><td class="mono">2026-04-24</td><td class="mono" style="text-align:right">137件</td></tr>
+        <tr style="background:#fff8f0"><td class="mono">1008764</td><td>Lypo-C Vitamin C 28包入［Amazon］</td><td class="mono">¥7,200</td><td class="mono">2025-01-30</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">75,131件</td></tr>
+        <tr><td class="mono">1108754</td><td>Lypo-C(30包入) PRESS</td><td class="mono">¥7,200</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">9004491</td><td>Lypo-C Vitamin C 11包入</td><td class="mono">¥2,777</td><td class="mono">2023-08-22</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">19,697件</td></tr>
+        <tr><td class="mono">9008751</td><td>Lypo-C Vitamin C 30包入</td><td class="mono">¥7,200</td><td class="mono">2023-08-22</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">837件</td></tr>
+        <tr><td class="mono">9008761</td><td>Lypo-C Vitamin C 28包入</td><td class="mono">¥7,200</td><td class="mono">2025-02-28</td><td class="mono">2026-04-26</td><td class="mono" style="text-align:right">146件</td></tr>
+        <tr><td class="mono">880</td><td>Lypo-C for SPORTS（VC30包入）</td><td class="mono">¥9,200</td><td class="mono">2025-08-28</td><td class="mono">2026-04-26</td><td class="mono" style="text-align:right">90件</td></tr>
+        <tr><td class="mono">1008756</td><td>Lypo-C for SPORTS（VC30包入）</td><td class="mono">¥9,200</td><td class="mono">2025-09-02</td><td class="mono">2026-04-06</td><td class="mono" style="text-align:right">81件</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C+D -->
+  <div class="section">
+    <div class="section-title">🟢 Lypo-C C+D — goods_tag: [Lypo-C C+D] / [Lypo-C for SPORTS C+D]　税率: 8%　BM: 坪井</div>
+    <table>
+      <thead><tr><th>goods_id</th><th>商品名</th><th>定価(税込)</th><th>初回販売日</th><th>最終販売日</th><th>累計受注件数</th></tr></thead>
+      <tbody>
+        <tr style="background:#fff8f0"><td class="mono">511</td><td>Lypo-C Vitamin C+D 30包入</td><td class="mono">¥8,300</td><td class="mono">2023-06-06</td><td class="mono">2026-04-28</td><td class="mono" style="text-align:right">228,962件</td></tr>
+        <tr style="background:#fff8f0"><td class="mono">512</td><td>Lypo-C Vitamin C+D 28包入</td><td class="mono">¥8,300</td><td class="mono">2025-01-21</td><td class="mono">2026-04-28</td><td class="mono" style="text-align:right">26,478件</td></tr>
+        <tr style="background:#fff8f0"><td class="mono">510</td><td>Lypo-C Vitamin C+D 11包入</td><td class="mono">¥3,190</td><td class="mono">2023-08-24</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">35,322件</td></tr>
+        <tr><td class="mono">1005101</td><td>Lypo-C Vitamin C+D 11包入</td><td class="mono">¥3,190</td><td class="mono">2023-10-30</td><td class="mono">2025-12-16</td><td class="mono" style="text-align:right">8件</td></tr>
+        <tr><td class="mono">1005102</td><td>Lypo-C Vitamin C+D 11包入</td><td class="mono">¥3,190</td><td class="mono">2024-01-05</td><td class="mono">2025-09-30</td><td class="mono" style="text-align:right">8件</td></tr>
+        <tr style="background:#fff8f0"><td class="mono">1005104</td><td>Lypo-C Vitamin C+D 11包入［Amazon］</td><td class="mono">¥3,190</td><td class="mono">2023-09-21</td><td class="mono">2026-04-28</td><td class="mono" style="text-align:right">33,740件</td></tr>
+        <tr><td class="mono">1005105</td><td>Lypo-C Vitamin C+D 11包入</td><td class="mono">¥3,190</td><td class="mono">2024-12-11</td><td class="mono">2026-04-24</td><td class="mono" style="text-align:right">907件</td></tr>
+        <tr><td class="mono">1005109</td><td>Lypo-C Vitamin C＋D（11包入）+コットン巾着</td><td class="mono">¥3,190</td><td class="mono">2025-12-26</td><td class="mono">2026-03-31</td><td class="mono" style="text-align:right">3件</td></tr>
+        <tr><td class="mono">1005111</td><td>Lypo-C Vitamin C+D 30包入</td><td class="mono">¥8,300</td><td class="mono">2023-07-26</td><td class="mono">2025-11-25</td><td class="mono" style="text-align:right">22件</td></tr>
+        <tr><td class="mono">1005112</td><td>Lypo-C Vitamin C+D 30包入</td><td class="mono">¥8,300</td><td class="mono">2023-09-15</td><td class="mono">2025-08-15</td><td class="mono" style="text-align:right">40件</td></tr>
+        <tr><td class="mono">1005114</td><td>Lypo-C Vitamin C+D 30包入</td><td class="mono">¥8,300</td><td class="mono">2023-10-31</td><td class="mono">2026-02-27</td><td class="mono" style="text-align:right">18件</td></tr>
+        <tr><td class="mono">1005115</td><td>Lypo-C Vitamin C+D 30包入</td><td class="mono">¥8,300</td><td class="mono">2025-09-30</td><td class="mono">2026-04-24</td><td class="mono" style="text-align:right">160件</td></tr>
+        <tr style="background:#fff8f0"><td class="mono">1005124</td><td>Lypo-C Vitamin C+D 28包入［Amazon］</td><td class="mono">¥8,300</td><td class="mono">2025-01-30</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">38,866件</td></tr>
+        <tr><td class="mono">9005101</td><td>Lypo-C Vitamin C+D 11包入</td><td class="mono">¥3,190</td><td class="mono">2023-10-02</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">1,361件</td></tr>
+        <tr><td class="mono">9005111</td><td>Lypo-C Vitamin C+D 30包入</td><td class="mono">¥8,300</td><td class="mono">2023-10-02</td><td class="mono">2026-04-26</td><td class="mono" style="text-align:right">479件</td></tr>
+        <tr><td class="mono">9005112</td><td>Lypo-C Vitamin C+D 30包入</td><td class="mono">¥8,300</td><td class="mono">2024-03-19</td><td class="mono">2024-07-01</td><td class="mono" style="text-align:right">17件</td></tr>
+        <tr><td class="mono">9005121</td><td>Lypo-C Vitamin C+D 28包入</td><td class="mono">¥8,300</td><td class="mono">2025-02-28</td><td class="mono">2026-04-26</td><td class="mono" style="text-align:right">101件</td></tr>
+        <tr><td class="mono">3000</td><td>Lypo-C Vitamin C+D バージンパック（4包入り）</td><td class="mono">¥0</td><td class="mono">2023-09-01</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">3,920件</td></tr>
+        <tr><td class="mono">3001</td><td>Lypo-C Vitamin C+D 分包（バラ）</td><td class="mono">¥0</td><td class="mono">2023-09-05</td><td class="mono">2026-04-24</td><td class="mono" style="text-align:right">144件</td></tr>
+        <tr><td class="mono">3002</td><td>Lypo-C Vitamin C+D（セット品）</td><td class="mono">¥0</td><td class="mono">2023-09-07</td><td class="mono">2026-04-07</td><td class="mono" style="text-align:right">111件</td></tr>
+        <tr><td class="mono">3018</td><td>Lypo-C Vitamin C+D VP（3包）</td><td class="mono">¥0</td><td class="mono">2025-09-29</td><td class="mono">2026-02-12</td><td class="mono" style="text-align:right">2,580件</td></tr>
+        <tr><td class="mono">3024</td><td>Lypo-C Vitamin C＋D バージンパック（3包）</td><td class="mono">¥0</td><td class="mono">2026-02-06</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">859件</td></tr>
+        <tr><td class="mono">3027</td><td>【プレゼント】Lypo-C Vitamin C+D 4包入</td><td class="mono">¥0</td><td class="mono">2025-11-12</td><td class="mono">2026-03-23</td><td class="mono" style="text-align:right">7,252件</td></tr>
+        <tr><td class="mono">3029</td><td>【プレゼント】Lypo-C Vitamin C+D 4包入</td><td class="mono">¥0</td><td class="mono">2025-12-18</td><td class="mono">2026-03-31</td><td class="mono" style="text-align:right">3件</td></tr>
+        <tr><td class="mono">3031</td><td>【プレゼント】Lypo-C C+D バージンパック（3包）</td><td class="mono">¥0</td><td class="mono">2026-04-21</td><td class="mono">2026-04-28</td><td class="mono" style="text-align:right">1,115件</td></tr>
+        <tr><td class="mono">3005</td><td>Lypo-C C+D .dev品 30包入</td><td class="mono">¥0</td><td class="mono">2025-02-05</td><td class="mono">2025-06-24</td><td class="mono" style="text-align:right">5件</td></tr>
+        <tr><td class="mono">505</td><td>Lypo-C Vitamin C+D 試供品（12包入り）</td><td class="mono">¥0</td><td class="mono">2023-04-03</td><td class="mono">2024-10-10</td><td class="mono" style="text-align:right">122件</td></tr>
+        <tr><td class="mono">506</td><td>Lypo-C C＋D 試供品（120包セット）</td><td class="mono">¥0</td><td class="mono">2023-04-22</td><td class="mono">2023-09-02</td><td class="mono" style="text-align:right">3件</td></tr>
+        <tr><td class="mono">881</td><td>Lypo-C for SPORTS（C+D 30包入）</td><td class="mono">¥10,300</td><td class="mono">2025-12-03</td><td class="mono">2026-04-15</td><td class="mono" style="text-align:right">31件</td></tr>
+        <tr><td class="mono">1008816</td><td>Lypo-C for SPORTS（C+D 30包入）</td><td class="mono">¥0</td><td class="mono">2026-02-20</td><td class="mono">2026-04-06</td><td class="mono" style="text-align:right">16件</td></tr>
+        <tr><td class="mono">3003</td><td>Lypo-C VC（2包）&amp; C+D（2包）／バージンパック</td><td class="mono">¥0</td><td class="mono">2023-12-12</td><td class="mono">2024-01-22</td><td class="mono" style="text-align:right">3件</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C+D+K -->
+  <div class="section">
+    <div class="section-title">🟩 C+D+K — goods_tag: [Lypo-C C+D+K]　税率: 8%　BM: 坪井</div>
+    <table>
+      <thead><tr><th>goods_id</th><th>商品名</th><th>定価(税込)</th><th>初回販売日</th><th>最終販売日</th><th>累計受注件数</th></tr></thead>
+      <tbody>
+        <tr style="background:#fff8f0"><td class="mono">110</td><td>Lypo-C Vitamin C＋D＋K 30包入</td><td class="mono">¥10,200</td><td class="mono">2025-08-23</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">309件</td></tr>
+        <tr><td class="mono">2981</td><td>Lypo-C Vitamin C＋D＋K（60包）</td><td class="mono">¥20,400</td><td class="mono">2026-03-23</td><td class="mono">2026-04-03</td><td class="mono" style="text-align:right">2件</td></tr>
+        <tr><td class="mono">1001101</td><td>Lypo-C Vitamin C＋D＋K 30包入</td><td class="mono">¥10,200</td><td class="mono">2025-09-17</td><td class="mono">2025-09-30</td><td class="mono" style="text-align:right">1件</td></tr>
+        <tr><td class="mono">1001102</td><td>Lypo-C Vitamin C＋D＋K 30包入</td><td class="mono">¥10,200</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">1001105</td><td>Lypo-C Vitamin C＋D＋K 30包入</td><td class="mono">¥10,200</td><td class="mono">2026-01-07</td><td class="mono">2026-04-26</td><td class="mono" style="text-align:right">85件</td></tr>
+        <tr><td class="mono">1001106</td><td>Lypo-C Vitamin C＋D＋K 30包入</td><td class="mono">¥10,200</td><td class="mono">2026-01-13</td><td class="mono">2026-03-09</td><td class="mono" style="text-align:right">106件</td></tr>
+        <tr><td class="mono">3012</td><td>Lypo-C Vitamin C＋D＋K 分包（バラ）</td><td class="mono">¥0</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">3013</td><td>Lypo-C Vitamin C＋D＋K バージンパック</td><td class="mono">¥0</td><td class="mono">2025-09-03</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">204件</td></tr>
+        <tr><td class="mono">3025</td><td>Lypo-C Vitamin C＋D＋K バージンパック（3包）</td><td class="mono">¥0</td><td class="mono">2026-02-06</td><td class="mono">2026-02-18</td><td class="mono" style="text-align:right">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C+Cera -->
+  <div class="section">
+    <div class="section-title">🩷 C+Cera — goods_tag: [Lypo-C C＋Cera]　※＋は全角U+FF0B　税率: 8%　BM: 仲宗根</div>
+    <table>
+      <thead><tr><th>goods_id</th><th>商品名</th><th>定価(税込)</th><th>初回販売日</th><th>最終販売日</th><th>累計受注件数</th></tr></thead>
+      <tbody>
+        <tr style="background:#fff8f0"><td class="mono">105</td><td>Lypo-C Vitamin C＋Cera 7包入</td><td class="mono">¥3,426</td><td class="mono">2026-02-09</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">727件</td></tr>
+        <tr style="background:#fff8f0"><td class="mono">106</td><td>Lypo-C Vitamin C＋Cera 28包入</td><td class="mono">¥12,463</td><td class="mono">2025-11-28</td><td class="mono">2026-04-28</td><td class="mono" style="text-align:right">3,899件</td></tr>
+        <tr><td class="mono">1001052</td><td>Lypo-C Vitamin C＋Cera 7包入</td><td class="mono">¥3,426</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">1001054</td><td>Lypo-C Vitamin C＋Cera 7包入[amazon]</td><td class="mono">¥3,426</td><td class="mono">2026-02-12</td><td class="mono">2026-04-25</td><td class="mono" style="text-align:right">104件</td></tr>
+        <tr><td class="mono">1001055</td><td>Lypo-C Vitamin C＋Cera 7包入</td><td class="mono">¥3,426</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">1001062</td><td>Lypo-C Vitamin C＋Cera 28包入</td><td class="mono">¥12,463</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">1001064</td><td>Lypo-C Vitamin C＋Cera 28包入[amazon]</td><td class="mono">¥12,463</td><td class="mono">2026-02-12</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">331件</td></tr>
+        <tr><td class="mono">3014</td><td>Lypo-C Vitamin C＋Cera バージンパック（3包入）</td><td class="mono">¥0</td><td class="mono">2026-01-09</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">259件</td></tr>
+        <tr><td class="mono">3014-set</td><td>【バリア×Cチャージセット】Lypo-C C＋Cera（3包入）</td><td class="mono">¥0</td><td class="mono">2026-01-13</td><td class="mono">2026-04-24</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">3015</td><td>Lypo-C Vitamin C＋Cera 分包（バラ）</td><td class="mono">¥0</td><td class="mono">2026-02-06</td><td class="mono">2026-04-22</td><td class="mono" style="text-align:right">5件</td></tr>
+        <tr><td class="mono">3028</td><td>C+Ceraアルミ分包28包入（説明資料付き）</td><td class="mono">¥0</td><td class="mono">2025-12-26</td><td class="mono">2026-02-04</td><td class="mono" style="text-align:right">27件</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CBD -->
+  <div class="section">
+    <div class="section-title">🌿 CBD — goods_tag: [Lypo-C CBD]　税率: 8%　BM: 冨田</div>
+    <table>
+      <thead><tr><th>goods_id</th><th>商品名</th><th>定価(税込)</th><th>初回販売日</th><th>最終販売日</th><th>累計受注件数</th></tr></thead>
+      <tbody>
+        <tr style="background:#fff8f0"><td class="mono">100</td><td>Lypo-C CBD 9包入</td><td class="mono">¥3,000</td><td class="mono">2025-06-09</td><td class="mono">2026-04-26</td><td class="mono" style="text-align:right">877件</td></tr>
+        <tr style="background:#fff8f0"><td class="mono">101</td><td>Lypo-C CBD 27包入</td><td class="mono">¥8,300</td><td class="mono">2025-05-08</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">5,044件</td></tr>
+        <tr><td class="mono">1001002</td><td>Lypo-C CBD 9包入</td><td class="mono">¥3,000</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">1001011</td><td>Lypo-C CBD 27包入</td><td class="mono">¥8,300</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="text-align:right">—</td></tr>
+        <tr><td class="mono">1001012</td><td>Lypo-C CBD 27包入</td><td class="mono">¥8,300</td><td class="mono">2025-08-08</td><td class="mono">2026-02-27</td><td class="mono" style="text-align:right">3件</td></tr>
+        <tr><td class="mono">3004</td><td>Lypo-C CBD .dev品 30包入</td><td class="mono">¥0</td><td class="mono">2024-10-30</td><td class="mono">2025-03-13</td><td class="mono" style="text-align:right">7件</td></tr>
+        <tr><td class="mono">3006</td><td>Lypo-C CBD 分包（バラ）</td><td class="mono">¥0</td><td class="mono">2025-06-13</td><td class="mono">2026-04-03</td><td class="mono" style="text-align:right">18件</td></tr>
+        <tr><td class="mono">3007</td><td>Lypo-C CBD バージンパック（4包入り）</td><td class="mono">¥0</td><td class="mono">2025-06-09</td><td class="mono">2026-02-21</td><td class="mono" style="text-align:right">704件</td></tr>
+        <tr><td class="mono">3010</td><td>Lypo-C CBD（30包）</td><td class="mono">¥0</td><td class="mono">2025-06-30</td><td class="mono">2026-02-06</td><td class="mono" style="text-align:right">59件</td></tr>
+        <tr><td class="mono">3026</td><td>Lypo-C CBD バージンパック（3包）</td><td class="mono">¥0</td><td class="mono">2026-01-14</td><td class="mono">2026-04-27</td><td class="mono" style="text-align:right">155件</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<!-- ========================================
+     TAB 8: 商品マスタ（その他）
+     ======================================== -->
+<div id="tab-goods-other" class="tab-content">
+<div class="content-wrap">
+
+  <div class="source-hero">
+    <div class="hero-icon">📋</div>
+    <div>
+      <h2>商品マスタ — その他商品・化粧品（全607件）</h2>
+      <p>同梱物・販促品・ノベルティ・化粧品（LPB/SPIC DRESSING）・サプリメント・ロイヤリティ・タグ未設定品の全件一覧。<strong>売上集計からは原則除外</strong>。</p>
+      <div class="hero-meta">
+        <span class="hero-badge badge-gray">その他商品: 457件</span>
+        <span class="hero-badge badge-gray">化粧品: 53件</span>
+        <span class="hero-badge badge-gray">タグ未設定: 72件</span>
+        <span class="hero-badge badge-red">売上集計: 除外対象</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note note-red" style="margin-bottom:16px">
+    <strong>⚠️ 集計除外方法：</strong> <code>TRIM(goods_tag) NOT IN ('[その他商品]','[化粧品]','[サプリメント]','[ロイヤリティ]','[その他]')</code> または <code>goods_selling_price &gt; 0</code> でフィルタ。receive_order_rowには大量出現するが sub_total_price=0 のため金額集計への影響はない。
+  </div>
+
+  <!-- 検索UI -->
+  <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+    <div style="position:relative;flex:1;min-width:200px">
+      <input id="other-search" type="text" placeholder="🔍　goods_id・商品名で検索..."
+        style="width:100%;padding:8px 12px 8px 36px;border:1.5px solid var(--border2);border-radius:8px;
+               font-family:inherit;font-size:13px;background:var(--surface);color:var(--text);outline:none;
+               transition:border-color 0.15s"
+        onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'">
+      <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px">🔍</span>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap" id="cat-filters">
+      <button class="cat-btn active" data-cat="all"
+        style="padding:5px 12px;border:1.5px solid var(--border2);border-radius:20px;background:var(--text);color:var(--surface);
+               font-size:12px;font-family:inherit;cursor:pointer;font-weight:700">全件</button>
+      <button class="cat-btn" data-cat="その他商品"
+        style="padding:5px 12px;border:1.5px solid var(--border2);border-radius:20px;background:var(--surface);color:var(--muted);
+               font-size:12px;font-family:inherit;cursor:pointer">その他商品</button>
+      <button class="cat-btn" data-cat="化粧品"
+        style="padding:5px 12px;border:1.5px solid var(--border2);border-radius:20px;background:var(--surface);color:var(--muted);
+               font-size:12px;font-family:inherit;cursor:pointer">化粧品</button>
+      <button class="cat-btn" data-cat="タグ未設定"
+        style="padding:5px 12px;border:1.5px solid var(--border2);border-radius:20px;background:var(--surface);color:var(--muted);
+               font-size:12px;font-family:inherit;cursor:pointer">タグ未設定</button>
+      <button class="cat-btn" data-cat="サプリメント"
+        style="padding:5px 12px;border:1.5px solid var(--border2);border-radius:20px;background:var(--surface);color:var(--muted);
+               font-size:12px;font-family:inherit;cursor:pointer">サプリメント</button>
+      <button class="cat-btn" data-cat="Biosyyd."
+        style="padding:5px 12px;border:1.5px solid var(--border2);border-radius:20px;background:var(--surface);color:var(--muted);
+               font-size:12px;font-family:inherit;cursor:pointer">Biosyyd.</button>
+      <button class="cat-btn" data-cat="ロイヤリティ"
+        style="padding:5px 12px;border:1.5px solid var(--border2);border-radius:20px;background:var(--surface);color:var(--muted);
+               font-size:12px;font-family:inherit;cursor:pointer">ロイヤリティ</button>
+      <button class="cat-btn" data-cat="その他"
+        style="padding:5px 12px;border:1.5px solid var(--border2);border-radius:20px;background:var(--surface);color:var(--muted);
+               font-size:12px;font-family:inherit;cursor:pointer">その他</button>
+    </div>
+  </div>
+
+  <!-- 件数表示 -->
+  <div style="font-size:12px;color:var(--muted);margin-bottom:8px">
+    表示: <span id="other-count" style="font-weight:700;color:var(--text)">607</span>件 / 全607件
+  </div>
+
+  <!-- テーブル -->
+  <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead style="position:sticky;top:0;z-index:10;background:var(--surface2)">
+        <tr>
+          <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border2);white-space:nowrap;font-weight:700;color:var(--muted);font-size:11px">goods_id</th>
+          <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border2);font-weight:700;color:var(--muted);font-size:11px">商品名</th>
+          <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border2);white-space:nowrap;font-weight:700;color:var(--muted);font-size:11px">カテゴリ</th>
+          <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border2);white-space:nowrap;font-weight:700;color:var(--muted);font-size:11px">税率</th>
+          <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border2);white-space:nowrap;font-weight:700;color:var(--muted);font-size:11px">初回販売日</th>
+          <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border2);white-space:nowrap;font-weight:700;color:var(--muted);font-size:11px">最終販売日</th>
+        </tr>
+      </thead>
+      <tbody id="other-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- 0件メッセージ -->
+  <div id="other-empty" style="display:none;text-align:center;padding:40px;color:var(--muted);font-size:13px">
+    該当する商品が見つかりません
+  </div>
+
+</div>
+</div>
+
+<script>
+(function() {
+  const DATA = [{"id": "1001004", "name": "Lypo-C CBD 9包入［Amazon］", "cat": "タグ未設定", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "1001014", "name": "Lypo-C CBD 27包入［Amazon］", "cat": "タグ未設定", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "1004498", "name": "Lypo-C(11包入)", "cat": "タグ未設定", "price": 2777, "tax": "8.0", "first": "", "last": ""}, {"id": "1004533", "name": "Lypo-C(90包入)", "cat": "タグ未設定", "price": 20000, "tax": "8.0", "first": "", "last": ""}, {"id": "1004536", "name": "Lypo-C(90包入)", "cat": "タグ未設定", "price": 20000, "tax": "8.0", "first": "", "last": ""}, {"id": "1004537", "name": "Lypo-C(90包入)", "cat": "タグ未設定", "price": 20000, "tax": "8.0", "first": "", "last": ""}, {"id": "1004538", "name": "Lypo-C(90包入)", "cat": "タグ未設定", "price": 20000, "tax": "8.0", "first": "", "last": ""}, {"id": "1004539", "name": "Lypo-C(90包入)", "cat": "タグ未設定", "price": 20000, "tax": "8.0", "first": "", "last": ""}, {"id": "1008753", "name": "Lypo-C(30包入)", "cat": "タグ未設定", "price": 7200, "tax": "8.0", "first": "", "last": ""}, {"id": "1008757", "name": "Lypo-C(30包入)", "cat": "タグ未設定", "price": 7200, "tax": "8.0", "first": "", "last": ""}, {"id": "1008758", "name": "Lypo-C(30包入)", "cat": "タグ未設定", "price": 7200, "tax": "8.0", "first": "", "last": ""}, {"id": "1008759", "name": "Lypo-C(30包入)", "cat": "タグ未設定", "price": 7200, "tax": "8.0", "first": "", "last": ""}, {"id": "1008760", "name": "【LINE連携クーポン適用済み】Lypo-C Vitamin C 30包入", "cat": "タグ未設定", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "2000011", "name": "3箱セット", "cat": "タグ未設定", "price": 0, "tax": "8.0", "first": "2020-11-21", "last": "2026-04-13"}, {"id": "2000012", "name": "4箱セット", "cat": "タグ未設定", "price": 0, "tax": "8.0", "first": "2021-08-30", "last": "2025-12-15"}, {"id": "2009324", "name": "リポスフェリックVC 2箱（FBA）", "cat": "タグ未設定", "price": 10926, "tax": "", "first": "", "last": ""}, {"id": "2009344", "name": "リポスフェリックVC 2箱（FBA）", "cat": "タグ未設定", "price": 10926, "tax": "", "first": "2022-06-16", "last": "2025-02-01"}, {"id": "449-amazake-f", "name": "【父の日ギフト】Lypo-C(11包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-21", "last": "2021-06-10"}, {"id": "449-amazake-m", "name": "【母の日ギフト】Lypo-C(11包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-20", "last": "2021-05-12"}, {"id": "449-honey-f", "name": "【父の日ギフト】Lypo-C(11包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-21", "last": "2021-06-14"}, {"id": "449-honey-m", "name": "【母の日ギフト】Lypo-C(11包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-20", "last": "2021-05-12"}, {"id": "449-tomato-f", "name": "【父の日ギフト】Lypo-C(11包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-20", "last": "2021-06-15"}, {"id": "449-tomato-m", "name": "【母の日ギフト】Lypo-C(11包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-21", "last": "2021-05-12"}, {"id": "7000241", "name": "母の日メッセージカード", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-04-19", "last": "2021-04-20"}, {"id": "7000242", "name": "母の日メッセージカード", "cat": "タグ未設定", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "7000251", "name": "父の日メッセージカード", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-04-19", "last": "2021-04-19"}, {"id": "7000252", "name": "父の日メッセージカード", "cat": "タグ未設定", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "7000261", "name": "おもいろ/そがいろトマトジュース", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-04-19", "last": "2021-08-18"}, {"id": "7000262", "name": "おもいろ/そがいろトマトジュース", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-05-27", "last": ""}, {"id": "7000271", "name": "北海道ハニーレモネードソーダ", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-04-19", "last": "2021-05-25"}, {"id": "7000272", "name": "北海道ハニーレモネードソーダ", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-05-27", "last": ""}, {"id": "7000281", "name": "米麹甘酒", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-04-19", "last": "2021-08-18"}, {"id": "7000282", "name": "米麹甘酒", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-05-27", "last": ""}, {"id": "7000292", "name": "【母の日ギフト】Lypo-C(11包入)+トマトジュース", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-30", "last": "2021-05-06"}, {"id": "7000302", "name": "【母の日ギフト】Lypo-C(11包入)+ハニーレモネードソーダ", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-30", "last": "2021-05-06"}, {"id": "7000312", "name": "【母の日ギフト】Lypo-C(11包入)+米麹甘酒", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-30", "last": "2021-05-06"}, {"id": "7000322", "name": "【母の日ギフト】Lypo-C(30包入)+トマトジュース", "cat": "タグ未設定", "price": 7200, "tax": "", "first": "2021-04-30", "last": "2021-05-06"}, {"id": "7000332", "name": "【母の日ギフト】Lypo-C(30包入)+ハニーレモネードソーダ", "cat": "タグ未設定", "price": 7200, "tax": "", "first": "2021-04-30", "last": "2021-05-06"}, {"id": "7000342", "name": "【母の日ギフト】Lypo-C(30包入)+米麹甘酒", "cat": "タグ未設定", "price": 7200, "tax": "", "first": "2021-04-30", "last": "2021-05-06"}, {"id": "7000352", "name": "【父の日ギフト】Lypo-C(11包入)+トマトジュース", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "", "last": ""}, {"id": "7000362", "name": "【父の日ギフト】Lypo-C(11包入)+ハニーレモネードソーダ", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-06-16", "last": "2021-06-17"}, {"id": "7000372", "name": "【父の日ギフト】Lypo-C(11包入)+米麹甘酒", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-06-16", "last": ""}, {"id": "7000382", "name": "【父の日ギフト】Lypo-C(30包入)+トマトジュース", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-06-16", "last": "2021-06-16"}, {"id": "7000392", "name": "【父の日ギフト】Lypo-C(30包入)+ハニーレモネードソーダ", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-06-16", "last": ""}, {"id": "7000402", "name": "【父の日ギフト】Lypo-C(30包入)+米麹甘酒", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-06-16", "last": ""}, {"id": "7000403", "name": "二つ折りレター（トマトジュース用）", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-05-25", "last": "2021-05-25"}, {"id": "7000404", "name": "二つ折りレター（甘酒用）", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-05-25", "last": "2021-05-25"}, {"id": "7000405", "name": "二つ折りレター（ハニーレモネード用）", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2021-05-25", "last": "2021-05-25"}, {"id": "7000499", "name": "オーガンジー巾着", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2023-08-21", "last": "2026-04-27"}, {"id": "7000520", "name": "ビタミンD血中濃度検査告知セット", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2023-11-07", "last": "2026-02-24"}, {"id": "7000521", "name": "Lypo-C ディスプレイスタンド（A5サイズ用）", "cat": "タグ未設定", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "7000522", "name": "血中濃度検査POP（A5サイズ）", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2026-02-24", "last": ""}, {"id": "7000525", "name": "Lypo-C Vitamin C+D 特典セット", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2023-10-18", "last": "2026-02-24"}, {"id": "7000526", "name": "Lypo-C Vitamin C+D 提供セット", "cat": "タグ未設定", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "7000527", "name": "市民医療講座セット（名古屋版）", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2023-10-13", "last": "2023-10-20"}, {"id": "7000537", "name": "市民医療講座セット（大阪版）", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2023-11-27", "last": "2023-11-28"}, {"id": "7000538", "name": "市民医療講座セット（東京版）", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2023-11-27", "last": "2023-12-13"}, {"id": "7000539", "name": "市民医療講座セット（福岡版）", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2023-11-27", "last": "2024-01-22"}, {"id": "7000549", "name": "ポイント交換アイテム同梱レター", "cat": "タグ未設定", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "7000713", "name": "ふるさと納税クーポンレター", "cat": "タグ未設定", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "7000717", "name": "【10万人モニター】A3ポスター", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2025-07-14", "last": "2025-09-17"}, {"id": "7000718", "name": "【10万人モニター】二つ折りリーフレット：100枚1セット", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2025-07-14", "last": "2025-09-17"}, {"id": "7000719", "name": "Lypo-Cロゴ入り日傘ノベルティー5本セット", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2025-09-09", "last": "2026-02-24"}, {"id": "7099692", "name": "レシピブック", "cat": "タグ未設定", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "875-amazake-f", "name": "【父の日ギフト】Lypo-C(30包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-20", "last": "2021-06-13"}, {"id": "875-amazake-m", "name": "【母の日ギフト】Lypo-C(30包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 7200, "tax": "", "first": "2021-04-21", "last": "2021-05-12"}, {"id": "875-honey-f", "name": "【父の日ギフト】Lypo-C(30包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-20", "last": "2021-06-14"}, {"id": "875-honey-m", "name": "【母の日ギフト】Lypo-C(30包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 7200, "tax": "", "first": "2021-04-20", "last": "2021-05-12"}, {"id": "875-tomato-f", "name": "【父の日ギフト】Lypo-C(30包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 2777, "tax": "", "first": "2021-04-21", "last": "2021-06-15"}, {"id": "875-tomato-m", "name": "【母の日ギフト】Lypo-C(30包入)1箱+ドリンク2本", "cat": "タグ未設定", "price": 7200, "tax": "", "first": "2021-04-21", "last": "2021-05-12"}, {"id": "9974", "name": "SPIC ドレッシング専用サンプル30ml容器", "cat": "タグ未設定", "price": 0, "tax": "", "first": "2022-06-29", "last": "2025-03-31"}, {"id": "set3-1", "name": "Lypo-C取扱い認定講習の資料", "cat": "タグ未設定", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "150", "name": "Biosyyd. Plus 5% CBD Oil Broad Spectrum 10ml", "cat": "Biosyyd.", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "151", "name": "Biosyyd. Plus 10% CBD Oil Broad Spectrum 10ml", "cat": "Biosyyd.", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "152", "name": "Biosyyd. Plus 10% CBD Oil Broad Spectrum 30ml", "cat": "Biosyyd.", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "153", "name": "Biosyyd. Plus 15% CBD Oil Broad Spectrum 30ml", "cat": "Biosyyd.", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "154", "name": "Biosyyd. Plus 20% CBD Oil Broad Spectrum 10ml", "cat": "Biosyyd.", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "155", "name": "Biosyyd. Plus CBD Capsules", "cat": "Biosyyd.", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "156", "name": "Biosyyd. Plus 15% CBD Oil Broad Spectrum 10ml", "cat": "Biosyyd.", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "9019763", "name": "遅延損害金(非課税)", "cat": "その他", "price": 0, "tax": "10.0", "first": "2020-12-29", "last": "2021-11-30"}, {"id": "9040003", "name": "niftyインターネット 接続料金", "cat": "その他", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "9040073", "name": "SPIC ネットワーク 使用料(@1,000-)", "cat": "その他", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "9040083", "name": "Orgアドレス 使用料金", "cat": "その他", "price": 0, "tax": "10.0", "first": "2020-11-20", "last": "2021-11-22"}, {"id": "1008", "name": "Handy Bottle 100mlボトルのみ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "1013", "name": "Lady Bird", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-05-10", "last": "2026-04-26"}, {"id": "1014", "name": "LADY BIRD 5セット (2コ入×5セット)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "1015", "name": "LADY BIRD 10セット (2コ入×10セット)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "1038", "name": "MAKE フィンガーパレット50枚入", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-03-27", "last": "2019-06-17"}, {"id": "1083", "name": "SPIC カルテ 200枚入", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-03-25", "last": "2025-12-12"}, {"id": "1087", "name": "SPIC ハンガーシール 200枚入 ピンク", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-10-17", "last": "2024-12-09"}, {"id": "1088", "name": "SPIC ハンガーシール 200枚入 ブルー", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-10-17", "last": "2024-12-09"}, {"id": "1091", "name": "日計表", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-09-12", "last": "2026-03-16"}, {"id": "1238", "name": "SPIC Handy Bottle 100ml用スプレー付5本", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-02-20", "last": "2020-04-09"}, {"id": "1239", "name": "SPIC Handy Bottle 100ml用ポンプ付5本", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-03-21", "last": ""}, {"id": "1597", "name": "プチプチエンジェル", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-05-10", "last": "2025-03-31"}, {"id": "1600", "name": "プチプチエンジェル交換用リング", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-09-25", "last": "2021-06-11"}, {"id": "1689", "name": "SPICシート", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-04-22", "last": "2025-11-05"}, {"id": "1767", "name": "和美の香(60本入り)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-09-20", "last": "2026-03-04"}, {"id": "1842", "name": "ソフトガーゼ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-07-25", "last": "2022-03-28"}, {"id": "1889", "name": "SPIC玄米10kg", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2019-11-21", "last": "2023-06-01"}, {"id": "1890", "name": "SPIC玄米2kg", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2022-08-06", "last": "2025-06-13"}, {"id": "2008", "name": "リポスフェリック公式ショップ パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-06-04", "last": "2020-09-11"}, {"id": "2222", "name": "PRIMAL PANACEA「究極の万能薬〜ビタミンCの真実〜」", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-04-09", "last": "2026-04-23"}, {"id": "2905", "name": "Lypo-C VC リーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2016-12-18", "last": "2026-04-24"}, {"id": "2911", "name": "ドレッシングメンバーズカード30枚", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-09-20", "last": "2024-03-21"}, {"id": "2917", "name": "つらくないがん治療", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-12-06", "last": "2026-01-16"}, {"id": "2949", "name": "レシピ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-01-16", "last": "2021-06-25"}, {"id": "2960", "name": "スタートセット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-09-02", "last": "2020-07-31"}, {"id": "2961", "name": "定期お手紙", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-09-08", "last": "2025-05-08"}, {"id": "2965", "name": "お詫びの品一式", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2020-11-25", "last": "2021-01-12"}, {"id": "2969", "name": "Lypo-Cパンフレット(海外用)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-06-03", "last": "2024-05-15"}, {"id": "2970", "name": "CM公開記念フライヤー", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-08-30", "last": ""}, {"id": "2973", "name": "Lypo-C スターターキット（トレラン）", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2023-06-28", "last": "2023-08-25"}, {"id": "3019", "name": "【toB】Lypo-C SKINBEAUTY FIRST KIT", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-09-29", "last": "2026-04-27"}, {"id": "3020", "name": "【toC】Lypo-C SKINBEAUTY FIRST KIT", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-08", "last": "2026-04-24"}, {"id": "3830", "name": "Stem-C Nutrition パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-06-04", "last": "2020-03-21"}, {"id": "3843", "name": "清明 パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-11-21", "last": "2020-05-20"}, {"id": "3962", "name": "SPIC DRESSING パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-10-01", "last": "2023-07-19"}, {"id": "503", "name": "Lypo-C インナー＆アウターケアセット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-06-29", "last": "2023-03-15"}, {"id": "504", "name": "SPIC40周年 メモリアルセット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-06-29", "last": "2022-12-31"}, {"id": "539", "name": "SPIC New シザース", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-06-14", "last": "2024-04-24"}, {"id": "555", "name": "SPIC エコボトル 130ml", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-05-17", "last": "2026-04-18"}, {"id": "6000002", "name": "海外その他商品", "cat": "その他商品", "price": 0, "tax": "", "first": "2022-05-31", "last": "2023-08-21"}, {"id": "6000003", "name": "スポット商品", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-12-23", "last": "2026-03-31"}, {"id": "6000011", "name": "Lypo-C VC サンプルセット案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-02-09", "last": "2025-09-11"}, {"id": "6000021", "name": "Lypo-Cお取扱い開始セット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "6000053", "name": "SP-2", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "6000063", "name": "SP-5", "cat": "その他商品", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "6000073", "name": "SP-5 深型", "cat": "その他商品", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "6000311", "name": "Lypo-C取扱い認定講習資料", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "6005034", "name": "Lypo-C インナー＆アウターケアセット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-09-30", "last": "2026-02-27"}, {"id": "6006431", "name": "SPICハンディーボトル30ml(青)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "6006432", "name": "SPICハンディーボトル30ml(青)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "6009712", "name": "SPIC アロマエッセンス30ml", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "601", "name": "NEW ブルードルフィン", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-02-12", "last": "2026-04-23"}, {"id": "6010132", "name": "Lady Bird", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-10", "last": "2023-11-17"}, {"id": "6010134", "name": "Lady Bird", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-06-25", "last": ""}, {"id": "6015972", "name": "プチプチエンジェル", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "6017672", "name": "和美の香(60本入)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-01-29", "last": "2024-05-08"}, {"id": "6018422", "name": "ソフトガーゼ 1個入", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-12-23", "last": "2021-08-06"}, {"id": "6018892", "name": "SPIC 玄米10kg", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2020-11-27", "last": "2023-08-08"}, {"id": "6018902", "name": "SPIC 玄米2kg", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2021-03-01", "last": "2025-08-20"}, {"id": "6022222", "name": "PRIMAL PANACEA「究極の万能薬 ビタミンCの真実」", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-16", "last": "2024-12-25"}, {"id": "6029172", "name": "つらくないがん治療", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-12-19", "last": "2021-01-06"}, {"id": "6029191", "name": "ドレッシングパンフレット 1枚", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "6029292", "name": "奇跡を起こす 点滴でアンチエイジング 1冊", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "6053443", "name": "オゾン機器", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-05-12", "last": "2024-07-04"}, {"id": "6105034", "name": "Lypo-C インナー＆アウターケアセット PRESS", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "684", "name": "SPIC メジャー付スプレーヤー 100ml(引き金式)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-04-26", "last": "2021-04-01"}, {"id": "685", "name": "SPIC メジャー付ポンプ 100ml", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-05-27", "last": ""}, {"id": "695", "name": "SPIC メジャー付ボトルのみ 100ml", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-02-25", "last": ""}, {"id": "7000002", "name": "オーサワ食材一式", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-12-28", "last": "2021-04-30"}, {"id": "7000011", "name": "BlueClair/Lypo-C Original Poach CoolGel 付", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-09-30", "last": "2020-11-20"}, {"id": "7000012", "name": "BlueClair/Lypo-C Original Poach CoolGel 付", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000021", "name": "Citron/Lypo-C Original Poach CoolGel 付", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-09-29", "last": "2020-12-22"}, {"id": "7000022", "name": "Citron/Lypo-C Original Poach CoolGel 付", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000031", "name": "Rouge/Lypo-C Original Poach CoolGel 付", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-10-01", "last": "2021-01-12"}, {"id": "7000032", "name": "Rouge/Lypo-C Original Poach CoolGel 付", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000041", "name": "Lypo-C VC ショッパー/S", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-12-07", "last": "2026-04-24"}, {"id": "7000042", "name": "Lypo-Cショッパー/S", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-01-21", "last": "2024-04-17"}, {"id": "7000051", "name": "Lypo-C VC ショッパー/M", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-12-07", "last": "2026-04-22"}, {"id": "7000052", "name": "Lypo-Cショッパー/M", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-01-20", "last": "2021-07-09"}, {"id": "7000061", "name": "にじいろセットのご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-09-30", "last": "2020-12-03"}, {"id": "7000071", "name": "Lypo-C VC 説明資料", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-23", "last": "2026-04-15"}, {"id": "7000081", "name": "Stem C Nutrition医療機関向け情報資料", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-23", "last": "2026-04-15"}, {"id": "7000091", "name": "Lypo-C解説テキスト", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-23", "last": "2021-08-03"}, {"id": "7000101", "name": "LINEオフィシャルアカウント登録方法", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-23", "last": "2021-02-09"}, {"id": "7000111", "name": "取引申込書", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-23", "last": "2021-02-09"}, {"id": "7000121", "name": "Lypo-Cショットグラス", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-12-05", "last": "2021-10-22"}, {"id": "7000122", "name": "Lypo-Cショットグラス", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000131", "name": "定期便シーズナルギフト", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-01-05", "last": "2024-10-02"}, {"id": "7000132", "name": "定期便シーズナルギフト", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000141", "name": "温活ポストカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-12-21", "last": "2021-03-01"}, {"id": "7000152", "name": "コットンバッグ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000162", "name": "コットンバッグ専用DPツール", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000171", "name": "定期便シーズナルギフトレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-01-05", "last": "2021-03-17"}, {"id": "7000181", "name": "Revitalize Deep Serum パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-01-22", "last": "2024-09-13"}, {"id": "7000182", "name": "Revitalize Deep Serum パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-01-25", "last": "2022-04-25"}, {"id": "7000191", "name": "定期便レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-01-30", "last": "2022-02-21"}, {"id": "7000202", "name": "リカバリーボール", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-03-15", "last": "2022-03-18"}, {"id": "7000231", "name": "ABC Cookingレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-03-29", "last": "2021-04-19"}, {"id": "7000406", "name": "はじめてのLypo-C二つ折りレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-06-25", "last": "2021-08-27"}, {"id": "7000407", "name": "紹介制度お礼レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-05", "last": "2021-09-09"}, {"id": "7000408", "name": "ミニ冷蔵庫", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2021-10-28"}, {"id": "7000409", "name": "ELLE8月号抜き刷り", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2021-12-13"}, {"id": "7000410", "name": "訴求ポスター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2021-12-13"}, {"id": "7000411", "name": "オリジナルポーチ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2023-03-29"}, {"id": "7000412", "name": "3包体感セット案内レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-13", "last": "2021-08-06"}, {"id": "7000413", "name": "LPB お申込みのお礼状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-20", "last": "2021-08-06"}, {"id": "7000414", "name": "TRY Lypo-C Special Invitation", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-20", "last": "2021-08-06"}, {"id": "7000415", "name": "冷蔵庫ロゴシール貼り方マニュアル", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2021-12-13"}, {"id": "7000416", "name": "同梱物案内書", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2021-12-13"}, {"id": "7000417", "name": "Lypo-C 3包実感ガイドレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2021-07-26"}, {"id": "7000418", "name": "実感アンケートカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2021-07-26"}, {"id": "7000419", "name": "冷蔵庫用アクリルボックス", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2021-12-13"}, {"id": "7000420", "name": "冷蔵庫用ロゴステッカー", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2021-12-13"}, {"id": "7000421", "name": "同梱物案内書（冷蔵庫なし）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-21", "last": "2021-09-09"}, {"id": "7000422", "name": "TRY Lypo-Cレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-30", "last": "2021-08-14"}, {"id": "7000423", "name": "試飲用プラカップ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-07-30", "last": "2021-08-14"}, {"id": "7000424", "name": "試飲発送用ウォーター", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2021-07-30", "last": "2021-08-14"}, {"id": "7000425", "name": "Lypo-Cボトル 企画案内レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-10", "last": "2021-09-30"}, {"id": "7000426", "name": "Lypo-Cボトル 本体 ブラック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-18", "last": "2022-03-18"}, {"id": "7000427", "name": "Lypo-Cボトル お礼レター ブラック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-20", "last": "2021-10-19"}, {"id": "7000428", "name": "Lypo-Cボトル 本体 ホワイト", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-18", "last": "2021-08-21"}, {"id": "7000429", "name": "Lypo-Cボトル お礼レター ホワイト", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-20", "last": "2021-08-21"}, {"id": "7000430", "name": "Lypo-Cボトル 本体 オレンジ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-18", "last": "2021-08-28"}, {"id": "7000431", "name": "Lypo-Cボトル お礼レター オレンジ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-20", "last": "2021-08-28"}, {"id": "7000432", "name": "【C-days記念】定期便限定3包プレゼントレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-30", "last": "2022-02-14"}, {"id": "7000433", "name": "レター（特別賞）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-09-03", "last": "2021-09-10"}, {"id": "7000435", "name": "Lypo-CプーラボーテBeauty Liveレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-11-05", "last": "2021-11-16"}, {"id": "7000436", "name": "more3！実感フォームレターA", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-10-28", "last": "2022-07-09"}, {"id": "7000437", "name": "ELLEスターターキット送付状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-11-25", "last": "2022-03-27"}, {"id": "7000438", "name": "more3！実感フォームレターB", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-12-03", "last": "2022-05-19"}, {"id": "7000439", "name": "Lypo-C飲み方カード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-12-16", "last": "2022-11-25"}, {"id": "7000440", "name": "Lypo-Cの味について", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-12-16", "last": "2022-11-25"}, {"id": "7000441", "name": "お召し上がりのヒント", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-12-16", "last": "2022-05-09"}, {"id": "7000442", "name": "Aurora glass 2022", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000443", "name": "#CGift 2022", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-12-22", "last": "2022-03-18"}, {"id": "7000444", "name": "リポスフェリックプレゼントレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-12-29", "last": "2021-12-29"}, {"id": "7000445", "name": "2021YearReport", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-01-25", "last": "2022-07-06"}, {"id": "7000446", "name": "#ここリポ_受験応援レター2022", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000447", "name": "11包用サンクスレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-03-04", "last": "2022-07-06"}, {"id": "7000448", "name": "Lypo-C Vitamin C 30包入りディスプレイ用化粧箱", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-02-14", "last": "2026-04-27"}, {"id": "7000449", "name": "Lypo-C Vitamin C 30包入りディスプレイ用化粧箱 中仕切り", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-02-14", "last": "2026-04-27"}, {"id": "7000450", "name": "Lypo-C30包入りディスプレイ用パッケージ送付状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-02-14", "last": "2025-11-28"}, {"id": "7000451", "name": "VP送付状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-03-09", "last": "2022-06-28"}, {"id": "7000452", "name": "ビタミンCの日 応募プレゼントレターA", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-03-22", "last": "2022-04-11"}, {"id": "7000453", "name": "ビタミンCの日 応募プレゼントレターB", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-03-22", "last": "2022-04-11"}, {"id": "7000454", "name": "ビタミンCの日 応募プレゼントレターC", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-03-22", "last": "2022-04-06"}, {"id": "7000455", "name": "DM専用サンプル送付状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-03-18", "last": "2022-04-25"}, {"id": "7000456", "name": "初回購入 ご挨拶レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-04-28", "last": "2024-12-20"}, {"id": "7000457", "name": "はじめてのLypo-C VC", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-04-28", "last": "2026-02-14"}, {"id": "7000458", "name": "初回定期便 ご挨拶レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-04-28", "last": "2023-11-09"}, {"id": "7000459", "name": "定期便 ご挨拶レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-04-28", "last": "2025-01-09"}, {"id": "7000460", "name": "YearReportレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-04-28", "last": "2022-07-06"}, {"id": "7000461", "name": "母の日more3レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-05-11", "last": "2022-06-01"}, {"id": "7000462", "name": "Well TOKK 春号", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-06-14", "last": "2022-09-27"}, {"id": "7000463", "name": "Well TOKK 夏号", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-06-14", "last": "2022-09-27"}, {"id": "7000464", "name": "90包定期便レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-06-20", "last": "2022-07-24"}, {"id": "7000465", "name": "保冷バック（タグ付き）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": "2023-12-04"}, {"id": "7000466", "name": "F0アンケート_500円オフレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-08-25", "last": "2022-08-29"}, {"id": "7000467", "name": "ELLEキャンペーン_落選レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-08-25", "last": "2022-08-29"}, {"id": "7000468", "name": "ELLEキャンペーン_500円オフレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-08-25", "last": "2022-08-29"}, {"id": "7000469", "name": "はじめてのLypo-C VC（事業所様専用）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-09-14", "last": "2023-10-23"}, {"id": "7000470", "name": "はじめてのLypo-C同梱案内書", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000471", "name": "【2022Autumn vol.27】\"見る\"チカラ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-10-19", "last": "2023-04-17"}, {"id": "7000472", "name": "Lypo-C記事抜き刷り", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-10-19", "last": "2023-04-17"}, {"id": "7000473", "name": "Lypo-C A3ポスター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-10-19", "last": "2023-07-01"}, {"id": "7000474", "name": "WellTOKK【2023 Winter vol.28】 Lypo-C記事抜き刷り", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-12-29", "last": "2023-04-21"}, {"id": "7000475", "name": "WellTOKK【2023 Winter vol.28】 同梱案内書", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-12-29", "last": "2023-02-13"}, {"id": "7000476", "name": "WellTOKK【2023 Winter vol.28】 本誌", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-12-29", "last": "2023-04-17"}, {"id": "7000477", "name": "2023 年始ギフトセット（営業用）5セット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-01-12", "last": "2023-05-30"}, {"id": "7000478", "name": "オリジナルロゴ入りマドラー", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-01-12", "last": ""}, {"id": "7000479", "name": "トートバッグ（ベージュ）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-01-12", "last": "2023-12-04"}, {"id": "7000480", "name": "2023 年始ギフトセット（営業用）10セット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-01-12", "last": "2023-05-29"}, {"id": "7000481", "name": "Lypo-Cカレンダー2023", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-03-17", "last": "2023-12-02"}, {"id": "7000482", "name": "ELLEレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000483", "name": "Lypo-C Vitamin C+D （試供品）同梱レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000484", "name": "Lypo-Cカレンダー2023 レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000485", "name": "リポスフェリックプレゼントレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000486", "name": "Lypo-C Vitamin C+D モニタリング案内レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-05-16", "last": "2023-07-31"}, {"id": "7000487", "name": "Lypo-Cカレンダー2023レター（ビジネス：10枚セット）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-03-17", "last": "2023-06-29"}, {"id": "7000488", "name": "Lypo-Cカレンダー2023（ビジネス）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000490", "name": "ビタミンCの日オンライン用レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000491", "name": "Lypo-C Vitamin C+D モニタリングレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-05-10", "last": "2023-05-30"}, {"id": "7000492", "name": "新インフォグラフィックA3ポスター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-05-24", "last": "2023-12-22"}, {"id": "7000493", "name": "新インフォグラフィックA4三つ折り（10枚セット）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-05-24", "last": "2023-12-22"}, {"id": "7000494", "name": "Lypo-C Vitamin C+D インフォグラフィック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-06-28", "last": "2026-04-15"}, {"id": "7000495", "name": "Lypo-C Vitamin C+D 研修用説明資料", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-08-07", "last": "2026-02-06"}, {"id": "7000496", "name": "Lypo-C Vitamin C+D ディスプレイ用化粧箱", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-09-12", "last": "2026-04-27"}, {"id": "7000497", "name": "Lypo-C Vitamin C+D 予約特典同梱レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000498", "name": "Lypo-C Vitamin C+D ディスプレイ用化粧箱 中仕切り", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-09-12", "last": "2026-04-27"}, {"id": "7000500", "name": "コットン巾着", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-08-02", "last": "2026-04-27"}, {"id": "7000501", "name": "ギフトカード（グレー：GIFT FOR YOU）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-08-21", "last": "2026-04-27"}, {"id": "7000502", "name": "ギフトカード（Thank you）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-08-02", "last": "2026-04-22"}, {"id": "7000503", "name": "ギフトカード（Congratulations!）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-08-02", "last": "2026-04-25"}, {"id": "7000504", "name": "ギフトカード（Best wishes on your special day.）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-08-02", "last": "2026-04-20"}, {"id": "7000505", "name": "ギフトカード（SUN and FUN）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-08-02", "last": "2026-04-15"}, {"id": "7000506", "name": "二つ折りリーフレット（英語版）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-07-27", "last": "2025-03-03"}, {"id": "7000507", "name": "Lypo-C ブランドブック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-09-15", "last": "2026-04-27"}, {"id": "7000508", "name": "Lypo-C レシピブック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-09-15", "last": "2026-04-27"}, {"id": "7000523", "name": "頼れる病院・クリニックダイジェスト版", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000524", "name": "Lypo-C Vitamin C+D ディスプレイツールセット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-10-02", "last": "2026-04-27"}, {"id": "7000528", "name": "市民医療講座フライヤー（名古屋版）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-10-13", "last": "2023-10-23"}, {"id": "7000529", "name": "市民医療講座フライヤー（広島版）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-10-23", "last": "2023-11-01"}, {"id": "7000530", "name": "初回購入レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-11-01", "last": "2025-12-10"}, {"id": "7000531", "name": "市民医療講座セット（広島版）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-10-23", "last": "2023-10-30"}, {"id": "7000532", "name": "頼れる病院・クリニック 本誌", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000533", "name": "ギフトカード（Xmas）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-11-28", "last": "2026-02-06"}, {"id": "7000534", "name": "市民医療講座フライヤー（大阪版）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-11-27", "last": "2024-01-09"}, {"id": "7000535", "name": "市民医療講座フライヤー（東京版）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-11-27", "last": "2024-01-10"}, {"id": "7000536", "name": "市民医療講座フライヤー（福岡版）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-11-27", "last": "2024-01-18"}, {"id": "7000540", "name": "Lypo-C 三つ折りリーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-12-11", "last": "2026-04-27"}, {"id": "7000541", "name": "Lypo-C Vitamin C+D インフォグラフィック A3ポスター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2023-12-11", "last": "2026-04-27"}, {"id": "7000542", "name": "VOCE 本誌（2月号）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000543", "name": "VOCEタイアップ企画 送付状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000547", "name": "新規向け二つ折りリーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-01-26", "last": "2024-03-06"}, {"id": "7000548", "name": "ノート", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000550", "name": "雪まつりオンライン追加企画の発送同梱レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-03-08", "last": "2024-03-26"}, {"id": "7000551", "name": "2024 SUN CALENDAR", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-03-22", "last": "2024-06-07"}, {"id": "7000552", "name": "SUN CALENDAR 同梱レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000553", "name": "SUN CALENDARフォロー施策レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000554", "name": "【TVCM連動企画】同梱レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-03-27", "last": "2024-05-20"}, {"id": "7000555", "name": "【TVCM連動企画】事業所用パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-04-24", "last": "2024-05-17"}, {"id": "7000556", "name": "【TVCM連動企画】事業所用ポスター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-04-15", "last": "2024-04-23"}, {"id": "7000557", "name": "Lypo-C Vitamin C+D 11包入同梱レター（4月-7月）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-03-27", "last": "2024-07-31"}, {"id": "7000558", "name": "Lypo-C Vitamin C 3つ折パンフレットA4(2024.4)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-05-14", "last": "2026-04-27"}, {"id": "7000559", "name": "ギフトカード（Mother's Day）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-04-16", "last": "2026-04-27"}, {"id": "7000600", "name": "オーガニックタオル", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-04-16", "last": "2026-04-27"}, {"id": "7000601", "name": "Lypo-C Vitamin C+D 3つ折パンフレットA4(2024.4)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-05-24", "last": "2026-01-27"}, {"id": "7000602", "name": "5月レシピ募集同梱レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-04-26", "last": "2024-12-25"}, {"id": "7000603", "name": "ギフトカード（Father's Day）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-05-24", "last": "2025-06-15"}, {"id": "7000604", "name": "神崎恵さんお悩み募集レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-05-08", "last": "2024-12-25"}, {"id": "7000605", "name": "Lypo-C Vitamin C インフォグラフィックA3ポスター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-05-14", "last": "2026-04-27"}, {"id": "7000606", "name": "ギフトカード（Happy Birthday）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-05-31", "last": "2026-04-27"}, {"id": "7000607", "name": "2024年6月同梱レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-06-10", "last": "2025-05-20"}, {"id": "7000608", "name": "試飲用プラカップ3オンス（1袋100カップ）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-06-06", "last": "2026-03-31"}, {"id": "7000609", "name": "Lypo-Cエクスペリエンスカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-06-20", "last": "2026-04-27"}, {"id": "7000610", "name": "オーガンジー巾着（夏企画用）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-22", "last": "2024-11-27"}, {"id": "7000611", "name": "2024トリカプセルサンクスレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-10", "last": "2024-11-12"}, {"id": "7000612", "name": "2024トリカプセル三つ折りパンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-10", "last": "2024-11-12"}, {"id": "7000613", "name": "Lypo-C Summer Gift Card", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-22", "last": "2024-10-08"}, {"id": "7000614", "name": "Seasonal information vol.1 (暑さ・冷房・紫外線)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-17", "last": "2024-09-17"}, {"id": "7000615", "name": "Lypo-C オリジナルウォーターボトル 330ml オレンジ 1ケース（20本）", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2024-07-23", "last": "2025-09-25"}, {"id": "7000616", "name": "Lypo-C オリジナルウォーターボトル 330ml グリーン 1ケース（20本）", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2024-07-22", "last": "2025-03-04"}, {"id": "7000617", "name": "Lypo-C オリジナルウォーターボトル 330ml ピンク 1ケース（20本）", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2024-07-22", "last": "2025-09-25"}, {"id": "7000618", "name": "定期便ガイド", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-18", "last": "2026-04-27"}, {"id": "7000619", "name": "ギフトカード（Enjoy your summer）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-20", "last": "2024-11-27"}, {"id": "7000620", "name": "11包ギフト同梱レター（A5）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-22", "last": "2024-11-27"}, {"id": "7000621", "name": "夏施策予告同梱レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-18", "last": "2025-01-29"}, {"id": "7000622", "name": "Lypo-C オリジナルウォーターボトル 330ml オレンジ 1本（夏企画用）", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2024-07-18", "last": "2024-10-18"}, {"id": "7000623", "name": "水同梱レター（A6）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-18", "last": "2024-08-19"}, {"id": "7000624", "name": "水同梱パンフレット（サマステ企画）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-07-18", "last": "2024-08-19"}, {"id": "7000625", "name": "Lypo-C オリジナルウォーターボトル 330ml オレンジ 1本", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2025-03-19", "last": "2025-07-11"}, {"id": "7000626", "name": "Lypo-C オリジナルウォーターボトル 330ml グリーン 1本", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2025-03-19", "last": ""}, {"id": "7000627", "name": "Lypo-C オリジナルウォーターボトル 330ml ピンク 1本", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2025-03-19", "last": ""}, {"id": "7000628", "name": "常温配送開始のお知らせチラシ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-08-06", "last": "2025-05-28"}, {"id": "7000629", "name": "Stem-C B6折りパンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-09-03", "last": "2026-04-27"}, {"id": "7000630", "name": "楽天レビュー案内1", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-09-17", "last": "2026-03-21"}, {"id": "7000631", "name": "Lypo-Cストッカー（グレー×イエロー）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-10-09", "last": "2026-04-28"}, {"id": "7000632", "name": "【既存定期】Lypo-Cストッカー同梱レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-10-09", "last": "2025-12-16"}, {"id": "7000633", "name": "Stem-C（ステム・シー）医療者向け情報資料", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-10-22", "last": "2026-04-15"}, {"id": "7000634", "name": "Re:charge Set サンクスレター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-10-28", "last": "2025-02-28"}, {"id": "7000635", "name": "VIP御礼レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000636", "name": "年末ご挨拶レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-12-01", "last": "2025-04-09"}, {"id": "7000637", "name": "ビタミンD吸収訴求A4ポスター（メイン）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-12-06", "last": "2026-04-23"}, {"id": "7000638", "name": "ビタミンD吸収訴求A4ポスター（日照時間説明文あり）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-12-06", "last": "2026-04-23"}, {"id": "7000639", "name": "クリアファイル", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-12-06", "last": "2026-04-23"}, {"id": "7000640", "name": "Vitamin Style 2025Winter Vol.01", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2024-12-06", "last": "2025-04-01"}, {"id": "7000641", "name": "スタートブック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-12-20", "last": "2026-04-27"}, {"id": "7000642", "name": "定期便案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-12-20", "last": "2025-10-02"}, {"id": "7000643", "name": "2025新春挨拶文", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2024-12-28", "last": "2025-02-26"}, {"id": "7000644", "name": "新年挨拶レター2025", "cat": "その他商品", "price": 0, "tax": "", "first": "", "last": ""}, {"id": "7000645", "name": "WWD A2二つ折り記事", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-01-10", "last": "2026-02-03"}, {"id": "7000646", "name": "バレンタインギフト送付状（A5）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-01-29", "last": "2025-02-04"}, {"id": "7000647", "name": "定期便ご案内レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-02-14", "last": "2026-04-27"}, {"id": "7000648", "name": "定期便ご契約お礼状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-02-14", "last": "2026-04-25"}, {"id": "7000649", "name": "28包VC商品説明リーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-02-22", "last": "2026-04-27"}, {"id": "7000650", "name": "28包C＋D商品説明リーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-02-22", "last": "2026-04-27"}, {"id": "7000651", "name": "28包用エクスペリエンスカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-02-22", "last": "2026-04-27"}, {"id": "7000652", "name": "新サイズ28包入のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-02-22", "last": "2026-01-15"}, {"id": "7000653", "name": "Lypo-C10周年記念メッセージカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-02-21", "last": "2026-02-24"}, {"id": "7000654", "name": "Lypo-C実感チェックシート", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-02-26", "last": "2026-04-22"}, {"id": "7000657", "name": "Vitamin Style Vol.2（ビタミンスタイル春号）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-04-08", "last": "2025-10-02"}, {"id": "7000658", "name": "ドリンク1BOX", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-05-08", "last": "2025-12-24"}, {"id": "7000659", "name": "プラコップ（30個入り）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-05-08", "last": "2026-03-19"}, {"id": "7000701", "name": "10th OBENTOセット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-12-22", "last": ""}, {"id": "7000702", "name": "10th OBENTO冊子", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000703", "name": "10th カラトリーセット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-04-22", "last": "2025-07-07"}, {"id": "7000704", "name": "炭酸水1本", "cat": "その他商品", "price": 0, "tax": "8.0", "first": "2025-05-22", "last": "2026-04-24"}, {"id": "7000705", "name": "定期便案内レターB", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-05-30", "last": "2026-04-27"}, {"id": "7000706", "name": "リポソームブック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-07-11", "last": "2026-04-15"}, {"id": "7000707", "name": "臨床CBDオイル研究会 ドクターズガイド", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-06-09", "last": "2026-04-27"}, {"id": "7000708", "name": "Lypo-C CBD ON&OFFカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-06-17", "last": "2026-04-15"}, {"id": "7000709", "name": "Lypo-C CBD パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-06-09", "last": "2026-04-27"}, {"id": "7000710", "name": "2回目特典レター（A5・縦）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-06-06", "last": "2025-08-08"}, {"id": "7000711", "name": "3回目特典レター（A5・縦）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-06-11", "last": "2025-08-08"}, {"id": "7000712", "name": "ギフトカード（Happy wedding）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-03-02", "last": ""}, {"id": "7000714", "name": "Vitamin Style Vol.3（ビタミンスタイル夏号）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-07-01", "last": "2025-10-06"}, {"id": "7000715", "name": "保冷エコバッグ（2025.6）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-07-29", "last": "2025-10-30"}, {"id": "7000716", "name": "Lypo-C リポソームPOP（2025.6）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-07-01", "last": "2026-04-27"}, {"id": "7000720", "name": "Lypo-C SKINBEAUTY ショッパー ローズレッド", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-07-16", "last": "2026-04-24"}, {"id": "7000721", "name": "Lypo-C SKINBEAUTY パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-07-16", "last": "2026-04-15"}, {"id": "7000722", "name": "Lypo-C SKINBEAUTY OGS同梱リーフレット（2025.8）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-07-29", "last": ""}, {"id": "7000723", "name": "Lypo-C CBD A4チラシ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-07-22", "last": "2026-04-16"}, {"id": "7000724", "name": "Lypo-C CBD 27包入りディスプレイ用パッケージ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-07-31", "last": "2026-04-27"}, {"id": "7000725", "name": "Lypo-C CBD 27包入りディスプレイ用パッケージ中仕切り", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-07-31", "last": "2026-04-27"}, {"id": "7000726", "name": "ビタミンCブック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000727", "name": "Lypo-C SKINBEAUTY商品パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-08-18", "last": "2026-04-27"}, {"id": "7000728", "name": "Lypo-C SKINBEAUTY ご挨拶レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-08-18", "last": "2026-04-15"}, {"id": "7000729", "name": "Lypo-C SKINBEAUTY 使い方ガイド", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-08-18", "last": "2026-04-27"}, {"id": "7000730", "name": "Lypo-C SKINBEAUTY 定期便ご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-08-18", "last": "2026-04-27"}, {"id": "7000731", "name": "梨地ギフト用ポリ袋", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-07", "last": "2026-04-24"}, {"id": "7000732", "name": "Lypo-C CBD 商品説明リーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-09-08", "last": "2026-04-16"}, {"id": "7000733", "name": "Lypo-C CBD ON/OFFカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-09-08", "last": "2026-04-16"}, {"id": "7000734", "name": "Lypo-C CBD セルフチューニングガイド", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-09-08", "last": "2026-04-16"}, {"id": "7000735", "name": "Lypo-C for SPORTSカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-08-28", "last": "2026-04-17"}, {"id": "7000736", "name": "Lypo-C SKINBEAUTY ご挨拶状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-03", "last": "2026-04-27"}, {"id": "7000737", "name": "Lypo-C C+D+K A4サイズポスター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-09-29", "last": "2026-04-22"}, {"id": "7000738", "name": "Lypo-C C+D+K パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-09-29", "last": "2026-04-09"}, {"id": "7000739", "name": "Lypo-C C+D+K VP用スリーブ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-11-13", "last": "2026-04-22"}, {"id": "7000740", "name": "Lypo-C SKINBEAUTY 卓上POP", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-09-05", "last": "2026-04-08"}, {"id": "7000741", "name": "Lypo-C実感チェックシート", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000742", "name": "Lypo-C SKINBEAUTY什器", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-04", "last": "2026-04-03"}, {"id": "7000743", "name": "28包 SB 商品説明リーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-01", "last": "2026-04-27"}, {"id": "7000744", "name": "Lypo-C SKINBEAUTY toB用パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-22", "last": "2026-04-15"}, {"id": "7000745", "name": "頼れる病院・クリニック 2024", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-14", "last": "2026-02-24"}, {"id": "7000746", "name": "Lypo-C SKINBEAUTY ショッパー テラコッタオレンジ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-01", "last": "2026-04-21"}, {"id": "7000747", "name": "Lypo-C SKINBEAUTY FIRST KIT ご挨拶レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-03", "last": "2025-10-13"}, {"id": "7000748", "name": "Lypo-C SKINBEAUTY FIRST KIT封筒", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-03", "last": "2025-10-13"}, {"id": "7000749", "name": "応援キャンペーン案内文", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-09-27", "last": "2025-09-29"}, {"id": "7000750", "name": "Lypo-C SKINBEAUTY FIRST KIT クーポン", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-03", "last": "2025-10-13"}, {"id": "7000751", "name": "インセンティブ制度初回ツール案内文", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-09", "last": "2026-04-17"}, {"id": "7000752", "name": "10万人モニターに関するアンケート回答特典送付のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000753", "name": "Lypo-C CBDオンオフカード VC30包入り", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-12-15", "last": "2026-04-15"}, {"id": "7000754", "name": "Lypo-C CBDに関するアンケート回答特典送付のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-15", "last": "2025-11-13"}, {"id": "7000755", "name": "Lypo-C CBDセミナー参加後発注特典の送付のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000756", "name": "Lypo-C C+D 定期便ご案内レターC", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-12-02", "last": "2026-04-27"}, {"id": "7000757", "name": "Lypo-C C+D 定期便ご案内レターD", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-12-01", "last": "2026-04-27"}, {"id": "7000758", "name": "Lypo-C C+D 風邪対策A5POP", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-20", "last": "2026-04-24"}, {"id": "7000759", "name": "Lypo-C C＋Dサンプル送付のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-10-20", "last": ""}, {"id": "7000760", "name": "Lypo-C SKINBEAUTY サンプルセット送付のご案", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000761", "name": "ビタミンC＋Dブック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-12-16", "last": "2026-04-15"}, {"id": "7000762", "name": "Lypo-C Vitamin C オリジナルポーチ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-12-08", "last": "2026-01-11"}, {"id": "7000763", "name": "SBギフトカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000764", "name": "ビタミンC＋Dブック送付のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-15", "last": ""}, {"id": "7000765", "name": "MINERALion挨拶状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-11-20", "last": "2026-04-15"}, {"id": "7000767", "name": "C+D VP プレゼントのご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000768", "name": "限定ポーチご送付のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000769", "name": "大切な人と丈夫にすごせる12月POP", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000770", "name": "大切な人と丈夫にすごせる12月（11包込）POP", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000771", "name": "MINERALion ブランドブック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000772", "name": "シーマロックスリーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000773", "name": "MINERALion ディスプレイ用化粧箱", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-11-26", "last": "2026-04-17"}, {"id": "7000774", "name": "MINERALion ディスプレイ用化粧箱 中仕切り", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-11-26", "last": "2026-04-17"}, {"id": "7000775", "name": "MINERALion インフォグラフィック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-11-26", "last": "2026-04-27"}, {"id": "7000776", "name": "2025AWご挨拶レターA", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-12-22", "last": "2026-02-25"}, {"id": "7000777", "name": "2025AWご挨拶レターB", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-11-26", "last": "2026-03-23"}, {"id": "7000778", "name": "2025AW Lypo-C C+Dリーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-11-26", "last": "2026-03-09"}, {"id": "7000779", "name": "MINERALion初回同梱レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-11-20", "last": "2026-04-27"}, {"id": "7000780", "name": "MINERALion 製品ガイド〈2点セット〉", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-11-20", "last": "2026-04-27"}, {"id": "7000781", "name": "SKINBEAUTY 販促用雑誌", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000782", "name": "SKINBEAUTY 雑誌用卓上POP", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-12-03", "last": "2026-01-14"}, {"id": "7000783", "name": "Lypo-C SKINBEAUTY ベスコス受賞販促物送付のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000784", "name": "頼れる病院・クリニック 2025", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-14", "last": "2026-04-16"}, {"id": "7000785", "name": "SKINBEAUTY ご挨拶カード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-09", "last": "2026-03-06"}, {"id": "7000786", "name": "SKINBEAUTY 14days ご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-09", "last": "2026-03-06"}, {"id": "7000787", "name": "SKINBEAUTY 2025年ベスコス受賞 記念クーポン", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-09", "last": "2026-03-06"}, {"id": "7000788", "name": "MINERALionお詫び状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-12-03", "last": "2025-12-20"}, {"id": "7000789", "name": "Lypo-C Vitamin C＋Cera 什器", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-16", "last": "2026-04-17"}, {"id": "7000790", "name": "Lypo-C Vitamin C＋Cera toBパンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-06", "last": "2026-04-27"}, {"id": "7000791", "name": "C+Cera先行販売特典送付のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000792", "name": "Lypo-C SKINBEAUTY 定期便ご契約お礼状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2025-12-18", "last": "2026-04-27"}, {"id": "7000793", "name": "セラミドBOOK（toB用）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-03", "last": "2026-04-15"}, {"id": "7000794", "name": "Lypo-C C＋Cera ご挨拶レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-13", "last": "2026-04-24"}, {"id": "7000795", "name": "Cera Lypo-C C＋Cera ご挨拶状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-02-09", "last": "2026-04-27"}, {"id": "7000796", "name": "Cera Lypo-C C＋Cera 定期便ご契約お礼状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-02-09", "last": "2026-04-27"}, {"id": "7000797", "name": "Cera Lypo-C C＋Cera パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-13", "last": "2026-04-27"}, {"id": "7000798", "name": "（仮）ビタミンDチェックシート", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000800", "name": "A4 CBDリーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-16", "last": "2026-04-27"}, {"id": "7000801", "name": "A4 CBDKVポスター（縦）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-16", "last": "2026-04-27"}, {"id": "7000802", "name": "A4 CBDKVポスター（横）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-16", "last": "2026-04-27"}, {"id": "7000803", "name": "CBD実感シート", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-16", "last": "2026-04-27"}, {"id": "7000804", "name": "Lypo-C C＋Cera レシピカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-13", "last": "2026-04-27"}, {"id": "7000805", "name": "Lypo-C C＋Cera 商品リーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-22", "last": "2026-04-27"}, {"id": "7000806", "name": "Lypo-C C＋Cera 実感カード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-02-11", "last": "2026-04-27"}, {"id": "7000807", "name": "Lypo-C C＋Cera 先行お届けご挨拶状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-30", "last": "2026-02-13"}, {"id": "7000808", "name": "Lypo-C C＋Cera 事前予約のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-30", "last": "2026-02-13"}, {"id": "7000809", "name": "Lypo-C お取扱いパートナー ご担当者さま", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-13", "last": "2026-01-30"}, {"id": "7000810", "name": "A4 CBD睡眠訴求ポスター（縦）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-16", "last": "2026-04-27"}, {"id": "7000811", "name": "A4 CBD睡眠訴求ポスター（横）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-16", "last": "2026-04-27"}, {"id": "7000812", "name": "C＋D成分表示カード（83×140）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000813", "name": "Lypo-C C+Cera 28包入りディスプレイ用化粧箱", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-06", "last": "2026-04-17"}, {"id": "7000814", "name": "Lypo-C C+Cera 28包入りディスプレイ用化粧箱 中仕切り", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-06", "last": "2026-04-17"}, {"id": "7000815", "name": "WWD本誌 2026_1/26号", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-30", "last": "2026-02-05"}, {"id": "7000816", "name": "Lypo-C CBD ご挨拶レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000817", "name": "Lypo-C CBD 500円クーポン", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000818", "name": "Lypo-C CBD 睡眠ジャーナル（仮）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000819", "name": "Lypo-C お取扱いパートナー ご担当者さま", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000820", "name": "WWD JAPAN 本誌 送付のご案内", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-01-27", "last": "2026-02-05"}, {"id": "7000821", "name": "同梱レター_CDパンフのお詫び", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000822", "name": "Lypo-C Vitamin C+D 3つ折パンフレットA4(2026.2)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-02-27", "last": ""}, {"id": "7000823", "name": "商品表示誤りに関するお詫び", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000824", "name": "C＋D＋K成分表示カード（83×140）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000825", "name": "同梱レター_CDKパンフ回収", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000826", "name": "Lypo-C C+D+K パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-02-18", "last": "2026-04-27"}, {"id": "7000827", "name": "Lypo-C SKINBEAUTY リーフレットver.1", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-03-04", "last": "2026-04-27"}, {"id": "7000828", "name": "定期便ご利用ガイド", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000829", "name": "セラミドBOOK発送について", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-03", "last": "2026-04-15"}, {"id": "7000830", "name": "ビタミンD×ミネラル企画", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000831", "name": "Lypo-C C+D+K ディスプレイ用化粧箱", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-03-23", "last": ""}, {"id": "7000832", "name": "Lypo-C C+D+K ディスプレイ用化粧箱 中仕切り", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000833", "name": "Lypo-C SKINBEAUTY リーフレットver.2", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-09", "last": "2026-04-24"}, {"id": "7000834", "name": "C+Cera Trial Week ご挨拶状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-17", "last": "2026-04-21"}, {"id": "7000835", "name": "C+Cera Trial Note", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-17", "last": "2026-04-21"}, {"id": "7000836", "name": "C+Styleチェックシート", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-16", "last": "2026-04-27"}, {"id": "7000837", "name": "全商品パンフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-16", "last": "2026-04-27"}, {"id": "7000838", "name": "ご当選のご挨拶レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000839", "name": "ご挨拶レター", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-21", "last": "2026-04-27"}, {"id": "7000840", "name": "Lypo-C C+Dリーフレット", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-21", "last": "2026-04-27"}, {"id": "7000841", "name": "Lypo-C C+D 試供品(3包)食品表示カード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-21", "last": "2026-04-27"}, {"id": "7000842", "name": "Lypo-C C+D ギフトカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-21", "last": "2026-04-27"}, {"id": "7000843", "name": "定期便ご案内レターE", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-21", "last": "2026-04-27"}, {"id": "7000844", "name": "Lypo-C C+D リーフレットB", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7000847", "name": "C+Cera Trial Week ご挨拶状", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2026-04-23", "last": "2026-04-27"}, {"id": "7001001", "name": "母の日応募プレゼント", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-04-27", "last": "2022-04-27"}, {"id": "7005392", "name": "SPIC New シザース", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-12-01", "last": "2021-12-20"}, {"id": "7005542", "name": "SPIC エコボトル 500ml", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-02", "last": "2024-06-05"}, {"id": "7005552", "name": "SPIC エコボトル 130ml", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-01-12", "last": "2023-12-14"}, {"id": "7006012", "name": "NEW ブルードルフィン", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-03-16", "last": "2023-10-19"}, {"id": "7006842", "name": "SPIC メジャー付スプレーヤー 100ml(引き金式)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7006852", "name": "SPIC メジャー付ポンプ 100ml", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7008002", "name": "ムースポンプ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-02", "last": "2024-11-08"}, {"id": "7008352", "name": "a Gift 日本語版 DVD", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-02-15", "last": ""}, {"id": "7008362", "name": "a Gift 英語版 DVD", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7009702", "name": "SPIC ドレッシング専用サンプル30ml容器", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-17", "last": "2022-06-29"}, {"id": "7015982", "name": "SPIC ONDINE リップブラシ 携帯用", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-02-18", "last": "2021-02-19"}, {"id": "7016002", "name": "プチプチエンジェル 交換用リング", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7029072", "name": "Lypo-Cパンフレット(クーポン)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-11-10", "last": "2021-04-08"}, {"id": "7029101", "name": "ドレッシングメンバーズカード", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7029112", "name": "ドレッシングメンバーズカード30枚", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-11-15", "last": "2026-03-12"}, {"id": "7029113", "name": "サンプル容器5ml", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7029114", "name": "シート", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2022-01-07", "last": "2022-10-19"}, {"id": "7029115", "name": "パラフィンバック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7029116", "name": "SPIC カルテ 200枚入", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "7029117", "name": "SPIC ハンガーシール 200枚入 ピンク", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-12-03", "last": ""}, {"id": "7029118", "name": "SPIC ハンガーシール 200枚入 ブルー", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-12-03", "last": ""}, {"id": "7029119", "name": "シャンプークロス（白）", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "743", "name": "トリガースプレー(引き金式のスプレー)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-08-04", "last": ""}, {"id": "744", "name": "プッシュスプレー(押し型のスプレー)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "745", "name": "ポンプディスペンサー(白)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "746", "name": "ポンプディスペンサー(透明)", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-11-14", "last": ""}, {"id": "800", "name": "ムースポンプ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-08-02", "last": "2026-04-06"}, {"id": "835", "name": "a Gift 日本語版", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-04", "last": ""}, {"id": "836", "name": "a Gift 英語版", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-08-04", "last": ""}, {"id": "970", "name": "SPIC ドレッシング専用サンプル30ml容器", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-10-26", "last": "2024-07-26"}, {"id": "971", "name": "SPIC アロマエッセンス30ml", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2019-04-20", "last": "2022-03-18"}, {"id": "973", "name": "SPIC アロマエッセンス10ml", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2020-10-26", "last": "2022-03-18"}, {"id": "981", "name": "SPIC DRESSINGバッグ", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2018-08-29", "last": "2026-04-25"}, {"id": "9969", "name": "レシピブック", "cat": "その他商品", "price": 0, "tax": "10.0", "first": "2021-04-08", "last": "2024-12-20"}, {"id": "4004142", "name": "乳酸菌 LRh24", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2021-01-13", "last": "2021-01-15"}, {"id": "4008302", "name": "Stem-C Nutrition", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2020-11-10", "last": "2024-10-02"}, {"id": "4008304", "name": "Stem-C Nutrition", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2020-12-06", "last": "2025-10-03"}, {"id": "4008432", "name": "清明", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2021-01-25", "last": "2021-06-30"}, {"id": "414", "name": "乳酸菌 LRh24", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "", "last": ""}, {"id": "415", "name": "乳酸菌 LRe01", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2021-02-27", "last": "2021-04-06"}, {"id": "416", "name": "乳酸菌 LGa27", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2021-02-27", "last": "2021-04-06"}, {"id": "417", "name": "乳酸菌 LAc23", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2021-02-27", "last": ""}, {"id": "418", "name": "乳酸菌 BLo22", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2021-02-27", "last": "2021-04-06"}, {"id": "419", "name": "乳酸菌 LPa21", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2021-02-27", "last": "2021-04-06"}, {"id": "830", "name": "Stem-C（ステム・シー）", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2018-06-04", "last": "2026-04-26"}, {"id": "843", "name": "清明", "cat": "サプリメント", "price": 0, "tax": "8.0", "first": "2018-06-25", "last": "2021-10-11"}, {"id": "5050853", "name": "MSL健康プログラム契約(ロイヤリティ)", "cat": "ロイヤリティ", "price": 0, "tax": "10.0", "first": "2020-11-13", "last": "2022-03-14"}, {"id": "5050863", "name": "SPIC オフィシャルトレーナー(ロイヤリティ)", "cat": "ロイヤリティ", "price": 0, "tax": "10.0", "first": "2020-11-12", "last": "2020-12-07"}, {"id": "3000011", "name": "SPIC DRESSING 3L", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2021-03-25", "last": "2026-04-27"}, {"id": "3000012", "name": "SPIC DRESSING 3L", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2021-04-22", "last": "2025-03-25"}, {"id": "3004032", "name": "LPB VC Tri-capsule Essence 500ml", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-07", "last": "2025-10-03"}, {"id": "3004052", "name": "Ozoni de Mousse 100ml", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2021-02-26", "last": "2022-03-29"}, {"id": "3004072", "name": "SPIC パフ", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-24", "last": "2023-12-25"}, {"id": "3004302", "name": "LPB Revitalize Deep Serum 40g", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-10", "last": "2024-07-24"}, {"id": "3004304", "name": "LPB Revitalize Deep Serum 40g", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-12-28", "last": "2026-02-27"}, {"id": "3004392", "name": "LPB Revitalize Deep Serum 500g", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-04", "last": "2024-08-09"}, {"id": "3004412", "name": "LPB Revitalize Deep Serum 3Daysサンプル", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-04", "last": "2022-04-25"}, {"id": "3005482", "name": "SPIC携帯用チークブラシ", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2021-02-18", "last": "2021-06-03"}, {"id": "3005492", "name": "SPIC携帯用シャドーブラシ", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2021-02-18", "last": "2021-02-19"}, {"id": "3006022", "name": "SPIC ルセレ 600g", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-02", "last": "2024-11-08"}, {"id": "3006042", "name": "新Radix 130ml", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-12-02", "last": "2024-09-30"}, {"id": "3006262", "name": "新Radix 500ml", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-12", "last": "2022-10-13"}, {"id": "3008922", "name": "MC SPIC Romanticist 105g", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-12-21", "last": "2020-12-21"}, {"id": "3009462", "name": "MC SPIC Romanticist 20g", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-10", "last": "2021-02-19"}, {"id": "3009612", "name": "SPIC DRESSING 5L", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-07", "last": "2021-06-26"}, {"id": "3009622", "name": "SPIC DRESSING 480ml", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-02", "last": "2025-08-18"}, {"id": "3009852", "name": "LPB VC Tri-capsule Essense", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-09", "last": "2024-07-24"}, {"id": "3009854", "name": "LPB VC Tri-capsule Essense", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2022-02-28", "last": "2026-02-27"}, {"id": "3009882", "name": "【ダーク】LPB Protect foundation ダークオークル", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-18", "last": "2022-03-29"}, {"id": "3009884", "name": "【ダーク】LPB Protect foundation ダークオークル", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "3009902", "name": "【ライト】LPB Protect foundation ライトオークル", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-04", "last": "2023-10-12"}, {"id": "3009904", "name": "【ライト】LPB Protect foundation ライトオークル", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2021-08-10", "last": "2022-02-28"}, {"id": "3009922", "name": "【オークル】LPB Serum foundation(パフ付き)", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-04", "last": "2021-11-26"}, {"id": "3009924", "name": "【オークル】LPB Serum foundation(パフ付き)", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2022-02-28", "last": ""}, {"id": "3009942", "name": "【ベージュ】LPB Serum foundation(パフ付き)", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-02", "last": "2023-11-17"}, {"id": "3009944", "name": "【ベージュ】LPB Serum foundation(パフ付き)", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2021-06-04", "last": "2021-11-01"}, {"id": "3009962", "name": "【ピンク】LPB Serum foundation(パフ付き)", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-04", "last": "2022-03-29"}, {"id": "3009964", "name": "【ピンク】LPB Serum foundation(パフ付き)", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "3104304", "name": "リヴァイタライズディープセラム PRESS", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "403", "name": "LPB VC Tri-capsule Essence 500ml", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2018-09-26", "last": "2026-04-27"}, {"id": "405", "name": "Ozoni de Mousse 100ml 6本", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-01-28", "last": "2026-03-17"}, {"id": "407", "name": "SPICパフ", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2018-10-13", "last": "2026-03-23"}, {"id": "430", "name": "LPB Revitalize Deep Serum 40g", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-03-06", "last": "2026-04-27"}, {"id": "439", "name": "LPB Revitalize Deep Serum 500g", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-01-17", "last": "2026-04-27"}, {"id": "441", "name": "LPB Revitalize Deep Serum 3Daysサンプル", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-02-20", "last": "2022-03-28"}, {"id": "554", "name": "SPIC エコボトル 500ml", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2018-06-14", "last": "2026-04-27"}, {"id": "602", "name": "ルセレ 600g エコボトルなし", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2018-06-25", "last": "2026-04-18"}, {"id": "624", "name": "Radix 130ml", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-10-26", "last": "2026-04-18"}, {"id": "626", "name": "Radix 500ml", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-08-27", "last": "2025-12-12"}, {"id": "7007412", "name": "稀釈用ピュアウォーター 5L", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "741", "name": "稀釈用ピュアウォーター 5L", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2018-06-30", "last": "2026-04-22"}, {"id": "892", "name": "MC SPIC Romanticist 105g 1本", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2018-06-25", "last": "2020-12-14"}, {"id": "946", "name": "MC SPIC Romanticist 20g", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "", "last": ""}, {"id": "961", "name": "新SPIC DRESSING 5L", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2016-12-07", "last": "2023-07-19"}, {"id": "962", "name": "新SPIC DRESSING 480ml", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2016-12-24", "last": "2026-04-27"}, {"id": "985", "name": "LPB VC Tri-capsule Essense", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2018-08-04", "last": "2026-04-27"}, {"id": "988", "name": "【ダーク】LPB Protect foundation ダークオークル", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2018-09-15", "last": "2022-03-28"}, {"id": "990", "name": "【ライト】LPB Protect foundation ライトオークル", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2018-09-27", "last": "2023-11-15"}, {"id": "992", "name": "LPB Serum Foundation オークル", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-18", "last": "2022-05-25"}, {"id": "994", "name": "LPB Serum Foundation ベージュ", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-14", "last": "2024-05-07"}, {"id": "996", "name": "LPB Serum Foundation ピンクナチュラル", "cat": "化粧品", "price": 0, "tax": "10.0", "first": "2020-11-14", "last": "2025-08-18"}];
+  const tbody = document.getElementById('other-tbody');
+  const countEl = document.getElementById('other-count');
+  const emptyEl = document.getElementById('other-empty');
+  const searchEl = document.getElementById('other-search');
+  let currentCat = 'all';
+  let currentQ = '';
+
+  const catColors = {
+    'その他商品': '#78716c',
+    '化粧品': '#be185d',
+    'タグ未設定': '#1d4ed8',
+    'サプリメント': '#15803d',
+    'Biosyyd.': '#7c3aed',
+    'ロイヤリティ': '#92400e',
+    'その他': '#374151',
+  };
+  const catBgs = {
+    'その他商品': '#f5f5f4',
+    '化粧品': '#fdf2f8',
+    'タグ未設定': '#eff6ff',
+    'サプリメント': '#f0fdf4',
+    'Biosyyd.': '#f5f3ff',
+    'ロイヤリティ': '#fffbeb',
+    'その他': '#f3f4f6',
+  };
+
+  function render() {
+    const q = currentQ.toLowerCase();
+    const filtered = DATA.filter(d => {
+      const catMatch = currentCat === 'all' || d.cat === currentCat;
+      const qMatch = !q || d.id.toLowerCase().includes(q) || d.name.toLowerCase().includes(q);
+      return catMatch && qMatch;
+    });
+
+    countEl.textContent = filtered.length.toLocaleString();
+    emptyEl.style.display = filtered.length === 0 ? '' : 'none';
+
+    const frag = document.createDocumentFragment();
+    filtered.forEach((d, i) => {
+      const tr = document.createElement('tr');
+      tr.style.cssText = i % 2 === 0 ? 'background:var(--surface)' : 'background:var(--surface2)';
+      tr.onmouseenter = () => tr.style.background = '#fff8f0';
+      tr.onmouseleave = () => tr.style.background = i % 2 === 0 ? 'var(--surface)' : 'var(--surface2)';
+
+      const col = catColors[d.cat] || '#374151';
+      const bg  = catBgs[d.cat]  || '#f3f4f6';
+      const taxStr = d.tax === '8.0' ? '8%' : d.tax === '10.0' ? '10%' : '—';
+
+      tr.innerHTML = `
+        <td style="padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;border-bottom:1px solid var(--border)">${d.id}</td>
+        <td style="padding:6px 10px;font-size:12px;border-bottom:1px solid var(--border)">${d.name}</td>
+        <td style="padding:6px 10px;border-bottom:1px solid var(--border);white-space:nowrap">
+          <span style="background:${bg};color:${col};border:1px solid ${col}40;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600">${d.cat}</span>
+        </td>
+        <td style="padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;border-bottom:1px solid var(--border)">${taxStr}</td>
+        <td style="padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap">${d.first || '—'}</td>
+        <td style="padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap">${d.last || '—'}</td>
+      `;
+      frag.appendChild(tr);
+    });
+    tbody.innerHTML = '';
+    tbody.appendChild(frag);
+  }
+
+  // 検索
+  let timer;
+  searchEl.addEventListener('input', e => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { currentQ = e.target.value; render(); }, 200);
+  });
+
+  // カテゴリフィルタ
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentCat = btn.dataset.cat;
+      document.querySelectorAll('.cat-btn').forEach(b => {
+        b.style.background = 'var(--surface)';
+        b.style.color = 'var(--muted)';
+        b.style.fontWeight = '400';
+      });
+      btn.style.background = 'var(--text)';
+      btn.style.color = 'var(--surface)';
+      btn.style.fontWeight = '700';
+      render();
+    });
+  });
+
+  // タブが開かれた時に初期描画
+  document.querySelector('[data-tab="goods-other"]').addEventListener('click', () => {
+    if (!tbody.hasChildNodes()) render();
+  });
+
+  // 最初から描画しておく（軽量なので問題なし）
+  render();
+})();
+</script>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + target).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
+</div><!-- /.page-body -->
+</body>
+</html>

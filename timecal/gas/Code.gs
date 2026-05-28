@@ -5,7 +5,7 @@
 
 // ★ ここを実際の値に変更してください
 const BQ_PROJECT  = 'spic-com-2025-apr-00';  // GCPプロジェクトID
-const BQ_DATASET  = 'nishimori';             // BigQueryデータセット名
+const BQ_DATASET  = 'sandbox_nishimori';      // BigQueryデータセット名
 const BQ_LOCATION = 'US';                    // データセット作成時のロケーション
 
 // 有効なユーザートークン → 名前のマッピング

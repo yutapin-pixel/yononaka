@@ -4,7 +4,7 @@
 // ============================================================
 
 // ★ ここを実際の値に変更してください
-const BQ_PROJECT = 'YOUR_GCP_PROJECT_ID';  // GCPプロジェクトID
+const BQ_PROJECT = 'spic-com-2025-apr-00';  // GCPプロジェクトID
 const BQ_DATASET = 'nishimori';            // BigQueryデータセット名
 
 // 有効なユーザートークン → 名前のマッピング

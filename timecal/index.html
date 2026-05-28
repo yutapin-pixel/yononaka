@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>工数管理</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header class="app-header">
+  <div style="display:flex;align-items:center;">
+    <h1>工数管理</h1>
+    <span class="user-chip" id="userChip">---</span>
+  </div>
+  <div class="header-right">
+    <a href="admin.html" id="adminLink" style="display:none;">
+      <button class="btn btn-sm" style="color:#6EE7B7;border-color:#6EE7B7;background:transparent;font-size:11px;">管理者画面</button>
+    </a>
+    <button class="btn btn-sm" id="refreshBtn" style="color:#D1FAE5;border-color:#6B7280;background:transparent;">更新</button>
+  </div>
+</header>
+
+<!-- ブランドパレット -->
+<section class="brand-palette">
+  <span class="palette-label">ブランド：</span>
+  <div class="palette-brands" id="brandPalette"></div>
+  <span class="palette-hint">選択後、下のカレンダー枠をクリックで色付け</span>
+</section>
+
+<!-- 週ナビゲーション -->
+<section class="week-nav">
+  <button class="btn btn-nav" id="prevWeekBtn">◀ 前週</button>
+  <span class="week-label" id="weekLabel">読み込み中...</span>
+  <button class="btn btn-nav" id="nextWeekBtn">翌週 ▶</button>
+</section>
+
+<!-- カレンダー -->
+<div class="calendar-wrap">
+  <div class="calendar-grid" id="calGrid"></div>
+</div>
+
+<!-- 月次サマリー -->
+<section class="summary-section">
+  <h2>当月 確定済み合計（<span id="summaryYM">--</span>）
+    <button class="btn btn-sm" id="refreshSummaryBtn" style="margin-left:10px;">集計を更新</button>
+  </h2>
+  <div class="summary-chips" id="summaryChips">
+    <span class="summary-loading">データを取得中...</span>
+  </div>
+</section>
+
+<!-- ローディング -->
+<div class="overlay hidden" id="overlay">
+  <div class="spinner"></div>
+  <span id="overlayMsg">読み込み中...</span>
+</div>
+
+<!-- トースト -->
+<div class="toast hidden" id="toast"></div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

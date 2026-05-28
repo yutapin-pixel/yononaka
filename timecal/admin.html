@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>工数管理 – 管理者</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="admin-header">
+  <h1>工数管理 – 管理者ダッシュボード</h1>
+  <a href="index.html">
+    <button class="btn btn-sm" style="color:#D1FAE5;border-color:#6B7280;background:transparent;">← 入力画面</button>
+  </a>
+</header>
+
+<main class="admin-main">
+
+  <!-- ツールバー -->
+  <div class="admin-toolbar">
+    <label for="monthSel">対象月：</label>
+    <select id="monthSel"></select>
+    <button class="btn btn-primary" id="loadBtn">データ取得</button>
+    <span style="margin-left:auto;font-size:12px;color:#9CA3AF;" id="lastUpdated"></span>
+  </div>
+
+  <!-- ローディング -->
+  <div class="admin-loading" id="adminLoading">
+    <div class="spinner" style="margin:0 auto 12px;"></div>
+    データを取得中です...
+  </div>
+
+  <!-- コンテンツ（取得後に表示） -->
+  <div class="admin-content hidden" id="adminContent">
+
+    <!-- 上段：確定状況 + ブランド集計 -->
+    <div class="admin-grid">
+      <div class="admin-card" id="progressCard">
+        <h3>確定状況</h3>
+        <div id="progressBody"></div>
+      </div>
+      <div class="admin-card" id="brandCard">
+        <h3>ブランド別 確定済み時間（チーム計）</h3>
+        <div id="brandBody"></div>
+      </div>
+    </div>
+
+    <!-- 月末予測 -->
+    <div class="admin-card full-width" id="predCard" style="margin-bottom:16px;">
+      <h3>月末予測</h3>
+      <div id="predBody"></div>
+    </div>
+
+    <!-- 担当者別円グラフ -->
+    <div class="admin-card full-width">
+      <h3>担当者別 時間内訳</h3>
+      <div class="charts-grid" id="chartsGrid"></div>
+    </div>
+
+  </div>
+</main>
+
+<!-- トースト -->
+<div class="toast hidden" id="toast"></div>
+
+<script src="config.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

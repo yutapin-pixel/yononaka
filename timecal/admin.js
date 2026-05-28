@@ -4,35 +4,25 @@
 function pad(n) { return String(n).padStart(2, '0'); }
 function fmtYM(d) { return `${d.getFullYear()}-${pad(d.getMonth()+1)}`; }
 
-function api(params) {
-  return new Promise((resolve, reject) => {
-    if (!CONFIG.GAS_URL) {
-      resolve(demoData());
-      return;
-    }
-    const cbName = '_ga_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
-    let timer;
-    window[cbName] = function(data) {
-      clearTimeout(timer);
-      delete window[cbName];
-      script.remove();
-      resolve(data);
-    };
-    const qs = Object.entries({ ...params, callback: cbName })
-      .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v)))
-      .join('&');
-    const script = document.createElement('script');
-    script.src = CONFIG.GAS_URL + '?' + qs;
-    script.onerror = () => {
-      clearTimeout(timer); delete window[cbName]; script.remove();
-      reject(new Error('通信エラー'));
-    };
-    timer = setTimeout(() => {
-      delete window[cbName]; script.remove();
-      reject(new Error('タイムアウト'));
-    }, 40000);
-    document.head.appendChild(script);
-  });
+async function api(params) {
+  if (!CONFIG.GAS_URL) {
+    return demoData();
+  }
+  const qs = Object.entries(params)
+    .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v)))
+    .join('&');
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 40000);
+  try {
+    const res = await fetch(CONFIG.GAS_URL + '?' + qs, { signal: controller.signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (e) {
+    if (e.name === 'AbortError') throw new Error('タイムアウト');
+    throw new Error('通信エラー');
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 function toast(msg, type = 'info', ms = 4000) {

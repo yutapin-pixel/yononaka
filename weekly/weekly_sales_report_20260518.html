@@ -929,9 +929,294 @@ td.latest-week.heat1{background:#fee2e2 !important;color:#991b1b !important;}
 <div class="ssub">※ ふるさと納税・LINEギフトはshop_id=21の月末締め計上のため、5月分は月末確定まで0円表示。</div>
 <div class="ssub">※ 週報実績はNE受注日ベース、予算はNE出荷ベース。集計基準の相違による構造的乖離あり。</div>
 <div class="ssub">※ 予算出典：KPIダッシュボード FY2027予実管理 &gt; 2026年5月列。参照ナレッジ：reference_fy2027_budget_weekly.md</div>
+
+<div class="stitle">日別売上 vs 日次予算</div>
+<div class="ssub">日次予算 = 月次予算 ÷ 31（破線は月末まで表示）　実績：NE受注日ベース・税抜（BQ直取得）　実績未確定日はグラフ空白</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px;">
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">Shopify（自社EC）</div>
+    <canvas id="chart_Shopify" height="160"></canvas>
+  </div>
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">Amazon</div>
+    <canvas id="chart_Amazon" height="160"></canvas>
+  </div>
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">楽天</div>
+    <canvas id="chart_Rakuten" height="160"></canvas>
+  </div>
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">Yahoo ＋ Qoo10</div>
+    <canvas id="chart_YQ" height="160"></canvas>
+  </div>
 </div>
-
-
+<script>
+(function(){
+  var ctx = document.getElementById('chart_Shopify').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['05-01', '05-02', '05-03', '05-04', '05-05', '05-06', '05-07', '05-08', '05-09', '05-10', '05-11', '05-12', '05-13', '05-14', '05-15', '05-16', '05-17', '05-18', '05-19', '05-20', '05-21', '05-22', '05-23', '05-24', '05-25', '05-26', '05-27', '05-28', '05-29', '05-30', '05-31'],
+      datasets: [
+        {
+          label: '実績',
+          data: [7319771,6680203,5845938,8728951,7031896,9061836,6914154,6546217,7116256,6793266,8100142,7916651,5785353,6335858,6543454,7695561,7384199,6875389,7885691,7811754,7060421,6840149,7178536,8052185,null,null,null,null,null,null,null],
+          borderColor: '#4f86f7',
+          backgroundColor: '#4f86f722',
+          borderWidth: 2.5,
+          pointRadius: 3.5,
+          pointHoverRadius: 6,
+          tension: 0.3,
+          fill: true,
+          spanGaps: false
+        },
+        {
+          label: '日次予算（月次÷31）',
+          data: [8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613, 8551613],
+          borderColor: '#93c5fd',
+          backgroundColor: 'transparent',
+          borderWidth: 2,
+          borderDash: [6,4],
+          pointRadius: 0,
+          tension: 0,
+          spanGaps: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 14 } },
+        tooltip: {
+          callbacks: {
+            label: function(c) {
+              if (c.parsed.y === null) return c.dataset.label + ': —';
+              return c.dataset.label + ': ¥' + c.parsed.y.toLocaleString();
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { font: { size: 10 }, maxRotation: 45 },
+          grid: { color: '#f0f0f0' }
+        },
+        y: {
+          min: 0,
+          max: 10692966,
+          ticks: {
+            font: { size: 10 },
+            callback: function(v) {
+              return v >= 1000000 ? '¥'+(v/1000000).toFixed(1)+'M' : '¥'+(v/1000).toFixed(0)+'K';
+            }
+          },
+          grid: { color: '#f0f0f0' }
+        }
+      }
+    }
+  });
+})();
+(function(){
+  var ctx = document.getElementById('chart_Amazon').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['05-01', '05-02', '05-03', '05-04', '05-05', '05-06', '05-07', '05-08', '05-09', '05-10', '05-11', '05-12', '05-13', '05-14', '05-15', '05-16', '05-17', '05-18', '05-19', '05-20', '05-21', '05-22', '05-23', '05-24', '05-25', '05-26', '05-27', '05-28', '05-29', '05-30', '05-31'],
+      datasets: [
+        {
+          label: '実績',
+          data: [5760479,5037710,5140627,2700127,2272670,2761596,2557889,3028771,2825479,3301937,2730949,2811461,2715495,2233248,2730663,3729020,3283333,3232782,3247419,5160579,4534280,4056959,4635251,4984971,null,null,null,null,null,null,null],
+          borderColor: '#f59e0b',
+          backgroundColor: '#f59e0b22',
+          borderWidth: 2.5,
+          pointRadius: 3.5,
+          pointHoverRadius: 6,
+          tension: 0.3,
+          fill: true,
+          spanGaps: false
+        },
+        {
+          label: '日次予算（月次÷31）',
+          data: [3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496, 3782496],
+          borderColor: '#fcd34d',
+          backgroundColor: 'transparent',
+          borderWidth: 2,
+          borderDash: [6,4],
+          pointRadius: 0,
+          tension: 0,
+          spanGaps: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 14 } },
+        tooltip: {
+          callbacks: {
+            label: function(c) {
+              if (c.parsed.y === null) return c.dataset.label + ': —';
+              return c.dataset.label + ': ¥' + c.parsed.y.toLocaleString();
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { font: { size: 10 }, maxRotation: 45 },
+          grid: { color: '#f0f0f0' }
+        },
+        y: {
+          min: 0,
+          max: 6797365,
+          ticks: {
+            font: { size: 10 },
+            callback: function(v) {
+              return v >= 1000000 ? '¥'+(v/1000000).toFixed(1)+'M' : '¥'+(v/1000).toFixed(0)+'K';
+            }
+          },
+          grid: { color: '#f0f0f0' }
+        }
+      }
+    }
+  });
+})();
+(function(){
+  var ctx = document.getElementById('chart_Rakuten').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['05-01', '05-02', '05-03', '05-04', '05-05', '05-06', '05-07', '05-08', '05-09', '05-10', '05-11', '05-12', '05-13', '05-14', '05-15', '05-16', '05-17', '05-18', '05-19', '05-20', '05-21', '05-22', '05-23', '05-24', '05-25', '05-26', '05-27', '05-28', '05-29', '05-30', '05-31'],
+      datasets: [
+        {
+          label: '実績',
+          data: [1645686,994077,789765,724129,1576272,1204525,1156896,834859,1601020,5272250,1827273,1636406,1358360,1224647,4224729,1528070,1136794,1512980,999743,1830241,710680,1379272,1306149,1862218,null,null,null,null,null,null,null],
+          borderColor: '#ef4444',
+          backgroundColor: '#ef444422',
+          borderWidth: 2.5,
+          pointRadius: 3.5,
+          pointHoverRadius: 6,
+          tension: 0.3,
+          fill: true,
+          spanGaps: false
+        },
+        {
+          label: '日次予算（月次÷31）',
+          data: [2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998, 2479998],
+          borderColor: '#fca5a5',
+          backgroundColor: 'transparent',
+          borderWidth: 2,
+          borderDash: [6,4],
+          pointRadius: 0,
+          tension: 0,
+          spanGaps: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 14 } },
+        tooltip: {
+          callbacks: {
+            label: function(c) {
+              if (c.parsed.y === null) return c.dataset.label + ': —';
+              return c.dataset.label + ': ¥' + c.parsed.y.toLocaleString();
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { font: { size: 10 }, maxRotation: 45 },
+          grid: { color: '#f0f0f0' }
+        },
+        y: {
+          min: 0,
+          max: 6221255,
+          ticks: {
+            font: { size: 10 },
+            callback: function(v) {
+              return v >= 1000000 ? '¥'+(v/1000000).toFixed(1)+'M' : '¥'+(v/1000).toFixed(0)+'K';
+            }
+          },
+          grid: { color: '#f0f0f0' }
+        }
+      }
+    }
+  });
+})();
+(function(){
+  var ctx = document.getElementById('chart_YQ').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['05-01', '05-02', '05-03', '05-04', '05-05', '05-06', '05-07', '05-08', '05-09', '05-10', '05-11', '05-12', '05-13', '05-14', '05-15', '05-16', '05-17', '05-18', '05-19', '05-20', '05-21', '05-22', '05-23', '05-24', '05-25', '05-26', '05-27', '05-28', '05-29', '05-30', '05-31'],
+      datasets: [
+        {
+          label: '実績',
+          data: [856573,442153,700687,391658,979035,440614,185632,224281,726014,821154,509756,215575,310515,139765,461785,108968,564506,213978,269671,170648,141821,385798,115413,578224,null,null,null,null,null,null,null],
+          borderColor: '#8b5cf6',
+          backgroundColor: '#8b5cf622',
+          borderWidth: 2.5,
+          pointRadius: 3.5,
+          pointHoverRadius: 6,
+          tension: 0.3,
+          fill: true,
+          spanGaps: false
+        },
+        {
+          label: '日次予算（月次÷31）',
+          data: [222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951, 222951],
+          borderColor: '#c4b5fd',
+          backgroundColor: 'transparent',
+          borderWidth: 2,
+          borderDash: [6,4],
+          pointRadius: 0,
+          tension: 0,
+          spanGaps: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 14 } },
+        tooltip: {
+          callbacks: {
+            label: function(c) {
+              if (c.parsed.y === null) return c.dataset.label + ': —';
+              return c.dataset.label + ': ¥' + c.parsed.y.toLocaleString();
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { font: { size: 10 }, maxRotation: 45 },
+          grid: { color: '#f0f0f0' }
+        },
+        y: {
+          min: 0,
+          max: 1155261,
+          ticks: {
+            font: { size: 10 },
+            callback: function(v) {
+              return v >= 1000000 ? '¥'+(v/1000000).toFixed(1)+'M' : '¥'+(v/1000).toFixed(0)+'K';
+            }
+          },
+          grid: { color: '#f0f0f0' }
+        }
+      }
+    }
+  });
+})();
+</script>
+</div>
 <script>
 function switchTab(n){document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===n));document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===n));}
 function toggleInsight(h){const b=h.nextElementSibling,c=h.querySelector('.insight-chevron');b.classList.toggle('open');c.classList.toggle('open');}

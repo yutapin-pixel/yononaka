@@ -177,17 +177,19 @@ function renderBrandSummary(data) {
     return;
   }
 
+  const max = entries[0][1];
   const bars = entries.map(([code, hours]) => {
-    const pct   = total > 0 ? Math.round(hours / total * 100) : 0;
+    const pctBar   = max > 0 ? Math.round(hours / max * 100) : 0;
+    const pctTotal = total > 0 ? Math.round(hours / total * 100) : 0;
     const color = getBrandColor(code);
     const name  = getBrandName(code);
     return `
       <div class="brand-bar-row">
         <div class="brand-bar-name">${name}</div>
         <div class="brand-bar-track">
-          <div class="brand-bar-fill" style="width:${pct}%;background:${color};"></div>
+          <div class="brand-bar-fill" style="width:${pctBar}%;background:${color};"></div>
         </div>
-        <div class="brand-bar-value">${hours}h (${pct}%)</div>
+        <div class="brand-bar-value">${hours}h (${pctTotal}%)</div>
       </div>
     `;
   }).join('');

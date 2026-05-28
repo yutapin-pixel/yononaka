@@ -234,6 +234,39 @@ a { color: inherit; }
 .entry-cell.cell-locked[data-brand="UNSET"] { background: #FAFAFA; }
 .entry-cell.cell-locked { opacity: .85; }
 
+/* ========== 使い方ガイド ========== */
+.guide-section {
+  margin: 0 20px 16px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.guide-toggle {
+  width: 100%;
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1D4ED8;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+.guide-toggle::-webkit-details-marker { display: none; }
+.guide-toggle::after { content: '▼'; font-size: 10px; color: #93C5FD; }
+details[open] .guide-toggle::after { content: '▲'; }
+.guide-body { padding: 0 20px 14px; }
+.guide-list {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.8;
+  padding-left: 18px;
+}
+.guide-list li { margin-bottom: 2px; }
+
 /* ========== 月次サマリー ========== */
 .summary-section {
   margin: 0 20px 20px;

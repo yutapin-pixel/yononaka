@@ -131,6 +131,7 @@ function buildCalendar() {
 
   const dates = Array.from({ length: 5 }, (_, i) => addDays(state.weekStart, i));
   const dayNames = ['月', '火', '水', '木', '金'];
+  const today = new Date(); today.setHours(0, 0, 0, 0);
 
   // 週ラベル
   document.getElementById('weekLabel').textContent =
@@ -145,16 +146,20 @@ function buildCalendar() {
   dates.forEach((d, i) => {
     const dateStr = fmtDate(d);
     const isConf = state.confirmed.has(dateStr);
+    const isPastUnconf = !isConf && d < today;
     const th = el('div', 'cal-th');
     th.innerHTML = `
       <div class="day-name">${dayNames[i]}</div>
       <div class="day-date">${d.getMonth()+1}/${d.getDate()}</div>
     `;
     const btn = document.createElement('button');
-    btn.className = 'confirm-day-btn' + (isConf ? ' is-confirmed' : '');
-    btn.textContent = isConf ? '確定済み ✓' : '確定';
-    btn.disabled = isConf;
-    if (!isConf) {
+    btn.className = 'confirm-day-btn' +
+      (isConf ? ' is-confirmed' : '') +
+      (isPastUnconf ? ' is-overdue' : '');
+    btn.textContent = isConf ? '確定済み ✓' : (isPastUnconf ? '確定してください' : '確定');
+    if (isConf) {
+      btn.addEventListener('click', () => doUnconfirm(dateStr, btn, d));
+    } else {
       btn.addEventListener('click', () => doConfirm(dateStr, btn, d));
     }
     th.appendChild(btn);
@@ -175,7 +180,7 @@ function buildCalendar() {
       let brand = state.entries[key];
       if (brand === undefined) {
         brand = (isFixed || CONFIG.DEFAULT_NA_HOURS.includes(h))
-          ? CONFIG.BRAND_NA : CONFIG.BRAND_UNSET;
+          ? CONFIG.BRAND_NA : 'NONE';
         state.entries[key] = brand;
       }
 
@@ -228,7 +233,7 @@ async function onCellClick(cell) {
 
   // 同じブランドをクリック → 元のデフォルト値に戻す
   const next = (prev === state.selectedBrand)
-    ? (CONFIG.DEFAULT_NA_HOURS.includes(hour) ? CONFIG.BRAND_NA : CONFIG.BRAND_UNSET)
+    ? (CONFIG.DEFAULT_NA_HOURS.includes(hour) ? CONFIG.BRAND_NA : 'NONE')
     : state.selectedBrand;
 
   // 即時反映（他セルはブロックしない）
@@ -293,6 +298,28 @@ async function doConfirm(dateStr, btn, d) {
   }
 }
 
+/* ===== 確定解除 ===== */
+async function doUnconfirm(dateStr, btn, d) {
+  if (!confirm(`${d.getMonth()+1}月${d.getDate()}日の確定を解除しますか？\n解除するとこの日の変更が再び可能になります。`)) return;
+
+  setLoading(true, '解除中...');
+  try {
+    const res = await api({ action: 'cancelConfirm', userToken: state.token, date: dateStr });
+    if (res.error) {
+      toast(res.message || '解除に失敗しました', 'error');
+    } else {
+      state.confirmed.delete(dateStr);
+      toast(`${d.getMonth()+1}/${d.getDate()} の確定を解除しました`, 'success');
+      buildCalendar();
+      loadSummary();
+    }
+  } catch (e) {
+    toast(e.message, 'error');
+  } finally {
+    setLoading(false);
+  }
+}
+
 /* ===== データ取得 ===== */
 async function loadWeek() {
   setLoading(true);
@@ -313,7 +340,7 @@ async function loadWeek() {
       CONFIG.HOURS.forEach(h => {
         const key = `${d}_${h}`;
         state.entries[key] = (CONFIG.FIXED_NA_HOURS.includes(h) || CONFIG.DEFAULT_NA_HOURS.includes(h))
-          ? CONFIG.BRAND_NA : CONFIG.BRAND_UNSET;
+          ? CONFIG.BRAND_NA : 'NONE';
       });
     }
 

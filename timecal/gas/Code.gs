@@ -44,6 +44,7 @@ function doGet(e) {
           case 'getEntries':      result = getEntries(e.parameter);      break;
           case 'saveEntry':       result = saveEntry(e.parameter);        break;
           case 'confirmDay':      result = confirmDay(e.parameter);       break;
+          case 'cancelConfirm':  result = cancelConfirm(e.parameter);   break;
           case 'getMonthSummary': result = getMonthSummary(e.parameter);  break;
           case 'getAdminSummary':
             if (!isAdmin && token !== ADMIN_TOKEN) {
@@ -225,6 +226,20 @@ function confirmDay(p) {
     INSERT INTO \`${BQ_PROJECT}.${BQ_DATASET}.confirmed_days\`
       (user_token, confirmed_date, confirmed_at)
     VALUES ('${token}', '${date}', CURRENT_TIMESTAMP())
+  `);
+  return { success: true };
+}
+
+// ============================================================
+//  確定解除
+// ============================================================
+function cancelConfirm(p) {
+  const token = safe(p.userToken);
+  const date  = safe(p.date);
+
+  bqQuery(`
+    DELETE FROM \`${BQ_PROJECT}.${BQ_DATASET}.confirmed_days\`
+    WHERE user_token = '${token}' AND confirmed_date = '${date}'
   `);
   return { success: true };
 }

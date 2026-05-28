@@ -59,6 +59,7 @@ a { color: inherit; }
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .palette-label { font-size: 12px; color: #6B7280; font-weight: 600; white-space: nowrap; }
 .palette-brands { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -77,7 +78,10 @@ a { color: inherit; }
 .brand-btn:hover { opacity: .85; transform: translateY(-1px); }
 .brand-btn.active {
   border-color: #111827;
-  box-shadow: 0 0 0 3px rgba(17,24,39,.2);
+  box-shadow: 0 0 0 4px rgba(17,24,39,.45);
+  transform: scale(1.1);
+  outline: 2px solid #111827;
+  outline-offset: 1px;
 }
 .brand-btn-vccd {
   background: linear-gradient(135deg, var(--vc) 50%, var(--cd) 50%);
@@ -153,7 +157,18 @@ a { color: inherit; }
 .confirm-day-btn.is-confirmed {
   background: #6B7280;
   color: #fff;
-  cursor: default;
+  cursor: pointer;
+}
+.confirm-day-btn.is-confirmed:hover { background: #4B5563; }
+.confirm-day-btn.is-overdue {
+  background: #DC2626;
+  color: #fff;
+  animation: pulse-red 1.4s ease-in-out infinite;
+}
+.confirm-day-btn.is-overdue:hover { background: #B91C1C; }
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,.4); }
+  50%       { box-shadow: 0 0 0 4px rgba(220,38,38,0); }
 }
 
 /* 時間ラベル */
@@ -195,8 +210,8 @@ a { color: inherit; }
 .entry-cell[data-brand="VCCD"] {
   background: repeating-linear-gradient(
     45deg,
-    var(--vc) 0px, var(--vc) 8px,
-    var(--cd) 8px, var(--cd) 16px
+    var(--vc) 0px, var(--vc) 60px,
+    var(--cd) 60px, var(--cd) 120px
   );
   color: #fff;
   text-shadow: 0 1px 2px rgba(0,0,0,.4);

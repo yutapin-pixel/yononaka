@@ -9,7 +9,7 @@ const state = {
   entries: {},           // "YYYY-MM-DD_H" → brandCode
   confirmed: new Set(),  // 確定済み日付 "YYYY-MM-DD"
   selectedBrand: null,
-  busy: false,
+  savingKeys: new Set(), // 保存中のセルkey（同一セルの二重送信防止）
 };
 
 /* ===== 日付ユーティリティ ===== */
@@ -217,9 +217,11 @@ async function onCellClick(cell) {
     toast('先にブランドを選択してください', 'error', 2000);
     return;
   }
-  if (state.busy) return;
 
   const key  = cell.dataset.key;
+  // 同一セルが保存中なら無視（二重送信防止）
+  if (state.savingKeys.has(key)) return;
+
   const date = cell.dataset.date;
   const hour = parseInt(cell.dataset.hour);
   const prev = state.entries[key];
@@ -229,12 +231,13 @@ async function onCellClick(cell) {
     ? (CONFIG.DEFAULT_NA_HOURS.includes(hour) ? CONFIG.BRAND_NA : CONFIG.BRAND_UNSET)
     : state.selectedBrand;
 
-  // 即時反映
+  // 即時反映（他セルはブロックしない）
   applyCell(cell, next);
   state.entries[key] = next;
 
-  // API保存
-  state.busy = true;
+  // API保存（このセルのみロック）
+  state.savingKeys.add(key);
+  cell.style.opacity = '0.6';
   try {
     const res = await api({ action: 'saveEntry', userToken: state.token, date, hour, brand: next });
     if (res.error) {
@@ -247,7 +250,8 @@ async function onCellClick(cell) {
     applyCell(cell, prev);
     state.entries[key] = prev;
   } finally {
-    state.busy = false;
+    state.savingKeys.delete(key);
+    cell.style.opacity = '';
   }
 }
 

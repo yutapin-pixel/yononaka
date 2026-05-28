@@ -4,8 +4,9 @@
 // ============================================================
 
 // ★ ここを実際の値に変更してください
-const BQ_PROJECT = 'spic-com-2025-apr-00';  // GCPプロジェクトID
-const BQ_DATASET = 'nishimori';            // BigQueryデータセット名
+const BQ_PROJECT  = 'spic-com-2025-apr-00';  // GCPプロジェクトID
+const BQ_DATASET  = 'nishimori';             // BigQueryデータセット名
+const BQ_LOCATION = 'US';                    // データセット作成時のロケーション
 
 // 有効なユーザートークン → 名前のマッピング
 const USER_MAP = {
@@ -75,7 +76,7 @@ function doGet(e) {
 //  BigQuery ヘルパー
 // ============================================================
 function bqQuery(sql) {
-  const req = { query: sql, useLegacySql: false, timeoutMs: 30000 };
+  const req = { query: sql, useLegacySql: false, timeoutMs: 30000, location: BQ_LOCATION };
   let res = BigQuery.Jobs.query(req, BQ_PROJECT);
 
   if (!res.jobComplete) {

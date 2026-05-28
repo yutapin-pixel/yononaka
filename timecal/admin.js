@@ -196,47 +196,78 @@ function renderBrandSummary(data) {
     <div style="margin-top:12px;font-size:12px;color:#6B7280;">チーム合計: ${total}h</div>`;
 }
 
-/* ===== 月末予測 ===== */
+/* ===== 月末予測（棒グラフ） ===== */
 function renderPrediction(data) {
   const el = document.getElementById('predBody');
-  const entries = Object.entries(data.predictedByBrand).sort((a, b) => b[1] - a[1]);
-  const totalPred = entries.reduce((s, [, h]) => s + h, 0);
-  const totalActual = Object.values(data.totalByBrand).reduce((s, h) => s + h, 0);
+  const entries = Object.entries(data.predictedByBrand)
+    .filter(([code]) => code !== 'NONE' && code !== 'UNSET')
+    .sort((a, b) => b[1] - a[1]);
   const remaining = data.workdaysTotal - data.workdaysPassed;
 
-  let html = `
+  if (predChartInstance) { predChartInstance.destroy(); predChartInstance = null; }
+
+  el.innerHTML = `
     <div class="prediction-note">
       残り <strong>${remaining}</strong> 営業日。確定済み実績から日割りで外挿した予測値です。
     </div>
-    <div>
+    <div class="pred-chart-wrap">
+      <canvas id="predChart"></canvas>
+    </div>
   `;
 
   if (entries.length === 0) {
-    html += '<p style="color:#9CA3AF;font-size:13px;">確定済みデータがありません</p>';
-  } else {
-    entries.forEach(([code, pred]) => {
-      const actual = data.totalByBrand[code] || 0;
-      html += `
-        <div class="pred-row">
-          <span class="pred-brand-name">${getBrandName(code)}</span>
-          <span class="pred-actual">確定 ${actual}h</span>
-          <span class="pred-arrow">→</span>
-          <span class="pred-forecast">月末予測 ${pred}h</span>
-        </div>
-      `;
-    });
-    html += `
-      <div style="margin-top:12px;padding-top:10px;border-top:1px solid #E5E7EB;font-size:13px;color:#374151;font-weight:700;">
-        チーム合計: 確定 ${totalActual}h → 予測 ${totalPred}h
-      </div>
-    `;
+    el.insertAdjacentHTML('beforeend', '<p style="color:#9CA3AF;font-size:13px;text-align:center;padding:20px 0;">確定済みデータがありません</p>');
+    return;
   }
 
-  html += '</div>';
-  el.innerHTML = html;
+  const labels     = entries.map(([code]) => getBrandName(code));
+  const actualVals = entries.map(([code]) => data.totalByBrand[code] || 0);
+  const predVals   = entries.map(([, h]) => h);
+  const colors     = entries.map(([code]) => {
+    const b = getBrand(code);
+    return b ? (b.isStripe ? b.color1 : b.color) : '#9CA3AF';
+  });
+
+  predChartInstance = new Chart(document.getElementById('predChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: '確定済み',
+          data: actualVals,
+          backgroundColor: colors.map(c => c + 'CC'),
+          borderColor: colors,
+          borderWidth: 1,
+        },
+        {
+          label: '月末予測',
+          data: predVals,
+          backgroundColor: colors.map(c => c + '33'),
+          borderColor: colors,
+          borderWidth: 2,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 11 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}h` } },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: v => v + 'h' },
+        },
+      },
+    },
+  });
 }
 
 /* ===== 担当者別円グラフ ===== */
+let predChartInstance = null;
 let chartInstances = [];
 
 function renderCharts(data) {
@@ -252,12 +283,10 @@ function renderCharts(data) {
     const card = document.createElement('div');
     card.className = 'user-chart-card';
 
-    const totalConf = user.confirmedDays * 8; // 1日8時間（対象外3h除く）
-    const knownH    = Object.values(user.brandHours).reduce((s, h) => s + h, 0);
-    const unsetH    = Math.max(0, totalConf - knownH);
-
-    const brandMap = { ...user.brandHours };
-    if (unsetH > 0) brandMap['UNSET'] = unsetH;
+    const brandMap = {};
+    Object.entries(user.brandHours).forEach(([code, h]) => {
+      if (code !== 'NONE' && code !== 'UNSET') brandMap[code] = h;
+    });
 
     const labels = Object.keys(brandMap).map(getBrandName);
     const values = Object.values(brandMap);

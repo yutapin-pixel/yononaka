@@ -31,8 +31,8 @@ const CONFIG = {
     { code: 'SB',    name: 'SkinBeauty', isStripe: false, color: '#C4934A', textColor: '#fff' },
     { code: 'MI',    name: 'MINERALion', isStripe: false, color: '#1E3A8A', textColor: '#fff' },
     { code: 'CBD',   name: 'CBD',        isStripe: false, color: '#1B7A4A', textColor: '#fff' },
-    { code: 'NONE',  name: '識別なし',   isStripe: false, color: '#9CA3AF', textColor: '#fff' },
-    { code: 'NA',    name: '対象外',     isStripe: false, color: '#E5E7EB', textColor: '#9CA3AF' },
+    { code: 'NONE',  name: '識別なし',   isStripe: false, color: '#E5E7EB', textColor: '#9CA3AF' },
+    { code: 'NA',    name: '対象外',     isStripe: false, color: '#9CA3AF', textColor: '#fff' },
   ],
 
   // 表示時間帯（9時〜19時の開始時間）

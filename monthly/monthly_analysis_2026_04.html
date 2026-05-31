@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
-<title>Lypo-C 月次顧客分析レポート | 2026年4月度</title>
+<title>Lypo-C 月次分析レポート | 2026年4月度</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
@@ -124,6 +124,35 @@ tr.ogs{background:#fff8f0}
 .teiki-stage .ts-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:4px}
 .teiki-stage .ts-count{font-size:20px;font-weight:700;letter-spacing:-0.5px}
 .teiki-stage .ts-ltv{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* データソース・集計基準バッジ */
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ship{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-mixed{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f8fafc;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+/* KPIカード内のバッジ（ラベル行用・小さめ） */
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-ship,.sc .lb .ds-order,.sc .lb .ds-mixed{font-size:9px;padding:1px 5px;margin-left:3px}
+
+/* スナップショット基準バッジ（定期便ヘルス用） */
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-snap{font-size:9px;padding:1px 5px;margin-left:3px}
+/* Adebis・クリック日基準バッジ */
+.ds-adebis{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-click{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-adebis,.sc .lb .ds-click{font-size:9px;padding:1px 5px;margin-left:3px}
+/* アドエビス専用テーブルスタイル */
+.adebis-rank{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-right:4px;flex-shrink:0}
+.adebis-rank.r1{background:#f59e0b;color:#fff}
+.adebis-rank.r2{background:#9ca3af;color:#fff}
+.adebis-rank.r3{background:#b45309;color:#fff}
+.adebis-rank.rx{background:#f3f4f6;color:#6b7280}
+.adebis-warn{font-size:10px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.adebis-new{font-size:10px;background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.cvr-high{color:#15803d;font-weight:700}
+.cvr-mid{color:#92400e}
+.cvr-low{color:#9ca3af}
+td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-all;line-height:1.4}
 @media(max-width:768px){
   .sg4{grid-template-columns:1fr 1fr}
   .sg3{grid-template-columns:1fr}
@@ -140,10 +169,18 @@ tr.ogs{background:#fff8f0}
 <div class="page-wrap">
 
 <div class="hdr">
-  <h1>🔬 Lypo-C 月次顧客分析レポート</h1>
-  <div class="meta">データ取得：2026年5月7日 ｜ Shopify公式（shop_id=17）｜ shopify_ordersベース・shopify_customer_master・subscription_history_view</div>
+  <h1>🔬 Lypo-C 月次分析レポート</h1>
+  <div class="meta">データ取得：2026年5月7日 ｜ 売上：NE受注（shop_id=17）出荷基準 ｜ 顧客：Shopify受注基準（shopify_customer_master）｜ 定期：subscription_history_view</div>
 </div>
 <div class="month-badge">📅 2026年4月度</div>
+<div style="background:#fff7ed;border:1px solid #fed7aa;border-left:4px solid #f97316;border-radius:6px;padding:10px 16px;margin-bottom:16px;font-size:12px;line-height:1.8;color:#7c2d12">
+  <strong>📋 2026年5月度より集計基準変更</strong>　旧レポート（月次顧客分析レポート）からリニューアル。
+  <span style="display:inline-block;margin-top:4px">
+    売上・受注件数：<span class="ds-ne">NE</span><span class="ds-ship">出荷</span>　spic-core.public.ne_order_items（shop_id=17）・ship_date基準に統一 ／
+    顧客数・新規顧客：<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span>　shopify_customer_master・shopify_orders ／
+    定期便：<span class="ds-mixed">subscription_history_view</span>
+  </span>
+</div>
 
 <div class="tab-nav">
   <button class="tab-btn active" onclick="switchTab('tab1',this)">① 基礎データ</button>
@@ -158,176 +195,270 @@ tr.ogs{background:#fff8f0}
 <!-- ===== TAB 1: 基礎データ ===== -->
 <div id="tab1" class="tab-pane active">
 
-  <div class="stitle">2026年4月 月次KPIサマリー<span style="font-size:12px;font-weight:400;background:#dcfce7;color:#15803d;padding:2px 7px;border-radius:3px;margin-left:8px">今月フォーカス</span></div>
+  <div class="stitle">2026年4月 月次KPIサマリー
+    <span style="font-size:12px;font-weight:400;background:#dcfce7;color:#15803d;padding:2px 7px;border-radius:3px;margin-left:8px">今月フォーカス</span>
+  </div>
+
   <div class="sg4">
+    <!-- NE/出荷基準カード -->
     <div class="sc">
-      <div class="lb">2026年4月 売上（税抜）<span style="font-size:10px;font-weight:400;background:#eff6ff;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:4px">受注基準</span></div>
-      <div class="vl">¥214.5M</div>
-      <div class="sb"><span class="up">+4.2%</span> 前年同月比（YoY）（2025-04：¥205.9M）<span class="kpi-change dn">前月比▲2.1%</span></div>
+      <div class="lb">2026年4月 出荷売上（税抜）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+      <div class="vl">¥210.3M</div>
+      <div class="sb"><span class="up">+3.7%</span> 前年同月比（YoY）（2025-04：¥202.9M）<span class="kpi-change dn">前月比▲6.0%</span></div>
     </div>
     <div class="sc">
-      <div class="lb">2026年4月 受注件数</div>
-      <div class="vl">17,598件</div>
-      <div class="sb">AOV（平均注文単価：Average Order Value） <strong>¥12,191</strong>（税抜）</div>
+      <div class="lb">2026年4月 出荷件数<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+      <div class="vl">17,239件</div>
+      <div class="sb">AOV（平均出荷単価） <strong>¥12,202</strong>（税抜） ｜ 受注件数：17,546件</div>
     </div>
     <div class="sc">
-      <div class="lb">2026年4月 新規顧客数</div>
+      <div class="lb">2026年4月 新規顧客数<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
       <div class="vl">1,096人</div>
       <div class="sb"><span class="dn">▼9.3%</span> 前月比（2026-03：1,208人）｜ OGS後低迷継続</div>
     </div>
     <div class="sc">
-      <div class="lb">ACTIVE定期便<span style="font-size:10px;font-weight:400;background:#eff6ff;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:4px">subscription_history_view</span></div>
+      <div class="lb">ACTIVE定期便<span class="ds-mixed">subscription_history_view</span></div>
       <div class="vl">22,003件</div>
       <div class="sb">FY2027末目標 27,000件まで <strong>+4,997件</strong> ｜ 総契約 72,605件 <span class="kpi-change dn">前月比▲33件</span></div>
     </div>
     <div class="sc">
-      <div class="lb">累計顧客数（全期間）</div>
+      <div class="lb">累計顧客数（全期間）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
       <div class="vl">190,832人</div>
       <div class="sb">リピート率（2回以上） <span class="up"><strong>44.9%</strong></span>（85,604人）</div>
     </div>
     <div class="sc">
-      <div class="lb">平均LTV（全顧客・税抜累計）</div>
-      <div class="vl">¥50,700</div>
-      <div class="sb">中央値（P50） ¥8,778 ｜ P80 ¥64,288</div>
+      <div class="lb">平均LTV（全顧客・税抜累計）<span class="ds-ne">NE出荷売上</span><span class="ds-shopify">Shopify顧客数</span></div>
+      <div class="vl">¥52,874</div>
+      <div class="sb">中央値（P50） ¥13,426 ｜ P80 ¥68,977<br><span style="font-size:10px;color:var(--muted)">※shopify_customer_masterの平均総LTVを参照</span></div>
     </div>
     <div class="sc">
-      <div class="lb">VC売上シェア（2026-04）<span style="font-size:10px;font-weight:400;background:#eff6ff;color:#2563eb;padding:1px 5px;border-radius:3px;margin-left:4px">line_itemベース</span></div>
-      <div class="vl" style="color:var(--vc)">51.8%</div>
-      <div class="sb"><span class="dn">▼14.3pt</span> 前年4月比（YoY：前年4月66.1%）</div>
+      <div class="lb">VC+C+D 売上シェア（2026-04）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+      <div class="vl" style="color:var(--vc)">88.2%</div>
+      <div class="sb">VC 52.2% ＋ C+D 36.0% ｜ 前年4月比（2025-04：約100%・新ブランド未発売）</div>
     </div>
     <div class="sc">
-      <div class="lb">新ブランド売上（2026-04）</div>
-      <div class="vl" style="color:var(--ccera)">¥25.0M</div>
-      <div class="sb">C+Cera¥15.3M+SKINBEAUTY¥5.4M+MINERALion¥3.9M</div>
+      <div class="lb">新ブランド売上（2026-04）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+      <div class="vl" style="color:var(--ccera)">¥24.7M</div>
+      <div class="sb">C+Cera¥15.2M+SKINBEAUTY¥5.6M+MINERALion¥4.0M</div>
     </div>
   </div>
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 2026年4月度 KPIサマリー 考察</div>
+    <div class="mi-title">💡 2026年4月度 KPIサマリー 考察（集計方法：NE受注出荷基準＋Shopify受注基準の混在）</div>
     <ul>
-      <li><strong>売上は前年比（YoY：前年同月比）+4.2%を維持。</strong>ただしリピート購買の底堅さに依存しており、新規獲得1,096人（前月比▲9.3%）の回復は依然不十分。「売れているが入り口が細い」状態が続く。</li>
-      <li><strong>AOV（平均注文単価）¥12,191は高水準を維持。</strong>C+Cera（高単価¥18,776/定期）・C+D（¥14,189/定期）の構成比向上が主因。収益性改善のポジティブシグナル。</li>
-      <li><strong>ACTIVE定期件数22,003件は前月比▲33件でほぼ横ばい。</strong>FY2027末目標27,000件（全コース合計）まで+4,997件。VC・C+Dの自然減をC+Cera・MINERALionの新興ブランド成長で相殺している状態。</li>
-      <li><strong>累計LTV¥50,700（税抜・Shopifyベース）。</strong>平均¥50,700 vs 中央値¥8,778の格差は「一部の高LTV顧客が平均を押し上げる構造」を示す。定期継続回数とLTVの相関が極めて強く、継続促進が最大のレバー。</li>
+      <li><strong>NE出荷売上¥210.3M（前年同月比+3.7%）。</strong>旧ShopifyベースKPIとの差異は基準変更（出荷vs受注・データソース変更）に起因する。NE出荷基準は「実際に顧客へ届いた売上」を示す実態値。前月（¥223.8M）比▲6.0%は3月のまとめ注文分が出荷ずれをしているのと4月の日数短縮効果が影響。</li>
+      <li><strong>VC+C+Dシェア88.2%は既存ブランドが依然収益の大半を支配。</strong>新ブランド3社計¥24.7M（全体の11.7%）は着実な拡大継続。C+Cera¥15.2Mが新ブランドの牽引役として台頭。</li>
+      <li><strong>新規獲得1,096人（Shopify受注）はOGS前水準（約2,050人）の約半数。</strong>OGS後の低迷が6ヶ月以上継続。新規獲得チャネルの抜本的な再設計が最優先課題。</li>
+      <li><strong>平均LTV¥52,874（shopify_customer_master参照・Shopify受注ベース）。</strong>中央値¥13,426との乖離は高LTV層による平均の押し上げを示す。NE出荷ベースの真のLTV計算（累計NE出荷金額÷Shopify顧客数）は継続検討事項。</li>
     </ul>
   </div>
 
   <!-- 月次売上推移グラフ -->
-  <div class="stitle">月次売上推移（2024年4月〜2026年4月）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">受注基準</span></div>
-  <div class="ssub">データソース：Shopify公式（shop_id=17）・税抜 ｜ 橙色ハイライト = OGSキャンペーン期間（2025年7〜9月）｜ 黄緑枠 = 今月（2026年4月）</div>
+  <div class="stitle">月次出荷売上推移（2024年4月〜2026年4月）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+  <div class="ssub">データソース：spic-core.public.ne_order_items（shop_id=17）・ship_date基準・税抜（salesカラム）｜ 橙色ハイライト = OGSキャンペーン期間（2025年7〜9月）｜ 黄緑枠 = 今月（2026年4月）<br>
+  <strong>集計方法：</strong>ship_dateで月次グルーピング・cancel_date IS NULLでキャンセル除外・salesカラム税抜確定値をSUM</div>
   <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 月次売上推移 考察（2026年4月）</div>
+    <div class="mi-title">💡 月次出荷売上推移 考察（2026年4月・NE出荷基準）</div>
     <ul>
-      <li><strong>OGS特需（2025年7〜9月：¥300M超）後、平常運転へ完全移行。</strong>2026年1〜4月は¥208〜215M帯で安定。OGS前水準（¥205〜220M）と比較すると概ね同等であり、OGS後の急落からは回復している。</li>
-      <li><strong>2026年4月（¥214.5M）は前年同月比+4.2%を確保。</strong>2026年1月（¥208.8M）を底に緩やかな回復トレンドを描いており、ポートフォリオ多様化の効果が売上下支えに寄与していると解釈できる。</li>
-      <li><strong>注意：前年同月比+4.2%は一見良好だが、2025年4月（¥205.9M）がOGS前の比較的低い月であることに留意。</strong>より厳格な評価には2024年4月（¥218.5M）との比較も参照すべき（▲1.8%）。</li>
+      <li><strong>NE出荷基準で見るOGS期間（2025年7〜9月）：VC出荷量の急増（7月226.5M・8月202.7M）が顕著。</strong>2026年1〜4月は¥206〜227M帯で推移。OGS前水準（¥195〜230M）に収束しており、OGS後の急落からは回復段階。出荷基準は受注基準よりも月末締め処理の影響を受けるため、月間の振れ幅がやや大きい。</li>
+      <li><strong>2026年4月出荷¥210.3M（前年同月比+3.7%）。</strong>2026年3月（¥223.8M）の反動減が出た形だが、前年4月（¥202.9M）を上回る水準。新ブランド（C+Cera+SKINBEAUTY+MINERALion計¥24.7M）が売上底上げに貢献。</li>
+      <li><strong>NE出荷と受注の差異（月間最大±10M）に注意。</strong>出荷売上は「当月発送完了分」、受注売上は「当月注文確定分」。月末前後の受注が翌月に出荷されるため、月次閾値での集計で差が生じる。KPI評価には出荷基準（実績）を用い、着地予測には受注基準（¥214.3M）も参考にすること。</li>
     </ul>
   </div>
 
   <!-- 直近12ヶ月 月次サマリーテーブル -->
-  <div class="stitle">直近12ヶ月 月次サマリー</div>
-  <div class="ssub">shopify_orders（prod_dwh_oci）・税抜・受注基準 ｜ ★OGS期間（2025年7〜9月）は大型施策による特需</div>
+  <div class="stitle">直近12ヶ月 月次サマリー<span class="ds-ne">NE</span><span class="ds-shopify">Shopify</span></div>
+  <div class="ssub">
+    出荷件数・出荷売上・受注売上：spic-core.public.ne_order_items（shop_id=17）・cancel_date IS NULL ｜ ★OGS期間（2025年7〜9月）は大型施策による特需<br>
+    当月購入顧客数・新規顧客数：shopify_orders（prod_dwh_oci）・Shopify受注基準
+  </div>
   <table>
     <thead>
       <tr>
         <th>月</th>
-        <th>受注件数</th>
-        <th>ユニーク顧客</th>
-        <th>売上（税抜）</th>
-        <th>新規有料客</th>
+        <th>出荷件数<br><span style="font-weight:400;font-size:10px" class="ds-ne">NE</span><span class="ds-ship" style="font-size:9px">出荷</span></th>
+        <th>出荷売上（税抜）<br><span style="font-weight:400;font-size:10px" class="ds-ne">NE</span><span class="ds-ship" style="font-size:9px">出荷</span></th>
+        <th>受注売上（税抜）<br><span style="font-weight:400;font-size:10px" class="ds-ne">NE</span><span class="ds-order" style="font-size:9px">受注</span></th>
+        <th>当月購入顧客数<br><span style="font-weight:400;font-size:10px" class="ds-shopify">Shopify</span><span class="ds-order" style="font-size:9px">受注</span></th>
+        <th>新規顧客数<br><span style="font-weight:400;font-size:10px" class="ds-shopify">Shopify</span><span class="ds-order" style="font-size:9px">受注</span></th>
       </tr>
     </thead>
     <tbody>
-      <tr><td>2025-05</td><td>17,373</td><td>16,722</td><td>¥209,162,837</td><td>1,913</td></tr>
-      <tr><td>2025-06</td><td>18,240</td><td>17,519</td><td>¥215,661,333</td><td>2,292</td></tr>
-      <tr class="ogs"><td>★ 2025-07（OGS）</td><td>44,257</td><td>43,131</td><td>¥238,151,576</td><td>26,952</td></tr>
-      <tr class="ogs"><td>★ 2025-08（OGS）</td><td>35,609</td><td>34,064</td><td>¥248,063,164</td><td>16,636</td></tr>
-      <tr class="ogs"><td>★ 2025-09（OGS）</td><td>24,982</td><td>23,801</td><td>¥232,171,057</td><td>6,689</td></tr>
-      <tr><td>2025-10</td><td>19,423</td><td>18,464</td><td>¥232,099,526</td><td>1,250</td></tr>
-      <tr><td>2025-11</td><td>18,110</td><td>17,344</td><td>¥220,819,681</td><td>996</td></tr>
-      <tr><td>2025-12</td><td>18,716</td><td>17,482</td><td>¥234,330,201</td><td>975</td></tr>
-      <tr><td>2026-01</td><td>19,216</td><td>17,714</td><td>¥209,000,406</td><td>1,318</td></tr>
-      <tr><td>2026-02</td><td>17,092</td><td>15,851</td><td>¥205,347,497</td><td>1,209</td></tr>
-      <tr><td>2026-03</td><td>18,449</td><td>16,936</td><td>¥219,194,710</td><td>1,208</td></tr>
-      <tr style="background:#fff8e8"><td><strong>2026-04 ★今月</strong></td><td><strong>17,598</strong></td><td><strong>16,507</strong></td><td><strong>¥214,542,365</strong></td><td><strong>1,096</strong></td></tr>
-      <tr class="tot"><td>合計（12ヶ月）</td><td>249,065</td><td>—</td><td>¥2,678,684,353</td><td>55,534</td></tr>
+      <tr><td>2025-05</td>
+        <td>17,561</td>
+        <td>¥211.3M</td>
+        <td>¥207.7M</td>
+        <td>16,722</td>
+        <td>1,913</td>
+      </tr>
+      <tr><td>2025-06</td>
+        <td>17,785</td>
+        <td>¥210.8M</td>
+        <td>¥217.3M</td>
+        <td>17,519</td>
+        <td>2,292</td>
+      </tr>
+      <tr class="ogs"><td>★ 2025-07</td>
+        <td>43,665</td>
+        <td>¥239.5M</td>
+        <td>¥235.8M</td>
+        <td>43,131</td>
+        <td>26,952</td>
+      </tr>
+      <tr class="ogs"><td>★ 2025-08</td>
+        <td>34,656</td>
+        <td>¥237.5M</td>
+        <td>¥247.6M</td>
+        <td>34,064</td>
+        <td>16,636</td>
+      </tr>
+      <tr class="ogs"><td>★ 2025-09</td>
+        <td>25,494</td>
+        <td>¥229.6M</td>
+        <td>¥232.7M</td>
+        <td>23,801</td>
+        <td>6,689</td>
+      </tr>
+      <tr><td>2025-10</td>
+        <td>20,759</td>
+        <td>¥243.7M</td>
+        <td>¥228.6M</td>
+        <td>18,464</td>
+        <td>1,250</td>
+      </tr>
+      <tr><td>2025-11</td>
+        <td>17,342</td>
+        <td>¥211.0M</td>
+        <td>¥222.5M</td>
+        <td>17,344</td>
+        <td>996</td>
+      </tr>
+      <tr><td>2025-12</td>
+        <td>17,283</td>
+        <td>¥217.9M</td>
+        <td>¥230.3M</td>
+        <td>17,482</td>
+        <td>975</td>
+      </tr>
+      <tr><td>2026-01</td>
+        <td>20,810</td>
+        <td>¥226.8M</td>
+        <td>¥208.9M</td>
+        <td>17,714</td>
+        <td>1,318</td>
+      </tr>
+      <tr><td>2026-02</td>
+        <td>17,055</td>
+        <td>¥206.0M</td>
+        <td>¥211.7M</td>
+        <td>15,851</td>
+        <td>1,209</td>
+      </tr>
+      <tr><td>2026-03</td>
+        <td>18,860</td>
+        <td>¥223.8M</td>
+        <td>¥211.8M</td>
+        <td>16,936</td>
+        <td>1,208</td>
+      </tr>
+      <tr style="background:#fff8e8"><td><strong>2026-04 ★今月</strong></td>
+        <td><strong>17,239</strong></td>
+        <td><strong>¥210.3M</strong></td>
+        <td><strong>¥214.3M</strong></td>
+        <td><strong>16,507</strong></td>
+        <td><strong>1,096</strong></td>
+      </tr>
+      <tr class="tot"><td>合計（12ヶ月）</td>
+        <td>268,509</td>
+        <td>¥2668.2M</td>
+        <td>¥2669.2M</td>
+        <td>—</td>
+        <td>62,534</td>
+      </tr>
     </tbody>
   </table>
+  <div class="ssub" style="margin-top:4px;margin-bottom:4px">
+    ※新規顧客は有料購入のみ対象（shopify_customer_master.first_paid_order_dt基準）<br>
+    【集計方法】出荷件数/出荷売上：ship_dateで月次グルーピング。受注売上：order_dateで月次グルーピング。いずれもcancel_date IS NULLでキャンセル除外。当月購入顧客数：shopify_ordersのcustomer_idユニーク数（test=0・cancelled_at IS NULL・売上>0）。新規顧客数：shopify_customer_masterのfirst_paid_order_dt月次グルーピング。
+  </div>
 
   <!-- ブランド別売上推移グラフ -->
-  <div class="stitle">ブランド別売上推移（2025年4月〜2026年4月）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">line_itemベース（VC/C+D/C+Cera/MINERALion÷1.08、SKINBEAUTY÷1.10）</span></div>
-  <div class="ssub">データソース：Shopify公式（shop_id=17）・SKUベース・税抜 ｜ 注文合計のブランド帰属は廃止（GE施策教訓）</div>
+  <div class="stitle">ブランド別出荷売上推移（2025年4月〜2026年4月）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+  <div class="ssub">データソース：spic-core.public.ne_order_items（shop_id=17）・goods_tagベースブランド判別・ship_date基準・税抜（salesカラム）<br>
+  <strong>集計方法：</strong>TRIM(goods_tag)でブランド判別→ship_dateで月次グルーピング→SUM(sales)（salesは税抜確定値のため÷1.08等の逆算不要）</div>
   <div class="chart-wrap"><canvas id="chartBrand"></canvas></div>
 
   <!-- ブランド別月次テーブル -->
-  <div class="stitle">ブランド別月次売上・直近6ヶ月（単位：百万円・税抜）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">line_itemベース（VC/C+D/C+Cera/MINERALion÷1.08、SKINBEAUTY÷1.10）</span></div>
+  <div class="stitle">ブランド別月次出荷売上・直近6ヶ月（単位：百万円・税抜）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
   <table>
     <thead>
       <tr><th>ブランド</th><th>2025-11</th><th>2025-12</th><th>2026-01</th><th>2026-02</th><th>2026-03</th><th style="background:#fff8e8">2026-04 ★今月</th><th>前月比</th><th>前年同月比(YoY)</th></tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="dot" style="background:var(--vc)"></span>Lypo-C VC</td>
-        <td>108.8</td><td>103.8</td><td>97.1</td><td>89.6</td><td>96.9</td>
-        <td style="background:#fff8e8;font-weight:700">96.9</td>
-        <td><span class="badge n">±0.0%</span></td>
-        <td><span class="badge b">▲7.8%</span></td>
+        <td><span class="dot" style="background:var(--vc)"></span>VC</td>
+        <td>128.9</td><td>119.6</td><td>131.8</td><td>104.9</td><td>118.1</td><td style="background:#fff8e8;font-weight:700">110.1</td>
+        <td><span class="badge b">▲6.8%</span></td>
+        <td><span class="badge b">▲18.0%</span></td>
       </tr>
       <tr>
         <td><span class="dot" style="background:var(--cd)"></span>C+D</td>
-        <td>104.9</td><td>120.4 <sup style="color:#92400e;font-weight:700;cursor:help" title="GE施策（12/1〜26）：C+D購入でVC試供品プレゼント。需要前倒し成分が大きく1月以降はベースラインに反落">★</sup></td>
-        <td>95.4</td><td>91.2</td><td>97.3</td>
-        <td style="background:#fff8e8;font-weight:700">92.9</td>
-        <td><span class="badge b">▲4.5%</span></td>
-        <td><span class="badge b">▲7.5%</span></td>
+        <td>75.4</td><td>89.0</td><td>84.3</td><td>71.1</td><td>81.3</td><td style="background:#fff8e8;font-weight:700">76.0</td>
+        <td><span class="badge b">▲6.5%</span></td>
+        <td><span class="badge a">+10.5%</span></td>
       </tr>
       <tr>
         <td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td>
-        <td>—</td><td>—</td><td>6.1</td><td>15.0</td><td>13.9</td>
-        <td style="background:#fff8e8;font-weight:700">15.3</td>
-        <td><span class="badge a">+10.1%</span></td>
+        <td>—</td><td>—</td><td>—</td><td>20.8</td><td>13.8</td><td style="background:#fff8e8;font-weight:700">15.2</td>
+        <td><span class="badge a">+9.9%</span></td>
         <td><span class="badge n">新規</span></td>
       </tr>
       <tr>
         <td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td>
-        <td>5.4</td><td>6.4</td><td>5.2</td><td>5.5</td><td>5.7</td>
-        <td style="background:#fff8e8;font-weight:700">5.4</td>
-        <td><span class="badge b">▲5.8%</span></td>
-        <td>—</td>
+        <td>5.5</td><td>6.7</td><td>5.8</td><td>5.7</td><td>6.0</td><td style="background:#fff8e8;font-weight:700">5.5</td>
+        <td><span class="badge b">▲7.3%</span></td>
+        <td><span class="badge n">新規</span></td>
       </tr>
       <tr>
         <td><span class="dot" style="background:var(--mi)"></span>MINERALion</td>
-        <td>1.2</td><td>2.8</td><td>4.4</td><td>3.6</td><td>4.9</td>
-        <td style="background:#fff8e8;font-weight:700">3.9</td>
-        <td><span class="badge b">▲20.4%</span></td>
-        <td>—</td>
+        <td>1.0</td><td>2.5</td><td>4.7</td><td>3.6</td><td>4.8</td><td style="background:#fff8e8;font-weight:700">4.0</td>
+        <td><span class="badge b">▲16.6%</span></td>
+        <td><span class="badge n">新規</span></td>
       </tr>
       <tr class="tot">
         <td>合計（主要ブランド）</td>
-        <td>220.3</td><td>233.4</td><td>208.2</td><td>204.9</td><td>218.8</td>
-        <td style="background:#fff0d8;font-weight:700">214.4</td>
-        <td><span class="badge b">▲2.1%</span></td>
+        <td>210.8</td><td>217.8</td><td>226.5</td><td>206.1</td><td>223.9</td><td style="background:#fff0d8;font-weight:700">210.8</td>
+        <td><span class="badge b">▲5.9%</span></td>
+        <td>—</td>
+      </tr>
+      <tr style="background:#fdf4ff">
+        <td style="color:var(--ccera);font-weight:600">新ブランド3社計（C+Cera+SB+MI）</td>
+        <td style="color:var(--ccera)">6.5</td><td style="color:var(--ccera)">9.2</td><td style="color:var(--ccera)">10.4</td><td style="color:var(--ccera)">30.1</td><td style="color:var(--ccera)">24.5</td><td style="background:#fff8e8;font-weight:700;color:var(--ccera)">24.7</td>
+        <td><span class="badge a">+0.5%</span></td>
         <td>—</td>
       </tr>
     </tbody>
   </table>
-  <div class="ssub" style="color:#78716c;margin-top:4px;margin-bottom:4px">【集計方法】shopify_orders の line_items[].price × quantity を SKUベースでブランド判別し税抜計算。税率はSKINBEAUTY（化粧品）÷1.10（標準税率10%）、その他ブランド（サプリ）÷1.08（軽減税率8%）を適用。全社売上（¥214.5M）との差は送料・ノベルティ・Other SKU分。★ 2025年12月はGE施策（C+D購入→SKU 3027・C+D試供品プレゼント）とMINERALion施策①（SKU 3021・MINERALion同梱・¥0）が並行して実施。旧集計（注文合計をブランド帰属）ではSKU 3021同梱注文の合計がMINERALionに誤帰属。line_itemベースに修正済み。</div>
+  <div class="ssub" style="color:#78716c;margin-top:4px;margin-bottom:4px">
+    【集計方法・抽出条件】spic-core.public.ne_order_items（shop_id=17）・ship_date基準・cancel_date IS NULL。ブランド判別：TRIM(goods_tag)。例：'[Lypo-C]'→VC、'[Lypo-C C+D]'→C+D、'[Lypo-C C＋Cera]'→C+Cera（＋は全角U+FF0B）、'[Lypo-C SKINBEAUTY]'→SKINBEAUTY、'[MINERALion]'→MINERALion。salesカラムは税抜確定済みのため÷1.08等の逆算不要。OGS期間（2025-07〜09）のOther（マイナス値）は施策関連割引・調整分。C+Cera NE出荷開始：2026-02（Shopify受注は2026-01から）。SKINBEAUTY NE出荷：2025-10の15.66Mは発売初月特需（以降5〜7M帯が定常水準）。
+  </div>
+
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 ブランド別売上 考察（2026年4月）</div>
+    <div class="mi-title">💡 ブランド別出荷売上 考察（2026年4月・NE出荷基準）</div>
     <ul>
-      <li><strong>VC（¥96.9M）は前月比±0.0%で横ばい。</strong>前年同月比（YoY：前年同月比）▲7.8%と実額縮小が続く。¥95〜100Mのレンジが「新しいVC底値」として固定化しつつある可能性に注意。VC定期ACTIVE回復が急務。</li>
-      <li><strong>C+D（¥92.9M）は前月比▲4.5%・前年同月比▲7.5%。</strong>2025年12月のGE施策（¥120.4M）後の反動は収束し、¥91〜97M台が新常態として定着。主力ブランドとしての安定的な位置は維持。</li>
-      <li><strong>C+Cera（¥15.3M）は前月比+10.1%で3ヶ月連続成長中。</strong>定期便ACTIVE548件も着実拡大。「成長継続」フェーズに入ったと判断できる。仲宗根BMの施策継続と定期コース拡充が鍵。</li>
-      <li><strong>SKINBEAUTY（¥5.4M）は前月比▲5.2%。</strong>税率10%（標準税率・化粧品）を適用した正値。¥5〜6M帯での推移が続いており、定期ACTIVE 357件（+16件/月）は健全な増加傾向。小林BMと定期化促進・継続率向上施策を推進。</li>
-      <li><strong>MINERALion（¥3.9M）は前月比▲20.4%。</strong>¥1〜5M帯が自発購買ベースライン。定期ACTIVE242件が今後の継続売上の基盤。宮崎BMと継続的な施策設計を進めること。</li>
+      <li><strong>VC（¥110.1M）は前月比▲6.8%・前年同月比▲18.0%。</strong>旧ShopifyベースVC（¥96.9M）との乖離はNEがVC全商品（SPORTS含む）を網羅していることと出荷基準の差。前年4月（¥134.2M）から大幅な実額縮小が続いており、¥110M台が「新しいVC底値」として固定化しつつある。VC定期ACTIVE回復が急務。</li>
+      <li><strong>C+D（¥76.0M）は前月比▲6.5%・前年同月比+10.5%。</strong>2025-12のGE施策（¥89.0M）後の反動は収束。前年同月比はプラスを確保しており、C+Dポジションは安定。¥75〜85M帯が現行の正常水準。</li>
+      <li><strong>C+Cera（¥15.2M）はNE出荷開始2ヶ月目で安定推移。</strong>NE出荷開始は2026-02（Shopify受注基準での集計開始は2026-01）。2026-02の¥20.8Mは初回出荷集中、2026-03以降が実態の月次水準。前月比+9.8%で成長継続。仲宗根BMの施策効果が反映されている。</li>
+      <li><strong>SKINBEAUTY（¥5.6M）は前月比▲7.3%。</strong>¥5〜7M帯が定常水準（2025-10の¥15.7Mは発売初月特需）。NE出荷基準でも安定した¥5〜6M帯を維持。定期ACTIVE 357件の積み上がりが月次の安定的な出荷基盤。</li>
+      <li><strong>MINERALion（¥4.0M）は前月比▲16.8%。</strong>¥3〜5M帯が自発購買ベースライン。定期ACTIVE242件が継続出荷の安定基盤。宮崎BM担当で継続施策を設計。</li>
     </ul>
   </div>
 
   <!-- 定期便コース別ヘルス -->
-  <div class="stitle">定期便コース別ヘルス（2026年4月末スナップショット）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">subscription_history_view</span></div>
+  <div class="stitle">定期便コース別ヘルス（2026年4月末スナップショット）<span class="ds-mixed">subscription_history_view</span></div>
   <div class="ssub">データソース：sandbox_nishimori.subscription_history_view ｜ PAUSED = 一時停止中（再アクティベーション対象）｜ FY2027末目標：Lypo-C定期便ACTIVE 27,000件（全コース合計）</div>
   <table>
     <thead><tr><th>コース</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>合計</th><th class="c">前月比変化</th><th class="c">備考</th></tr></thead>
@@ -343,7 +474,7 @@ tr.ogs{background:#fff8f0}
   </table>
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 定期便ヘルス 考察（2026年4月）</div>
+    <div class="mi-title">💡 定期便ヘルス 考察（2026年4月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
     <ul>
       <li><strong>全社ACTIVE 22,003件は前月比▲33件で事実上横ばい。</strong>VC（▲107件）・C+D（▲85件）・Mixed（▲20件）という既存ブランドの自然減を、C+Cera（+97件）・MINERALion（+66件）・SKINBEAUTY（+16件）の新興ブランドが相殺。</li>
       <li><strong>VC停止率62.7%は深刻な水準。</strong>PAUSED 17,967件はACTIVEの1.68倍。再開施策なしでは月次ACTIVEの下落が続く。坪井BMと再開特典設計を最優先で協議。1件再開 ≈ ¥12,936/月の定期売上回収。</li>
@@ -353,11 +484,12 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- 新規顧客獲得推移グラフ -->
-  <div class="stitle">月次新規顧客獲得数（2024年4月〜2026年4月）</div>
-  <div class="ssub">転売業者除外済み ｜ 橙色 = OGSキャンペーン期間（2025年7〜9月）｜ データソース：Shopify公式（shop_id=17）・受注ベース</div>
+  <div class="stitle">月次新規顧客獲得数（2024年4月〜2026年4月）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：shopify_customer_master.first_paid_order_dt（Shopify受注基準・有料購入のみ）｜ 橙色 = OGSキャンペーン期間（2025年7〜9月）｜ 転売業者除外済み<br>
+  <strong>集計方法：</strong>first_paid_order_dtの月次グルーピング。有料初回購入日をShopifyが顧客認識した受注日として使用。</div>
   <div class="chart-wrap"><canvas id="chartNewCust"></canvas></div>
 
-  <div class="stitle">月次新規顧客獲得数 ─ 通常スケール表示（直近トレンド確認用）</div>
+  <div class="stitle">月次新規顧客獲得数 ─ 通常スケール（直近トレンド確認用）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
   <div class="ssub">縦軸を 0〜3,000人・500人刻みに固定 ｜ OGS月（2025年7〜9月）は数値が範囲外 ｜ 2026年4月（1,096人）をハイライト表示</div>
   <div class="chart-wrap"><canvas id="chartNewCustNorm"></canvas></div>
 
@@ -373,10 +505,10 @@ tr.ogs{background:#fff8f0}
   <div class="notes">
     <div class="nt">📌 基礎データ 総合注目ポイント（2026年4月度）</div>
     <ul>
-      <li><strong>売上成長（YoY+4.2%）は維持されているが「既存顧客頼み」の構造がより鮮明に</strong> ─ 新規獲得1,096人はOGS前平均の▲46%。売上成長と獲得力の乖離が拡大しており、これが最大のリスク。2〜3年後の既存顧客自然減を補えるかが焦点。</li>
-      <li><strong>C+Cera¥15.3M・定期ACTIVE548件は「第3の柱」候補として確立しつつある</strong> ─ 発売3ヶ月目で高成長継続。定期化率・停止率ともに健全。仲宗根BMの施策継続と5月以降の成長トレンド確認が最重要観測点。</li>
-      <li><strong>VC▲7.8%（YoY）は実額縮小が継続中</strong> ─ 他ブランドの伸びで相殺されているが、VC定期ACTIVE10,685件（前月比▲107件）の減少が続く限りリスクは残る。PAUSED 17,967件への再開施策が最大の収益回収レバー。</li>
-      <li><strong>OGS後の新規獲得低迷が継続（過去最低水準圏）</strong> ─ 2026年4月1,096人はOGS後最低水準圏。新規獲得チャネル再設計を最優先施策として取り組む時期。</li>
+      <li><strong>NE出荷売上¥210.3M（YoY+3.7%）は維持。データソースがShopify受注→NE出荷に移行した</strong> ─ 今月から集計基準を変更。NE出荷基準は実態を正確に反映。旧Shopify受注基準（¥214.5M）との差（▲4.2M）は受注残の月またぎが主因。</li>
+      <li><strong>C+Cera（NE出荷¥15.2M）・定期ACTIVE548件は「第3の柱」候補として確立しつつある</strong> ─ NE出荷ベースでも安定成長継続。仲宗根BMの施策継続と5月以降の成長トレンド確認が最重要観測点。</li>
+      <li><strong>VC（NE出荷¥110.1M）はYoY▲18.0%と実額縮小が継続中</strong> ─ Shopifyベース¥96.9Mとの差は集計範囲（SPORTS含む等）の違いによる。定期ACTIVE10,685件（前月比▲107件）の減少継続がリスク。PAUSED 17,967件への再開施策が最大の収益回収レバー。</li>
+      <li><strong>OGS後の新規獲得低迷（Shopify受注1,096人）が継続</strong> ─ NE出荷・Shopify受注どちらで見ても新規獲得力の構造的低下は明確。2026年4月はOGS後最低水準圏。新規獲得チャネル再設計を最優先施策として取り組む時期。</li>
     </ul>
   </div>
 </div>
@@ -386,14 +518,16 @@ tr.ogs{background:#fff8f0}
 <div id="tab2" class="tab-pane">
 
   <!-- LTVティア別 顧客構成・売上パレート -->
-  <div class="stitle">LTVティア別 顧客構成・売上パレート</div>
-  <div class="ssub">上位14.1%（Tier6以上）が売上の70.4%を占める ｜ shopify_customer_master（2026-05-07スナップショット）</div>
+  <div class="stitle">LTVティア別 顧客構成・売上パレート<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master（2026-05-07スナップショット）　上位14.1%（Tier6以上）が売上の70.4%を占める<br>
+  <strong>集計方法：</strong>shopify_customer_masterの ltv_tier カラムでグルーピング → COUNT(*)・SUM(total_ltv)・AVG(total_ltv)を集計。total_ltvはShopify受注ベースの累計税抜LTV。</div>
 
   <div class="chart-wrap" style="height:320px"><canvas id="chartPareto"></canvas></div>
 
   <!-- LTVティア別 月次売上構成 100%積み上げ棒グラフ -->
-  <div class="stitle" style="margin-top:20px">LTVティア別 月次売上推移（実額積み上げ）</div>
-  <div class="ssub">各月の売上金額をLTVティア別に積み上げ表示（単位：百万円）｜ 棒グラフ下から Tier9（最高LTV）→ Tier0（最低LTV）順に表示 ｜ 2025年5月〜2026年4月</div>
+  <div class="stitle" style="margin-top:20px">LTVティア別 月次売上推移（実額積み上げ）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：prod_dwh_oci.shopify_orders LEFT JOIN sandbox_nishimori.shopify_customer_master　単位：百万円　2025年5月〜2026年4月<br>
+  <strong>集計方法：</strong>shopify_ordersの月次売上をcustomer_idでshopify_customer_masterのltv_tierにマッピング → ティア×月の売上をSUM（税抜・cancelled_at IS NULL・test=0・売上>0）。Tier=NULLはTier0扱い。</div>
   <div class="chart-wrap" style="height:360px"><canvas id="chartParetoStacked"></canvas></div>
 
   <div>
@@ -426,7 +560,7 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 LTVティア別 顧客構成・売上パレート 考察（2026年4月）</div>
+    <div class="mi-title">💡 LTVティア別 顧客構成・売上パレート 考察（2026年4月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
     <ul>
       <li><strong>上位14.1%（Tier6以上・27,099人）が売上¥6,865.8Mの70.4%を支配するパレート構造は安定継続。</strong>Tier9の31人が¥3.2M/人・Tier8の244人が¥1.3M/人と、超高LTV層が収益を牽引。この上位層のチャーン防止が最大のレバー。</li>
       <li><strong>Tier0（62,940人・33%）はDB上「顧客」だが収益貢献は0.4%（¥34.6M）にすぎない。</strong>OGS無料モニター中心のこの層を通常指標に混在させると指標が歪む。Tier1以上（127,892人）の実購買層で見ると、上位Tier6以上の支配率は依然70%超。</li>
@@ -436,8 +570,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- 初回購入ブランド別 LTV成長カーブ -->
-  <div class="stitle">初回購入ブランド別 LTV成長カーブ</div>
-  <div class="ssub">初回有料注文のブランドで分類 ｜ 30日〜累計LTVの推移 ｜ VCはOGS経由（¥220送料のみ顧客含む）とOGS除外の2行を掲載</div>
+  <div class="stitle">初回購入ブランド別 LTV成長カーブ<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master　カラム：first_purchased_brands・ltv_30d/90d/180d/365d・total_ltv<br>
+  <strong>集計方法：</strong>first_purchased_brandsでブランドグルーピング → 各期間LTVの平均値（AVG）を集計。LTV期間はShopify有料初回注文日（first_paid_order_dt）からの経過日数ベース。VCはOGS顧客（ogs_entry=true）の有無で2行掲載。抽出条件：first_paid_order_dt IS NOT NULL。</div>
   <div class="chart-wrap"><canvas id="chartLtvCurve"></canvas></div>
 
   <table>
@@ -490,7 +625,7 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 初回購入ブランド別 LTV成長カーブ 考察（2026年4月）</div>
+    <div class="mi-title">💡 初回購入ブランド別 LTV成長カーブ 考察（2026年4月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
     <ul>
       <li><strong>C+D初回顧客の累計LTV¥72,750はVC（OGS除外）¥69,601を+4.5%上回り最高水準。</strong>「より高価格な商品を最初から選ぶ意欲層」がC+D初回購入者の特性。90日LTV（¥22,523）・180日（¥32,545）・365日（¥48,649）と全ての段階でVCを上回って成長するため、C+Dへの誘導は「LTV向上」目的より「意欲層への適切なマッチング」として設計すべき。</li>
       <li><strong>VC（OGS除外・¥69,601）はC+Dと実質同等の高LTV層。</strong>OGS込みVC¥50,554との▲27%差はOGS顧客45,219人（平均LTV¥2,720）が母数を歪めた見かけ上のもの。実購買VC顧客の品質はC+Dと同等と判明しており、VC→C+D誘導の「LTV改善効果」は実際には限定的。ブランド多様化・継続体験の豊かさを価値として訴求すべき。</li>
@@ -500,7 +635,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- ブランドクロス購買分析（円グラフなし） -->
-  <div class="stitle">ブランドクロス購買分析（全期間累計）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">shopify_customer_master・has_*フラグ</span></div>
+  <div class="stitle">ブランドクロス購買分析（全期間累計）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master　カラム：has_vc・has_cd・has_ccera・has_skinbeauty・ltv_mineralion（実購買判定）<br>
+  <strong>集計方法：</strong>全期間累積の has_*フラグをCOUNT（has_*=1の顧客数）でセグメント集計。MINERALionのみ ltv_mineralion &gt; 0（有償購買者・サンプリング除外）を使用。各セグメントは独立カウント（重複考慮なし）。「保有」＝過去1回以上の有償購買経験（解約後もカウント残）。</div>
   <table>
     <thead><tr><th>セグメント</th><th>顧客数</th><th>構成比</th><th class="c">特徴</th></tr></thead>
     <tbody>
@@ -539,16 +676,18 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <div style="background:#f5f5f4;border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-top:4px;margin-bottom:16px;font-size:11px;color:var(--muted);line-height:1.85">
-    <strong style="color:var(--text)">【データ定義・解釈の注意】</strong><br>
+    <strong style="color:var(--text)">【データ定義・集計方法の注意】</strong>　<span class="ds-shopify" style="font-size:9px">Shopify</span><span class="ds-order" style="font-size:9px">受注</span>　テーブル：sandbox_nishimori.shopify_customer_master<br>
     ① <strong>「保有」＝「購買経験あり（全期間累計）」：</strong>has_* フラグは現在も使用中かどうかに関わらず、過去1回でも有償購入があれば1になる累積フラグ。解約・離脱後もカウントに含まれる点に注意。<br>
     ② <strong>各行は独立カウント・重複考慮なし：</strong>「C+Cera保有」「SKINBEAUTY保有」等は各ブランド単体の経験者数。複数ブランドをまたいで保有している顧客は複数の行にカウントされる。<br>
     ③ <strong>「VC+C+D両方保有」の背景：</strong>VCが入口の圧倒的多数を占めるため、C+Dは「VC購買経験者へのアップセル商品」として機能している（C+D保有者のVC保有率：82.3%）。この数値は実質「VC→C+Dアップセル達成累積数」として解釈できる。<br>
-    ④ <strong>MINERALion実購買：</strong>ltv_mineralion&gt;0（有償購買者のみ・1,731人）。has_mineralion=1（22,708人・サンプリング含む）は施策効果タブで管理。
+    ④ <strong>MINERALion実購買：</strong>ltv_mineralion&gt;0（有償購買者のみ・1,731人）。has_mineralion=1（22,708人・サンプリング含む）は施策効果タブで管理。<br>
+    ⑤ <strong>抽出条件：</strong>first_paid_order_dt IS NOT NULL（無償モニター・テスト注文のみ顧客を除外）。
   </div>
 
   <!-- ブランドクロス購買分析 月次トレンド版 -->
-  <div class="stitle">ブランドクロス購買分析（月次トレンド版）<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">shopify_customer_master・月次スナップショット</span></div>
-  <div class="ssub">ブランドクロス購買の月次トレンド ｜ VC+C+D両方保有・C+Cera保有・MINERALion実購買者の累積推移 ｜ 月次増加が続いているかを確認</div>
+  <div class="stitle">ブランドクロス購買分析（月次トレンド版）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master（月次スナップショット）　カラム：has_vc・has_cd・has_ccera・has_skinbeauty・ltv_mineralion・first_paid_order_dt<br>
+  <strong>集計方法：</strong>first_paid_order_dtでコホート月を定義 → 各月末時点でのhas_*フラグの累積保有者数をCOUNT集計。累積カウントのため単調増加が正常。MINERALionは ltv_mineralion &gt; 0（有償購買のみ）で計上。「VC+C+D両方保有」はhas_vc=1 AND has_cd=1の顧客数。</div>
 
   <div class="chart-wrap" style="height:280px"><canvas id="chartCrossBuyTrend"></canvas></div>
 
@@ -588,7 +727,7 @@ tr.ogs{background:#fff8f0}
   </table>
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 ブランドクロス購買 月次トレンド 考察（2026年4月）</div>
+    <div class="mi-title">💡 ブランドクロス購買 月次トレンド 考察（2026年4月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
     <ul>
       <li><strong>VC+C+D両方保有は+200〜400件/月ペースで着実に増加。</strong>2025-11の35,423件→2026-04の36,920件で+1,497件（+4.2%）。クロス購買顧客はVC単独比でLTVが大幅に高く、この層の拡大は収益性改善に直結する。</li>
       <li><strong>C+Cera保有は2026-01の631件→2026-04の2,785件（+4.4倍・3ヶ月）と急成長。</strong>+363〜575件/月ペースが継続中。VC/C+D既存顧客へのアップセルが機能していることを示す。</li>
@@ -598,8 +737,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- 定期継続ステージ -->
-  <div class="stitle">定期継続ステージ別 顧客数・LTV</div>
-  <div class="ssub">is_teiki_customer=1の顧客 / 定期継続回数別グループ（計50,417人）</div>
+  <div class="stitle">定期継続ステージ別 顧客数・LTV<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master　カラム：is_teiki_customer・teiki_order_count・total_ltv<br>
+  <strong>集計方法：</strong>is_teiki_customer=1（定期購買経験あり）でフィルタ後、teiki_order_countで継続回数グループに分類 → COUNT(*)・AVG(total_ltv)を集計。継続回数はShopify定期注文のsource_nameベース。total_ltvはShopify受注ベース累計税抜LTV（計50,417人）。</div>
   <div class="teiki-funnel">
     <div class="teiki-stage">
       <div class="ts-label">1〜3回</div>
@@ -629,7 +769,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- リピート回数別 顧客数・平均LTV分布 -->
-  <div class="stitle">リピート回数別 顧客数・平均LTV分布<span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">shopify_customer_master・2026-05-07スナップショット</span></div>
+  <div class="stitle">リピート回数別 顧客数・平均LTV分布<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master（2026-05-07スナップショット）　カラム：total_orders・total_ltv<br>
+  <strong>集計方法：</strong>total_ordersで購入回数グルーピング（1回/2回/3〜6回/7回以上）→ COUNT(*)・AVG(total_ltv)・SUM(total_ltv)を集計。total_ordersはShopify受注ベースの全注文数（test=0・cancelled_at IS NULL）。抽出条件：first_paid_order_dt IS NOT NULL。</div>
   <div class="sg2" style="margin-top:8px">
     <table>
       <thead><tr><th>購入回数</th><th>顧客数</th><th>構成比</th><th>平均LTV（税抜）</th></tr></thead>
@@ -668,8 +810,9 @@ tr.ogs{background:#fff8f0}
 
 
   <!-- ===== 休眠顧客 月次復活トレンド ===== -->
-  <div class="stitle" style="margin-top:28px">休眠顧客 月次復活トレンド</div>
-  <div class="ssub">定義：再購入日と直前購入日の差分日数で3種類に分類 ｜ 初回購入は除外 ｜ Shopify公式（shop_id=17）・注文日（created_at）ベース ｜ 2024年4月〜2026年4月</div>
+  <div class="stitle" style="margin-top:28px">休眠顧客 月次復活トレンド<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：prod_dwh_oci.shopify_orders（shop_id=17）　集計期間：2024年4月〜2026年4月<br>
+  <strong>集計方法：</strong>同一customer_idの連続購入間隔（LAG(created_at)との差分日数）で「短期休眠（60〜120日）」「中期休眠（121〜180日）」「長期休眠（181日以上）」に分類 → 復活月（再購入月）ごとにCOUNT集計。初回購入は除外（前回購入日なし）。条件：test=0・cancelled_at IS NULL・customer_id IS NOT NULL・(total_price - current_total_tax)&gt;0。</div>
 
   <!-- サマリーカード -->
   <div class="sg3" style="margin-bottom:16px">
@@ -716,7 +859,7 @@ tr.ogs{background:#fff8f0}
   <div class="chart-wrap" style="height:300px"><canvas id="chartDormantRevival"></canvas></div>
 
   <div class="monthly-insight" style="margin-top:12px">
-    <div class="mi-title">💡 休眠復活トレンド 考察（2026年4月）</div>
+    <div class="mi-title">💡 休眠復活トレンド 考察（2026年4月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
     <ul>
       <li><strong>短期休眠（90〜180日）が月1,500〜2,100人と最大の復活層。</strong>定期便スキップ・一時停止後の再開が多数含まれると推定される。毎月安定して戻ってくる「潜在継続顧客」として捉え、PAUSEリマインドCRMとセットで管理することで上積みが期待できる。</li>
       <li><strong>2026年1月に全カテゴリーが同時急増（短期2,152人・中期575人・長期511人）。</strong>長期休眠の511人は全期間最大値。年明けの需要喚起・まとめ買い効果が示唆されており、1月タイミングの休眠顧客向けウィンバックキャンペーンの有効性を裏付ける。</li>
@@ -832,8 +975,9 @@ tr.ogs{background:#fff8f0}
 <!-- ===== TAB 3: コホート分析 ===== -->
 <div id="tab3" class="tab-pane">
 
-  <div class="stitle">コホート継続率ヒートマップ</div>
-  <div class="ssub">M+0=初回月新規顧客数　M+1以降=該当月に再購入した顧客数（括弧内は継続率%）　★=OGSキャンペーン期間　灰色=未到達 ｜ <strong>今月更新：2026-03コホートのM+1（36.7%）確定、2026-04コホート新規追加</strong></div>
+  <div class="stitle">コホート継続率ヒートマップ<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master / prod_dwh_oci.shopify_orders（customer_id基準）　M+0=初回月新規顧客数　M+1以降=該当月に再購入した顧客数（括弧内は継続率%）　★=OGSキャンペーン期間　灰色=未到達 ｜ <strong>今月更新：2026-03コホートのM+1（36.7%）確定、2026-04コホート新規追加</strong><br>
+  <strong>集計方法：</strong>first_paid_order_dtの月でコホート定義 → 各M+N月に同一customer_idで再購入があればカウント（test=0・cancelled_at IS NULL・売上&gt;0）。OGS月（2025-07〜09）はogs_entry=trueで識別・ogs:trueフラグ付き別行表示。MINERALion施策サンプル（SKU 3021/3016）による汚染を避けるため有償初回購入のみをM+0に採用。</div>
 
   <!-- 注文方法セレクター -->
   <div style="display:flex;gap:8px;margin:10px 0 12px;flex-wrap:wrap;align-items:center">
@@ -855,7 +999,7 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 コホート分析 考察（2026年4月 新規確定データ）</div>
+    <div class="mi-title">💡 コホート分析 考察（2026年4月 新規確定データ）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
     <ul>
       <li><strong>2026年3月コホートのM+1継続率：36.7%（確定）。</strong>新規1,208人中443人が翌月（4月）に再購入。前月（2026-02コホートのM+1：40.8%）より▲4.1ptとやや低下。ただし通常コホート基準（33〜42%）の範囲内であり、コホート品質自体は引き続き健全。</li>
       <li><strong>2026年2月コホートのM+2継続率：35.8%（確定）。</strong>1,209人中433人が2ヶ月後（4月）に購入。M+1（40.8%）からM+2で▲5.0ptの自然減は過去平均と同水準。</li>
@@ -868,8 +1012,9 @@ tr.ogs{background:#fff8f0}
 
 
   <!-- コホート 期間別LTVマップ -->
-  <div class="stitle" style="margin-top:24px">コホート別 期間別LTV推移マップ（全ブランド基準）</div>
-  <div class="ssub">購入月（縦軸）× 経過期間（横軸）の平均LTV推移ヒートマップ ｜ 値が大きいほど色が濃い（単位：千円）</div>
+  <div class="stitle" style="margin-top:24px">コホート別 期間別LTV推移マップ（全ブランド基準）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master　カラム：first_paid_order_dt・ltv_30d/60d/90d/120d/180d/365d<br>
+  <strong>集計方法：</strong>first_paid_order_dtでコホート月を定義 → 各期間LTVの平均値（AVG）を月別に集計（単位：千円）。値が大きいほど濃い色で表示。OGS月（2025-07〜09）は通常コホートと切り離し除外（ogs_entry=true顧客を除外）。ltv_*dはShopify有料受注ベースの税抜累計LTV。</div>
   <div class="cohort-wrap">
 <table class="cohort-table" id="cohortLtvMap" style="min-width:800px">
 <thead><tr><th style="text-align:left;min-width:80px">購入月</th><th style="text-align:right">30日LTV</th><th style="text-align:right">60日LTV</th><th style="text-align:right">90日LTV</th><th style="text-align:right">120日LTV</th><th style="text-align:right">180日LTV</th><th style="text-align:right">365日LTV</th></tr></thead>
@@ -900,7 +1045,7 @@ tr.ogs{background:#fff8f0}
 </table>
   </div>
   <div class="monthly-insight" style="margin-top:12px">
-    <div class="mi-title">💡 コホート期間別LTV 考察</div>
+    <div class="mi-title">💡 コホート期間別LTV 考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
     <ul>
       <li><strong>購入月が古いコホートほど累積LTVが高く、「時間＝LTV積み上げ」の構造が明確。</strong>2024-04コホートのM+12時点LTV（推定¥45K前後）は2025年後半コホートの約2倍以上で、継続期間の長さがLTVに比例して積み上がることを示す。</li>
       <li><strong>OGS期間（2025-07〜09）コホートはM+0のLTVが非常に低い（¥220の送料のみ）。</strong>M+1以降のLTV増加も極めて緩慢で、実質的な顧客価値が低い。これらのコホートのLTV向上には定価商品への転換が必須。</li>
@@ -909,12 +1054,13 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- M+1・M+6継続率推移 -->
-  <div class="stitle">M+1継続率・M+6継続率 推移</div>
-  <div class="ssub">通常月（OGS除く）のM+1・M+6継続率の月次推移 ｜ OGS期間（2025-07〜09）は破線で別表示 ｜ 最新確定値：2026-03コホートM+1 = 36.7%</div>
+  <div class="stitle">M+1継続率・M+6継続率 推移<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master（cohortData配列）　通常月（OGS除く）のM+1・M+6継続率の月次推移　OGS期間（2025-07〜09）は破線で別表示　最新確定値：2026-03コホートM+1 = 36.7%<br>
+  <strong>集計方法：</strong>cohortData[n].m1 / cohortData[n].m0 × 100 でM+1継続率を算出。M+6も同様。OGS行（ogs:true）は破線グラフへ。通常期ベンチマーク：M+1 33〜42%・M+6 17〜26%（2024-04〜2025-06実績）。</div>
   <div class="chart-wrap"><canvas id="chartCohortRate"></canvas></div>
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 M+1・M+6継続率トレンド 考察（2026年4月）</div>
+    <div class="mi-title">💡 M+1・M+6継続率トレンド 考察（2026年4月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
     <ul>
       <li><strong>M+1継続率（通常月・全注文方法）は33〜42%レンジで安定推移。</strong>2024年前半（31〜34%）から改善した水準が定着している。コホート品質の劣化は見られない。</li>
       <li><strong>注文方法別の継続率格差：定期顧客が最も高く、都度買い顧客が最も低い。</strong>定期アクティブ顧客のM+1継続率は全体平均より約+10pt高いと推定される（定期の自動再注文が「継続」としてカウントされるため）。都度買い顧客は全体比▲5〜10pt低く、2回目購入への積極的なCRM誘導が必要。注文方法セレクターの「都度買い顧客」モードで低継続率の実態を確認することを推奨。</li>
@@ -924,8 +1070,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- アイテム別コホート継続率 -->
-  <div class="stitle" style="margin-top:24px">アイテム別コホート継続率ヒートマップ</div>
-  <div class="ssub">初回購入がSKINBEAUTY・MINERALion・C+Ceraだった顧客のコホート継続率分析 ｜ 各アイテムの入口顧客の定着状況を確認</div>
+  <div class="stitle" style="margin-top:24px">アイテム別コホート継続率ヒートマップ<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：prod_dwh_oci.shopify_orders × sandbox_nishimori.shopify_sku_brand_master（SKUベースブランド判別）　初回購入がSKINBEAUTY・MINERALion・C+Ceraだった顧客のコホート継続率分析<br>
+  <strong>集計方法：</strong>初回有料注文のSKUからブランドを特定（shopify_sku_brand_masterでJOIN）→ 同ブランドへの再購入のみを継続としてカウント（他ブランドリピートは含まない「真のブランド内リピート率」）。MINERALionはSKU 3021/3016（無償同梱・試供品）を除いた有償購買のみ対象。SKINBEAUTY・C+Ceraは事前予約期間含むコホートに★注記。</div>
 
   <!-- SKINBEAUTY コホート -->
   <div style="margin-top:16px">
@@ -938,7 +1085,7 @@ tr.ogs{background:#fff8f0}
     </div>
     <div class="chart-wrap" style="height:250px;margin-top:12px"><canvas id="chartCohortSB"></canvas></div>
     <div class="monthly-insight" style="margin-top:10px">
-      <div class="mi-title">💡 SKINBEAUTY コホート 考察</div>
+      <div class="mi-title">💡 SKINBEAUTY コホート 考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
       <ul>
         <li><strong>⚠️ このコホートは「SKINBEAUTYを再度購入した顧客のみ」を継続としてカウントしています（ブランド限定）。</strong>全体コホートより継続率が大幅に低い数値になりますが、これがSKINBEAUTY単体の真のリピート実態です。</li>
         <li><strong>通常期（2025-10〜）のM+1継続率は19〜41%と月によってばらつきがある。</strong>2026-01（41.3%）は高めだが、事前予約顧客やVCからの乗り換え層が含まれる可能性。2025-10（19.2%）〜2025-11（17.1%）の水準が当面のベースラインと考えられる。VCやC+D（35〜42%）と比較すると低く、リピート促進が課題。</li>
@@ -959,7 +1106,7 @@ tr.ogs{background:#fff8f0}
     </div>
     <div class="chart-wrap" style="height:250px;margin-top:12px"><canvas id="chartCohortMI"></canvas></div>
     <div class="monthly-insight" style="margin-top:10px">
-      <div class="mi-title">💡 MINERALion コホート 考察</div>
+      <div class="mi-title">💡 MINERALion コホート 考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
       <ul>
         <li><strong>⚠️ このコホートは「MINERALionを再度購入した顧客のみ」を継続としてカウントしています（SKU 3021/3016除外・ブランド限定）。</strong>無償同梱受取（SKU 3021）・トライアル受取（SKU 3016）による擬似的な初回は除外し、自発的有償購買者のみが対象です。</li>
         <li><strong>通常期（2025-11〜）のM+1継続率は15〜29%。</strong>2025-12（32%）・2026-01（23%）・2026-02（29%）・2026-03（26%）と概ね20〜32%の範囲で推移。VC/C+Dの35〜42%より低いが、発売から6ヶ月未満のブランドとしては一定水準。定期ACTIVE 242件が今後の継続購買の基盤。</li>
@@ -980,7 +1127,7 @@ tr.ogs{background:#fff8f0}
     </div>
     <div class="chart-wrap" style="height:250px;margin-top:12px"><canvas id="chartCohortCCera"></canvas></div>
     <div class="monthly-insight" style="margin-top:10px">
-      <div class="mi-title">💡 C+Cera コホート 考察</div>
+      <div class="mi-title">💡 C+Cera コホート 考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
       <ul>
         <li><strong>⚠️ このコホートは「C+Ceraを再度購入した顧客のみ」を継続としてカウントしています（ブランド限定）。</strong>全体コホートのように他ブランドへのリピートは含まず、C+Cera専用の純粋なリピート実態を示します。</li>
         <li><strong>2026-01（事前予約含む）のM+1は8.6%と低いが、M+2（19.1%）・M+3（17.2%）と継続上昇。</strong>事前予約層の購買タイミングは初回に集中するため、M+1直後より少し遅れてリピートが発生するイレギュラーパターン。正式発売後のコホートで評価することを推奨。</li>
@@ -1005,8 +1152,9 @@ tr.ogs{background:#fff8f0}
 <div id="tab4" class="tab-pane">
 
   <!-- 全社概況 -->
-  <div class="stitle">全社 定期便ステータス概況（2026年4月末時点）</div>
-  <div class="ssub">subscription_history_view より。ブランド別アクティブ・停止・解約の現在地点。</div>
+  <div class="stitle">全社 定期便ステータス概況（2026年4月末時点）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view（snapshot_ym = 2026-04）　ブランド別ACTIVE・PAUSED・CANCELLED件数の月末時点の全社概況<br>
+  <strong>集計方法：</strong>snapshot_ymで対象月を指定 → ブランド別にstatus（ACTIVE/PAUSED/CANCELLED）でGROUP BY COUNT集計。ブランド判別はproduct_title/variant_titleベース（subscription_history_viewのブランド判別ロジック準拠）。スナップショット方式のため過去月への遡及修正は不可。</div>
 
   <div class="sg4" style="margin-bottom:16px">
     <div class="sc">
@@ -1092,12 +1240,13 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- 定期便ステータス月次推移 -->
-  <div class="stitle">定期便ステータス月次推移</div>
-  <div class="ssub">subscription_history_view（2025年5月〜2026年4月・12ヶ月分）｜ ACTIVE・PAUSED・CANCELLED 全社推移</div>
+  <div class="stitle">定期便ステータス月次推移<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view　集計期間：2025年5月〜2026年4月（12ヶ月）<br>
+  <strong>集計方法：</strong>snapshot_ymでグルーピング → 各月末時点のACTIVE・PAUSED・CANCELLED件数をCOUNT集計。スナップショット方式のため「当月末に契約が存在し、そのステータスが何か」を記録。前月比はスナップショット間の差分。</div>
   <div class="chart-wrap"><canvas id="chartSubStatus"></canvas></div>
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 定期便ステータス推移 考察（2026年4月）</div>
+    <div class="mi-title">💡 定期便ステータス推移 考察（2026年4月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
     <ul>
       <li><strong>ACTIVE 22,003件（前月22,036件から▲33件）。</strong>ピーク（2025年9月: 23,967件）から1,964件の減少。月次の新規定期開始よりも離脱（CANCELLED/PAUSED化）が上回る状態。</li>
       <li><strong>PAUSEDは26,327件（前月25,820件から+507件）で増加継続。</strong>PAUSEDが26,327件と高水準なのは再アクティベーションの余地であり、ネガティブな指標だけではない。適切な再開施策で翌月の定期売上に直結する潜在在庫。</li>
@@ -1106,8 +1255,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- ブランド別ACTIVE件数推移 -->
-  <div class="stitle">ブランド別 ACTIVE件数推移</div>
-  <div class="ssub">スナップショット方式のため「その月末時点のACTIVE件数」。月次変化がビジネスの実態を反映。</div>
+  <div class="stitle">ブランド別 ACTIVE件数推移<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view　スナップショット方式のため「その月末時点のACTIVE件数」　月次変化がビジネスの実態を反映<br>
+  <strong>集計方法：</strong>snapshot_ym × brand でGROUP BY → status='ACTIVE'の件数をCOUNT。ブランド判別：subscription_history_viewのbrandカラム。PAUSED・CANCELLEDは別集計し解約率・停止率算出に使用。</div>
   <div class="chart-wrap"><canvas id="chartSubActive"></canvas></div>
 
   <table>
@@ -1172,8 +1322,9 @@ tr.ogs{background:#fff8f0}
   </table>
 
   <!-- 定期コース別ACTIVE件数構成 -->
-  <div class="stitle">定期コース別 ACTIVE件数構成（2026年4月末）</div>
-  <div class="ssub">ブランド × 周期（1ヶ月・2ヶ月・3ヶ月・28日）の現在地点の内訳。</div>
+  <div class="stitle">定期コース別 ACTIVE件数構成（2026年4月末）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view（snapshot_ym = 2026-04）　ブランド × 周期（1ヶ月・2ヶ月・3ヶ月・28日）の現在地点の内訳<br>
+  <strong>集計方法：</strong>snapshot_ym='2026-04'・status='ACTIVE'でフィルタ → brand × billing_policy_interval（周期）でGROUP BY COUNT。28日定期はbilling_policy_interval_count=28・interval=DAYで識別。</div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
     <div>
@@ -1244,8 +1395,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- ACTIVE顧客継続回数分布 -->
-  <div class="stitle">ACTIVE顧客の継続回数（決済完了回数）分布</div>
-  <div class="ssub">ACTIVEユーザーの「何回目か」の分布。ロイヤルティ構造と長期顧客比率を確認。</div>
+  <div class="stitle">ACTIVE顧客の継続回数（決済完了回数）分布<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view（snapshot_ym = 2026-04）　ACTIVEユーザーの「何回目か」の分布　ロイヤルティ構造と長期顧客比率を確認<br>
+  <strong>集計方法：</strong>snapshot_ym='2026-04'・status='ACTIVE'でフィルタ → orders_count（決済完了回数）を1回・2回・3〜6回・7回以上にグルーピングしてCOUNT集計。orders_countはShopify定期便の累計決済完了数。</div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
     <div>
@@ -1303,8 +1455,9 @@ tr.ogs{background:#fff8f0}
   </table>
 
   <!-- 平均定期単価推移 -->
-  <div class="stitle">ACTIVE顧客の平均定期単価（payment_amount）推移</div>
-  <div class="ssub">定期便の平均的な1回あたりの支払金額（税込）。単価の変化がLTVに直結。</div>
+  <div class="stitle">ACTIVE顧客の平均定期単価（payment_amount）推移<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view　カラム：payment_amount（税込・円）<br>
+  <strong>集計方法：</strong>snapshot_ym × brand でGROUP BY → status='ACTIVE'の顧客のAVG(payment_amount)を算出（税込）。単価は定期契約上の予定請求金額であり、実際の決済金額とは一部差異が生じる場合あり（クーポン適用等）。</div>
 
   <table>
     <thead>
@@ -1349,7 +1502,7 @@ tr.ogs{background:#fff8f0}
 
   <!-- 定期便4項目 総括考察 -->
   <div class="monthly-insight" style="margin-top:16px">
-    <div class="mi-title">💡 定期便ヘルス 4項目 総括考察（ACTIVE推移・コース構成・継続回数分布・平均単価）</div>
+    <div class="mi-title">💡 定期便ヘルス 4項目 総括考察（ACTIVE推移・コース構成・継続回数分布・平均単価）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
     <ul>
       <li><strong>【ブランド別ACTIVE推移】VC・C+Dの構造的な純減（計▲212件/月）がC+Cera・MINERALion・SKINBEAUTYの純増（計+179件/月）で相殺され、全社ACTIVE 22,003件は事実上の横ばい。</strong>新興ブランドの成長速度が既存ブランドの減少を追い越すことができるかが、FY2027末27,000件達成の分岐点。現ペースでは目標達成は困難（月次+454件が必要に対して+33件逆行）。</li>
       <li><strong>【コース別ACTIVE構成】VC1ヶ月定期（5,461件・停止率65.9%）が最大の課題層。</strong>1ヶ月定期は消費ペース不一致（余りやすい）による停止が最多で、2ヶ月・3ヶ月への誘導が停止率改善の構造的な解決策。C+Cera・MINERALionは停止率10%未満と健全で、新規定期加入の質が高い。28日定期（SKINBEAUTY・C+Cera）は停止率が相対的に低く、消費サイクルに合った設定が奏功していると読める。</li>
@@ -1359,8 +1512,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- 解約理由 -->
-  <div class="stitle">解約理由 構成比（VC・C+D）</div>
-  <div class="ssub">2026年4月末スナップショット時点の累計解約に占める理由別の割合。</div>
+  <div class="stitle">解約理由 構成比（VC・C+D）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view（snapshot_ym = 2026-04）<br>
+  <strong>集計方法：</strong>status='CANCELLED'でフィルタ → cancellation_reason（解約理由）でGROUP BY COUNT。解約理由はShopify定期便の解約フロー上で顧客が選択した理由コード。累計件数ベースのため当月解約のみではなく全期間累積の構成比を示す。</div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px">
     <div>
@@ -1396,8 +1550,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- 継続回数別解約理由 -->
-  <div class="stitle" style="margin-top:28px">継続回数（F）別 解約理由分析</div>
-  <div class="ssub">解約時点の決済完了回数でセグメントを分け、解約理由の構成比を比較。浅いFと深いFで理由の構造が変わる。</div>
+  <div class="stitle" style="margin-top:28px">継続回数（F）別 解約理由分析<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view（snapshot_ym = 2026-04）<br>
+  <strong>集計方法：</strong>status='CANCELLED'でフィルタ → orders_count（解約時点の累計決済回数）を F=1/2/3〜4/5〜6/7〜12/13回以上 にグルーピング → cancellation_reasonでCROSS集計し構成比（%）を算出。浅いFと深いFで理由の構造の違いを可視化。</div>
 
   <div style="font-size:13px;font-weight:600;margin-bottom:6px;margin-top:16px"><span class="dot" style="background:var(--vc)"></span>VC — 継続回数セグメント別 解約理由構成比</div>
   <div style="overflow-x:auto;margin-bottom:8px">
@@ -1450,7 +1605,7 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <div class="monthly-insight">
-    <div class="mi-title">💡 継続回数（F）別 解約理由 考察</div>
+    <div class="mi-title">💡 継続回数（F）別 解約理由 考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
     <ul>
       <li><strong>浅いF（1〜2回）の特徴</strong> ─ VC・C+D共通で「高いから」「美味しくない」が相対的に高い。特に「美味しくない」はVC1回で14.9%と全セグメントで最大値。製品の第一印象・味・コスパの合わなさが初期離脱の主因。アクション：定期申込直後（M+0）の「味・飲み方サポート」コンテンツ配信で1〜2回目の離脱を防ぐ。</li>
       <li><strong>中間F（3〜6回）の特徴</strong> ─ 「高いから」が最も重い。続けてきたが価格負担を感じ始めるフェーズ。アクション：3〜4回目のタイミングで継続特典・ロイヤルティポイント付与のオファーを送付。価格負担を緩和し「損せず続けられる」感を醸成。</li>
@@ -1460,8 +1615,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <!-- PAUSED再開インパクト試算 -->
-  <div class="stitle">PAUSED顧客の再開インパクト試算</div>
-  <div class="ssub">停止中の顧客を再アクティベーションした場合の月次定期売上への影響。実際の再開率は施策なしで月1〜2%程度、施策あり・強度次第で3〜5%が現実的な上限。</div>
+  <div class="stitle">PAUSED顧客の再開インパクト試算<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view（snapshot_ym = 2026-04）　カラム：payment_amount（税込）<br>
+  <strong>集計方法：</strong>status='PAUSED'でフィルタ → ブランド別のPAUSED件数 × AVG(payment_amount)で「全員再開時の月次追加売上」を試算。再開率シナリオ（1%/3%/5%）は施策強度の仮定値。実際の再開率は施策なし月1〜2%・施策あり強度次第で3〜5%が現実的な上限。</div>
 
   <table>
     <thead>
@@ -1527,8 +1683,282 @@ tr.ogs{background:#fff8f0}
 <!-- ===== TAB 5: 施策効果 ===== -->
 <div id="tab5" class="tab-pane">
 
-  <div class="stitle">施策参加別 LTV比較</div>
-  <div class="ssub">experienced_campaign_tagsベース ｜ OGS・GE各施策に参加した顧客の現時点LTVを表示</div>
+<!-- ===== アドエビス実績上位傾向分析 ===== -->
+<div class="stitle">アドエビス実績上位傾向分析（2026年4月度）<span class="ds-adebis">Adebis</span><span class="ds-click">クリック日</span></div>
+<div class="ssub">データソース：spic-core.public.adebis_lypoc_detail_by_period　集計条件：channel_type=&#39;広告クリック&#39;・period 2026-04-01〜04-30（前月比較：2026-03）<br>
+<strong>集計方法：</strong>name × ad_group1 × ad_group2 でGROUP BY → SUM(clicks/sessions/purchase_completion_cv)・REGEXP_REPLACE金額キャスト。全カラムSTRING型のためCAST(col AS INT64)適用。<br>
+<span style="background:#fef3c7;border:1px solid #fde68a;border-radius:4px;padding:2px 8px;font-size:11px;color:#92400e;font-weight:600">⚠️ CV捕捉率は約70%（実際のCVの約30%が欠損）。CV数・CVR・売上はすべて参考値として扱うこと。クリック数・セッション数は精度ほぼ100%。</span></div>
+
+<!-- 月次サマリーカード -->
+<div class="sg4" style="margin-top:12px">
+  <div class="sc">
+    <div class="lb">総クリック数（4月）<span class="ds-adebis" style="font-size:9px">Adebis</span></div>
+    <div class="vl">80,753</div>
+    <div class="sb"><span class="up">+71.0%</span> 前月比（3月：47,225）｜ うちアンケートQR約7,083件（CV=0）を含む</div>
+  </div>
+  <div class="sc">
+    <div class="lb">総CV数・購買完了（4月）<span class="ds-adebis" style="font-size:9px">Adebis</span></div>
+    <div class="vl">2,642</div>
+    <div class="sb"><span class="up">+14.9%</span> 前月比（3月：2,299）｜ ⚠️捕捉率約70%・参考値</div>
+  </div>
+  <div class="sc">
+    <div class="lb">全体CVR（4月）<span class="ds-adebis" style="font-size:9px">Adebis</span></div>
+    <div class="vl" style="color:var(--red)">3.27%</div>
+    <div class="sb"><span class="dn">▼1.6pt</span> 前月比（3月：4.87%）｜ QR除外後の実質CVR：<strong>3.59%</strong>（▲1.3pt）</div>
+  </div>
+  <div class="sc">
+    <div class="lb">最高CVR施策（4月）<span class="ds-adebis" style="font-size:9px">Adebis</span></div>
+    <div class="vl" style="font-size:20px;color:var(--green)">28.6%</div>
+    <div class="sb">LINEリッチメニュー_連携あり定期なし_公式サイトA（414 CV / 1,447 clk）</div>
+  </div>
+</div>
+
+<div class="sg2" style="margin-top:16px">
+  <!-- クリック数上位10 -->
+  <div>
+    <div class="stitle" style="font-size:13px;margin:0 0 8px">クリック数 上位10（2026年4月）<span class="ds-adebis" style="font-size:9px">Adebis</span><span class="ds-click" style="font-size:9px">クリック日</span></div>
+    <table>
+      <thead>
+        <tr>
+          <th class="c" style="width:28px">#</th>
+          <th style="text-align:left">広告名 / カテゴリ</th>
+          <th>クリック</th>
+          <th>前月</th>
+          <th>CV<span class="adebis-warn" style="margin-left:2px">参考</span></th>
+          <th>CVR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="c"><span class="adebis-rank r1">1</span></td>
+          <td class="adebis-name">GSA_自社運用_GSA（指名）<br><span style="font-size:10px;color:var(--muted)">獲得_VC ／ VC指名検索 安定首位</span></td>
+          <td><strong>9,657</strong></td><td style="color:var(--muted)">9,302</td>
+          <td class="cvr-high">464</td><td class="cvr-high">4.8%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank r2">2</span></td>
+          <td class="adebis-name">Google_自社運用_P-MAX<br><span style="font-size:10px;color:var(--muted)">獲得_VC ／ P-MAX VC</span></td>
+          <td><strong>7,564</strong></td><td style="color:var(--muted)">6,495</td>
+          <td>137</td><td class="cvr-mid">1.8%</td>
+        </tr>
+        <tr style="background:#fffbeb">
+          <td class="c"><span class="adebis-rank rx">3</span></td>
+          <td class="adebis-name">260408_line_定量アンケート<span class="adebis-warn">⚠️QR</span><br><span style="font-size:10px;color:#92400e">その他 ／ アンケート配信QR読取・CV=0</span></td>
+          <td><strong>4,987</strong></td><td style="color:var(--muted)">0</td>
+          <td style="color:var(--muted)">0</td><td style="color:var(--muted)">—</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">4</span></td>
+          <td class="adebis-name">LINEリッチメニュー_連携あり定期あり_マイページA<br><span style="font-size:10px;color:var(--muted)">その他 ／ LINE定期加入中顧客</span></td>
+          <td><strong>4,326</strong></td><td style="color:var(--muted)">3,751</td>
+          <td>121</td><td class="cvr-mid">2.8%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">5</span></td>
+          <td class="adebis-name">260420_line_CTW<span class="adebis-new">新規</span><br><span style="font-size:10px;color:var(--muted)">獲得_Cera ／ CTW＝C+Cera Trial Week</span></td>
+          <td><strong>4,276</strong></td><td style="color:var(--muted)">0</td>
+          <td>130</td><td class="cvr-mid">3.0%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">6</span></td>
+          <td class="adebis-name">Meta_自社運用_NoTG_CV_Gift<br><span style="font-size:10px;color:var(--muted)">獲得_商品特定なし ／ ギフト向けMeta広告</span></td>
+          <td><strong>3,110</strong></td><td style="color:var(--muted)">—</td>
+          <td>14</td><td class="cvr-low">0.5%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">7</span></td>
+          <td class="adebis-name">Google_自社運用_P-MAX<br><span style="font-size:10px;color:var(--muted)">認知_C+D ／ C+D認知P-MAX</span></td>
+          <td><strong>3,011</strong></td><td style="color:var(--muted)">3,007</td>
+          <td>54</td><td class="cvr-mid">1.8%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">8</span></td>
+          <td class="adebis-name">YSA_LCVC_SA_ブランド_指名系_既存CP<br><span style="font-size:10px;color:var(--muted)">獲得_商品特定なし ／ Yahoo指名・既存CP</span></td>
+          <td><strong>3,010</strong></td><td style="color:var(--muted)">2,955</td>
+          <td class="cvr-high">140</td><td class="cvr-high">4.7%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">9</span></td>
+          <td class="adebis-name">Meta_自社運用_NoTG_CV_CTW<span class="adebis-new">新規</span><br><span style="font-size:10px;color:var(--muted)">獲得_Cera ／ CTW Meta広告</span></td>
+          <td><strong>2,913</strong></td><td style="color:var(--muted)">0</td>
+          <td>35</td><td class="cvr-low">1.2%</td>
+        </tr>
+        <tr style="background:#fffbeb">
+          <td class="c"><span class="adebis-rank rx">10</span></td>
+          <td class="adebis-name">260408_mail_定量アンケート<span class="adebis-warn">⚠️QR</span><br><span style="font-size:10px;color:#92400e">その他 ／ アンケートメール配信リンク・CV=0</span></td>
+          <td><strong>2,096</strong></td><td style="color:var(--muted)">0</td>
+          <td style="color:var(--muted)">0</td><td style="color:var(--muted)">—</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="font-size:10px;color:var(--muted);margin-top:4px">⚠️黄背景＝QRコード・リンク配布によるクリック（CV=0）。クリック急増の要因評価時は除外して読むこと。</div>
+  </div>
+
+  <!-- CV数上位10 -->
+  <div>
+    <div class="stitle" style="font-size:13px;margin:0 0 8px">CV数（購買完了）上位10（2026年4月）<span class="ds-adebis" style="font-size:9px">Adebis</span><span class="ds-click" style="font-size:9px">クリック日</span><span style="font-size:9px" class="adebis-warn">⚠️捕捉率約70%</span></div>
+    <table>
+      <thead>
+        <tr>
+          <th class="c" style="width:28px">#</th>
+          <th style="text-align:left">広告名 / カテゴリ</th>
+          <th>CV</th>
+          <th>クリック</th>
+          <th>CVR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="c"><span class="adebis-rank r1">1</span></td>
+          <td class="adebis-name">GSA_自社運用_GSA（指名）<br><span style="font-size:10px;color:var(--muted)">獲得_VC ／ 指名検索・安定首位</span></td>
+          <td class="cvr-high"><strong>464</strong></td><td>9,657</td><td class="cvr-mid">4.8%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank r2">2</span></td>
+          <td class="adebis-name">LINEリッチメニュー_連携あり定期なし_公式サイトA<br><span style="font-size:10px;color:var(--muted)">その他 ／ 既存LINE登録・未定期顧客</span></td>
+          <td class="cvr-high"><strong>414</strong></td><td>1,447</td><td class="cvr-high">28.6%<span style="font-size:10px;color:#15803d;font-weight:700">🔥</span></td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank r3">3</span></td>
+          <td class="adebis-name">YSA_LCVC_SA_ブランド_指名系_既存CP<br><span style="font-size:10px;color:var(--muted)">獲得_商品特定なし ／ Yahoo指名</span></td>
+          <td><strong>140</strong></td><td>3,010</td><td class="cvr-high">4.7%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">4</span></td>
+          <td class="adebis-name">Google_自社運用_P-MAX（VC）<br><span style="font-size:10px;color:var(--muted)">獲得_VC</span></td>
+          <td><strong>137</strong></td><td>7,564</td><td class="cvr-mid">1.8%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">5</span></td>
+          <td class="adebis-name">260420_line_CTW<br><span style="font-size:10px;color:var(--ccera)">獲得_Cera ／ CTW=C+Cera Trial Week</span></td>
+          <td><strong>130</strong></td><td>4,276</td><td class="cvr-mid">3.0%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">6</span></td>
+          <td class="adebis-name">LINEリッチメニュー_連携あり定期あり_マイページA<br><span style="font-size:10px;color:var(--muted)">その他 ／ LINE定期加入中顧客</span></td>
+          <td><strong>121</strong></td><td>4,326</td><td class="cvr-mid">2.8%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">7</span></td>
+          <td class="adebis-name">LINEリッチメニュー_すべての友だち_公式サイトA<br><span style="font-size:10px;color:var(--muted)">その他 ／ 全LINE友だち向け</span></td>
+          <td><strong>98</strong></td><td>466</td><td class="cvr-high">21.0%<span style="font-size:10px;color:#15803d;font-weight:700">🔥</span></td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">8</span></td>
+          <td class="adebis-name">LINEリッチメニュー_すべての友だち_クーポン<br><span style="font-size:10px;color:var(--muted)">その他 ／ クーポンボタン</span></td>
+          <td><strong>91</strong></td><td>580</td><td class="cvr-high">15.7%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">9</span></td>
+          <td class="adebis-name">LINEリッチメニュー_連携あり定期なし_定期<br><span style="font-size:10px;color:var(--muted)">その他 ／ 未定期顧客への定期誘導ボタン</span></td>
+          <td><strong>85</strong></td><td>916</td><td class="cvr-high">9.3%</td>
+        </tr>
+        <tr>
+          <td class="c"><span class="adebis-rank rx">10</span></td>
+          <td class="adebis-name">260420_mail_CTW①<br><span style="font-size:10px;color:var(--ccera)">獲得_Cera ／ CTW メール配信①</span></td>
+          <td><strong>81</strong></td><td>548</td><td class="cvr-high">14.8%</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="font-size:10px;color:var(--muted);margin-top:4px">🔥 = CVR 20%超の高効率施策。LINEリッチメニュー経由は既存顧客の再購買が主体のため自然にCVRが高い。</div>
+  </div>
+</div>
+
+<!-- ブランド別広告配分変化 -->
+<div class="stitle" style="font-size:13px;margin-top:20px">ブランド別広告配分の前月比変化（ad_group2別）<span class="ds-adebis" style="font-size:9px">Adebis</span><span class="ds-click" style="font-size:9px">クリック日</span></div>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">カテゴリ（ad_group2）</th>
+      <th>4月 クリック</th><th>4月 CV</th><th>4月 CVR</th>
+      <th>3月 クリック</th><th>3月 CV</th>
+      <th>クリック差分</th><th class="c">動向</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="dot" style="background:var(--vc)"></span>獲得_VC</td>
+      <td>20,206</td><td>636</td><td>3.1%</td><td>16,495</td><td>536</td>
+      <td><span class="badge a">+3,711</span></td><td class="c">→ 安定</td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:var(--ccera)"></span>獲得_Cera</td>
+      <td>10,240</td><td>368</td><td>3.6%</td><td>6,770</td><td>259</td>
+      <td><span class="badge a">+3,470</span></td><td class="c"><span class="up">↑ CTW集中</span></td>
+    </tr>
+    <tr>
+      <td>獲得_商品特定なし</td>
+      <td>16,090</td><td>395</td><td>2.5%</td><td>3,767</td><td>162</td>
+      <td><span class="badge a">+12,323</span></td><td class="c"><span class="up">↑↑ ESS等</span></td>
+    </tr>
+    <tr style="background:#fffbeb">
+      <td>その他_商品特定なし</td>
+      <td>24,996</td><td>1,043</td><td>4.2%</td><td>8,829</td><td>866</td>
+      <td><span class="badge a">+16,167</span></td><td class="c"><span style="color:#92400e">⚠️QR含む</span></td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:var(--cd)"></span>認知_C+D</td>
+      <td>3,028</td><td>54</td><td>1.8%</td><td>3,020</td><td>47</td>
+      <td><span class="badge n">+8</span></td><td class="c">→ 横ばい</td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:var(--mi)"></span>獲得_MION</td>
+      <td>1,548</td><td>61</td><td>3.9%</td><td>4,501</td><td>313</td>
+      <td><span class="badge b">▲2,953</span></td><td class="c"><span class="dn">↓ 3月集中終了</span></td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:var(--sb)"></span>獲得_SB</td>
+      <td>1,456</td><td>38</td><td>2.6%</td><td>2,014</td><td>54</td>
+      <td><span class="badge b">▲558</span></td><td class="c"><span class="dn">↓ 縮小</span></td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:var(--cd)"></span>獲得_C+D</td>
+      <td>554</td><td>16</td><td>2.9%</td><td>597</td><td>17</td>
+      <td><span class="badge n">▲43</span></td><td class="c">→ 横ばい</td>
+    </tr>
+  </tbody>
+</table>
+<div style="font-size:10px;color:var(--muted);margin-top:4px">※ CV捕捉率約70%のため全CVR数値は実際より低く出る。前月との相対比較での動向把握に使用すること。</div>
+
+<!-- ランディングページ別CVR -->
+<div class="stitle" style="font-size:13px;margin-top:20px">ランディングページ別 CV実績（4月・ad_group1別）<span class="ds-adebis" style="font-size:9px">Adebis</span><span class="ds-click" style="font-size:9px">クリック日</span></div>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">ランディングページ（ad_group1）</th>
+      <th>クリック</th><th>CV</th><th>CVR</th><th class="c">特記事項</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>EC_LINE連携案内ページ</td><td>630</td><td>93</td><td class="cvr-high">14.8%</td><td class="c">LINE連携完了後の購買導線が機能</td></tr>
+    <tr><td>EC_お知らせ</td><td>211</td><td>27</td><td class="cvr-high">12.8%</td><td class="c">メール配信経由・高意欲層</td></tr>
+    <tr><td>EC_定期便</td><td>953</td><td>86</td><td class="cvr-high">9.0%</td><td class="c">定期加入ページへの直接誘導</td></tr>
+    <tr style="background:#f0fdf4"><td><strong>EC_トップ</strong></td><td><strong>15,459</strong></td><td class="cvr-high"><strong>1,224</strong></td><td class="cvr-high"><strong>7.9%</strong></td><td class="c"><span class="badge a">CV最多・効率も高水準</span></td></tr>
+    <tr><td>EC_マイページ</td><td>5,463</td><td>204</td><td class="cvr-mid">3.7%</td><td class="c">LINEリッチメニュー経由が主体</td></tr>
+    <tr><td>EC_MION商品ページ</td><td>763</td><td>24</td><td class="cvr-mid">3.1%</td><td class="c">MINERALion商品ページ</td></tr>
+    <tr><td>EC_カート</td><td>11,096</td><td>195</td><td class="cvr-mid">1.8%</td><td class="c">P-MAX等カート直接流入</td></tr>
+    <tr><td>EC_記事</td><td>30,028</td><td>719</td><td class="cvr-mid">2.4%</td><td class="c">記事LP最多クリック・CVRは低め</td></tr>
+    <tr><td>EC_ギフト</td><td>5,445</td><td>19</td><td class="cvr-low">0.3%</td><td class="c">ブランディング目的が主</td></tr>
+  </tbody>
+</table>
+
+<div class="monthly-insight" style="margin-top:16px">
+  <div class="mi-title">💡 アドエビス 2026年4月 傾向考察<span class="ds-adebis" style="font-size:9px;vertical-align:middle">Adebis</span></div>
+  <ul>
+    <li><strong>全体クリック数+71%の急増は「施策多様化」と「アンケートQR」の合算効果。</strong>実質的な広告クリック（QR/リンク配布除外後）は約73,670件で前月比+56%。CTW（C+Cera施策）・ESS（Early Summer Switch）の本格展開とLINE配信の増加が主因。CVR低下（4.87%→3.27%）はQR除外後も3.59%と実質▲1.3pt改善余地あり。広告効率として許容範囲内。</li>
+    <li><strong>CTW（C+Cera Trial Week）が4月の最大トピック。</strong>260420_line_CTW（4,276clk・130CV・3.0%CVR）+ Meta_NoTG_CV_CTW（2,913clk・35CV）+ メール配信CTW①（81CV）で合計246CVを獲得。C+Cera獲得クリックが前月比+3,470件（+51%）増。NE出荷売上¥15.2Mの好調と直接連動していると推定。</li>
+    <li><strong>LINEリッチメニューの高CVR（最高28.6%）は既存顧客再購買の主要経路として機能。</strong>「連携あり定期なし_公式サイトA」CVR28.6%・「すべての友だち_公式サイトA」21.0%・「クーポン」15.7%。LINE経由は意欲の高い既存顧客へのリターゲットが中心。CV総数の合計は851件（全体CV2,642の32%）を占める。LINEリッチメニューの継続的な最適化が大きな収益レバー。</li>
+    <li><strong>MINERALion（獲得_MION）が3月比▲66%（4,501→1,548クリック）と急減。</strong>3月に集中投下していたLINE配信（260305_line_MION商品ページ：1,885clk・61CV）が終了し、4月は通常水準に戻った。3月のCV313件（CVR6.9%）は施策あり特需。4月61件が「自力獲得ベースライン」の参考値。今後の投下計画の基準として認識する。</li>
+    <li><strong>EC_トップがCV最多（1,224CV・7.9%CVR）。</strong>記事LP（EC_記事：30,028クリック）はクリック量は最大だがCVR2.4%。記事閲覧後にTOPへ遷移してから購買するユーザーが多い可能性あり。記事→TOPへの導線最適化でCV底上げの余地。</li>
+  </ul>
+</div>
+<!-- /アドエビス実績上位傾向分析 -->
+
+<div style="border-top:1px dashed var(--border);margin:24px 0 16px"></div>
+
+  <div class="stitle">施策参加別 LTV比較<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master　カラム：experienced_campaign_tags・total_ltv・ltv_90d・ltv_365d<br>
+  <strong>集計方法：</strong>experienced_campaign_tagsでOGS/GE/MINERALion施策セグメントを識別 → 各セグメントのCOUNT・AVG(total_ltv/ltv_90d/ltv_365d)・F2転換率を集計。MINERALion施策①（SKU 3021）・施策②（SKU 3016）のF2転換はshopify_orders.line_itemsベースで直接カウント（実BQ実測値）。施策参加後180日LTVはfirst_paid_order_dtからの経過日数で換算した参考値。</div>
 
   <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:12px;color:#1e40af;line-height:1.7">
     <strong>⚠️ 読み方の注意:</strong> この表は「施策に参加した顧客が、現時点までに積み上げたLTVの平均」です。施策参加は各顧客のLTV計測期間の途中で発生するため、参加前の購買履歴もLTVに含まれます。<br>
@@ -1600,7 +2030,7 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <div class="monthly-insight" style="margin-top:12px">
-    <div class="mi-title">💡 施策参加別 LTV 考察（2026年4月）</div>
+    <div class="mi-title">💡 施策参加別 LTV 考察（2026年4月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
     <ul>
       <li><strong>GE参加者（7,290人・累計LTV¥252,680）はC+D購入時にC+D試供品（SKU 3027）を受け取った顧客。</strong>既存高LTV顧客が大半を占め、このLTVは「GE参加前から積み上がっていた値」を大きく含む。GE施策の純粋効果を測るには参加前後6ヶ月の購買頻度比較が必要。なお、この2025年12月にはMINERALion施策①（SKU 3021）も並行して実施されており、両施策は独立した別々の施策として同月に走っていた。</li>
       <li><strong>MINERALion施策①（SKU 3021・19,764人）のF2転換率は3.8%（実BQデータ）。</strong>完全無償配布としては低めの水準で、「プレゼントとして受け取っただけ」で終わった顧客が多い。施策②（SKU 3016・2,958人・¥220有償）のF2転換率10.9%の方が2.9倍高く、「自ら¥220を払って取り寄せた」購買意欲の差が転換率に明確に表れている。</li>
@@ -1616,16 +2046,17 @@ tr.ogs{background:#fff8f0}
 <div id="tab6" class="tab-pane">
 
   <!-- 前月との売上差分分析 -->
-  <div class="stitle">2026年4月度 前月比 売上差分分析<span style="font-size:12px;font-weight:400;background:#fff5f5;color:#dc2626;padding:2px 7px;border-radius:3px;margin-left:8px">3月比▲¥4.7M（▲2.1%）の原因考察</span></div>
+  <div class="stitle">2026年4月度 前月比 売上差分分析<span class="ds-ne">NE</span><span class="ds-shopify">Shopify</span><span class="ds-ship">出荷</span><span class="ds-order">受注</span><span style="font-size:12px;font-weight:400;background:#fff5f5;color:#dc2626;padding:2px 7px;border-radius:3px;margin-left:8px">出荷▲¥13.5M（▲6.0%）/ 受注+¥2.5M（+1.2%）── 乖離の構造を読む</span></div>
 
   <div style="background:#fff5f5;border:1px solid #fdd;border-left:4px solid #f87171;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;line-height:1.9">
-    <div style="font-weight:700;font-size:12px;margin-bottom:8px;color:#dc2626">📉 2026年4月（¥214.5M）vs 2026年3月（¥219.2M）：差分▲¥4.7M（▲2.1%）</div>
+    <div style="font-weight:700;font-size:12px;margin-bottom:8px;color:#dc2626">📉 NE出荷：4月¥210.3M vs 3月¥223.8M → <strong>▲¥13.5M（▲6.0%）</strong>　NE受注：4月¥214.3M vs 3月¥211.8M → <strong style="color:#15803d">+¥2.5M（+1.2%）</strong></div>
     <ul style="padding-left:18px">
-      <li><strong>原因①【構造的】4月は30日間しかない（3月より1日少ない）。</strong>日次平均売上（¥214.5M÷30日≒¥7.15M/日）vs 3月日次平均（¥219.2M÷31日≒¥7.07M/日）で比較すると、実は4月の日次売上は3月よりわずかに高い。この観点では「前月比▲2.1%」の実態は「暦日数差による押し下げが主因」であり、実力値は横ばい〜微増と解釈できる。</li>
-      <li><strong>原因②【需要集中・月末偏在】4月29日〜5月6日のGW（5連休）が4月末に重なり、一部購買行動が5月初旬にズレた可能性。</strong>GW前の駆け込み需要（4/25〜28）と、GW後の遅延需要（5月初旬）が混在することで、4月の月内売上が若干抑制された可能性がある。5月の最初の週の売上と合算して見ることを推奨。</li>
-      <li><strong>原因③【ブランド構成】C+D（▲¥4.4M・▲4.5%）・SKINBEAUTY（▲¥0.3M・▲5.2%）・MINERALion（▲¥1.0M・▲20.4%）の3ブランドが前月比マイナス。</strong>MINERALionの▲20.4%は3月（¥4.9M）がやや高かった反動で、¥3〜5M帯が自発購買のベースラインと考えられる。C+Dは3月（¥97.3M）からの振れ幅としては正常範囲内。</li>
-      <li><strong>原因④【新規顧客の減少】4月新規1,096人（3月1,208人比▲112人・▲9.3%）。</strong>新規顧客の初回購買が▲約¥1.4M（▲112人×平均初回単価¥12,500）の売上減に直結。しかし既存リピーター層の底堅さで全体▲2.1%に留まっており、既存顧客の購買行動には大きな変化なし。</li>
-      <li><strong>総括：4月の前月比▲2.1%は「暦日数差（▲1日）＋GW需要の月ズレ＋MINERALion月次ブレ」が主因と考えられ、構造的な売上低下ではない。</strong>日次ベースで比較すると実力値は前月同等かやや上回る水準。懸念すべきは前月比ではなく「新規獲得の持続的な低迷（1,096人・前年比▲46%）」であり、これが2〜3年後の既存顧客自然減を補えなくなるリスクの本質。</li>
+      <li><strong>⚠️ まず「出荷と受注の乖離」を理解すること（▲6%の大半はここに起因）。</strong>3月は2月末〜3月初の繰越注文が多く出荷に回ったため、NE出荷が¥223.8Mと高水準だった（受注¥211.8Mに対し+¥12M超の出荷）。4月はGW直前の受注が5月初旬に出荷されたため、受注¥214.3Mに対し出荷¥210.3Mと▲¥4Mの繰越が発生。つまり<strong>出荷▲6.0%の多くは「3月特需の出荷繰越分」と「4月末GW直前注文の翌月出荷分」によるものであり、実需（受注）は+1.2%と堅調</strong>。</li>
+      <li><strong>原因①【暦日数差】4月は30日（3月31日比▲1日）。</strong>NE受注の日次換算：4月（¥214.3M÷30日≒¥7.14M/日）vs 3月（¥211.8M÷31日≒¥6.83M/日）で比較すると、<strong>4月の受注日次は3月を+4.5%上回る</strong>。需要水準は確実に改善している。</li>
+      <li><strong>原因②【GW前後の需要分散】4月29日〜5月6日のGWにより4月末の駆け込み注文が集中→出荷が5月初旬にずれ込んだ可能性。</strong>5月第1週の出荷実績と合わせて判断することを推奨。</li>
+      <li><strong>原因③【ブランド別出荷増減】C+Cera（+¥1.4M・+9.8%）がプラスを牽引。C+D（▲¥5.3M・▲6.5%）・VC（▲¥8.0M・▲6.7%）・MINERALion（▲¥0.8M・▲16.8%）がマイナス。</strong>MINERALionは3月MION施策（LINE配信：4,501clk・313CV）終了後の反動安。C+DとVCの減少幅は出荷繰越効果（3月高・4月低）が主因で構造的劣化ではない。<br><span style="font-size:11px;color:var(--muted)">※ブランド数値はNE出荷基準（ship_date）。データソース：spic-core.public.ne_order_items（shop_id=17）</span></li>
+      <li><strong>原因④【新規顧客の減少】4月新規1,096人（Shopify受注）は3月1,208人比▲112人（▲9.3%）。</strong>新規顧客初回購買の売上減は▲約¥1.4M（▲112人×¥12,500）。Adebisでは4月クリック総数80,753件（+71%）と広告活動は活発だったが、新規獲得には繋がっていない。クリック→CV→有償初回購買の転換効率に構造的な問題がある可能性を示唆。</li>
+      <li><strong>総括：NE出荷ベースの▲6.0%は主に出荷タイミングのズレであり、NE受注+1.2%（日次+4.5%）が実態に近い。構造的な売上低下ではない。</strong>懸念すべきは前月比ではなく「新規獲得の持続的な低迷（1,096人・OGS前比▲46%）」。広告クリックは増えているが獲得に繋がっていない──広告設計の質的転換が急務。</li>
     </ul>
   </div>
 
@@ -1806,7 +2237,7 @@ tr.ogs{background:#fff8f0}
     <div class="summary-verdict">
       <div class="summary-verdict-icon">📌</div>
       <div class="summary-verdict-text">
-        今月を一言で：<em>「売上の質は上がっている。しかし入口が詰まっている。今は問題ないが、2〜3年後に崩れる構造だ。」</em>
+        今月を一言で：<em>「受注は堅調（+1.2%）。出荷は繰越ズレで▲6%。CTW施策が光り、入口は依然詰まっている。今は問題ないが、2〜3年後に崩れる構造だ。」</em>
       </div>
     </div>
 
@@ -1815,13 +2246,13 @@ tr.ogs{background:#fff8f0}
 
       <!-- 発見① -->
       <div class="finding-card fc-green">
-        <div class="fc-index">発見 ①  ─  成長</div>
-        <div class="fc-metric">¥7.15M<span style="font-size:13px;font-weight:500">/日</span></div>
-        <div class="fc-title">「売上の質」が静かに改善している</div>
+        <div class="fc-index">発見 ①  ─  成長　<span class="ds-ne" style="font-size:9px">NE</span><span class="ds-order" style="font-size:9px">受注</span></div>
+        <div class="fc-metric">¥7.14M<span style="font-size:13px;font-weight:500">/日</span></div>
+        <div class="fc-title">需要（受注）日次は3月を+4.5%上回る。出荷▲6%は繰越ズレが主因。</div>
         <div class="fc-body">
-          売上総額は前月比▲2.1%に見えるが、<strong>日次換算では3月（¥7.07M）を上回る</strong>。差分の主因は暦日数（30日 vs 31日）。C+Cera定期¥18,776・C+D定期¥14,189という高単価ブランドの構成比向上がAOV ¥12,191を底上げ。上位Tier（14.1%・27,099人）の¥6,866M（70.4%）保有は安定継続。
+          NE出荷は前月比▲6.0%（¥210.3M）に見えるが、<strong>NE受注日次換算では4月（¥7.14M）が3月（¥6.83M）を+4.5%上回る</strong>。出荷▲6%の大半は3月の繰越出荷高（受注¥211.8Mに対し出荷¥223.8M）と4月末GW前後の受注→翌月出荷ズレによる見かけ上のもの。Adebisクリック+71%・CTW施策246CVの好実績が売上を下支え。上位Tier（14.1%・27,099人）の70.4%売上シェアも安定継続。
         </div>
-        <div class="fc-insight">→ 売上の「中身」は良くなっている月。前月比ではなく日次・YoYで読むべき。</div>
+        <div class="fc-insight">→ 出荷▲6%を"実力低下"と読まない。受注+1.2%・日次+4.5%が実態。YoY+3.7%（NE出荷）も維持。</div>
       </div>
 
       <!-- 発見② -->
@@ -1830,20 +2261,20 @@ tr.ogs{background:#fff8f0}
         <div class="fc-metric">▲46%</div>
         <div class="fc-title">新規獲得が「構造的に詰まっている」。季節要因ではない。</div>
         <div class="fc-body">
-          1,096人はOGS前平均（2,050人）の半分以下。2026年1〜4月は<strong>1,318→1,209→1,208→1,096人と単調減少</strong>しており、8ヶ月間一度も1,400人を超えていない。コホート品質（M+1継続率36.7%）は健全——つまり問題は「入口の量のみ」。
+          1,096人はOGS前平均（2,050人）の半分以下。2026年1〜4月は<strong>1,318→1,209→1,208→1,096人と単調減少</strong>しており、8ヶ月間一度も1,400人を超えていない。一方Adebisでは4月クリック総数80,753件（+71%）と広告活動は活発。<strong>クリック増→新規獲得に繋がっていない</strong>ことは、量の問題ではなく「クリックから有償初回購買までの転換設計」に構造的な課題があることを示す。コホート品質（M+1継続率36.7%）は健全——問題は入口の設計のみ。
         </div>
-        <div class="fc-insight">→ 広告チャネルの改善ではなく、設計そのものの抜本見直しが必要な段階。</div>
+        <div class="fc-insight">→ 広告クリック+71%でも獲得▲46%。量より「LP・オファー設計」の質的転換が急務。CTW有償トライアル型（246CV実績）がその答えの一つ。</div>
       </div>
 
       <!-- 発見③ -->
       <div class="finding-card fc-amber">
-        <div class="fc-index">発見 ③  ─  ポートフォリオ</div>
-        <div class="fc-metric">+10.1%</div>
-        <div class="fc-title">C+Ceraが「第3の柱」に育ちつつある。ただし評価は早い。</div>
+        <div class="fc-index">発見 ③  ─  ポートフォリオ　<span class="ds-ne" style="font-size:9px">NE</span><span class="ds-ship" style="font-size:9px">出荷</span></div>
+        <div class="fc-metric">+9.8%</div>
+        <div class="fc-title">C+Ceraが「第3の柱」に育ちつつある。CTW施策が牽引。</div>
         <div class="fc-body">
-          ¥15.3M・定期ACTIVE 548件・停止率9.7%と3指標すべて健全。3ヶ月連続前月比プラス。ただし<strong>M+6継続率の確定は2026年7〜8月が最速</strong>であり、「長期継続するブランド」かどうかの判定材料はまだ揃っていない。
+          NE出荷¥15.2M（+9.8%）・定期ACTIVE 548件・停止率9.7%と3指標すべて健全。CTW（C+Cera Trial Week）のAdebis実績：LINE配信4,276clk・130CV＋Meta2,913clk・35CV＋メール81CVで<strong>合計246CVを4月単月で獲得</strong>。NE出荷の好調はCTW施策と直接連動。ただし<strong>M+6継続率の確定は2026年7〜8月が最速</strong>であり、「長期継続するブランド」かどうかの判定材料はまだ揃っていない。
         </div>
-        <div class="fc-insight">→ 今は「成長を止めない施策継続」が優先。過大評価も過小評価もしない段階。</div>
+        <div class="fc-insight">→ CTW施策継続がC+Cera成長の主ドライバー。過大評価も過小評価もしない段階。次のCTW（秋予定）までの自力継続率が「本当の実力」の試金石。</div>
       </div>
 
       <!-- 発見④ -->
@@ -1887,7 +2318,7 @@ tr.ogs{background:#fff8f0}
   <div class="summary-header" style="margin-top:32px">
     <div class="summary-header-title">
       事業健全性スコアカード
-      <span style="font-size:12px;font-weight:400;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:3px;margin-left:8px">2026年4月月次更新 · Shopifyベース</span>
+      <span class="ds-ne" style="margin-left:8px">NE</span><span class="ds-shopify">Shopify</span><span style="font-size:11px;color:var(--muted);margin-left:6px">売上=NE出荷 / 顧客・定期=Shopify受注</span>
     </div>
   </div>
   <p style="font-size:12px;color:var(--muted);margin:-4px 0 14px 12px">各指標の「値」だけでなく「なぜその判定か」の根拠を1行で付記。</p>
@@ -1896,11 +2327,11 @@ tr.ogs{background:#fff8f0}
 
     <div class="sc-item">
       <div class="sc-item-axis">成長</div>
-      <div class="sc-item-label">月次売上 YoY成長率</div>
-      <div class="sc-item-value" style="color:#16a34a">+4.2%</div>
-      <div class="sc-item-sub">¥214.5M（2025-04：¥205.9M）</div>
+      <div class="sc-item-label">月次出荷売上 YoY成長率<span class="ds-ne" style="font-size:8px;margin-left:2px">NE</span><span class="ds-ship" style="font-size:8px">出荷</span></div>
+      <div class="sc-item-value" style="color:#16a34a">+3.7%</div>
+      <div class="sc-item-sub">¥210.3M（2025-04：¥202.9M）</div>
       <div class="sc-item-verdict sc-v-ok">○ 維持</div>
-      <div class="sc-item-rationale">日次換算では3月を上回る実力値。ただし2024-04比では▲1.8%で厳密評価は横ばい。</div>
+      <div class="sc-item-rationale">NE受注日次は+4.5%（¥7.14M > ¥6.83M）。出荷▲6%は繰越ズレが主因で実力値はYoY+3.7%以上。</div>
     </div>
 
     <div class="sc-item">
@@ -1950,20 +2381,20 @@ tr.ogs{background:#fff8f0}
 
     <div class="sc-item">
       <div class="sc-item-axis">ポートフォリオ</div>
-      <div class="sc-item-label">VC売上依存度</div>
-      <div class="sc-item-value" style="color:#16a34a">51.8%</div>
-      <div class="sc-item-sub">1年前：66.1%（▲14.3pt低下）</div>
+      <div class="sc-item-label">VC売上シェア（NE出荷）<span class="ds-ne" style="font-size:8px;margin-left:2px">NE</span><span class="ds-ship" style="font-size:8px">出荷</span></div>
+      <div class="sc-item-value" style="color:#16a34a">52.2%</div>
+      <div class="sc-item-sub">VC+C+D計88.2%　1年前VC：約66%（▲14pt低下）</div>
       <div class="sc-item-verdict sc-v-ok">○ 目標内</div>
-      <div class="sc-item-rationale">目標70%以下を達成。C+Cera・MINERALionの成長が多様化を牽引。</div>
+      <div class="sc-item-rationale">VC依存70%以下を達成。C+Cera（7.2%）・MINERALion（1.9%）の成長が多様化を牽引。</div>
     </div>
 
     <div class="sc-item">
       <div class="sc-item-axis">ポートフォリオ</div>
-      <div class="sc-item-label">C+Cera月次売上</div>
-      <div class="sc-item-value" style="color:var(--ccera)">¥15.3M</div>
-      <div class="sc-item-sub">発売3ヶ月目・前月比+10.1%</div>
+      <div class="sc-item-label">C+Cera月次出荷売上<span class="ds-ne" style="font-size:8px;margin-left:2px">NE</span><span class="ds-ship" style="font-size:8px">出荷</span></div>
+      <div class="sc-item-value" style="color:var(--ccera)">¥15.2M</div>
+      <div class="sc-item-sub">発売3ヶ月目・前月比+9.8%　CTW施策246CV獲得</div>
       <div class="sc-item-verdict sc-v-ok">○ 成長中</div>
-      <div class="sc-item-rationale">3ヶ月連続プラス。ただしM+6継続率未確定。「第3の柱」判定は2026年下半期以降。</div>
+      <div class="sc-item-rationale">3ヶ月連続プラス。CTW（Adebis）が牽引。M+6継続率未確定。「第3の柱」判定は2026年下半期以降。</div>
     </div>
 
     <div class="sc-item">
@@ -1987,7 +2418,7 @@ tr.ogs{background:#fff8f0}
   </div><!-- /scorecard-grid -->
 
   <!-- CRM施策提言 -->
-  <div class="stitle">CRM・プロモーション施策提言（2026年4月度 優先度更新）</div>
+  <div class="stitle">CRM・プロモーション施策提言（2026年4月度 優先度更新）<span class="ds-shopify">Shopify</span><span class="ds-adebis">Adebis</span></div>
 
   <div class="crm-card">
     <div class="crm-head"><span class="crm-priority p1">🔴 最高優先</span><span class="crm-title">① 新規獲得チャネルの設計そのものを抜本的に見直す（単なる改善では足りない）</span></div>
@@ -1999,7 +2430,7 @@ tr.ogs{background:#fff8f0}
       ・「Lypo-Cとはなにか」を再定義するブランド認知施策（上位ファネルの強化）
     </div>
     <div class="crm-kpi">📊 KPI：月次新規顧客 1,500人以上回復（現状1,096人）→ 目標1,900人（OGS前水準）</div>
-    <div class="crm-update">📅 4月度更新：1,096人はOGS後最低水準。コホート品質（M+1継続率36.7%）は健全なため、入口の量さえ増えれば収益直結。有償トライアル型の設計検討を坪井BMと今月中に着手。</div>
+    <div class="crm-update">📅 4月度更新：1,096人はOGS後最低水準。Adebisでは4月クリック80,753件（+71%）も新規獲得に繋がっていない──広告量より入口設計の質が課題と確定。CTW型有償トライアル（4月実績246CV）はその解答の一つ。LINEリッチメニュー経由CVR28.6%は既存LINE顧客への高効率再購買経路として確立。有償トライアル設計を坪井BMと今月中に着手。</div>
   </div>
 
   <div class="crm-card">
@@ -2011,7 +2442,7 @@ tr.ogs{background:#fff8f0}
       ・「余っている」層には2ヶ月・3ヶ月定期への変更を解約フロー前に必ず挟む
     </div>
     <div class="crm-kpi">📊 KPI：VC PAUSED月次再開率3%（539件/月）・月次定期売上+¥7.0M（施策なし自然再開1%比+¥4.7M）</div>
-    <div class="crm-update">📅 4月度更新：PAUSED 17,967件（前月比+約600件増）。3%再開施策で月+¥7.0Mの即効性。解約理由が対処可能な問題である以上、施策未着手は機会損失。坪井BMと今月中に実行。</div>
+    <div class="crm-update">📅 4月度更新：PAUSED 17,967件（前月比+約600件増）。3%再開施策で月+¥7.0Mの即効性。Adebisでは「LINEリッチメニュー_連携あり定期なし_公式サイトA」のCVR28.6%（414CV/1,447clk）が実証済み──PAUSED顧客はLINE連携を保持しているケースが多く、同様のLINEリッチメニュー経由の復帰誘導が高CVRを期待できる。坪井BMと今月中に実行。</div>
   </div>
 
   <div class="crm-card">
@@ -2046,7 +2477,7 @@ tr.ogs{background:#fff8f0}
       ・VC×C+D・VC×C+Ceraのお試しセット導線を整備
     </div>
     <div class="crm-kpi">📊 KPI：VC→C+D保有率 20.4%→25%（+8,200人）・C+Cera保有2,785人→4,000人（+1,215人）</div>
-    <div class="crm-update">📅 4月度更新：VC→C+D移行は緩慢（自然移行に頼っている状態）。C+Ceraの高成長・健全な停止率を活かし、VC既存顧客へのC+Cera誘導を新しい施策軸として坪井BMと合意する。</div>
+    <div class="crm-update">📅 4月度更新：Adebis4月実績でCTW（C+Cera Trial Week）がC+Cera獲得クリック+3,470件（+51%）・合計246CVを達成。VC既存顧客へのC+Cera誘導はCTWブランドの成功事例として再現性の高い施策軸。次回CTW（秋予定）に向けてVC既存顧客セグメントへの配信設計を坪井BM・仲宗根BMと合意する。</div>
   </div>
 
   <div class="crm-card">
@@ -2063,7 +2494,7 @@ tr.ogs{background:#fff8f0}
 
 
   <!-- 来月確認指標 -->
-  <div class="stitle">📊 2026年5月度レポートで確認すべき指標</div>
+  <div class="stitle">📊 2026年5月度レポートで確認すべき指標<span class="ds-ne">NE</span><span class="ds-shopify">Shopify</span></div>
   <div class="notes">
     <div class="nt">📌 次月モニタリングポイント</div>
     <ul>
@@ -2071,7 +2502,7 @@ tr.ogs{background:#fff8f0}
       <li><strong>MINERALion 5月売上</strong> ─ ¥3.9M（4月）から成長するか。定期ACTIVE242件の出荷が反映されているか確認。目標：¥5M以上。</li>
       <li><strong>5月新規獲得数</strong> ─ 4月の1,096人がOGS後最低水準なら、5月は反発するか・さらに低下するか。GW（4/26〜5/6）の購買行動の影響も考慮。1,500人回復が短期目標。</li>
       <li><strong>Lypo-C定期便ACTIVE件数（全コース合計）</strong> ─ 22,003件（4月）からの増加可否。FY2027末目標27,000件への進捗を確認。特にVC PAUSEDへの再開施策効果の初期計測。</li>
-      <li><strong>C+Cera月次売上（¥15.3M台維持・成長するか）</strong> ─ 発売4ヶ月目としての継続成長を確認。¥20M超を継続できれば年間¥240M目標は射程圏内。</li>
+      <li><strong>C+Cera月次売上（¥15.2M台維持・成長するか）</strong> ─ 発売4ヶ月目としての継続成長を確認。CTW効果が継続するか・定期ACTIVE積み上がりによる自力出荷が¥15M以上を維持できるかを確認。</li>
     </ul>
   </div>
 
@@ -2080,10 +2511,10 @@ tr.ogs{background:#fff8f0}
     <div class="mi-title">💡 2026年4月度 総合考察（全タブ統合コメント）</div>
     <ul>
       <li><strong>4月の総評：「売上の質は上がっているが、入口が深刻に細っている」。</strong>AOV上昇・コホート品質維持・既存LTV積み上がり・LTVティア構造の安定はすべて良好。しかし新規獲得1,096人という数字は、事業の持続性に対して赤信号を点灯させている。既存顧客の自然減（解約・加齢）を補えなくなるまでのタイムラインを算出し、経営判断として新規獲得への投資増加を議論すべき。</li>
-      <li><strong>「Lypo-C依存度70%以下」の目標は51.8%（Shopifyベース）と大幅達成。</strong>しかしこれはVC実額縮小の裏返しでもある。「依存度低下」と「VC売上の絶対額維持」を同時に達成する必要があり、「VC実額維持＋他ブランド成長」というポートフォリオ戦略を明確化すべき。</li>
-      <li><strong>C+Ceraは¥15.3M・定期ACTIVE548件で「第3の柱」として確立。</strong>発売3ヶ月で前月比+10.1%の成長は健全なトレンド。LTV成長カーブでも初回30日LTV¥13,959と高く、長期的なLTV積み上がりが期待できる。仲宗根BMの施策継続と定期コース拡充が鍵。</li>
+      <li><strong>「VC売上依存度70%以下」の目標はNE出荷ベースで52.2%（VC+C+D計88.2%）と達成継続。</strong>しかしこれはVC実額縮小の裏返しでもある。「依存度低下」と「VC売上の絶対額維持」を同時に達成する必要があり、「VC実額維持＋他ブランド成長」というポートフォリオ戦略を明確化すべき。</li>
+      <li><strong>C+Cera NE出荷¥15.2M・定期ACTIVE548件で「第3の柱」候補として確立。</strong>CTW（C+Cera Trial Week）施策のAdebis実績が牽引力──4月にLINE・Meta・メールを通じて計246CVを獲得、C+Cera獲得クリックが前月比+3,470件（+51%）増加。NE出荷¥15.2Mの好調はこのCTW施策と直接連動しており、次回CTW（秋予定）がC+Cera事業継続の重要イベントとなる。LTV成長カーブでも初回30日LTV¥13,959と高く、長期的な積み上がりが期待できる。仲宗根BMの施策継続・定期コース拡充が鍵。</li>
       <li><strong>LTVティア分析とコホート分析の合わせ技：</strong>コホートM+1継続率36.7%は健全だが、この継続者がLTVティア5〜6（¥50K〜300K）に成長するまでには「定期7回継続」という重要な閾値がある。M+1継続者に対してすぐに定期継続促進CRMを実施し、7回継続を目指すシーケンスを設計することで、月次の良好なコホート品質をLTV向上に直結させることができる。</li>
-      <li><strong>【データソースについて】</strong> 本レポートはShopifyベース（shopify_orders / shopify_customer_master / subscription_history_view）を全面的に採用。旧NEベース（receive_order）は廃止済み。今後はShopifyベースを基準として継続的に計測・改善を行う。</li>
+      <li><strong>【データソースについて・2025年5月度改訂】</strong> 本レポートは2026年5月度より集計基準を変更。<strong>売上・出荷件数：NE（spic-core.public.ne_order_items・shop_id=17・ship_date基準）</strong>、<strong>顧客数・新規顧客・コホート・LTV：Shopify受注（shopify_customer_master / shopify_orders）</strong>、<strong>定期便：subscription_history_view（月末スナップショット）</strong>の混在方針。さらに施策効果タブにAdebis（adebis_lypoc_detail_by_period）を追加し、クリック・CV実績を月次分析に組み込んだ。今後もNEとShopifyのデータを目的に応じて使い分ける。</li>
     </ul>
   </div>
 
@@ -2092,7 +2523,7 @@ tr.ogs{background:#fff8f0}
 <!-- ===== TAB 7: 目標進捗管理 ===== -->
 <div id="tab7" class="tab-pane">
 
-<div class="stitle">FY2027 コンシューマー本部 KGI 目標進捗管理<span style="font-size:12px;font-weight:400;background:#dcfce7;color:#15803d;padding:2px 7px;border-radius:3px;margin-left:8px">毎月更新</span></div>
+<div class="stitle">FY2027 コンシューマー本部 KGI 目標進捗管理<span class="ds-ne">NE</span><span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span><span style="font-size:12px;font-weight:400;background:#dcfce7;color:#15803d;padding:2px 7px;border-radius:3px;margin-left:8px">毎月更新</span></div>
 
 <style>
 /* ===== TAB7 専用スタイル ===== */
@@ -2158,6 +2589,35 @@ tr.ogs{background:#fff8f0}
 .diff-explain{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);padding:6px 10px;background:#f9f9f8;border-radius:6px;margin-bottom:10px;flex-wrap:wrap}
 .diff-explain strong{color:var(--text)}
 .diff-explain .arrow{font-size:14px;color:var(--muted)}
+
+/* データソース・集計基準バッジ */
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ship{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-mixed{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f8fafc;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+/* KPIカード内のバッジ（ラベル行用・小さめ） */
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-ship,.sc .lb .ds-order,.sc .lb .ds-mixed{font-size:9px;padding:1px 5px;margin-left:3px}
+
+/* スナップショット基準バッジ（定期便ヘルス用） */
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-snap{font-size:9px;padding:1px 5px;margin-left:3px}
+/* Adebis・クリック日基準バッジ */
+.ds-adebis{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-click{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-adebis,.sc .lb .ds-click{font-size:9px;padding:1px 5px;margin-left:3px}
+/* アドエビス専用テーブルスタイル */
+.adebis-rank{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-right:4px;flex-shrink:0}
+.adebis-rank.r1{background:#f59e0b;color:#fff}
+.adebis-rank.r2{background:#9ca3af;color:#fff}
+.adebis-rank.r3{background:#b45309;color:#fff}
+.adebis-rank.rx{background:#f3f4f6;color:#6b7280}
+.adebis-warn{font-size:10px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.adebis-new{font-size:10px;background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.cvr-high{color:#15803d;font-weight:700}
+.cvr-mid{color:#92400e}
+.cvr-low{color:#9ca3af}
+td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-all;line-height:1.4}
 @media(max-width:768px){
   .kgi-metrics{grid-template-columns:1fr 1fr}
   .kgi-summary-grid{grid-template-columns:1fr 1fr}
@@ -2193,6 +2653,35 @@ tr.ogs{background:#fff8f0}
 .sc8-badge.yellow{background:#fef9c3;color:#854d0e}
 .sc8-badge.red{background:#fef2f2;color:#dc2626}
 .sc8-badge.gray{background:#f5f5f4;color:#78716c}
+
+/* データソース・集計基準バッジ */
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ship{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-mixed{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f8fafc;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+/* KPIカード内のバッジ（ラベル行用・小さめ） */
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-ship,.sc .lb .ds-order,.sc .lb .ds-mixed{font-size:9px;padding:1px 5px;margin-left:3px}
+
+/* スナップショット基準バッジ（定期便ヘルス用） */
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-snap{font-size:9px;padding:1px 5px;margin-left:3px}
+/* Adebis・クリック日基準バッジ */
+.ds-adebis{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-click{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-adebis,.sc .lb .ds-click{font-size:9px;padding:1px 5px;margin-left:3px}
+/* アドエビス専用テーブルスタイル */
+.adebis-rank{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-right:4px;flex-shrink:0}
+.adebis-rank.r1{background:#f59e0b;color:#fff}
+.adebis-rank.r2{background:#9ca3af;color:#fff}
+.adebis-rank.r3{background:#b45309;color:#fff}
+.adebis-rank.rx{background:#f3f4f6;color:#6b7280}
+.adebis-warn{font-size:10px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.adebis-new{font-size:10px;background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.cvr-high{color:#15803d;font-weight:700}
+.cvr-mid{color:#92400e}
+.cvr-low{color:#9ca3af}
+td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-all;line-height:1.4}
 @media(max-width:768px){.sc8-grid{grid-template-columns:1fr 1fr}}
 </style>
 
@@ -2354,7 +2843,7 @@ tr.ogs{background:#fff8f0}
     <li>例：年間購入回数 4.49回（FY2026）→ 4.71回（目標）、差分0.22回。現時点4.54回なら差分0.05回 = 差分の22.7%埋まった → 表示: <strong>61.4%</strong>（50% + 22.7%×0.5）</li>
     <li>100%に達した = 目標達成。未達でも50%未満には下がらない。</li>
     <li><strong>売上・定期ACTIVE</strong>は月次で直接追えるため、累積進捗率（実績/目標）を50%スタートに換算して表示。</li>
-    <li>売上①②のデータソース：<strong>NEベース（receive_order）</strong>　自社EC:shop_id=17 / モール:31,32,33,35,41 / ふるさと納税&LINEギフト:21</li>
+    <li>売上①②のデータソース：<strong>spic-core.public.ne_order_items（ship_date出荷基準）</strong>　自社EC:shop_id=17 / モール:31,32,33,35,41 / ふるさと納税&LINEギフト:21　<span class="ds-ne">NE</span><span class="ds-ship">出荷</span>　⚠️ receive_orderは廃止済み・使用禁止</li>
   </ul>
 </div>
 
@@ -2365,7 +2854,7 @@ tr.ogs{background:#fff8f0}
       <div class="kgi-card-num">1</div>
       <div class="kgi-card-info">
         <div class="kgi-card-name">toC売上合算（自社EC ＋ モール ＋ ふるさと納税）</div>
-        <div class="kgi-card-desc">FY2027目標：<strong>¥59.76億</strong>　│　FY2026実績（NEベース）：¥47.17億　│　データソース：receive_order（NEベース全チャネル）</div>
+        <div class="kgi-card-desc">FY2027目標：<strong>¥59.76億</strong>　│　FY2026実績（NEベース）：¥47.17億　│　データソース：<strong>spic-core.public.ne_order_items</strong>（ship_date出荷基準）　全チャネル: shop_id除外=toB(7,8,12,18,20,23,26,27,42,43)+テスト(10,19,22,25,29,30,37,45)+リポスフェリック(1,5,6,15,34,36,40)　<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
       </div>
     </div>
     <div class="achv-badge yellow">⚠ 要観察</div>
@@ -2392,7 +2881,7 @@ tr.ogs{background:#fff8f0}
   <div class="kgi-metrics">
     <div class="kgi-metric"><div class="km-label">FY2026実績（NE年間）</div><div class="km-val">¥47.17億</div><div class="km-sub">2025-04〜2026-03</div></div>
     <div class="kgi-metric"><div class="km-label">FY2027目標</div><div class="km-val" style="color:#2563eb">¥59.76億</div><div class="km-sub">差分 +¥12.59億</div></div>
-    <div class="kgi-metric"><div class="km-label">2026-04実績（NE）</div><div class="km-val this" style="background:transparent">¥38.44億</div><div class="km-sub">EC+モール+ふるさと</div></div>
+    <div class="kgi-metric"><div class="km-label">2026-04実績（NE出荷）<span class="ds-ne" style="font-size:8px">NE</span><span class="ds-ship" style="font-size:8px">出荷</span></div><div class="km-val this" style="background:transparent">¥3.844億</div><div class="km-sub">EC+モール+ふるさと（月次）</div></div>
     <div class="kgi-metric"><div class="km-label">月次目標ペース</div><div class="km-val" style="color:var(--accent)">¥49.8M×10</div><div class="km-sub">¥59.76億÷12≒¥498M/月</div></div>
   </div>
 
@@ -2428,7 +2917,7 @@ tr.ogs{background:#fff8f0}
       <div class="kgi-card-num">2</div>
       <div class="kgi-card-info">
         <div class="kgi-card-name">売上内訳：自社EC / モール合算 / ふるさと納税&LINEギフト</div>
-        <div class="kgi-card-desc">NEベース　自社EC（shop_id=17）/ モール（31,32,33,35,41）/ ふるさと納税&LINEギフト（shop_id=21）</div>
+        <div class="kgi-card-desc">データソース：<strong>spic-core.public.ne_order_items</strong>（ship_date出荷基準）　自社EC（shop_id=17）/ モール（31,32,33,35,41）/ ふるさと納税&LINEギフト（shop_id=21）　cancel_date IS NULL　<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
       </div>
     </div>
     <div class="achv-badge yellow">⚠ 要観察</div>
@@ -2467,7 +2956,7 @@ tr.ogs{background:#fff8f0}
       </div>
       <div class="diff-prog-pct" style="color:#ca8a04">50.0%</div>
     </div>
-    <div class="diff-note">2026-04: ¥161.5M（月次目標¥207.5Mの77.8%）。FY2026月平均¥149.3M → FY2027目標¥207.5M。差分+¥58.2M/月が必要。</div>
+    <div class="diff-note">2026-04: ¥161.5M（月次目標¥207.5Mの77.8%）。FY2026月平均¥149.3M → FY2027目標¥207.5M。差分+¥58.2M/月が必要。　<span style="font-size:10px;color:var(--muted)">※自社EC NE出荷: ¥210.3M（モール等合算後の値と差異あり・次回更新時に統一予定）</span></div>
   </div>
 
   <!-- ふるさと -->
@@ -2508,7 +2997,7 @@ tr.ogs{background:#fff8f0}
       <div class="kgi-card-num">3</div>
       <div class="kgi-card-info">
         <div class="kgi-card-name">M+1継続率（初回購入翌月）の平均値底上げ</div>
-        <div class="kgi-card-desc">FY2026実績（OGS除外12ヶ月平均）：<strong>37.3%</strong>　→　FY2027目標：<strong>39.0%以上</strong>（ストレッチ：40%）</div>
+        <div class="kgi-card-desc">FY2026実績（OGS除外12ヶ月平均）：<strong>37.3%</strong>　→　FY2027目標：<strong>39.0%以上</strong>（ストレッチ：40%）　<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span>　shopify_orders/shopify_customer_master（customer_idベース）</div>
       </div>
     </div>
     <div class="achv-badge yellow">⚠ 要観察</div>
@@ -2567,7 +3056,7 @@ tr.ogs{background:#fff8f0}
       <div class="kgi-card-num">4</div>
       <div class="kgi-card-info">
         <div class="kgi-card-name">toC内における公式EC比率（自社EC ÷ toC合算）</div>
-        <div class="kgi-card-desc">FY2027目標：<strong>55.4%</strong>　│　算式：自社EC ¥33.1億 ÷ toC ¥59.76億 ＝ 55.4%　│　NEベースで月次算出</div>
+        <div class="kgi-card-desc">FY2027目標：<strong>55.4%</strong>　│　算式：自社EC ¥33.1億 ÷ toC ¥59.76億 ＝ 55.4%　│　データソース：<strong>spic-core.public.ne_order_items</strong>（ship_date出荷基準）　<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
       </div>
     </div>
     <div class="achv-badge yellow">⚠ 要観察</div>
@@ -2598,9 +3087,9 @@ tr.ogs{background:#fff8f0}
   </div>
 
   <div class="kgi-metrics">
-    <div class="kgi-metric"><div class="km-label">FY2026実績 EC比率（NE）</div><div class="km-val">58.9%</div><div class="km-sub">¥27.80億 / ¥47.17億</div></div>
+    <div class="kgi-metric"><div class="km-label">FY2026実績 EC比率<span class="ds-ne" style="font-size:8px">NE</span></div><div class="km-val">58.9%</div><div class="km-sub">¥27.80億 / ¥47.17億</div></div>
     <div class="kgi-metric"><div class="km-label">FY2027目標比率</div><div class="km-val" style="color:#16a34a">55.4%</div><div class="km-sub">差分 ▲3.5pt（モール強化）</div></div>
-    <div class="kgi-metric"><div class="km-label">2026-04実績比率（NE）</div><div class="km-val this" style="background:transparent">56.1%</div><div class="km-sub">215.5 / 384.4</div></div>
+    <div class="kgi-metric"><div class="km-label">2026-04実績比率<span class="ds-ne" style="font-size:8px">NE</span><span class="ds-ship" style="font-size:8px">出荷</span></div><div class="km-val this" style="background:transparent">56.1%</div><div class="km-sub">215.5 / 384.4</div></div>
     <div class="kgi-metric"><div class="km-label">差分ベース達成率</div><div class="km-val" style="color:#16a34a">91.4%</div><div class="km-sub">目標まで▲0.7pt</div></div>
   </div>
 
@@ -2617,7 +3106,7 @@ tr.ogs{background:#fff8f0}
       <div class="kgi-card-num">5</div>
       <div class="kgi-card-info">
         <div class="kgi-card-name">定期便ACTIVE件数（2027年3月末 27,000件達成）</div>
-        <div class="kgi-card-desc">FY2026期末実績：<strong>22,003件</strong>（2026-04スナップショット）　→　FY2027末目標：<strong>27,000件</strong>（+4,997件）</div>
+        <div class="kgi-card-desc">FY2026期末実績：<strong>22,003件</strong>（2026-04スナップショット）　→　FY2027末目標：<strong>27,000件</strong>（+4,997件）　<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span>　sandbox_nishimori.subscription_history_view</div>
       </div>
     </div>
     <div class="achv-badge red">🔴 要アクション</div>
@@ -2681,7 +3170,7 @@ tr.ogs{background:#fff8f0}
       <div class="kgi-card-num">6</div>
       <div class="kgi-card-info">
         <div class="kgi-card-name">年間購入回数（直近12ヶ月ローリング・OGS除外）</div>
-        <div class="kgi-card-desc">集計方法：常に<strong>算出時点から遡った直近12ヶ月</strong>の購入顧客1人あたり注文件数（OGS除外）。FY2027進行に伴いリアルな数値に近づく。</div>
+        <div class="kgi-card-desc">集計方法：常に<strong>算出時点から遡った直近12ヶ月</strong>の購入顧客1人あたり注文件数（OGS除外）。FY2027進行に伴いリアルな数値に近づく。　<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span>　shopify_orders（customer_idベース・OGS除外）</div>
       </div>
     </div>
     <div class="achv-badge green">✓ 順調</div>
@@ -2749,7 +3238,7 @@ tr.ogs{background:#fff8f0}
       <div class="kgi-card-num">7</div>
       <div class="kgi-card-info">
         <div class="kgi-card-name">購入単価（AOV：平均注文単価）OGS除外</div>
-        <div class="kgi-card-desc">FY2026実績（OGS除外年間平均）：<strong>¥12,110</strong>　→　FY2027目標：<strong>¥12,713</strong>（+¥603・+5.0%）</div>
+        <div class="kgi-card-desc">FY2026実績（OGS除外年間平均）：<strong>¥12,110</strong>　→　FY2027目標：<strong>¥12,713</strong>（+¥603・+5.0%）　<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span>　<span style="font-size:10px;color:var(--muted)">※OGS除外にShopifyのdiscount_codes識別が必要なためShopify受注ベース維持</span></div>
       </div>
     </div>
     <div class="achv-badge yellow">⚠ 要観察</div>
@@ -2771,7 +3260,7 @@ tr.ogs{background:#fff8f0}
       <div class="diff-prog-pct" style="color:#ca8a04">57.0%</div>
     </div>
     <div class="diff-note">
-      2026-04 OGS除外 AOV：<strong>¥12,191</strong>（Shopifyベース）。FY2026基準¥12,110からの差分¥603のうち¥81（13.4%）埋まった → 表示達成率 <strong>57.0%</strong>（50% + 13.4%×50%）。月別変動が大きいため、3ヶ月移動平均でも管理推奨。
+      2026-04 OGS除外 AOV：<strong>¥12,191</strong>（Shopify受注基準・NE出荷ベース¥12,202と差異小）。FY2026基準¥12,110からの差分¥603のうち¥81（13.4%）埋まった → 表示達成率 <strong>57.0%</strong>（50% + 13.4%×50%）。月別変動が大きいため、3ヶ月移動平均でも管理推奨。
     </div>
   </div>
 
@@ -2815,7 +3304,7 @@ tr.ogs{background:#fff8f0}
       <div class="kgi-card-num">8</div>
       <div class="kgi-card-info">
         <div class="kgi-card-name">月次新規顧客獲得数（ベース1,200人 ＋ 純増500人/月）</div>
-        <div class="kgi-card-desc">FY2026実績（OGS除外）月平均：<strong>1,428人</strong>　→　FY2027目標実質：<strong>1,700人/月</strong>（ベース1,200 ＋ 純増500）</div>
+        <div class="kgi-card-desc">FY2026実績（OGS除外）月平均：<strong>1,428人</strong>　→　FY2027目標実質：<strong>1,700人/月</strong>（ベース1,200 ＋ 純増500）　<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span>　shopify_customer_master.first_paid_order_dt（OGS除外・有償購入のみ）</div>
       </div>
     </div>
     <div class="achv-badge red">🔴 要アクション</div>
@@ -2868,13 +3357,13 @@ tr.ogs{background:#fff8f0}
 <div class="notes">
   <div class="nt">🔄 更新ルール（毎月レポート完成後に実施）</div>
   <ul>
-    <li><strong>KGI①②（売上・NEベース）：</strong>BQのreceive_orderから当月の shop_id別売上を取得し「当月実績」欄・各チャネル累積列を更新。差分ベース達成率を再計算。</li>
+    <li><strong>KGI①②（売上・NE出荷）：</strong><code>spic-core.public.ne_order_items</code>（ship_date基準・cancel_date IS NULL・toB/テスト/リポスフェリック除外）から当月の shop_id別 SUM(sales)を取得し「当月実績」欄・各チャネル累積列を更新。差分ベース達成率を再計算。⚠️ 旧テーブル<code>receive_order</code>は廃止済み・使用禁止。</li>
     <li><strong>KGI③（M+1継続率）：</strong>前月コホートのM+1確定値をBQ shopify_ordersから取得し追記。FY2027累積平均を算出して達成率を更新。</li>
     <li><strong>KGI④（公式EC比率）：</strong>KGI①②の更新後、自社EC÷合計で比率を計算し更新。差分の方向（低下）に注意。</li>
     <li><strong>KGI⑤（定期便ACTIVE）：</strong>subscription_history_viewの当月スナップショットから取得。前月比と目標ペース差分を更新。</li>
-    <li><strong>KGI⑥（購入回数）：</strong>BQ shopify_ordersで「当月末から遡った直近12ヶ月」のOGS除外注文件数÷購入顧客数を毎月再計算して更新。</li>
-    <li><strong>KGI⑦（AOV）：</strong>当月のshopify_orders OGS除外AOVを取得して更新。差分達成率を再計算。</li>
-    <li><strong>KGI⑧（新規顧客）：</strong>shopify_ordersの新規顧客数（OGS除外ロジック）を取得。ベース1,200・目標1,700対比を更新。</li>
+    <li><strong>KGI⑥（購入回数・Shopify受注）：</strong>shopify_ordersで「当月末から遡った直近12ヶ月」のOGS除外注文件数÷購入顧客数を毎月再計算して更新。顧客識別（customer_id）が必要なためShopify受注ベース継続。</li>
+    <li><strong>KGI⑦（AOV・Shopify受注）：</strong>shopify_orders OGS除外AOVを取得して更新。差分達成率を再計算。OGS除外にdiscount_codesカラムが必要なためShopify受注ベースを維持（NE出荷ベースAOV¥12,202と差異¥11程度・実用上支障なし）。</li>
+    <li><strong>KGI⑧（新規顧客・Shopify受注）：</strong>shopify_customer_master.first_paid_order_dtで当月の新規顧客数を取得（OGS除外: ogs_entry IS NOT TRUE）。ベース1,200・目標1,700対比を更新。</li>
     <li><strong>ヘッダーサマリー（順調/要観察/要アクション）：</strong>全KGI更新後に手動集計。</li>
   </ul>
 </div>
@@ -2884,7 +3373,7 @@ tr.ogs{background:#fff8f0}
 
 
 <div class="footer">
-  <span>【データソース】売上・コホート：BQ prod_dwh_oci.shopify_orders ｜ LTV・ブランドフラグ：sandbox_nishimori.shopify_customer_master（2026-05-07スナップショット）｜ 定期便：sandbox_nishimori.subscription_history_view ｜ Shopify公式（shop_id=17）・税抜（total_price - current_total_tax）</span>
+  <span>【データソース】<strong>KGI①②④売上：</strong>spic-core.public.ne_order_items（ship_date出荷基準・cancel_date IS NULL）　<strong>KGI③⑥⑦⑧顧客：</strong>shopify_customer_master / shopify_orders（customer_idベース・Shopify受注）　<strong>KGI⑤定期便：</strong>subscription_history_view（月末スナップショット）　⚠️ receive_order（旧テーブル）は廃止済み・使用禁止</span>
   <span>【集計基準】受注基準 ｜ データ取得日：2026-05-07 ｜ 対象月：2026年4月（2026-04-01〜2026-04-30）｜ spic-com-2025-apr-00</span>
 </div>
 
@@ -2900,17 +3389,18 @@ function switchTab(id, btn) {
 
 // ===== SHARED DATA =====
 const allMonths = ['2024-04','2024-05','2024-06','2024-07','2024-08','2024-09','2024-10','2024-11','2024-12','2025-01','2025-02','2025-03','2025-04','2025-05','2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04'];
-const totalRev = [218.5,211.5,214.4,230.9,226.8,208.6,214.3,203.7,209.8,212.6,200.8,225.3,205.9,209.2,215.7,238.2,248.1,232.2,232.1,220.8,234.3,209.0,205.3,219.2,214.5];
+const totalRev = [220.6,214.7,204.5,237.1,225.6,204.6,217.7,202.4,198.6,224.3,195.0,229.8,202.9,211.3,210.8,239.5,237.5,229.6,243.7,211.0,217.9,226.8,206.0,223.8,210.3]; // NE出荷基準（ship_date）・spic-core.public.ne_order_items（shop_id=17）
 const newCusts = [8179,2655,2314,2707,2665,2050,1465,1608,1583,2255,1839,2178,1724,1913,2292,26952,16636,6689,1250,996,975,1318,1209,1208,1096];
 const isOGS   = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true,true,false,false,false,false,false,false,false];
 const isThis  = allMonths.map(m => m === '2026-04');
 
+// ===== ブランド別売上データ（NE出荷基準・ship_date・spic-core.public.ne_order_items shop_id=17）=====
 const brandMonths = ['2025-04','2025-05','2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04'];
-const vcRev    = [105.1,110.1,114.9,196.2,177.1,140.0,120.9,108.8,103.8, 97.1, 89.6, 96.9, 96.9];
-const cdRev    = [100.5, 98.7,100.6,106.0,106.7,100.4,104.4,104.9,120.4, 95.4, 91.2, 97.3, 92.9];
-const sbRev    = [0,    0,    0,    0,    3.45, 5.21, 6.29, 5.37, 6.38, 5.21, 5.47, 5.72, 5.42];
-const miRev    = [0,    0,    0,    0,    0,    0,    0,    1.2,  2.8,  4.4,  3.6,  4.9,  3.9];
-const ceraRev  = [0,    0,    0,    0,    0,    0,    0,    0,    0,    6.1,  15.0, 13.9, 15.3];
+const vcRev    = [134.22,142.08,141.68,226.52,202.70,172.10,151.51,128.94,119.64,131.81,104.94,118.10,110.12]; // NE出荷基準
+const cdRev    = [68.78, 69.21, 69.02, 74.88, 73.90, 73.17, 76.94, 75.39, 88.95, 84.27, 71.06, 81.30, 75.99]; // NE出荷基準
+const sbRev    = [0,     0,     0,     0,     0,     0,     15.66, 5.48,  6.73,  5.78,  5.71,  5.99,  5.55];  // NE出荷基準（2025-10初月特需含む）
+const miRev    = [0,     0,     0,     0,     0,     0,     0,     1.02,  2.51,  4.67,  3.63,  4.75,  3.96];  // NE出荷基準
+const ceraRev  = [0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     20.79, 13.79, 15.15]; // NE出荷基準（Shopify受注は2026-01から、NE出荷は2026-02から）
 
 // ===== COHORT DATA (newより拡張・M+12対応) =====
 const cohortData = [

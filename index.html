@@ -388,17 +388,27 @@ footer {
 
   <div class="card-grid">
 
-    <a class="rcard" href="customer_analysis_2026_04.html" target="_blank" rel="noopener">
+    <div class="rcard weekly-card">
       <div class="top-bar" style="background:var(--monthly)"></div>
-      <div class="body">
-        <div class="period">2026年4月度</div>
-        <div class="rtitle">Lypo-C<br>月次顧客分析レポート</div>
+      <a class="weekly-latest" href="monthly/monthly_analysis_2026_04.html" target="_blank" rel="noopener">
+        <div class="period">
+          2026年4月度
+          <span class="new-badge" style="background:var(--monthly)">NEW</span>
+        </div>
+        <div class="rtitle">Lypo-C<br>月次分析レポート</div>
         <div class="tag-row">
           <span class="tag tag-monthly">月次</span>
           <span class="tag tag-brand">Lypo-C</span>
         </div>
+      </a>
+      <div class="weekly-toggle" onclick="toggleMonthly(this)" style="--hover-color:var(--monthly)">
+        <span>過去の月報</span>
+        <span class="toggle-chevron">▾</span>
       </div>
-    </a>
+      <div class="weekly-archive">
+        <div class="weekly-archive-empty">過去のレポートはまだありません</div>
+      </div>
+    </div>
 
     <!-- GA4週次トレンドカード -->
     <div class="rcard weekly-card">
@@ -627,6 +637,17 @@ footer {
 <footer>yononaka &nbsp;|&nbsp; noindex &nbsp;|&nbsp; internal use only</footer>
 
 <script>
+function toggleMonthly(btn) {
+  var archive = btn.nextElementSibling;
+  var isOpen = btn.classList.contains('open');
+  if (isOpen) {
+    btn.classList.remove('open');
+    archive.style.display = 'none';
+  } else {
+    btn.classList.add('open');
+    archive.style.display = 'block';
+  }
+}
 function toggleWeeklyGa4(btn) {
   var archive = btn.nextElementSibling;
   var isOpen = btn.classList.contains('open');

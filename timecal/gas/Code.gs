@@ -282,25 +282,42 @@ function getMonthSummary(p) {
 // ============================================================
 //  管理者サマリー
 // ============================================================
+// 日本の祝日をGoogleカレンダーから取得し、日付(数値)のSetで返す
+function getJapaneseHolidays(year, month) {
+  try {
+    const cal = CalendarApp.getCalendarById('ja.japanese#holiday@group.v.calendar.google.com');
+    const start = new Date(year, month - 1, 1);
+    const end   = new Date(year, month, 1);  // 翌月1日（exclusive）
+    const events = cal.getEvents(start, end);
+    const days = new Set();
+    events.forEach(e => days.add(e.getStartTime().getDate()));
+    return days;
+  } catch (e) {
+    return new Set();  // 取得失敗時は祝日なしとして続行
+  }
+}
+
 function workdaysInMonth(year, month) {
+  const holidays = getJapaneseHolidays(year, month);
   let cnt = 0;
   const days = new Date(year, month, 0).getDate();
   for (let d = 1; d <= days; d++) {
     const dow = new Date(year, month - 1, d).getDay();
-    if (dow !== 0 && dow !== 6) cnt++;
+    if (dow !== 0 && dow !== 6 && !holidays.has(d)) cnt++;
   }
   return cnt;
 }
 
 function workdaysPassed(year, month) {
+  const holidays = getJapaneseHolidays(year, month);
   const today = new Date();
   const lastDay = (today.getFullYear() === year && today.getMonth() + 1 === month)
-    ? today.getDate()
+    ? today.getDate() - 1
     : new Date(year, month, 0).getDate();
   let cnt = 0;
   for (let d = 1; d <= lastDay; d++) {
     const dow = new Date(year, month - 1, d).getDay();
-    if (dow !== 0 && dow !== 6) cnt++;
+    if (dow !== 0 && dow !== 6 && !holidays.has(d)) cnt++;
   }
   return cnt;
 }

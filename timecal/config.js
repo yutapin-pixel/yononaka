@@ -2,7 +2,7 @@
 
 const CONFIG = {
   // GASデプロイ後にここにURLを入力してください
-  GAS_URL: 'https://script.google.com/macros/s/AKfycbyGe5EiRlypXU2vR3qEGYpq7g_XwXoWVOtxwtqs1uicjLy55SrsyOR1dw7QOtTZEmJBdg/exec',
+  GAS_URL: 'https://script.google.com/macros/s/AKfycby3LZa-Xl966Qw5RyE5J2TonzSlAmxrK54eAFOwgnTkVWUUPoD4r_FHFRZmd3Y4ywwMhA/exec',
 
   // ユーザーマップ（URLトークン → ユーザー情報）
   USERS: {

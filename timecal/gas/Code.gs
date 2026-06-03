@@ -245,11 +245,11 @@ function cancelConfirm(p) {
 }
 
 // ============================================================
-//  月次サマリー（入力者用）
+//  月次サマリー（チーム全体集計）
 // ============================================================
 function getMonthSummary(p) {
-  const token = safe(p.userToken);
-  const ym    = safe(p.yearMonth);  // YYYY-MM
+  const ym        = safe(p.yearMonth);  // YYYY-MM
+  const tokenList = VALID_TOKENS.map(t => `'${t}'`).join(',');
 
   const res = bqQuery(`
     SELECT te.brand, COUNT(*) AS hours
@@ -260,7 +260,7 @@ function getMonthSummary(p) {
           ORDER BY updated_at DESC
         ) AS rn
       FROM \`${BQ_PROJECT}.${BQ_DATASET}.time_entries\`
-      WHERE user_token = '${token}'
+      WHERE user_token IN (${tokenList})
         AND FORMAT_DATE('%Y-%m', entry_date) = '${ym}'
         AND brand NOT IN ('NA', 'UNSET')
     ) te

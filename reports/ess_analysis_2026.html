@@ -846,6 +846,179 @@ td.down{color:var(--red);font-weight:600;}
 <!-- ===== TAB 4: 総括 ===== -->
 <div id="tab-3" class="tab-panel">
 
+  <!-- ====== 増分売上試算 ====== -->
+  <div class="stitle">施策起因の増分売上 試算</div>
+  <div class="ssub">
+    「ESS施策がなければ発生しなかった売上」を3シナリオで試算 ／ 比較基準：ESS前35日（3/23〜4/26）の購買実績 ／
+    データソース：Shopify受注（spic-core.public.shopify_orders・ESS_entry/ESS_CD_countタグ）
+  </div>
+
+  <!-- ベースデータ表 -->
+  <div class="tbl-wrap" style="margin-bottom:12px;">
+    <table>
+      <thead>
+        <tr>
+          <th class="label-col">セグメント</th>
+          <th>人数</th>
+          <th>ESS期間売上</th>
+          <th>前期35日 売上（推計ベースライン）</th>
+          <th>差分（増加分）</th>
+          <th>前期比</th>
+          <th>増分の性質</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label-col">🔴 休眠復活（100日以上未購入）</td>
+          <td>1,569</td>
+          <td>¥25,397,180</td>
+          <td class="sl">¥0（未購入）</td>
+          <td class="heat5"><strong>¥25,397,180</strong></td>
+          <td class="heat5">—</td>
+          <td style="text-align:left;font-size:12px;">施策がなければ0円。100%増分。</td>
+        </tr>
+        <tr>
+          <td class="label-col">🔵 アクティブ 3回以上購入</td>
+          <td>56</td>
+          <td>¥3,016,579</td>
+          <td>¥1,640,860</td>
+          <td class="heat4"><strong>¥1,375,719</strong></td>
+          <td class="heat4 up">+83.8%</td>
+          <td style="text-align:left;font-size:12px;">前期を超えた分が増分。</td>
+        </tr>
+        <tr>
+          <td class="label-col">🟡 アクティブ 2回購入</td>
+          <td>1,137</td>
+          <td>¥26,183,795</td>
+          <td>¥14,007,970</td>
+          <td class="heat4"><strong>¥12,175,825</strong></td>
+          <td class="heat4 up">+86.9%</td>
+          <td style="text-align:left;font-size:12px;">2回目以降の追加購入が増分。</td>
+        </tr>
+        <tr>
+          <td class="label-col">⚪ アクティブ 1回購入（無意識適用）</td>
+          <td>12,791</td>
+          <td>¥160,366,657</td>
+          <td>¥116,074,684</td>
+          <td><strong>¥44,291,973</strong></td>
+          <td class="up">+38.1%</td>
+          <td style="text-align:left;font-size:12px;">増加分のうち施策起因の割合は議論あり。</td>
+        </tr>
+        <tr>
+          <td class="label-col">⚫ 新規（ESS前Shopify購入なし）</td>
+          <td>1,328</td>
+          <td>¥18,204,815</td>
+          <td class="sl">¥0（未購入）</td>
+          <td><strong>¥18,204,815</strong></td>
+          <td>—</td>
+          <td style="text-align:left;font-size:12px;">他チャネル流入込み。帰属率に議論あり。</td>
+        </tr>
+        <tr class="total-row">
+          <td class="label-col">ESS参加者 合計</td>
+          <td>16,881</td>
+          <td>¥233,169,026</td>
+          <td>¥131,723,514</td>
+          <td><strong>¥101,445,512</strong></td>
+          <td class="up">+77.0%</td>
+          <td style="text-align:left;font-size:12px;">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- シナリオ定義 -->
+  <div class="stitle">3シナリオ 試算結果</div>
+  <div class="ssub">各シナリオの帰属率の前提は下表のとおり</div>
+
+  <!-- 帰属率前提テーブル -->
+  <div class="tbl-wrap" style="margin-bottom:16px;">
+    <table>
+      <thead>
+        <tr>
+          <th class="label-col">セグメント</th>
+          <th style="background:#dbeafe;">①最小値<br><span style="font-weight:400;font-size:11px;">確実に施策起因のもの</span></th>
+          <th style="background:#dcfce7;">②ベスト推計<br><span style="font-weight:400;font-size:11px;">増加分は施策起因と仮定</span></th>
+          <th style="background:#fef9c3;">③最大値<br><span style="font-weight:400;font-size:11px;">タイミング前倒しも含む</span></th>
+          <th style="min-width:200px;white-space:normal;">帰属率の考え方</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label-col">休眠復活</td>
+          <td style="text-align:center;background:#dbeafe;font-weight:700;">100%</td>
+          <td style="text-align:center;background:#dcfce7;font-weight:700;">100%</td>
+          <td style="text-align:center;background:#fef9c3;font-weight:700;">100%</td>
+          <td style="text-align:left;font-size:12px;white-space:normal;">100日以上未購入→施策なければ0円</td>
+        </tr>
+        <tr>
+          <td class="label-col">アクティブ 3回・2回（増加分）</td>
+          <td style="text-align:center;background:#dbeafe;font-weight:700;">増加分 100%</td>
+          <td style="text-align:center;background:#dcfce7;font-weight:700;">増加分 100%</td>
+          <td style="text-align:center;background:#fef9c3;font-weight:700;">増加分 100%</td>
+          <td style="text-align:left;font-size:12px;white-space:normal;">2回目以降の余剰購入は施策起因と判断</td>
+        </tr>
+        <tr>
+          <td class="label-col">アクティブ 1回（増加分）</td>
+          <td style="text-align:center;background:#dbeafe;font-weight:700;">50%</td>
+          <td style="text-align:center;background:#dcfce7;font-weight:700;">100%</td>
+          <td style="text-align:center;background:#fef9c3;font-weight:700;">100%</td>
+          <td style="text-align:left;font-size:12px;white-space:normal;">①：半分は季節変動・自然単価増と仮定</td>
+        </tr>
+        <tr>
+          <td class="label-col">アクティブ 1回（通常購入分）</td>
+          <td style="text-align:center;background:#dbeafe;">0%</td>
+          <td style="text-align:center;background:#dcfce7;">0%</td>
+          <td style="text-align:center;background:#fef9c3;font-weight:700;">20%</td>
+          <td style="text-align:left;font-size:12px;white-space:normal;">③：ESS訴求で購入時期を前倒しした分を加算</td>
+        </tr>
+        <tr>
+          <td class="label-col">新規</td>
+          <td style="text-align:center;background:#dbeafe;">0%</td>
+          <td style="text-align:center;background:#dcfce7;font-weight:700;">30%</td>
+          <td style="text-align:center;background:#fef9c3;font-weight:700;">50%</td>
+          <td style="text-align:left;font-size:12px;white-space:normal;">他チャネル流入を差し引いた施策起因分</td>
+        </tr>
+        <tr class="total-row">
+          <td class="label-col">推計 増分売上</td>
+          <td style="text-align:center;background:#dbeafe;font-size:16px;font-weight:700;">¥61.1M</td>
+          <td style="text-align:center;background:#dcfce7;font-size:16px;font-weight:700;">¥88.7M</td>
+          <td style="text-align:center;background:#fef9c3;font-size:16px;font-weight:700;">¥115.6M</td>
+          <td style="text-align:left;font-size:12px;white-space:normal;">—</td>
+        </tr>
+        <tr>
+          <td class="label-col">ESS期間売上（¥233M）比</td>
+          <td style="text-align:center;background:#dbeafe;font-weight:700;">26.2%</td>
+          <td style="text-align:center;background:#dcfce7;font-weight:700;">38.1%</td>
+          <td style="text-align:center;background:#fef9c3;font-weight:700;">49.6%</td>
+          <td style="text-align:left;font-size:12px;white-space:normal;">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 試算チャート -->
+  <div class="chart-grid" style="margin-bottom:20px;">
+    <div class="chart-card">
+      <h3>増分売上 シナリオ別試算（万円）</h3>
+      <div class="chart-wrap"><canvas id="chartIncremental"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>セグメント別 増分売上の構成（ベスト推計②）</h3>
+      <div class="chart-wrap"><canvas id="chartIncrementalStack"></canvas></div>
+    </div>
+  </div>
+
+  <div class="insight-wrap">
+    <div class="insight-header"><span class="insight-label">📊 増分売上試算 考察</span></div>
+    <div class="insight-body"><ul>
+      <li><span class="itag itag-ref">推計レンジ</span><span>施策起因の増分売上は<strong>¥61M〜¥116M（ベスト推計 ¥89M）</strong>。ESS期間の全売上¥233Mのうち<strong>約26〜50%、推計値で38%</strong>が施策によって上積みされたと推計できる。残り62%は施策なしでも発生した「元々の購買ベース」。</span></li>
+      <li><span class="itag itag-ok">最も確実な増分：休眠復活 ¥25.4M</span><span>100日以上未購入だった1,569人の全購買額。施策がなければ確実に発生しなかった売上であり、シナリオ①〜③すべてで共通。この¥25.4Mが施策効果の「確定下限値」と言える。</span></li>
+      <li><span class="itag itag-ok">まとめ買い増加分：¥13.6M（確度高）</span><span>2回以上購入した1,193人の「前期比超過分」¥13.6M。2回目以降の追加購入は「ESS特典獲得目的の意図的購入」であることが示されており、施策起因の確度が高い。</span></li>
+      <li><span class="itag itag-warn">アクティブ1回 増加分：¥44.3M（確度中）</span><span>1回購入の12,791人は前期比+38.1%（¥9,075→¥12,537/人）と平均単価が上昇。この差額¥44.3Mの帰属率は議論の余地があり、<strong>季節変動・SKU単価変化・購入タイミングのズレ</strong>が含まれる可能性がある。対照群（非ESS参加者）との比較分析があれば確度が上がる。</span></li>
+      <li><span class="itag itag-bad">限界と留意点</span><span>本試算は「ESS前35日 vs ESS期間35日」の同一顧客比較であり、<strong>対照群なし・シングルアーム分析</strong>。季節性（4〜5月の需要増）や他の施策との重複効果が除去できていない。より精緻な増分計測には、次回施策でのA/Bテスト設計（非施策グループの設定）が必要。</span></li>
+    </ul></div>
+  </div>
+
   <div class="stitle">ESS施策 総括サマリー</div>
 
   <div class="tbl-wrap">
@@ -949,17 +1122,26 @@ td.down{color:var(--red);font-weight:600;}
 
   <!-- 日別売上チャート（3軸：売上＋GA4セッション＋CRMマーカー） -->
   <div class="stitle">ESS期間 日別売上 × GA4セッション数 × CRM配信タイミング</div>
-  <div class="ssub">棒グラフ（左軸）：日別売上（税抜・Shopify受注） ／ 折れ線（右軸）：GA4セッション数 ／ 縦線：CRM配信日（4/27・5/28） ／ データソース：Shopify受注 + GA4（spic-core.public.ga4_events）</div>
+  <div class="ssub">
+    棒グラフ（左軸）：<strong>Shopify全体売上（税抜）</strong>── ESS施策タグとは無関係、期間中の全受注合計 ／
+    折れ線（右軸）：<strong>GA4セッション数</strong>── サイト全訪問者、ESS施策タグとは無関係 ／
+    縦線：CRM配信日（4/27・5/28）<br>
+    ⚠️ <strong>CRM帰属CV数・帰属売上（配信実績テーブル記載値）のみ</strong> メルマガ/LINE経由の計測値。4/27・4/28午前分はESS施策タグ欠損の影響で過小計上の可能性あり ／
+    データソース：Shopify全受注（spic-core.public.shopify_orders・タグフィルタなし）＋ GA4（spic-core.public.ga4_events・タグフィルタなし）
+  </div>
   <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:8px;">
     <div style="display:flex;gap:20px;margin-bottom:10px;font-size:12px;flex-wrap:wrap;">
-      <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:14px;height:14px;background:#2563eb;border-radius:2px;opacity:0.8;"></span>日別売上（万円・左軸）</span>
-      <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:14px;height:14px;background:#FF7A30;border-radius:2px;"></span>CRM配信日の売上</span>
-      <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:28px;height:3px;background:#16a34a;border-radius:2px;"></span>GA4セッション数（右軸）</span>
+      <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:14px;height:14px;background:#2563eb;border-radius:2px;opacity:0.8;"></span>日別売上（万円・左軸）<span style="color:#9a3412;font-weight:600;">※Shopify全体・ESS非依存</span></span>
+      <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:14px;height:14px;background:#FF7A30;border-radius:2px;"></span>CRM配信日の売上（同上）</span>
+      <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:28px;height:3px;background:#16a34a;border-radius:2px;"></span>GA4セッション数（右軸）<span style="color:#9a3412;font-weight:600;">※全訪問者・ESS非依存</span></span>
     </div>
     <div style="position:relative;height:380px;"><canvas id="chartDailySales"></canvas></div>
   </div>
-  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px;font-size:12px;color:#166534;margin-bottom:16px;">
+  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px;font-size:12px;color:#166534;margin-bottom:4px;">
     💡 <strong>注目：</strong>4/27はGA4セッション <strong>7,805件（期間最高）</strong> を記録しながら売上は687万円（中程度）。翌4/28に売上が1,213万円（期間最高）へ集中→ <strong>「CRM配信当日は訪問、翌日に購入」というセッション先行・購入遅延パターン</strong>。5/28は逆に当日セッション5,411件＋売上1,050万円で同日完結型。
+  </div>
+  <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:8px 14px;font-size:12px;color:#9a3412;margin-bottom:16px;">
+    📌 <strong>このグラフの売上はShopify全体売上（ESS施策タグとは無関係）</strong>です。ESS_entry/ESS_CD_countタグの有無にかかわらず、期間中の全受注を集計しています。GA4セッション数も同様にサイト全訪問者の実績値です。なお4/27・4/28午前のESS施策タグ欠損は、上記グラフには影響しません（タグフィルタなし）が、下記「CRM帰属CV数・帰属売上」の数値には過小計上の影響がある可能性があります。
   </div>
 
   <!-- CRM詳細テーブル：メルマガ -->
@@ -1119,7 +1301,7 @@ td.down{color:var(--red);font-weight:600;}
   <div class="insight-wrap">
     <div class="insight-header"><span class="insight-label">📊 CRM施策効果 考察</span></div>
     <div class="insight-body"><ul>
-      <li><span class="itag itag-ok">4/27 セッション先行→翌日購入集中（GA4）</span><span>4/27はGA4セッション<strong>7,805件（ESS期間最高）</strong>を記録。CRM配信（メルマガ+LINE同日）が大量の訪問を誘導したが、その日の売上は687万円（中程度）にとどまった。翌4/28のセッションは5,224件に落ちながら売上が<strong>1,213万円（期間最高）</strong>に跳ね上がった→ <strong>「CRM当日は訪問・比較検討、翌日に購入決断」という典型的なセッション先行・購入遅延パターン</strong>。メルマガ・LINE閲覧後に一度サイトを離れ、翌日改めて購入するユーザー行動が示されており、4/28の翌日フォローCRMに追加投資する余地がある。</span></li>
+      <li><span class="itag itag-ok">4/27 セッション先行→翌日購入集中（GA4）</span><span>4/27はGA4セッション<strong>7,805件（ESS期間最高）</strong>を記録。CRM配信（メルマガ+LINE同日）が大量の訪問を誘導したが、その日のShopify全体売上は687万円（中程度）にとどまった。翌4/28のセッションは5,224件に落ちながらShopify全体売上が<strong>1,213万円（期間最高）</strong>に跳ね上がった→ <strong>「CRM当日は訪問・比較検討、翌日に購入決断」という典型的なセッション先行・購入遅延パターン</strong>。なおこの売上はESS施策タグとは無関係のShopify全体値であり、4/27タグ欠損の影響を受けない純粋な受注実績。メルマガ・LINE閲覧後に一度サイトを離れ、翌日改めて購入するユーザー行動が示されており、4/28の翌日フォローCRMに追加投資する余地がある。</span></li>
       <li><span class="itag itag-ok">5/28 セッション＋売上 同日完結型（GA4）</span><span>5/28はGA4セッション5,411件＋売上1,050万円（第2位）で第1弾と異なり<strong>当日完結型</strong>。翌5/29もセッション6,250件（期間第2位）・売上993万円と高水準を維持し、2日にわたる効果継続が確認できる。施策終盤「残り3日」の緊迫感訴求が即日購入を促した可能性が高い。また5/29のセッションが期間第2位を記録していることから、5/28のCRM配信を見て5/29に訪問・購入した「1日遅延型」も一定数存在する。</span></li>
       <li><span class="itag itag-ok">メルマガ CVR改善</span><span>既存層へのメルマガCVRは第1弾18.8%→第2弾<strong>20.8%と2pt向上</strong>。施策終盤の「残り期間限定」訴求が購入背中押しとして機能したと解釈できる。CTRも1.4%→2.0%に上昇しており、件名・本文の訴求力も第2弾の方が高かった可能性がある。</span></li>
       <li><span class="itag itag-ok">LINE 開封率が高水準</span><span>LINE既存層の開封率は64.9%・63.3%と<strong>メルマガの47%を大きく上回る</strong>。プッシュ通知の即時性がLINEの強みであり、特に既存顧客への到達効率が高い。ただしCVR（クリックから購入）はメルマガより低く（2.8%・8.2%）、LINEは「認知・誘導」、メルマガは「刈り取り」の役割分担になっている。</span></li>
@@ -1230,6 +1412,74 @@ new Chart(ctxF,{type:'doughnut',data:{
 },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{padding:12,font:{size:12}}},tooltip:{callbacks:{label:function(c){const v=c.raw;const t=13807;return ` ${v.toLocaleString()}人（${(v/t*100).toFixed(1)}%）`}}}}}});
 </script>
 <script>
+// ===== Tab4: 増分売上試算チャート =====
+
+// シナリオ別棒グラフ
+const ctxInc = document.getElementById('chartIncremental');
+if(ctxInc){
+  new Chart(ctxInc.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['①最小値\n(確実な増分のみ)', '②ベスト推計\n(増加分100%帰属)', '③最大値\n(前倒し効果含む)'],
+      datasets: [{
+        label: '増分売上（万円）',
+        data: [6109, 8870, 11558],
+        backgroundColor: ['#93c5fd', '#22c55e', '#fbbf24'],
+        borderWidth: 0, borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: {
+          title: { display: true, text: '増分売上（万円）' },
+          ticks: { callback: v => v.toLocaleString() + '万' },
+          max: 14000
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: {
+          label: c => ` ¥${(c.raw * 10000).toLocaleString()}（ESS売上比 ${({6109:'26.2%',8870:'38.1%',11558:'49.6%'})[c.raw]}）`
+        }}
+      }
+    }
+  });
+}
+
+// セグメント別積み上げ（ベスト推計②）
+const ctxIS = document.getElementById('chartIncrementalStack');
+if(ctxIS){
+  new Chart(ctxIS.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['ベスト推計（②）'],
+      datasets: [
+        { label: '休眠復活（確定）', data: [2540], backgroundColor: '#ef4444' },
+        { label: 'まとめ買い増加分', data: [1376+1218], backgroundColor: '#f97316' },
+        { label: 'アクティブ1回 増加分', data: [4429], backgroundColor: '#facc15' },
+        { label: '新規（30%帰属）', data: [546], backgroundColor: '#94a3b8' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { stacked: true },
+        y: { stacked: true,
+          title: { display: true, text: '増分売上（万円）' },
+          ticks: { callback: v => v.toLocaleString() + '万' }
+        }
+      },
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 10, font: { size: 11 } } },
+        tooltip: { callbacks: {
+          label: c => ` ${c.dataset.label}: ¥${(c.raw * 10000).toLocaleString()}`
+        }}
+      }
+    }
+  });
+}
+
 // ===== Tab5: CRM施策効果 チャート =====
 
 // 日別売上データ（4/27〜5/31, 35日）

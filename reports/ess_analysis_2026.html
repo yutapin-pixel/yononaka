@@ -142,6 +142,7 @@ td.down{color:var(--red);font-weight:600;}
   <button class="tab-btn active" onclick="switchTab(0)">① 全体概要</button>
   <button class="tab-btn" onclick="switchTab(1)">② 休眠顧客の復活</button>
   <button class="tab-btn" onclick="switchTab(2)">③ 無意識適用・まとめ買い</button>
+  <!-- 休眠定義: 100日以上（3ヶ月＝約90日サイクルを考慮）-->
   <button class="tab-btn" onclick="switchTab(3)">④ 総括・示唆</button>
 </div>
 
@@ -172,7 +173,7 @@ td.down{color:var(--red);font-weight:600;}
   </div>
 
   <div class="stitle">顧客セグメント構成</div>
-  <div class="ssub">ESS開始日（4/27）時点での最終購入からの経過日数でセグメント分類</div>
+  <div class="ssub">ESS開始日（4/27）時点での最終購入からの経過日数でセグメント分類 ／ 休眠定義：100日以上（3ヶ月周期購入者はアクティブとして扱う）</div>
 
   <div class="chart-grid">
     <div class="chart-card">
@@ -210,19 +211,19 @@ td.down{color:var(--red);font-weight:600;}
           <td>252</td><td>237</td><td>51.5%</td>
         </tr>
         <tr>
-          <td class="label-col">🟡 休眠90〜179日（短期）</td>
-          <td>895</td><td>5.3%</td>
-          <td>623</td><td>272</td><td>69.6%</td>
+          <td class="label-col">🟡 休眠100〜179日（短期）</td>
+          <td>718</td><td>4.3%</td>
+          <td>501</td><td>217</td><td>69.8%</td>
         </tr>
         <tr class="total-row">
-          <td class="label-col">▶ 休眠計（90日以上）</td>
-          <td>1,746</td><td>10.3%</td>
-          <td>1,010</td><td>736</td><td>57.8%</td>
+          <td class="label-col">▶ 休眠計（100日以上）</td>
+          <td>1,569</td><td>9.3%</td>
+          <td>888</td><td>681</td><td>56.6%</td>
         </tr>
         <tr>
-          <td class="label-col">🟢 直近90日以内（既存アクティブ）</td>
-          <td>13,807</td><td>81.8%</td>
-          <td>12,631</td><td>1,176</td><td>91.5%</td>
+          <td class="label-col">🟢 直近100日以内（既存アクティブ）</td>
+          <td>13,984</td><td>82.8%</td>
+          <td>12,753</td><td>1,231</td><td>91.2%</td>
         </tr>
         <tr>
           <td class="label-col">⚪ 新規（ESS前購入なし）</td>
@@ -243,7 +244,7 @@ td.down{color:var(--red);font-weight:600;}
     <div class="insight-header"><span class="insight-label">📊 全体概要 考察</span></div>
     <div class="insight-body"><ul>
       <li><span class="itag itag-ok">構造</span><span>ESS参加者の<strong>81.8%（13,807人）は直近90日以内の既存アクティブ顧客</strong>。施策の設計通り「既存顧客への自動適用」が中心。定期継続中の顧客が注文のたびに特典を受け取る「無意識適用」がESS売上の大部分を形成している。</span></li>
-      <li><span class="itag itag-ok">休眠</span><span>休眠復活（90日以上）は<strong>1,746人（10.3%）</strong>。うち180日以上の本格休眠からの復活が851人（5.0%）、365日以上の長期休眠からも362人が戻ってきた。施策トリガー（VC購入でC+Dプレゼント）が離脱後の再購入動機として一定機能している。</span></li>
+      <li><span class="itag itag-ok">休眠</span><span>休眠復活（100日以上）は<strong>1,569人（9.3%）</strong>。うち180日以上の本格休眠から851人復活、365日以上の長期休眠からも362人が戻ってきた。施策トリガー（VC購入でC+Dプレゼント）が離脱後の再購入動機として一定機能している。なお3ヶ月周期（約90日）の購入者をアクティブに含めるため、今回の休眠定義は100日以上としている。</span></li>
       <li><span class="itag itag-ref">新規</span><span>ESS前にShopify公式で購入歴がない「新規」が1,328人（7.9%）。他チャネル（楽天・Amazon等）からの流入者や、紹介・SNS経由での初回購入者が含まれる可能性。施策対象外のはずの純新規顧客がどの程度含まれるかは別途チャネル別照合が必要。</span></li>
     </ul></div>
   </div>
@@ -341,44 +342,44 @@ td.down{color:var(--red);font-weight:600;}
       </div>
     </div>
 
-    <!-- 90〜179日 -->
+    <!-- 100〜179日 -->
     <div class="rv-card">
-      <h4>🟡 休眠90〜179日（計 895人）</h4>
+      <h4>🟡 休眠100〜179日（計 718人）</h4>
 
       <div class="rv-block">
-        <div class="rv-label">過去：定期経験あり（623人）</div>
+        <div class="rv-label">過去：定期経験あり（501人）</div>
         <div class="rv-type">
           <div class="dot" style="background:#2563eb;"></div>
           <span class="name">定期で復活</span>
-          <span class="num">549人</span>
-          <span class="pct">88.1%</span>
+          <span class="num">441人</span>
+          <span class="pct">88.0%</span>
         </div>
-        <div class="rv-mini-bar"><div class="rv-mini-bar-inner" style="width:88.1%;background:#2563eb;"></div></div>
+        <div class="rv-mini-bar"><div class="rv-mini-bar-inner" style="width:88.0%;background:#2563eb;"></div></div>
         <div class="rv-type" style="margin-top:4px;">
           <div class="dot" style="background:#93c5fd;"></div>
           <span class="name">都度買いで復活</span>
-          <span class="num">74人</span>
-          <span class="pct">11.9%</span>
+          <span class="num">60人</span>
+          <span class="pct">12.0%</span>
         </div>
-        <div class="rv-mini-bar"><div class="rv-mini-bar-inner" style="width:11.9%;background:#93c5fd;"></div></div>
+        <div class="rv-mini-bar"><div class="rv-mini-bar-inner" style="width:12.0%;background:#93c5fd;"></div></div>
       </div>
 
       <div class="rv-block">
-        <div class="rv-label">過去：都度買いのみ（272人）</div>
+        <div class="rv-label">過去：都度買いのみ（217人）</div>
         <div class="rv-type">
           <div class="dot" style="background:#16a34a;"></div>
           <span class="name">定期に転換（新定期）</span>
-          <span class="num">18人</span>
-          <span class="pct">6.6%</span>
+          <span class="num">15人</span>
+          <span class="pct">6.9%</span>
         </div>
-        <div class="rv-mini-bar"><div class="rv-mini-bar-inner" style="width:6.6%;background:#16a34a;"></div></div>
+        <div class="rv-mini-bar"><div class="rv-mini-bar-inner" style="width:6.9%;background:#16a34a;"></div></div>
         <div class="rv-type" style="margin-top:4px;">
           <div class="dot" style="background:#86efac;"></div>
           <span class="name">都度買いで復活</span>
-          <span class="num">254人</span>
-          <span class="pct">93.4%</span>
+          <span class="num">202人</span>
+          <span class="pct">93.1%</span>
         </div>
-        <div class="rv-mini-bar"><div class="rv-mini-bar-inner" style="width:93.4%;background:#86efac;"></div></div>
+        <div class="rv-mini-bar"><div class="rv-mini-bar-inner" style="width:93.1%;background:#86efac;"></div></div>
       </div>
     </div>
 
@@ -442,26 +443,26 @@ td.down{color:var(--red);font-weight:600;}
           <td>都度買いのみ</td><td>都度買いで復活</td>
           <td>210</td><td>¥16,288</td><td>1.02回</td><td>88.6%</td>
         </tr>
-        <tr class="group-hdr"><td colspan="7">🟡 休眠90〜179日（計895人）</td></tr>
+        <tr class="group-hdr"><td colspan="7">🟡 休眠100〜179日（計718人）</td></tr>
         <tr>
-          <td class="label-col" style="padding-left:20px;">90〜179日</td>
+          <td class="label-col" style="padding-left:20px;">100〜179日</td>
           <td>定期経験あり</td><td>定期で復活</td>
-          <td>549</td><td>¥16,369</td><td>1.06回</td><td class="heat5">88.1%</td>
+          <td>441</td><td>¥16,353</td><td>1.06回</td><td class="heat5">88.0%</td>
         </tr>
         <tr>
-          <td class="label-col" style="padding-left:20px;">90〜179日</td>
+          <td class="label-col" style="padding-left:20px;">100〜179日</td>
           <td>定期経験あり</td><td>都度買いで復活</td>
-          <td>74</td><td>¥17,301</td><td>1.04回</td><td>11.9%</td>
+          <td>60</td><td>¥15,618</td><td>1.03回</td><td>12.0%</td>
         </tr>
         <tr>
-          <td class="label-col" style="padding-left:20px;">90〜179日</td>
+          <td class="label-col" style="padding-left:20px;">100〜179日</td>
           <td>都度買いのみ</td><td><strong>定期に初転換</strong></td>
-          <td>18</td><td>¥14,592</td><td>1.06回</td><td>6.6%</td>
+          <td>15</td><td>¥13,847</td><td>1.00回</td><td>6.9%</td>
         </tr>
         <tr>
-          <td class="label-col" style="padding-left:20px;">90〜179日</td>
+          <td class="label-col" style="padding-left:20px;">100〜179日</td>
           <td>都度買いのみ</td><td>都度買いで復活</td>
-          <td>254</td><td>¥20,458</td><td>1.02回</td><td>93.4%</td>
+          <td>202</td><td>¥20,883</td><td>1.02回</td><td>93.1%</td>
         </tr>
       </tbody>
     </table>
@@ -482,9 +483,9 @@ td.down{color:var(--red);font-weight:600;}
   <div class="insight-wrap">
     <div class="insight-header"><span class="insight-label">📊 休眠復活 考察</span></div>
     <div class="insight-body"><ul>
-      <li><span class="itag itag-ok">定期経験層</span><span>過去に定期を利用していた休眠顧客は、<strong>休眠期間が短いほど高確率で定期に復帰</strong>する（90〜179日: 88.1% → 180〜364日: 79.4% → 365日以上: 62.9%）。一度定期を体験した顧客は「続けたいが何らかの理由で止まった」構造であり、ESS特典が再開のきっかけになりやすい。</span></li>
+      <li><span class="itag itag-ok">定期経験層</span><span>過去に定期を利用していた休眠顧客は、<strong>休眠期間が短いほど高確率で定期に復帰</strong>する（100〜179日: 88.0% → 180〜364日: 79.4% → 365日以上: 62.9%）。一度定期を体験した顧客は「続けたいが何らかの理由で止まった」構造であり、ESS特典が再開のきっかけになりやすい。</span></li>
       <li><span class="itag itag-warn">都度買い層</span><span>過去に都度買いしかしていなかった休眠顧客の定期転換率は低め（6.6〜14.5%）。ただし長期休眠（365日以上）ほどわずかに転換率が高い傾向があり、「長い間離れていたが、ESS特典を契機に定期の検討まで進んだ」可能性が読める。</span></li>
-      <li><span class="itag itag-ref">規模感</span><span>休眠復活の絶対数は1,746人でESS参加者の10.3%。90日以上休眠の中で定期に復帰または新たに転換した人は合計<strong>834人（定期経験→定期復活: 834人 = 85+200+549 / 都度→定期転換: 78人 = 33+27+18）</strong>。定期の新規復活人数として施策効果を評価できる。</span></li>
+      <li><span class="itag itag-ref">規模感</span><span>休眠復活の絶対数は1,569人でESS参加者の9.3%。100日以上休眠の中で定期に復帰または新たに転換した人は合計<strong>726人（定期経験→定期復活: 726人 = 85+200+441 / 都度→定期転換: 75人 = 33+27+15）</strong>。定期の新規復活人数として施策効果を評価できる。</span></li>
       <li><span class="itag itag-watch">要継続観察</span><span>休眠から戻ってきた顧客がESS終了後も継続するか（翌月以降のF2転換・定期解約率）が重要。復帰した定期顧客の6〜7月の注文発生率を追って「真の復活」か「施策限り」かを検証する必要がある。</span></li>
     </ul></div>
   </div>
@@ -620,21 +621,21 @@ td.down{color:var(--red);font-weight:600;}
           <td style="white-space:normal;text-align:left;">—</td>
         </tr>
         <tr>
-          <td class="label-col">休眠復活（90日以上）</td>
-          <td>1,746人（10.3%）</td>
+          <td class="label-col">休眠復活（100日以上）</td>
+          <td>1,569人（9.3%）</td>
           <td style="white-space:normal;text-align:left;">うち180日以上の本格休眠から851人復活</td>
           <td style="white-space:normal;text-align:left;">翌月の継続率モニタリング必須</td>
         </tr>
         <tr>
           <td class="label-col">　└ 定期経験あり → 定期復帰</td>
           <td>834人</td>
-          <td style="white-space:normal;text-align:left;">85+200+549人。休眠前定期ユーザーの多くが定期に再帰</td>
+          <td style="white-space:normal;text-align:left;">85+200+441人。休眠前定期ユーザーの多くが定期に再帰</td>
           <td style="white-space:normal;text-align:left;">6〜7月の定期継続率をトラッキング</td>
         </tr>
         <tr>
           <td class="label-col">　└ 都度買いのみ → 定期に初転換</td>
           <td>78人</td>
-          <td style="white-space:normal;text-align:left;">33+27+18人。ESS特典が定期への背中押しになったケース</td>
+          <td style="white-space:normal;text-align:left;">33+27+15人。ESS特典が定期への背中押しになったケース</td>
           <td style="white-space:normal;text-align:left;">初定期顧客として30日F2率を計測</td>
         </tr>
         <tr>
@@ -662,7 +663,7 @@ td.down{color:var(--red);font-weight:600;}
   <div class="insight-wrap">
     <div class="insight-header"><span class="insight-label">🎯 次のアクション提言</span></div>
     <div class="insight-body"><ul>
-      <li><span class="itag itag-ok">最優先</span><span><strong>休眠復活顧客（1,746人）の6月・7月モニタリング：</strong>ESS終了後に定期を維持しているか、再び休眠に入らないかをトラッキング。定期で復帰した834人の解約率が上昇していれば「施策依存の一時的な復活」と判断し、CRM（ステップメール・LINE）での継続支援を強化する。</span></li>
+      <li><span class="itag itag-ok">最優先</span><span><strong>休眠復活顧客（1,569人）の6月・7月モニタリング：</strong>ESS終了後に定期を維持しているか、再び休眠に入らないかをトラッキング。定期で復帰した726人の解約率が上昇していれば「施策依存の一時的な復活」と判断し、CRM（ステップメール・LINE）での継続支援を強化する。</span></li>
       <li><span class="itag itag-ok">優先</span><span><strong>ESS経由で初定期に転換した78人（元都度顧客）へのフォロー：</strong>都度派が定期を初めて選んだ珍しいケース。初期解約リスクが高い層なので、定期申し込み後30〜60日以内にLINE/メールで「定期継続のメリット訴求」「スキップ自由の安心設計」を届けるCRMを発動する。</span></li>
       <li><span class="itag itag-ref">中期</span><span><strong>まとめ買い（1,186人）の行動特性分析：</strong>ESS期間中に2回以上購入したヘビー顧客はLTVが高い可能性が高い。この層を抽出してLTV・ブランド構成・定期有無を確認し、次回ESS等の施策で優先ターゲットとする設計を検討する。</span></li>
       <li><span class="itag itag-watch">中期</span><span><strong>無意識適用による「C+D初体験者」の追跡：</strong>ESS施策でVC購入者にC+D 3包が付与された結果、多数のVC顧客がC+Dを初体験している。この中からC+Dへのクロスセル（定期転換）が生じているかをブランドクロス購買データで追跡する（翌月以降の has_cd=1 の増加分を確認）。</span></li>
@@ -687,8 +688,8 @@ Chart.defaults.font.size=12;
 // ① ドーナツ
 const ctxD=document.getElementById('chartDonut').getContext('2d');
 new Chart(ctxD,{type:'doughnut',data:{
-  labels:['既存アクティブ（90日以内）','休眠90〜179日','休眠180〜364日','休眠365日以上','新規（ESS前購入なし）'],
-  datasets:[{data:[13807,895,489,362,1328],
+  labels:['既存アクティブ（100日以内）','休眠100〜179日','休眠180〜364日','休眠365日以上','新規（ESS前購入なし）'],
+  datasets:[{data:[13984,718,489,362,1328],
     backgroundColor:['#22c55e','#facc15','#f97316','#ef4444','#94a3b8'],
     borderWidth:1,borderColor:'#fff'}]
 },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{padding:12,font:{size:12}}},tooltip:{callbacks:{label:function(c){const v=c.raw;const t=16881;return ` ${v.toLocaleString()}人（${(v/t*100).toFixed(1)}%）`}}}}}});
@@ -696,30 +697,30 @@ new Chart(ctxD,{type:'doughnut',data:{
 // ② スタック棒グラフ（休眠別 定期/都度）
 const ctxS=document.getElementById('chartStackedDormant').getContext('2d');
 new Chart(ctxS,{type:'bar',data:{
-  labels:['休眠365日以上','休眠180〜364日','休眠90〜179日'],
+  labels:['休眠365日以上','休眠180〜364日','休眠100〜179日'],
   datasets:[
-    {label:'定期経験あり',data:[135,252,623],backgroundColor:'#2563eb',stack:'s'},
-    {label:'都度買いのみ',data:[227,237,272],backgroundColor:'#93c5fd',stack:'s'}
+    {label:'定期経験あり',data:[135,252,501],backgroundColor:'#2563eb',stack:'s'},
+    {label:'都度買いのみ',data:[227,237,217],backgroundColor:'#93c5fd',stack:'s'}
   ]
 },options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true,title:{display:true,text:'顧客数（人）'}}},plugins:{legend:{position:'top'}}}});
 
 // ③ 定期経験あり → 定期復活率
 const ctxT=document.getElementById('chartTeikiRevival').getContext('2d');
 new Chart(ctxT,{type:'bar',data:{
-  labels:['休眠365日以上','休眠180〜364日','休眠90〜179日'],
+  labels:['休眠365日以上','休眠180〜364日','休眠100〜179日'],
   datasets:[
-    {label:'定期で復活',data:[62.9,79.4,88.1],backgroundColor:'#2563eb'},
-    {label:'都度買いで復活',data:[37.1,20.6,11.9],backgroundColor:'#93c5fd'}
+    {label:'定期で復活',data:[62.9,79.4,88.0],backgroundColor:'#2563eb'},
+    {label:'都度買いで復活',data:[37.1,20.6,12.0],backgroundColor:'#93c5fd'}
   ]
 },options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true,max:100,title:{display:true,text:'比率（%）'}}},plugins:{legend:{position:'top'},tooltip:{callbacks:{label:function(c){return ` ${c.dataset.label}: ${c.raw}%`}}}}}});
 
 // ④ 都度買いのみ → 定期転換率
 const ctxC=document.getElementById('chartSpotConvert').getContext('2d');
 new Chart(ctxC,{type:'bar',data:{
-  labels:['休眠365日以上','休眠180〜364日','休眠90〜179日'],
+  labels:['休眠365日以上','休眠180〜364日','休眠100〜179日'],
   datasets:[
-    {label:'定期に初転換',data:[14.5,11.4,6.6],backgroundColor:'#16a34a'},
-    {label:'都度買いで復活',data:[85.5,88.6,93.4],backgroundColor:'#86efac'}
+    {label:'定期に初転換',data:[14.5,11.4,6.9],backgroundColor:'#16a34a'},
+    {label:'都度買いで復活',data:[85.5,88.6,93.1],backgroundColor:'#86efac'}
   ]
 },options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true,max:100,title:{display:true,text:'比率（%）'}}},plugins:{legend:{position:'top'},tooltip:{callbacks:{label:function(c){return ` ${c.dataset.label}: ${c.raw}%`}}}}}});
 

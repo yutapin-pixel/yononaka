@@ -480,12 +480,116 @@ td.down{color:var(--red);font-weight:600;}
     </div>
   </div>
 
+  <!-- 休眠復活率テーブル -->
+  <div class="stitle">休眠復活率（母集団ベース）</div>
+  <div class="ssub">
+    分母 = ESS開始日（4/27）時点で各休眠セグメントに該当するShopify顧客全員（ESS参加・非参加を問わず）<br>
+    分子 = そのうちESS期間中（4/27〜5/31）に ESS_entry / ESS_CD_count タグ付き注文をした顧客<br>
+    ※ データソース: spic-core.public.shopify_orders
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="label-col">休眠セグメント</th>
+          <th>過去購買タイプ</th>
+          <th>母集団（分母）</th>
+          <th>ESS参加・復活（分子）</th>
+          <th>未参加（非復活）</th>
+          <th>休眠復活率</th>
+          <th>評価</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="group-hdr"><td colspan="7">🔴 休眠365日以上</td></tr>
+        <tr>
+          <td class="label-col" style="padding-left:20px;">365日以上</td>
+          <td>定期経験あり</td>
+          <td>23,798</td>
+          <td>135</td>
+          <td>23,663</td>
+          <td class="heat2"><strong>0.6%</strong></td>
+          <td style="text-align:left;font-size:12px;color:var(--muted);">99.4%は未復活</td>
+        </tr>
+        <tr>
+          <td class="label-col" style="padding-left:20px;">365日以上</td>
+          <td>都度買いのみ</td>
+          <td>67,942</td>
+          <td>227</td>
+          <td>67,715</td>
+          <td class="heat1"><strong>0.3%</strong></td>
+          <td style="text-align:left;font-size:12px;color:var(--muted);">99.7%は未復活</td>
+        </tr>
+        <tr class="group-hdr"><td colspan="7">🟠 休眠180〜364日</td></tr>
+        <tr>
+          <td class="label-col" style="padding-left:20px;">180〜364日</td>
+          <td>定期経験あり</td>
+          <td>7,371</td>
+          <td>252</td>
+          <td>7,119</td>
+          <td class="heat2"><strong>3.4%</strong></td>
+          <td style="text-align:left;font-size:12px;color:var(--muted);">定期経験あり層では相対的に高い</td>
+        </tr>
+        <tr>
+          <td class="label-col" style="padding-left:20px;">180〜364日</td>
+          <td>都度買いのみ</td>
+          <td>48,391</td>
+          <td>237</td>
+          <td>48,154</td>
+          <td class="heat1"><strong>0.5%</strong></td>
+          <td style="text-align:left;font-size:12px;color:var(--muted);">母集団が膨大で復活率は極低</td>
+        </tr>
+        <tr class="group-hdr"><td colspan="7">🟡 休眠100〜179日</td></tr>
+        <tr>
+          <td class="label-col" style="padding-left:20px;">100〜179日</td>
+          <td>定期経験あり</td>
+          <td>4,153</td>
+          <td>501</td>
+          <td>3,652</td>
+          <td class="heat5"><strong>12.1%</strong></td>
+          <td style="text-align:left;font-size:12px;color:var(--muted);">6セグメント中最高</td>
+        </tr>
+        <tr>
+          <td class="label-col" style="padding-left:20px;">100〜179日</td>
+          <td>都度買いのみ</td>
+          <td>2,933</td>
+          <td>217</td>
+          <td>2,716</td>
+          <td class="heat4"><strong>7.4%</strong></td>
+          <td style="text-align:left;font-size:12px;color:var(--muted);">都度層では最高水準</td>
+        </tr>
+        <tr class="total-row">
+          <td class="label-col">合計（100日以上休眠）</td>
+          <td>—</td>
+          <td>154,588</td>
+          <td>1,569</td>
+          <td>153,019</td>
+          <td><strong>1.0%</strong></td>
+          <td style="text-align:left;font-size:12px;color:var(--muted);">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 復活率チャート -->
+  <div class="chart-grid" style="margin-top:12px;">
+    <div class="chart-card">
+      <h3>休眠復活率（母集団ベース） ％</h3>
+      <div class="chart-wrap"><canvas id="chartRevivalRate"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>母集団規模 vs ESS復活数（対数スケール）</h3>
+      <div class="chart-wrap"><canvas id="chartRevivalScale"></canvas></div>
+    </div>
+  </div>
+
   <div class="insight-wrap">
     <div class="insight-header"><span class="insight-label">📊 休眠復活 考察</span></div>
     <div class="insight-body"><ul>
       <li><span class="itag itag-ok">定期経験層</span><span>過去に定期を利用していた休眠顧客は、<strong>休眠期間が短いほど高確率で定期に復帰</strong>する（100〜179日: 88.0% → 180〜364日: 79.4% → 365日以上: 62.9%）。一度定期を体験した顧客は「続けたいが何らかの理由で止まった」構造であり、ESS特典が再開のきっかけになりやすい。</span></li>
-      <li><span class="itag itag-warn">都度買い層</span><span>過去に都度買いしかしていなかった休眠顧客の定期転換率は低め（6.6〜14.5%）。ただし長期休眠（365日以上）ほどわずかに転換率が高い傾向があり、「長い間離れていたが、ESS特典を契機に定期の検討まで進んだ」可能性が読める。</span></li>
-      <li><span class="itag itag-ref">規模感</span><span>休眠復活の絶対数は1,569人でESS参加者の9.3%。100日以上休眠の中で定期に復帰または新たに転換した人は合計<strong>726人（定期経験→定期復活: 726人 = 85+200+441 / 都度→定期転換: 75人 = 33+27+15）</strong>。定期の新規復活人数として施策効果を評価できる。</span></li>
+      <li><span class="itag itag-warn">都度買い層</span><span>過去に都度買いしかしていなかった休眠顧客の定期転換率は低め（6.9〜14.5%）。ただし長期休眠（365日以上）ほどわずかに転換率が高い傾向があり、「長い間離れていたが、ESS特典を契機に定期の検討まで進んだ」可能性が読める。</span></li>
+      <li><span class="itag itag-ok">復活率</span><span>母集団ベースの復活率は<strong>休眠100〜179日・定期経験あり層が12.1%と最高</strong>。この層は「まだ離れて日が浅く、かつ定期の体験値がある」ため、ESS特典が再購入の後押しとして機能しやすい。一方で休眠180日以上の定期あり層（3.4%）・都度層（0.3〜0.5%）は復活率が急落しており、長期離脱ほどESS単体では接触・説得が困難なことを示している。</span></li>
+      <li><span class="itag itag-bad">未リーチの規模</span><span>100日以上休眠の母集団は<strong>154,588人</strong>に対し、ESS経由の復活はわずか1,569人（1.0%）。特に365日以上休眠層の母集団は91,740人（定期あり23,798人 + 都度67,942人）と膨大で、復活率0.3〜0.6%にとどまる。ESS施策のリーチ方法（既存CRM・メール・LINEプッシュ等）が長期休眠層に届いていない可能性が高い。</span></li>
       <li><span class="itag itag-watch">要継続観察</span><span>休眠から戻ってきた顧客がESS終了後も継続するか（翌月以降のF2転換・定期解約率）が重要。復帰した定期顧客の6〜7月の注文発生率を追って「真の復活」か「施策限り」かを検証する必要がある。</span></li>
     </ul></div>
   </div>
@@ -684,6 +788,35 @@ function switchTab(idx){
 
 Chart.defaults.font.family="'Noto Sans JP',sans-serif";
 Chart.defaults.font.size=12;
+const ctxRR=document.getElementById('chartRevivalRate').getContext('2d');
+new Chart(ctxRR,{type:'bar',data:{
+  labels:['365日以上\n定期経験あり','365日以上\n都度のみ','180〜364日\n定期経験あり','180〜364日\n都度のみ','100〜179日\n定期経験あり','100〜179日\n都度のみ'],
+  datasets:[{
+    label:'休眠復活率（%）',
+    data:[0.6,0.3,3.4,0.5,12.1,7.4],
+    backgroundColor:['#fca5a5','#fca5a5','#fdba74','#fdba74','#4ade80','#86efac'],
+    borderWidth:0
+  }]
+},options:{responsive:true,maintainAspectRatio:false,
+  scales:{y:{title:{display:true,text:'復活率（%）'},max:14,ticks:{callback:v=>v+'%'}}},
+  plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` 復活率: ${c.raw}%`}}}}});
+
+// ⑧ 母集団 vs 復活数（対数スケール）
+const ctxRS=document.getElementById('chartRevivalScale').getContext('2d');
+new Chart(ctxRS,{type:'bar',data:{
+  labels:['365日以上\n定期あり','365日以上\n都度のみ','180〜364日\n定期あり','180〜364日\n都度のみ','100〜179日\n定期あり','100〜179日\n都度のみ'],
+  datasets:[
+    {label:'未復活（非参加）',data:[23663,67715,7119,48154,3652,2716],backgroundColor:'#e2e8f0',stack:'s'},
+    {label:'ESS復活（参加）',data:[135,227,252,237,501,217],backgroundColor:'#2563eb',stack:'s'}
+  ]
+},options:{responsive:true,maintainAspectRatio:false,
+  scales:{
+    x:{stacked:true},
+    y:{stacked:true,type:'logarithmic',title:{display:true,text:'人数（対数）'},
+       ticks:{callback:v=>v>=1000?Math.round(v/1000)+'K':v}}
+  },
+  plugins:{legend:{position:'top'},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw.toLocaleString()}人`}}}
+}});
 
 // ① ドーナツ
 const ctxD=document.getElementById('chartDonut').getContext('2d');

@@ -807,18 +807,19 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
 
   <!-- ===== 休眠顧客 月次復活トレンド ===== -->
   <div class="stitle" style="margin-top:28px">休眠顧客 月次復活トレンド<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
-  <div class="ssub">データソース：prod_dwh_oci.shopify_orders（shop_id=17）　集計期間：2024年4月〜2026年5月<br>
-  <strong>集計方法：</strong>同一customer_idの連続購入間隔（LAG(created_at)との差分日数）で「短期休眠（60〜120日）」「中期休眠（121〜180日）」「長期休眠（181日以上）」に分類 → 復活月（再購入月）ごとにCOUNT集計。初回購入は除外（前回購入日なし）。条件：test=0・cancelled_at IS NULL・customer_id IS NOT NULL・(total_price - current_total_tax)&gt;0。</div>
+  <div class="ssub">データソース：spic-core.public.shopify_orders（shop_id=17）　集計期間：2024年4月〜2026年5月<br>
+  <strong>集計方法：</strong>同一customer_idの連続購入間隔（LAG(created_at)との差分日数）で「短期休眠（100〜180日）」「中期休眠（181〜365日）」「長期休眠（366日以上）」に分類 → 復活月（再購入月）ごとにCOUNT集計。初回購入は除外（前回購入日なし）。条件：test=0・cancelled_at IS NULL・customer_id IS NOT NULL・(total_price - current_total_tax)&gt;0。<br>
+  <strong>⚠️ 定義変更（2026年6月〜）：</strong>3ヶ月周期（約90日）の通常購入者が「短期休眠」に誤分類されていた問題を解消するため、休眠下限を90日→<strong>100日</strong>に変更。91〜99日間隔の購入者は「アクティブ継続」として扱う。</div>
 
   <!-- サマリーカード -->
   <div class="sg3" style="margin-bottom:16px">
     <div class="sc">
       <div class="lb">短期休眠復活（2026年5月）</div>
-      <div class="vl" style="color:var(--blue)">1,048人</div>
-      <div class="sb">90〜180日ぶりの再購入</div>
+      <div class="vl" style="color:var(--blue)">840人</div>
+      <div class="sb">100〜180日ぶりの再購入</div>
       <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
         <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">うち定期注文</div>
-        <div style="font-size:20px;font-weight:700;color:var(--blue)">489人 <span style="font-size:14px;font-weight:600">46.7%</span></div>
+        <div style="font-size:20px;font-weight:700;color:var(--blue)">380人 <span style="font-size:14px;font-weight:600">45.2%</span></div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px">復活時に定期商品で再開</div>
       </div>
     </div>
@@ -847,7 +848,7 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
 
   <!-- 凡例 -->
   <div style="display:flex;gap:20px;margin-bottom:8px;font-size:12px;color:var(--muted);flex-wrap:wrap">
-    <span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:24px;height:3px;background:var(--blue);border-radius:2px"></span>短期休眠（90〜180日）</span>
+    <span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:24px;height:3px;background:var(--blue);border-radius:2px"></span>短期休眠（100〜180日）</span>
     <span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:16px;height:3px;background:var(--green);border-radius:2px;border-top:1px dashed var(--green)"></span>中期休眠（181〜365日）</span>
     <span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:16px;height:3px;background:var(--accent);border-radius:2px"></span>長期休眠（366日以上）</span>
   </div>
@@ -857,10 +858,11 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
   <div class="monthly-insight" style="margin-top:12px">
     <div class="mi-title">💡 休眠復活トレンド 考察（2026年5月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
     <ul>
-      <li><strong>短期休眠（90〜180日）が月1,000〜2,100人と最大の復活層（2026-05はGW季節要因で1,048人に減少）。</strong>定期便スキップ・一時停止後の再開が多数含まれると推定される。毎月安定して戻ってくる「潜在継続顧客」として捉え、PAUSEリマインドCRMとセットで管理することで上積みが期待できる。</li>
-      <li><strong>2026年1月に全カテゴリーが同時急増（短期2,152人・中期575人・長期511人）。</strong>長期休眠の511人は全期間最大値。年明けの需要喚起・まとめ買い効果が示唆されており、1月タイミングの休眠顧客向けウィンバックキャンペーンの有効性を裏付ける。</li>
-      <li><strong>長期休眠（1年以上）も毎月200〜500人が自然復活。</strong>施策なしでもこの規模が戻っており、CRMでターゲティングすれば追加的な復活が見込める。休眠顧客へのウィンバックは新規獲得CPAより低コストになる傾向があり、優先施策候補。</li>
-      <li><strong>2025年5月の短期休眠が852人と前後月比で約半数に急減。</strong>前後月（4月1,674人・6月1,764人）と乖離が大きく、GW期間中の注文集中・分散など季節要因の影響を確認する必要がある。</li>
+      <li><strong>定義変更の影響：旧「短期（90〜180日）」の約56%が新定義「短期（100〜180日）」に残り、残り44%はアクティブに再分類。</strong>2026年5月の短期復活は旧1,048人→新840人。90〜99日間隔は「3ヶ月周期の通常継続購入」として正しくアクティブ扱いになった。中期・長期の数値に変化なし。</li>
+      <li><strong>短期休眠（100〜180日）は月600〜1,100人が復活ゾーン（2026-01の急増を除く）。</strong>定期便スキップ・一時停止後の再開が中心。毎月安定して戻ってくる「潜在継続顧客」として、PAUSEリマインドCRMとセットで管理することで上積みが期待できる。2026-05（840人）はESS施策による休眠復活（100〜179日：718人）が含まれており、通常月より高水準。</li>
+      <li><strong>2026年1月に全カテゴリーが同時急増（短期1,081人・中期575人・長期511人）。</strong>長期休眠の511人は全期間最大値。年明けの需要喚起・まとめ買い効果が示唆されており、1月タイミングの休眠顧客向けウィンバックキャンペーンの有効性を裏付ける。短期は旧2,152人→新1,081人と約半数になったが、絶対数は依然として月内最大ピーク。</li>
+      <li><strong>長期休眠（1年以上）も毎月200〜500人が自然復活。</strong>施策なしでもこの規模が戻っており、CRMでターゲティングすれば追加的な復活が見込める。91,740人超の未リーチ長期休眠母集団（ESS分析より）への専用リアクティベーション施策の設計が必要。</li>
+      <li><strong>2025年5月の短期休眠は654人と前後月比で抑制（4月602人・6月686人）。</strong>旧定義では852人と顕著な減少に見えたが、新定義では前後月と同水準に近づき、季節異常というより定義の歪みだった可能性が高い。</li>
     </ul>
   </div>
 
@@ -879,7 +881,7 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
 <script>
 (function(){
   const dormantLabels = ['2024-04','2024-05','2024-06','2024-07','2024-08','2024-09','2024-10','2024-11','2024-12','2025-01','2025-02','2025-03','2025-04','2025-05','2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05'];
-  const dormantShort = [1612,1592,1598,2032,1682,1585,1839,1739,1725,1830,1574,1734,1674,852,1764,1924,1786,1614,1719,1813,1933,2152,1668,1927,1898,1048];
+  const dormantShort = [711,675,705,775,739,641,660,679,728,704,636,701,602,654,686,751,711,561,572,631,778,1081,640,757,835,840];
   const dormantMid   = [451,462,482,529,441,350,370,453,407,426,379,517,417,436,469,510,467,380,372,358,360,575,409,635,493,581];
   const dormantLong  = [189,165,170,256,263,180,200,194,203,263,190,292,247,239,337,371,308,287,244,225,224,511,266,273,301,398];
 
@@ -891,7 +893,7 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
       labels: dormantLabels,
       datasets: [
         {
-          label: '短期休眠（90〜180日）',
+          label: '短期休眠（100〜180日）',
           data: dormantShort,
           borderColor: '#2563eb',
           backgroundColor: 'rgba(37,99,235,0.07)',
@@ -2069,9 +2071,9 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
     <div class="sb">顧客あたり平均 1.08回 ／ 35日間</div>
   </div>
   <div class="sc" style="border-top:3px solid #2563eb">
-    <div class="lb">休眠復活（90日以上）</div>
-    <div class="vl" style="font-size:22px">1,746人</div>
-    <div class="sb">全体の<strong>10.3%</strong> ／ うち180日以上 851人</div>
+    <div class="lb">休眠復活（100日以上）</div>
+    <div class="vl" style="font-size:22px">1,569人</div>
+    <div class="sb">全体の<strong>9.3%</strong> ／ うち180日以上 851人</div>
   </div>
   <div class="sc" style="border-top:3px solid var(--vc)">
     <div class="lb">ESS期間合計売上（税抜）</div>
@@ -2098,18 +2100,18 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
       </thead>
       <tbody>
         <tr>
-          <td>🟢 直近90日以内（既存アクティブ）</td>
-          <td style="font-weight:700">13,807人</td>
-          <td>81.8%</td>
-          <td>12,631人</td>
-          <td>91.5%</td>
+          <td>🟢 直近100日以内（既存アクティブ）</td>
+          <td style="font-weight:700">13,984人</td>
+          <td>82.8%</td>
+          <td>12,753人</td>
+          <td>91.2%</td>
         </tr>
         <tr>
-          <td>🟡 休眠90〜179日（短期）</td>
-          <td>895人</td>
-          <td>5.3%</td>
-          <td>623人</td>
-          <td>69.6%</td>
+          <td>🟡 休眠100〜179日（短期）</td>
+          <td>718人</td>
+          <td>4.3%</td>
+          <td>501人</td>
+          <td>69.8%</td>
         </tr>
         <tr>
           <td>🟠 休眠180〜364日（中期）</td>
@@ -2146,7 +2148,7 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
 
   <!-- 休眠復活 × 定期転換内訳 -->
   <div>
-    <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--text)">休眠復活（1,746人）の定期転換内訳</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--text)">休眠復活（1,569人）の定期転換内訳 <span style="font-size:11px;font-weight:400;color:var(--muted)">休眠定義：100日以上</span></div>
     <table>
       <thead>
         <tr>
@@ -2159,18 +2161,18 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
       </thead>
       <tbody>
         <tr style="background:#eff6ff">
-          <td>90〜179日</td>
+          <td>100〜179日</td>
           <td>定期経験あり</td>
           <td><strong>定期で復活</strong></td>
-          <td>549人</td>
-          <td style="color:#2563eb;font-weight:700">88.1%</td>
+          <td>441人</td>
+          <td style="color:#2563eb;font-weight:700">88.0%</td>
         </tr>
         <tr>
-          <td>90〜179日</td>
+          <td>100〜179日</td>
           <td>都度買いのみ</td>
           <td>定期に初転換</td>
-          <td>18人</td>
-          <td>6.6%</td>
+          <td>15人</td>
+          <td>6.9%</td>
         </tr>
         <tr style="background:#eff6ff">
           <td>180〜364日</td>
@@ -2202,23 +2204,23 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
         </tr>
         <tr class="tot">
           <td colspan="3">定期復活計（経験あり→定期復帰）</td>
-          <td><strong>834人</strong></td>
+          <td><strong>726人</strong></td>
           <td>—</td>
         </tr>
         <tr class="tot">
           <td colspan="3">都度→定期 初転換計</td>
-          <td><strong>78人</strong></td>
+          <td><strong>75人</strong></td>
           <td>—</td>
         </tr>
       </tbody>
     </table>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px">休眠期間が短いほど定期復活率が高い（88.1% → 79.4% → 62.9%）。定期経験者のほとんどがESS特典を契機に定期に再帰。</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px">休眠期間が短いほど定期復活率が高い（88.0% → 79.4% → 62.9%）。定期経験者のほとんどがESS特典を契機に定期に再帰。</div>
   </div>
 
 </div>
 
 <!-- まとめ買い・既存アクティブ分析 -->
-<div class="stitle" style="font-size:13px;margin:16px 0 8px">既存アクティブ顧客（13,807人）ESS前後の購買変化<span style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:3px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:6px">比較期間：ESS前35日 vs ESS期間35日</span></div>
+<div class="stitle" style="font-size:13px;margin:16px 0 8px">既存アクティブ顧客（13,984人）ESS前後の購買変化<span style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:3px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:6px">比較期間：ESS前35日 vs ESS期間35日</span><span style="font-size:11px;font-weight:400;color:var(--muted);margin-left:8px">アクティブ定義：直近100日以内</span></div>
 <table>
   <thead>
     <tr>
@@ -2243,52 +2245,52 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
     </tr>
     <tr style="background:#fffbeb">
       <td>🟡 2回（まとめ買い）</td>
-      <td>1,130人</td>
-      <td>8.2%</td>
-      <td>¥12,396</td>
-      <td style="font-weight:700;color:var(--green)">¥22,921</td>
-      <td style="font-weight:700;color:var(--green)">+84.9%</td>
-      <td>84.9%</td>
+      <td>1,137人</td>
+      <td>8.1%</td>
+      <td>¥12,320</td>
+      <td style="font-weight:700;color:var(--green)">¥23,029</td>
+      <td style="font-weight:700;color:var(--green)">+86.9%</td>
+      <td>85.1%</td>
     </tr>
     <tr>
       <td>⚪ 1回（無意識適用・通常ペース）</td>
-      <td>12,621人</td>
-      <td>91.4%</td>
-      <td>¥9,197</td>
-      <td style="color:var(--green)">¥12,479</td>
-      <td style="color:var(--green)">+35.7%</td>
-      <td>31.9%</td>
+      <td>12,791人</td>
+      <td>91.5%</td>
+      <td>¥9,075</td>
+      <td style="color:var(--green)">¥12,537</td>
+      <td style="color:var(--green)">+38.1%</td>
+      <td>32.8%</td>
     </tr>
     <tr class="tot">
       <td>合計（既存アクティブ）</td>
-      <td>13,807人</td>
+      <td>13,984人</td>
       <td>100%</td>
       <td>—</td>
       <td>—</td>
       <td>—</td>
-      <td>36.4%</td>
+      <td>37.2%</td>
     </tr>
   </tbody>
 </table>
-<div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:16px">まとめ買い（2回以上：1,186人・8.6%）は ESS特典（C+D 3包プレゼント）の獲得を意識した追加購入が主体。無意識適用（1回・12,621人）でも ESS特典による注文数量増が平均単価を+35.7%押し上げ。</div>
+<div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:16px">まとめ買い（2回以上：1,193人・8.5%）はESS特典（C+D 3包プレゼント）の獲得を意識した追加購入が主体。無意識適用（1回・12,791人）でもESS特典による注文数量増が平均単価を+38.1%押し上げ。</div>
 
 <!-- ESS評価サマリー・考察 -->
 <div class="analysis orange" style="margin-top:8px">
-  <div class="analysis-head">🔍 ESS施策評価サマリー ─ 2026年5月</div>
+  <div class="analysis-head">🔍 ESS施策評価サマリー ─ 2026年5月（休眠定義：100日以上）</div>
   <div class="analysis-body">
     <div class="an-col">
       <div class="an-label">✅ 達成・確認できた効果</div>
       <div class="an-text">
-        <strong>休眠復活 1,746人（10.3%）</strong>を獲得。うち定期で復活した834人は次月以降の定期継続率次第で<strong>ACTIVEの純増</strong>に直結。都度→定期初転換78人も重要な成果。<br>
-        既存アクティブ13,807人の平均売上が<strong>前期比+35〜85%</strong>増加。まとめ買い1,186人（8.6%）はESS特典を意識した追加購入と読める。<br>
+        <strong>休眠復活 1,569人（9.3%）</strong>を獲得（100日以上未購入基準。旧90日基準では1,746人だが正確な定義に修正）。うち定期で復活した726人は次月以降の定期継続率次第で<strong>ACTIVEの純増</strong>に直結。都度→定期初転換75人も重要な成果。<br>
+        既存アクティブ13,984人の平均売上が<strong>前期比+38〜87%</strong>増加。まとめ買い1,193人（8.5%）はESS特典を意識した追加購入と読める。<br>
         LINE経由ESSのCVR 13.3%（241CV）は高効率施策として確認済み。
       </div>
     </div>
     <div class="an-col">
       <div class="an-label">⏳ 次月以降に確認が必要</div>
       <div class="an-text">
-        <strong>休眠復活顧客の6〜7月継続率：</strong>834人の定期復活が「施策限り」か「真の復活」かは7月末時点の解約率で判断。<br>
-        <strong>都度→定期転換78人のF2転換：</strong>初定期顧客は離脱リスクが高い。30〜60日以内のCRMフォローを推奨。<br>
+        <strong>休眠復活顧客の6〜7月継続率：</strong>726人の定期復活が「施策限り」か「真の復活」かは7月末時点の解約率で判断。<br>
+        <strong>都度→定期転換75人のF2転換：</strong>初定期顧客は離脱リスクが高い。30〜60日以内のCRMフォローを推奨。<br>
         <strong>ESS特設LPのCVR改善：</strong>13,425クリックでCVR0.7%は非効率。Meta流入→LP設計見直しが次月最優先。<br>
         <strong>参加後180日LTV（確定予定：2026年11月頃）：</strong>GE型との比較でESS施策の純効果を測定。
       </div>
@@ -2304,14 +2306,164 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
   </div>
 </div>
 
+<!-- 増分売上試算 -->
+<div class="stitle" style="margin-top:24px;color:#9a3412">💹 施策起因の増分売上 試算<span style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:3px;font-size:10px;font-weight:700;padding:2px 7px;margin-left:8px">Shopify 受注</span></div>
+<div class="ssub">「ESSがなければ発生しなかった売上」を3シナリオで試算 ／ 比較基準：ESS前35日（3/23〜4/26）の購買実績 ／ データソース：spic-core.public.shopify_orders（ESS_entry/ESS_CD_countタグ）</div>
+
+<table style="margin-bottom:12px">
+  <thead>
+    <tr>
+      <th>セグメント</th>
+      <th>人数</th>
+      <th>ESS期間売上</th>
+      <th>前期35日 売上（推計ベースライン）</th>
+      <th>差分（増加分）</th>
+      <th>前期比</th>
+      <th style="min-width:160px;white-space:normal">増分の性質</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>🔴 休眠復活（100日以上未購入）</td>
+      <td>1,569人</td>
+      <td>¥25,397,180</td>
+      <td style="color:var(--muted)">¥0（未購入）</td>
+      <td style="font-weight:700;color:var(--green)">¥25,397,180</td>
+      <td>—</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">施策がなければ0円。100%増分。</td>
+    </tr>
+    <tr>
+      <td>🔵 アクティブ 3回以上購入</td>
+      <td>56人</td>
+      <td>¥3,016,579</td>
+      <td>¥1,640,860</td>
+      <td style="font-weight:700;color:var(--green)">¥1,375,719</td>
+      <td style="color:var(--green)">+83.8%</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">前期を超えた分が増分。</td>
+    </tr>
+    <tr>
+      <td>🟡 アクティブ 2回購入</td>
+      <td>1,137人</td>
+      <td>¥26,183,795</td>
+      <td>¥14,007,970</td>
+      <td style="font-weight:700;color:var(--green)">¥12,175,825</td>
+      <td style="color:var(--green)">+86.9%</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">2回目以降の追加購入が増分。</td>
+    </tr>
+    <tr>
+      <td>⚪ アクティブ 1回購入（無意識適用）</td>
+      <td>12,791人</td>
+      <td>¥160,366,657</td>
+      <td>¥116,074,684</td>
+      <td>¥44,291,973</td>
+      <td style="color:var(--green)">+38.1%</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">増加分のうち施策起因の割合は議論あり。</td>
+    </tr>
+    <tr>
+      <td>⚫ 新規（ESS前Shopify購入なし）</td>
+      <td>1,328人</td>
+      <td>¥18,204,815</td>
+      <td style="color:var(--muted)">¥0（未購入）</td>
+      <td>¥18,204,815</td>
+      <td>—</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">他チャネル流入込み。帰属率に議論あり。</td>
+    </tr>
+    <tr class="tot">
+      <td>ESS参加者 合計</td>
+      <td>16,881人</td>
+      <td>¥233,169,026</td>
+      <td>¥131,723,514</td>
+      <td><strong>¥101,445,512</strong></td>
+      <td style="color:var(--green)">+77.0%</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">—</td>
+    </tr>
+  </tbody>
+</table>
+
+<div style="font-size:13px;font-weight:700;margin:16px 0 8px">3シナリオ 試算結果</div>
+<table style="margin-bottom:16px">
+  <thead>
+    <tr>
+      <th style="min-width:170px">セグメント</th>
+      <th style="background:#dbeafe;min-width:110px;white-space:normal">①最小値<br><span style="font-weight:400;font-size:11px">確実に施策起因のもの</span></th>
+      <th style="background:#dcfce7;min-width:110px;white-space:normal">②ベスト推計<br><span style="font-weight:400;font-size:11px">増加分は施策起因と仮定</span></th>
+      <th style="background:#fef9c3;min-width:110px;white-space:normal">③最大値<br><span style="font-weight:400;font-size:11px">タイミング前倒しも含む</span></th>
+      <th style="min-width:200px;white-space:normal">帰属率の考え方</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>休眠復活</td>
+      <td style="text-align:center;background:#dbeafe;font-weight:700">100%</td>
+      <td style="text-align:center;background:#dcfce7;font-weight:700">100%</td>
+      <td style="text-align:center;background:#fef9c3;font-weight:700">100%</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">100日以上未購入→施策なければ0円</td>
+    </tr>
+    <tr>
+      <td>アクティブ 3回・2回（増加分）</td>
+      <td style="text-align:center;background:#dbeafe;font-weight:700">増加分 100%</td>
+      <td style="text-align:center;background:#dcfce7;font-weight:700">増加分 100%</td>
+      <td style="text-align:center;background:#fef9c3;font-weight:700">増加分 100%</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">2回目以降の余剰購入は施策起因と判断</td>
+    </tr>
+    <tr>
+      <td>アクティブ 1回（増加分）</td>
+      <td style="text-align:center;background:#dbeafe;font-weight:700">50%</td>
+      <td style="text-align:center;background:#dcfce7;font-weight:700">100%</td>
+      <td style="text-align:center;background:#fef9c3;font-weight:700">100%</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">①：半分は季節変動・自然単価増と仮定</td>
+    </tr>
+    <tr>
+      <td>アクティブ 1回（通常購入分）</td>
+      <td style="text-align:center;background:#dbeafe">0%</td>
+      <td style="text-align:center;background:#dcfce7">0%</td>
+      <td style="text-align:center;background:#fef9c3;font-weight:700">20%</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">③：ESS訴求で購入時期を前倒しした分を加算</td>
+    </tr>
+    <tr>
+      <td>新規</td>
+      <td style="text-align:center;background:#dbeafe">0%</td>
+      <td style="text-align:center;background:#dcfce7;font-weight:700">30%</td>
+      <td style="text-align:center;background:#fef9c3;font-weight:700">50%</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">他チャネル流入を差し引いた施策起因分</td>
+    </tr>
+    <tr class="tot">
+      <td>推計 増分売上</td>
+      <td style="text-align:center;background:#dbeafe;font-size:18px;font-weight:700;color:#1e40af">¥61.1M</td>
+      <td style="text-align:center;background:#dcfce7;font-size:18px;font-weight:700;color:#15803d">¥88.7M</td>
+      <td style="text-align:center;background:#fef9c3;font-size:18px;font-weight:700;color:#854d0e">¥115.6M</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">—</td>
+    </tr>
+    <tr>
+      <td>ESS期間売上（¥233M）比</td>
+      <td style="text-align:center;background:#dbeafe;font-weight:700">26.2%</td>
+      <td style="text-align:center;background:#dcfce7;font-weight:700">38.1%</td>
+      <td style="text-align:center;background:#fef9c3;font-weight:700">49.6%</td>
+      <td style="font-size:12px;white-space:normal;text-align:left">—</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="monthly-insight" style="margin-top:8px">
+  <div class="mi-title">💡 増分売上試算 考察</div>
+  <ul>
+    <li><strong>施策起因の増分売上はベスト推計 ¥88.7M（レンジ：¥61M〜¥116M）。</strong>ESS期間の全売上¥233Mのうち<strong>約26〜50%（推計38%）</strong>が施策によって上積みされたと推計。残り62%は施策なしでも発生した「元々の購買ベース」。</li>
+    <li><strong>最も確実な増分：休眠復活¥25.4M（確度：最高）。</strong>100日以上未購入だった1,569人の全購買額。施策がなければ確実に発生しなかった売上であり、3シナリオすべてで共通。この¥25.4Mが施策効果の「確定下限値」。</li>
+    <li><strong>まとめ買い増加分 ¥13.6M（確度：高）。</strong>2回以上購入した1,193人の「前期比超過分」。2回目以降の追加購入は「ESS特典獲得目的の意図的購入」であることが示されており施策起因の確度が高い。</li>
+    <li><strong>アクティブ1回 増加分 ¥44.3M（確度：中）。</strong>1回購入の12,791人は前期比+38.1%（¥9,075→¥12,537/人）と平均単価が上昇。この差額¥44.3Mの帰属率は議論の余地があり、季節変動・SKU単価変化・購入タイミングのズレが含まれる可能性がある。</li>
+    <li><strong>本試算の限界：対照群なし・シングルアーム分析。</strong>季節性（4〜5月の需要増）や他施策との重複効果が除去できていない。より精緻な計測には次回施策でのA/Bテスト設計が必要。</li>
+  </ul>
+</div>
+
 <!-- 次のアクション -->
 <div class="notes" style="margin-top:12px">
   <div class="nt">📌 ESS施策 次のアクション（優先順）</div>
   <ul>
-    <li><strong>【最優先 6〜7月】休眠復活顧客（1,746人）の継続モニタリング：</strong>定期復活834人の解約率・都度転換78人の30日F2転換率を追跡。CRM（ステップメール・LINE）での継続支援を起動。</li>
-    <li><strong>【優先 〜6月中】都度→定期初転換78人へのフォロー：</strong>定期申し込み後30〜60日以内にLINE/メールで「定期継続メリット訴求」「スキップ自由の安心設計」を配信。</li>
+    <li><strong>【最優先 6〜7月】休眠復活顧客（1,569人）の継続モニタリング：</strong>定期復活726人の解約率・都度転換75人の30日F2転換率を追跡。CRM（ステップメール・LINE）での継続支援を起動。※ 旧90日定義1,746人から100日定義1,569人に変更済み。</li>
+    <li><strong>【優先 〜6月中】都度→定期初転換75人へのフォロー：</strong>定期申し込み後30〜60日以内にLINE/メールで「定期継続メリット訴求」「スキップ自由の安心設計」を配信。</li>
+    <li><strong>【優先 〜7月】長期休眠層（366日以上・91,740人）への専用リアクティベーション施策：</strong>ESS経由復活率は0.3〜0.6%にとどまり、現行CRM（メルマガ・LINE）が届いていない可能性が高い。新規獲得とは別の専用チャネル設計が必要。</li>
     <li><strong>【中期】ESS特設LP（CVR0.7%）の設計見直し：</strong>Meta経由の大量流入（13,425clk）が転換していない。LP上のオファー訴求・CTAの見直しが次回ESS前に必要。</li>
-    <li><strong>【中期】まとめ買い1,186人の行動特性分析：</strong>この層のLTV・ブランド構成・定期有無を確認し、次回ESS等の施策で優先ターゲット設計に活用。</li>
+    <li><strong>【中期】まとめ買い1,193人の行動特性分析：</strong>この層のLTV・ブランド構成・定期有無を確認し、次回ESS等の施策で優先ターゲット設計に活用。</li>
     <li><strong>【2026年11月】参加後180日LTV確定後に総括評価：</strong>GE参加者（¥38,847）との比較でESS型施策の収益性を評価し、施策タイプ別ROIの基礎データを確立。</li>
   </ul>
 </div>

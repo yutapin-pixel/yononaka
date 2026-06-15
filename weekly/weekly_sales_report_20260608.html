@@ -103,6 +103,7 @@ td.latest-week.heat1{background:#fee2e2 !important;color:#991b1b !important;}
   <button class="tab-btn" onclick="switchTab(1)">📈 グラフ</button>
   <button class="tab-btn" onclick="switchTab(2)">💬 考察</button>
   <button class="tab-btn" onclick="switchTab(3)">📊 実績（文字大）</button>
+  <button class="tab-btn" onclick="switchTab(4)">📋 予実管理</button>
 </div>
 <div class="tab-panel active" id="tab-0">
 <div class="stitle">① 全チャネル売上まとめ</div><div class="ssub">NE受注日基準・税抜 ／ 全チャネル（Amazon含む）受注日（order_date）統一</div><div class="tbl-wrap"><table><thead><tr>
@@ -836,4 +837,213 @@ function toggleInsight(h){const b=h.nextElementSibling,c=h.querySelector('.insig
   mkC('chart_cbd_d',[bar('Amazon',[22600,47500,41500,64100,44500,75400,16600,52800,16600,66400,47500,44500,0,47500,92628,89628,29876,74690,58283,40345,80690,100853,59752,29876,97097,59752,37345,0,0,0,54000,15000,3000,3000,18000,0,0,0,0,0],'#06B6D4'),bar('楽天',[14300,8300,25600,24900,173468,99600,24900,57684,59852,96884,42200,36200,49800,24900,61100,24484,19600,44500,38784,173052,52384,0,49800,57268,11300,8300,51552,65152,35784,8300,32368,0,8300,0,0,15768,0,0,0,0],'#10B981'),bar('Yahoo!',[8300,8300,0,33200,22600,8300,8300,0,0,49800,0,16600,0,16600,0,0,16600,0,16600,0,0,0,0,0,116200,49800,41500,8300,0,0,0,0,0,0,0,0,0,0,0,0],'#84CC16'),bar('Qoo10',[0,0,3000,0,0,0,0,8300,0,0,0,0,0,0,0,0,0,0,0,8300,0,0,0,8300,41500,0,8300,16600,0,0,0,0,0,0,0,0,0,0,0,0],'#F59E0B'),bar('ふるさと納税他',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,181659,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#F97316'),ln('楽天新規(CBD・NE)',[2,0,4,2,4,6,2,3,6,8,5,4,4,0,4,2,3,4,4,8,4,0,2,3,0,1,3,4,1,0,1,0,0,0,0,0,0,0,0,0],'#065f46')]);
 })();
 </script>
+
+<div class="tab-panel" id="tab-4">
+<div class="stitle">予実管理 ｜ 当月累計 売上まとめ</div>
+<div class="ssub">集計期間：2026年6月1日〜6月14日（経過14日 ／ 月全体30日）　実績：BigQuery直接取得（NE受注日基準・税抜）</div>
+
+<div style="background:#f0f6ff;border:1px solid #bae6fd;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:12px;color:#0c4a6e;line-height:1.9;">
+  <strong>📌 算出ロジック</strong><br>
+  <strong>① 当月累計実績</strong>：<code>spic-core.public.ne_order_items</code> から 2026-06-01〜2026-06-14 を受注日ベースで直接集計。<br>
+  <strong>② Shopify定期/都次</strong>：<code>ne_orders.shop_order_id = shopify_orders.name</code> でJOIN後、<code>shopify_sku_brand_master.product_type = '定期'</code> の行を含む注文を定期と判定（ナレッジ正式仕様）。NE×Shopify JOINで未マッチの注文（全体の約0.3%）は都次として算入。<br>
+  <strong>③ 予算按分</strong>：月次予算（KPIダッシュボード FY2027・v19）× 経過日数(14) ÷ 月間日数(30)。Yahoo/Qoo10の個別予算は「その他モール合計予算」を当期間の実績比率で按分。<br>
+  <strong>④ 着地予測</strong>：当月累計実績 ÷ 14日 × 30日（現在のペースが月末まで続いた場合の予測値）。<br>
+  <strong>⑤ 着地達成率</strong>：着地予測 ÷ 月次予算 × 100。<br>
+  データソース：NE受注（<code>spic-core.public.ne_order_items</code>）／予算：KPIダッシュボード FY2027予実管理<br>
+  達成率凡例：☀️≥105%　🌤 95〜105%　⛅ 85〜95%　🌧 60〜85%　⛈&lt;60%
+</div>
+
+<div class="tbl-wrap"><table>
+<thead><tr>
+  <th class="label-col">項目</th>
+  <th class="latest-wk">当月累計実績<br><small>6/1〜6/14（BQ実測）</small></th>
+  <th>予算按分<br><small>月次×14÷30</small></th>
+  <th>累計差額</th>
+  <th>進捗達成率</th>
+  <th>着地予測<br><small>÷14×30</small></th>
+  <th>着地達成率<br><small>vs月次予算</small></th>
+</tr></thead>
+<tbody>
+<tr>
+  <td class="label-col">Shopify 計</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">93,019,047</td>
+  <td style="text-align:right;">123,806,667<br><small style="color:var(--muted);font-size:10px;">月次×14÷30</small></td>
+  <td style="text-align:right;"><span style="color:#dc2626;font-weight:600;">▼30,787,620</span></td>
+  <td style="text-align:right;"><span style="color:#dc2626;">🌧 75.1%</span></td>
+  <td style="text-align:right;font-weight:600;">199,326,529</td>
+  <td style="text-align:right;"><span style="color:#dc2626;">🌧 75.1%</span></td>
+</tr><tr style="opacity:0.8;">
+  <td class="label-col indent" style="font-size:12px;">└ 定期注文売上（product_type判定）<br><small style="color:#aaa;">※NE×Shopify JOIN実測（shop_order_id=name）</small></td>
+  <td class="latest-week" style="text-align:right;font-size:12px;">75,041,488</td>
+  <td colspan="5" style="text-align:center;font-size:11px;color:#bbb;">—</td>
+</tr><tr style="opacity:0.8;">
+  <td class="label-col indent" style="font-size:12px;">└ 都次購入売上（product_type判定）<br><small style="color:#aaa;">※NE×Shopify JOIN実測（未マッチ0.3%含む）</small></td>
+  <td class="latest-week" style="text-align:right;font-size:12px;">17,769,901</td>
+  <td colspan="5" style="text-align:center;font-size:11px;color:#bbb;">—</td>
+</tr><tr>
+  <td class="label-col">Amazon</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">43,150,114</td>
+  <td style="text-align:right;">55,186,860<br><small style="color:var(--muted);font-size:10px;">月次×14÷30</small></td>
+  <td style="text-align:right;"><span style="color:#dc2626;font-weight:600;">▼12,036,746</span></td>
+  <td style="text-align:right;"><span style="color:#dc2626;">🌧 78.2%</span></td>
+  <td style="text-align:right;font-weight:600;">92,464,531</td>
+  <td style="text-align:right;"><span style="color:#dc2626;">🌧 78.2%</span></td>
+</tr><tr>
+  <td class="label-col">楽天</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">39,898,904</td>
+  <td style="text-align:right;">33,612,857<br><small style="color:var(--muted);font-size:10px;">月次×14÷30</small></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:600;">▲6,286,047</span></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 118.7%</span></td>
+  <td style="text-align:right;font-weight:600;">85,497,652</td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 118.7%</span></td>
+</tr><tr>
+  <td class="label-col">Yahoo</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">3,609,075</td>
+  <td style="text-align:right;">1,705,724<br><small style="color:var(--muted);font-size:10px;">その他モール×実績比按分×14÷30</small></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:600;">▲1,903,351</span></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 211.6%</span></td>
+  <td style="text-align:right;font-weight:600;">7,733,732</td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 211.6%</span></td>
+</tr><tr>
+  <td class="label-col">Qoo10</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">7,751,257</td>
+  <td style="text-align:right;">3,663,613<br><small style="color:var(--muted);font-size:10px;">その他モール×実績比按分×14÷30</small></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:600;">▲4,087,644</span></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 211.6%</span></td>
+  <td style="text-align:right;font-weight:600;">16,609,837</td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:700;">☀️ 211.6%</span></td>
+</tr><tr>
+  <td class="label-col">ふるさと納税</td>
+  <td class="latest-week" style="text-align:right;"><span style="color:#bbb;">月末集計</span></td>
+  <td style="text-align:right;">3,678,483<br><small style="color:var(--muted);font-size:10px;">月次×14÷30</small></td>
+  <td colspan="4" style="text-align:center;color:#bbb;font-size:11px;">月末集計後に確定</td>
+</tr><tr>
+  <td class="label-col">LINEギフト</td>
+  <td class="latest-week" style="text-align:right;"><span style="color:#bbb;">月末集計</span></td>
+  <td style="text-align:right;">1,735,292<br><small style="color:var(--muted);font-size:10px;">月次×14÷30</small></td>
+  <td colspan="4" style="text-align:center;color:#bbb;font-size:11px;">月末集計後に確定</td>
+</tr><tr>
+  <td class="label-col">その他</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">1,161,446</td>
+  <td style="text-align:right;color:#bbb;font-size:11px;">— (非予算計上)</td>
+  <td style="text-align:center;color:#bbb;font-size:11px;">—</td>
+  <td style="text-align:center;color:#bbb;font-size:11px;">—</td>
+  <td style="text-align:right;font-weight:600;">2,489,528</td>
+  <td style="text-align:center;color:#bbb;font-size:11px;">—</td>
+</tr><tr class="total-row">
+  <td class="label-col">合計</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">188,589,843</td>
+  <td style="text-align:right;font-weight:700;">223,440,000<br><small style="color:var(--muted);font-size:10px;">月次×14÷30</small></td>
+  <td style="text-align:right;font-weight:700;"><span style="color:#dc2626;font-weight:600;">▼34,850,157</span></td>
+  <td style="text-align:right;font-weight:700;"><span style="color:#dc2626;">🌧 84.4%</span></td>
+  <td style="text-align:right;font-weight:700;">404,264,520</td>
+  <td style="text-align:right;font-weight:700;"><span style="color:#dc2626;">🌧 84.4%</span></td>
+</tr>
+</tbody>
+</table></div>
+<div class="ssub">※ ふるさと納税・LINEギフトはshop_id=21の月末締め計上のため、月末確定まで実績はハイフン。</div>
+<div class="ssub">※ 週報実績はNE受注日ベース、予算はNE出荷ベース。集計基準の相違による構造的乖離あり（参考値として使用のこと）。</div>
+<div class="ssub">※ 予算出典：KPIダッシュボード FY2027予実管理 v19（2026-06-03更新）＞ 2026年6月列。Yahoo/Qoo10予算はその他モール合計（¥11,613,944）を当期実績比（Yahoo 31.5%・Qoo10 67.6%・auPAY 0.9%）で按分。</div>
+<div class="ssub">※ 合計の着地予測・達成率はふるさと納税・LINEギフトを除く（月末集計のため）。ふる納¥7,882,464・LINEギフト¥3,718,483を加算した場合、月次目標¥478,800,000に対する最終達成率は月末まで確定しない。</div>
+
+<div class="stitle">日別売上 vs 日次予算</div>
+<div class="ssub">日次予算 = 月次予算 ÷ 30（破線は月末まで表示）　実績：NE受注日ベース・税抜（BQ直取得）　実績未確定日はグラフ空白</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px;">
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">Shopify（自社EC）</div>
+    <canvas id="chart_Shopify_p" height="160"></canvas>
+  </div>
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">Amazon</div>
+    <canvas id="chart_Amazon_p" height="160"></canvas>
+  </div>
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">楽天</div>
+    <canvas id="chart_Rakuten_p" height="160"></canvas>
+  </div>
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">Yahoo ＋ Qoo10（その他モール）</div>
+    <canvas id="chart_YQ_p" height="160"></canvas>
+  </div>
+</div>
+<script>
+(function(){
+  var DAYS = ['06-01','06-02','06-03','06-04','06-05','06-06','06-07','06-08','06-09','06-10','06-11','06-12','06-13','06-14','06-15','06-16','06-17','06-18','06-19','06-20','06-21','06-22','06-23','06-24','06-25','06-26','06-27','06-28','06-29','06-30'];
+  function mkChart(id, actual, budgetPerDay, color, budgetColor) {
+    var ctx = document.getElementById(id).getContext('2d');
+    var budgetData = [];
+    for (var i = 0; i < 30; i++) budgetData.push(budgetPerDay);
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: DAYS,
+        datasets: [
+          {
+            label: '実績',
+            data: actual,
+            borderColor: color,
+            backgroundColor: color + '22',
+            borderWidth: 2.5,
+            pointRadius: 3.5,
+            pointHoverRadius: 6,
+            tension: 0.3,
+            fill: true,
+            spanGaps: false
+          },
+          {
+            label: '日次予算（月次÷30）',
+            data: budgetData,
+            borderColor: budgetColor,
+            backgroundColor: 'transparent',
+            borderWidth: 2,
+            borderDash: [6,4],
+            pointRadius: 0,
+            tension: 0,
+            spanGaps: true
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 14 } },
+          tooltip: {
+            callbacks: {
+              label: function(c) {
+                if (c.parsed.y === null) return c.dataset.label + ': —';
+                return c.dataset.label + ': ¥' + c.parsed.y.toLocaleString();
+              }
+            }
+          }
+        },
+        scales: {
+          x: { ticks: { font: { size: 10 }, maxRotation: 45 }, grid: { color: '#f0f0f0' } },
+          y: {
+            min: 0,
+            ticks: {
+              font: { size: 10 },
+              callback: function(v) { return v >= 1000000 ? '¥'+(v/1000000).toFixed(1)+'M' : '¥'+(v/1000).toFixed(0)+'K'; }
+            },
+            grid: { color: '#f0f0f0' }
+          }
+        }
+      }
+    });
+  }
+  mkChart('chart_Shopify_p',
+    [7997767,6325306,5751600,7389277,6307957,6474743,6250459,6778474,6733800,5844874,6133284,6971690,6186756,7873060,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+    8843333, '#4f86f7', '#93c5fd');
+  mkChart('chart_Amazon_p',
+    [5697999,4967019,2719152,2948675,2404399,1812000,1766887,2246079,2171341,2183120,3984074,2780925,3560187,3908257,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+    3941919, '#f97316', '#fcd34d');
+  mkChart('chart_Rakuten_p',
+    [1850367,947701,1012004,2660357,9981107,2403548,2766396,2102754,2277072,9273947,1842902,1046969,777805,955975,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+    2400918, '#dc2626', '#fca5a5');
+  mkChart('chart_YQ_p',
+    [2386793,1264494,731823,388167,905507,755650,1015315,585977,765890,1189144,580577,160178,171394,567108,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+    387131, '#8b5cf6', '#c4b5fd');
+})();
+</script>
+</div>
 </div></body></html>

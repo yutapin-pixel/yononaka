@@ -504,6 +504,247 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
   <div class="ssub">縦軸を 0〜3,000人・500人刻みに固定 ｜ OGS月（2025年7〜9月）は数値が範囲外 ｜ 2026年6月（1,447人）をハイライト表示 ｜ v10定義（MINERALionトライアル含む）に基づく値</div>
   <div class="chart-wrap"><canvas id="chartNewCustNorm"></canvas></div>
 
+  <div class="stitle" style="margin-top:20px">月次新規顧客獲得数 推移表（2024年4月〜2026年6月）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">
+    <strong>データソース：</strong>sandbox_nishimori.shopify_customer_master ／ spic-core.public.shopify_orders（Shopify受注）<br>
+    <strong>無償含む新規（v10）</strong>：shopify_customer_master.first_paid_order_dt｜OGSトライアル（SKU 1004496・送料¥220）・MINERALionトライアル（SKU 3016・送料¥220）を含む ／
+    <strong>有償新規</strong>：v10の新規顧客のfirst_paid_order_dt当日の注文 subtotal_price &gt; 0 で分類（送料のみ注文を無償として除外）<br>
+    集計方法：shopify_customer_master.first_paid_order_dt を起点に shopify_orders.subtotal_price で有償/無償を判定。差分は常に ≥ 0（v10と完全整合）<br>
+    橙背景：OGSキャンペーン期間（2025年7〜9月）｜ 青背景：FY2027（2026年4月〜）｜ <span style="color:#1E3A8A;font-weight:600">MION</span>バッジ：MINERALionトライアル施策月
+  </div>
+  <div style="overflow-x:auto;margin-bottom:20px">
+    <table style="min-width:820px;font-size:13px">
+      <thead>
+        <tr>
+          <th style="min-width:90px;text-align:left">年月</th>
+          <th style="min-width:130px;text-align:right">無償含む新規<br><span style="font-weight:400;font-size:10px;color:#78716c">（v10デフォルト）</span></th>
+          <th style="min-width:130px;text-align:right">有償新規<br><span style="font-weight:400;font-size:10px;color:#78716c">（無償除外）</span></th>
+          <th style="min-width:100px;text-align:right">無償獲得数<br><span style="font-weight:400;font-size:10px;color:#78716c">（v10 − 有償）</span></th>
+          <th style="min-width:110px;text-align:right">前年同月比<br><span style="font-weight:400;font-size:10px;color:#78716c">（有償ベース）</span></th>
+          <th style="min-width:100px;text-align:right">前月比<br><span style="font-weight:400;font-size:10px;color:#78716c">（有償ベース）</span></th>
+        </tr>
+      </thead>
+      <tbody>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-04</td>
+                <td style="text-align:right">8,179人</td>
+                <td style="text-align:right;font-weight:600">8,179人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-05</td>
+                <td style="text-align:right">2,655人</td>
+                <td style="text-align:right;font-weight:600">2,655人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-67.5%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-06</td>
+                <td style="text-align:right">2,314人</td>
+                <td style="text-align:right;font-weight:600">2,314人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-12.8%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-07</td>
+                <td style="text-align:right">2,707人</td>
+                <td style="text-align:right;font-weight:600">2,707人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+17.0%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-08</td>
+                <td style="text-align:right">2,665人</td>
+                <td style="text-align:right;font-weight:600">2,665人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-1.6%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-09</td>
+                <td style="text-align:right">2,050人</td>
+                <td style="text-align:right;font-weight:600">2,050人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-23.1%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-10</td>
+                <td style="text-align:right">1,465人</td>
+                <td style="text-align:right;font-weight:600">1,465人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-28.5%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-11</td>
+                <td style="text-align:right">1,608人</td>
+                <td style="text-align:right;font-weight:600">1,608人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+9.8%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-12</td>
+                <td style="text-align:right">1,583人</td>
+                <td style="text-align:right;font-weight:600">1,583人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-1.6%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-01</td>
+                <td style="text-align:right">2,255人</td>
+                <td style="text-align:right;font-weight:600">2,255人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+42.5%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-02</td>
+                <td style="text-align:right">1,839人</td>
+                <td style="text-align:right;font-weight:600">1,839人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-18.4%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-03</td>
+                <td style="text-align:right">2,178人</td>
+                <td style="text-align:right;font-weight:600">2,178人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+18.4%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-04</td>
+                <td style="text-align:right">1,724人</td>
+                <td style="text-align:right;font-weight:600">1,724人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-78.9%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-20.8%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-05</td>
+                <td style="text-align:right">1,913人</td>
+                <td style="text-align:right;font-weight:600">1,913人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-27.9%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+11.0%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-06</td>
+                <td style="text-align:right">2,292人</td>
+                <td style="text-align:right;font-weight:600">2,292人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-1.0%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+19.8%</span></td>
+              </tr>
+              <tr style="background:#fff7ed">
+                <td style="font-weight:500;white-space:nowrap">2025-07 <span style="font-size:9px;background:#ea580c;color:#fff;padding:1px 5px;border-radius:3px">OGS</span></td>
+                <td style="text-align:right">26,952人</td>
+                <td style="text-align:right;font-weight:600">2,646人</td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600" title="OGSキャンペーン（送料¥220のみ）">+24,306</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-2.3%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+15.4%</span></td>
+              </tr>
+              <tr style="background:#fff7ed">
+                <td style="font-weight:500;white-space:nowrap">2025-08 <span style="font-size:9px;background:#ea580c;color:#fff;padding:1px 5px;border-radius:3px">OGS</span></td>
+                <td style="text-align:right">16,636人</td>
+                <td style="text-align:right;font-weight:600">1,877人</td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600" title="OGSキャンペーン（送料¥220のみ）">+14,759</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-29.6%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-29.1%</span></td>
+              </tr>
+              <tr style="background:#fff7ed">
+                <td style="font-weight:500;white-space:nowrap">2025-09 <span style="font-size:9px;background:#ea580c;color:#fff;padding:1px 5px;border-radius:3px">OGS</span></td>
+                <td style="text-align:right">6,689人</td>
+                <td style="text-align:right;font-weight:600">1,429人</td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600" title="OGSキャンペーン（送料¥220のみ）">+5,260</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-30.3%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-23.9%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-10</td>
+                <td style="text-align:right">1,250人</td>
+                <td style="text-align:right;font-weight:600">1,250人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-14.7%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-12.5%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-11</td>
+                <td style="text-align:right">996人</td>
+                <td style="text-align:right;font-weight:600">996人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-38.1%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-20.3%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-12</td>
+                <td style="text-align:right">975人</td>
+                <td style="text-align:right;font-weight:600">975人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-38.4%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-2.1%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2026-01 <span style="font-size:9px;background:#1E3A8A;color:#fff;padding:1px 5px;border-radius:3px">MION</span></td>
+                <td style="text-align:right">1,318人</td>
+                <td style="text-align:right;font-weight:600">1,076人</td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600" title="MINERALionトライアル等（送料¥220のみ）">+242</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-52.3%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+10.4%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2026-02 <span style="font-size:9px;background:#1E3A8A;color:#fff;padding:1px 5px;border-radius:3px">MION</span></td>
+                <td style="text-align:right">1,209人</td>
+                <td style="text-align:right;font-weight:600">1,168人</td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600" title="MINERALionトライアル等（送料¥220のみ）">+41</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-36.5%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+8.6%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2026-03 <span style="font-size:9px;background:#1E3A8A;color:#fff;padding:1px 5px;border-radius:3px">MION</span></td>
+                <td style="text-align:right">1,208人</td>
+                <td style="text-align:right;font-weight:600">1,082人</td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600" title="MINERALionトライアル等（送料¥220のみ）">+126</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-50.3%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-7.4%</span></td>
+              </tr>
+              <tr style="background:#eff6ff">
+                <td style="font-weight:500;white-space:nowrap">2026-04 <span style="font-size:9px;background:#1E3A8A;color:#fff;padding:1px 5px;border-radius:3px">MION</span></td>
+                <td style="text-align:right">1,096人</td>
+                <td style="text-align:right;font-weight:600">1,088人</td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600" title="MINERALionトライアル等（送料¥220のみ）">+8</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-36.9%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+0.6%</span></td>
+              </tr>
+              <tr style="background:#eff6ff">
+                <td style="font-weight:500;white-space:nowrap">2026-05</td>
+                <td style="text-align:right">1,437人</td>
+                <td style="text-align:right;font-weight:600">1,437人</td>
+                <td style="text-align:right"><span style="color:#9ca3af">0</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-24.9%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+32.1%</span></td>
+              </tr>
+              <tr style="background:#f0fdf4">
+                <td style="font-weight:500;white-space:nowrap">2026-06 <span style="font-size:9px;background:#16a34a;color:#fff;padding:1px 5px;border-radius:3px;font-weight:700">最新</span> <span style="font-size:9px;background:#1E3A8A;color:#fff;padding:1px 5px;border-radius:3px">MION</span></td>
+                <td style="text-align:right">1,447人</td>
+                <td style="text-align:right;font-weight:600">1,290人</td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600" title="MINERALionトライアル等（送料¥220のみ）">+157</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-43.7%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-10.2%</span></td>
+              </tr>
+      </tbody>
+    </table>
+  </div>
+
   <div class="monthly-insight">
     <div class="mi-title">💡 新規顧客獲得 考察（2026年6月）</div>
     <ul>

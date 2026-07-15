@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Shopify → ecforce リプレイス検討状況共有</title>
+<style>
+  :root{
+    --navy:#0F2A47;
+    --navy-deep:#0A1D33;
+    --blue:#2456C9;
+    --blue-soft:#EAF0FC;
+    --paper:#F7F6F2;
+    --card:#FFFFFF;
+    --ink:#1B242E;
+    --sub:#5B6675;
+    --line:#DEDCD3;
+    --amber:#B5762A;
+    --amber-soft:#FBF2E6;
+    --green:#1E7A52;
+    --green-soft:#E9F5EF;
+    --slate:#3E5A82;
+    --slate-soft:#EEF2F8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+    line-height:1.75;
+    font-size:15.5px;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px 80px;}
+
+  /* Header */
+  header{
+    background:linear-gradient(135deg,var(--navy-deep),var(--navy) 70%);
+    color:#fff;
+    padding:56px 24px 42px;
+    margin-bottom:8px;
+  }
+  header .inner{max-width:920px;margin:0 auto;}
+  .eyebrow{
+    font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:#9FB6DE;font-weight:600;margin-bottom:14px;
+  }
+  h1{
+    font-family:"Hiragino Mincho ProN","Noto Serif JP",serif;
+    font-size:30px;line-height:1.5;margin:0 0 10px;font-weight:600;
+  }
+  .lead{color:#C7D4E8;font-size:15px;max-width:640px;}
+  .meta-row{display:flex;gap:28px;margin-top:26px;flex-wrap:wrap;}
+  .meta-row div{font-size:12.5px;color:#9FB6DE;}
+  .meta-row strong{display:block;color:#fff;font-size:14px;font-weight:600;margin-top:2px;}
+
+  /* Position banner */
+  .position{
+    background:var(--blue-soft);
+    border:1px solid #C9DAF6;
+    border-radius:10px;
+    padding:20px 24px;
+    margin:28px 0 40px;
+    font-size:14.5px;
+    color:#173A72;
+  }
+  .position b{color:var(--blue);}
+
+  section{margin-bottom:52px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;}
+  .sec-num{
+    font-family:"Hiragino Mincho ProN","Noto Serif JP",serif;
+    font-size:13px;color:var(--blue);border:1px solid var(--blue);
+    border-radius:20px;padding:3px 12px;font-weight:600;white-space:nowrap;
+  }
+  h2{
+    font-family:"Hiragino Mincho ProN","Noto Serif JP",serif;
+    font-size:21px;margin:0;font-weight:600;color:var(--navy-deep);
+  }
+  h3{font-size:16px;margin:0 0 12px;color:var(--navy-deep);font-weight:600;}
+  p{margin:0 0 12px;}
+  .note{color:var(--sub);font-size:13.5px;}
+
+  /* 拡張ポイント box（旧why box。トーンを中立〜ポジティブに変更） */
+  .expand{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:18px 20px;margin-bottom:18px;border-left:4px solid var(--slate);
+  }
+  .expand h4{margin:0 0 8px;font-size:14.5px;color:var(--navy-deep);font-weight:700;}
+  .expand h4 span.tag{
+    display:inline-block;background:var(--slate-soft);color:var(--slate);
+    font-size:11px;border-radius:4px;padding:1px 8px;margin-right:8px;font-weight:700;
+  }
+  .expand .current{font-size:13.5px;color:var(--sub);margin-bottom:8px;}
+  .expand .plus{
+    margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);
+    font-size:14px;
+  }
+  .expand .plus b{color:var(--blue);}
+  .expand .effect{margin-top:8px;font-size:13.5px;color:var(--sub);}
+  .expand .effect b{color:var(--ink);}
+
+  /* table */
+  table{width:100%;border-collapse:collapse;margin:10px 0 20px;font-size:14px;}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
+  th{background:var(--navy);color:#fff;font-weight:600;font-size:13px;}
+  tr:nth-child(even) td{background:#FBFAF7;}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;}
+
+  /* company card */
+  .company-card{
+    display:grid;grid-template-columns:1fr 1fr;gap:0 32px;
+    background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px 24px;margin-bottom:20px;
+  }
+  .company-card dl{margin:0;}
+  .company-card dt{font-size:12px;color:var(--sub);margin-top:10px;}
+  .company-card dt:first-child{margin-top:0;}
+  .company-card dd{margin:0;font-size:14.5px;font-weight:600;}
+
+  .strength-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px;}
+  .strength{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
+  .strength .label{font-size:12px;color:var(--blue);font-weight:700;margin-bottom:6px;}
+
+  /* feature cards */
+  .feature{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:22px 24px;margin-top:28px;margin-bottom:16px;position:relative;border-left:5px solid var(--blue);
+  }
+  .feature:first-of-type{margin-top:28px;}
+  .feature .fnum{
+    position:absolute;top:-14px;left:20px;background:var(--blue);color:#fff;
+    font-size:13px;font-weight:700;padding:4px 12px;border-radius:20px;
+  }
+  .feature h3{margin-top:6px;}
+  .feature .kpi-line{
+    display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;
+  }
+  .kpi-pill{
+    background:var(--green-soft);color:var(--green);font-size:12.5px;font-weight:700;
+    padding:5px 12px;border-radius:20px;
+  }
+
+  /* status / phase */
+  .phase-banner{
+    background:var(--amber-soft);border:1px solid #EAD3AE;border-radius:10px;
+    padding:20px 24px;margin-bottom:20px;
+  }
+  .phase-banner .flag{
+    display:inline-block;background:var(--amber);color:#fff;font-size:12px;font-weight:700;
+    padding:3px 12px;border-radius:20px;margin-bottom:10px;
+  }
+
+  .tailwind-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .tailwind{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
+  .tailwind .num{font-family:"Hiragino Mincho ProN",serif;font-size:22px;color:var(--blue);font-weight:700;}
+  .tailwind .cap{font-size:12.5px;color:var(--sub);margin-top:4px;}
+
+  /* timeline */
+  .timeline{position:relative;margin:30px 0 10px;padding-left:26px;}
+  .timeline::before{
+    content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line);
+  }
+  .t-item{position:relative;padding-bottom:28px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:"";position:absolute;left:-26px;top:3px;width:14px;height:14px;border-radius:50%;
+    background:#fff;border:3px solid var(--blue);
+  }
+  .t-item.milestone::before{background:var(--blue);}
+  .t-item .when{font-size:12.5px;color:var(--blue);font-weight:700;letter-spacing:.02em;}
+  .t-item .what{font-size:15px;font-weight:600;margin:2px 0 4px;}
+  .t-item .detail{font-size:13.5px;color:var(--sub);}
+
+  /* notes（旧risk。中立トーン） */
+  .memo{
+    background:var(--slate-soft);border:1px solid #CBD8EA;border-radius:10px;
+    padding:16px 20px;margin-bottom:14px;
+  }
+  .memo .rt{font-size:13.5px;font-weight:700;color:var(--slate);margin-bottom:4px;}
+
+  /* summary box top */
+  .summary-box{
+    background:var(--navy);color:#fff;border-radius:12px;padding:26px 28px;margin:0 0 40px;
+  }
+  .summary-box h2{color:#fff;font-size:16px;letter-spacing:.02em;margin-bottom:14px;}
+  .summary-box ul{margin:0;padding-left:20px;}
+  .summary-box li{margin-bottom:10px;font-size:14.5px;color:#DCE4F2;}
+  .summary-box li b{color:#fff;}
+
+  footer{
+    text-align:center;color:var(--sub);font-size:12px;padding:30px 0 10px;border-top:1px solid var(--line);
+  }
+
+  @media (max-width:700px){
+    .company-card,.tailwind-grid,.strength-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <div class="eyebrow">経営共有資料 ・ Consumer本部 / 事業基盤本部</div>
+    <h1>Shopify → ecforce リプレイス検討<br>現状進捗のご共有</h1>
+    <p class="lead">Lypo-C事業の通販カートシステム基盤について、Shopifyからecforceへの段階的リプレイスを進めています。本資料では背景・現状・今後の計画を共有します。</p>
+    <div class="meta-row">
+      <div>作成日<strong>2026年7月14日</strong></div>
+      <div>対象事業<strong>Lypo-C D2C事業（コンシューマー本部）</strong></div>
+      <div>ステータス<strong>フェーズ1（CBD先行導入）準備中</strong></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="position">
+    <b>本資料の位置づき：</b>本資料は「ecforceへのリプレイスを審議いただく」ためのものではなく、現在すでに合意・実行段階にある取り組みの<b>進捗共有</b>を目的としています。判断が必要な事項（本体サイトの全面リプレイス可否）は2027年2月を目処に改めて検討します。
+  </div>
+
+  <div class="summary-box">
+    <h2>要点サマリー</h2>
+    <ul>
+      <li><b>Why：</b>Shopifyは都度購入型のECに強みを持つプラットフォームです。当社の主力である<b>定期リピート通販</b>の領域では、ecforceを選択することでCVR・LTV・CPAの各方面において、できることの幅がさらに広がると見込んでいます。</li>
+      <li><b>What：</b>まずはShopifyでは取り扱いのなかった<b>Lypo-C CBD</b>を対象に、ecforceを一部導入（先行導入）。<b>2026年9月8日ローンチ目標</b>で準備中。</li>
+      <li><b>Why now：</b>この1年で新規4ブランド（SKINBEAUTY / MINERALion / CBD / C+Cera）が立ち上がり、ブランド横断のクロスセルの重要性が高まっています。加えて売上の85%を占めるVC・C+Dのブランドマネージャーである坪井さんも導入に前向きで、全体リプレイスへの機運が高まっています。</li>
+      <li><b>Next：</b>CBDサイトでの半年間の実地検証を経て、<b>2027年2月までに本体サイトの全面リプレイス可否を判断</b>。倉庫リプレイス（2027年3月頃）と時期が重ならないよう設計しています。</li>
+    </ul>
+  </div>
+
+  <!-- 1. 背景 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>背景｜ecforceを選択することで広がること</h2></div>
+    <p>Shopifyは都度カートで購入する通販業態と特に相性の良いプラットフォームです。当社の主力である定期リピート通販の領域においては、ecforceを選択することでマーケティング面でできることの幅が大きく広がると考えられます。ランニングコストは両者で大きな差はなく、ビジネス側の連携機能は自社開発の組み合わせで実装するため、論点は純粋に「ecforceにすることで、今より何ができるようになるか」という拡張の話です。以下、当社のマーケティング課題に直結する4つのポイントを整理します。</p>
+
+    <div class="expand">
+      <h4><span class="tag">拡張ポイント①</span>フォーム一体型LP</h4>
+      <div class="current">現状：LP上に申込フォームを組み込む「フォーム一体型LP」は、現行のShopifyでは対応が難しい機能です。</div>
+      <div class="plus"><b>ecforceでは、</b>標準機能としてフォーム一体型LPが利用でき、画面遷移数を減らすことでカート落ちの低減・CVR向上が期待できます。あわせて遷移データの計測精度も高まるため、離脱ポイントの特定・改善もしやすくなります。</div>
+    </div>
+
+    <div class="expand">
+      <h4><span class="tag">拡張ポイント②</span>確認画面・完了画面でのアップセル／クロスセル</h4>
+      <div class="current">現状：注文確認画面でのアップセル提案や、購入完了画面でのクロスセル提案は、現行の仕組みでは実現できていません。</div>
+      <div class="plus"><b>ecforceでは、</b>これらが標準機能として備わっており、「Lypo-C VC購入者へのC+Dアップセル提案」など、ブランド横断のクロスセル導線を自由に設計できます。新規4ブランド体制になった今、この機能を活用できる余地は大きく広がっています。</div>
+      <div class="effect"><b>期待効果：</b>クロスセル率・客単価・LTVの向上</div>
+    </div>
+
+    <div class="expand">
+      <h4><span class="tag">拡張ポイント③</span>広告タグ・効果計測の柔軟性</h4>
+      <div class="current">現状：購入完了時の広告成果計測タグについて、発火率にはまだ改善余地があります。</div>
+      <div class="plus"><b>ecforceでは、</b>計測・タグ管理の仕組みをより柔軟にコントロールでき、広告費用の最適化やCPA改善につなげやすくなります。複数代理店を運用するような規模の通販事業とも親和性が高い設計です。</div>
+    </div>
+
+    <div class="expand">
+      <h4><span class="tag">拡張ポイント④</span>定期購入における決済手段の幅</h4>
+      <div class="current">現状：定期購入の決済手段はクレジットカードが中心です。</div>
+      <div class="plus"><b>ecforceでは、</b>定期購入においても後払い決済（コンビニ決済等）を含む多様な決済手段に対応できます。国内でよく使われる決済手段の第4位が後払い決済というデータもあり（SBペイメント調べ）、選択肢を広げることで機会損失の低減が見込めます。</div>
+    </div>
+
+    <p class="note">※上記はいずれもecforceが標準機能として備えているものが中心であり、追加開発を抑えながら実現できる点が特徴です。</p>
+  </section>
+
+  <!-- 2. ecforceとは -->
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>改めて、ecforceとは</h2></div>
+    <p>移行検討先であるecforceについて、判断材料として改めて整理します。</p>
+
+    <div class="company-card">
+      <dl>
+        <dt>提供会社</dt><dd>株式会社SUPER STUDIO</dd>
+        <dt>設立</dt><dd>2014年12月24日</dd>
+        <dt>代表者</dt><dd>林 紘祐（CEO）</dd>
+      </dl>
+      <dl>
+        <dt>資本金</dt><dd>約79.7億円（資本準備金含む）</dd>
+        <dt>従業員数</dt><dd>373名（2024年11月末時点）</dd>
+        <dt>事業内容</dt><dd>統合コマースプラットフォーム「ecforce」提供／自社D2C事業</dd>
+      </dl>
+    </div>
+
+    <h3>ecforceが持つ本質的な強み</h3>
+    <div class="strength-grid">
+      <div class="strength">
+        <div class="label">自社D2C運営から得る実装力</div>
+        自社でD2Cブランドを運営しながら開発しているため、「売上を伸ばすために本当に必要な機能」が実装に反映されやすい。毎月10〜20機能を新規リリースするペースで進化している。
+      </div>
+      <div class="strength">
+        <div class="label">API全開放という思想</div>
+        Admin/Product/Cart/Checkout/Order/Customer等の各種APIが開放されており、「外側で好きに機能を作ってよい」という方針。当社側に開発力があれば拡張性を自由に確保できる。
+      </div>
+      <div class="strength">
+        <div class="label">スクラッチ／パッケージに対する優位性</div>
+        W2社やecbeing等のパッケージを大規模改修すると、初期3,000万円・開発期間1年規模になり、以後も社内にエンジニアを抱え続ける必要が生じる。ecforceに事業側を合わせることで、初期費用・導入期間を最小化できる。
+      </div>
+      <div class="strength">
+        <div class="label">海外製SaaSに対する優位性</div>
+        日本の商習慣・決済手段（Amazon Pay、コンビニ後払い等）・法改正・ガイドライン（3省2ガイドライン等）への継続的な適合を、国内SaaSとして担保している。
+      </div>
+    </div>
+
+    <h3 style="margin-top:24px;">他社カートとの比較（提案書より要約）</h3>
+    <table>
+      <tr><th>観点</th><th>ecforce</th><th>スクラッチ／パッケージ</th><th>海外製SaaS</th></tr>
+      <tr><td>アジャイルな機能拡張</td><td class="num">◎（月10〜20機能）</td><td class="num">△（都度開発工数発生）</td><td class="num">△（国内要件は拡張されにくい）</td></tr>
+      <tr><td>日本の商習慣適合</td><td class="num">◎</td><td class="num">◎（オーダーメイド対応可）</td><td class="num">△（Amazon Pay不可等）</td></tr>
+      <tr><td>法改正・ガイドライン対応</td><td class="num">◎（継続対応）</td><td class="num">△（自社対応要）</td><td class="num">△</td></tr>
+      <tr><td>初期・カスタマイズコスト</td><td class="num">○〜◎（リーズナブル）</td><td class="num">△（実装分イニシャル発生）</td><td class="num">○（月額固定＋従量）</td></tr>
+    </table>
+
+    <h3 style="margin-top:20px;">参考：見積概要（SUPER STUDIO社より受領・社外秘）</h3>
+    <table>
+      <tr><th>区分</th><th>主な項目</th><th class="num">金額目安（税別）</th></tr>
+      <tr><td>イニシャル（標準）</td><td>ecforce初期費用・カスタムバッチ処理・chat初期費用等</td><td class="num">約34.8万円</td></tr>
+      <tr><td>イニシャル（オプション：efo/cdp/bi）</td><td>cdpインプリメント費用が中心</td><td class="num">約204万円</td></tr>
+      <tr><td>ランニング（標準）</td><td>ecforce・ma・chat の月額＋トランザクション費用</td><td class="num">約136万円/月</td></tr>
+      <tr><td>ランニング（オプション：cdp/bi/efo）</td><td>データ統合・BI活用</td><td class="num">約61万円〜/月</td></tr>
+    </table>
+    <p class="note">※本見積はSUPER STUDIO社提示の非公開見積であり、社外への転送・共有は控えてください。別途、ドメイン移管・決済再審査・移行元データ出力等で追加費用が発生するケースがある点も留意。</p>
+  </section>
+
+  <!-- 3. 注目機能 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>特に注目すべき3つの機能</h2></div>
+    <p>数あるecforceの機能の中でも、当社のマーケティング課題に直結し、導入効果が特に大きいと見込まれるのは以下の3点です。</p>
+
+    <div class="feature">
+      <span class="fnum">機能①</span>
+      <h3>フォーム一体型LP</h3>
+      <p>LPから購入フォームまでを画面遷移なしで完結させる機能。ページ遷移数の最小化により、購入手続き中の離脱を最小化する。</p>
+
+      <svg viewBox="0 0 860 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;margin:14px 0 6px;font-family:'Hiragino Sans','Noto Sans JP',sans-serif;">
+        <defs>
+          <marker id="arrow-slate" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#3E5A82"/>
+          </marker>
+          <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#2456C9"/>
+          </marker>
+        </defs>
+
+        <!-- 現行フロー ラベル -->
+        <text x="46" y="24" font-size="14" font-weight="700" fill="#0F2A47">現行の購入体験（6ステップ）</text>
+
+        <!-- 6 boxes -->
+        <g font-size="12.5" fill="#0F2A47">
+          <!-- box1 LP -->
+          <rect x="46" y="38" width="112" height="96" rx="6" fill="#EEF2F8" stroke="#B9C2CF"/>
+          <text x="102" y="90" text-anchor="middle" font-weight="700">LP</text>
+
+          <!-- box2 カート画面 -->
+          <rect x="177" y="38" width="112" height="96" rx="6" fill="#EEF2F8" stroke="#B9C2CF"/>
+          <text x="233" y="86" text-anchor="middle">カート</text>
+          <text x="233" y="102" text-anchor="middle">画面</text>
+
+          <!-- box3 ログイン画面 -->
+          <rect x="308" y="38" width="112" height="96" rx="6" fill="#EEF2F8" stroke="#B9C2CF"/>
+          <text x="364" y="86" text-anchor="middle">ログイン</text>
+          <text x="364" y="102" text-anchor="middle">画面</text>
+
+          <!-- box4 新規会員登録画面 -->
+          <rect x="439" y="38" width="112" height="96" rx="6" fill="#EEF2F8" stroke="#B9C2CF"/>
+          <text x="495" y="86" text-anchor="middle">新規会員</text>
+          <text x="495" y="102" text-anchor="middle">登録画面</text>
+
+          <!-- box5 配送先と支払い方法入力確認画面 -->
+          <rect x="570" y="38" width="112" height="96" rx="6" fill="#EEF2F8" stroke="#B9C2CF"/>
+          <text x="626" y="76" text-anchor="middle">配送先と</text>
+          <text x="626" y="92" text-anchor="middle">支払い方法</text>
+          <text x="626" y="108" text-anchor="middle">入力確認画面</text>
+
+          <!-- box6 購入完了 -->
+          <rect x="701" y="38" width="112" height="96" rx="6" fill="#DCE6F7" stroke="#2456C9"/>
+          <text x="757" y="90" text-anchor="middle" font-weight="700">購入完了</text>
+        </g>
+
+        <!-- arrows row1 -->
+        <g stroke="#3E5A82" stroke-width="1.6" marker-end="url(#arrow-slate)">
+          <line x1="158" y1="86" x2="173" y2="86"/>
+          <line x1="289" y1="86" x2="304" y2="86"/>
+          <line x1="420" y1="86" x2="435" y2="86"/>
+          <line x1="551" y1="86" x2="566" y2="86"/>
+          <line x1="682" y1="86" x2="697" y2="86"/>
+        </g>
+
+        <!-- bracket under box2-5 -->
+        <path d="M 177,150 L 177,162 L 682,162 L 682,150" fill="none" stroke="#9AA6B4" stroke-width="1.4"/>
+        <text x="429" y="184" text-anchor="middle" font-size="12.5" fill="#5B6675">
+          この4画面の遷移で、現状は一定数のユーザー離脱が発生していると推定されます（参考値：5割前後）
+        </text>
+
+        <!-- divider -->
+        <line x1="0" y1="212" x2="860" y2="212" stroke="#DEDCD3" stroke-dasharray="3 4"/>
+
+        <!-- ecforceフロー ラベル -->
+        <text x="46" y="240" font-size="14" font-weight="700" fill="#2456C9">ecforce導入後の購入体験（2ステップ）</text>
+
+        <!-- box A：統合LP -->
+        <rect x="46" y="254" width="619" height="112" rx="8" fill="#EAF0FC" stroke="#2456C9" stroke-width="1.4"/>
+        <g font-size="13" fill="#0F2A47" text-anchor="middle">
+          <text x="355" y="288" font-weight="700">LP</text>
+          <text x="355" y="306">会員登録・配送先・支払い方法・確認画面</text>
+          <text x="355" y="324" fill="#5B6675" font-size="11.5">（画面遷移なしで1画面に統合）</text>
+        </g>
+
+        <!-- arrow to 購入完了 -->
+        <line x1="665" y1="310" x2="696" y2="310" stroke="#2456C9" stroke-width="1.8" marker-end="url(#arrow-blue)"/>
+
+        <!-- box B：購入完了 -->
+        <rect x="701" y="254" width="112" height="112" rx="8" fill="#DCE6F7" stroke="#2456C9" stroke-width="1.4"/>
+        <text x="757" y="316" text-anchor="middle" font-weight="700" font-size="13" fill="#0F2A47">購入完了</text>
+      </svg>
+      <p class="note" style="margin-top:2px;">現行6ステップの画面遷移が、ecforceでは実質1〜2ステップに集約されるイメージです。<br>※ブランド体験を大切にする価値観や、確認画面でアップセルを行うために確認画面を表示させる可能性も大</p>
+
+      <div class="kpi-line"><span class="kpi-pill">CVR向上</span><span class="kpi-pill">CPA低減</span></div>
+    </div>
+
+    <div class="feature">
+      <span class="fnum">機能②</span>
+      <h3>確認画面／完了画面でのアップセル・クロスセル</h3>
+      <p>購入直後の最もモチベーションが高いタイミングで、上位商品・関連商品を訴求できる機能。「VC購入者へのC+Dアップセル提案」など、ブランド横断のクロスセル導線を自由に設計できる。</p>
+      <div class="kpi-line"><span class="kpi-pill">クロスセル率向上</span><span class="kpi-pill">C+D転換率向上</span><span class="kpi-pill">客単価UP</span></div>
+    </div>
+
+    <div class="feature">
+      <span class="fnum">機能③</span>
+      <h3>定期購入の注文回数に応じた柔軟な販促物制御</h3>
+      <p>定期購入の継続回数（例：7回目前後の変曲点）に応じて、案内メール・同梱物・オファー内容を出し分けられる。CRM哲学における「解約を気持ちよく受け入れる」設計と、能動的なリテンション施策の両立を、システム側で自動化できる。</p>
+      <div class="kpi-line"><span class="kpi-pill">継続率改善</span><span class="kpi-pill">CRM運用工数削減</span></div>
+    </div>
+  </section>
+
+  <!-- 4. 現状ステータス -->
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>現状のステータス｜フェーズ1：CBD先行導入</h2></div>
+
+    <div class="phase-banner">
+      <span class="flag">進行中</span>
+      <p style="margin:0;">Shopifyでは取り扱いのなかった<b>Lypo-C CBD</b>について、<b>ecforceの一部導入（CBDのみ取り扱い）</b>を決定し、<b>2026年9月8日ローンチ</b>を目標に準備中です。</p>
+    </div>
+
+    <p>このCBD導入は単なる新商品ローンチではなく、<b>Shopify全体のecforceリプレイス計画における「フェーズ1」の実地検証</b>と位置付けています。CBDサイトを通じてecforceの使い勝手・運用工数・機能面の実効性を検証し、その結果をもとに本体サイト（VC・C+D等）のリプレイス可否を判断する設計です。つまり、現状はまだ「全体リプレイスを実行する」段階ではなく、<b>「実行して大丈夫かを検証する」段階</b>にあります。</p>
+  </section>
+
+  <!-- 5. 追い風 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>追い風となっている要因</h2></div>
+    <p>1年前にecforce導入を検討した時点と比べ、以下の3点が全体リプレイスの機運を後押ししています。</p>
+
+    <div class="tailwind-grid">
+      <div class="tailwind">
+        <div class="num">4ブランド</div>
+        <div class="cap">SKINBEAUTY・MINERALion・CBD・C+Ceraが新規ローンチ。ブランド横断のクロスセル必要性が大幅に増加しており、機能②（アップセル・クロスセル）の価値が1年前より格段に高まっている。</div>
+      </div>
+      <div class="tailwind">
+        <div class="num">売上85%</div>
+        <div class="cap">VC・C+Dブランドが占める売上構成比。同ブランドのブランドマネージャーである坪井さんが導入に前向きであり、事業の中核を担うキーパーソンの後押しが得られている。</div>
+      </div>
+      <div class="tailwind">
+        <div class="num">機運の醸成</div>
+        <div class="cap">上記2点が重なり、社内の全体リプレイスに対する温度感が1年前より前向きに変化してきている。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. スケジュール -->
+  <section>
+    <div class="sec-head"><span class="sec-num">06</span><h2>全体ロードマップ</h2></div>
+    <p>倉庫システムのリプレイス（2027年3月頃）とカートリプレイスの時期が重ならないよう、あえてタイミングを分けて設計しています。</p>
+
+    <div class="timeline">
+      <div class="t-item milestone">
+        <div class="when">2026年9月8日（目標）</div>
+        <div class="what">フェーズ1：CBDサイトのecforceローンチ</div>
+        <div class="detail">Lypo-C CBDのみを対象に、ecforceでの新サイトを先行公開。</div>
+      </div>
+      <div class="t-item">
+        <div class="when">2026年9月〜2027年2月（約半年間）</div>
+        <div class="what">CBDサイトでの実地検証期間</div>
+        <div class="detail">ecforceで何ができるか、CVR・クロスセル・CRM運用面を含めテスト検証。</div>
+      </div>
+      <div class="t-item milestone">
+        <div class="when">2027年2月まで</div>
+        <div class="what">本体サイト（VC・C+D等）の全面リプレイス可否を判断</div>
+        <div class="detail">検証結果をもとに経営として意思決定。ここが唯一の「審議ポイント」となる見込み。</div>
+      </div>
+      <div class="t-item">
+        <div class="when">2027年3月頃</div>
+        <div class="what">（参考）倉庫システムのリプレイス</div>
+        <div class="detail">カートリプレイスとは意図的に時期を分離し、同時多発的な混乱を回避。</div>
+      </div>
+      <div class="t-item">
+        <div class="when">2027年4月〜</div>
+        <div class="what">予算組・本体サイトリプレイスのプロジェクト開始</div>
+        <div class="detail">全面リプレイスの意思決定がなされた場合、正式プロジェクトとして始動。</div>
+      </div>
+      <div class="t-item milestone">
+        <div class="when">2027年秋頃</div>
+        <div class="what">Shopify全体からecforceへのリプレイス完了</div>
+        <div class="detail">本体サイトを含め、Lypo-C事業全体のカート基盤をecforceに統一。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 留意事項 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">07</span><h2>移行方針・留意事項</h2></div>
+
+    <div class="memo">
+      <div class="rt">新サイトのドメインについて</div>
+      リプレイス後の新サイトは、現在休眠させている<b>「lypo-c.jp」</b>を使用する想定です。ここに新サイトを立ち上げ、既存顧客を段階的に移行していきます。
+    </div>
+
+    <div class="memo">
+      <div class="rt">既存Shopifyサイトの扱い（顧客体験への配慮）</div>
+      既存のShopifyサイトは<b>noindexとした上で当分のあいだ残置</b>します。段階的な移行を基本とし、Shopifyから新サイトへまだ移行していない顧客についても、定期購入であれば<b>当面は継続的に注文・出荷される状態を維持</b>する方針です。
+    </div>
+
+    <div class="memo">
+      <div class="rt">決済データの移行について</div>
+      Shopifyペイメント利用時、カードデータ自体はecforce側に移行できない仕様のため、決済情報の移行を伴わない切替アプローチ（メール等での定期購入切替誘導、自動ログイン機能の活用等）の実績が他社事例としてある。本体移行時は同様の設計を検討する。
+    </div>
+
+    <div class="memo">
+      <div class="rt">別途費用が発生し得るケース</div>
+      ドメイン移管、メールサーバの契約変更、決済代行会社側の決済データ再出力・再審査（1ヶ月以上を要する場合あり）、移行元カートからのデータ出力不足時の補正対応等は、当社負担での追加費用・工数が発生する可能性がある。
+    </div>
+  </section>
+
+  <!-- 8. まとめ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">08</span><h2>まとめ</h2></div>
+    <p>Shopifyは都度購入型のECに強みを持つプラットフォームですが、当社の主力である定期リピート通販の領域では、ecforceを選択することでマーケティング面でできることの幅が大きく広がると見込んでいます。今後、新商品や売上規模がさらに拡大する前に、この可能性を検証しておくことが得策と考え、まずは影響範囲の小さいCBDブランドを対象に先行導入を進めています。新規4ブランドの立ち上がりとキーパーソンの後押しにより、全体リプレイスへの機運は高まっていますが、意思決定自体は<b>CBDサイトでの半年間の実地検証結果を踏まえ、2027年2月を目処に改めて行う</b>方針です。引き続き進捗を随時共有します。</p>
+  </section>
+
+  <footer>
+    株式会社スピック　コンシューマー本部／事業基盤本部　社内共有資料｜取り扱いにご注意ください
+  </footer>
+
+</div>
+</body>
+</html>

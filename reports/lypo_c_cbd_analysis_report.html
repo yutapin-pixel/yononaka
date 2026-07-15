@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Lypo-C CBD 拡大戦略分析レポート｜デプスインタビュー グループD（13名）</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg:     #fafaf9;
+  --card:   #fff;
+  --border: #e7e5e4;
+  --text:   #1c1917;
+  --muted:  #78716c;
+  --accent: #7ED8A0; /* CBDはハーブ系グリーンをアクセントに */
+
+  --green:  #16a34a;
+  --red:    #dc2626;
+  --blue:   #2563eb;
+
+  --cat-a: #7ED8A0;
+  --cat-b: #FF7A30;
+  --cat-c: #C4934A;
+  --cat-d: #FF6B9D;
+  --cat-e: #5BC882;
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.7;
+}
+.wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+/* ヘッダー */
+.hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 3px solid var(--text);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.hdr h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin: 0; }
+.hdr .meta { font-size: 13px; color: var(--muted); }
+
+/* セクションタイトル */
+.stitle {
+  font-size: 15px; font-weight: 700;
+  margin: 32px 0 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.stitle::before {
+  content: '';
+  display: inline-block;
+  width: 4px; height: 16px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.ssub { font-size: 12px; color: var(--muted); margin: -6px 0 14px 12px; }
+
+/* サマリーカード */
+.sg { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.sc { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; }
+.sc .lb { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.sc .vl { font-size: 28px; font-weight: 700; letter-spacing: -1px; margin-top: 4px; }
+.up { color: var(--green); font-weight: 600; }
+.dn { color: var(--red); font-weight: 600; }
+.rf { color: var(--blue); font-weight: 600; }
+
+/* KPIカード */
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 12px 0; }
+.kpi { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; text-align: center; }
+.kpi .kl { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi .kv { font-size: 21px; font-weight: 700; margin-top: 4px; }
+.kpi .ks { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* バッジ */
+.badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; }
+.badge.a { background: #dcfce7; color: #15803d; }
+.badge.b { background: #fef2f2; color: #dc2626; }
+.badge.n { background: #eff6ff; color: #2563eb; }
+
+/* テーブル */
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 8px; }
+thead th { background: #f5f5f4; font-weight: 600; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.3px; color: var(--muted); padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+tbody td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #f5f5f4; vertical-align: top; }
+tr.tot { background: #f5f5f4; font-weight: 700; }
+.tbl-wrap { overflow-x: auto; }
+
+/* 考察ブロック */
+.insight-block { margin-bottom: 14px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.insight-block-hdr {
+  background: #f5f5f4; padding: 10px 16px; cursor: pointer;
+  display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700;
+}
+.insight-icon { font-size: 14px; }
+.insight-chevron { margin-left: auto; transition: transform .2s; font-size: 11px; color: var(--muted); }
+.insight-chevron.open { transform: rotate(180deg); }
+.insight-body { max-height: 0; overflow: hidden; transition: max-height .25s ease; padding: 0 16px; font-size: 13px; }
+.insight-body.open { max-height: 2000px; padding: 12px 16px; }
+.insight-body ul { margin: 0; padding-left: 18px; }
+.insight-body li { margin-bottom: 10px; }
+.insight-tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10.5px; font-weight: 700; margin-right: 6px; }
+.itag-bad  { background: #fef2f2; color: #dc2626; }
+.itag-warn { background: #fff7ed; color: #c2410c; }
+.itag-ok   { background: #dcfce7; color: #15803d; }
+.itag-ref  { background: #eff6ff; color: #2563eb; }
+.itag-watch{ background: #fefce8; color: #a16207; }
+
+/* 注目ポイント */
+.notes { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 14px 18px; font-size: 13px; line-height: 1.8; margin-bottom: 16px; }
+.notes .nt { font-weight: 700; font-size: 12px; color: #92400e; margin-bottom: 6px; }
+
+/* 重要発見カード */
+.finding-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 8px; }
+.finding-card { border-radius: 8px; padding: 16px; border: 1px solid var(--border); background: var(--card); border-top: 4px solid var(--muted); }
+.fc-red    { border-top-color: var(--red); }
+.fc-amber  { border-top-color: #f59e0b; }
+.fc-orange { border-top-color: #f97316; }
+.fc-green  { border-top-color: var(--green); }
+.fc-blue   { border-top-color: var(--blue); }
+.fc-slate  { border-top-color: #64748b; }
+.fc-index { font-size: 10.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+.fc-metric { font-size: 26px; font-weight: 700; letter-spacing: -1px; margin-bottom: 4px; }
+.fc-title { font-size: 13.5px; font-weight: 700; margin-bottom: 6px; }
+.fc-body { font-size: 12.5px; color: var(--text); margin-bottom: 8px; }
+.fc-insight { font-size: 12.5px; font-weight: 600; color: var(--muted); border-top: 1px dashed var(--border); padding-top: 8px; }
+
+/* スコアカード */
+.score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.score-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.score-card .sc-axis { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.score-card .sc-name { font-size: 13px; font-weight: 700; margin: 4px 0; }
+.score-card .sc-val { font-size: 20px; font-weight: 700; }
+.sc-v-ok   { background: #dcfce7; color: #15803d; }
+.sc-v-warn { background: #fff7ed; color: #c2410c; }
+.sc-v-bad  { background: #fef2f2; color: #dc2626; }
+.sc-v-ref  { background: #eff6ff; color: #2563eb; }
+.sc-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10.5px; font-weight: 700; margin-top: 6px; }
+.sc-reason { font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+
+/* 提言カード */
+.action-card { border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; background: var(--card); }
+.action-card .a-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.action-card .a-pri { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+.pri-high { background: #fef2f2; color: #dc2626; }
+.pri-mid  { background: #fff7ed; color: #c2410c; }
+.pri-low  { background: #eff6ff; color: #2563eb; }
+.action-card .a-title { font-size: 14px; font-weight: 700; }
+.action-card .a-body { font-size: 13px; color: var(--text); }
+.action-card .a-evidence { font-size: 12px; color: var(--muted); margin-top: 6px; font-style: normal; border-left: 3px solid var(--border); padding-left: 10px; }
+
+.persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.persona-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+.persona-card h4 { margin: 0 0 8px; font-size: 14px; }
+.persona-card .p-quote { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 8px; border-left: 3px solid var(--accent); padding-left: 8px; }
+.persona-card ul { margin: 8px 0 0; padding-left: 18px; font-size: 12.5px; }
+.persona-card li { margin-bottom: 4px; }
+
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+
+/* フッター */
+.footer { margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+
+@media(max-width:768px){
+  .sg { grid-template-columns: 1fr; }
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .finding-grid { grid-template-columns: 1fr; }
+  .score-grid { grid-template-columns: repeat(2, 1fr); }
+  .persona-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hdr">
+    <h1>Lypo-C CBD 拡大戦略分析レポート</h1>
+    <div class="meta">デプスインタビュー グループD（Lypo-C CBD利用実態調査・13名）｜実施期間：2026年6月29日〜7月10日｜作成日：2026-07-10</div>
+  </div>
+
+  <div class="notes">
+    <div class="nt">📌 このレポートのスコープ</div>
+    本レポートは、Lypo-C CBD利用者13名へのデプスインタビュー（グループD）を主データソースとし、定量調査アンケート（N=5,428・2026年4月実施）のCBD関連設問を補助的に参照して作成した。目的は「現状の課題は何か」「どうすればより多くの顧客にLypo-C CBDを利用してもらえるか」を明らかにすること。グループA〜C（美容/健康・OGS起点の分析軸）とは商品ライン・購買文脈が異なるため、本レポートではグループD独自の軸（頓服か定期か／訴求軸の妥当性／ブランド起点かカテゴリ起点か）で分析している。
+  </div>
+
+  <div class="stitle">サマリー</div>
+  <div class="ssub">最も構造的なインパクトを持つ2つの事実</div>
+  <div class="sg">
+    <div class="sc">
+      <div class="lb">CBD認知度 vs 実利用率のギャップ</div>
+      <div class="vl">51.4% <span style="font-size:16px; color:var(--muted); font-weight:500;">→</span> 3.7%</div>
+      <div class="sb"><span class="dn">認知はあるが利用に至っていない層が大半</span>｜定量調査N=5,428のうちCBDを「詳しく／ある程度知っている」51.4%に対し、実利用者はわずか200名（3.7%）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">インタビュー対象13名の利用実態</div>
+      <div class="vl">9 / 13名</div>
+      <div class="sb"><span class="dn">「頓服・スポット利用」が主流</span>｜13名中9名（約69%）が「毎日ではなく必要な時だけ」使用。定期・日課的利用はわずか2名、離脱・卒業は2名</div>
+    </div>
+  </div>
+
+  <div class="stitle">主要指標（グループD・13名 + 定量調査補足）</div>
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kl">CBD認知度（詳しく＋ある程度）</div>
+      <div class="kv">51.4%</div>
+      <div class="ks">4商品中で高水準（定量調査N=5,428）</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">実利用率（全体比）</div>
+      <div class="kv">3.7%</div>
+      <div class="ks">200名。Shopify非取扱のため実態はモール・クリニック経由が中心</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">頓服・スポット利用比率</div>
+      <div class="kv">69%</div>
+      <div class="ks">13名中9名。ビタミンC系（毎日摂取前提）とは異なる消費構造</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">効果実感（自己申告平均）</div>
+      <div class="kv">約3.8 / 5</div>
+      <div class="ks">効果を数値化した5名の平均（5・3・5・3・3）</div>
+    </div>
+  </div>
+
+  <div class="stitle">重要発見</div>
+  <div class="ssub">13名のインタビューから浮かび上がった6つの構造的発見</div>
+  <div class="finding-grid">
+
+    <div class="finding-card fc-red">
+      <div class="fc-index">発見①｜チャネル構造</div>
+      <div class="fc-metric">Shopify非取扱</div>
+      <div class="fc-title">自社公式サイトでCBDを販売できていない</div>
+      <div class="fc-body">決済代行の契約制約（カナダの決済システムを利用しており、CBDを扱うと契約解除リスクがある）により、公式ECサイト（Shopify）でLypo-C CBDを取り扱えていない。結果、顧客は楽天・Amazon・Qoo10・ふるさと納税・美容室経由の非正規流通など、分散した非公式チャネルで購入せざるを得ない状況にある（HMさん・SCさん・NAさん等で確認）。</div>
+      <div class="fc-insight">→ 決済スキームの見直し、またはCBD専用の別カート導入を検討し、公式サイトでの安定販売・定期便提供を実現することが最優先課題。</div>
+    </div>
+
+    <div class="finding-card fc-red">
+      <div class="fc-index">発見②｜供給安定性</div>
+      <div class="fc-metric">現在も欠品中</div>
+      <div class="fc-title">在庫切れが継続顧客の離脱リスクを高めている</div>
+      <div class="fc-body">インタビュー期間中（2026年6〜7月）だけでもSCさん・SN（33歳）さん・SWさんが「現在在庫切れ」と回答し、9月入荷を待っている状態。定期便の仕組みがないため、都度買いの顧客ほど欠品時にそのまま離脱しやすい構造になっている。</div>
+      <div class="fc-insight">→ 欠品期間中の代替導線（入荷通知登録・関連商品への一時誘導）を整備し、離脱を防ぐ設計が必要。</div>
+    </div>
+
+    <div class="finding-card fc-amber">
+      <div class="fc-index">発見③｜利用パターン</div>
+      <div class="fc-metric">9/13名が頓服型</div>
+      <div class="fc-title">「毎日摂取」ではなく「必要な時だけ」が主流</div>
+      <div class="fc-body">肩こり・気圧による痛み（KKさん）、緊張・ストレス（NAさん・YAさん）、PMS（SNさん33歳・SWさん）、過集中（MAさん）など、症状発生時に頼る「頓服」的な使い方が大半。ビタミンC系（VC・C+D）が前提とする「毎日摂取・定期購入」のビジネスモデルとは根本的に消費構造が異なる。</div>
+      <div class="fc-insight">→ 定期購入への誘導ではなく、頓服利用に最適化した少量・低価格パッケージ（例：14本入り程度）の新設を検討する。</div>
+    </div>
+
+    <div class="finding-card fc-amber">
+      <div class="fc-index">発見④｜訴求軸</div>
+      <div class="fc-metric">睡眠は一部分のみ</div>
+      <div class="fc-title">当初の「睡眠」訴求は実態の一面に過ぎない</div>
+      <div class="fc-body">実際のニーズは、疼痛緩和（KKさん）、メンタル・緊張緩和（NAさん・YAさん・KNさん）、PMS（SNさん33歳・SWさん）、過集中対策（MAさん）、産後の寝つき・覚醒サポート（TWさん）、アレルギー症状緩和（DUさん）と多岐にわたる。単一の「睡眠」訴求では、これらの多様なニーズを持つ顧客層に十分にリーチできていない可能性が高い。</div>
+      <div class="fc-insight">→ CEP（カテゴリー購入機会）別に「痛み・こり」「ストレス・緊張」「PMS」「集中力」など複数の訴求コンテンツを用意し、顧客が自分の悩みに応じて選べる導線を整備する。</div>
+    </div>
+
+    <div class="finding-card fc-orange">
+      <div class="fc-index">発見⑤｜購入起点</div>
+      <div class="fc-metric">大半がブランド起点</div>
+      <div class="fc-title">CBDというカテゴリではなく「Lypo-Cだから」で選ばれている</div>
+      <div class="fc-body">NAさんは「他社CBD商品との比較検討は一切していない。ずっとLypo-Cを飲んでいたので、この会社が出すんだったら間違いない」と明言。SNさん（33歳）・KNさん・SWさんもファンミーティング等のリアル接点でCBDを知り、ブランドへの信頼を根拠に購入している。CBD自体を積極比較したのはKKさん・YAさん・DUさんなど少数派。</div>
+      <div class="fc-insight">→ CBD単体でのカテゴリ訴求よりも、「Lypo-Cを信頼している既存顧客への横展開」が引き続き最も効率的な獲得チャネルになりうる。既存顧客のCRM接点（LINE・メール・ファンミーティング）を強化する。</div>
+    </div>
+
+    <div class="finding-card fc-blue">
+      <div class="fc-index">発見⑥｜周辺ニーズ</div>
+      <div class="fc-metric">経口＋経皮の併用</div>
+      <div class="fc-title">塗るCBD・ロールオンなど経皮タイプの併用ニーズがある</div>
+      <div class="fc-body">NAさんはLypo-C CBD（経口）と別にCBD配合マグネシウムクリーム（経皮）を首・肩・腰のコリ対策として併用。YAさんもLypo-C CBDとロールオンタイプを併用している。経口摂取だけでは物理的な痛みへの即効性を感じにくいというニーズが背景にある。</div>
+      <div class="fc-insight">→ 経皮タイプ（クリーム・ロールオン等）のライン拡張は、既存経口ユーザーのクロスセル機会として有望。</div>
+    </div>
+
+    <div class="finding-card fc-red">
+      <div class="fc-index">発見⑦｜顧客の悩みの深さ</div>
+      <div class="fc-metric">臨床レベルの悩みが混在</div>
+      <div class="fc-title">VC（美容目的84%）とは異質な、深刻な悩みを抱える顧客が一定数存在する</div>
+      <div class="fc-body">HMさんは双極性障害の診断を受け精神科通院中で、「死にたいぐらい思う」という発言もあった。しかも処方薬を医師に無断で自己調整・一部中断し、CBDを「薬未満」の代替として使用している。DUさんはデュピクセント（生物学的製剤）によるアレルギー治療の傍らでCBDを補助的に使用、NAさんは前職の高ストレス環境で産業医面談でも解決に至らなかった経験を自己対処していた、YAさんはアスピリンアレルギーで西洋薬全般を避ける健康観を持つ。Lypo-C本体（VC・C+D）が「美容・憧れ」を軸にした比較的ライトな文脈で語られるのに対し、CBDは治療中・自己管理の難しい深刻な悩みと隣り合わせにある点で、他商品にはない質的なギャップがある。</div>
+      <div class="fc-insight">→ VCと同じ「憧れ」「華やかさ」のトーンでCBDを訴求することは適さない。「治療の代替ではない」ことを明示しつつ、深刻な症状には医療機関受診を促す誠実な訴求設計が必要。薬機法・景表法上のチェック（効能効果を匂わせる表現）もVCより一段厳格に運用すべき。</div>
+    </div>
+
+  </div>
+
+  <div class="stitle">対象者一覧（グループD・13名）</div>
+  <div class="ssub">属性・利用実態・訴求ニーズ・購入起点・購入チャネルの一覧</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>イニシャル</th><th>年代・性別</th><th>職業</th><th>利用パターン</th><th>主な訴求ニーズ</th><th>購入起点</th><th>効果実感<br>(5段階)</th><th>主な購入チャネル／状況</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>KK</td><td>49歳・男性</td><td>IT系会社員</td><td><span class="badge b">頓服</span></td><td>肩・首こり／気圧変化による痛み</td><td>ブランド信頼（田中みな実きっかけでLypo-C本体を先に購入）</td><td>5</td><td>公式サイトで偶然発見・購入継続中</td></tr>
+      <tr><td>HM</td><td>51歳・女性</td><td>パート</td><td><span class="badge b">頓服</span>（現在は夫が使用）</td><td>メンタル不調（本人は双極性障害治療中）／夫の適応障害</td><td>美容室でのサンプル紹介</td><td>本人評価未実施</td><td>Qoo10（非正規・箱なし）</td></tr>
+      <tr><td>KN</td><td>44歳・女性</td><td>経理事務</td><td><span class="badge b">ほぼ未消費</span>（頓服だが出番少）</td><td>更年期の予防的関心・緊張緩和</td><td>ファンミーティングでのサンプル</td><td>未評価（味の壁で消費進まず）</td><td>サンプル保有のみ・自己購入なし</td></tr>
+      <tr><td>SN（41）</td><td>41歳・女性</td><td>臨床工学技士</td><td><span class="badge n">準日課</span>（就寝前）</td><td>自律神経の乱れ・ストレス</td><td>インスタでフォローするモデルの利用</td><td>3</td><td>定期便で2〜3箱まとめ買い</td></tr>
+      <tr><td>SC</td><td>39歳</td><td>不動産営業</td><td><span class="badge b">頓服</span>（就寝前寄り）</td><td>禁煙代替→入眠サポートに収束</td><td>ブランド信頼＋コスパ重視</td><td>体感重視・数値評価せず</td><td>都度購入・現在在庫切れで次回待ち</td></tr>
+      <tr><td>DU</td><td>40歳・女性</td><td>プロダクトデザイナー</td><td><span class="badge b">1回のみ</span>（継続せず）</td><td>アレルギー症状緩和→治療成功でニーズ消失</td><td>元業務委託としての製品信頼</td><td>効果実感わかりにくいと指摘</td><td>1回購入のみ・優先順位低下</td></tr>
+      <tr><td>SN（33）</td><td>33歳・女性</td><td>輸入雑貨・会社員</td><td><span class="badge b">スポット</span>（PMS・ストレス時）</td><td>PMS（生理前の不安感・不眠）</td><td>フェムテックイベント＋ブランド信頼</td><td>体感重視・数値評価せず</td><td>スポット購入・現在品切れ中</td></tr>
+      <tr><td>NA</td><td>36歳・女性</td><td>カスタマーサポート</td><td><span class="badge b">頓服</span>（緊張時・就寝前）</td><td>前職ストレスによる寝つき・緊張緩和</td><td>ブランド信頼の延長（カテゴリ比較なし）</td><td>5</td><td>楽天・ふるさと納税の返礼品</td></tr>
+      <tr><td>MA</td><td>40歳・女性</td><td>コーチ（個人事業主）</td><td><span class="badge n">定期購入</span></td><td>過集中のセルフマネジメント</td><td>自ら検索・比較検討</td><td>3（他成分と混同あり）</td><td>定期購入継続中</td></tr>
+      <tr><td>NY</td><td>49歳・女性</td><td>無職（元看護師）</td><td><span class="badge b">時々・お守り的</span></td><td>更年期の予防的関心・リラックス</td><td>発売メール通知でオイル型から切替</td><td>3</td><td>継続購入・使わない期間があっても不安なし</td></tr>
+      <tr><td>SW</td><td>35歳・女性</td><td>データオペレーション</td><td><span class="badge b">頓服</span>（月3〜4包）</td><td>PMS・興奮による不眠</td><td>ファンミーティング等のリアル接点</td><td>体感重視・数値評価せず</td><td>楽天・2月購入後欠品で9月入荷待ち</td></tr>
+      <tr><td>TW</td><td>29歳・女性</td><td>フリーランス</td><td><span class="badge n">卒業済み</span>（残在庫を活用）</td><td>産後不眠→現在は早朝の覚醒サポート</td><td>知人（サプリ詳しい友人）紹介</td><td>体感重視・数値評価せず</td><td>残り在庫を早朝・旅行前に使用</td></tr>
+      <tr><td>YA</td><td>43歳・女性</td><td>航空業界管理職</td><td><span class="badge b">頓服</span>（頭痛・メンタル・生理前）</td><td>頭痛（鎮痛剤忌避）・メンタル低下</td><td>職場（CA）経由の認知＋購買チャネルへの信頼</td><td>体感あり・数値評価せず</td><td>Lypo-C CBD＋ロールオン併用継続中</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="stitle">考察：4つのテーマ別ディープダイブ</div>
+
+  <div class="insight-block">
+    <div class="insight-block-hdr" onclick="toggleInsight(this)">
+      <span class="insight-icon">💊</span>
+      <span class="insight-label">テーマ①｜摂取パターン：定期か頓服か</span>
+      <span class="insight-chevron open">▼</span>
+    </div>
+    <div class="insight-body open">
+      <ul>
+        <li><span class="insight-tag itag-bad">要警戒</span><strong>13名中9名（約69%）が「頓服・スポット利用」型</strong> ─ 肩こり・気圧変化の痛み（KKさん）、緊張・ストレス（NAさん・YAさん）、PMS（SNさん33歳・SWさん）、過集中（MAさん）と、症状が出た時にだけ使う利用がほとんど。これはVC・C+Dが前提とする「毎日摂取・定期購入」モデルとは根本的に異なる消費構造であり、既存の定期便中心の販売設計とミスマッチが生じている。</li>
+        <li><span class="insight-tag itag-warn">注視</span><strong>準日課的利用は2名のみ（SN41さん・MAさん）</strong> ─ 毎晩の就寝前摂取や定期購入で継続しているのはごく一部。この2名でも効果実感は5段階中3程度にとどまり、劇的な体感ではなく「習慣化できたら続ける」レベル。</li>
+        <li><span class="insight-tag itag-ok">好材料</span><strong>離脱後も「お守り」として残す傾向</strong> ─ TWさんは「卒業」と述べつつも在庫を早朝・旅行前に使い続けており、DUさんも継続はしていないが製品自体への不信はない。ブランドへの信頼は保たれたまま、単に「今は優先順位が低い」状態であるため、再アクティベーションの余地がある。</li>
+        <li><span class="insight-tag itag-ref">参考</span><strong>定量調査の「頓服」設問（全商品共通5.2%）とは切り分けが必要</strong> ─ 定量調査の頓服比率は全商品共通集計であり、CBD単体の実態（本インタビューでは69%）とは大きく異なる。CBDは他商品と別軸で語るべき商材であることが定性・定量の両面から裏付けられた。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="insight-block">
+    <div class="insight-block-hdr" onclick="toggleInsight(this)">
+      <span class="insight-icon">🎯</span>
+      <span class="insight-label">テーマ②｜訴求軸の妥当性：睡眠訴求は正しかったか</span>
+      <span class="insight-chevron open">▼</span>
+    </div>
+    <div class="insight-body open">
+      <ul>
+        <li><span class="insight-tag itag-bad">要警戒</span><strong>「睡眠」に明確に紐づくのは13名中2〜3名程度</strong> ─ SN（41歳）さんが就寝前摂取で自律神経を意識、TWさんが産後不眠対策として開始（ただし現在は覚醒用途にシフト）。当初の睡眠訴求だけでは、疼痛・メンタル・PMS・過集中・アレルギーといった残り大半のニーズを取りこぼしている。</li>
+        <li><span class="insight-tag itag-warn">注視</span><strong>「痛み・こり」への実用的な鎮痛代替ニーズが明確に存在</strong> ─ KKさんは気圧変化による肩・首の痛みに対し、ロキソニン・カロナールからの置き換えとして効果実感5/5と高評価。「毎日ではなく、痛い時だけ」というニーズは、既存の鎮痛剤ユーザー層への訴求機会になりうる。</li>
+        <li><span class="insight-tag itag-warn">注視</span><strong>PMS・女性特有の周期的な不調ニーズも明確</strong> ─ SNさん（33歳）・SWさんともに生理前の不安感・不眠に対して使用しており、定量調査での美容・健康の二軸に加えて「周期的な不調ケア」という新しい訴求軸を提示できる可能性がある。</li>
+        <li><span class="insight-tag itag-ok">好材料</span><strong>「メンタルのお守り」という位置づけ自体には広い受容性がある</strong> ─ NAさん・YAさん・KNさんなど、明確な症状がなくても「気持ちが和らぐお守り」として受け入れられている。効果の有無よりも「安心感」自体に価値を感じる顧客層が一定数存在する。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="insight-block">
+    <div class="insight-block-hdr" onclick="toggleInsight(this)">
+      <span class="insight-icon">🏷️</span>
+      <span class="insight-label">テーマ③｜購入の起点：ブランド起点かカテゴリ起点か</span>
+      <span class="insight-chevron open">▼</span>
+    </div>
+    <div class="insight-body open">
+      <ul>
+        <li><span class="insight-tag itag-ok">好材料</span><strong>大多数がブランド起点で購入している</strong> ─ NAさんは「他社CBDとの比較は一切していない。この会社が出すなら間違いない」と明言。SNさん（33歳）・KNさん・SWさんもファンミーティング等のリアル接点でLypo-Cブランドの延長として購入に至っている。CBDというカテゴリ自体への強いこだわりを持つ顧客は少数派（KKさん・YAさん・DUさんなど）。</li>
+        <li><span class="insight-tag itag-ref">参考</span><strong>ファンミーティング・ポップアップイベントが極めて強力な認知チャネルになっている</strong> ─ KNさん・SNさん（33歳）・SWさん・YAさん・NAさんなど、13名中5名以上がリアルイベント経由でCBDを認知。オンライン広告よりもリアル接点の効果が高いことが示唆される。</li>
+        <li><span class="insight-tag itag-bad">要警戒</span><strong>サンプル取得後、購入・継続まで至らないケースがある</strong> ─ KNさんはファンミーティングから約1年経った今もサンプルの大半が未消費のまま。サンプル配布だけでは購入導線として不十分であり、使い方・タイミングを具体的に伝えるフォローアップが欠けている。</li>
+        <li><span class="insight-tag itag-warn">注視</span><strong>CBD＝大麻由来という漠然とした不安が残る</strong> ─ KKさん・KNさんとも「SPICが出しているから大丈夫」というブランド信頼で不安を乗り越えているが、CBD/CBNの違いや合法性についての理解は限定的。ブランド信頼に頼り切らず、安全性説明を簡潔に補強する余地がある。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="insight-block">
+    <div class="insight-block-hdr" onclick="toggleInsight(this)">
+      <span class="insight-icon">🛒</span>
+      <span class="insight-label">テーマ④｜チャネル・在庫・価格の構造的課題</span>
+      <span class="insight-chevron open">▼</span>
+    </div>
+    <div class="insight-body open">
+      <ul>
+        <li><span class="insight-tag itag-bad">要警戒</span><strong>公式サイト（Shopify）でCBDを取り扱えない</strong> ─ 決済代行の契約制約により、自社ECの主戦場である公式サイトでCBDを販売できず、楽天・Amazon・Qoo10・ふるさと納税・美容室経由の非正規流通など、購入導線が分散している。定期便の提供もできていない。</li>
+        <li><span class="insight-tag itag-bad">要警戒</span><strong>現在も欠品中で、9月まで入荷見込みなし</strong> ─ インタビュー実施時点（2026年6〜7月）で複数名が「在庫切れ」「品切れ中」と回答。都度買いが中心のため、欠品＝そのまま離脱に直結しやすい。</li>
+        <li><span class="insight-tag itag-warn">注視</span><strong>頓服利用に対して現行パッケージ・価格が割高感を生んでいる</strong> ─ KKさんは「頓服利用にふさわしい14本程度・4,000円前後の少量パッケージがあれば導入しやすい」と提案。KNさんも9本入りサンプルを1年経っても消費しきれておらず、使用ペースと容量のミスマッチが機会損失を生んでいる。</li>
+        <li><span class="insight-tag itag-ref">参考</span><strong>経皮タイプ（クリーム・ロールオン）の併用ニーズがある</strong> ─ NAさん・YAさんともに経口のLypo-C CBDと他社の経皮製品（クリーム・ロールオン）を併用しており、痛みへの即効性を求める場面では経皮タイプが選ばれている。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stitle">代表的な3つの顧客像（簡易ペルソナ）</div>
+  <div class="ssub">13名のインタビューから浮かび上がった主要な利用シーン。最終的なペルソナ設計は全グループのデータを統合した別分析で実施予定</div>
+  <div class="persona-grid">
+    <div class="persona-card">
+      <h4><span class="dot" style="background:var(--cat-b)"></span>①「痛み・こり」頓服型</h4>
+      <ul>
+        <li>肩こり・首こり・気圧変化による体調不良に対する鎮痛剤代替</li>
+        <li>効果実感は高い（5段階中5評価あり）</li>
+        <li>常用薬（ロキソニン等）への抵抗感から乗り換え</li>
+        <li>頓服利用にふさわしい少量パッケージを望む</li>
+      </ul>
+      <div class="p-quote">「あの、痛み止めとか飲んでしのいでたこともあったんですけど、こっちの方がいいなって。」（KKさん）</div>
+    </div>
+    <div class="persona-card">
+      <h4><span class="dot" style="background:var(--cat-d)"></span>②「メンタル・お守り」型</h4>
+      <ul>
+        <li>緊張・ストレス・生理前の不安感に対する精神的な安心材料</li>
+        <li>効果の有無より「気持ちが和らぐ」ことに価値を感じる</li>
+        <li>ブランド信頼を根拠に購入（カテゴリ比較なし）</li>
+        <li>ポーチ・携帯性を重視する場面が多い</li>
+      </ul>
+      <div class="p-quote">「ずっとLypo-Cを飲んでいたので、この会社が出すんだったら間違いないだろう」（NAさん）</div>
+    </div>
+    <div class="persona-card">
+      <h4><span class="dot" style="background:var(--cat-e)"></span>③「離脱・卒業」型</h4>
+      <ul>
+        <li>明確な課題（産後不眠・アレルギー等）が解消・治療で軽減し優先度低下</li>
+        <li>ブランドへの不信はなく、残った在庫はお守り的に継続利用</li>
+        <li>再アクティベーションの余地がある層</li>
+      </ul>
+      <div class="p-quote">「デュピクセントの治療がうまくいって、今は（CBDの）優先順位が下がっている」（DUさん・要約）</div>
+    </div>
+  </div>
+
+  <div class="stitle">留意点：悩みの深さという、VC（本体商品）との質的な違い</div>
+  <div class="ssub">CBDは「美容の憧れ」文脈とは異なる顧客層を含んでおり、マーケティングのトーン設計に特有の注意が必要</div>
+
+  <div class="notes">
+    <div class="nt">📌 本体商品（VC・C+D）との構造的な違い</div>
+    定量調査ではLypo-C全体の摂取目的の<strong>84%が「美容寄り」</strong>であり、「田中みな実さん起用」に代表される「憧れ」を軸としたポジティブな文脈が本体商品の主戦場になっている。一方、グループD（CBD）の13名を見ると、<strong>臨床レベル・治療中の深刻な悩みを開示した対象者が複数含まれている</strong>。軽い「気分転換」「お守り」レベルの利用者と、こうした層が同じ商品の中に混在している点が、CBD特有の構造であり、VCと同じ訴求トーンをそのまま流用できない理由になっている。
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead>
+      <tr><th>対象者</th><th>開示された悩みの深さ</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>HMさん</td><td>双極性障害の診断を受け精神科で治療中。「死にたいぐらい思うぐらい」という発言があった時期を経験。<strong>処方薬を医師に内緒で自己判断により減薬・一部中断</strong>しており、CBDを「薬未満」の位置づけで使用。夫も適応障害で治療中で、CBDを譲渡している。</td></tr>
+      <tr><td>DUさん</td><td>アレルギー症状に対しデュピクセント（生物学的製剤）による本格的な医療治療を受けており、CBDはその治療の隙間を埋める補助的な位置づけだった。</td></tr>
+      <tr><td>NAさん</td><td>前職の高ストレス環境で、産業医面談を受けても「根本的解決に至らなかった」経験があり、転職までの自己対処としてCBDに頼っていた。</td></tr>
+      <tr><td>YAさん</td><td>アスピリンアレルギーの既往があり、頭痛薬を含む西洋薬全般を避ける健康観を持つ。医学的な制約から鎮痛剤という選択肢自体を持てず、CBDに行き着いている。</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="insight-block">
+    <div class="insight-block-hdr" onclick="toggleInsight(this)">
+      <span class="insight-icon">⚠️</span>
+      <span class="insight-label">なぜCBDは「軽々しく」マーケティングできないのか</span>
+      <span class="insight-chevron open">▼</span>
+    </div>
+    <div class="insight-body open">
+      <ul>
+        <li><span class="insight-tag itag-bad">要警戒</span><strong>薬機法・景表法リスクがVCより高い</strong> ─ 「精神的な悩みに効く」「メンタルケアになる」といった訴求は、対象者の中に実際に精神疾患の診断・治療を受けている方が含まれる以上、医薬品的な効能効果を示唆していると受け取られるリスクが本体（VC）以上に高い。</li>
+        <li><span class="insight-tag itag-bad">要警戒</span><strong>治療の代替を助長しかねない</strong> ─ HMさんのケースのように、処方薬を自己判断で減らしCBDに置き換える行動が既に起きている。「薬に頼らず」「病院に行く前に」といったメッセージは、この行動をさらに後押ししてしまい、健康被害につながりかねない。</li>
+        <li><span class="insight-tag itag-warn">注視</span><strong>「憧れ」トーンとの相性の悪さ</strong> ─ VCの「あの人みたいになりたい」という華やかな訴求と、深刻な悩みを抱えた顧客の実態は温度差が大きく、当事者からすると軽薄・的外れに映るリスクがある。同じブランドトーンをそのまま流用すべきではない。</li>
+        <li><span class="insight-tag itag-ok">好材料</span><strong>「お守り」という現状の位置づけ自体は適切</strong> ─ 効能を断定せず「気持ちが和らぐお守り」として扱う現状の顧客の受け止め方（NAさん・KNさんなど）は、過度な期待を煽らない誠実なポジションであり、この距離感を保つことが望ましい。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div class="nt">📌 トーン設計への反映ポイント</div>
+    <ul>
+      <li><strong>「治療の代替ではない」ことを明示する</strong> ─ 「お守り」「頓服的な支え」という位置づけは維持しつつ、深刻な症状には医療機関の受診を勧める一文を添える。</li>
+      <li><strong>静かで落ち着いたトーン設計にする</strong> ─ VCの華やかさ・「憧れ」の訴求とは切り離し、煽らない・過度な期待を持たせないコミュニケーションにする。</li>
+      <li><strong>効能効果を匂わせる表現の社内チェックを一段強化する</strong> ─ CBDラインは薬機法チェックのハードルをVCより厳格に設定する。</li>
+    </ul>
+  </div>
+
+  <div class="stitle">健全性スコアカード</div>
+  <div class="ssub">Lypo-C CBD事業の現状を4軸で評価</div>
+  <div class="score-grid">
+    <div class="score-card">
+      <div class="sc-axis">チャネル</div>
+      <div class="sc-name">公式サイト取扱状況</div>
+      <div class="sc-val">非取扱</div>
+      <span class="sc-badge sc-v-bad">問題あり</span>
+      <div class="sc-reason">決済代行の契約制約により自社ECで扱えず、購入導線が分散</div>
+    </div>
+    <div class="score-card">
+      <div class="sc-axis">供給</div>
+      <div class="sc-name">在庫状況</div>
+      <div class="sc-val">欠品中</div>
+      <span class="sc-badge sc-v-bad">問題あり</span>
+      <div class="sc-reason">複数のインタビューで欠品が確認済み。9月まで入荷見込みなし</div>
+    </div>
+    <div class="score-card">
+      <div class="sc-axis">認知</div>
+      <div class="sc-name">CBD認知度</div>
+      <div class="sc-val">51.4%</div>
+      <span class="sc-badge sc-v-ok">健全</span>
+      <div class="sc-reason">4商品中でも高水準。認知形成は順調</div>
+    </div>
+    <div class="score-card">
+      <div class="sc-axis">転換</div>
+      <div class="sc-name">認知→利用転換率</div>
+      <div class="sc-val">低い</div>
+      <span class="sc-badge sc-v-warn">要注視</span>
+      <div class="sc-reason">認知51.4%に対し実利用3.7%。チャネル・パッケージ要因が大きいと推定</div>
+    </div>
+  </div>
+
+  <div class="stitle">施策提言</div>
+  <div class="ssub">現象→解釈→アクションの3層に基づく優先度別の打ち手</div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-high">優先度：高</span><span class="a-title">CBD専用の決済・販売導線を確保し、公式サイトでの安定供給・定期便提供を実現する</span></div>
+    <div class="a-body">現状はカナダの決済代行会社との契約制約により、公式サイト（Shopify）でCBDを取り扱えず、楽天・Amazon・Qoo10・非正規流通に購入が分散している。加えて現在も欠品中で9月まで入荷見込みがない。これは「チャネルが分散している」「欠品時に離脱する」という2つのリスクを同時に生んでいる、最も構造的な課題。CBD専用の別カート導入や決済代行会社の切り替えを検討し、安定供給と定期便オプションの提供を目指す。</div>
+    <div class="a-evidence">根拠：HMさん・SCさん・SNさん（33歳）・SWさんが揃って非公式チャネルでの購入・在庫切れを言及。SPIC社内ナレッジでも「Lypo-C CBD＝Shopify非取扱」と明記されている。</div>
+  </div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-high">優先度：高</span><span class="a-title">頓服利用に最適化した少量・低価格パッケージを新設する</span></div>
+    <div class="a-body">13名中9名が「毎日ではなく必要な時だけ」使う頓服型であり、既存の定期便前提の容量・価格設計とミスマッチが生じている。KKさんが提案する「14本程度・4,000円前後」規模の少量パッケージは、初回導入のハードルを下げ、頓服利用の実態に合った買い方を提供できる。</div>
+    <div class="a-evidence">根拠：KKさん本人の具体的提案。KNさんも9本入りサンプルを1年経っても消費しきれていない実態から、現行容量が頓服利用者にとって過大であることが示唆される。</div>
+  </div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-mid">優先度：中</span><span class="a-title">「睡眠」単一訴求から、CEP（カテゴリー購入機会）別の複数訴求へ拡張する</span></div>
+    <div class="a-body">実際のニーズは「痛み・こり」「メンタル・緊張」「PMS」「過集中」「産後の覚醒サポート」など多様。訴求コンテンツを「あなたの悩みは？」形式で分岐させ、顧客が自分の状況に合わせて選べる導線（LP・LINE配信・メルマガ）を整備する。</div>
+    <div class="a-evidence">根拠：KKさん（痛み）、NAさん・YAさん（メンタル・緊張）、SNさん33歳・SWさん（PMS）、MAさん（過集中）、TWさん（産後覚醒）と、13名の訴求ニーズが明確に分散している。</div>
+  </div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-mid">優先度：中</span><span class="a-title">ファンミーティング等のリアル接点からのサンプル→購入導線を強化する</span></div>
+    <div class="a-body">ファンミーティングやポップアップイベントは強力な認知チャネルになっている一方、サンプル配布後に購入・継続まで至らないケースがある（KNさんは1年経過後も未消費）。サンプル配布直後に「いつ・どう使うか」を具体的に伝えるフォローアップメール・LINEメッセージを設計する。</div>
+    <div class="a-evidence">根拠：KNさん・SNさん（33歳）・SWさん・YAさん・NAさんなど、複数名がリアルイベント起点でCBDを認知している一方、消費・継続度合いにはばらつきがある。</div>
+  </div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-low">優先度：中〜低</span><span class="a-title">経皮タイプ（クリーム・ロールオン）のライン拡張を検討する</span></div>
+    <div class="a-body">NAさん・YAさんともに経口のLypo-C CBDと他社の経皮製品を併用しており、痛みへの即効性を求める場面では経皮タイプが選ばれている。既存の経口ユーザーへのクロスセル商材として、経皮タイプの自社ライン化を検討する価値がある。</div>
+    <div class="a-evidence">根拠：NAさんのCBD配合マグネシウムクリーム併用、YAさんのロールオン併用の実態から。</div>
+  </div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-low">優先度：低（継続監視）</span><span class="a-title">安全性・合法性に関する簡潔な説明コンテンツを補強する</span></div>
+    <div class="a-body">CBD＝大麻由来という点への漠然とした不安が一部顧客に残っている。現状はブランド信頼でカバーされているが、CBD/CBN等の違いや合法性を簡潔に説明するコンテンツ（長文ではなく要点のみ）を用意し、新規顧客の心理的ハードルをさらに下げる。</div>
+    <div class="a-evidence">根拠：KKさん・KNさんが「SPICが出しているから大丈夫」という信頼で不安を乗り越えたと発言。HMさんも「主人は長い説明を読めないから、わかりやすいものが欲しい」と発言。</div>
+  </div>
+
+  <div class="footer">
+    <span>データソース：Lypo-C CBD デプスインタビュー グループD（13名・2026年6〜7月実施）／定量調査アンケート（N=5,428・2026年4月実施・lypo_c_survey_report_2026Q1.md）／SPIC社内ナレッジ（spic_lypo_c_knowledge_for_survey.md）｜考察はグループD独自の分析軸（頓服/定期・訴求軸・購入起点）に基づく一次考察であり、全グループ横断のペルソナ設計は別分析で実施予定</span>
+    <span>作成日: 2026-07-10</span>
+  </div>
+
+</div>
+
+<script>
+function toggleInsight(el) {
+  el.nextElementSibling.classList.toggle('open');
+  el.querySelector('.insight-chevron').classList.toggle('open');
+}
+</script>
+</body>
+</html>

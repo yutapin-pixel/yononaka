@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>楽天市場 手数料率サマリー（Lypo-C公式楽天店）</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
+:root{
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;--rakuten:#bf0000;
+  --soft:#fff7f0;--softb:#ffd9bf;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.75;padding:24px;max-width:1000px;margin:0 auto}
+.hdr{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--text);padding-bottom:14px;margin-bottom:8px;flex-wrap:wrap;gap:10px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted);text-align:right}
+.hdr .dow{display:inline-block;background:var(--text);color:#fff;padding:2px 8px;border-radius:3px;font-size:11px;margin-left:6px;font-weight:500}
+.conf{display:inline-block;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;margin-bottom:6px}
+.lead{font-size:13.5px;color:var(--muted);margin:14px 0 4px;line-height:1.9}
+.stitle{font-size:15px;font-weight:700;margin:32px 0 8px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:5px;height:18px;background:var(--accent);border-radius:2px}
+.hero{background:linear-gradient(180deg,#fff7f0,#fff);border:1px solid var(--softb);border-left:6px solid var(--accent);border-radius:12px;padding:22px 28px;margin:18px 0 6px}
+.hero .tag{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase}
+.hero .big{font-size:34px;font-weight:700;line-height:1.3;margin:6px 0 6px;letter-spacing:-1px}
+.hero .big span{color:var(--accent)}
+.hero .sub{font-size:13px;color:#57534e;line-height:1.85}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:15px 16px}
+.sc.hl{border-color:var(--accent);background:#fff7f0}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);margin-bottom:4px;line-height:1.4}
+.sc .vl{font-size:23px;font-weight:700;letter-spacing:-1px}
+.sc.hl .vl{color:var(--accent)}
+.sc .sb{font-size:11px;color:var(--muted);margin-top:3px}
+.svgwrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:14px 0}
+.svgwrap h4{font-size:13px;font-weight:700;margin-bottom:12px;color:#44403c}
+.svgwrap .cap{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.7}
+svg{display:block;width:100%;height:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:12px 0}
+thead th{background:#f5f5f4;font-weight:600;font-size:11px;color:var(--muted);padding:9px 12px;text-align:left;border-bottom:1px solid var(--border)}
+tbody td{padding:9px 12px;border-bottom:1px solid #f5f5f4;vertical-align:top;line-height:1.6}
+tbody tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.sub{background:#fff7f0;font-weight:700}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.ex td{color:#a8a29e}
+.badge{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10.5px;font-weight:700;white-space:nowrap}
+.badge.sys{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa}
+.badge.pay{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
+.badge.aff{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.badge.pt{background:#faf5ff;color:#7e22ce;border:1px solid #e9d5ff}
+.badge.ex{background:#f5f5f4;color:#a8a29e;border:1px solid #e7e5e4}
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px 20px;margin:16px 0;font-size:12.5px;line-height:1.85}
+.notes .nt{font-weight:700;font-size:12.5px;margin-bottom:8px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:7px}
+.notes code{background:#fef3c7;padding:1px 5px;border-radius:4px;font-size:11.5px}
+.footer{margin-top:32px;padding-top:14px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);line-height:1.8}
+.footer code{background:#f5f5f4;padding:1px 5px;border-radius:3px}
+@media(max-width:768px){body{padding:16px}.sg{grid-template-columns:1fr 1fr}.hero .big{font-size:26px}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="conf">社外秘 / 実数を含む</div>
+    <h1>楽天市場 手数料率サマリー ｜ Lypo-C公式楽天店</h1>
+  </div>
+  <div class="meta">
+    作成 2026-07-16<span class="dow">Thu</span><br>
+    コンシューマー本部 データ分析（西守）<br>
+    対象: 楽天 shop_id=31（店舗別ID 407098）
+  </div>
+</div>
+
+<p class="lead">
+楽天の支払明細（店舗別内訳書）は費目の対象月がバラバラで手数料率が読み取りにくいため、
+各費目を<strong>本来の対象月の楽天売上（NE受注・税抜）</strong>で割り、月次コスト率として足し上げた。
+広告費（RPP・TDA・R-Mail）は手数料ではないため除外。
+</p>
+
+<!-- ===== 結論 ===== -->
+<div class="hero">
+  <div class="tag">結論</div>
+  <div class="big">楽天の販売手数料 ≒ <span>9.13%</span></div>
+  <div class="sub">
+    アフィリエイト・ポイント付与まで含めた「準販売手数料」ベース。
+    純粋なシステム利用料（実質の出店手数料）は<strong>4.21%</strong>、決済手数料（楽天ペイ）は<strong>3.37%</strong>。
+    ※費目本来の対象月・税抜ベース（内訳・前提は末尾の備考を参照）
+  </div>
+</div>
+
+<div class="sg">
+  <div class="sc"><div class="lb">① システム利用料のみ</div><div class="vl">4.21%</div><div class="sb">実質の出店手数料</div></div>
+  <div class="sc"><div class="lb">② ＋楽天ペイ（決済）</div><div class="vl">7.58%</div><div class="sb">①＋3.37pt</div></div>
+  <div class="sc hl"><div class="lb">③ 準販売手数料</div><div class="vl">9.13%</div><div class="sb">②＋アフィリ＋ポイント</div></div>
+  <div class="sc"><div class="lb">決済手数料 単体</div><div class="vl">3.37%</div><div class="sb">楽天ペイ利用料</div></div>
+</div>
+
+<!-- ===== 積み上げ ===== -->
+<div class="stitle">手数料率の積み上げ（→ 9.13%）</div>
+<div class="svgwrap">
+  <h4>費目別の対売上比率（対象月の楽天売上・税抜が分母）</h4>
+  <svg viewBox="0 0 720 150" role="img" aria-label="楽天手数料率の積み上げ">
+    <!-- stacked bar, total 9.13% mapped to 600px from x=60 -->
+    <!-- system 4.21% -> 276.7 ; pay 3.37% -> 221.5 ; aff 0.42% -> 27.6 ; pt 1.13% -> 74.3 -->
+    <rect x="60"    y="40" width="277" height="40" fill="#FF7A30"/>
+    <rect x="337"   y="40" width="221" height="40" fill="#2563eb"/>
+    <rect x="558"   y="40" width="28"  height="40" fill="#16a34a"/>
+    <rect x="586"   y="40" width="74"  height="40" fill="#7e22ce"/>
+    <!-- segment labels -->
+    <text x="198" y="65" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">システム 4.21%</text>
+    <text x="447" y="65" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">楽天ペイ 3.37%</text>
+    <text x="623" y="65" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">ﾎﾟｲﾝﾄ 1.13%</text>
+    <!-- affiliate label below (too narrow) -->
+    <text x="572" y="102" font-size="10.5" fill="#166534" text-anchor="middle">ｱﾌｨﾘｴｲﾄ 0.42%</text>
+    <line x1="572" y1="80" x2="572" y2="96" stroke="#16a34a" stroke-width="1"/>
+    <!-- total -->
+    <text x="660" y="32" font-size="13" fill="#1c1917" text-anchor="end" font-weight="700">合計 9.13%</text>
+    <line x1="60" y1="86" x2="660" y2="86" stroke="#e7e5e4"/>
+    <text x="60"  y="128" font-size="11" fill="#78716c">① 4.21%</text>
+    <text x="337" y="128" font-size="11" fill="#78716c" text-anchor="middle">② 7.58%（＋楽天ペイ）</text>
+    <text x="660" y="128" font-size="11" fill="#9a3412" text-anchor="end" font-weight="700">③ 9.13%（準販売手数料）</text>
+  </svg>
+  <div class="cap">システム利用料のうちモバイルだけで3.03%を占める（楽天のモバイル比率が高いため）。広告費（RPP等 計¥357,580）は非計上。</div>
+</div>
+
+<!-- ===== 内訳テーブル ===== -->
+<div class="stitle">費目別の内訳</div>
+<table>
+  <thead>
+    <tr><th style="width:38%">品目</th><th>科目</th><th>対象月</th><th class="num">金額(税抜)</th><th class="num">対売上比</th><th>分類</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>システム利用料_モバイル</td><td>20</td><td>3月</td><td class="num">¥1,779,966</td><td class="num">3.03%</td><td><span class="badge sys">システム</span></td></tr>
+    <tr><td>システム利用料_PC</td><td>20</td><td>3月</td><td class="num">¥116,812</td><td class="num">0.20%</td><td><span class="badge sys">システム</span></td></tr>
+    <tr><td>システム利用料_ショップクーポン</td><td>20</td><td>3月</td><td class="num">¥151,100</td><td class="num">0.26%</td><td><span class="badge sys">システム</span></td></tr>
+    <tr><td>定期購入・頒布会購入_システム利用料</td><td>20</td><td>3月</td><td class="num">¥343,073</td><td class="num">0.58%</td><td><span class="badge sys">システム</span></td></tr>
+    <tr><td>取引の安全性・利便性向上のためのシステム利用料</td><td>20</td><td>3月</td><td class="num">¥63,532</td><td class="num">0.11%</td><td><span class="badge sys">システム</span></td></tr>
+    <tr><td>商品一括登録サービス／楽ロボ月額（固定ツール）</td><td>20</td><td>4月</td><td class="num">¥20,000</td><td class="num">0.04%</td><td><span class="badge sys">システム</span></td></tr>
+    <tr class="sub"><td>① システム利用料 小計</td><td></td><td></td><td class="num">¥2,474,483</td><td class="num">4.21%</td><td></td></tr>
+    <tr><td>プラン共通_楽天ペイ利用料（決済手数料）</td><td>30</td><td>4月</td><td class="num">¥1,790,636</td><td class="num">3.37%</td><td><span class="badge pay">決済</span></td></tr>
+    <tr class="sub"><td>② ＋楽天ペイ 小計</td><td></td><td></td><td class="num">¥4,265,119</td><td class="num">7.58%</td><td></td></tr>
+    <tr><td>スーパーアフィリエイト（成果報酬＋システム＋アドバンス±割引）</td><td>40</td><td>3月</td><td class="num">¥244,676</td><td class="num">0.42%</td><td><span class="badge aff">アフィリ</span></td></tr>
+    <tr><td>プラン共通_ポイント付与料（PC＋モバイル／非課税）</td><td>20</td><td>3月</td><td class="num">¥664,973</td><td class="num">1.13%</td><td><span class="badge pt">ポイント</span></td></tr>
+    <tr class="tot"><td>③ 準販売手数料 合計（＝楽天の販売手数料）</td><td></td><td></td><td class="num">¥5,174,768</td><td class="num">9.13%</td><td></td></tr>
+    <tr class="ex"><td>検索連動型広告(RPP)</td><td>40</td><td>3月</td><td class="num">¥295,594</td><td class="num">0.50%</td><td><span class="badge ex">除外</span></td></tr>
+    <tr class="ex"><td>R-Mail_配信料</td><td>40</td><td>4月</td><td class="num">¥60,914</td><td class="num">0.11%</td><td><span class="badge ex">除外</span></td></tr>
+    <tr class="ex"><td>ターゲティングディスプレイ広告(TDA)</td><td>40</td><td>4月</td><td class="num">¥1,072</td><td class="num">0.00%</td><td><span class="badge ex">除外</span></td></tr>
+  </tbody>
+</table>
+
+<!-- ===== 備考 ===== -->
+<div class="notes">
+  <div class="nt">📌 備考（内訳説明・前提）</div>
+  <ul>
+    <li><strong>「販売手数料 9.13%」の定義</strong>：楽天への支払いのうち、① システム利用料（実質の出店手数料）＋ ② 楽天ペイ利用料（決済手数料）＋ アフィリエイト ＋ ポイント付与料 を合算した「準販売手数料」。段階では、① システムのみ <strong>4.21%</strong> → ② ＋楽天ペイ <strong>7.58%</strong> → ③ ＋アフィリエイト＋ポイント <strong>9.13%</strong>。</li>
+    <li><strong>決済手数料（科目30）は 3.37%</strong>：純粋な「決済手数料」は楽天ペイ利用料 ¥1,790,636 のみ。システム利用料（≒出店手数料）とは別物なので分けて把握する。</li>
+    <li><strong>広告費は全額除外</strong>：検索連動型広告(RPP) ¥295,594・R-Mail配信料 ¥60,914・ディスプレイ広告(TDA) ¥1,072（計 ¥357,580）は手数料ではなく広告宣伝費のため、手数料率には含めない。</li>
+    <li><strong>ポイント付与・アフィリエイトの位置づけ</strong>：厳密な「販売手数料」ではないが、販売に付随して必ず発生する費用のため「準販売手数料」として③にのみ加算。ポイント付与料は非課税、それ以外は税抜金額。</li>
+    <li><strong>分母（売上）と対象月の対応</strong>：システム利用料・アフィリエイト・ポイント付与は<strong>3月分</strong>の請求 → 3月の楽天売上で除算。楽天ペイ利用料・固定ツールは<strong>4月分</strong> → 4月の楽天売上で除算。月次コスト率として各費目の率を足し上げた（3月¥58.75M・4月¥53.20Mと売上水準が近く合算可能）。</li>
+    <li><strong>税基準</strong>：手数料（ポイント付与のみ非課税）・売上とも<strong>税抜</strong>で統一（自社の税抜売上に対する負担率）。楽天の契約料率は税込GMV基準のことが多く、定義が異なる点に注意。</li>
+    <li><strong>2通の明細について</strong>：楽天は月末日（5/31）を含む精算サイクル側にコストを集約する運用。5/11〜5/25の明細（No…220-32）は支払（入金）のみで請求（手数料）ゼロ。手数料は月末を含む明細（No…177-32、発行2026/6/19）に全額計上されている。本サマリーの手数料はこの明細を採用。</li>
+    <li><strong>参考（別ベース）</strong>：2通の決済金を合算して1か月分の分母（¥71.2M・税込）とみなすと、① 3.47%／② 5.99%／③ 7.27%と低く出る（分母が税込かつ繰越分を含むため）。実態把握には本サマリーの「対象月・税抜ベース 9.13%」を正とする。</li>
+  </ul>
+</div>
+
+<div class="footer">
+  <div><strong>データソース:</strong> 手数料＝楽天 店舗別内訳書 <code>No.26051559623177-32</code>（発行 2026/6/19・Lypo-C公式ショップ楽天市場店・店舗別ID 407098）｜ 売上分母＝<code>spic-core.public.ne_order_items</code>（shop_id=31・order_dateベース・税抜・cancel_date除外）：2026年3月 ¥58,754,866（6,935件）／2026年4月 ¥53,204,339（6,409件）</div>
+  <div style="margin-top:6px"><strong>取扱注意:</strong> 社外秘・実数を含む。<code>noindex, nofollow</code> 指定済み・社外配布不可。作成: コンシューマー本部 データ分析（西守）／2026-07-16</div>
+</div>
+
+</body>
+</html>

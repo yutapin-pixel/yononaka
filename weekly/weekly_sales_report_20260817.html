@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>2026年8月17日週 売上進捗シート</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;--accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;--vc:#FF7A30;--cd:#16a34a;--cbd:#1B7A4A;--ccera:#FF6B9D;--sb:#C4934A;--mi:#1E3A8A;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;}
+.container{max-width:1500px;margin:0 auto;padding:24px 20px;}
+.hdr{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--text);padding-bottom:14px;margin-bottom:20px;}
+.hdr h1{font-size:22px;font-weight:700;}.hdr .meta{font-size:13px;color:var(--muted);}
+.badge{display:inline-block;background:var(--text);color:#fff;font-size:11px;padding:1px 6px;border-radius:3px;margin-left:6px;}
+.badge-amz{background:#ff9900;}
+.tab-bar{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);}
+.tab-btn{padding:8px 20px;font-size:14px;font-weight:600;font-family:'Noto Sans JP',sans-serif;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+.stitle{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;margin:24px 0 6px;}
+.stitle::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
+.ssub{font-size:12px;color:var(--muted);margin-bottom:10px;padding-left:12px;}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:8px;background:var(--card);margin-bottom:8px;}
+table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap;}
+thead th{background:#f5f4f3;padding:6px 9px;text-align:center;font-weight:600;font-size:12px;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:1;}
+thead th.label-col{text-align:left;position:sticky;left:0;background:#f0eeec;z-index:2;min-width:180px;}
+th.latest-wk{background:#fff4ec !important;color:var(--accent) !important;}
+tbody tr:hover{background:#fdf9f6;}
+tbody td{padding:5px 9px;border-bottom:1px solid #f0eeec;text-align:right;font-variant-numeric:tabular-nums;}
+tbody td.label-col{text-align:left;position:sticky;left:0;background:var(--card);font-weight:500;z-index:1;min-width:180px;}
+tbody tr:hover td.label-col{background:#fdf9f6;}
+td.indent{padding-left:23px;font-size:12px;color:var(--muted);font-weight:400;}
+td.latest-week{font-weight:700;background:#fffbf7 !important;}
+td.latest-week.label-col{background:#fffbf7 !important;}
+td.wow-col{font-weight:700;font-size:13px;min-width:58px;text-align:right;}
+td.wow-up{color:var(--green) !important;}
+td.wow-down{color:var(--red) !important;}
+td.wow-flat{color:var(--muted) !important;}
+tr.total-row td{border-top:2px solid var(--border);font-weight:700;background:#f8f7f6;}
+tr.total-row td.label-col{background:#f0eeec;}
+tr.diff-row td{font-weight:600;background:#f0f6ff;}
+tr.diff-row td.label-col{background:#e8f2ff;}
+tr.diff-row td.latest-week{background:#f0f6ff !important;font-weight:700;}
+tr.kpi-row td.wow-col.wow-up{color:var(--green) !important;}
+tr.kpi-row td.wow-col.wow-down{color:var(--red) !important;}
+tr.kpi-row td.wow-col.wow-flat{color:var(--muted) !important;}
+td.dash-val{color:#bbb;text-align:center;}
+.brand-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle;}
+.insight-wrap{border:1px solid var(--border);border-radius:8px;margin-top:10px;margin-bottom:20px;background:var(--card);overflow:hidden;}
+.insight-header{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fdf8f5;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;}
+.insight-header:hover{background:#fdf4ee;}
+.insight-label{font-size:14px;font-weight:700;color:var(--accent);}
+.insight-chevron{color:var(--muted);font-size:13px;transition:transform .2s;}
+.insight-chevron.open{transform:rotate(180deg);}
+.insight-body{display:none;padding:14px 16px;}
+.insight-body.open{display:block;}
+.insight-body ul{list-style:none;padding:0;}
+.insight-body ul li{padding:5px 0;border-bottom:1px solid #f5f4f3;font-size:13px;line-height:1.6;display:flex;gap:8px;align-items:flex-start;}
+.insight-body ul li:last-child{border-bottom:none;}
+.itag{display:inline-block;font-size:11px;font-weight:700;padding:1px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.itag-ok{background:#dcfce7;color:#166534;}.itag-warn{background:#ffedd5;color:#9a3412;}.itag-bad{background:#fee2e2;color:#991b1b;}.itag-watch{background:#fef9c3;color:#854d0e;}.itag-ref{background:#dbeafe;color:#1e40af;}
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 12px;margin-bottom:20px;width:80%;}
+.chart-wrap{position:relative;height:360px;width:100%;}
+td.heat5{background:#bbf7d0 !important;color:#14532d !important;}
+td.heat4{background:#f0fdf4 !important;color:#374151 !important;}
+td.heat3{}
+td.heat2{background:#fff1f2 !important;color:#9f1239 !important;}
+td.heat1{background:#fee2e2 !important;color:#991b1b !important;}
+tr.kpi-row td.heat5{background:#bbf7d0 !important;color:#14532d !important;}
+tr.kpi-row td.heat4{background:#f0fdf4 !important;color:#374151 !important;}
+tr.kpi-row td.heat3{}
+tr.kpi-row td.heat2{background:#fff1f2 !important;color:#9f1239 !important;}
+tr.kpi-row td.heat1{background:#fee2e2 !important;color:#991b1b !important;}
+td.latest-week.heat5{background:#bbf7d0 !important;color:#14532d !important;}
+td.latest-week.heat4{background:#f0fdf4 !important;color:#374151 !important;}
+td.latest-week.heat3{}
+td.latest-week.heat2{background:#fff1f2 !important;color:#9f1239 !important;}
+td.latest-week.heat1{background:#fee2e2 !important;color:#991b1b !important;}
+/* ===== tab-3（実績・文字大）専用 font-size オーバーライド ===== */
+#tab-3 table{font-size:14px;}
+#tab-3 thead th{font-size:13px;}
+#tab-3 tbody td{font-size:14px;}
+#tab-3 td.indent{font-size:13px;}
+#tab-3 td.wow-col{font-size:14px;}
+#tab-3 .stitle{font-size:15px;}
+#tab-3 .ssub{font-size:13px;}
+#tab-3 .insight-label{font-size:15px;}
+#tab-3 .insight-chevron{font-size:14px;}
+#tab-3 .insight-body ul li{font-size:14px;}
+#tab-3 .itag{font-size:12px;}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+</head><body><div class="container">
+<div class="hdr">
+  <div><h1>2026年8月17日週 売上進捗シート</h1>
+  <div class="meta">コンシューマー本部週報｜2026年8月17日（月）〜8月23日（日）
+    <span class="badge">NE受注日基準・税抜</span>
+    <span class="badge">LypoSpheric除外</span>
+    <span class="badge" style="background:#dc2626;">shop_id=9 ¥0除外</span>
+  </div></div>
+</div>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(0)">📊 実績</button>
+  <button class="tab-btn" onclick="switchTab(1)">📈 グラフ</button>
+  <button class="tab-btn" onclick="switchTab(2)">💬 考察</button>
+  <button class="tab-btn" onclick="switchTab(3)">📊 実績（文字大）</button>
+  <button class="tab-btn" onclick="switchTab(4)">📋 予実管理</button>
+</div>
+<div class="tab-panel active" id="tab-0">
+<div class="stitle">① 全チャネル売上まとめ</div><div class="ssub">NE受注日基準・税抜 ／ 全チャネル（Amazon含む）受注日（order_date）統一</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><strong>Shopify 計</strong></td><td class="heat2">48,524,291</td><td>48,711,780</td><td class="heat5">53,166,270</td><td>50,805,690</td><td>50,264,831</td><td class="heat1">47,199,240</td><td class="latest-week heat4">50,865,915</td><td class="wow-col wow-up">▲7.8%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat1">37,505,437</td><td class="heat2">38,214,626</td><td class="heat5">40,812,429</td><td>38,619,200</td><td>38,558,214</td><td>38,899,169</td><td class="latest-week heat4">39,708,112</td><td class="wow-col wow-up">▲2.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>10,769,240</td><td class="heat2">10,054,297</td><td class="heat5">12,107,078</td><td class="heat4">11,967,502</td><td>11,423,771</td><td class="heat1">8,138,764</td><td class="latest-week">10,508,279</td><td class="wow-col wow-up">▲29.1%</td></tr>
+<tr class=""><td class="label-col "><strong>Amazon</strong></td><td class="heat5">57,650,451</td><td class="heat4">33,367,452</td><td class="heat1">22,395,811</td><td class="heat2">24,074,604</td><td>25,403,447</td><td>24,081,892</td><td class="latest-week">25,918,130</td><td class="wow-col wow-up">▲7.6%</td></tr>
+<tr class=""><td class="label-col "><strong>楽天</strong></td><td>15,712,065</td><td class="heat1">9,960,166</td><td class="heat5">19,878,894</td><td>12,014,795</td><td class="heat4">17,640,355</td><td>13,132,784</td><td class="latest-week heat2">11,265,143</td><td class="wow-col wow-down">▼14.2%</td></tr>
+<tr class=""><td class="label-col "><strong>Yahoo</strong></td><td class="heat5">5,058,370</td><td class="heat1">1,449,020</td><td>1,890,081</td><td class="heat4">2,908,215</td><td class="heat2">1,504,259</td><td>1,922,967</td><td class="latest-week">1,627,279</td><td class="wow-col wow-down">▼15.4%</td></tr>
+<tr class=""><td class="label-col "><strong>Qoo10</strong></td><td class="heat4">1,553,804</td><td class="heat2">724,071</td><td>817,645</td><td>1,360,397</td><td class="heat5">1,788,959</td><td class="heat1">642,446</td><td class="latest-week">807,624</td><td class="wow-col wow-up">▲25.7%</td></tr>
+<tr class=""><td class="label-col "><strong>ふるさと納税</strong></td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">7,948,600</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col "><strong>LINEギフト</strong></td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">3,449,681</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col "><strong>その他</strong></td><td>541,119</td><td>544,000</td><td class="heat4">843,157</td><td>513,041</td><td class="heat5">931,940</td><td class="heat1">337,356</td><td class="latest-week heat2">483,102</td><td class="wow-col wow-up">▲43.2%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>129,052,231</td><td>94,766,821</td><td>99,362,026</td><td>104,082,779</td><td>99,616,583</td><td>88,791,898</td><td class="latest-week">90,967,193</td><td class="wow-col wow-up">▲2.4%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼34,285,410</td><td style="color:var(--green);font-weight:700;">▲4,595,205</td><td style="color:var(--green);font-weight:700;">▲4,720,753</td><td style="color:var(--red);font-weight:700;">▼4,466,196</td><td style="color:var(--red);font-weight:700;">▼10,824,685</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲2,175,295</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat1">¥9,554</td><td>¥9,628</td><td>¥9,678</td><td class="heat5">¥10,709</td><td class="heat2">¥9,586</td><td>¥9,593</td><td class="latest-week heat4">¥9,705</td><td class="wow-col wow-up">▲1.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td>394</td><td class="heat1">293</td><td class="heat5">415</td><td>385</td><td>396</td><td class="heat2">360</td><td class="latest-week">396</td><td class="wow-col wow-up">▲10.0%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat1">22,231</td><td class="heat2">22,260</td><td>22,275</td><td>22,305</td><td>22,333</td><td class="heat5">22,368</td><td class="latest-week heat4">22,354</td><td class="wow-col wow-down">▼0.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>496</td><td>336</td><td class="heat5">697</td><td class="heat1">294</td><td class="heat4">504</td><td>409</td><td class="latest-week heat2">327</td><td class="wow-col wow-down">▼20.0%</td></tr></tbody></table></div>
+<div class="ssub">※Shopify定期/都度は shopify_sku_brand_master.product_type で判定。ふるさと納税・LINEギフト（shop_id=21）は月末締め登録のため締め日以外はハイフン。shop_id=9（Consumer）の¥0受注は除外。</div>
+<div class="stitle">② Lypo-C VC 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C] / [Lypo-C for SPORTS]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--vc)"></span>Shopify 計</td><td class="heat2">24,696,174</td><td class="heat1">24,509,893</td><td class="heat5">27,055,054</td><td class="heat4">26,095,663</td><td>26,007,170</td><td>24,797,349</td><td class="latest-week">25,491,131</td><td class="wow-col wow-up">▲2.8%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat1">19,171,108</td><td class="heat2">19,451,447</td><td class="heat5">21,214,828</td><td>20,069,199</td><td>20,186,420</td><td class="heat4">20,801,171</td><td class="latest-week">19,954,693</td><td class="wow-col wow-down">▼4.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>5,431,967</td><td class="heat2">5,017,892</td><td class="heat4">5,705,156</td><td class="heat5">5,922,856</td><td>5,678,110</td><td class="heat1">3,934,441</td><td class="latest-week">5,254,959</td><td class="wow-col wow-up">▲33.6%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">34,084,353</td><td class="heat4">19,900,325</td><td class="heat1">12,966,076</td><td>13,741,618</td><td>14,127,527</td><td class="heat2">13,349,347</td><td class="latest-week">14,769,008</td><td class="wow-col wow-up">▲10.6%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>9,098,435</td><td class="heat1">5,756,877</td><td class="heat5">11,568,606</td><td>7,166,565</td><td class="heat4">10,240,510</td><td>7,758,316</td><td class="latest-week heat2">6,408,415</td><td class="wow-col wow-down">▼17.4%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">3,140,425</td><td class="heat2">913,777</td><td>1,148,449</td><td class="heat4">1,941,677</td><td class="heat1">862,707</td><td>1,162,948</td><td class="latest-week">1,038,749</td><td class="wow-col wow-down">▼10.7%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">959,902</td><td>528,064</td><td>555,733</td><td>842,035</td><td class="heat5">985,314</td><td class="heat1">454,208</td><td class="latest-week heat2">502,758</td><td class="wow-col wow-up">▲10.7%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">4,139,753</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">2,731,540</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat4">250,217</td><td>208,499</td><td class="heat2">205,978</td><td class="heat1">185,707</td><td class="heat5">360,174</td><td>220,702</td><td class="latest-week">234,476</td><td class="wow-col wow-up">▲6.2%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>72,239,586</td><td>51,829,175</td><td>53,746,304</td><td>57,419,536</td><td>53,826,145</td><td>48,645,948</td><td class="latest-week">48,444,537</td><td class="wow-col wow-down">▼0.4%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼20,410,411</td><td style="color:var(--green);font-weight:700;">▲1,917,129</td><td style="color:var(--green);font-weight:700;">▲3,673,232</td><td style="color:var(--red);font-weight:700;">▼3,593,391</td><td style="color:var(--red);font-weight:700;">▼5,180,197</td><td style="color:var(--red);font-weight:700;" class="latest-week">▼201,411</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat1">¥8,495</td><td>¥8,608</td><td>¥8,602</td><td class="heat5">¥9,777</td><td class="heat2">¥8,514</td><td>¥8,602</td><td class="latest-week heat4">¥8,620</td><td class="wow-col wow-up">▲0.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat2">188</td><td class="heat1">186</td><td class="heat5">219</td><td>202</td><td>191</td><td class="heat4">214</td><td class="latest-week">195</td><td class="wow-col wow-down">▼8.9%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td class="heat2">206</td><td class="heat1">198</td><td class="heat5">242</td><td>227</td><td>237</td><td class="heat4">241</td><td class="latest-week">221</td><td class="wow-col wow-down">▼8.3%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat2">11,129</td><td class="heat1">11,111</td><td>11,164</td><td>11,191</td><td>11,235</td><td class="heat5">11,266</td><td class="latest-week heat4">11,244</td><td class="wow-col wow-down">▼0.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>358</td><td>238</td><td class="heat5">487</td><td class="heat1">208</td><td class="heat4">364</td><td>299</td><td class="latest-week heat2">233</td><td class="wow-col wow-down">▼22.1%</td></tr></tbody></table></div>
+<div class="stitle">③ C+D 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C C+D] / [Lypo-C for SPORTS C+D] / [Lypo-C C+D+K]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--cd)"></span>Shopify 計</td><td>17,702,291</td><td class="heat1">17,096,382</td><td class="heat5">18,962,868</td><td>17,391,965</td><td>18,002,658</td><td class="heat2">17,164,244</td><td class="latest-week heat4">18,623,254</td><td class="wow-col wow-up">▲8.5%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td>14,170,633</td><td class="heat2">13,949,764</td><td class="heat4">14,754,654</td><td class="heat1">13,723,758</td><td>14,123,977</td><td>14,103,187</td><td class="latest-week heat5">14,823,448</td><td class="wow-col wow-up">▲5.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>3,461,843</td><td class="heat2">3,115,138</td><td class="heat5">4,097,910</td><td>3,636,727</td><td class="heat4">3,788,675</td><td class="heat1">3,044,887</td><td class="latest-week">3,659,161</td><td class="wow-col wow-up">▲20.2%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">20,044,205</td><td class="heat4">11,374,379</td><td class="heat1">7,928,113</td><td class="heat2">8,892,195</td><td>9,264,058</td><td>9,367,525</td><td class="latest-week">9,800,902</td><td class="wow-col wow-up">▲4.6%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>4,957,070</td><td class="heat1">3,168,068</td><td class="heat5">5,974,368</td><td class="heat2">3,787,815</td><td class="heat4">5,346,802</td><td>4,138,052</td><td class="latest-week">3,815,495</td><td class="wow-col wow-down">▼7.8%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">1,380,524</td><td class="heat1">354,266</td><td>615,232</td><td class="heat4">716,758</td><td>516,940</td><td>583,242</td><td class="latest-week heat2">382,504</td><td class="wow-col wow-down">▼34.4%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">448,997</td><td class="heat1">132,150</td><td>204,028</td><td>340,103</td><td class="heat5">571,054</td><td class="heat2">150,670</td><td class="latest-week">225,025</td><td class="wow-col wow-up">▲49.3%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">3,538,754</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">665,441</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat2">113,654</td><td class="heat4">145,405</td><td>139,945</td><td>127,682</td><td class="heat5">190,043</td><td class="heat1">29,794</td><td class="latest-week">120,466</td><td class="wow-col wow-up">▲304.3%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>44,656,952</td><td>32,269,242</td><td>33,946,387</td><td>35,874,822</td><td>34,642,586</td><td>31,961,896</td><td class="latest-week">32,967,646</td><td class="wow-col wow-up">▲3.1%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼12,387,710</td><td style="color:var(--green);font-weight:700;">▲1,677,145</td><td style="color:var(--green);font-weight:700;">▲1,928,435</td><td style="color:var(--red);font-weight:700;">▼1,232,236</td><td style="color:var(--red);font-weight:700;">▼2,680,690</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲1,005,750</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td>¥9,852</td><td class="heat1">¥9,776</td><td>¥9,868</td><td class="heat5">¥10,894</td><td class="heat2">¥9,778</td><td>¥9,828</td><td class="latest-week heat4">¥9,909</td><td class="wow-col wow-up">▲0.8%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat2">71</td><td class="heat1">64</td><td class="heat5">111</td><td>73</td><td class="heat4">103</td><td>76</td><td class="latest-week">92</td><td class="wow-col wow-up">▲21.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td class="heat2">135</td><td>137</td><td class="heat5">181</td><td>148</td><td class="heat4">169</td><td class="heat1">133</td><td class="latest-week">166</td><td class="wow-col wow-up">▲24.8%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat4">9,911</td><td class="heat4">9,911</td><td>9,882</td><td class="heat1">9,869</td><td class="heat1">9,869</td><td>9,871</td><td class="latest-week">9,876</td><td class="wow-col wow-up">▲0.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td class="heat4">115</td><td class="heat2">70</td><td class="heat5">163</td><td class="heat1">69</td><td>109</td><td>96</td><td class="latest-week">85</td><td class="wow-col wow-down">▼11.5%</td></tr></tbody></table></div>
+<div class="ssub" style="color:#9a3412;"></div>
+<div class="stitle">④ CBD 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C CBD] ／ ※CBDはShopify取り扱いなし</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col ">Amazon</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td class="heat1">7,884</td><td class="heat1">7,884</td><td class="heat5">55,188</td><td>15,768</td><td class="heat4">23,652</td><td class="heat1">7,884</td><td class="latest-week heat1">7,884</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">74,997</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td>3,519</td><td class="heat4">14,076</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat5">32,933</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>11,403</td><td>21,960</td><td>55,188</td><td>90,765</td><td>56,585</td><td>7,884</td><td class="latest-week">7,884</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--green);font-weight:700;">▲10,557</td><td style="color:var(--green);font-weight:700;">▲33,228</td><td style="color:var(--green);font-weight:700;">▲35,577</td><td style="color:var(--red);font-weight:700;">▼34,180</td><td style="color:var(--red);font-weight:700;">▼48,701</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥5,702</td><td class="heat1">¥5,490</td><td class="heat4">¥13,797</td><td class="heat5">¥30,255</td><td>¥7,073</td><td>¥7,884</td><td class="latest-week">¥7,884</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天 27包 個数（箱）</td><td class="heat1">1</td><td class="heat1">1</td><td class="heat5">7</td><td>2</td><td class="heat4">3</td><td class="heat1">1</td><td class="latest-week heat1">1</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天 9包 個数（箱）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">Amazon 27包 個数（箱）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">Amazon 9包 個数（箱）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr></tbody></table></div>
+<div class="stitle">⑤ SkinBeauty 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C SKINBEAUTY]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--sb)"></span>Shopify 計</td><td class="heat1">1,313,144</td><td class="heat4">1,615,352</td><td>1,432,384</td><td class="heat5">1,645,028</td><td>1,560,728</td><td class="heat2">1,342,448</td><td class="latest-week">1,421,608</td><td class="wow-col wow-up">▲5.9%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat1">1,000,944</td><td class="heat5">1,360,352</td><td class="heat2">1,079,684</td><td>1,186,528</td><td class="heat4">1,186,828</td><td>1,129,148</td><td class="latest-week">1,151,808</td><td class="wow-col wow-up">▲2.0%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>312,200</td><td class="heat2">255,000</td><td>352,700</td><td class="heat5">458,500</td><td class="heat4">373,900</td><td class="heat1">213,300</td><td class="latest-week">269,800</td><td class="wow-col wow-up">▲26.5%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">970,645</td><td class="heat4">531,491</td><td class="heat1">138,970</td><td>241,590</td><td>372,686</td><td>262,440</td><td class="latest-week heat2">219,305</td><td class="wow-col wow-down">▼16.4%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>504,023</td><td class="heat2">296,619</td><td class="heat5">628,665</td><td>317,476</td><td class="heat4">555,959</td><td>393,365</td><td class="latest-week heat1">216,288</td><td class="wow-col wow-down">▼45.0%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">96,916</td><td class="heat4">50,008</td><td>26,554</td><td>38,281</td><td class="heat1">0</td><td class="heat2">17,927</td><td class="latest-week">41,381</td><td class="wow-col wow-up">▲130.8%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">54,450</td><td class="heat2">11,727</td><td>32,754</td><td class="heat5">91,812</td><td>51,520</td><td>14,827</td><td class="latest-week heat1">3,100</td><td class="wow-col wow-down">▼79.1%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">195,096</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">52,700</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat4">44,600</td><td>38,800</td><td>33,200</td><td class="heat2">31,900</td><td class="heat5">56,800</td><td class="heat1">14,400</td><td class="latest-week">40,800</td><td class="wow-col wow-up">▲183.3%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>2,983,778</td><td>2,543,997</td><td>2,292,527</td><td>2,613,883</td><td>2,597,693</td><td>2,045,407</td><td class="latest-week">1,942,482</td><td class="wow-col wow-down">▼5.0%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼439,781</td><td style="color:var(--red);font-weight:700;">▼251,470</td><td style="color:var(--green);font-weight:700;">▲321,356</td><td style="color:var(--red);font-weight:700;">▼16,190</td><td style="color:var(--red);font-weight:700;">▼552,286</td><td style="color:var(--red);font-weight:700;" class="latest-week">▼102,925</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥10,543</td><td>¥10,734</td><td>¥10,713</td><td class="heat5">¥11,936</td><td class="heat4">¥10,961</td><td class="heat2">¥10,543</td><td class="latest-week heat1">¥10,443</td><td class="wow-col wow-down">▼0.9%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td>10</td><td class="heat4">15</td><td class="heat1">7</td><td>12</td><td class="heat2">8</td><td>9</td><td class="latest-week heat4">15</td><td class="wow-col wow-up">▲66.7%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td>26</td><td class="heat5">319</td><td>31</td><td class="heat2">22</td><td class="heat1">19</td><td>23</td><td class="latest-week heat4">33</td><td class="wow-col wow-up">▲43.5%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat1">445</td><td>454</td><td class="heat2">453</td><td>466</td><td class="heat5">467</td><td>466</td><td class="latest-week">466</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td class="heat4">21</td><td>17</td><td class="heat5">30</td><td class="heat1">9</td><td>15</td><td>12</td><td class="latest-week heat1">9</td><td class="wow-col wow-down">▼25.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">28包入（全Ch）個数（箱）</td><td class="heat5">177</td><td>119</td><td>123</td><td class="heat4">140</td><td>125</td><td class="heat2">92</td><td class="latest-week heat1">89</td><td class="wow-col wow-down">▼3.3%</td></tr>
+<tr class="kpi-row"><td class="label-col ">レフィル30包（全Ch）個数（箱）</td><td>94</td><td class="heat5">116</td><td class="heat1">76</td><td>91</td><td class="heat4">112</td><td>86</td><td class="latest-week heat2">77</td><td class="wow-col wow-down">▼10.5%</td></tr>
+<tr class="kpi-row"><td class="label-col ">7包系（全Ch）個数（箱）</td><td class="heat4">50</td><td class="heat2">36</td><td>41</td><td class="heat5">56</td><td>46</td><td class="heat1">34</td><td class="latest-week">49</td><td class="wow-col wow-up">▲44.1%</td></tr></tbody></table></div>
+<div class="stitle">⑥ MINERALion 売上まとめ</div><div class="ssub">goods_tag = [MINERALion]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--mi)"></span>Shopify 計</td><td>1,333,200</td><td class="heat4">1,797,400</td><td class="heat5">1,854,200</td><td>1,776,900</td><td class="heat2">1,200,200</td><td class="heat1">1,028,000</td><td class="latest-week">1,244,400</td><td class="wow-col wow-up">▲21.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat2">688,400</td><td class="heat5">1,056,600</td><td class="heat4">1,003,800</td><td>854,400</td><td class="heat1">662,600</td><td>715,200</td><td class="latest-week">790,200</td><td class="wow-col wow-up">▲10.5%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>644,800</td><td>740,800</td><td class="heat4">850,400</td><td class="heat5">917,100</td><td>537,600</td><td class="heat1">312,800</td><td class="latest-week heat2">443,800</td><td class="wow-col wow-up">▲41.9%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">628,483</td><td>283,552</td><td class="heat4">401,255</td><td>307,203</td><td>302,888</td><td class="heat1">219,515</td><td class="latest-week heat2">261,093</td><td class="wow-col wow-up">▲18.9%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td class="heat4">312,555</td><td class="heat1">150,026</td><td class="heat5">468,396</td><td class="heat2">177,937</td><td>295,110</td><td>224,457</td><td class="latest-week">182,879</td><td class="wow-col wow-down">▼18.5%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">87,225</td><td class="heat2">22,969</td><td class="heat1">17,445</td><td class="heat4">63,674</td><td>23,260</td><td>34,599</td><td class="latest-week">46,520</td><td class="wow-col wow-up">▲34.5%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">28,202</td><td>11,630</td><td>11,630</td><td>27,620</td><td class="heat5">33,144</td><td class="heat1">5,815</td><td class="latest-week heat1">5,815</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat1">10,000</td><td>40,000</td><td class="heat4">51,400</td><td>14,000</td><td class="heat5">55,600</td><td class="heat1">10,000</td><td class="latest-week">24,400</td><td class="wow-col wow-up">▲144.0%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>2,401,091</td><td>2,305,577</td><td>2,804,326</td><td>2,368,442</td><td>1,918,524</td><td>1,534,307</td><td class="latest-week">1,765,107</td><td class="wow-col wow-up">▲15.0%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼95,514</td><td style="color:var(--green);font-weight:700;">▲498,749</td><td style="color:var(--red);font-weight:700;">▼435,884</td><td style="color:var(--red);font-weight:700;">▼449,918</td><td style="color:var(--red);font-weight:700;">▼384,217</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲230,800</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥6,900</td><td class="heat5">¥7,273</td><td>¥7,136</td><td>¥7,155</td><td class="heat1">¥6,638</td><td class="heat4">¥7,272</td><td class="latest-week">¥7,004</td><td class="wow-col wow-down">▼3.7%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat2">12</td><td>21</td><td class="heat5">37</td><td class="heat4">22</td><td>17</td><td class="heat1">8</td><td class="latest-week">16</td><td class="wow-col wow-up">▲100.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td>81</td><td class="heat5">124</td><td class="heat4">120</td><td>65</td><td>53</td><td class="heat1">35</td><td class="latest-week heat2">43</td><td class="wow-col wow-up">▲22.9%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat1">551</td><td class="heat2">607</td><td>629</td><td>642</td><td>649</td><td class="heat4">661</td><td class="latest-week heat4">661</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>9</td><td class="heat2">7</td><td class="heat5">30</td><td>9</td><td class="heat4">15</td><td>13</td><td class="latest-week heat1">5</td><td class="wow-col wow-down">▼61.5%</td></tr></tbody></table></div>
+<div class="stitle">⑦ C+Cera 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C C＋Cera]（全角＋）</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--ccera)"></span>Shopify 計</td><td>3,439,282</td><td class="heat2">3,358,856</td><td class="heat4">3,860,375</td><td>3,829,634</td><td>3,443,875</td><td class="heat1">2,795,799</td><td class="latest-week heat5">3,940,522</td><td class="wow-col wow-up">▲40.9%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td>2,474,352</td><td class="heat2">2,396,463</td><td>2,759,463</td><td class="heat4">2,785,315</td><td>2,398,389</td><td class="heat1">2,150,463</td><td class="latest-week heat5">2,987,963</td><td class="wow-col wow-up">▲38.9%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>918,430</td><td>925,467</td><td class="heat5">1,100,912</td><td>1,032,319</td><td class="heat4">1,045,486</td><td class="heat1">633,336</td><td class="latest-week heat2">880,559</td><td class="wow-col wow-up">▲39.0%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">1,922,765</td><td>1,277,705</td><td>961,397</td><td>891,998</td><td class="heat4">1,336,288</td><td class="heat2">883,065</td><td class="latest-week heat1">867,822</td><td class="wow-col wow-down">▼1.7%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>832,098</td><td class="heat2">580,692</td><td class="heat5">1,183,671</td><td class="heat1">549,234</td><td class="heat4">1,178,322</td><td>610,710</td><td class="latest-week">634,182</td><td class="wow-col wow-up">▲3.8%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">353,280</td><td>108,000</td><td class="heat1">82,401</td><td class="heat4">147,825</td><td class="heat2">101,352</td><td>124,251</td><td class="latest-week">118,125</td><td class="wow-col wow-down">▼4.9%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td>62,253</td><td>40,500</td><td class="heat1">13,500</td><td>58,827</td><td class="heat5">147,927</td><td class="heat2">16,926</td><td class="latest-week heat4">70,926</td><td class="wow-col wow-up">▲319.0%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td>62,463</td><td>30,000</td><td class="heat4">76,352</td><td>25,352</td><td class="heat5">103,500</td><td class="heat2">10,000</td><td class="latest-week heat1">5,000</td><td class="wow-col wow-down">▼50.0%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>6,662,555</td><td>5,395,753</td><td>6,179,623</td><td>5,520,431</td><td>6,373,072</td><td>4,469,101</td><td class="latest-week">5,636,577</td><td class="wow-col wow-up">▲26.1%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼1,266,802</td><td style="color:var(--green);font-weight:700;">▲783,870</td><td style="color:var(--red);font-weight:700;">▼659,192</td><td style="color:var(--green);font-weight:700;">▲852,641</td><td style="color:var(--red);font-weight:700;">▼1,903,971</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲1,167,476</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥13,766</td><td>¥14,274</td><td class="heat4">¥14,305</td><td class="heat1">¥13,464</td><td>¥14,257</td><td>¥13,794</td><td class="latest-week heat5">¥14,640</td><td class="wow-col wow-up">▲6.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat5">25</td><td class="heat4">14</td><td>13</td><td class="heat1">8</td><td>12</td><td class="heat2">9</td><td class="latest-week">13</td><td class="wow-col wow-up">▲44.4%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td class="heat5">78</td><td class="heat4">57</td><td>51</td><td>43</td><td>41</td><td class="heat1">31</td><td class="latest-week heat2">36</td><td class="wow-col wow-up">▲16.1%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat5">1,181</td><td class="heat4">1,176</td><td>1,163</td><td>1,148</td><td>1,138</td><td class="heat1">1,135</td><td class="latest-week heat2">1,137</td><td class="wow-col wow-up">▲0.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>16</td><td>14</td><td class="heat4">17</td><td class="heat1">6</td><td class="heat5">28</td><td class="heat2">11</td><td class="latest-week heat2">11</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">28包（全Ch）個数（箱）</td><td class="heat5">534</td><td class="heat2">429</td><td>488</td><td>438</td><td class="heat4">506</td><td class="heat1">342</td><td class="latest-week">437</td><td class="wow-col wow-up">▲27.8%</td></tr>
+<tr class="kpi-row"><td class="label-col ">7包（全Ch）個数（箱）</td><td class="heat5">59</td><td>46</td><td>41</td><td class="heat2">37</td><td class="heat4">50</td><td class="heat2">37</td><td class="latest-week heat1">34</td><td class="wow-col wow-down">▼8.1%</td></tr></tbody></table></div>
+<div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:12px 16px;margin:20px 0 8px;font-size:12px;color:#0c4a6e;">
+<strong>📖 指標の定義</strong><br><span style="display:inline-block;margin-top:6px;">
+<strong>純粋新規顧客数（Shopify）</strong>：Shopify公式ECで生まれて初めて購入した顧客数。<br><br>
+<strong>楽天純粋新規（NE）</strong>：楽天ショップ（shop_id=31）で初めて購入した顧客数。NEデータの電話番号ハッシュで顧客識別。
+</span></div>
+</div>
+<div class="tab-panel" id="tab-1">
+<div style="background:#fff8f3;border:1px solid #fdd;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#7a4010;">
+📈 <strong>日別グラフ</strong>（07/15〜08/23・40日間）：積み上げ棒グラフ（左軸: 売上）＋折れ線（右軸: 新規顧客数）<br>
+データソース：NE受注日基準・税抜 ／ 新規顧客：Shopify有料初回購入者（CBDを除く）
+</div>
+<div class="stitle">① 全チャネル 日別推移</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 12px;margin-bottom:20px;"><div style="position:relative;height:320px;width:100%;"><canvas id="chart_all_d"></canvas></div></div>
+<div class="stitle">② Lypo-C VC 日別推移</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 12px;margin-bottom:20px;"><div style="position:relative;height:290px;width:100%;"><canvas id="chart_vc_d"></canvas></div></div>
+<div class="stitle">③ C+D 日別推移</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 12px;margin-bottom:20px;"><div style="position:relative;height:290px;width:100%;"><canvas id="chart_cd_d"></canvas></div></div>
+<div class="stitle">④ C+Cera 日別推移</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 12px;margin-bottom:20px;"><div style="position:relative;height:290px;width:100%;"><canvas id="chart_cc_d"></canvas></div></div>
+<div class="stitle">⑤ SkinBeauty 日別推移</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 12px;margin-bottom:20px;"><div style="position:relative;height:290px;width:100%;"><canvas id="chart_sb_d"></canvas></div></div>
+<div class="stitle">⑥ MINERALion 日別推移</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 12px;margin-bottom:20px;"><div style="position:relative;height:290px;width:100%;"><canvas id="chart_mi_d"></canvas></div></div>
+<div class="stitle">⑦ CBD 日別推移</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 12px;margin-bottom:20px;"><div style="position:relative;height:290px;width:100%;"><canvas id="chart_cbd_d"></canvas></div></div>
+</div>
+<div class="tab-panel" id="tab-2">
+<div style="background:#fff8f3;border:1px solid #fdd;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#7a4010;">💡 <strong>考察タブ</strong>：週単位の上下より長めのトレンドで見てどう捉えるかを重視。</div><div class="stitle">① 全チャネル売上まとめ</div><div class="ssub">NE受注日基準・税抜 ／ 全チャネル（Amazon含む）受注日（order_date）統一</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><strong>Shopify 計</strong></td><td class="heat2">48,524,291</td><td>48,711,780</td><td class="heat5">53,166,270</td><td>50,805,690</td><td>50,264,831</td><td class="heat1">47,199,240</td><td class="latest-week heat4">50,865,915</td><td class="wow-col wow-up">▲7.8%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat1">37,505,437</td><td class="heat2">38,214,626</td><td class="heat5">40,812,429</td><td>38,619,200</td><td>38,558,214</td><td>38,899,169</td><td class="latest-week heat4">39,708,112</td><td class="wow-col wow-up">▲2.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>10,769,240</td><td class="heat2">10,054,297</td><td class="heat5">12,107,078</td><td class="heat4">11,967,502</td><td>11,423,771</td><td class="heat1">8,138,764</td><td class="latest-week">10,508,279</td><td class="wow-col wow-up">▲29.1%</td></tr>
+<tr class=""><td class="label-col "><strong>Amazon</strong></td><td class="heat5">57,650,451</td><td class="heat4">33,367,452</td><td class="heat1">22,395,811</td><td class="heat2">24,074,604</td><td>25,403,447</td><td>24,081,892</td><td class="latest-week">25,918,130</td><td class="wow-col wow-up">▲7.6%</td></tr>
+<tr class=""><td class="label-col "><strong>楽天</strong></td><td>15,712,065</td><td class="heat1">9,960,166</td><td class="heat5">19,878,894</td><td>12,014,795</td><td class="heat4">17,640,355</td><td>13,132,784</td><td class="latest-week heat2">11,265,143</td><td class="wow-col wow-down">▼14.2%</td></tr>
+<tr class=""><td class="label-col "><strong>Yahoo</strong></td><td class="heat5">5,058,370</td><td class="heat1">1,449,020</td><td>1,890,081</td><td class="heat4">2,908,215</td><td class="heat2">1,504,259</td><td>1,922,967</td><td class="latest-week">1,627,279</td><td class="wow-col wow-down">▼15.4%</td></tr>
+<tr class=""><td class="label-col "><strong>Qoo10</strong></td><td class="heat4">1,553,804</td><td class="heat2">724,071</td><td>817,645</td><td>1,360,397</td><td class="heat5">1,788,959</td><td class="heat1">642,446</td><td class="latest-week">807,624</td><td class="wow-col wow-up">▲25.7%</td></tr>
+<tr class=""><td class="label-col "><strong>ふるさと納税</strong></td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">7,948,600</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col "><strong>LINEギフト</strong></td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">3,449,681</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col "><strong>その他</strong></td><td>541,119</td><td>544,000</td><td class="heat4">843,157</td><td>513,041</td><td class="heat5">931,940</td><td class="heat1">337,356</td><td class="latest-week heat2">483,102</td><td class="wow-col wow-up">▲43.2%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>129,052,231</td><td>94,766,821</td><td>99,362,026</td><td>104,082,779</td><td>99,616,583</td><td>88,791,898</td><td class="latest-week">90,967,193</td><td class="wow-col wow-up">▲2.4%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼34,285,410</td><td style="color:var(--green);font-weight:700;">▲4,595,205</td><td style="color:var(--green);font-weight:700;">▲4,720,753</td><td style="color:var(--red);font-weight:700;">▼4,466,196</td><td style="color:var(--red);font-weight:700;">▼10,824,685</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲2,175,295</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat1">¥9,554</td><td>¥9,628</td><td>¥9,678</td><td class="heat5">¥10,709</td><td class="heat2">¥9,586</td><td>¥9,593</td><td class="latest-week heat4">¥9,705</td><td class="wow-col wow-up">▲1.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td>394</td><td class="heat1">293</td><td class="heat5">415</td><td>385</td><td>396</td><td class="heat2">360</td><td class="latest-week">396</td><td class="wow-col wow-up">▲10.0%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat1">22,231</td><td class="heat2">22,260</td><td>22,275</td><td>22,305</td><td>22,333</td><td class="heat5">22,368</td><td class="latest-week heat4">22,354</td><td class="wow-col wow-down">▼0.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>496</td><td>336</td><td class="heat5">697</td><td class="heat1">294</td><td class="heat4">504</td><td>409</td><td class="latest-week heat2">327</td><td class="wow-col wow-down">▼20.0%</td></tr></tbody></table></div>
+<div class="ssub">※Shopify定期/都度は shopify_sku_brand_master.product_type で判定。ふるさと納税・LINEギフト（shop_id=21）は月末締め登録のため締め日以外はハイフン。shop_id=9（Consumer）の¥0受注は除外。</div>
+<div class="insight-wrap">
+<div class="insight-header" onclick="toggleInsight(this)">
+<span><span style="margin-right:6px;">💬</span><span class="insight-label">① 全チャネル 考察</span></span>
+<span class="insight-chevron open">▼</span>
+</div>
+<div class="insight-body open"><ul><li><span class="itag itag-ok">好材料</span><span>全社合計¥90,967,193（前週¥88,791,898、+2.4%）と増加。Shopify¥50,865,915（前週¥47,199,240、+7.8%）の伸びが主因。楽天¥11,265,143（前週¥13,132,784、▼14.2%）とYahoo¥1,627,279（前週¥1,922,967、▼15.4%）は減少。</span></li>
+<li><span class="itag itag-warn">警告</span><span>⚠️Amazon¥25,918,130。本日(8/24)、直近7週分（07/06週〜08/17週）をQ1結果からAMAZON_HISTORYとして再抽出し、「amazon」キーの過去配列も含めて全面上書きした（NE取り込み遅延構造への対応・ルール8）。これにより前週（08/10週）のAmazon確定値は速報¥25,557,105から¥24,081,892に下方修正され（▼5.8%）、今週分との比較は+7.6%。他キー・他チャネルの過去配列は従来通り不変。</span></li>
+<li><span class="itag itag-watch">注視</span><span>定期ACTIVE 22,354件（前週22,368件、▲14件、▲0.1%）とわずかに減少。</span></li>
+<li><span class="itag itag-watch">注視</span><span>楽天純粋新規327名（前週409名、▼20.0%）と減少。PRE3（その他チャネル内訳）は500K超の異常値なし（最大shop_id=9・VC¥168,295・9件、次点shop_id=9・C+D¥90,564。継続的傾向で急増なし）。</span></li>
+</ul></div>
+</div>
+<div class="stitle">② Lypo-C VC 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C] / [Lypo-C for SPORTS]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--vc)"></span>Shopify 計</td><td class="heat2">24,696,174</td><td class="heat1">24,509,893</td><td class="heat5">27,055,054</td><td class="heat4">26,095,663</td><td>26,007,170</td><td>24,797,349</td><td class="latest-week">25,491,131</td><td class="wow-col wow-up">▲2.8%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat1">19,171,108</td><td class="heat2">19,451,447</td><td class="heat5">21,214,828</td><td>20,069,199</td><td>20,186,420</td><td class="heat4">20,801,171</td><td class="latest-week">19,954,693</td><td class="wow-col wow-down">▼4.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>5,431,967</td><td class="heat2">5,017,892</td><td class="heat4">5,705,156</td><td class="heat5">5,922,856</td><td>5,678,110</td><td class="heat1">3,934,441</td><td class="latest-week">5,254,959</td><td class="wow-col wow-up">▲33.6%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">34,084,353</td><td class="heat4">19,900,325</td><td class="heat1">12,966,076</td><td>13,741,618</td><td>14,127,527</td><td class="heat2">13,349,347</td><td class="latest-week">14,769,008</td><td class="wow-col wow-up">▲10.6%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>9,098,435</td><td class="heat1">5,756,877</td><td class="heat5">11,568,606</td><td>7,166,565</td><td class="heat4">10,240,510</td><td>7,758,316</td><td class="latest-week heat2">6,408,415</td><td class="wow-col wow-down">▼17.4%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">3,140,425</td><td class="heat2">913,777</td><td>1,148,449</td><td class="heat4">1,941,677</td><td class="heat1">862,707</td><td>1,162,948</td><td class="latest-week">1,038,749</td><td class="wow-col wow-down">▼10.7%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">959,902</td><td>528,064</td><td>555,733</td><td>842,035</td><td class="heat5">985,314</td><td class="heat1">454,208</td><td class="latest-week heat2">502,758</td><td class="wow-col wow-up">▲10.7%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">4,139,753</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">2,731,540</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat4">250,217</td><td>208,499</td><td class="heat2">205,978</td><td class="heat1">185,707</td><td class="heat5">360,174</td><td>220,702</td><td class="latest-week">234,476</td><td class="wow-col wow-up">▲6.2%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>72,239,586</td><td>51,829,175</td><td>53,746,304</td><td>57,419,536</td><td>53,826,145</td><td>48,645,948</td><td class="latest-week">48,444,537</td><td class="wow-col wow-down">▼0.4%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼20,410,411</td><td style="color:var(--green);font-weight:700;">▲1,917,129</td><td style="color:var(--green);font-weight:700;">▲3,673,232</td><td style="color:var(--red);font-weight:700;">▼3,593,391</td><td style="color:var(--red);font-weight:700;">▼5,180,197</td><td style="color:var(--red);font-weight:700;" class="latest-week">▼201,411</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat1">¥8,495</td><td>¥8,608</td><td>¥8,602</td><td class="heat5">¥9,777</td><td class="heat2">¥8,514</td><td>¥8,602</td><td class="latest-week heat4">¥8,620</td><td class="wow-col wow-up">▲0.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat2">188</td><td class="heat1">186</td><td class="heat5">219</td><td>202</td><td>191</td><td class="heat4">214</td><td class="latest-week">195</td><td class="wow-col wow-down">▼8.9%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td class="heat2">206</td><td class="heat1">198</td><td class="heat5">242</td><td>227</td><td>237</td><td class="heat4">241</td><td class="latest-week">221</td><td class="wow-col wow-down">▼8.3%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat2">11,129</td><td class="heat1">11,111</td><td>11,164</td><td>11,191</td><td>11,235</td><td class="heat5">11,266</td><td class="latest-week heat4">11,244</td><td class="wow-col wow-down">▼0.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>358</td><td>238</td><td class="heat5">487</td><td class="heat1">208</td><td class="heat4">364</td><td>299</td><td class="latest-week heat2">233</td><td class="wow-col wow-down">▼22.1%</td></tr></tbody></table></div>
+<div class="insight-wrap">
+<div class="insight-header" onclick="toggleInsight(this)">
+<span><span style="margin-right:6px;">💬</span><span class="insight-label">② Lypo-C VC 考察</span></span>
+<span class="insight-chevron open">▼</span>
+</div>
+<div class="insight-body open"><ul><li><span class="itag itag-watch">注視</span><span>VC全体¥48,444,537（前週¥48,645,948、▼0.4%）とほぼ横ばい。shopify_total¥25,491,131（前週¥24,797,349、+2.8%）は増加したが、楽天¥6,408,415（前週¥7,758,316、▼17.4%）の落ち込みが相殺した。</span></li>
+<li><span class="itag itag-ok">好材料</span><span>Amazon¥14,769,008（前週補正後¥13,349,347、+10.6%）と増加。①のAMAZON_HISTORY補正後の比較。</span></li>
+<li><span class="itag itag-watch">注視</span><span>VC定期ACTIVE 11,244件（前週11,266件、▲22件、▲0.2%）とわずかに減少に転じた。</span></li>
+</ul></div>
+</div>
+<div class="stitle">③ C+D 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C C+D] / [Lypo-C for SPORTS C+D] / [Lypo-C C+D+K]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--cd)"></span>Shopify 計</td><td>17,702,291</td><td class="heat1">17,096,382</td><td class="heat5">18,962,868</td><td>17,391,965</td><td>18,002,658</td><td class="heat2">17,164,244</td><td class="latest-week heat4">18,623,254</td><td class="wow-col wow-up">▲8.5%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td>14,170,633</td><td class="heat2">13,949,764</td><td class="heat4">14,754,654</td><td class="heat1">13,723,758</td><td>14,123,977</td><td>14,103,187</td><td class="latest-week heat5">14,823,448</td><td class="wow-col wow-up">▲5.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>3,461,843</td><td class="heat2">3,115,138</td><td class="heat5">4,097,910</td><td>3,636,727</td><td class="heat4">3,788,675</td><td class="heat1">3,044,887</td><td class="latest-week">3,659,161</td><td class="wow-col wow-up">▲20.2%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">20,044,205</td><td class="heat4">11,374,379</td><td class="heat1">7,928,113</td><td class="heat2">8,892,195</td><td>9,264,058</td><td>9,367,525</td><td class="latest-week">9,800,902</td><td class="wow-col wow-up">▲4.6%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>4,957,070</td><td class="heat1">3,168,068</td><td class="heat5">5,974,368</td><td class="heat2">3,787,815</td><td class="heat4">5,346,802</td><td>4,138,052</td><td class="latest-week">3,815,495</td><td class="wow-col wow-down">▼7.8%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">1,380,524</td><td class="heat1">354,266</td><td>615,232</td><td class="heat4">716,758</td><td>516,940</td><td>583,242</td><td class="latest-week heat2">382,504</td><td class="wow-col wow-down">▼34.4%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">448,997</td><td class="heat1">132,150</td><td>204,028</td><td>340,103</td><td class="heat5">571,054</td><td class="heat2">150,670</td><td class="latest-week">225,025</td><td class="wow-col wow-up">▲49.3%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">3,538,754</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">665,441</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat2">113,654</td><td class="heat4">145,405</td><td>139,945</td><td>127,682</td><td class="heat5">190,043</td><td class="heat1">29,794</td><td class="latest-week">120,466</td><td class="wow-col wow-up">▲304.3%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>44,656,952</td><td>32,269,242</td><td>33,946,387</td><td>35,874,822</td><td>34,642,586</td><td>31,961,896</td><td class="latest-week">32,967,646</td><td class="wow-col wow-up">▲3.1%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼12,387,710</td><td style="color:var(--green);font-weight:700;">▲1,677,145</td><td style="color:var(--green);font-weight:700;">▲1,928,435</td><td style="color:var(--red);font-weight:700;">▼1,232,236</td><td style="color:var(--red);font-weight:700;">▼2,680,690</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲1,005,750</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td>¥9,852</td><td class="heat1">¥9,776</td><td>¥9,868</td><td class="heat5">¥10,894</td><td class="heat2">¥9,778</td><td>¥9,828</td><td class="latest-week heat4">¥9,909</td><td class="wow-col wow-up">▲0.8%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat2">71</td><td class="heat1">64</td><td class="heat5">111</td><td>73</td><td class="heat4">103</td><td>76</td><td class="latest-week">92</td><td class="wow-col wow-up">▲21.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td class="heat2">135</td><td>137</td><td class="heat5">181</td><td>148</td><td class="heat4">169</td><td class="heat1">133</td><td class="latest-week">166</td><td class="wow-col wow-up">▲24.8%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat4">9,911</td><td class="heat4">9,911</td><td>9,882</td><td class="heat1">9,869</td><td class="heat1">9,869</td><td>9,871</td><td class="latest-week">9,876</td><td class="wow-col wow-up">▲0.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td class="heat4">115</td><td class="heat2">70</td><td class="heat5">163</td><td class="heat1">69</td><td>109</td><td>96</td><td class="latest-week">85</td><td class="wow-col wow-down">▼11.5%</td></tr></tbody></table></div>
+<div class="ssub" style="color:#9a3412;"></div>
+<div class="insight-wrap">
+<div class="insight-header" onclick="toggleInsight(this)">
+<span><span style="margin-right:6px;">💬</span><span class="insight-label">③ C+D 考察</span></span>
+<span class="insight-chevron open">▼</span>
+</div>
+<div class="insight-body open"><ul><li><span class="itag itag-ok">好材料</span><span>C+D全体¥32,967,646（前週¥31,961,896、+3.1%）と増加。shopify_total¥18,623,254（前週¥17,164,244、+8.5%）が牽引。</span></li>
+<li><span class="itag itag-ok">好材料</span><span>Amazon¥9,800,902（前週補正後¥9,367,525、+4.6%）と増加。①のAMAZON_HISTORY補正後の比較。</span></li>
+<li><span class="itag itag-watch">注視</span><span>C+D定期ACTIVE 9,876件（前週9,871件、+5件、+0.1%）とほぼ横ばい。</span></li>
+</ul></div>
+</div>
+<div class="stitle">④ CBD 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C CBD] ／ ※CBDはShopify取り扱いなし</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col ">Amazon</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td class="heat1">7,884</td><td class="heat1">7,884</td><td class="heat5">55,188</td><td>15,768</td><td class="heat4">23,652</td><td class="heat1">7,884</td><td class="latest-week heat1">7,884</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">74,997</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td>3,519</td><td class="heat4">14,076</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat5">32,933</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>11,403</td><td>21,960</td><td>55,188</td><td>90,765</td><td>56,585</td><td>7,884</td><td class="latest-week">7,884</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--green);font-weight:700;">▲10,557</td><td style="color:var(--green);font-weight:700;">▲33,228</td><td style="color:var(--green);font-weight:700;">▲35,577</td><td style="color:var(--red);font-weight:700;">▼34,180</td><td style="color:var(--red);font-weight:700;">▼48,701</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥5,702</td><td class="heat1">¥5,490</td><td class="heat4">¥13,797</td><td class="heat5">¥30,255</td><td>¥7,073</td><td>¥7,884</td><td class="latest-week">¥7,884</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天 27包 個数（箱）</td><td class="heat1">1</td><td class="heat1">1</td><td class="heat5">7</td><td>2</td><td class="heat4">3</td><td class="heat1">1</td><td class="latest-week heat1">1</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天 9包 個数（箱）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">Amazon 27包 個数（箱）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">Amazon 9包 個数（箱）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr></tbody></table></div>
+<div class="insight-wrap">
+<div class="insight-header" onclick="toggleInsight(this)">
+<span><span style="margin-right:6px;">💬</span><span class="insight-label">④ CBD 考察</span></span>
+<span class="insight-chevron open">▼</span>
+</div>
+<div class="insight-body open"><ul><li><span class="itag itag-watch">注視</span><span>CBD全体¥7,884（前週¥7,884、±0%）と横ばい。在庫切れの影響で引き続き楽天のみの計上にとどまり、Amazon・Yahoo・Qoo10は引き続きゼロ。楽天新規NEも0件（前週0件、±0件）。r27/r9/a27/a9はhandoff_data.mdにQ6結果が含まれていなかったため、BigQuery MCPコネクタで同等クエリを直接実行し実測値（楽天27包1箱のみ、他は0）で補完した。</span></li>
+</ul></div>
+</div>
+<div class="stitle">⑤ SkinBeauty 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C SKINBEAUTY]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--sb)"></span>Shopify 計</td><td class="heat1">1,313,144</td><td class="heat4">1,615,352</td><td>1,432,384</td><td class="heat5">1,645,028</td><td>1,560,728</td><td class="heat2">1,342,448</td><td class="latest-week">1,421,608</td><td class="wow-col wow-up">▲5.9%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat1">1,000,944</td><td class="heat5">1,360,352</td><td class="heat2">1,079,684</td><td>1,186,528</td><td class="heat4">1,186,828</td><td>1,129,148</td><td class="latest-week">1,151,808</td><td class="wow-col wow-up">▲2.0%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>312,200</td><td class="heat2">255,000</td><td>352,700</td><td class="heat5">458,500</td><td class="heat4">373,900</td><td class="heat1">213,300</td><td class="latest-week">269,800</td><td class="wow-col wow-up">▲26.5%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">970,645</td><td class="heat4">531,491</td><td class="heat1">138,970</td><td>241,590</td><td>372,686</td><td>262,440</td><td class="latest-week heat2">219,305</td><td class="wow-col wow-down">▼16.4%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>504,023</td><td class="heat2">296,619</td><td class="heat5">628,665</td><td>317,476</td><td class="heat4">555,959</td><td>393,365</td><td class="latest-week heat1">216,288</td><td class="wow-col wow-down">▼45.0%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">96,916</td><td class="heat4">50,008</td><td>26,554</td><td>38,281</td><td class="heat1">0</td><td class="heat2">17,927</td><td class="latest-week">41,381</td><td class="wow-col wow-up">▲130.8%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">54,450</td><td class="heat2">11,727</td><td>32,754</td><td class="heat5">91,812</td><td>51,520</td><td>14,827</td><td class="latest-week heat1">3,100</td><td class="wow-col wow-down">▼79.1%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">195,096</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">52,700</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat4">44,600</td><td>38,800</td><td>33,200</td><td class="heat2">31,900</td><td class="heat5">56,800</td><td class="heat1">14,400</td><td class="latest-week">40,800</td><td class="wow-col wow-up">▲183.3%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>2,983,778</td><td>2,543,997</td><td>2,292,527</td><td>2,613,883</td><td>2,597,693</td><td>2,045,407</td><td class="latest-week">1,942,482</td><td class="wow-col wow-down">▼5.0%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼439,781</td><td style="color:var(--red);font-weight:700;">▼251,470</td><td style="color:var(--green);font-weight:700;">▲321,356</td><td style="color:var(--red);font-weight:700;">▼16,190</td><td style="color:var(--red);font-weight:700;">▼552,286</td><td style="color:var(--red);font-weight:700;" class="latest-week">▼102,925</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥10,543</td><td>¥10,734</td><td>¥10,713</td><td class="heat5">¥11,936</td><td class="heat4">¥10,961</td><td class="heat2">¥10,543</td><td class="latest-week heat1">¥10,443</td><td class="wow-col wow-down">▼0.9%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td>10</td><td class="heat4">15</td><td class="heat1">7</td><td>12</td><td class="heat2">8</td><td>9</td><td class="latest-week heat4">15</td><td class="wow-col wow-up">▲66.7%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td>26</td><td class="heat5">319</td><td>31</td><td class="heat2">22</td><td class="heat1">19</td><td>23</td><td class="latest-week heat4">33</td><td class="wow-col wow-up">▲43.5%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat1">445</td><td>454</td><td class="heat2">453</td><td>466</td><td class="heat5">467</td><td>466</td><td class="latest-week">466</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td class="heat4">21</td><td>17</td><td class="heat5">30</td><td class="heat1">9</td><td>15</td><td>12</td><td class="latest-week heat1">9</td><td class="wow-col wow-down">▼25.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">28包入（全Ch）個数（箱）</td><td class="heat5">177</td><td>119</td><td>123</td><td class="heat4">140</td><td>125</td><td class="heat2">92</td><td class="latest-week heat1">89</td><td class="wow-col wow-down">▼3.3%</td></tr>
+<tr class="kpi-row"><td class="label-col ">レフィル30包（全Ch）個数（箱）</td><td>94</td><td class="heat5">116</td><td class="heat1">76</td><td>91</td><td class="heat4">112</td><td>86</td><td class="latest-week heat2">77</td><td class="wow-col wow-down">▼10.5%</td></tr>
+<tr class="kpi-row"><td class="label-col ">7包系（全Ch）個数（箱）</td><td class="heat4">50</td><td class="heat2">36</td><td>41</td><td class="heat5">56</td><td>46</td><td class="heat1">34</td><td class="latest-week">49</td><td class="wow-col wow-up">▲44.1%</td></tr></tbody></table></div>
+<div class="insight-wrap">
+<div class="insight-header" onclick="toggleInsight(this)">
+<span><span style="margin-right:6px;">💬</span><span class="insight-label">⑤ SkinBeauty 考察</span></span>
+<span class="insight-chevron open">▼</span>
+</div>
+<div class="insight-body open"><ul><li><span class="itag itag-watch">注視</span><span>SB全体¥1,942,482（前週¥2,045,407、▼5.0%）と減少。shopify_total¥1,421,608（前週¥1,342,448、+5.9%）は増加したが、Amazon¥219,305（前週¥262,440、▼16.4%。AMAZON_HISTORYでも同値のため補正なし）の減少が主因。</span></li>
+<li><span class="itag itag-watch">注視</span><span>定期ACTIVE 466件（前週466件、±0件）で横ばい。</span></li>
+</ul></div>
+</div>
+<div class="stitle">⑥ MINERALion 売上まとめ</div><div class="ssub">goods_tag = [MINERALion]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--mi)"></span>Shopify 計</td><td>1,333,200</td><td class="heat4">1,797,400</td><td class="heat5">1,854,200</td><td>1,776,900</td><td class="heat2">1,200,200</td><td class="heat1">1,028,000</td><td class="latest-week">1,244,400</td><td class="wow-col wow-up">▲21.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat2">688,400</td><td class="heat5">1,056,600</td><td class="heat4">1,003,800</td><td>854,400</td><td class="heat1">662,600</td><td>715,200</td><td class="latest-week">790,200</td><td class="wow-col wow-up">▲10.5%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>644,800</td><td>740,800</td><td class="heat4">850,400</td><td class="heat5">917,100</td><td>537,600</td><td class="heat1">312,800</td><td class="latest-week heat2">443,800</td><td class="wow-col wow-up">▲41.9%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">628,483</td><td>283,552</td><td class="heat4">401,255</td><td>307,203</td><td>302,888</td><td class="heat1">219,515</td><td class="latest-week heat2">261,093</td><td class="wow-col wow-up">▲18.9%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td class="heat4">312,555</td><td class="heat1">150,026</td><td class="heat5">468,396</td><td class="heat2">177,937</td><td>295,110</td><td>224,457</td><td class="latest-week">182,879</td><td class="wow-col wow-down">▼18.5%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">87,225</td><td class="heat2">22,969</td><td class="heat1">17,445</td><td class="heat4">63,674</td><td>23,260</td><td>34,599</td><td class="latest-week">46,520</td><td class="wow-col wow-up">▲34.5%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">28,202</td><td>11,630</td><td>11,630</td><td>27,620</td><td class="heat5">33,144</td><td class="heat1">5,815</td><td class="latest-week heat1">5,815</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat1">10,000</td><td>40,000</td><td class="heat4">51,400</td><td>14,000</td><td class="heat5">55,600</td><td class="heat1">10,000</td><td class="latest-week">24,400</td><td class="wow-col wow-up">▲144.0%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>2,401,091</td><td>2,305,577</td><td>2,804,326</td><td>2,368,442</td><td>1,918,524</td><td>1,534,307</td><td class="latest-week">1,765,107</td><td class="wow-col wow-up">▲15.0%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼95,514</td><td style="color:var(--green);font-weight:700;">▲498,749</td><td style="color:var(--red);font-weight:700;">▼435,884</td><td style="color:var(--red);font-weight:700;">▼449,918</td><td style="color:var(--red);font-weight:700;">▼384,217</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲230,800</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥6,900</td><td class="heat5">¥7,273</td><td>¥7,136</td><td>¥7,155</td><td class="heat1">¥6,638</td><td class="heat4">¥7,272</td><td class="latest-week">¥7,004</td><td class="wow-col wow-down">▼3.7%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat2">12</td><td>21</td><td class="heat5">37</td><td class="heat4">22</td><td>17</td><td class="heat1">8</td><td class="latest-week">16</td><td class="wow-col wow-up">▲100.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td>81</td><td class="heat5">124</td><td class="heat4">120</td><td>65</td><td>53</td><td class="heat1">35</td><td class="latest-week heat2">43</td><td class="wow-col wow-up">▲22.9%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat1">551</td><td class="heat2">607</td><td>629</td><td>642</td><td>649</td><td class="heat4">661</td><td class="latest-week heat4">661</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>9</td><td class="heat2">7</td><td class="heat5">30</td><td>9</td><td class="heat4">15</td><td>13</td><td class="latest-week heat1">5</td><td class="wow-col wow-down">▼61.5%</td></tr></tbody></table></div>
+<div class="insight-wrap">
+<div class="insight-header" onclick="toggleInsight(this)">
+<span><span style="margin-right:6px;">💬</span><span class="insight-label">⑥ MINERALion 考察</span></span>
+<span class="insight-chevron open">▼</span>
+</div>
+<div class="insight-body open"><ul><li><span class="itag itag-ok">好材料</span><span>MINERALion全体¥1,765,107（前週¥1,534,307、+15.0%）と増加。shopify_total¥1,244,400（前週¥1,028,000、+21.1%）が牽引。</span></li>
+<li><span class="itag itag-ok">好材料</span><span>Amazon¥261,093（前週補正後¥219,515、+18.9%）と増加。①のAMAZON_HISTORY補正後の比較。</span></li>
+<li><span class="itag itag-watch">注視</span><span>MINERALion定期ACTIVE 661件（前週661件、±0件）で横ばい。</span></li>
+</ul></div>
+</div>
+<div class="stitle">⑦ C+Cera 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C C＋Cera]（全角＋）</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--ccera)"></span>Shopify 計</td><td>3,439,282</td><td class="heat2">3,358,856</td><td class="heat4">3,860,375</td><td>3,829,634</td><td>3,443,875</td><td class="heat1">2,795,799</td><td class="latest-week heat5">3,940,522</td><td class="wow-col wow-up">▲40.9%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td>2,474,352</td><td class="heat2">2,396,463</td><td>2,759,463</td><td class="heat4">2,785,315</td><td>2,398,389</td><td class="heat1">2,150,463</td><td class="latest-week heat5">2,987,963</td><td class="wow-col wow-up">▲38.9%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>918,430</td><td>925,467</td><td class="heat5">1,100,912</td><td>1,032,319</td><td class="heat4">1,045,486</td><td class="heat1">633,336</td><td class="latest-week heat2">880,559</td><td class="wow-col wow-up">▲39.0%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">1,922,765</td><td>1,277,705</td><td>961,397</td><td>891,998</td><td class="heat4">1,336,288</td><td class="heat2">883,065</td><td class="latest-week heat1">867,822</td><td class="wow-col wow-down">▼1.7%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>832,098</td><td class="heat2">580,692</td><td class="heat5">1,183,671</td><td class="heat1">549,234</td><td class="heat4">1,178,322</td><td>610,710</td><td class="latest-week">634,182</td><td class="wow-col wow-up">▲3.8%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">353,280</td><td>108,000</td><td class="heat1">82,401</td><td class="heat4">147,825</td><td class="heat2">101,352</td><td>124,251</td><td class="latest-week">118,125</td><td class="wow-col wow-down">▼4.9%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td>62,253</td><td>40,500</td><td class="heat1">13,500</td><td>58,827</td><td class="heat5">147,927</td><td class="heat2">16,926</td><td class="latest-week heat4">70,926</td><td class="wow-col wow-up">▲319.0%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td>62,463</td><td>30,000</td><td class="heat4">76,352</td><td>25,352</td><td class="heat5">103,500</td><td class="heat2">10,000</td><td class="latest-week heat1">5,000</td><td class="wow-col wow-down">▼50.0%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>6,662,555</td><td>5,395,753</td><td>6,179,623</td><td>5,520,431</td><td>6,373,072</td><td>4,469,101</td><td class="latest-week">5,636,577</td><td class="wow-col wow-up">▲26.1%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼1,266,802</td><td style="color:var(--green);font-weight:700;">▲783,870</td><td style="color:var(--red);font-weight:700;">▼659,192</td><td style="color:var(--green);font-weight:700;">▲852,641</td><td style="color:var(--red);font-weight:700;">▼1,903,971</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲1,167,476</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥13,766</td><td>¥14,274</td><td class="heat4">¥14,305</td><td class="heat1">¥13,464</td><td>¥14,257</td><td>¥13,794</td><td class="latest-week heat5">¥14,640</td><td class="wow-col wow-up">▲6.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat5">25</td><td class="heat4">14</td><td>13</td><td class="heat1">8</td><td>12</td><td class="heat2">9</td><td class="latest-week">13</td><td class="wow-col wow-up">▲44.4%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td class="heat5">78</td><td class="heat4">57</td><td>51</td><td>43</td><td>41</td><td class="heat1">31</td><td class="latest-week heat2">36</td><td class="wow-col wow-up">▲16.1%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat5">1,181</td><td class="heat4">1,176</td><td>1,163</td><td>1,148</td><td>1,138</td><td class="heat1">1,135</td><td class="latest-week heat2">1,137</td><td class="wow-col wow-up">▲0.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>16</td><td>14</td><td class="heat4">17</td><td class="heat1">6</td><td class="heat5">28</td><td class="heat2">11</td><td class="latest-week heat2">11</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">28包（全Ch）個数（箱）</td><td class="heat5">534</td><td class="heat2">429</td><td>488</td><td>438</td><td class="heat4">506</td><td class="heat1">342</td><td class="latest-week">437</td><td class="wow-col wow-up">▲27.8%</td></tr>
+<tr class="kpi-row"><td class="label-col ">7包（全Ch）個数（箱）</td><td class="heat5">59</td><td>46</td><td>41</td><td class="heat2">37</td><td class="heat4">50</td><td class="heat2">37</td><td class="latest-week heat1">34</td><td class="wow-col wow-down">▼8.1%</td></tr></tbody></table></div>
+<div class="insight-wrap">
+<div class="insight-header" onclick="toggleInsight(this)">
+<span><span style="margin-right:6px;">💬</span><span class="insight-label">⑦ C+Cera 考察</span></span>
+<span class="insight-chevron open">▼</span>
+</div>
+<div class="insight-body open"><ul><li><span class="itag itag-ok">好材料</span><span>C+Cera全体¥5,636,577（前週¥4,469,101、+26.1%）と大幅増加。shopify_total¥3,940,522（前週¥2,795,799、+40.9%）の伸びが主因。</span></li>
+<li><span class="itag itag-watch">注視</span><span>Amazon¥867,822（前週補正後¥883,065、▼1.7%）とほぼ横ばい。①のAMAZON_HISTORY補正後の比較。</span></li>
+<li><span class="itag itag-ok">好材料</span><span>定期ACTIVE 1,137件（前週1,135件、+2件、+0.2%）とわずかに増加。</span></li>
+</ul></div>
+</div>
+
+</div>
+<div class="tab-panel" id="tab-3">
+<div class="stitle">① 全チャネル売上まとめ</div><div class="ssub">NE受注日基準・税抜 ／ 全チャネル（Amazon含む）受注日（order_date）統一</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><strong>Shopify 計</strong></td><td class="heat2">48,524,291</td><td>48,711,780</td><td class="heat5">53,166,270</td><td>50,805,690</td><td>50,264,831</td><td class="heat1">47,199,240</td><td class="latest-week heat4">50,865,915</td><td class="wow-col wow-up">▲7.8%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat1">37,505,437</td><td class="heat2">38,214,626</td><td class="heat5">40,812,429</td><td>38,619,200</td><td>38,558,214</td><td>38,899,169</td><td class="latest-week heat4">39,708,112</td><td class="wow-col wow-up">▲2.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>10,769,240</td><td class="heat2">10,054,297</td><td class="heat5">12,107,078</td><td class="heat4">11,967,502</td><td>11,423,771</td><td class="heat1">8,138,764</td><td class="latest-week">10,508,279</td><td class="wow-col wow-up">▲29.1%</td></tr>
+<tr class=""><td class="label-col "><strong>Amazon</strong></td><td class="heat5">57,650,451</td><td class="heat4">33,367,452</td><td class="heat1">22,395,811</td><td class="heat2">24,074,604</td><td>25,403,447</td><td>24,081,892</td><td class="latest-week">25,918,130</td><td class="wow-col wow-up">▲7.6%</td></tr>
+<tr class=""><td class="label-col "><strong>楽天</strong></td><td>15,712,065</td><td class="heat1">9,960,166</td><td class="heat5">19,878,894</td><td>12,014,795</td><td class="heat4">17,640,355</td><td>13,132,784</td><td class="latest-week heat2">11,265,143</td><td class="wow-col wow-down">▼14.2%</td></tr>
+<tr class=""><td class="label-col "><strong>Yahoo</strong></td><td class="heat5">5,058,370</td><td class="heat1">1,449,020</td><td>1,890,081</td><td class="heat4">2,908,215</td><td class="heat2">1,504,259</td><td>1,922,967</td><td class="latest-week">1,627,279</td><td class="wow-col wow-down">▼15.4%</td></tr>
+<tr class=""><td class="label-col "><strong>Qoo10</strong></td><td class="heat4">1,553,804</td><td class="heat2">724,071</td><td>817,645</td><td>1,360,397</td><td class="heat5">1,788,959</td><td class="heat1">642,446</td><td class="latest-week">807,624</td><td class="wow-col wow-up">▲25.7%</td></tr>
+<tr class=""><td class="label-col "><strong>ふるさと納税</strong></td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">7,948,600</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col "><strong>LINEギフト</strong></td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">3,449,681</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col "><strong>その他</strong></td><td>541,119</td><td>544,000</td><td class="heat4">843,157</td><td>513,041</td><td class="heat5">931,940</td><td class="heat1">337,356</td><td class="latest-week heat2">483,102</td><td class="wow-col wow-up">▲43.2%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>129,052,231</td><td>94,766,821</td><td>99,362,026</td><td>104,082,779</td><td>99,616,583</td><td>88,791,898</td><td class="latest-week">90,967,193</td><td class="wow-col wow-up">▲2.4%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼34,285,410</td><td style="color:var(--green);font-weight:700;">▲4,595,205</td><td style="color:var(--green);font-weight:700;">▲4,720,753</td><td style="color:var(--red);font-weight:700;">▼4,466,196</td><td style="color:var(--red);font-weight:700;">▼10,824,685</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲2,175,295</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat1">¥9,554</td><td>¥9,628</td><td>¥9,678</td><td class="heat5">¥10,709</td><td class="heat2">¥9,586</td><td>¥9,593</td><td class="latest-week heat4">¥9,705</td><td class="wow-col wow-up">▲1.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td>394</td><td class="heat1">293</td><td class="heat5">415</td><td>385</td><td>396</td><td class="heat2">360</td><td class="latest-week">396</td><td class="wow-col wow-up">▲10.0%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat1">22,231</td><td class="heat2">22,260</td><td>22,275</td><td>22,305</td><td>22,333</td><td class="heat5">22,368</td><td class="latest-week heat4">22,354</td><td class="wow-col wow-down">▼0.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>496</td><td>336</td><td class="heat5">697</td><td class="heat1">294</td><td class="heat4">504</td><td>409</td><td class="latest-week heat2">327</td><td class="wow-col wow-down">▼20.0%</td></tr></tbody></table></div>
+<div class="ssub">※Shopify定期/都度は shopify_sku_brand_master.product_type で判定。ふるさと納税・LINEギフト（shop_id=21）は月末締め登録のため締め日以外はハイフン。shop_id=9（Consumer）の¥0受注は除外。</div>
+<div class="stitle">② Lypo-C VC 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C] / [Lypo-C for SPORTS]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--vc)"></span>Shopify 計</td><td class="heat2">24,696,174</td><td class="heat1">24,509,893</td><td class="heat5">27,055,054</td><td class="heat4">26,095,663</td><td>26,007,170</td><td>24,797,349</td><td class="latest-week">25,491,131</td><td class="wow-col wow-up">▲2.8%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat1">19,171,108</td><td class="heat2">19,451,447</td><td class="heat5">21,214,828</td><td>20,069,199</td><td>20,186,420</td><td class="heat4">20,801,171</td><td class="latest-week">19,954,693</td><td class="wow-col wow-down">▼4.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>5,431,967</td><td class="heat2">5,017,892</td><td class="heat4">5,705,156</td><td class="heat5">5,922,856</td><td>5,678,110</td><td class="heat1">3,934,441</td><td class="latest-week">5,254,959</td><td class="wow-col wow-up">▲33.6%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">34,084,353</td><td class="heat4">19,900,325</td><td class="heat1">12,966,076</td><td>13,741,618</td><td>14,127,527</td><td class="heat2">13,349,347</td><td class="latest-week">14,769,008</td><td class="wow-col wow-up">▲10.6%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>9,098,435</td><td class="heat1">5,756,877</td><td class="heat5">11,568,606</td><td>7,166,565</td><td class="heat4">10,240,510</td><td>7,758,316</td><td class="latest-week heat2">6,408,415</td><td class="wow-col wow-down">▼17.4%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">3,140,425</td><td class="heat2">913,777</td><td>1,148,449</td><td class="heat4">1,941,677</td><td class="heat1">862,707</td><td>1,162,948</td><td class="latest-week">1,038,749</td><td class="wow-col wow-down">▼10.7%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">959,902</td><td>528,064</td><td>555,733</td><td>842,035</td><td class="heat5">985,314</td><td class="heat1">454,208</td><td class="latest-week heat2">502,758</td><td class="wow-col wow-up">▲10.7%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">4,139,753</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">2,731,540</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat4">250,217</td><td>208,499</td><td class="heat2">205,978</td><td class="heat1">185,707</td><td class="heat5">360,174</td><td>220,702</td><td class="latest-week">234,476</td><td class="wow-col wow-up">▲6.2%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>72,239,586</td><td>51,829,175</td><td>53,746,304</td><td>57,419,536</td><td>53,826,145</td><td>48,645,948</td><td class="latest-week">48,444,537</td><td class="wow-col wow-down">▼0.4%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼20,410,411</td><td style="color:var(--green);font-weight:700;">▲1,917,129</td><td style="color:var(--green);font-weight:700;">▲3,673,232</td><td style="color:var(--red);font-weight:700;">▼3,593,391</td><td style="color:var(--red);font-weight:700;">▼5,180,197</td><td style="color:var(--red);font-weight:700;" class="latest-week">▼201,411</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat1">¥8,495</td><td>¥8,608</td><td>¥8,602</td><td class="heat5">¥9,777</td><td class="heat2">¥8,514</td><td>¥8,602</td><td class="latest-week heat4">¥8,620</td><td class="wow-col wow-up">▲0.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat2">188</td><td class="heat1">186</td><td class="heat5">219</td><td>202</td><td>191</td><td class="heat4">214</td><td class="latest-week">195</td><td class="wow-col wow-down">▼8.9%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td class="heat2">206</td><td class="heat1">198</td><td class="heat5">242</td><td>227</td><td>237</td><td class="heat4">241</td><td class="latest-week">221</td><td class="wow-col wow-down">▼8.3%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat2">11,129</td><td class="heat1">11,111</td><td>11,164</td><td>11,191</td><td>11,235</td><td class="heat5">11,266</td><td class="latest-week heat4">11,244</td><td class="wow-col wow-down">▼0.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>358</td><td>238</td><td class="heat5">487</td><td class="heat1">208</td><td class="heat4">364</td><td>299</td><td class="latest-week heat2">233</td><td class="wow-col wow-down">▼22.1%</td></tr></tbody></table></div>
+<div class="stitle">③ C+D 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C C+D] / [Lypo-C for SPORTS C+D] / [Lypo-C C+D+K]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--cd)"></span>Shopify 計</td><td>17,702,291</td><td class="heat1">17,096,382</td><td class="heat5">18,962,868</td><td>17,391,965</td><td>18,002,658</td><td class="heat2">17,164,244</td><td class="latest-week heat4">18,623,254</td><td class="wow-col wow-up">▲8.5%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td>14,170,633</td><td class="heat2">13,949,764</td><td class="heat4">14,754,654</td><td class="heat1">13,723,758</td><td>14,123,977</td><td>14,103,187</td><td class="latest-week heat5">14,823,448</td><td class="wow-col wow-up">▲5.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>3,461,843</td><td class="heat2">3,115,138</td><td class="heat5">4,097,910</td><td>3,636,727</td><td class="heat4">3,788,675</td><td class="heat1">3,044,887</td><td class="latest-week">3,659,161</td><td class="wow-col wow-up">▲20.2%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">20,044,205</td><td class="heat4">11,374,379</td><td class="heat1">7,928,113</td><td class="heat2">8,892,195</td><td>9,264,058</td><td>9,367,525</td><td class="latest-week">9,800,902</td><td class="wow-col wow-up">▲4.6%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>4,957,070</td><td class="heat1">3,168,068</td><td class="heat5">5,974,368</td><td class="heat2">3,787,815</td><td class="heat4">5,346,802</td><td>4,138,052</td><td class="latest-week">3,815,495</td><td class="wow-col wow-down">▼7.8%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">1,380,524</td><td class="heat1">354,266</td><td>615,232</td><td class="heat4">716,758</td><td>516,940</td><td>583,242</td><td class="latest-week heat2">382,504</td><td class="wow-col wow-down">▼34.4%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">448,997</td><td class="heat1">132,150</td><td>204,028</td><td>340,103</td><td class="heat5">571,054</td><td class="heat2">150,670</td><td class="latest-week">225,025</td><td class="wow-col wow-up">▲49.3%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">3,538,754</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">665,441</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat2">113,654</td><td class="heat4">145,405</td><td>139,945</td><td>127,682</td><td class="heat5">190,043</td><td class="heat1">29,794</td><td class="latest-week">120,466</td><td class="wow-col wow-up">▲304.3%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>44,656,952</td><td>32,269,242</td><td>33,946,387</td><td>35,874,822</td><td>34,642,586</td><td>31,961,896</td><td class="latest-week">32,967,646</td><td class="wow-col wow-up">▲3.1%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼12,387,710</td><td style="color:var(--green);font-weight:700;">▲1,677,145</td><td style="color:var(--green);font-weight:700;">▲1,928,435</td><td style="color:var(--red);font-weight:700;">▼1,232,236</td><td style="color:var(--red);font-weight:700;">▼2,680,690</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲1,005,750</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td>¥9,852</td><td class="heat1">¥9,776</td><td>¥9,868</td><td class="heat5">¥10,894</td><td class="heat2">¥9,778</td><td>¥9,828</td><td class="latest-week heat4">¥9,909</td><td class="wow-col wow-up">▲0.8%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat2">71</td><td class="heat1">64</td><td class="heat5">111</td><td>73</td><td class="heat4">103</td><td>76</td><td class="latest-week">92</td><td class="wow-col wow-up">▲21.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td class="heat2">135</td><td>137</td><td class="heat5">181</td><td>148</td><td class="heat4">169</td><td class="heat1">133</td><td class="latest-week">166</td><td class="wow-col wow-up">▲24.8%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat4">9,911</td><td class="heat4">9,911</td><td>9,882</td><td class="heat1">9,869</td><td class="heat1">9,869</td><td>9,871</td><td class="latest-week">9,876</td><td class="wow-col wow-up">▲0.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td class="heat4">115</td><td class="heat2">70</td><td class="heat5">163</td><td class="heat1">69</td><td>109</td><td>96</td><td class="latest-week">85</td><td class="wow-col wow-down">▼11.5%</td></tr></tbody></table></div>
+<div class="ssub" style="color:#9a3412;"></div>
+<div class="stitle">④ CBD 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C CBD] ／ ※CBDはShopify取り扱いなし</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col ">Amazon</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td class="heat1">7,884</td><td class="heat1">7,884</td><td class="heat5">55,188</td><td>15,768</td><td class="heat4">23,652</td><td class="heat1">7,884</td><td class="latest-week heat1">7,884</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">74,997</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td>3,519</td><td class="heat4">14,076</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat5">32,933</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>11,403</td><td>21,960</td><td>55,188</td><td>90,765</td><td>56,585</td><td>7,884</td><td class="latest-week">7,884</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--green);font-weight:700;">▲10,557</td><td style="color:var(--green);font-weight:700;">▲33,228</td><td style="color:var(--green);font-weight:700;">▲35,577</td><td style="color:var(--red);font-weight:700;">▼34,180</td><td style="color:var(--red);font-weight:700;">▼48,701</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥5,702</td><td class="heat1">¥5,490</td><td class="heat4">¥13,797</td><td class="heat5">¥30,255</td><td>¥7,073</td><td>¥7,884</td><td class="latest-week">¥7,884</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天 27包 個数（箱）</td><td class="heat1">1</td><td class="heat1">1</td><td class="heat5">7</td><td>2</td><td class="heat4">3</td><td class="heat1">1</td><td class="latest-week heat1">1</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天 9包 個数（箱）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">Amazon 27包 個数（箱）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">Amazon 9包 個数（箱）</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="heat1">0</td><td class="latest-week heat1">0</td><td class="wow-col wow-flat">—</td></tr></tbody></table></div>
+<div class="stitle">⑤ SkinBeauty 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C SKINBEAUTY]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--sb)"></span>Shopify 計</td><td class="heat1">1,313,144</td><td class="heat4">1,615,352</td><td>1,432,384</td><td class="heat5">1,645,028</td><td>1,560,728</td><td class="heat2">1,342,448</td><td class="latest-week">1,421,608</td><td class="wow-col wow-up">▲5.9%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat1">1,000,944</td><td class="heat5">1,360,352</td><td class="heat2">1,079,684</td><td>1,186,528</td><td class="heat4">1,186,828</td><td>1,129,148</td><td class="latest-week">1,151,808</td><td class="wow-col wow-up">▲2.0%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>312,200</td><td class="heat2">255,000</td><td>352,700</td><td class="heat5">458,500</td><td class="heat4">373,900</td><td class="heat1">213,300</td><td class="latest-week">269,800</td><td class="wow-col wow-up">▲26.5%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">970,645</td><td class="heat4">531,491</td><td class="heat1">138,970</td><td>241,590</td><td>372,686</td><td>262,440</td><td class="latest-week heat2">219,305</td><td class="wow-col wow-down">▼16.4%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>504,023</td><td class="heat2">296,619</td><td class="heat5">628,665</td><td>317,476</td><td class="heat4">555,959</td><td>393,365</td><td class="latest-week heat1">216,288</td><td class="wow-col wow-down">▼45.0%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">96,916</td><td class="heat4">50,008</td><td>26,554</td><td>38,281</td><td class="heat1">0</td><td class="heat2">17,927</td><td class="latest-week">41,381</td><td class="wow-col wow-up">▲130.8%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">54,450</td><td class="heat2">11,727</td><td>32,754</td><td class="heat5">91,812</td><td>51,520</td><td>14,827</td><td class="latest-week heat1">3,100</td><td class="wow-col wow-down">▼79.1%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">195,096</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="heat5">52,700</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat4">44,600</td><td>38,800</td><td>33,200</td><td class="heat2">31,900</td><td class="heat5">56,800</td><td class="heat1">14,400</td><td class="latest-week">40,800</td><td class="wow-col wow-up">▲183.3%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>2,983,778</td><td>2,543,997</td><td>2,292,527</td><td>2,613,883</td><td>2,597,693</td><td>2,045,407</td><td class="latest-week">1,942,482</td><td class="wow-col wow-down">▼5.0%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼439,781</td><td style="color:var(--red);font-weight:700;">▼251,470</td><td style="color:var(--green);font-weight:700;">▲321,356</td><td style="color:var(--red);font-weight:700;">▼16,190</td><td style="color:var(--red);font-weight:700;">▼552,286</td><td style="color:var(--red);font-weight:700;" class="latest-week">▼102,925</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥10,543</td><td>¥10,734</td><td>¥10,713</td><td class="heat5">¥11,936</td><td class="heat4">¥10,961</td><td class="heat2">¥10,543</td><td class="latest-week heat1">¥10,443</td><td class="wow-col wow-down">▼0.9%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td>10</td><td class="heat4">15</td><td class="heat1">7</td><td>12</td><td class="heat2">8</td><td>9</td><td class="latest-week heat4">15</td><td class="wow-col wow-up">▲66.7%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td>26</td><td class="heat5">319</td><td>31</td><td class="heat2">22</td><td class="heat1">19</td><td>23</td><td class="latest-week heat4">33</td><td class="wow-col wow-up">▲43.5%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat1">445</td><td>454</td><td class="heat2">453</td><td>466</td><td class="heat5">467</td><td>466</td><td class="latest-week">466</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td class="heat4">21</td><td>17</td><td class="heat5">30</td><td class="heat1">9</td><td>15</td><td>12</td><td class="latest-week heat1">9</td><td class="wow-col wow-down">▼25.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">28包入（全Ch）個数（箱）</td><td class="heat5">177</td><td>119</td><td>123</td><td class="heat4">140</td><td>125</td><td class="heat2">92</td><td class="latest-week heat1">89</td><td class="wow-col wow-down">▼3.3%</td></tr>
+<tr class="kpi-row"><td class="label-col ">レフィル30包（全Ch）個数（箱）</td><td>94</td><td class="heat5">116</td><td class="heat1">76</td><td>91</td><td class="heat4">112</td><td>86</td><td class="latest-week heat2">77</td><td class="wow-col wow-down">▼10.5%</td></tr>
+<tr class="kpi-row"><td class="label-col ">7包系（全Ch）個数（箱）</td><td class="heat4">50</td><td class="heat2">36</td><td>41</td><td class="heat5">56</td><td>46</td><td class="heat1">34</td><td class="latest-week">49</td><td class="wow-col wow-up">▲44.1%</td></tr></tbody></table></div>
+<div class="stitle">⑥ MINERALion 売上まとめ</div><div class="ssub">goods_tag = [MINERALion]</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--mi)"></span>Shopify 計</td><td>1,333,200</td><td class="heat4">1,797,400</td><td class="heat5">1,854,200</td><td>1,776,900</td><td class="heat2">1,200,200</td><td class="heat1">1,028,000</td><td class="latest-week">1,244,400</td><td class="wow-col wow-up">▲21.1%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td class="heat2">688,400</td><td class="heat5">1,056,600</td><td class="heat4">1,003,800</td><td>854,400</td><td class="heat1">662,600</td><td>715,200</td><td class="latest-week">790,200</td><td class="wow-col wow-up">▲10.5%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>644,800</td><td>740,800</td><td class="heat4">850,400</td><td class="heat5">917,100</td><td>537,600</td><td class="heat1">312,800</td><td class="latest-week heat2">443,800</td><td class="wow-col wow-up">▲41.9%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">628,483</td><td>283,552</td><td class="heat4">401,255</td><td>307,203</td><td>302,888</td><td class="heat1">219,515</td><td class="latest-week heat2">261,093</td><td class="wow-col wow-up">▲18.9%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td class="heat4">312,555</td><td class="heat1">150,026</td><td class="heat5">468,396</td><td class="heat2">177,937</td><td>295,110</td><td>224,457</td><td class="latest-week">182,879</td><td class="wow-col wow-down">▼18.5%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">87,225</td><td class="heat2">22,969</td><td class="heat1">17,445</td><td class="heat4">63,674</td><td>23,260</td><td>34,599</td><td class="latest-week">46,520</td><td class="wow-col wow-up">▲34.5%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td class="heat4">28,202</td><td>11,630</td><td>11,630</td><td>27,620</td><td class="heat5">33,144</td><td class="heat1">5,815</td><td class="latest-week heat1">5,815</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td class="heat1">10,000</td><td>40,000</td><td class="heat4">51,400</td><td>14,000</td><td class="heat5">55,600</td><td class="heat1">10,000</td><td class="latest-week">24,400</td><td class="wow-col wow-up">▲144.0%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>2,401,091</td><td>2,305,577</td><td>2,804,326</td><td>2,368,442</td><td>1,918,524</td><td>1,534,307</td><td class="latest-week">1,765,107</td><td class="wow-col wow-up">▲15.0%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼95,514</td><td style="color:var(--green);font-weight:700;">▲498,749</td><td style="color:var(--red);font-weight:700;">▼435,884</td><td style="color:var(--red);font-weight:700;">▼449,918</td><td style="color:var(--red);font-weight:700;">▼384,217</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲230,800</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥6,900</td><td class="heat5">¥7,273</td><td>¥7,136</td><td>¥7,155</td><td class="heat1">¥6,638</td><td class="heat4">¥7,272</td><td class="latest-week">¥7,004</td><td class="wow-col wow-down">▼3.7%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat2">12</td><td>21</td><td class="heat5">37</td><td class="heat4">22</td><td>17</td><td class="heat1">8</td><td class="latest-week">16</td><td class="wow-col wow-up">▲100.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td>81</td><td class="heat5">124</td><td class="heat4">120</td><td>65</td><td>53</td><td class="heat1">35</td><td class="latest-week heat2">43</td><td class="wow-col wow-up">▲22.9%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat1">551</td><td class="heat2">607</td><td>629</td><td>642</td><td>649</td><td class="heat4">661</td><td class="latest-week heat4">661</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>9</td><td class="heat2">7</td><td class="heat5">30</td><td>9</td><td class="heat4">15</td><td>13</td><td class="latest-week heat1">5</td><td class="wow-col wow-down">▼61.5%</td></tr></tbody></table></div>
+<div class="stitle">⑦ C+Cera 売上まとめ</div><div class="ssub">goods_tag = [Lypo-C C＋Cera]（全角＋）</div><div class="tbl-wrap"><table><thead><tr>
+<th class="label-col">項目</th>
+<th>2026/07/06<br><small>〜07/12</small></th>
+<th>2026/07/13<br><small>〜07/19</small></th>
+<th>2026/07/20<br><small>〜07/26</small></th>
+<th>2026/07/27<br><small>〜08/02</small></th>
+<th>2026/08/03<br><small>〜08/09</small></th>
+<th>2026/08/10<br><small>〜08/16</small></th>
+<th class="latest-wk">2026/08/17<br><small>〜08/23</small></th>
+<th class="latest-wk">前週比</th>
+</tr></thead>
+<tbody><tr class=""><td class="label-col "><span class="brand-dot" style="background:var(--ccera)"></span>Shopify 計</td><td>3,439,282</td><td class="heat2">3,358,856</td><td class="heat4">3,860,375</td><td>3,829,634</td><td>3,443,875</td><td class="heat1">2,795,799</td><td class="latest-week heat5">3,940,522</td><td class="wow-col wow-up">▲40.9%</td></tr>
+<tr class=""><td class="label-col indent">└ 定期注文売上（Shopifyデータ）</td><td>2,474,352</td><td class="heat2">2,396,463</td><td>2,759,463</td><td class="heat4">2,785,315</td><td>2,398,389</td><td class="heat1">2,150,463</td><td class="latest-week heat5">2,987,963</td><td class="wow-col wow-up">▲38.9%</td></tr>
+<tr class=""><td class="label-col indent">└ 都度購入売上（Shopifyデータ）</td><td>918,430</td><td>925,467</td><td class="heat5">1,100,912</td><td>1,032,319</td><td class="heat4">1,045,486</td><td class="heat1">633,336</td><td class="latest-week heat2">880,559</td><td class="wow-col wow-up">▲39.0%</td></tr>
+<tr class=""><td class="label-col ">Amazon</td><td class="heat5">1,922,765</td><td>1,277,705</td><td>961,397</td><td>891,998</td><td class="heat4">1,336,288</td><td class="heat2">883,065</td><td class="latest-week heat1">867,822</td><td class="wow-col wow-down">▼1.7%</td></tr>
+<tr class=""><td class="label-col ">楽天</td><td>832,098</td><td class="heat2">580,692</td><td class="heat5">1,183,671</td><td class="heat1">549,234</td><td class="heat4">1,178,322</td><td>610,710</td><td class="latest-week">634,182</td><td class="wow-col wow-up">▲3.8%</td></tr>
+<tr class=""><td class="label-col ">Yahoo</td><td class="heat5">353,280</td><td>108,000</td><td class="heat1">82,401</td><td class="heat4">147,825</td><td class="heat2">101,352</td><td>124,251</td><td class="latest-week">118,125</td><td class="wow-col wow-down">▼4.9%</td></tr>
+<tr class=""><td class="label-col ">Qoo10</td><td>62,253</td><td>40,500</td><td class="heat1">13,500</td><td>58,827</td><td class="heat5">147,927</td><td class="heat2">16,926</td><td class="latest-week heat4">70,926</td><td class="wow-col wow-up">▲319.0%</td></tr>
+<tr class=""><td class="label-col ">ふるさと納税</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">LINEギフト</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val">—</td><td class="dash-val latest-week">—</td><td class="wow-col wow-flat">—</td></tr>
+<tr class=""><td class="label-col ">その他</td><td>62,463</td><td>30,000</td><td class="heat4">76,352</td><td>25,352</td><td class="heat5">103,500</td><td class="heat2">10,000</td><td class="latest-week heat1">5,000</td><td class="wow-col wow-down">▼50.0%</td></tr>
+<tr class="total-row"><td class="label-col">合計</td><td>6,662,555</td><td>5,395,753</td><td>6,179,623</td><td>5,520,431</td><td>6,373,072</td><td>4,469,101</td><td class="latest-week">5,636,577</td><td class="wow-col wow-up">▲26.1%</td></tr>
+<tr class="diff-row"><td class="label-col">前週差</td><td>—</td><td style="color:var(--red);font-weight:700;">▼1,266,802</td><td style="color:var(--green);font-weight:700;">▲783,870</td><td style="color:var(--red);font-weight:700;">▼659,192</td><td style="color:var(--green);font-weight:700;">▲852,641</td><td style="color:var(--red);font-weight:700;">▼1,903,971</td><td style="color:var(--green);font-weight:700;" class="latest-week">▲1,167,476</td><td class="wow-col wow-flat">—</td></tr>
+<tr class="kpi-row"><td class="label-col ">平均注文単価</td><td class="heat2">¥13,766</td><td>¥14,274</td><td class="heat4">¥14,305</td><td class="heat1">¥13,464</td><td>¥14,257</td><td>¥13,794</td><td class="latest-week heat5">¥14,640</td><td class="wow-col wow-up">▲6.1%</td></tr>
+<tr class="kpi-row"><td class="label-col ">純粋新規顧客数（Shopify）</td><td class="heat5">25</td><td class="heat4">14</td><td>13</td><td class="heat1">8</td><td>12</td><td class="heat2">9</td><td class="latest-week">13</td><td class="wow-col wow-up">▲44.4%</td></tr>
+<tr class="kpi-row"><td class="label-col ">アイテム新規顧客数（Shopify）</td><td class="heat5">78</td><td class="heat4">57</td><td>51</td><td>43</td><td>41</td><td class="heat1">31</td><td class="latest-week heat2">36</td><td class="wow-col wow-up">▲16.1%</td></tr>
+<tr class="kpi-row"><td class="label-col">定期アクティブ数</td><td class="heat5">1,181</td><td class="heat4">1,176</td><td>1,163</td><td>1,148</td><td>1,138</td><td class="heat1">1,135</td><td class="latest-week heat2">1,137</td><td class="wow-col wow-up">▲0.2%</td></tr>
+<tr class="kpi-row"><td class="label-col ">楽天純粋新規（NE）</td><td>16</td><td>14</td><td class="heat4">17</td><td class="heat1">6</td><td class="heat5">28</td><td class="heat2">11</td><td class="latest-week heat2">11</td><td class="wow-col wow-up">▲0.0%</td></tr>
+<tr class="kpi-row"><td class="label-col ">28包（全Ch）個数（箱）</td><td class="heat5">534</td><td class="heat2">429</td><td>488</td><td>438</td><td class="heat4">506</td><td class="heat1">342</td><td class="latest-week">437</td><td class="wow-col wow-up">▲27.8%</td></tr>
+<tr class="kpi-row"><td class="label-col ">7包（全Ch）個数（箱）</td><td class="heat5">59</td><td>46</td><td>41</td><td class="heat2">37</td><td class="heat4">50</td><td class="heat2">37</td><td class="latest-week heat1">34</td><td class="wow-col wow-down">▼8.1%</td></tr></tbody></table></div>
+<div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:12px 16px;margin:20px 0 8px;font-size:12px;color:#0c4a6e;">
+<strong>📖 指標の定義</strong><br><span style="display:inline-block;margin-top:6px;">
+<strong>純粋新規顧客数（Shopify）</strong>：Shopify公式ECで生まれて初めて購入した顧客数。<br><br>
+<strong>楽天純粋新規（NE）</strong>：楽天ショップ（shop_id=31）で初めて購入した顧客数。NEデータの電話番号ハッシュで顧客識別。
+</span></div>
+</div>
+<div class="tab-panel" id="tab-4">
+<div class="stitle">予実管理 ｜ 当月累計 売上まとめ</div>
+<div class="ssub">集計期間：2026年8月8/1〜8/23（23日経過/31日中）（経過23日 ／ 月全体31日）　実績：BigQuery直接取得（NE受注日基準・税抜）</div>
+<div style="background:#f0f6ff;border:1px solid #bae6fd;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:12px;color:#0c4a6e;line-height:1.9;">
+  <strong>📌 算出ロジック</strong><br>
+  <strong>① 当月累計実績</strong>：<code>spic-core.public.ne_order_items</code> から 8/1〜8/23（23日経過/31日中） を受注日ベースで直接集計（YOJI-Q1）。<br>
+  <strong>② Shopify定期/都度</strong>：<code>ne_orders.shop_order_id = shopify_orders.name</code> でJOIN後、<code>shopify_sku_brand_master.product_type = '定期'</code> の行を含む注文を定期と判定（YOJI-Q2）。<br>
+  <strong>③ 予算按分</strong>：月次予算（KPIダッシュボード FY2027）× 23 ÷ 31。Yahoo/Qoo10はその他モール合計予算を当期実績比率で按分。<br>
+  <strong>④ 着地予測</strong>：当月累計実績 ÷ 23日 × 31日（現在ペース継続前提）。<br>
+  <strong>⑤ 着地達成率</strong>：着地予測 ÷ 月次予算 × 100。<br>
+  データソース：NE受注（<code>spic-core.public.ne_order_items</code>）／予算：KPIダッシュボード FY2027予実管理<br>
+  達成率凡例：☀️≥105%　🌤 95〜105%　⛅ 85〜95%　🌧 60〜85%　⛈&lt;60%
+</div>
+<div class="tbl-wrap"><table>
+<thead><tr>
+  <th class="label-col">項目</th>
+  <th class="latest-wk">当月累計実績<br><small>8/1〜8/23（23日経過/31日中）（BQ実測）</small></th>
+  <th>予算按分<br><small>月次×23÷31</small></th>
+  <th>累計差額</th>
+  <th>進捗達成率</th>
+  <th>着地予測<br><small>÷23×31</small></th>
+  <th>着地達成率<br><small>vs月次予算</small></th>
+</tr></thead>
+<tbody>
+<tr>
+  <td class="label-col">Shopify 計</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">164,372,006</td>
+  <td style="text-align:right;">210,190,323<br><small style="color:var(--muted);font-size:10px;">月次×23÷31</small></td>
+  <td style="text-align:right;"><span style="color:#dc2626;font-weight:600;">▼45,818,317</span></td>
+  <td style="text-align:right;"><span style="color:#dc2626;">🌧 78.2%</span></td>
+  <td style="text-align:right;font-weight:600;">221,544,878</td>
+  <td style="text-align:right;"><span style="color:#dc2626;">🌧 78.2%</span></td>
+</tr>
+<tr style="opacity:0.8;">
+  <td class="label-col indent" style="font-size:12px;">└ 定期注文売上（product_type判定）<br><small style="color:#aaa;">※NE×Shopify JOIN実測</small></td>
+  <td class="latest-week" style="text-align:right;font-size:12px;">129,963,309</td>
+  <td colspan="5" style="text-align:center;font-size:11px;color:#bbb;">—</td>
+</tr>
+<tr style="opacity:0.8;">
+  <td class="label-col indent" style="font-size:12px;">└ 都度購入売上（product_type判定）<br><small style="color:#aaa;">※未マッチ約0.3%含む</small></td>
+  <td class="latest-week" style="text-align:right;font-size:12px;">33,581,620</td>
+  <td colspan="5" style="text-align:center;font-size:11px;color:#bbb;">—</td>
+</tr>
+<tr>
+  <td class="label-col">Amazon</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">83,480,292</td>
+  <td style="text-align:right;">88,935,680<br><small style="color:var(--muted);font-size:10px;">月次×23÷31</small></td>
+  <td style="text-align:right;"><span style="color:#dc2626;font-weight:600;">▼5,455,388</span></td>
+  <td style="text-align:right;"><span style="color:#b45309;">⛅ 93.9%</span></td>
+  <td style="text-align:right;font-weight:600;">112,516,915</td>
+  <td style="text-align:right;"><span style="color:#b45309;">⛅ 93.9%</span></td>
+</tr>
+<tr>
+  <td class="label-col">楽天</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">45,581,119</td>
+  <td style="text-align:right;">52,057,033<br><small style="color:var(--muted);font-size:10px;">月次×23÷31</small></td>
+  <td style="text-align:right;"><span style="color:#dc2626;font-weight:600;">▼6,475,914</span></td>
+  <td style="text-align:right;"><span style="color:#b45309;">⛅ 87.6%</span></td>
+  <td style="text-align:right;font-weight:600;">61,435,421</td>
+  <td style="text-align:right;"><span style="color:#b45309;">⛅ 87.6%</span></td>
+</tr>
+<tr>
+  <td class="label-col">Yahoo</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">6,944,927</td>
+  <td style="text-align:right;">6,589,082<br><small style="color:var(--muted);font-size:10px;">その他モール×実績比按分×23÷31</small></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:600;">▲355,845</span></td>
+  <td style="text-align:right;"><span style="color:#16a34a;">☀️ 105.4%</span></td>
+  <td style="text-align:right;font-weight:600;">9,360,554</td>
+  <td style="text-align:right;"><span style="color:#16a34a;">☀️ 105.4%</span></td>
+</tr>
+<tr>
+  <td class="label-col">Qoo10</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">4,144,243</td>
+  <td style="text-align:right;">3,931,900<br><small style="color:var(--muted);font-size:10px;">その他モール×実績比按分×23÷31</small></td>
+  <td style="text-align:right;"><span style="color:#16a34a;font-weight:600;">▲212,343</span></td>
+  <td style="text-align:right;"><span style="color:#16a34a;">☀️ 105.4%</span></td>
+  <td style="text-align:right;font-weight:600;">5,585,719</td>
+  <td style="text-align:right;"><span style="color:#16a34a;">☀️ 105.4%</span></td>
+</tr>
+<tr>
+  <td class="label-col">ふるさと納税</td>
+  <td class="latest-week" style="text-align:right;"><span style="color:#bbb;">月末集計</span></td>
+  <td style="text-align:right;">5,848,280<br><small style="color:var(--muted);font-size:10px;">月次×23÷31</small></td>
+  <td colspan="4" style="text-align:center;color:#bbb;font-size:11px;">月末集計後に確定</td>
+</tr>
+<tr>
+  <td class="label-col">LINEギフト</td>
+  <td class="latest-week" style="text-align:right;"><span style="color:#bbb;">月末集計</span></td>
+  <td style="text-align:right;">2,969,620<br><small style="color:var(--muted);font-size:10px;">月次×23÷31</small></td>
+  <td colspan="4" style="text-align:center;color:#bbb;font-size:11px;">月末集計後に確定</td>
+</tr>
+<tr>
+  <td class="label-col">その他</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">1,730,544</td>
+  <td style="text-align:right;color:#bbb;font-size:11px;">— (非予算計上)</td>
+  <td style="text-align:center;color:#bbb;font-size:11px;">—</td>
+  <td style="text-align:center;color:#bbb;font-size:11px;">—</td>
+  <td style="text-align:right;font-weight:600;">2,332,472</td>
+  <td style="text-align:center;color:#bbb;font-size:11px;">—</td>
+</tr>
+<tr class="total-row">
+  <td class="label-col">合計</td>
+  <td class="latest-week" style="text-align:right;font-weight:700;">306,253,131</td>
+  <td style="text-align:right;font-weight:700;">370,670,968<br><small style="color:var(--muted);font-size:10px;">月次×23÷31</small></td>
+  <td style="text-align:right;font-weight:700;"><span style="color:#dc2626;font-weight:600;">▼64,417,837</span></td>
+  <td style="text-align:right;font-weight:700;"><span style="color:#dc2626;">🌧 82.6%</span></td>
+  <td style="text-align:right;font-weight:700;">412,775,959</td>
+  <td style="text-align:right;font-weight:700;"><span style="color:#dc2626;">🌧 82.6%</span></td>
+</tr>
+</tbody>
+</table></div>
+<div class="ssub">※ ふるさと納税・LINEギフトはshop_id=21の月末締め計上のため、月末確定まで実績はハイフン。</div>
+<div class="ssub">※ 週報実績はNE受注日ベース、予算はNE出荷ベース。集計基準の相違による構造的乖離あり（参考値として使用のこと）。</div>
+<div class="ssub">※ 予算出典：KPIダッシュボード FY2027予実管理（reference_fy2027_budget_weekly.md）。Yahoo/Qoo10予算はその他モール合計を当期実績比で按分。</div>
+<div class="ssub">※ 合計の着地予測・達成率はふるさと納税・LINEギフトを除く（月末集計のため）。</div>
+<div class="stitle">日別売上 vs 日次予算</div>
+<div class="ssub">日次予算 = 月次予算 ÷ 31（破線は月末まで表示）　実績：NE受注日ベース・税抜（BQ直取得）　実績未確定日はグラフ空白</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px;">
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">Shopify（自社EC）</div>
+    <canvas id="chart_yoji_shopify" height="160"></canvas>
+  </div>
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">Amazon</div>
+    <canvas id="chart_yoji_amazon" height="160"></canvas>
+  </div>
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">楽天</div>
+    <canvas id="chart_yoji_rakuten" height="160"></canvas>
+  </div>
+  <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">Yahoo ＋ Qoo10（その他モール）</div>
+    <canvas id="chart_yoji_ym" height="160"></canvas>
+  </div>
+</div>
+<script>
+(function(){
+  var DAYS=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
+  function mkYC(id,actual,bpd,color,bc){
+    var el=document.getElementById(id); if(!el) return;
+    var ctx=el.getContext('2d');
+    var bd=[]; for(var i=0;i<DAYS.length;i++) bd.push(bpd);
+    new Chart(ctx,{type:'line',data:{labels:DAYS,datasets:[
+      {label:'実績',data:actual,borderColor:color,backgroundColor:color+'22',borderWidth:2.5,pointRadius:3.5,pointHoverRadius:6,tension:0.3,fill:true,spanGaps:false},
+      {label:'日次予算（月次÷31）',data:bd,borderColor:bc,backgroundColor:'transparent',borderWidth:2,borderDash:[6,4],pointRadius:0,tension:0,spanGaps:true}
+    ]},options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{font:{size:11},boxWidth:14}},
+        tooltip:{callbacks:{label:function(c){if(c.parsed.y===null) return c.dataset.label+': —'; return c.dataset.label+': ¥'+c.parsed.y.toLocaleString();}}}},
+      scales:{x:{ticks:{font:{size:10},maxRotation:45},grid:{color:'#f0f0f0'}},
+        y:{min:0,ticks:{font:{size:10},callback:function(v){return v>=1000000?'¥'+(v/1000000).toFixed(1)+'M':'¥'+(v/1000).toFixed(0)+'K';}},grid:{color:'#f0f0f0'}}}}
+    });
+  }
+  mkYC('chart_yoji_shopify',[8548318,7965583,6812867,8745685,7851479,7589385,6570334,5818859,6493961,7114568,6971815,6277153,6467130,6633905,5838846,7806203,7567428,8264028,7338420,7352587,6583114,6615944,7144394,null,null,null,null,null,null,null,null],9138710,'#4f86f7','#93c5fd');
+  mkYC('chart_yoji_amazon', [4278695,3798128,3600885,4005868,3831417,3411210,3277118,3572696,3704253,3689040,3553069,2876216,2878307,3265885,3460049,4359326,3644138,3771082,3762385,3686771,3404657,3855269,3793828,null,null,null,null,null,null,null,null],3866769, '#f97316','#fcd34d');
+  mkYC('chart_yoji_rakuten',[2122772,1744122,874559,1646754,6560142,2212745,1860728,1837478,2452000,4970167,1537869,1173404,997097,986893,2041928,1297318,1388273,2159017,1032161,2196726,1081548,1961142,1446276,null,null,null,null,null,null,null,null],2263349,'#dc2626','#fca5a5');
+  mkYC('chart_yoji_ym',     [1432115,1458440,449155,298936,740057,315767,314854,283880,910229,95029,515750,172280,173669,180912,537768,888772,205706,199409,304851,222006,178597,525963,842125,null,null,null,null,null,null,null,null],463914,     '#8b5cf6','#c4b5fd');
+})();
+</script>
+</div>
+<script>
+
+
+
+
+
+
+
+
+
+
+
+
+function switchTab(n){document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===n));document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===n));}
+function toggleInsight(h){const b=h.nextElementSibling,c=h.querySelector('.insight-chevron');b.classList.toggle('open');c.classList.toggle('open');}
+(function(){
+  if(typeof Chart==='undefined') return;
+  var L=["07-15","07-16","07-17","07-18","07-19","07-20","07-21","07-22","07-23","07-24","07-25","07-26","07-27","07-28","07-29","07-30","07-31","08-01","08-02","08-03","08-04","08-05","08-06","08-07","08-08","08-09","08-10","08-11","08-12","08-13","08-14","08-15","08-16","08-17","08-18","08-19","08-20","08-21","08-22","08-23"];
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  if(typeof Chart==='undefined') return;
+  var opt={responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}}},scales:{x:{stacked:true,ticks:{maxTicksLimit:20,font:{size:10}}},y:{stacked:true,beginAtZero:true,ticks:{callback:function(v){return v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(0)+'K':v}}},y2:{type:'linear',display:true,position:'right',beginAtZero:true,grid:{drawOnChartArea:false},ticks:{font:{size:10}}}}};
+  function mkC(id,ds){var el=document.getElementById(id);if(!el)return;new Chart(el.getContext('2d'),{type:'bar',data:{labels:L,datasets:ds},options:opt});}
+  function bar(l,d,c){return{label:l,data:d,backgroundColor:c,stack:'s',order:2};}
+  function ln(l,d,c){return{label:l,data:d,type:'line',borderColor:c,backgroundColor:'transparent',borderWidth:2,pointRadius:2.5,yAxisID:'y2',order:1};}
+  mkC('chart_all_d',[bar('Shopify定期',[4891870,5962247,5173576,5568997,5895293,5437413,5118000,5438704,5115595,5643194,6465768,7690567,5510808,9795641,3862714,4478454,1927900,6882258,6251979,5232347,6833680,5805626,5483592,4969577,4939472,5293920,5623801,5797224,5265359,5556091,5707564,4815232,6133898,5952267,6072751,5586958,5808999,5406701,5095167,5785269],'#1D4ED8'),bar('Shopify都度',[1665220,1670954,1468002,1473715,1249659,1714910,1598607,1658315,2013957,1512526,1736803,1906928,1909653,2021914,1336712,1654588,1693737,1658800,1726288,1601536,1896935,2000473,2060793,1591521,963786,1308727,1460143,1174591,1014571,894743,933541,978782,1682393,1524787,1958597,1626447,1427939,1134007,1477377,1359125],'#60A5FA'),bar('Amazon',[2781594,3544082,2990493,2874327,3056530,2996298,3184856,3569809,3210262,3227449,3189142,3713195,3378822,3300034,3555115,3592164,3274356,4578585,4072518,3775343,4322081,4113526,3648278,3546682,3976888,4103441,3863420,3779830,3049687,3101945,3417601,3661190,4683432,3644138,3771082,3762385,3686771,3404657,3855269,3793828],'#06B6D4'),bar('楽天',[2246514,1158646,1405616,1558758,1561322,4712600,1759687,2487750,2127068,1868128,5238376,1638615,1415063,1589575,1450157,2552679,1302006,2365969,1940814,908759,1680584,6579069,2241509,1881968,1866926,2481540,5028471,1544709,1201808,997097,994777,2069648,1296274,1388273,2159017,1032161,2196726,1081548,1961142,1446276],'#10B981'),bar('Yahoo!',[379734,86304,73871,91341,528712,124944,89066,252409,158381,122974,425241,525545,59994,151050,69673,109753,619023,876330,1244660,91693,90978,513863,98726,134357,55017,519625,40885,404629,72736,97231,93342,443091,771053,72049,68211,224512,101346,114827,397946,648388],'#84CC16'),bar('Qoo10',[117979,180215,83339,100129,129121,79239,130100,101405,112652,127185,69949,160015,80308,113112,131867,41967,51016,609690,412439,334762,207958,229844,217041,177307,219293,402754,54144,108344,96354,83638,87570,94677,117719,43926,131198,72039,120660,56570,128017,165483],'#F59E0B'),bar('ふるさと納税他',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11323284,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#F97316'),ln('新規顧客数(Shopify)',[36,43,32,44,45,42,48,53,53,52,59,83,59,53,40,43,56,64,70,61,50,68,72,47,44,54,46,64,42,50,39,59,60,49,57,68,44,53,55,70],'#1E3A8A')]);
+  mkC('chart_vc_d',[bar('Shopify定期',[2592070,2956232,2526786,2879480,2975862,2938874,2464764,2798650,2557591,2764192,3683249,4068710,2776050,5253766,2026172,2198380,911280,3595002,3329381,2968625,3344178,3006594,3012432,2570860,2695382,2588349,2965406,3216966,2736151,2946693,3272256,2646359,3017340,2941098,2931024,2623366,2919666,2790037,2725125,3024377],'#1D4ED8'),bar('Shopify都度',[820859,859529,673265,756580,662002,849874,841184,703582,898257,788610,724232,926085,945863,964697,580931,660940,873680,898746,1012399,822809,1014841,945234,1056709,654320,534595,649602,757749,528300,500665,462092,410991,584912,689732,782968,1049896,873379,742708,568411,649483,588114],'#60A5FA'),bar('Amazon',[1507298,1950687,1807142,1659753,1708095,1784970,1721470,2215854,1893040,1833617,1837166,2130739,1999858,1900638,2107363,1882409,1828172,2589706,2423322,2048599,2535079,2211867,1854539,2015002,2269210,2435974,2064046,1958895,1726159,1783664,2095519,2125524,2498618,2155951,2176550,2080762,2041905,1833187,2216348,2264305],'#06B6D4'),bar('楽天',[1216021,693714,811335,1043421,845483,2763551,1085237,1419323,1204558,1100618,3073053,957134,862704,976781,831337,1590012,740977,1293436,1196044,555937,911564,3609441,1346345,1133791,1271927,1411505,2932956,948954,711098,607469,511965,1266734,779140,765818,1310694,617861,1221011,533714,1142891,816426],'#10B981'),bar('Yahoo!',[255754,55440,23657,66857,333359,92160,31217,190594,86811,46748,236005,373320,26794,92571,47674,58011,456991,536706,784024,64851,63720,274623,48600,93651,38417,278845,16817,277354,64436,71331,69274,276119,387617,21240,48600,151457,82388,34920,300445,399699],'#84CC16'),bar('Qoo10',[103062,121885,69839,55439,87531,62639,85885,68708,81462,107485,38777,81977,47108,93085,81977,38777,51016,390495,181232,204119,119057,115199,100233,132942,142559,171205,34354,91744,63154,57085,70970,67062,69839,0,60993,55439,85885,56570,66547,104193],'#F59E0B'),bar('ふるさと納税他',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6871293,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#F97316'),ln('新規顧客(VC)',[19,31,20,31,35,26,34,35,30,27,34,29,27,31,28,21,31,29,35,32,26,30,30,26,24,23,25,40,24,31,25,36,33,27,29,35,23,26,23,32],'#1E3A8A')]);
+  mkC('chart_cd_d',[bar('Shopify定期',[1618388,2225815,1917506,2005509,2267207,1750975,2034140,1783571,1950028,2291202,2095287,2873061,2144126,3856387,1180467,1633078,505096,2313100,2161226,1720442,2777174,2176939,1995652,1739973,1711230,2002567,2040007,1999530,2058112,1872287,2022028,1605973,2505250,2067869,2328243,2343780,2340229,1915561,1686830,2140936],'#1D4ED8'),bar('Shopify都度',[555820,464154,512014,354549,385990,497850,424263,579177,714325,435556,671200,783839,541867,629798,512514,752381,461764,371616,386577,507256,584097,599508,737676,581630,336439,442069,477286,435746,417465,336662,360783,341144,675801,486900,706482,456160,538186,342803,588101,540529],'#60A5FA'),bar('Amazon',[1036869,1368744,1069260,1094884,1130179,1027521,1242473,1074801,1062256,1302602,1202970,1240017,1161240,1203081,1226582,1479493,1236558,1797220,1413154,1536655,1555963,1618352,1207383,1256035,1416306,1424395,1531861,1648260,1120313,1192172,1167165,1314575,1921548,1319445,1432955,1543052,1382394,1370780,1413680,1338596],'#06B6D4'),bar('楽天',[743324,365800,435838,386912,569256,1376508,524450,864986,697758,516748,1456868,503690,384182,529102,571178,709322,475300,647067,550300,301881,582966,2139240,628328,564153,427324,702910,1531238,410906,392738,365202,388716,676742,372510,430194,657922,330476,719256,461853,697162,518632],'#10B981'),bar('Yahoo!',[73526,30864,44690,24484,83854,32784,19374,52574,71570,76226,172636,115368,33200,39164,16184,51742,113448,214552,261228,26842,27258,158554,33200,40706,16600,213780,24068,88548,8300,19374,24068,104732,314152,24484,7884,46598,18958,38332,85774,160474],'#84CC16'),bar('Qoo10',[3190,33200,0,44690,28090,16600,24900,17870,28090,16600,31172,60496,33200,8300,36390,3190,0,118275,140748,93115,72650,105695,86735,31540,58385,122934,19790,16600,33200,8300,16600,8300,47880,16600,61290,16600,34775,0,34470,61290],'#F59E0B'),bar('ふるさと納税他',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4204195,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#F97316'),ln('新規顧客(C+D)',[14,6,8,11,7,12,9,10,12,11,16,29,12,12,7,7,10,9,16,20,10,15,21,10,13,14,9,11,7,12,12,13,12,8,16,15,10,12,13,18],'#1E3A8A')]);
+  mkC('chart_cc_d',[bar('Shopify定期',[366500,403000,354500,191000,321000,454000,275000,472963,345000,381000,439000,404500,357000,381000,370963,304852,286500,595500,489500,309000,405000,386389,227500,309000,356000,405500,345500,319000,238000,439463,214000,274000,320500,568500,391500,392500,333000,414463,437500,450500],'#1D4ED8'),bar('Shopify都度',[87241,183371,146223,174686,65167,178686,216760,102556,231575,133760,159371,78204,211723,111019,86667,110667,90093,222538,199612,141871,160297,307631,148408,161871,28352,97056,127908,112945,40241,37389,69167,24926,220760,135019,88019,195408,116945,113593,133593,97982],'#60A5FA'),bar('Amazon',[167553,163401,82401,49428,174354,108115,110140,123576,191076,50778,109465,281743,96640,106243,151705,157710,144853,129417,155131,113777,143560,168428,477199,178926,181677,134529,168852,131103,124326,73677,87852,168177,157428,124455,74352,121029,197928,100677,114177,135204],'#06B6D4'),bar('楽天',[205863,29751,68901,84426,56751,335004,81000,93150,122901,117603,379338,67500,81930,66150,27000,104103,27000,297051,85152,13500,121704,501984,148029,90603,83751,218751,283029,138426,39825,10278,39150,57426,42576,118125,114903,39825,158103,54000,106650,42576],'#10B981'),bar('Yahoo!',[27000,0,0,0,67500,0,38475,3426,0,0,13500,13500,0,13500,0,0,13500,66825,162000,0,0,57426,16926,0,0,27000,0,27000,0,3426,0,53325,40500,26325,0,0,0,38475,0,53325],'#84CC16'),bar('Qoo10',[0,13500,13500,0,13500,0,13500,0,0,0,0,0,0,0,13500,0,0,35928,25650,12825,16251,3426,12825,12825,12825,76950,0,0,0,3426,0,13500,0,0,0,0,0,0,27000,0],'#F59E0B'),bar('ふるさと納税他',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#F97316'),ln('新規顧客(C+Cera)',[2,3,1,2,1,2,2,2,3,0,1,1,1,1,1,1,0,1,3,2,0,4,1,0,3,2,1,1,2,1,0,0,4,4,0,3,2,1,1,2],'#1E3A8A')]);
+  mkC('chart_sb_d',[bar('Shopify定期',[176512,277200,174384,236208,165424,143364,247296,213920,114576,92400,113232,154896,113232,103488,165312,186144,165424,267456,185472,144480,184128,113904,143808,278544,115660,206304,195888,83328,166096,216048,144480,179500,143808,176400,266784,165312,113904,173040,173712,82656],'#1D4ED8'),bar('Shopify都度',[59100,59100,3100,59100,36700,76500,33600,33600,73400,51000,56000,28600,89600,56000,62200,22400,103900,87700,36700,44800,20500,59100,33600,126300,22400,67200,44800,41000,0,17400,44800,6200,59100,47900,46000,47900,3100,29800,63400,31700],'#60A5FA'),bar('Amazon',[41381,38281,14827,53108,14827,46908,29654,35181,12400,11727,0,3100,35854,50008,25438,67014,20469,12400,36607,42807,20469,58945,70114,67935,56208,56208,46908,24127,26554,11727,38281,29654,85189,21027,35181,11727,29654,59308,29654,32754],'#06B6D4'),bar('楽天',[52522,51936,43895,26554,84017,132770,46322,46908,55622,69776,218632,58635,57463,11727,14827,115516,29654,58635,29654,17927,41381,184706,101944,75976,37695,96330,176578,23454,29654,3100,49422,26554,84603,34595,23454,26554,69863,14827,3100,43895],'#10B981'),bar('Yahoo!',[23454,0,0,0,26554,0,0,0,0,0,3100,23454,0,0,0,0,23454,11727,3100,0,0,0,0,0,0,0,0,11727,0,3100,0,3100,0,0,11727,14827,0,3100,11727,0],'#84CC16'),bar('Qoo10',[11727,0,0,0,0,0,0,14827,3100,3100,0,11727,0,11727,0,0,0,48420,31665,13655,0,0,6200,0,0,31665,0,0,0,14827,0,0,0,0,3100,0,0,0,0,0],'#F59E0B'),bar('ふるさと納税他',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,247796,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#F97316'),ln('新規顧客(SB)',[1,3,2,3,1,2,1,0,2,0,0,2,2,1,2,0,2,3,2,0,2,2,1,1,1,1,2,2,1,0,1,1,2,0,2,2,2,2,4,3],'#1E3A8A')]);
+  mkC('chart_mi_d',[bar('Shopify定期',[138400,100000,200400,256800,165800,150200,96800,169600,148400,114400,135000,189400,120400,201000,119800,156000,59600,111200,86400,89800,123200,121800,104200,71200,61200,91200,77000,178400,67000,81600,54800,109400,147000,198400,155200,62000,102200,113600,72000,86800],'#1D4ED8'),bar('Shopify都度',[142200,104800,133400,128800,99800,112000,82800,239400,96400,103600,126000,90200,120600,260400,94400,108200,164300,78200,91000,84800,117200,89000,84400,67400,42000,52800,52400,56600,56200,41200,47800,21600,37000,72000,68200,53600,27000,79400,42800,100800],'#60A5FA'),bar('Amazon',[28493,22969,16863,17154,29075,28784,81119,120397,51490,28725,39541,57596,85230,40064,44027,5538,44304,49842,44304,33505,67010,55934,39043,28784,34599,52335,51753,17445,52335,40705,28784,23260,17154,23260,52044,5815,34890,40705,81410,22969],'#06B6D4'),bar('楽天',[28784,17445,45647,17445,5815,93040,22678,63383,46229,63383,110485,63383,28784,5815,5815,33726,29075,69780,79664,11630,22969,127930,16863,17445,46229,52044,104670,22969,28493,11048,5524,34308,17445,39541,52044,17445,28493,17154,11339,16863],'#10B981'),bar('Yahoo!',[0,0,5524,0,17445,0,0,5815,0,0,0,11630,0,5815,5815,0,11630,46520,34308,0,0,23260,0,0,0,0,0,0,0,0,0,5815,28784,0,0,11630,0,0,0,34890],'#84CC16'),bar('Qoo10',[0,11630,0,0,0,0,5815,0,0,0,0,5815,0,0,0,0,0,16572,33144,11048,0,5524,11048,0,5524,0,0,0,0,0,0,5815,0,0,5815,0,0,0,0,0],'#F59E0B'),bar('ふるさと納税他',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#F97316'),ln('新規顧客(MI)',[3,3,5,0,4,7,4,12,5,2,2,5,6,2,0,1,5,2,6,3,2,7,2,1,1,1,0,3,2,1,0,0,2,2,4,5,1,2,1,1],'#1E3A8A')]);
+  mkC('chart_cbd_d',[bar('Amazon',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#06B6D4'),bar('楽天',[15768,0,0,0,0,0,15768,0,7884,15768,15768,0,0,0,0,0,0,0,15768,7884,0,15768,0,0,0,0,0,0,0,0,0,7884,0,0,0,0,0,0,0,7884],'#10B981'),bar('Yahoo!',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#84CC16'),bar('Qoo10',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#F59E0B'),bar('ふるさと納税他',[3519,3519,0,0,0,0,0,0,0,0,0,0,0,0,0,0,74997,0,0,7038,8300,3519,0,14076,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#F97316'),ln('楽天新規(CBD・NE)',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],'#065f46')]);
+})();
+</script>
+</div></body></html>

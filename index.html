@@ -421,6 +421,117 @@ footer {
       </div>
     </div>
 
+    <!-- ブランド別月次CRMレポート -->
+    <div class="rcard weekly-card">
+      <div class="top-bar" style="background:var(--monthly)"></div>
+      <a class="weekly-latest" href="monthly/ブランド別monthly/ccera_crm_brand_report_2026_07.html" target="_blank" rel="noopener">
+        <div class="period">
+          2026年7月度
+          <span class="new-badge" style="background:var(--monthly)">NEW</span>
+        </div>
+        <div class="rtitle">C+Cera<br>CRMブランドレポート</div>
+        <div class="tag-row">
+          <span class="tag tag-monthly">月次</span>
+          <span class="tag tag-brand">C+Cera</span>
+        </div>
+      </a>
+      <div class="weekly-toggle" onclick="toggleBrandArchive(this)" style="--hover-color:var(--monthly)">
+        <span>過去の月報</span>
+        <span class="toggle-chevron">▾</span>
+      </div>
+      <div class="weekly-archive">
+        <div class="weekly-archive-empty">過去のレポートはまだありません</div>
+      </div>
+    </div>
+
+    <div class="rcard weekly-card">
+      <div class="top-bar" style="background:var(--monthly)"></div>
+      <a class="weekly-latest" href="monthly/ブランド別monthly/cd_crm_brand_report_2026_07.html" target="_blank" rel="noopener">
+        <div class="period">
+          2026年7月度
+          <span class="new-badge" style="background:var(--monthly)">NEW</span>
+        </div>
+        <div class="rtitle">C+D<br>CRMブランドレポート</div>
+        <div class="tag-row">
+          <span class="tag tag-monthly">月次</span>
+          <span class="tag tag-brand">C+D</span>
+        </div>
+      </a>
+      <div class="weekly-toggle" onclick="toggleBrandArchive(this)" style="--hover-color:var(--monthly)">
+        <span>過去の月報</span>
+        <span class="toggle-chevron">▾</span>
+      </div>
+      <div class="weekly-archive">
+        <div class="weekly-archive-empty">過去のレポートはまだありません</div>
+      </div>
+    </div>
+
+    <div class="rcard weekly-card">
+      <div class="top-bar" style="background:var(--monthly)"></div>
+      <a class="weekly-latest" href="monthly/ブランド別monthly/mineralion_crm_brand_report_2026_07.html" target="_blank" rel="noopener">
+        <div class="period">
+          2026年7月度
+          <span class="new-badge" style="background:var(--monthly)">NEW</span>
+        </div>
+        <div class="rtitle">MINERALion<br>CRMブランドレポート</div>
+        <div class="tag-row">
+          <span class="tag tag-monthly">月次</span>
+          <span class="tag tag-brand">MINERALion</span>
+        </div>
+      </a>
+      <div class="weekly-toggle" onclick="toggleBrandArchive(this)" style="--hover-color:var(--monthly)">
+        <span>過去の月報</span>
+        <span class="toggle-chevron">▾</span>
+      </div>
+      <div class="weekly-archive">
+        <div class="weekly-archive-empty">過去のレポートはまだありません</div>
+      </div>
+    </div>
+
+    <div class="rcard weekly-card">
+      <div class="top-bar" style="background:var(--monthly)"></div>
+      <a class="weekly-latest" href="monthly/ブランド別monthly/skinbeauty_crm_brand_report_2026_07.html" target="_blank" rel="noopener">
+        <div class="period">
+          2026年7月度
+          <span class="new-badge" style="background:var(--monthly)">NEW</span>
+        </div>
+        <div class="rtitle">SKINBEAUTY<br>CRMブランドレポート</div>
+        <div class="tag-row">
+          <span class="tag tag-monthly">月次</span>
+          <span class="tag tag-brand">SKINBEAUTY</span>
+        </div>
+      </a>
+      <div class="weekly-toggle" onclick="toggleBrandArchive(this)" style="--hover-color:var(--monthly)">
+        <span>過去の月報</span>
+        <span class="toggle-chevron">▾</span>
+      </div>
+      <div class="weekly-archive">
+        <div class="weekly-archive-empty">過去のレポートはまだありません</div>
+      </div>
+    </div>
+
+    <div class="rcard weekly-card">
+      <div class="top-bar" style="background:var(--monthly)"></div>
+      <a class="weekly-latest" href="monthly/ブランド別monthly/vc_crm_brand_report_2026_07.html" target="_blank" rel="noopener">
+        <div class="period">
+          2026年7月度
+          <span class="new-badge" style="background:var(--monthly)">NEW</span>
+        </div>
+        <div class="rtitle">VC<br>CRMブランドレポート</div>
+        <div class="tag-row">
+          <span class="tag tag-monthly">月次</span>
+          <span class="tag tag-brand">VC</span>
+        </div>
+      </a>
+      <div class="weekly-toggle" onclick="toggleBrandArchive(this)" style="--hover-color:var(--monthly)">
+        <span>過去の月報</span>
+        <span class="toggle-chevron">▾</span>
+      </div>
+      <div class="weekly-archive">
+        <div class="weekly-archive-empty">過去のレポートはまだありません</div>
+      </div>
+    </div>
+
     <!-- GA4週次トレンドカード -->
     <div class="rcard weekly-card">
       <div class="top-bar" style="background:var(--weekly)"></div>
@@ -753,6 +864,17 @@ function toggleWeeklyGa4(btn) {
   }
 }
 function toggleWeekly(btn) {
+  var archive = btn.nextElementSibling;
+  var isOpen = btn.classList.contains('open');
+  if (isOpen) {
+    btn.classList.remove('open');
+    archive.style.display = 'none';
+  } else {
+    btn.classList.add('open');
+    archive.style.display = 'block';
+  }
+}
+function toggleBrandArchive(btn) {
   var archive = btn.nextElementSibling;
   var isOpen = btn.classList.contains('open');
   if (isOpen) {

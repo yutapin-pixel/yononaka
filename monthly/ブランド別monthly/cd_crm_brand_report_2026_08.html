@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C+D CRMブランドレポート 2026-08</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#1a9e63;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--ccera:#FF6B9D;--sb:#C4934A;--mi:#1E3A8A;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0;max-width:1200px;margin:0 auto}
+.page-wrap{padding:24px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted)}
+.month-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 14px;border-radius:4px;font-size:13px;font-weight:700;margin-bottom:20px;letter-spacing:0.3px}
+.stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px;align-items:stretch}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+thead th.c{text-align:center}
+tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid #f5f5f4;font-size:13px}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td.c{text-align:center}
+tbody tr:last-child td{border-bottom:none}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.tot td{border-top:2px solid var(--border)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600}
+.badge.a{background:#dcfce7;color:#15803d}.badge.b{background:#fef2f2;color:#dc2626}
+.badge.n{background:#eff6ff;color:#2563eb}.badge.w{background:#fff8f0;color:#92400e}
+.monthly-insight{background:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0284c7;border-radius:8px;padding:14px 18px;margin-top:12px;margin-bottom:20px;font-size:13px;line-height:1.9}
+.monthly-insight .mi-title{font-weight:700;font-size:12px;margin-bottom:6px;color:#0369a1;display:flex;align-items:center;gap:6px}
+.monthly-insight ul{padding-left:18px}.monthly-insight li{margin-bottom:5px}
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.9}
+.notes .nt{font-weight:700;font-size:12px;margin-bottom:6px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:4px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;position:relative;height:290px}
+.chart-wrap canvas{display:block;width:100% !important}
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.cohort-wrap{overflow-x:auto;margin-bottom:12px}
+.cohort-table{border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:900px}
+.cohort-table th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cohort-table th:first-child{text-align:left;min-width:110px}
+.cohort-table td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11px;line-height:1.4}
+.cohort-table td:first-child{text-align:left;font-weight:500;padding:5px 10px;font-size:12px}
+.cohort-table tr.ogs-row td:first-child{color:#92400e;font-weight:700}
+.cohort-table tr.highlight-row td{background:#fafafa}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.insight-card .ic-num{font-size:30px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:-1px}
+.insight-card .ic-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.insight-card .ic-body{font-size:13px;color:var(--muted);line-height:1.7}
+.insight-card.positive .ic-num{color:var(--green)}
+.insight-card.negative .ic-num{color:var(--red)}
+.insight-card.warning .ic-num{color:#f59e0b}
+.crm-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px}
+.crm-card .crm-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.crm-card .crm-priority{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.crm-card .crm-priority.p1{background:#fef2f2;color:#dc2626}
+.crm-card .crm-priority.p2{background:#fff8f0;color:#92400e}
+.crm-card .crm-priority.p3{background:#eff6ff;color:#2563eb}
+.crm-card .crm-title{font-size:14px;font-weight:700}
+.crm-card .crm-body{font-size:13px;color:var(--muted);line-height:1.7}
+.crm-card .crm-kpi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:500}
+.crm-card .crm-update{font-size:11px;margin-top:6px;padding:4px 8px;background:#f0fdf4;border-radius:4px;color:#15803d;font-weight:500}
+.kpi-change{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;margin-left:6px}
+.kpi-change.up{background:#dcfce7;color:#15803d}
+.kpi-change.dn{background:#fef2f2;color:#dc2626}
+.kpi-change.flat{background:#f5f5f4;color:#78716c}
+.summary-verdict{background:#1c1917;border-radius:10px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.summary-verdict-icon{font-size:22px;flex-shrink:0}
+.summary-verdict-text{font-size:13.5px;font-weight:600;color:#fff;line-height:1.65;letter-spacing:0.1px}
+.summary-verdict-text em{font-style:normal;color:#7EE8A8}
+.finding-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.finding-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.finding-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.finding-card.fc-green::before{background:#16a34a}
+.finding-card.fc-red::before{background:#dc2626}
+.finding-card.fc-amber::before{background:#f59e0b}
+.finding-card.fc-orange::before{background:var(--accent)}
+.finding-card.fc-blue::before{background:#2563eb}
+.finding-card.fc-slate::before{background:#64748b}
+.fc-index{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.fc-metric{font-size:26px;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.finding-card.fc-green .fc-metric{color:#16a34a}
+.finding-card.fc-red .fc-metric{color:#dc2626}
+.finding-card.fc-amber .fc-metric{color:#d97706}
+.finding-card.fc-orange .fc-metric{color:var(--accent)}
+.finding-card.fc-blue .fc-metric{color:#2563eb}
+.finding-card.fc-slate .fc-metric{color:#475569}
+.fc-title{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.4}
+.fc-body{font-size:12px;color:var(--muted);line-height:1.75;flex:1}
+.fc-body strong{color:var(--text)}
+.fc-insight{margin-top:4px;padding:6px 10px;border-radius:5px;font-size:11.5px;font-weight:600;line-height:1.5}
+.finding-card.fc-green .fc-insight{background:#f0fdf4;color:#15803d}
+.finding-card.fc-red .fc-insight{background:#fff5f5;color:#dc2626}
+.finding-card.fc-amber .fc-insight{background:#fffbeb;color:#92400e}
+.finding-card.fc-orange .fc-insight{background:#ecfdf5;color:#0f6e46}
+.finding-card.fc-blue .fc-insight{background:#eff6ff;color:#1e40af}
+.finding-card.fc-slate .fc-insight{background:#f8fafc;color:#475569}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.ds-cust{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-order,.sc .lb .ds-snap,.sc .lb .ds-cust{font-size:9px;padding:1px 5px;margin-left:3px}
+.correction{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid #dc2626;border-radius:8px;padding:12px 16px;margin:12px 0;font-size:12.5px;line-height:1.8;color:#7f1d1d}
+.correction .cr-title{font-weight:700;color:#dc2626;margin-bottom:4px}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .finding-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="hdr">
+    <h1>C+D CRMブランドレポート</h1>
+    <div class="meta">作成日：2026-09-07 ｜ 対象データ：月次確定分は2026年8月末まで（定期便ステータスはspic-core.public.sn_subscription_history_view・バッチ2026-08まで反映済み）</div>
+  </div>
+  <div class="month-badge">C+D単独ブランド深掘り版（2026-08月次確定版・C+Cera最新フォーマット準拠で全面再構築）</div>
+
+  <!-- ===== 1. 現在地サマリー ===== -->
+  <div class="stitle">1. 現在地サマリー（2026年8月度確定）</div>
+  <div class="ssub">定期便：spic-core.public.sn_subscription_history_view（月末スナップショット）／売上：NE出荷（ship_date基準）／保有・LTV：spic-core.public.sn_shopify_customer_master</div>
+  <div class="sg4">
+    <div class="sc">
+      <div class="lb">定期ACTIVE件数<span class="ds-shopify">Shopify</span><span class="ds-snap">月末SS</span></div>
+      <div class="vl">9,855件<span class="kpi-change up">+6件</span></div>
+      <div class="sb">2025-12（10,746件）をピークに7ヶ月連続減少していたが、8月はほぼ横ばいへ転じた（3・7-2章参照）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">保有顧客数（累計）<span class="ds-shopify">Shopify</span><span class="ds-cust">customer_master</span></div>
+      <div class="vl">43,031人<span class="kpi-change up">+223人</span></div>
+      <div class="sb">7月末42,808人からの増分（アイテム新規653人のうち一部はhas_cd反映のタイミング差により翌月計上）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">NE出荷売上（8月）<span class="ds-ne">NE出荷</span></div>
+      <div class="vl">¥78.87M<span class="kpi-change dn">▲2.2%</span></div>
+      <div class="sb">7月（¥80.67M）からわずかに減速。直近12ヶ月では¥70.9M〜¥88.9Mのレンジで安定推移</div>
+    </div>
+    <div class="sc">
+      <div class="lb">純粋新規獲得（8月）<span class="ds-order">BQ再取得</span></div>
+      <div class="vl">372人<span class="kpi-change dn">▲7.2%</span></div>
+      <div class="sb">shopify_ordersから直接算出（CYS0810除外・4-2章標準テンプレート準拠）。7月（401人）から軽微減</div>
+    </div>
+  </div>
+  <div class="sg4">
+    <div class="sc">
+      <div class="lb">平均定期単価（月換算・アイテム新規基準）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末SS</span></div>
+      <div class="vl">¥9,480</div>
+      <div class="sb">2026-09-07にBigQueryで再取得した最新値（7-B章参照）。5ブランド中はC+Ceraに次ぐ水準</div>
+    </div>
+    <div class="sc">
+      <div class="lb">停止率／解約率（アイテム新規基準）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末SS</span></div>
+      <div class="vl">49.1%／27.1%</div>
+      <div class="sb">前回確定値（47.6%／26.6%）からやや悪化。7ヶ月連続減少していた定期ACTIVEの累積影響とみられる（7章参照）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">定期継続中とみられる顧客<span class="ds-order">BQ再取得</span></div>
+      <div class="vl">48.7%</div>
+      <div class="sb">「都度買い1回のみ」は33.4%（9-2章）。5ブランド中もっとも定期継続比率が高い</div>
+    </div>
+    <div class="sc">
+      <div class="lb">純粋新規（C+Dが生涯初のLypo-C購入・累計）<span class="ds-cust">customer_master</span></div>
+      <div class="vl">46.5%</div>
+      <div class="sb">残り53.5%は既存顧客からの追加購入（うち46.3%がVC起点）。構成比は7月からほぼ不変（9-3・9-4章）</div>
+    </div>
+  </div>
+
+  <!-- ===== 2. 総評 ===== -->
+  <div class="stitle">2. 総評</div>
+  <div class="summary-verdict">
+    <div class="summary-verdict-icon">📊</div>
+    <div class="summary-verdict-text">
+      C+Dの定期ACTIVE件数は<em>2025年12月（10,746件）をピークに7ヶ月連続で減少</em>してきたが、2026年8月は9,849→9,855件（<em>+6件</em>）とほぼ横ばいに転じた（1・3章）。新規獲得面では、NE出荷売上¥78.87M（前月比▲2.2%）・アイテム新規653人（709人から▲7.9%）・純粋新規372人（401人から▲7.2%）といずれも軽微な減速にとどまり、<em>C+Cera（▲73.3%）・SKINBEAUTY（▲68.4%）・MINERALion（▲52.3%）の新興3ブランドが軒並み大幅減速した8月において、VCと並んで施策依存度の低い成熟ブランドらしい底堅さ</em>を示した（4-2・9-3章）。一方、7章の健全性指標（アイテム新規基準）は停止率49.1%・解約率27.1%と前回（47.6%／26.6%）からやや悪化しており、7ヶ月続いた減少局面の累積効果が数値に表れ始めている可能性がある。9-3・9-4章で確認した<em>保有者43,031人の53.5%が既存顧客からの追加購入（うち46.3%がVC起点）というクロスセル構造</em>は変わらず、平均継続回数（5.45〜5.82回）・累計LTV（¥72,887・5ブランド中最高）とも高水準を維持している。9-7章の相互流出入では<em>VC⇄C+Dの「双子ブランド」関係が継続する一方、C+D→C+Ceraの受け皿比率は11.7%（3月）→3.9%（8月）へ縮小傾向</em>にあり、C+Cera自身の停滞（発売来初のネット減少・7-2章）とも整合する。次回9月版では、7ヶ月連続減少局面が完全に底を打ったかどうかを最優先で確認する（12章）。
+    </div>
+  </div>
+
+  <!-- ===== 3. 月次成長トレンド ===== -->
+  <div class="stitle">3. 月次成長トレンド：NE出荷売上×定期ACTIVE件数<span class="ds-ne">NE出荷</span><span class="ds-shopify">Shopify</span></div>
+  <div class="ssub">データソース：spic-core.public.ne_order_items（shop_id=17・ship_date基準・TRIM(goods_tag)='[Lypo-C C+D]'）／spic-core.public.sn_subscription_history_view（has_cd=1・月末スナップショット）。2026-09-07再取得・直近12ヶ月（2025-09〜2026-08）</div>
+  <div class="chart-wrap"><canvas id="chartMonthlyRevActive"></canvas></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 月次トレンド 考察</div>
+    <ul>
+      <li><strong>NE出荷売上は2025-12に¥88.90M（直近12ヶ月最高）を記録した後、2026-01（¥84.16M）を経て2026-02は¥70.91M（同最低）まで落ち込み、以降は¥75〜81M帯で概ね安定して推移している。</strong>2025-12の高値は既存顧客向けGE施策（無償試供品プレゼント）による需要先食いが主因とみられ、2026-02の落ち込みはその反動と整合する。</li>
+      <li><strong>定期ACTIVEは2025-12（10,746件）をピークに7ヶ月連続で減少し、2026-07には9,849件（ピーク比▲8.3%）まで縮小したが、2026-08は9,855件（+6件）とほぼ横ばいに転じた。</strong>VC（ピーク比▲23.9%）と比べ下落幅は緩やかであり、成熟ブランドとしての底堅さがうかがえるが、7-2章のグロスフローとの乖離もあり、この反発が構造的な底打ちか一時的な変動かは9月分で見極める必要がある。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 3-2. 週次売上推移 ===== -->
+  <div class="stitle">3-2. 週次売上推移（施策の影響を詳細化）<span class="ds-ne">NE出荷</span></div>
+  <div class="ssub">集計方法：ship_date基準・週境界は月曜始まり。2026-03-02週〜2026-08-31週（2026-09-07再取得・全27週とも完全週）</div>
+  <div class="chart-wrap"><canvas id="chartWeeklyRev"></canvas></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 週次売上 考察 ── ¥14.6M〜¥22.2Mの狭いレンジで安定、突出したスパイクなし</div>
+    <ul>
+      <li><strong>週次売上は全期間を通じて¥14.56M（2026-08-10週・最低）〜¥22.19M（2026-05-25週・最高）の比較的狭いレンジで推移しており、C+Cera（CTC施策週に¥9.32M）やC+D以外の新興ブランドのような施策起因の突出したスパイクは見られない。</strong>C+D単体では現状、大型トライアル施策を主軸に据えていないことの裏付けと言える。</li>
+      <li><strong>2026-08-10週（¥14.56M）が全期間で最も低い週だったが、翌週08-17週には¥20.56Mまで回復しており、単月内でも週次の振れ幅自体は他ブランドより大きくない。</strong>8月合計（¥78.87M）は7月比▲2.2%にとどまり、CTC施策のような単一施策の反動一巡に左右されるC+Ceraとは対照的に、週次ベースでも安定した基盤売上であることがわかる。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 4. 新規獲得の質 ===== -->
+  <div class="stitle">4. 新規獲得の質：新規コホートサイズ × 初回購入時の定期便選択率（月次）<span class="ds-shopify">Shopify</span></div>
+  <div class="ssub">集計方法：shopify_ordersから直接算出（customer_master非依存・CYS0810除外）。C+Dは会社創業時から都度買い・定期便とも提供されているため、集計開始月は直近12ヶ月（2025-09）に限定して表示（2026-09-07再取得）</div>
+  <table>
+    <thead><tr><th>月</th><th>アイテム新規</th><th>うち初回が定期</th><th class="c">初回定期選択率</th><th>備考</th></tr></thead>
+    <tbody>
+      <tr><td>2025-09</td><td>745</td><td>116</td><td class="c">15.6%</td><td></td></tr>
+      <tr><td>2025-10</td><td>805</td><td>179</td><td class="c"><span class="badge a">22.2%</span></td><td>直近12ヶ月で3位</td></tr>
+      <tr><td>2025-11</td><td>699</td><td>159</td><td class="c"><span class="badge a">22.7%</span></td><td>直近12ヶ月で2位</td></tr>
+      <tr><td>2025-12 <span style="font-size:10px;color:#c2410c">GE施策</span></td><td>939</td><td>193</td><td class="c">20.6%</td><td>既存顧客向けGE施策（無償試供品）で母数増、選択率はやや希薄化</td></tr>
+      <tr><td>2026-01</td><td>741</td><td>187</td><td class="c"><span class="badge a">25.2%</span></td><td>直近12ヶ月で最高</td></tr>
+      <tr><td>2026-02</td><td>674</td><td>105</td><td class="c">15.6%</td><td></td></tr>
+      <tr><td>2026-03</td><td>602</td><td>104</td><td class="c">17.3%</td><td></td></tr>
+      <tr><td>2026-04</td><td>547</td><td>79</td><td class="c">14.4%</td><td></td></tr>
+      <tr><td>2026-05</td><td>711</td><td>76</td><td class="c"><span class="badge b">10.7%</span></td><td>直近12ヶ月で最低（当時）</td></tr>
+      <tr><td>2026-06</td><td>622</td><td>125</td><td class="c">20.1%</td><td></td></tr>
+      <tr><td>2026-07</td><td>709</td><td>81</td><td class="c">11.4%</td><td></td></tr>
+      <tr class="tot" style="background:#eefcf3"><td><strong>2026-08 ★今月</strong></td><td><strong>653</strong></td><td><strong>54</strong></td><td class="c"><span class="badge b"><strong>8.3%</strong></span></td><td>直近12ヶ月で最低を更新</td></tr>
+    </tbody>
+  </table>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 このデータが示すCRM上の意味 ── 初回定期選択率が直近12ヶ月で最低を更新</div>
+    <ul>
+      <li><strong>2026-08の初回定期選択率は8.3%（54/653人）と、直近12ヶ月でもっとも低い水準まで低下した。</strong>2026-01（25.2%）・2025-11（22.7%）のような高水準の月と比べると、半年強で選択率がほぼ3分の1まで縮小している計算になる。</li>
+      <li><strong>2025-12（GE施策月・20.6%）のように母数が膨らむ月ほど選択率が希薄化する傾向はこれまでも見られたが、2026-08はアイテム新規自体が653人（直近12ヶ月で下位）に縮小したにもかかわらず選択率も低下しており、母数希薄化だけでは説明がつかない。</strong>初回接点での定期訴求（同梱物・チェックアウト導線等）が弱まっていないか、次回レポートで確認する価値がある。</li>
+      <li><strong>4-3章のブランド横断比較では、C+Dの2026年通期の初回定期選択率（15.4%）は5ブランド中トップを維持しており、8月単月の落ち込みが年間の順位を揺るがすものではない。</strong>ただし直近の月次トレンドは監視を要する。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 4-2. 週次新規獲得数 ===== -->
+  <div class="stitle">4-2. 週次新規獲得数（アイテム新規／純粋新規）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">🔧2026-09-07、reference_brand_crm_report_workflow.md 4-2章の標準テンプレート（shopify_ordersから直接MIN(created_at)で算出・customer_master非依存・CYS0810除外フィルタ適用）でBigQuery再取得。グラフは2026-03-02週以降の全期間、表は直近16週（2026-05-18週〜08-31週）に絞って掲載。全27週とも完全週（部分週なし）</div>
+  <div class="chart-wrap"><canvas id="chartWeeklyNew"></canvas></div>
+
+  <table>
+    <thead><tr><th>週（月曜起算）</th><th>アイテム新規</th><th>純粋新規</th><th class="c">純粋新規率</th><th>備考</th></tr></thead>
+    <tbody>
+      <tr><td>2026-05-18</td><td>179</td><td>114</td><td class="c">63.7%</td><td></td></tr>
+      <tr><td>2026-05-25</td><td>218</td><td>104</td><td class="c">47.7%</td><td>直近16週でアイテム新規最多</td></tr>
+      <tr><td>2026-06-01</td><td>115</td><td>53</td><td class="c">46.1%</td><td>直近16週でアイテム新規最少</td></tr>
+      <tr><td>2026-06-08</td><td>130</td><td>68</td><td class="c">52.3%</td><td></td></tr>
+      <tr><td>2026-06-15</td><td>161</td><td>73</td><td class="c">45.3%</td><td></td></tr>
+      <tr><td>2026-06-22</td><td>166</td><td>99</td><td class="c">59.6%</td><td></td></tr>
+      <tr style="background:#eefcf3"><td><strong>2026-06-29</strong></td><td><strong>203</strong></td><td><strong>137</strong></td><td class="c"><strong style="color:var(--green)">67.5%</strong></td><td>直近16週で純粋新規率最高</td></tr>
+      <tr><td>2026-07-06</td><td>136</td><td>71</td><td class="c">52.2%</td><td></td></tr>
+      <tr><td>2026-07-13</td><td>137</td><td>64</td><td class="c">46.7%</td><td></td></tr>
+      <tr><td>2026-07-20</td><td>182</td><td>111</td><td class="c">61.0%</td><td></td></tr>
+      <tr><td>2026-07-27</td><td>148</td><td>73</td><td class="c">49.3%</td><td></td></tr>
+      <tr><td>2026-08-03</td><td>168</td><td>102</td><td class="c">60.7%</td><td></td></tr>
+      <tr><td>2026-08-10</td><td>132</td><td>75</td><td class="c">56.8%</td><td></td></tr>
+      <tr><td>2026-08-17</td><td>165</td><td>91</td><td class="c">55.2%</td><td></td></tr>
+      <tr><td>2026-08-24</td><td>121</td><td>66</td><td class="c"><span class="badge b">54.5%</span></td><td>直近16週でアイテム新規少なめ</td></tr>
+      <tr><td>2026-08-31</td><td>179</td><td>93</td><td class="c">52.0%</td><td>月末週も完全週（データ実行日2026-09-07）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 週次新規獲得 考察 ── 純粋新規率は概ね50〜60%台で安定、突出した週なし</div>
+    <ul>
+      <li><strong>C+Cera（CTC施策週に純粋新規率42.0%へ急伸）のような施策起因の単発スパイクは見られず、直近16週の純粋新規率は45.3%〜67.5%のレンジで比較的安定している。</strong>アイテム新規（週次115〜218人）も緩やかな増減にとどまり、8月を通じて急減・急増のいずれも起きていない。</li>
+      <li><strong>4-2章の標準テンプレート（CYS0810除外・customer_master非依存）で全期間を再計算した結果、旧レポートで報告されていた週次データと大きな乖離は確認されなかった。</strong>VC版で発覚したような「標準テンプレートからの逸脱」はC+Dでは見られず、既存の集計方法が引き続き有効であることを確認した。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 4-3. 初回購入時の定期便選択率：ブランド比較 ===== -->
+  <div class="stitle">4-3. 初回購入時の定期便選択率：ブランド横断比較<span class="ds-shopify">Shopify</span></div>
+  <div class="ssub">データソース：spic-core.public.shopify_orders × sn_shopify_sku_brand_master。各顧客の「そのブランドの生涯初有償購入」がsubscription_contract_checkout_one／subscription_contractだった比率。<strong>ブランドの創業年による偏りを避けるため、各顧客の初回購入日が2026年（1〜8月・確定）だった人に限定</strong>して比較。2026-09-01実行・全ブランド一括取得（reference_brand_crm_report_values.md転記・再クエリ不要）</div>
+  <div class="chart-wrap"><canvas id="chartSubSelectCompare"></canvas></div>
+
+  <table>
+    <thead><tr><th>ブランド</th><th>2026年 初回購入者数</th><th>うち初回が定期便</th><th class="c">初回定期選択率</th></tr></thead>
+    <tbody>
+      <tr style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D</strong></td><td><strong>5,259人</strong></td><td><strong>811人</strong></td><td class="c"><strong style="color:var(--accent)">15.4%</strong></td></tr>
+      <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td><td>4,368人</td><td>534人</td><td class="c">12.2%</td></tr>
+      <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion</td><td>2,162人</td><td>138人</td><td class="c">6.4%</td></tr>
+      <tr><td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td><td>1,551人</td><td>46人</td><td class="c">3.0%</td></tr>
+      <tr><td><span class="dot" style="background:var(--vc)"></span>VC</td><td>6,954人</td><td>172人</td><td class="c">2.5%</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--muted);margin-top:-4px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">
+    ⚠️ C+Dは創業時から都度買い・定期便を提供しているため、「2026年限定」の値（15.4%）は「全期間累計」（14.3%・42,832人中）とほぼ同水準。会社創業以来一貫して初回接点での定期化に強いブランドであることを示す。
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ブランド比較 考察 ── C+Dは5ブランド中トップを維持</div>
+    <ul>
+      <li><strong>C+Dの初回定期選択率は15.4%と、C+Cera（12.2%）・MINERALion（6.4%）・SKINBEAUTY（3.0%）・VC（2.5%）を明確に上回り5ブランド中トップ。</strong>4章で確認したとおり8月単月の選択率は8.3%まで落ち込んでいるが、年間累計の順位には影響していない。</li>
+      <li><strong>VC（2.5%）が5ブランド中最下位である一方、同じく会社創業時からの長寿ブランドであるC+D（15.4%）が最高位という対照的な結果は、6章⑰の教訓（「同じ長寿ブランドだから同様の性質を持つ」という類推は誤り）を裏付ける事例のひとつでもある。</strong></li>
+    </ul>
+  </div>
+
+  <!-- ===== 5. コホート継続率 ===== -->
+  <div class="stitle">5. コホート継続率（M+1〜M+12ヒートマップ）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">初回有料注文がC+Dだった顧客（アイテム新規ベース）のコホート分析。同ブランドへの再購入のみを継続としてカウント（他ブランドリピートは含まない「真のブランド内リピート率」）。2026-09-07再取得・2025-05〜2026-08コホート（16ヶ月分）。2026-09が1週間程度しか経過していないため、対象期間が完全に経過していないセルは「—」表示</div>
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortCd"></table></div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortCd"></canvas></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 コホート 考察</div>
+    <ul>
+      <li><strong>M+1継続率は2025-05〜2026-03にかけて概ね29〜41%のレンジで推移していたが、2025-12コホート（939人・GE施策で母数増）は28.9%とやや低く出ている。</strong>4章で確認した「GE施策で母数が膨らんだ月は選択率が薄まる」という傾向が、コホート継続率にも同様に表れている一事例。</li>
+      <li><strong>2026-04〜07コホートのM+1継続率は29.1〜34.7%で、2025年（38〜41%）と比べるとやや低下傾向にある。</strong>2026-07コホート（709人）のM+1継続率は206/709人＝29.1%で確定しており、この値は本レポート作成時点で追加検証不要の確定値である。</li>
+      <li>🔧 <strong>2026-05コホート（711人）のM+1継続率29.3%は、2025-12（GE施策）と同様に「施策の締め切り効果」による質の希薄化が原因と判明した。</strong>BigQuery実測により、2026-05の新規顧客の87.6%（715人中627人）にESS施策（Early Summer Switch・2026-04-27〜05-31実施・VP付与）のタグが付与されており、しかも5/25〜31の締切直前週だけで月間新規の30.5%（218人）が集中していることを確認した（通常の日割り想定22.6%を上回る駆け込み傾向）。<strong>締切直前週（5/25〜31）のESS参加者のM+1継続率は26.8%で、月前半（5/1〜24）のESS参加者（31.5%）より4.7pt低く、「締切間際の駆け込み獲得ほど定着率が低い」というGE施策と同型の現象が確認できた。</strong>今後、月末締切型の施策を評価する際は、単純な参加者数・獲得数だけでなく、締切直前の駆け込み比率とその後の継続率を必ずセットで確認すべきという教訓が得られた。</li>
+      <li><strong>M+6継続率が観測できる2025-05〜2026-02の12コホートでは24.6〜31.8%のレンジで安定しており、M+1時点の変動ほど大きなブレは見られない。</strong>初期の変動が中期的な定着率にそのまま連動するわけではないことを示唆する。</li>
+      <li><strong>M+9まで観測できる2025-05〜2025-11の7コホートでは20.7〜23.6%、M+10まで観測できる2025-05〜10の6コホートでは18.7〜22.3%、M+11まで観測できる2025-05〜09の5コホートでは16.7〜19.9%、M+12まで観測できる2025-05〜08の4コホートでは19.0〜23.0%と、M+6以降は緩やかな減衰にとどまり大きな崩れは見られない。</strong>M+11からM+12にかけてわずかに値が上昇するコホートが複数あり（2025-05・07・08）、年末年始や季節性の影響で1年周期の再購入が発生している可能性がある。</li>
+      <li>⚠️ <strong>2026-08コホート（653人・★今月）はM+1がまだ観測不能（9月分は1週間程度しか経過していないため「—」表示）。</strong>9月度レポートで確定値を確認する。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 6. LTV成長カーブ ===== -->
+  <div class="stitle">6. LTV成長カーブ：ブランド横断比較<span class="ds-shopify">Shopify</span><span class="ds-cust">customer_master</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_shopify_customer_master（2026-09-01取得・2026-08-31基準・5ブランド単一クエリで統一取得・reference_brand_crm_report_workflow.md 6章⑳参照）。<strong>全5ブランドを「first_purchased_brands＝そのブランド（そのブランドが生涯初のLypo-C購入）」に統一。</strong>MINERALion・VCは無償トライアル/OGSモニターの混入除外のため`ltv_{brand}>0`を追加適用</div>
+  <div class="chart-wrap"><canvas id="chartLtvCurve"></canvas></div>
+
+  <table>
+    <thead><tr><th>初回購入ブランド</th><th>顧客数</th><th>30日LTV</th><th>90日LTV</th><th>180日LTV</th><th>365日LTV</th><th>累計LTV</th></tr></thead>
+    <tbody>
+      <tr style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D（初回）</strong></td><td><strong>20,004人</strong></td><td><strong>¥14,787</strong></td><td><strong>¥24,117</strong></td><td><strong>¥35,594</strong></td><td><strong>¥55,027</strong></td><td style="font-weight:700"><strong>¥72,887 <span class="badge a">5ブランド中最高</span></strong></td></tr>
+      <tr><td><span class="dot" style="background:var(--vc)"></span>VC（初回・有償のみ）</td><td>121,823人</td><td>¥11,865</td><td>¥18,241</td><td>¥25,895</td><td>¥37,859</td><td style="font-weight:700">¥60,046</td></tr>
+      <tr><td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY（初回）</td><td>840人</td><td>¥14,716</td><td>¥20,022</td><td>¥24,312</td><td>¥31,618</td><td style="font-weight:700">¥23,118</td></tr>
+      <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera（初回）</td><td>693人</td><td>¥17,390</td><td>¥25,354</td><td>¥34,680</td><td>—（未到達）</td><td style="font-weight:700">¥26,301</td></tr>
+      <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion（初回・有償のみ）</td><td>480人</td><td>¥9,419</td><td>¥14,882</td><td>¥18,731</td><td>—（未到達）</td><td style="font-weight:700">¥15,723</td></tr>
+    </tbody>
+  </table>
+
+  <div class="insight-grid">
+    <div class="insight-card positive">
+      <div class="ic-num">¥72,887</div>
+      <div class="ic-title">累計LTVは5ブランド中最高</div>
+      <div class="ic-body">VC（¥60,046）を¥12,841上回る。30日LTV（¥14,787）も5ブランド中2位（1位はC+Cera¥17,390）と早期段階からの単価優位も維持している。</div>
+    </div>
+    <div class="insight-card">
+      <div class="ic-num">100%</div>
+      <div class="ic-title">365日LTV到達率はほぼ観測完了</div>
+      <div class="ic-body">創業時からのブランドのため、観測期間バイアスの影響をほぼ受けない（VCと並び6章のバイアス注記の対象外）。他ブランドとの比較にそのまま使える数少ない指標。</div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div class="nt">📋 6章 観測期間バイアスに関する注記（他ブランド版との比較のため必須記載）</div>
+    <ul>
+      <li>本レポート内の他ブランド比較で用いるSKINBEAUTY・C+Cera・MINERALionの365日LTV・累計LTVは、初回購入者の365日到達率がそれぞれ4.8%・0%・0%に留まり、統計的に未成熟な値である点に留意すること。<strong>C+Dは会社創業時からのブランドであり、VCと並んでこの観測期間バイアスの対象外。両ブランド間の比較は信頼できるが、VC・C+D と C+Cera・SKINBEAUTY・MINERALionを365日LTV・累計LTVで単純比較するのは不適切。</strong></li>
+      <li><strong>C+Dの累計LTV（¥72,887）が90日・180日LTV（¥24,117／¥35,594）より高い、成熟ブランドらしい健全な大小関係になっている点にも留意。</strong>SKINBEAUTY・C+Ceraのような新興ブランドでは母集団の若さゆえに累計LTVが90日・180日LTVを下回る「逆転現象」が起きるが、C+D・VCではこの逆転は起きない。逆転の有無自体がブランドの成熟度を示す簡易的な目安になる（6章参照）。</li>
+      <li>本表（2026-09-01取得・2026-08-31基準）は5ブランド共通の単一クエリ・単一基準日で統一取得された値であり、C+D単独版の月次更新でも再クエリ不要でそのまま転記する（6章⑳の運用ルール）。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 7. 定期便健全性のブランド横断比較 ===== -->
+  <div class="stitle">7. 定期便健全性のブランド横断比較<span class="ds-shopify">Shopify</span><span class="ds-snap">月末SS</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_shopify_customer_master（顧客区分の判定）× sn_subscription_history_raw（契約ステータス）× shopify_orders（購入回数の実測）。C+D行は2026-09-07にBigQueryで再取得（2026-08月末スナップショット基準）。他ブランド行はreference_brand_crm_report_workflow.md 6章㉒（2026-09-03取得）より転記</div>
+
+  <div class="correction">
+    <div class="cr-title">🚨 集計方法は「そのブランドの商品購入だけ」を計測する2表構成（reference_brand_crm_report_workflow.md 6章㉒準拠）</div>
+    ①そのブランドが生涯初のLypo-C購入だった「純粋新規顧客」、②そのブランドを一度でも購入したことがある「アイテム新規顧客」の2つの母集団に分け、「平均購入回数」はそのブランドのSKUを実際に購入した回数（shopify_orders実測）を用いる。契約引継ぎ問題（他ブランドの長期契約がそのまま引き継がれcompleted_paymentsが実態より大きく出る現象）を回避するため、`sn_subscription_history_raw`のcustomer_id（customer_masterと同一のSTRING空間）を用いてJOINしている。
+  </div>
+
+  <div class="stitle" style="font-size:15px;margin-top:20px">7-A. 純粋新規顧客ベース（そのブランドが生涯初のLypo-C購入）</div>
+  <table>
+    <thead><tr><th>ブランド</th><th>母集団</th><th>定期ACTIVE</th><th>停止率</th><th>解約率</th><th>平均購入回数<br><span style="font-weight:400">（実購入・全チャネル）</span></th><th>1回目比率</th><th>平均定期単価<br><span style="font-weight:400">（月換算・ACTIVE分）</span></th></tr></thead>
+    <tbody>
+      <tr style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D</strong></td><td><strong>20,253人</strong></td><td><strong>3,973件</strong></td><td><strong>51.0%</strong></td><td><strong>29.1%</strong></td><td><strong>5.45回</strong></td><td><strong>38.0%</strong></td><td><strong>¥9,333</strong></td></tr>
+      <tr><td><span class="dot" style="background:var(--vc)"></span>VC</td><td>163,324人</td><td>10,256件</td><td>64.1%</td><td>39.7%</td><td>3.93回</td><td>59.0%</td><td>¥8,552</td></tr>
+      <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td><td>693人</td><td>136件</td><td>18.1%</td><td>21.7%</td><td>1.72回</td><td>67.2%</td><td>¥13,014</td></tr>
+      <tr><td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td><td>841人</td><td>94件</td><td>37.7%</td><td>24.5%</td><td>1.78回</td><td>70.0%</td><td>¥11,550</td></tr>
+      <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion</td><td>481人</td><td>96件</td><td>14.3%</td><td>15.8%</td><td>1.86回</td><td>60.5%</td><td>¥5,946</td></tr>
+    </tbody>
+  </table>
+
+  <div class="stitle" style="font-size:15px;margin-top:24px">7-B. アイテム新規顧客ベース（そのブランドを一度でも購入したことがある全顧客）</div>
+  <table>
+    <thead><tr><th>ブランド</th><th>母集団</th><th>定期ACTIVE</th><th>停止率</th><th>解約率</th><th>平均購入回数<br><span style="font-weight:400">（実購入・全チャネル）</span></th><th>1回目比率</th><th>平均定期単価<br><span style="font-weight:400">（月換算・ACTIVE分）</span></th></tr></thead>
+    <tbody>
+      <tr style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D</strong></td><td><strong>43,209人</strong></td><td><strong>9,026件</strong></td><td><strong>49.1%</strong></td><td><strong>27.1%</strong></td><td><strong>5.82回</strong></td><td><strong>35.3%</strong></td><td><strong>¥9,480</strong></td></tr>
+      <tr><td><span class="dot" style="background:var(--vc)"></span>VC</td><td>169,504人</td><td>11,166件</td><td>63.1%</td><td>39.2%</td><td>3.91回</td><td>58.5%</td><td>¥8,673</td></tr>
+      <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td><td>4,367人</td><td>1,094件</td><td>19.0%</td><td>11.6%</td><td>2.00回</td><td>59.3%</td><td>¥14,547</td></tr>
+      <tr><td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td><td>3,452人</td><td>462件</td><td>32.9%</td><td>21.5%</td><td>2.03回</td><td>64.9%</td><td>¥12,779</td></tr>
+      <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion</td><td>2,711人</td><td>649件</td><td>15.9%</td><td>11.6%</td><td>2.10回</td><td>53.9%</td><td>¥8,677</td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:11px;color:var(--muted);margin-top:8px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">
+    ⚠️ 母集団の「定期ACTIVE」欄は、その母集団のうち現在ACTIVEな定期契約を保持している件数。停止率＝PAUSED／(ACTIVE+PAUSED)、解約率＝CANCELLED／(ACTIVE+PAUSED+CANCELLED)。<strong>平均購入回数＝そのブランドのSKUをこれまでに何件の注文で購入したかを顧客ごとに数えた実測値（shopify_orders）の母集団平均。1回目比率＝その購入回数がちょうど1件の顧客が母集団に占める割合。</strong>いずれも他ブランドからの契約引継ぎによる汚染を受けない。C+Dの数値は2026-09-07にBigQueryで再取得した最新値であり、旧値（母集団20,009人／43,031人・停止率50.2%／47.6%）からわずかに変動している（母集団の自然増・時間経過による）。
+  </div>
+  <div class="sg2">
+    <div class="chart-wrap"><canvas id="chartStopRate"></canvas></div>
+    <div class="chart-wrap"><canvas id="chartAvgPrice"></canvas></div>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 健全性比較の考察 ── 平均購入回数・平均定期単価は5ブランド中トップ水準を維持</div>
+    <ul>
+      <li><strong>C+Dの平均購入回数（純粋新規5.45回／アイテム新規5.82回）は5ブランド中もっとも多く、VC（3.93回／3.91回）を明確に上回る。</strong>会社創業時からの長寿ブランドとして母集団の在籍期間が長いことに加え、9-4章で確認したクロスセル経由の既存顧客（1人当たり平均売上¥90,727）が購入回数を押し上げている構造がうかがえる。</li>
+      <li><strong>停止率（純粋新規51.0%／アイテム新規49.1%）はVC（64.1%／63.1%）よりは低いが、新興3ブランド（C+Cera・SKINBEAUTY・MINERALionいずれも14〜38%）と比べると高い水準にある。</strong>これは母集団の在籍期間が長いこと自体の裏返しであり、新興ブランドとの単純比較は6章の観測バイアス注記と同様の注意が必要（在籍期間が長いほど累積的にPAUSED経験者の比率が上がりやすい）。</li>
+      <li><strong>平均定期単価（純粋新規¥9,333／アイテム新規¥9,480）はVC（¥8,552／¥8,673）をやや上回るが、C+Cera（¥13,014／¥14,547）・SKINBEAUTY（¥11,550／¥12,779）には及ばない中位の水準。</strong>C+D自身の強みは単価よりも継続回数・累計LTV（6章）の高さにあることが健全性面からも裏付けられる。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 7-2. 毎月の新規ACTIVE vs PAUSE+CANCELLED発生 ===== -->
+  <div class="stitle">7-2. 毎月のグロスフロー：6区分改修版（ブランド乗換を分離）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末SS</span></div>
+  <div class="ssub">🔧2026-09-07、乖離解明の過程で確立した6区分クエリ（reference_brand_crm_report_workflow.md 6章㉔）をC+D単体の2026-03〜08全期間に適用し、旧来の「新規ACTIVE vs PAUSE+CANCELLED」2区分表示から刷新。`LAG(status)`と`LAG(has_cd)`を未フィルタの全期間タイムラインで計算し、ブランド乗換（乗換流入・乗換流出）を純粋な新規/復帰/解約と分離</div>
+  <div class="chart-wrap"><canvas id="chartGrossFlowCd6"></canvas></div>
+
+  <table>
+    <thead><tr><th>月</th><th class="c">A新規契約</th><th class="c">B自ブランド復帰</th><th class="c">C他ブランドから乗換流入</th><th class="c">D PAUSE+CANCELLED</th><th class="c">E他ブランドへ乗換流出</th><th class="c">F乗換と同時に休止解約</th><th class="c">計算上のネット</th><th class="c">実測ストック純増</th><th class="c">差</th></tr></thead>
+    <tbody>
+      <tr><td>2026-03</td><td class="c">386</td><td class="c">88</td><td class="c">147</td><td class="c">597</td><td class="c">205</td><td class="c">20</td><td class="c">▲201</td><td class="c">▲201</td><td class="c"><span class="badge a">0</span></td></tr>
+      <tr><td>2026-04</td><td class="c">361</td><td class="c">108</td><td class="c">114</td><td class="c">516</td><td class="c">165</td><td class="c">14</td><td class="c">▲112</td><td class="c">▲131</td><td class="c"><span class="badge w">19</span></td></tr>
+      <tr><td>2026-05</td><td class="c">406</td><td class="c">94</td><td class="c">177</td><td class="c">536</td><td class="c">150</td><td class="c">13</td><td class="c">▲22</td><td class="c">▲27</td><td class="c"><span class="badge w">5</span></td></tr>
+      <tr><td>2026-06</td><td class="c">328</td><td class="c">76</td><td class="c">155</td><td class="c">507</td><td class="c">141</td><td class="c">17</td><td class="c">▲106</td><td class="c">▲106</td><td class="c"><span class="badge a">0</span></td></tr>
+      <tr><td>2026-07</td><td class="c">352</td><td class="c">84</td><td class="c">144</td><td class="c">472</td><td class="c">162</td><td class="c">23</td><td class="c">▲77</td><td class="c">▲77</td><td class="c"><span class="badge a">0</span></td></tr>
+      <tr class="tot" style="background:#eefcf3"><td><strong>2026-08 ★今月</strong></td><td class="c"><strong>425</strong></td><td class="c"><strong>91</strong></td><td class="c"><strong>111</strong></td><td class="c"><strong>492</strong></td><td class="c"><strong>117</strong></td><td class="c"><strong>12</strong></td><td class="c"><strong style="color:var(--green)">+6</strong></td><td class="c"><strong>+6</strong></td><td class="c"><span class="badge a"><strong>0</strong></span></td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--muted);margin-top:-4px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">
+    ⚠️ 計算上のネット＝(A+B+C)−(D+E+F)。2026-03・06・07・08の4ヶ月は実測ストック純増と完全一致（差0）。2026-04・05の2ヶ月はそれぞれ19件・5件の小さな残差が残っており、月をまたぐスナップショットの欠落等、6区分では未分類の要因が他にわずかに存在する可能性がある（今後の精査課題）。いずれにせよ旧来の2区分集計（新規ACTIVE vs PAUSE+CANCELLED）よりストック実測への説明力は大幅に改善している。
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 グロスフロー 考察（C+D単体・6区分版） ── ブランド乗換の影響は毎月おおむね一定、8月の反発は「乗換の縮小」も一因</div>
+    <ul>
+      <li><strong>他ブランドから乗換流入（C）・他ブランドへ乗換流出（E）は毎月100〜200件規模で恒常的に発生しており、C+D単体では消えない「地力の一部」である。</strong>2026-08はC（111件）がE（117件）とほぼ拮抗し、5月（C177件・E150件）のようにCがEを上回る月もあれば逆の月もある。</li>
+      <li><strong>純粋な新規契約＋自ブランド復帰（A+B）は2026-03の474件から06の404件まで緩やかに減少し、07・08は436件・516件へ回復基調にある。</strong>これは4章・9-3章で確認した「アイテム新規」の月次推移と方向性が一致しており、6区分に分解しても新規獲得力の実態把握は損なわれていないことを確認できた。</li>
+      <li><strong>2026-08のネット改善（+6件）は、PAUSE+CANCELLED（D）が472→492件へ増加する逆風の中でも、真の新規契約（A）が352→425件へ回復したことが主因。</strong>ブランド乗換（C・E）自体は7月とほぼ同水準（144→111件・162→117件）で推移しており、8月の反発を乗換要因だけで説明することはできない。</li>
+    </ul>
+  </div>
+
+  <div class="correction">
+    <div class="cr-title">🔍 乖離解明の経緯（2026-09-07）：旧2区分集計との差分</div>
+    旧来の2区分集計（新規ACTIVE・PAUSE+CANCELLED）では2026-08のネットが+94件と算出され、実測のストック純増（+6件）と88件乖離していた。<strong>原因は、契約継続のまま定期便の中身がC+D以外へ乗り換えられた117件（表のE）が旧集計では一切計上されず、逆に別ブランドから乗り換わってきた111件（表のC）が「新規ACTIVE」に混入して過大計上されていたため。</strong>乗換の8割超（C：111件中93件・E：117件中97件）はVC⇄C+D間で発生しており、会員基盤最大の「双子ブランド」（9-7章参照）であることと整合する。この6区分クエリはreference_brand_crm_report_workflow.md 6章㉔に標準テンプレートとして収録済み。
+  </div>
+
+  <div class="ssub" style="margin-top:16px">ブランド横断比較（2026-08snapshot・旧2区分集計）。データソース：sn_subscription_history_view（LAGによるステータス遷移検出・reference_brand_crm_report_values.md 9章より転記）</div>
+  <div style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.7;padding:8px 12px;background:#fff8f0;border:1px solid #fde68a;border-radius:6px">
+    ⚠️ 下表は他4ブランドとの比較のため旧来の2区分集計（新規ACTIVE・PAUSE+CANCELLED）を維持している。C+D列の8月値（新規586件・PAUSE+CANCELLED492件）は上記6区分表のA+B+C（627件）・D+E+F（621件）とは定義が異なるため、C+D単体の実態把握には上記6区分表を優先すること。他ブランドも同様のブランド乗換の影響を受けている可能性があり、次回ワークフロー更新で6区分化を横展開する。
+  </div>
+  <table>
+    <thead><tr><th>ブランド</th><th>2025-09</th><th>2025-12</th><th>2026-03</th><th>2026-05</th><th>2026-07</th><th style="background:#e6faee">2026-08</th><th class="c">8月ネット</th></tr></thead>
+    <tbody>
+      <tr style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D</strong></td><td><strong>608</strong></td><td><strong>604</strong></td><td><strong>486</strong></td><td><strong>509</strong></td><td><strong>444</strong></td><td style="background:#dcf9e6"><strong>586</strong></td><td class="c"><span class="badge a"><strong>+94</strong></span></td></tr>
+      <tr><td><span class="dot" style="background:var(--vc)"></span>VC</td><td>1,534</td><td>560</td><td>589</td><td>760</td><td>695</td><td style="background:#dcf9e6">678</td><td class="c"><span class="badge b">▲32</span></td></tr>
+      <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td><td>—</td><td>—</td><td>351</td><td>189</td><td>267</td><td style="background:#dcf9e6">77</td><td class="c"><span class="badge b">▲19</span></td></tr>
+      <tr><td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td><td>—</td><td>58</td><td>80</td><td>68</td><td>66</td><td style="background:#dcf9e6">67</td><td class="c"><span class="badge a">+8</span></td></tr>
+      <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion</td><td>—</td><td>—</td><td>168</td><td>70</td><td>162</td><td style="background:#dcf9e6">78</td><td class="c"><span class="badge a">+12</span></td></tr>
+      <tr style="background:#fef2f2"><td colspan="8" style="font-weight:700;color:#b91c1c">PAUSE・CANCELLED発生（グロス減少）</td></tr>
+      <tr style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D</strong></td><td><strong>629</strong></td><td><strong>634</strong></td><td><strong>608</strong></td><td><strong>541</strong></td><td><strong>476</strong></td><td style="background:#dcf9e6"><strong>492</strong></td><td class="c"></td></tr>
+      <tr><td><span class="dot" style="background:var(--vc)"></span>VC</td><td>1,319</td><td>1,041</td><td>913</td><td>776</td><td>696</td><td style="background:#dcf9e6">710</td><td class="c"></td></tr>
+      <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td><td>—</td><td>—</td><td>18</td><td>50</td><td>87</td><td style="background:#dcf9e6">96</td><td class="c"></td></tr>
+      <tr><td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td><td>—</td><td>1</td><td>48</td><td>47</td><td>54</td><td style="background:#dcf9e6">59</td><td class="c"></td></tr>
+      <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion</td><td>—</td><td>—</td><td>0</td><td>27</td><td>48</td><td style="background:#dcf9e6">66</td><td class="c"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ブランド比較で見える「8月の全社的な鈍化からの例外」── C+Dはイベント単位で最大の伸び</div>
+    <ul>
+      <li><strong>8月は5ブランド中、VC（ネット▲32件）とC+Cera（ネット▲19件）の2ブランドがマイナスに転じた一方、C+D（+94件）はイベント単位で5ブランド中最大のネットプラスを記録した。</strong>ただし1章・3章で確認したとおりストック純増は+6件にとどまり、イベント単位の値をそのまま「実態」として扱うのは早計である点に注意が必要。</li>
+      <li><strong>新規ACTIVE発生の絶対件数（586件）だけを見ればSKINBEAUTY（67件）・MINERALion（78件）・C+Cera（77件）を大きく上回るが、C+Dは母集団自体が桁違いに大きい（定期ACTIVE9,855件）ため、絶対件数の比較よりストックに対する比率で評価する方が適切。</strong></li>
+    </ul>
+  </div>
+
+  <!-- ===== 7-3. 定期解約・休止が発生する継続回数の分布 ===== -->
+  <div class="stitle">7-3. 定期解約・休止が発生する継続回数の分布（純粋新規顧客のみ）<span class="ds-shopify">Shopify</span></div>
+  <div class="ssub">🔧2026-09-07、reference_brand_crm_report_workflow.md 4-10章・6章㉒準拠でBigQuery再取得。データソース：spic-core.public.sn_subscription_history_raw（customer_masterと同一のSTRING customer_id空間）× sn_shopify_customer_master（母集団を`first_purchased_brands＝C+D`の純粋新規20,253人に限定）。前月ACTIVE→当月PAUSED/CANCELLEDへ遷移したイベントを継続回数（completed_payments）別に集計（全期間累計）</div>
+
+  <div class="chart-wrap"><canvas id="chartCancelDist"></canvas></div>
+
+  <table>
+    <thead><tr><th>継続回数</th><th class="c">PAUSE件数</th><th class="c">CANCELLED件数</th><th class="c">合計</th><th class="c">構成比</th></tr></thead>
+    <tbody>
+      <tr><td>1回目</td><td class="c">246</td><td class="c">189</td><td class="c">435</td><td class="c"><span class="badge b">11.8%</span></td></tr>
+      <tr><td>2回目</td><td class="c">313</td><td class="c">229</td><td class="c">542</td><td class="c"><span class="badge w">14.7%</span></td></tr>
+      <tr><td>3〜4回目</td><td class="c">459</td><td class="c">271</td><td class="c">730</td><td class="c"><span class="badge w">19.8%</span></td></tr>
+      <tr><td>5〜6回目</td><td class="c">343</td><td class="c">193</td><td class="c">536</td><td class="c">14.6%</td></tr>
+      <tr><td>7〜12回目</td><td class="c">530</td><td class="c">338</td><td class="c">868</td><td class="c"><span class="badge a">23.6%</span></td></tr>
+      <tr><td>13回目以上</td><td class="c">376</td><td class="c">195</td><td class="c">571</td><td class="c"><span class="badge a">15.5%</span></td></tr>
+      <tr class="tot"><td>合計</td><td class="c">2,267</td><td class="c">1,415</td><td class="c">3,682</td><td class="c">100%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 継続回数分布 考察 ── C+Ceraとは対照的に「7回目以上」の離脱が全体の39.1%を占める、成熟ブランドらしい分布</div>
+    <ul>
+      <li><strong>C+Ceraの純粋新規限定分布（1〜4回目に98.1%が集中）とは対照的に、C+Dは「7〜12回目」23.6%・「13回目以上」15.5%と、長期契約者の離脱が全体の約4割（39.1%）を占める。</strong>これは契約引継ぎ問題を除去した後も、C+D自身の顧客基盤に長期在籍者が数多く存在すること自体の裏返しであり、6章で確認した平均購入回数の高さ（5.45回）と整合的。</li>
+      <li><strong>「1回目」（11.8%）の離脱比率は5ブランド中もっとも低い部類とみられ（C+Cera35.2%・MINERALion等の新興ブランドは軒並り高い）、初期離脱よりも長期契約からの離脱の方が構成比として大きい、成熟ブランド特有のプロファイルを示している。</strong></li>
+      <li><strong>件数自体は合計3,682件（PAUSE2,267件＋CANCELLED1,415件）と、C+Cera（54件）と比べ桁違いに大きい。</strong>これは母集団自体の規模（純粋新規20,253人）に加え、長期在籍者が多いことで離脱イベントの絶対数が積み上がりやすいためであり、率としての解約率悪化（7章）と合わせて評価する必要がある。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 7-4. 定期ACTIVE顧客が他ブランドの定期便を併用しているか ===== -->
+  <div class="stitle">7-4. 定期ACTIVE顧客が他ブランドの定期便を併用しているか（ポートフォリオ重複）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末SS</span></div>
+  <div class="ssub">🔧2026-09-07、reference_brand_crm_report_workflow.md 4-13章準拠でBigQuery再取得。データソース：sn_subscription_history_view（snapshot_ym=2026-08・customer_id単位でMAX集約）。9-7章「相互流出入」が離脱後の乗り換え（フロー）を見るのに対し、本章は現時点で並行保有している契約（ストック）を見る点で異なる</div>
+
+  <div class="sg4">
+    <div class="sc">
+      <div class="lb">他ブランド併用率（合計）</div>
+      <div class="vl">26.2%</div>
+      <div class="sb">2,555人／9,743人が他ブランドの定期便も併用中（前回確定値：26.7%）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">併用先トップ：VC</div>
+      <div class="vl">21.0%</div>
+      <div class="sb">2,043人がVCの定期便を併用（うち91%超はMix商品による便宜的な重複・下記参照）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">併用先2位：C+Cera</div>
+      <div class="vl">3.1%</div>
+      <div class="sb">303人がC+Ceraの定期便を併用。MINERALion（2.7%）・SKINBEAUTY（1.5%）が続く</div>
+    </div>
+    <div class="sc">
+      <div class="lb">C+Dのみ保有</div>
+      <div class="vl">73.8%</div>
+      <div class="sb">7,188人は他ブランドの定期便を併用していない</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap"><canvas id="chartBrandOverlap"></canvas></div>
+  <table>
+    <thead><tr><th>併用状況</th><th class="c">顧客数</th><th class="c">構成比</th></tr></thead>
+    <tbody>
+      <tr class="tot"><td>C+Dのみ</td><td class="c">7,188</td><td class="c">73.8%</td></tr>
+      <tr><td>VCのみ併用</td><td class="c">1,913</td><td class="c">19.6%</td></tr>
+      <tr><td>C+Ceraのみ併用</td><td class="c">202</td><td class="c">2.1%</td></tr>
+      <tr><td>MINERALionのみ併用</td><td class="c">181</td><td class="c">1.9%</td></tr>
+      <tr><td>SKINBEAUTYのみ併用</td><td class="c">74</td><td class="c">0.8%</td></tr>
+      <tr><td>VC+C+Cera併用</td><td class="c">49</td><td class="c">0.5%</td></tr>
+      <tr><td>VC+MINERALion併用</td><td class="c">37</td><td class="c">0.4%</td></tr>
+      <tr><td>VC+SKINBEAUTY併用</td><td class="c">33</td><td class="c">0.3%</td></tr>
+      <tr><td>C+Cera+MINERALion併用</td><td class="c">24</td><td class="c">0.2%</td></tr>
+      <tr><td>C+Cera+SKINBEAUTY併用</td><td class="c">17</td><td class="c">0.2%</td></tr>
+      <tr><td>3ブランド以上併用</td><td class="c">16</td><td class="c">0.2%</td></tr>
+      <tr><td>SKINBEAUTY+MINERALion併用</td><td class="c">9</td><td class="c">0.1%</td></tr>
+      <tr class="tot"><td><strong>合計（C+D定期ACTIVE顧客）</strong></td><td class="c"><strong>9,743</strong></td><td class="c">100.0%</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--muted);margin-top:-4px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">
+    ⚠️ この9,743人という合計は、7章のACTIVE件数（9,855件・contract単位）とは分母が異なる（複数のC+D契約を持つ顧客が名寄せされ112件少なくなる）点に注意（13章参照）。<strong>また、VC併用者2,043人のうち91.4%はMix商品（VC+C+D同梱定期便）による便宜的な重複であり、真に2つの独立契約を持つ「真の併用」はごく一部にとどまる（6章⑱・4-13章のバンドル内訳検証クエリ参照）。</strong>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 併用状況 考察 ── VC併用が突出するがMix商品の影響が大半、真の複数ブランド併用はC+Ceraが上位</div>
+    <ul>
+      <li><strong>C+D定期ACTIVE顧客の26.2%（2,555人）が他ブランドの定期便も併用中で、併用先トップは引き続きVC（21.0%）。</strong>ただしVC版・C+D版いずれの単独レポートでも確認されているとおり、この併用の91.4%はVC+C+D同梱のMix商品による便宜的な重複であり、真に独立した2契約を持つ「真の併用」は約1.8%（C+D ACTIVE中）にとどまる。</li>
+      <li><strong>Mix商品が存在しないC+Cera（3.1%）・MINERALion（2.7%）・SKINBEAUTY（1.5%）との併用は、いずれもVC側の対応する比率より高く、C+Dは他の新興3ブランドとも積極的に併用される「ハブ」的な性格を持つ。</strong>9-4章で確認した「C+Dは有力なクロスセル先」という新規獲得面の構造が、現在のポートフォリオ（ストック）面でも一貫して裏付けられた。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 8. 施策効果比較 ===== -->
+  <div class="stitle">8. 施策効果比較：CYS→C+D単品30包アップセル vs 他ブランド施策</div>
+  <div class="ssub">データソース：reference_campaign_history.mdの定義に基づくBQ集計（reference_brand_crm_report_values.mdより転記）。C+Dは¥220トライアル経由のCYS施策における即時アップセル（購入時点でのアップグレード）が主要な比較対象。他施策との単純比較には観測方法・観測窓の違いに注意</div>
+  <table>
+    <thead><tr><th>施策</th><th>対象商品・形式</th><th class="c">参加者数</th><th class="c">F2転換率</th><th class="c">観測窓</th></tr></thead>
+    <tbody>
+      <tr style="background:#eefcf3"><td><strong>CYS→C+D単品30包アップセル</strong></td><td>C+D・¥220トライアル→その場30包アップグレード</td><td class="c"><strong>1,200人</strong></td><td class="c"><strong style="color:var(--accent)">8.1%</strong></td><td class="c">即時（購入時アップセル）</td></tr>
+      <tr><td>CYS→VC単品30包アップセル（参考）</td><td>VC・¥220トライアル→その場30包アップグレード</td><td class="c">629人</td><td class="c">20.5%</td><td class="c">即時（購入時アップセル）</td></tr>
+      <tr><td>C+Cera「CTW」</td><td>7包・¥700 OFFクーポン</td><td class="c">432人</td><td class="c">24.1%</td><td class="c">施策終了から約122日</td></tr>
+      <tr><td>C+Cera「CTC」</td><td>28包・マストバイ型VP</td><td class="c">1,163人</td><td class="c">37.7%</td><td class="c">施策終了から約58日・参考値</td></tr>
+      <tr><td>MINERALion 施策①</td><td>4包無償同梱</td><td class="c">19,764人</td><td class="c">3.8%</td><td class="c">180日・確定</td></tr>
+      <tr><td>MINERALion 施策②</td><td>4包¥220試供品</td><td class="c">2,958人</td><td class="c">10.9%</td><td class="c">180日・確定</td></tr>
+      <tr><td>SKINBEAUTY「オンライン体験会」</td><td>¥500トライアルセット→¥800OFFクーポン</td><td class="c">322人</td><td class="c">9.6%</td><td class="c">約8日間・確定</td></tr>
+      <tr><td>OGS→VC有償転換（参考）</td><td>VC・無償モニター（送料¥220自己負担）</td><td class="c">45,245人</td><td class="c">7.4%</td><td class="c">確定（全数到達）</td></tr>
+    </tbody>
+  </table>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 C+D施策の位置づけ ── 同一施策内でVC側を大きく下回るアップセル率</div>
+    <ul>
+      <li><strong>CYS施策のC+D側アップセル成立率は8.1%（97人/1,200人）と、同一施策内のVC側（20.5%）を大きく下回る。</strong>C+Dのトライアル価格から単品30包へのアップグレード時の価格差がVCより大きいことが一因とみられる。この指標は「その場での即時判断」のみを見たものであり、2回目購入時の定期引き上げ率の高さ（9-5章・53.1%）とは矛盾しない。</li>
+      <li><strong>C+Cera（CTW24.1%・CTC37.7%）・MINERALion施策②（10.9%）と比べると見劣りするが、測定方法（即時判断 vs 一定期間内の再購入）が根本的に異なるため単純比較はできない。</strong>C+Dは主要な自社主導トライアル施策（CTW・CTCのような専用施策）を持たないため、施策効果比較においてはCYSの即時アップセルが実質的な代表指標となる。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 9. 都度買い vs 定期：売上比率 ===== -->
+  <div class="stitle">9. 都度買い vs 定期：売上比率の月次推移（100%内訳）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">税抜換算：C+Dは÷1.08。CYS0810除外。2025-09〜2026-08（直近12ヶ月・全月確定値）。月ごとの構成比の変化を見やすくするため100%積み上げ表示（2026-09-07・BQ再取得）</div>
+  <div class="chart-wrap"><canvas id="chartRevSplit"></canvas></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 都度買い/定期比率 考察 ── 定期比率78〜82%の高水準で安定、5ブランド中もっとも定期依存度が高い</div>
+    <ul>
+      <li><strong>直近12ヶ月を通じて都度買い比率は18.2%（2026-01）〜28.9%（2025-12）のレンジで推移し、定期比率は71〜82%と常に7割を超える水準を維持している。</strong>2025-12の都度買い比率上昇（28.9%）はGE施策による既存顧客向け無償試供品プレゼントの影響で都度買い売上が一時的に膨らんだことによるもので、施策終了後の2026-01には18.2%まで戻っている。</li>
+      <li><strong>2026-08は都度買い比率22.0%（定期比率78.0%）で、7月（22.9%）からわずかに定期比率が上昇したがほぼ横ばい。</strong>C+Ceraのような新規獲得急減による見かけ上の構成比変化ではなく、C+D自身の売上構造が安定的に推移していることの裏付けである。</li>
+    </ul>
+  </div>
+
+  <div class="ssub" style="margin-top:16px">直近月（2026年8月）のブランド横断比較。データソース：spic-core.public.shopify_orders（2026年8月・line_item単位、税抜換算・reference_brand_crm_report_values.md 9章より転記）</div>
+  <div class="chart-wrap"><canvas id="chartRevSplitByBrand"></canvas></div>
+  <table>
+    <thead><tr><th>ブランド</th><th>都度買い売上</th><th class="c">都度買い比率</th><th>定期売上</th><th class="c">定期比率</th><th>8月合計</th></tr></thead>
+    <tbody>
+      <tr style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D</strong></td><td><strong>¥20.2M</strong></td><td class="c"><strong>22.0%</strong></td><td><strong>¥71.4M</strong></td><td class="c"><strong>78.0%</strong></td><td><strong>¥91.6M</strong></td></tr>
+      <tr><td><span class="dot" style="background:var(--vc)"></span>VC</td><td>¥30.0M</td><td class="c">30.0%</td><td>¥69.9M</td><td class="c">70.0%</td><td>¥99.8M</td></tr>
+      <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td><td>¥5.4M</td><td class="c">33.6%</td><td>¥10.6M</td><td class="c">66.4%</td><td>¥16.0M</td></tr>
+      <tr><td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td><td>¥2.3M</td><td class="c">35.8%</td><td>¥4.2M</td><td class="c">64.2%</td><td>¥6.5M</td></tr>
+      <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion</td><td>¥2.8M</td><td class="c">54.1%</td><td>¥2.4M</td><td class="c">45.9%</td><td>¥5.3M</td></tr>
+    </tbody>
+  </table>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 都度買い比率のブランド比較 ── C+Dは5ブランド中もっとも定期比率が高い</div>
+    <ul>
+      <li><strong>C+Dの定期比率78.0%は5ブランド中最高。</strong>VC（70.0%）を8.0pt上回り、C+Cera（66.4%）・SKINBEAUTY（64.2%）・MINERALion（45.9%）とは明確な差がある。9-2章の「定期継続中とみられる顧客48.7%（5ブランド中最高）」とも整合する。</li>
+      <li><strong>成熟ブランドほど定期比率が高く新興ブランドほど都度買い比率が高いという序列（C+D&lt;VC&lt;C+Cera&lt;SKINBEAUTY&lt;MINERALion、定期比率が高い順）が明確に確認できる。</strong>C+Dは会社の中で最も定期便が浸透したブランドであると言える。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 9-2. 顧客の購買チャネル構成 ===== -->
+  <div class="stitle">9-2. 顧客の購買チャネル構成（都度買い継続／定期継続）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">🔧2026-09-07、reference_brand_crm_report_workflow.md 4-6章準拠でBigQuery再取得。C+D購入経験のある全顧客（43,209人）をShopify注文履歴から推定分類。⚠️この分類は「現在ACTIVEか」を厳密に判定するものではなく、あくまで注文履歴からの推定値（customer_id体系不一致の制約・13章参照）</div>
+  <div class="chart-wrap"><canvas id="chartChannelSeg"></canvas></div>
+  <table>
+    <thead><tr><th>セグメント</th><th class="c">人数</th><th class="c">構成比</th></tr></thead>
+    <tbody>
+      <tr><td>A. 定期継続中とみられる</td><td class="c">21,029</td><td class="c">48.7%</td></tr>
+      <tr><td>B. 定期経験ありだが直近は都度買い</td><td class="c">886</td><td class="c">2.1%</td></tr>
+      <tr><td>C. 都度買いリピーター（2回以上）</td><td class="c">6,867</td><td class="c">15.9%</td></tr>
+      <tr><td>D. 都度買い1回のみ</td><td class="c">14,425</td><td class="c">33.3%</td></tr>
+      <tr class="tot"><td>合計</td><td class="c">43,209</td><td class="c">100.0%</td></tr>
+    </tbody>
+  </table>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 チャネル構成 考察 ── 「定期継続中とみられる」は5ブランド中トップの48.7%</div>
+    <ul>
+      <li><strong>「定期継続中とみられる」は48.7%（21,029人）と、C+Cera（29.7%）・SKINBEAUTY・MINERALion等の新興ブランドを大きく上回り5ブランド中もっとも高い。</strong>9章で確認した定期売上比率78.0%（5ブランド中最高）とも整合し、C+Dが会社の中で最も定期便中心のブランドであることを裏付ける。</li>
+      <li><strong>「都度買い1回のみ」は33.3%（14,425人）にとどまり、C+Cera（55.3%）・SKINBEAUTYのような新興ブランドと比べ明確に低い。</strong>ただし絶対人数（14,425人）自体は他ブランドより大きく、この層への定期化フォローの余地は依然として大きい。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 9-3. 純粋新規獲得の難易度検証 ===== -->
+  <div class="stitle">9-3. 純粋新規獲得の難易度検証<span class="ds-shopify">Shopify</span><span class="ds-cust">customer_master</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_shopify_customer_master（has_cd=1・全期間累計・2026-09-07時点で再確認）</div>
+  <div class="sg2">
+    <div class="sc">
+      <div class="lb">純粋新規（C+Dが生涯初のLypo-C購入）</div>
+      <div class="vl">20,005人</div>
+      <div class="sb">累計売上¥14.58億（平均¥72,884/人）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">既存顧客からの追加購入</div>
+      <div class="vl">23,026人</div>
+      <div class="sb">累計売上¥20.89億（平均¥90,727/人）</div>
+    </div>
+  </div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 難易度検証 考察 ── VCとは対照的に、既存顧客経由の方が単価が高い</div>
+    <ul>
+      <li><strong>C+D保有者43,031人のうち53.5%（23,026人）が既存顧客からの追加購入であり、純粋新規（46.5%・20,005人）をやや上回る。</strong>C+Cera（既存顧客経由84.1%）ほどクロスセル依存度は高くないが、VC（既存顧客経由わずか3.6%）とは対照的に、半数以上が既存顧客経由という構造にある。</li>
+      <li><strong>1人当たり平均売上は既存顧客経由の方が明確に高い（¥90,727 vs 純粋新規¥72,884）。</strong>VCでは逆に純粋新規経由の方が高かった（¥44,660 vs ¥37,544）のと対照的であり、「他ブランド（主にVC）を先に使い始め、後からC+Dも追加購入するようになった顧客」の方が生涯価値が高いことを示唆する（9-4章参照）。</li>
+    </ul>
+  </div>
+
+  <div class="ssub" style="margin-top:16px">2026年8月単月の純粋新規獲得数：ブランド横断比較<span class="ds-order">BQ再取得</span></div>
+  <div class="chart-wrap"><canvas id="chartPureNewByBrand"></canvas></div>
+  <table>
+    <thead><tr><th>ブランド</th><th>アイテム新規（8月）</th><th>純粋新規（8月）</th><th class="c">純粋新規率</th><th class="c">参考：7月純粋新規率</th></tr></thead>
+    <tbody>
+      <tr><td><span class="dot" style="background:var(--vc)"></span>VC</td><td>1,126人</td><td>845人</td><td class="c">75.0%</td><td class="c">92.2%</td></tr>
+      <tr style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D</strong></td><td><strong>653人</strong></td><td><strong>372人</strong></td><td class="c"><strong style="color:var(--accent)">57.0%</strong></td><td class="c">56.6%</td></tr>
+      <tr><td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td><td>138人</td><td>61人</td><td class="c">44.2%</td><td class="c">18.8%</td></tr>
+      <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion</td><td>210人</td><td>63人</td><td class="c">30.0%</td><td class="c">22.5%</td></tr>
+      <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td><td>167人</td><td>46人</td><td class="c">27.5%</td><td class="c">36.9%</td></tr>
+    </tbody>
+  </table>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 2026年8月の純粋新規獲得：C+Dは5ブランド中2位で7月からほぼ横ばい</div>
+    <ul>
+      <li><strong>C+Dの純粋新規率（8月・57.0%）は7月（56.6%）からほぼ横ばいで、VC（75.0%）に次ぐ5ブランド中2位を維持。</strong>C+Cera・SKINBEAUTY・MINERALionのように施策の反動で比率が乱高下する新興ブランドとは異なり、月次の変動が小さい安定した推移である。</li>
+      <li><strong>アイテム新規（653人）・純粋新規（372人）とも絶対数は7月からわずかに減少しているが、減少幅（▲7.9%／▲7.2%）はVC（+5.3%）に次いで小さく、新興3ブランド（▲52〜73%）の急減とは一線を画す。</strong>成熟ブランドとしての底堅さが、比率・絶対数の両面から確認できる。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 9-4. スイッチ／クロスセル元仮説の検証 ===== -->
+  <div class="stitle">9-4. 「スイッチ元」仮説の検証：C+D購入者は元々何を買っていたか<span class="ds-shopify">Shopify</span><span class="ds-cust">customer_master</span></div>
+  <div class="ssub">first_purchased_brands（生涯初めて購入したブランド）別の内訳（sn_shopify_customer_master・2026-09-07時点で再確認）。<strong>🚨reference_brand_crm_report_workflow.md 6章⑰参照：当初「VC・C+Dは自ブランドが起点のため意味が薄い」としていたが、C+Dでは明確に成立することが判明・訂正済み（8-5章参照）</strong></div>
+  <table>
+    <thead><tr><th>入口ブランド（first_purchased_brands）</th><th class="c">人数</th><th class="c">構成比</th></tr></thead>
+    <tbody>
+      <tr><td><span class="dot" style="background:var(--vc)"></span><strong>VC</strong></td><td class="c"><strong>19,922</strong></td><td class="c"><strong style="color:var(--accent)">46.3%</strong></td></tr>
+      <tr class="tot" style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D（自ブランドが起点）</strong></td><td class="c"><strong>20,005</strong></td><td class="c"><strong>46.5%</strong></td></tr>
+      <tr><td>VC,C+D（混合初回）</td><td class="c">1,345</td><td class="c">3.1%</td></tr>
+      <tr><td>C+D,VC（混合初回）</td><td class="c">1,301</td><td class="c">3.0%</td></tr>
+      <tr><td>その他（少数多数）</td><td class="c">458</td><td class="c">1.1%</td></tr>
+    </tbody>
+  </table>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 「スイッチ元」仮説はC+Dで明確に成立 ── VC経由だけで保有者の52.4%に達する</div>
+    <ul>
+      <li><strong>C+D保有者の46.3%（19,922人）はVCが生涯初のLypo-C購入であり、VC・C+D混合初回（6.1%）まで含めるとVC経由の流入だけで保有者の52.4%に達する。</strong>VC自身のレポート（純粋新規96.4%・既存顧客経由わずか3.6%）とは正反対の構造であり、「同じ長寿ブランドだから同様に意義が薄い」という当初の類推が誤りだったことを裏付ける（6章⑰参照）。</li>
+      <li><strong>9-3章で確認したとおり既存顧客経由の1人当たり平均売上（¥90,727）は純粋新規（¥72,884）より高く、「先にVCで購入体験を積んでから時間を空けてC+Dを追加購入する」層の生涯価値の高さがうかがえる。</strong>複数ブランド併用顧客ほどロイヤルティが高い可能性があり、クロスセル施策の投資価値を裏付ける材料となる。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 9-5. 2回目購入時の定期引き上げ率：ブランド比較 ===== -->
+  <div class="stitle">9-5. 2回目購入時の定期引き上げ率：ブランド比較<span class="ds-shopify">Shopify</span></div>
+  <div class="ssub">データソース：spic-core.public.shopify_orders。各ブランドで「初回購入が2026年（1〜8月）かつ都度買いだった顧客」に限定し、その顧客の2回目購入が定期便チェックアウトだった比率を算出。5ブランドを2026年の初回購入者に統一して集計（reference_brand_crm_report_values.md 9章より転記・2026-09-01再取得）</div>
+  <div class="chart-wrap"><canvas id="chartUpgradeRate"></canvas></div>
+  <table>
+    <thead><tr><th>ブランド</th><th>初回都度買い顧客数<br><span style="font-weight:400">（2026年初回購入）</span></th><th>うち2回目購入到達</th><th class="c">2回目到達率</th><th class="c">2回目が定期の比率<br><span style="font-weight:400">（2回目到達者中）</span></th></tr></thead>
+    <tbody>
+      <tr style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D</strong></td><td><strong>4,386人</strong></td><td><strong>1,991人</strong></td><td class="c"><strong>45.4%</strong></td><td class="c"><strong style="color:var(--accent)">53.1%</strong></td></tr>
+      <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion</td><td>1,998人</td><td>855人</td><td class="c">42.8%</td><td class="c">26.4%</td></tr>
+      <tr><td><span class="dot" style="background:var(--vc)"></span>VC</td><td>6,686人</td><td>2,708人</td><td class="c">40.5%</td><td class="c">43.6%</td></tr>
+      <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td><td>3,822人</td><td>1,418人</td><td class="c">37.1%</td><td class="c">37.8%</td></tr>
+      <tr><td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td><td>1,485人</td><td>498人</td><td class="c">33.5%</td><td class="c">48.2%</td></tr>
+    </tbody>
+  </table>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 C+Dの2回目引き上げ率・2回目到達率とも5ブランド中トップ</div>
+    <ul>
+      <li><strong>2026年の初回購入者で見ると、C+Dの2回目定期引き上げ率は53.1%で5ブランド中トップ。2回目到達率（45.4%）も同様にトップ。</strong>4章・4-3章で確認した初回定期選択率（15.4%・トップ）と合わせ、初回・2回目のいずれの接点でも定期化に強いという一貫した構図が確認できる。</li>
+      <li><strong>これはC+Dが「初回・2回目のいずれの接点でも定期化に強く、継続回数と単価を両立する」という8-5章で確立された評価と完全に整合し、8月実績を加えても変化していない。</strong></li>
+    </ul>
+  </div>
+
+  <!-- ===== 9-6. F2転換までの日数 ===== -->
+  <div class="stitle">9-6. F2転換（2回目購入）までの日数：ブランド比較<span class="ds-shopify">Shopify</span></div>
+  <div class="ssub">データソース：spic-core.public.shopify_orders（初回購入が2026年〈1〜8月〉だった顧客に限定し、初回購入日から2回目購入日までの経過日数を算出。2回目購入に到達した顧客のみ対象）。reference_brand_crm_report_values.md 9章より転記</div>
+  <div class="chart-wrap"><canvas id="chartF2Days"></canvas></div>
+  <table>
+    <thead><tr><th>ブランド</th><th>2回目到達者数<br><span style="font-weight:400">（2026年初回購入）</span></th><th>平均日数</th><th>中央値</th><th class="c">30日以内</th><th class="c">60日以内</th><th class="c">90日以内</th></tr></thead>
+    <tbody>
+      <tr><td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td><td>498人</td><td>32.2日</td><td>28日</td><td class="c">76.1%</td><td class="c">89.4%</td><td class="c">95.6%</td></tr>
+      <tr><td><span class="dot" style="background:var(--vc)"></span>VC</td><td>2,708人</td><td>38.1日</td><td>30日</td><td class="c">50.0%</td><td class="c">82.7%</td><td class="c">93.0%</td></tr>
+      <tr style="background:#eefcf3"><td><span class="dot" style="background:var(--cd)"></span><strong>C+D</strong></td><td><strong>1,991人</strong></td><td><strong>42.2日</strong></td><td><strong>31日</strong></td><td class="c"><strong>42.2%</strong></td><td class="c"><strong>76.4%</strong></td><td class="c"><strong>91.2%</strong></td></tr>
+      <tr><td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td><td>1,418人</td><td>49.8日</td><td>34日</td><td class="c">41.9%</td><td class="c">72.1%</td><td class="c">86.6%</td></tr>
+      <tr><td><span class="dot" style="background:var(--mi)"></span>MINERALion</td><td>855人</td><td>49.3日</td><td>32日</td><td class="c">38.8%</td><td class="c">73.4%</td><td class="c">85.1%</td></tr>
+    </tbody>
+  </table>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 C+DのF2転換速度は5ブランド中3位、引き上げ率の高さとは対照的にやや振るわない</div>
+    <ul>
+      <li><strong>C+Dの平均F2日数は42.2日・中央値31日で、SKINBEAUTY（32.2日）・VC（38.1日）に次ぐ5ブランド中3位。</strong>9-5章で確認した2回目引き上げ率（53.1%・トップ）の高さとは対照的に、2回目接点への到達速度自体は中位にとどまる。</li>
+      <li><strong>「2回目接点への到達はやや遅いが、到達すればもっとも高い確率で定期化する」というC+D特有の構図が浮かび上がる。</strong>8-5章で指摘されているとおり、VC経由のクロスセル顧客（先にVCで購入体験を積んでから時間を空けてC+Dを追加購入する層）が混在しているため、C+D単体の「初回→2回目」の速度が薄まっている可能性があり、次回はクロスセル顧客と純粋新規顧客のF2速度を分けて分析する価値がある（未着手・今後の課題）。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 9-7. 近接ブランドとの相互流出入 ===== -->
+  <div class="stitle">9-7. 近接ブランドとの相互流出入：VCとは「双子ブランド」、C+Ceraへは縮小傾向の「送り出し役」<span class="ds-shopify">Shopify</span><span class="ds-snap">月末SS</span></div>
+  <div class="ssub">🔧2026-09-07、reference_brand_crm_report_workflow.md 4-12章準拠でBigQuery再取得（customer_id×snapshot_ymでLAG比較）。対象ペア：VC⇄C+D、C+D⇄C+Cera（8章のブランド別カスタマイズ一覧に基づく）</div>
+
+  <div class="ssub" style="margin-top:8px">(a) VC⇄C+D 相互流出入<span class="ds-order">BQ再取得</span></div>
+  <table>
+    <thead><tr><th>月</th><th class="c">VC離脱数</th><th class="c">→C+D保有</th><th class="c">構成比</th><th class="c">C+D離脱数</th><th class="c">→VC保有</th><th class="c">構成比</th></tr></thead>
+    <tbody>
+      <tr><td>2026-03</td><td class="c">1,128</td><td class="c">187</td><td class="c">16.6%</td><td class="c">786</td><td class="c">137</td><td class="c">17.4%</td></tr>
+      <tr><td>2026-04</td><td class="c">895</td><td class="c">138</td><td class="c">15.4%</td><td class="c">674</td><td class="c">148</td><td class="c"><strong style="color:var(--accent)">22.0%</strong></td></tr>
+      <tr><td>2026-05</td><td class="c">895</td><td class="c">192</td><td class="c"><strong style="color:var(--accent)">21.5%</strong></td><td class="c">647</td><td class="c">125</td><td class="c">19.3%</td></tr>
+      <tr><td>2026-06</td><td class="c">881</td><td class="c">169</td><td class="c">19.2%</td><td class="c">615</td><td class="c">118</td><td class="c">19.2%</td></tr>
+      <tr><td>2026-07</td><td class="c">807</td><td class="c">129</td><td class="c">16.0%</td><td class="c">623</td><td class="c">137</td><td class="c">22.0%</td></tr>
+      <tr class="tot"><td><strong>2026-08</strong></td><td class="c"><strong>769</strong></td><td class="c"><strong>106</strong></td><td class="c">13.8%</td><td class="c"><strong>593</strong></td><td class="c"><strong>108</strong></td><td class="c">18.2%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ssub" style="margin-top:16px">(b) C+D⇄C+Cera 相互流出入（C+Dは受け皿・戻り先の両面を持つ）<span class="ds-order">BQ再取得</span></div>
+  <table>
+    <thead><tr><th>月</th><th class="c">C+D離脱数</th><th class="c">→C+Cera保有</th><th class="c">構成比</th><th class="c">C+Cera離脱数</th><th class="c">→C+D保有</th><th class="c">構成比</th></tr></thead>
+    <tbody>
+      <tr><td>2026-03</td><td class="c">786</td><td class="c">92</td><td class="c"><strong style="color:var(--accent)">11.7%</strong></td><td class="c">28</td><td class="c">7</td><td class="c">25.0%</td></tr>
+      <tr><td>2026-04</td><td class="c">674</td><td class="c">38</td><td class="c">5.6%</td><td class="c">61</td><td class="c">17</td><td class="c">27.9%</td></tr>
+      <tr><td>2026-05</td><td class="c">647</td><td class="c">36</td><td class="c">5.6%</td><td class="c">92</td><td class="c">27</td><td class="c"><strong style="color:var(--accent)">29.3%</strong></td></tr>
+      <tr><td>2026-06</td><td class="c">615</td><td class="c">47</td><td class="c">7.6%</td><td class="c">98</td><td class="c">24</td><td class="c">24.5%</td></tr>
+      <tr><td>2026-07</td><td class="c">623</td><td class="c">46</td><td class="c">7.4%</td><td class="c">128</td><td class="c">33</td><td class="c">25.8%</td></tr>
+      <tr class="tot"><td><strong>2026-08</strong></td><td class="c"><strong>593</strong></td><td class="c"><strong>23</strong></td><td class="c"><span class="badge b">3.9%</span></td><td class="c"><strong>145</strong></td><td class="c"><strong>35</strong></td><td class="c">24.1%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 VCとは対称的な「双子ブランド」関係を維持、C+Ceraへの送り出しは縮小傾向</div>
+    <ul>
+      <li><strong>VC離脱者の13.8〜21.5%がC+Dへ、C+D離脱者の17.4〜22.0%がVCへとほぼ対称的な比率で相互に受け皿となっており、8-4・8-5章で確立された「双子ブランド」関係が8月実績を加えても継続していることを確認した。</strong></li>
+      <li><strong>C+D離脱者のC+Ceraへの流入は2026-03の11.7%から2026-08は3.9%まで一貫して縮小傾向にある。</strong>これはC+Cera自身が発売来初のネット減少（7-2章）を記録し「5ブランド中唯一の成長フェーズ」という位置づけが途切れた時期と重なっており、C+Ceraの新規獲得力の低下が、他ブランドからの「受け皿」としての魅力低下にも表れている可能性がある。</li>
+      <li><strong>一方、C+Cera離脱者のC+Dへの回帰は24.1〜29.3%の範囲で安定的に推移しており、C+D自身がC+Ceraからの「戻り先」としての役割を継続して果たしている。</strong>C+D⇄C+Ceraの関係は非対称（C+D→C+Ceraは縮小、C+Cera→C+Dは安定）であり、VC⇄C+Dの対称的な関係とは異なる構図であることが今回のBigQuery再取得で明確になった。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 10. ブランド横断ポジショニング ===== -->
+  <div class="stitle">10. ブランド横断ポジショニング：勝ち筋と負け筋</div>
+  <div class="finding-grid">
+    <div class="finding-card fc-green">
+      <div class="fc-index">勝ち筋①</div>
+      <div class="fc-metric">¥72,887</div>
+      <div class="fc-title">累計LTVは5ブランド中最高</div>
+      <div class="fc-body">VC（¥60,046）を上回り、観測期間バイアスの影響を受けない唯一の比較対象。平均購入回数（5.45〜5.82回）も5ブランド中トップ（6章・7章）。</div>
+      <div class="fc-insight">高いLTVを支える継続的な購買基盤を維持しつつ、停止率・解約率の悪化に注意</div>
+    </div>
+    <div class="finding-card fc-orange">
+      <div class="fc-index">勝ち筋②</div>
+      <div class="fc-metric">15.4%／53.1%</div>
+      <div class="fc-title">初回定期選択率・2回目引き上げ率とも5ブランド中トップ</div>
+      <div class="fc-body">初回・2回目いずれの接点でも定期化に強い一貫した強み（4-3・9-5章）。ただし8月単月の初回定期選択率は8.3%と直近12ヶ月で最低を更新（4章）。</div>
+      <div class="fc-insight">年間トップの強みを維持しつつ、直近の月次悪化トレンドの原因究明が急務</div>
+    </div>
+    <div class="finding-card fc-blue">
+      <div class="fc-index">要注視②</div>
+      <div class="fc-metric">49.1%／27.1%</div>
+      <div class="fc-title">停止率・解約率が前回からやや悪化</div>
+      <div class="fc-body">前回確定値（47.6%／26.6%）から悪化。7ヶ月続いた定期ACTIVE減少局面の累積影響とみられる（7章）。</div>
+      <div class="fc-insight">9月以降の悪化継続有無を最優先で確認する</div>
+    </div>
+    <div class="finding-card fc-slate">
+      <div class="fc-index">新発見</div>
+      <div class="fc-metric">11.7%→3.9%</div>
+      <div class="fc-title">C+Dの「C+Ceraへの送り出し」比率が一貫して縮小</div>
+      <div class="fc-body">C+D離脱者のC+Ceraへの流入は2026-03の11.7%から8月は3.9%まで縮小。C+Cera自身の成長鈍化と時期が重なる（9-7章）。</div>
+      <div class="fc-insight">C+Cera側の新規獲得回復が、この受け皿比率にも波及するか継続監視</div>
+    </div>
+    <div class="finding-card fc-green">
+      <div class="fc-index">勝ち筋③</div>
+      <div class="fc-metric">78.0%</div>
+      <div class="fc-title">定期売上比率は5ブランド中最高</div>
+      <div class="fc-body">「定期継続中とみられる顧客」比率も48.7%で5ブランド中最高。会社の中で最も定期便が浸透したブランド（9・9-2章）。</div>
+      <div class="fc-insight">定期便中心のビジネスモデルとしての強みを維持</div>
+    </div>
+  </div>
+
+  <!-- ===== 11. CRM的課題まとめ ===== -->
+  <div class="stitle">11. CRM的課題まとめ</div>
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p1">🔴 最高優先</span><span class="crm-title">① 停止率・解約率の悪化トレンドを継続監視する</span></div>
+    <div class="crm-body">
+      7章で確認したとおり、アイテム新規基準の停止率・解約率は47.6%／26.6%→49.1%／27.1%へ悪化した。7ヶ月連続で定期ACTIVEが減少していた局面（2025-12〜2026-07）の累積影響である可能性がある。<br>
+      <strong>次のアクション：</strong>9月分のデータで悪化が続くか、8月の反発（+6件）と歩調を合わせて改善に転じるかを最優先で確認する。
+    </div>
+    <div class="crm-kpi">📊 関連KPI：停止率・解約率（月次推移）・定期ACTIVE件数（1・3・7章）</div>
+  </div>
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p2">🟡 優先</span><span class="crm-title">② 8月の初回定期選択率急落（8.3%）の原因究明</span></div>
+    <div class="crm-body">
+      4章で確認したとおり、2026-08の初回定期選択率は8.3%と直近12ヶ月で最低を更新した。母数（アイテム新規653人）の縮小だけでは説明がつかない下落幅であり、初回接点での定期訴求（同梱物・チェックアウト導線等）が弱まっていないか懸念される。<br>
+      <strong>次のアクション：</strong>チェックアウトページの定期便訴求表示・同梱物の内容に変更がなかったか確認し、9月分で回復するかを追跡する。
+    </div>
+    <div class="crm-kpi">📊 関連KPI：月次初回定期選択率（4章）・週次新規獲得（4-2章）</div>
+  </div>
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p2">🟡 優先</span><span class="crm-title">③ F2転換速度（2回目接点到達）の改善余地</span></div>
+    <div class="crm-body">
+      9-5・9-6章で、C+Dの2回目引き上げ率（53.1%・トップ）は強い一方、F2転換速度（平均42.2日・5ブランド中3位）はSKINBEAUTY・VCに劣後することが判明した。クロスセル顧客（VC経由）と純粋新規顧客のF2速度の違いは未分析。<br>
+      <strong>次のアクション：</strong>クロスセル顧客と純粋新規顧客を分けたF2速度分析を実施し、初回都度買い顧客向けのフォロー施策（ステップメール等）の要否を検討する。
+    </div>
+    <div class="crm-kpi">📊 関連KPI：F2転換日数（30/60/90日到達率）・9-4章クロスセル構成比</div>
+  </div>
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p3">🔵 中期</span><span class="crm-title">④ C+Ceraへの送り出し比率の縮小トレンドを継続監視する</span></div>
+    <div class="crm-body">
+      9-7章で確認したとおり、C+D離脱者のC+Ceraへの流入は2026-03の11.7%から8月は3.9%まで一貫して縮小している。C+Cera自身の成長鈍化（発売来初のネット減少）と時期が重なっており、両者の関連性が示唆される。<br>
+      <strong>次のアクション：</strong>C+Ceraの新規獲得動向（9月データ）とあわせて、この受け皿比率の推移を継続確認する。
+    </div>
+    <div class="crm-kpi">📊 関連KPI：月次相互流出入の構成比（9-7章）・C+Cera新規ACTIVE発生</div>
+  </div>
+
+  <!-- ===== 12. 次月の注目指標 ===== -->
+  <div class="stitle">12. 次月の注目指標</div>
+  <div class="notes">
+    <div class="nt">📅 9月度レポートで検証すべきポイント</div>
+    <ul>
+      <li><strong>定期ACTIVE件数の反発（8月+6件）が9月も続くか、7ヶ月連続減少局面の完全な底打ちと言えるか</strong> ─ 最重要指標。</li>
+      <li><strong>7-2章のグロスフロー（イベント単位）とストック純増の乖離（88件）が9月データでも再現するか</strong> ─ 全ブランド共通の未解決課題の切り分けに直結。</li>
+      <li><strong>停止率・解約率（8月49.1%／27.1%）の9月動向</strong> ─ 悪化継続か改善転換かを確認。</li>
+      <li><strong>初回定期選択率（8月8.3%・直近12ヶ月最低）が9月に回復するか</strong> ─ 初回接点での定期訴求の実効性を判断する分岐点。</li>
+      <li><strong>2026-08コホート（653人）のM+1継続率</strong> ─ 9月末に確定。</li>
+      <li><strong>C+Dの2026-09コホートのアイテム新規・純粋新規の絶対数</strong> ─ 8月からの軽微な減速が継続するか回復するかを確認。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 13. データソース・集計方法メモ ===== -->
+  <div class="stitle">13. データソース・集計方法メモ</div>
+  <div class="notes">
+    <div class="nt">📋 本レポートのデータソース一覧</div>
+    <ul>
+      <li><strong>NE出荷売上：</strong>spic-core.public.ne_order_items（shop_id=17・cancel_date IS NULL・ship_date基準）。ブランド判別：TRIM(goods_tag)='[Lypo-C C+D]'（半角プラス表記）。salesカラムは税抜確定済み。</li>
+      <li><strong>Shopify受注ベース分析：</strong>spic-core.public.shopify_orders（test=0・cancelled_at IS NULL）× sn_shopify_sku_brand_master（SKUベースブランド判別）。税抜換算：C+Dは÷1.08。discount_codesにCYS0810を含む注文は恒久的に除外（4-2章標準テンプレート準拠）。</li>
+      <li><strong>顧客属性・LTV：</strong>spic-core.public.sn_shopify_customer_master（has_cd・ltv_cd・first_purchased_brands等）。本更新実行時点（2026-09-07）でバッチ反映は2026-08まで完了しており、sandbox_nishimori側の参照は不要だった。</li>
+      <li><strong>定期便ステータス：</strong>spic-core.public.sn_subscription_history_view（has_cd=1・月末スナップショット）／sn_subscription_history_raw（SKU単位の生ログ・customer_masterと同一のSTRING customer_id空間）。</li>
+      <li><strong>本レポートでBigQuery MCPコネクタを用いて新規に再取得したもの（実行日2026-09-07）：</strong>月次NE出荷売上×定期ACTIVE推移（直近12ヶ月）、週次売上（27週・全週完全週）、月次初回定期選択率トレンド（直近12ヶ月）、週次新規獲得数（アイテム新規／純粋新規・4-2章標準テンプレート・CYS0810除外）、コホート継続率ヒートマップ（2025-05〜2026-08コホート・M+1〜M+12）、ESS施策の締切効果に関する2026-05コホートの追加検証、7-A/7-B定期便健全性（純粋新規・アイテム新規の2母集団）、7-2章グロスフロー（C+D単体）と88件の乖離の直接突き合わせ検証、7-3章継続回数分布（純粋新規限定）、7-4章他ブランド定期併用状況、都度買い/定期売上比率の月次推移、9-2章顧客購買チャネル構成、9-3章純粋新規獲得の難易度検証、9-4章スイッチ元仮説の検証、9-7章VC⇄C+D・C+D⇄C+Cera相互流出入。</li>
+      <li><strong>🔍 7-2章グロスフロー6区分化（2026-09-07）：</strong>旧来の2区分集計（新規ACTIVE586件・PAUSE+CANCELLED492件・ネット+94件）が実測ストック純増（+6件）と88件乖離していた問題を解明し、7-2章のチャート・表を実際に6区分（A真の新規契約・B自ブランド復帰・C他ブランドから乗換流入・D PAUSE+CANCELLED・E他ブランドへ乗換流出・F乗換と同時に休止解約）へ刷新した。2026-03〜08の6ヶ月に適用したところ4ヶ月で実測と完全一致（残り2ヶ月も5〜19件の小さな残差のみ）。乗換（C・E）の8割超はVC⇄C+D間で発生しており、会員基盤最大の「双子ブランド」であることと整合する。7-2章下部のブランド横断比較表は他4ブランドがまだ旧2区分集計のままのため、C+D列の解釈には注意（横展開は11章①の課題）。</li>
+      <li><strong>reference_brand_crm_report_values.md（8-5・8-11章）・reference_brand_crm_report_workflow.md（6章⑳・6章㉒の一部）・ccera_crm_brand_report_2026_08.html から転記したもの（集計定義が変わっていないことを確認済み）：</strong>6章LTV成長カーブのブランド横断表（5ブランド共通の単一クエリ・2026-08-31基準）、7章7-A/7-Bの他4ブランド行、7-2章の他4ブランド行、8章の他ブランド施策比較行、9章の他4ブランド都度買い/定期比率、4-3章の他4ブランド初回定期選択率、9-5・9-6章の他4ブランド2回目引き上げ率・F2転換日数。</li>
+      <li><strong>⚠️ 7-4章の顧客数（9,743人）について：</strong>customer_id単位の集計のため、7章のACTIVE件数（9,855件・contract単位）とは分母が異なる（複数のC+D契約を持つ顧客が名寄せされ112件少なくなる）。</li>
+      <li><strong>⚠️ Mix商品（VC+C+D同梱定期便SKU）の扱い：</strong>`875511-teiki-*`・`453511-teiki-*`等のSKUで、VCとC+Dを1つの定期便契約に同梱した「Mix商品」が存在する（全期間6,990人・47,851件、2026年だけでも1,965人が購入）。Shopify受注ベースの分析（4・4-2・4-3・6・9-2・9-3・9-4章等）ではMix商品は`brand='C+D'`にのみタグ付けされ100%C+D側にカウントされる一方、定期便ステータスベースの分析（7・7-2・7-3・9-7章等）では`has_vc`・`has_cd`の両方のフラグが立ち二重計上される。7-4章のVC併用91.4%はこのMix商品の影響が大半であり、真の併用はごく一部にとどまる（6章⑱参照）。</li>
+      <li><strong>⚠️ customer_id体系不一致の注記：</strong>shopify_orders/customer_masterのcustomer_id（STRING・64文字ハッシュ）と、旧subscription_history_viewのcustomer_id（INT64）は異なる体系であり直接JOIN不可な場合がある。9-2章の購買チャネル構成のような分類は、あくまで注文履歴（source_name）からの推定に留まる。一方、9-7章「相互流出入」やsn_subscription_history_rawとcustomer_masterのJOIN（7章）はSTRING customer_id空間で完結するため、この制約の対象外（6章㉒参照）。</li>
+      <li><strong>📅 CYS施策：</strong>¥220トライアル経由の即時アップセル施策。C+D側1,200人・アップセル成立率8.1%（97人）。discount_codesにCYS0810を含む注文（VC 449-set・223件）は本レポートの各種集計から恒久的に除外している（reference_campaign_history.md参照）。</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div>C+D CRMブランドレポート ｜ 作成：Claude（Google Cloud BigQuery MCPコネクタ経由でspic-com-2025-apr-00へ接続・実行日2026-09-07）</div>
+    <div>次回更新：monthly_analysis_2026_09.html確定後、または9月の新規獲得動向・グロスフロー乖離の解消状況確認後を推奨</div>
+  </div>
+
+</div>
+
+<script>
+// ===== 3. 月次NE出荷売上×定期ACTIVE =====
+const cdMonths = ['2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08'];
+const cdRev = [73.17,76.94,75.39,88.90,84.16,70.91,81.22,75.89,80.43,77.42,80.67,78.87];
+const cdActive = [10265,10407,10504,10746,10610,10391,10190,10059,10032,9926,9849,9855];
+new Chart(document.getElementById('chartMonthlyRevActive'), {
+  data: {
+    labels: cdMonths,
+    datasets: [
+      { type:'bar', label:'NE出荷売上(¥M)', data: cdRev, backgroundColor:'rgba(34,150,105,0.5)', borderColor:'#1a9e63', borderWidth:1, yAxisID:'y' },
+      { type:'line', label:'定期ACTIVE(件)', data: cdActive, borderColor:'#1c1917', backgroundColor:'transparent', borderWidth:2, pointRadius:4, yAxisID:'y1' }
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=> ctx.dataset.yAxisID==='y' ? `${ctx.dataset.label}: ¥${ctx.raw}M` : `${ctx.dataset.label}: ${ctx.raw}件` }} },
+    scales:{
+      y:{ position:'left', title:{display:true,text:'¥M'}, ticks:{callback:v=>`¥${v}M`} },
+      y1:{ position:'right', title:{display:true,text:'件'}, grid:{drawOnChartArea:false}, ticks:{callback:v=>`${v}件`} }
+    }
+  }
+});
+
+// ===== 3-2. 週次売上 =====
+const weeklyRevWeeks = ['03/02','03/09','03/16','03/23','03/30','04/06','04/13','04/20','04/27','05/04','05/11','05/18','05/25','06/01','06/08','06/15','06/22','06/29','07/06','07/13','07/20','07/27','08/03','08/10','08/17','08/24','08/31'];
+const weeklyRev = [20.72,17.26,16.08,19.42,16.18,17.79,17.79,17.41,19.14,17.61,17.99,17.95,22.19,16.28,17.29,17.51,17.64,19.30,17.81,18.37,16.38,18.99,18.07,14.56,20.56,19.97,15.60];
+new Chart(document.getElementById('chartWeeklyRev'), {
+  type:'bar',
+  data:{ labels: weeklyRevWeeks, datasets:[{ label:'週次NE出荷売上(¥M)', data: weeklyRev, backgroundColor:'rgba(34,150,105,0.55)', borderColor:'#1a9e63', borderWidth:1 }] },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>`¥${ctx.raw}M`}}}, scales:{ y:{ min:0, ticks:{callback:v=>`¥${v}M`} }, x:{ticks:{font:{size:10},maxRotation:45}} } }
+});
+
+// ===== 4-2. 週次新規獲得数（アイテム新規／純粋新規） =====
+const weeklyNewWeeks = weeklyRevWeeks;
+const weeklyPureNew = [72,68,81,80,67,64,62,67,68,87,78,114,104,53,68,73,99,137,71,64,111,73,102,75,91,66,93];
+const weeklyItemNewTotal = [143,129,146,131,121,116,127,125,131,142,124,179,218,115,130,161,166,203,136,137,182,148,168,132,165,121,179];
+const weeklyExisting = weeklyItemNewTotal.map((v,i)=>v-weeklyPureNew[i]);
+new Chart(document.getElementById('chartWeeklyNew'), {
+  type:'bar',
+  data:{
+    labels: weeklyNewWeeks,
+    datasets:[
+      { label:'純粋新規（生涯初のLypo-C購入）', data: weeklyPureNew, backgroundColor:'#1a9e63', stack:'s' },
+      { label:'既存顧客の新規購入（アイテム新規）', data: weeklyExisting, backgroundColor:'#c7ecd9', stack:'s' }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw}人`}}}, scales:{ x:{stacked:true, ticks:{font:{size:10},maxRotation:45}}, y:{stacked:true, ticks:{callback:v=>`${v}人`}} } }
+});
+
+// ===== 4-3. 初回定期便選択率 ブランド比較 =====
+new Chart(document.getElementById('chartSubSelectCompare'), {
+  type:'bar',
+  data:{
+    labels:['C+D','C+Cera','MINERALion','SKINBEAUTY','VC'],
+    datasets:[{ data:[15.4,12.2,6.4,3.0,2.5], backgroundColor:['#7ED8A0','#FF6B9D','#1E3A8A','#C4934A','#FF7A30'], borderRadius:4 }]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}}, scales:{ y:{ ticks:{callback:v=>`${v}%`} } } }
+});
+
+// ===== 5. コホートテーブル =====
+const cohortCdData = [
+  {m:'2025-05', m0:777, m1:316, m2:300, m3:306, m4:244, m5:214, m6:247, m7:206, m8:181, m9:183, m10:173, m11:155, m12:179},
+  {m:'2025-06', m0:844, m1:326, m2:365, m3:291, m4:263, m5:222, m6:268, m7:178, m8:184, m9:187, m10:177, m11:148, m12:160},
+  {m:'2025-07', m0:826, m1:309, m2:303, m3:271, m4:250, m5:229, m6:242, m7:177, m8:163, m9:171, m10:168, m11:138, m12:163},
+  {m:'2025-08', m0:878, m1:325, m2:363, m3:330, m4:307, m5:224, m6:262, m7:188, m8:203, m9:190, m10:175, m11:164, m12:185},
+  {m:'2025-09', m0:745, m1:287, m2:303, m3:297, m4:241, m5:179, m6:219, m7:156, m8:166, m9:172, m10:139, m11:132, m12:null},
+  {m:'2025-10', m0:805, m1:328, m2:366, m3:279, m4:259, m5:211, m6:244, m7:182, m8:188, m9:183, m10:171, m11:null, m12:null},
+  {m:'2025-11', m0:699, m1:272, m2:249, m3:226, m4:199, m5:167, m6:184, m7:143, m8:156, m9:147, m10:null, m11:null, m12:null},
+  {m:'2025-12 ★GE施策', m0:939, m1:271, m2:257, m3:281, m4:236, m5:230, m6:231, m7:210, m8:186, m9:null, m10:null, m11:null, m12:null, ge:true},
+  {m:'2026-01', m0:741, m1:286, m2:293, m3:268, m4:244, m5:184, m6:218, m7:173, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:674, m1:276, m2:272, m3:261, m4:219, m5:178, m6:210, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:602, m1:230, m2:254, m3:199, m4:193, m5:149, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:547, m1:176, m2:181, m3:164, m4:154, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05 ★ESS施策(締切効果)', m0:711, m1:208, m2:213, m3:208, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, ess:true},
+  {m:'2026-06', m0:622, m1:216, m2:240, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07', m0:709, m1:206, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, newThisMonth:true},
+  {m:'2026-08 ★今月', m0:653, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+function buildItemCohortTable(tableId, data, keys) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const kLen = keys.length;
+  let hd = '<thead><tr><th>コホート月</th><th>新規数</th>';
+  keys.forEach(k => { hd += `<th>${k}</th>`; });
+  hd += '</tr></thead><tbody>';
+  let html2 = hd;
+  data.forEach(row => {
+    const isGeRow = !!row.ge || !!row.ess;
+    const isThisR = !!row.thisMonth;
+    const isNew  = !!row.newThisMonth;
+    const rowClass = isGeRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = '';
+    if (isThisR) labelSuffix = ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>';
+    if (isNew)   labelSuffix = ' <span style="font-size:10px;background:#bbf7d0;color:#15803d;padding:1px 4px;border-radius:2px">M+1確定</span>';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    ['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11','m12'].slice(0, kLen).forEach(k => {
+      const v = row[k];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>'; return; }
+      const pct = Math.round(v / row.m0 * 100);
+      let bg, tc;
+      if (isGeRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 30) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 20) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 12) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 6) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}</span></td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+buildItemCohortTable('cohortCd', cohortCdData, ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12']);
+
+const cdCohortMonths = ['2025-05','2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12★GE','2026-01','2026-02','2026-03','2026-04','2026-05★ESS','2026-06','2026-07','2026-08'];
+const cdM1 = [40.7,38.6,37.4,37.0,38.5,40.7,38.9,28.9,38.6,41.0,38.2,32.2,29.3,34.7,29.1,null];
+const cdM6 = [31.8,31.8,29.3,29.8,29.4,30.3,26.3,24.6,29.4,31.2,null,null,null,null,null,null];
+new Chart(document.getElementById('chartCohortCd'), {
+  type: 'line',
+  data: {
+    labels: cdCohortMonths,
+    datasets: [
+      {label:'M+1継続率', data:cdM1, borderColor:'#1a9e63', backgroundColor:'rgba(26,158,99,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'M+6継続率', data:cdM6, borderColor:'#1a9e63', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:45, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 6. LTV成長カーブ =====
+new Chart(document.getElementById('chartLtvCurve'), {
+  type:'line',
+  data:{
+    labels:['30日','90日','180日','365日','累計'],
+    datasets:[
+      {label:'C+D（初回）', data:[14787,24117,35594,55027,72887], borderColor:'#1a9e63', tension:0.3, fill:false, pointRadius:6, borderWidth:3},
+      {label:'VC（初回・有償のみ）', data:[11865,18241,25895,37859,60046], borderColor:'#FF7A30', tension:0.3, fill:false, pointRadius:5},
+      {label:'SKINBEAUTY（初回）', data:[14716,20022,24312,31618,23118], borderColor:'#C4934A', tension:0.3, fill:false, pointRadius:5},
+      {label:'C+Cera（初回）', data:[17390,25354,34680,null,26301], borderColor:'#FF6B9D', tension:0.3, fill:false, pointRadius:5, spanGaps:false},
+      {label:'MINERALion（初回・有償のみ）', data:[9419,14882,18731,null,15723], borderColor:'#1E3A8A', tension:0.3, fill:false, pointRadius:5, spanGaps:false},
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=> ctx.raw===null ? `${ctx.dataset.label}: 未到達（観測不能）` : `${ctx.dataset.label}: ¥${ctx.raw.toLocaleString()}`}}}, scales:{y:{ticks:{callback:v=>`¥${(v/1000).toFixed(0)}K`}}} }
+});
+
+// ===== 7. 停止率・単価 ブランド横断比較（純粋新規／アイテム新規の2系列） =====
+const brandLabels5 = ['C+D','VC','C+Cera','SKINBEAUTY','MINERALion'];
+new Chart(document.getElementById('chartStopRate'), {
+  type:'bar',
+  data:{
+    labels:brandLabels5,
+    datasets:[
+      { label:'解約率・純粋新規基準', data:[29.1,39.7,21.7,24.5,15.8], backgroundColor:'#fca5a5' },
+      { label:'解約率・アイテム新規基準', data:[27.1,39.2,11.6,21.5,11.6], backgroundColor:'#dc2626' }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}, title:{display:true,text:'定期便 解約率（2026年8月末・母集団2基準）'}}, scales:{y:{ticks:{callback:v=>v+'%'}}} }
+});
+new Chart(document.getElementById('chartAvgPrice'), {
+  type:'bar',
+  data:{
+    labels:brandLabels5,
+    datasets:[
+      { label:'平均単価・純粋新規基準', data:[9333,8552,13014,11550,5946], backgroundColor:'#93c5fd' },
+      { label:'平均単価・アイテム新規基準', data:[9480,8673,14547,12779,8677], backgroundColor:'#1c1917' }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}, title:{display:true,text:'ACTIVE平均定期単価・月換算（2026年8月末・母集団2基準）'}}, scales:{y:{ticks:{callback:v=>'¥'+v.toLocaleString()}}} }
+});
+
+// ===== 7-2. グロスフロー6区分（C+D単体） =====
+const cdFlowMonths = ['2026-03','2026-04','2026-05','2026-06','2026-07','2026-08'];
+const flowA = [386,361,406,328,352,425];
+const flowB = [88,108,94,76,84,91];
+const flowC = [147,114,177,155,144,111];
+const flowD = [-597,-516,-536,-507,-472,-492];
+const flowE = [-205,-165,-150,-141,-162,-117];
+const flowF = [-20,-14,-13,-17,-23,-12];
+const flowNetActual = [-201,-131,-27,-106,-77,6];
+new Chart(document.getElementById('chartGrossFlowCd6'), {
+  data:{
+    labels: cdFlowMonths,
+    datasets:[
+      { type:'bar', label:'A_真の新規契約', data: flowA, backgroundColor:'#15803d', stack:'s', order:2 },
+      { type:'bar', label:'B_自ブランド復帰', data: flowB, backgroundColor:'#4ade80', stack:'s', order:2 },
+      { type:'bar', label:'C_他ブランドから乗換流入', data: flowC, backgroundColor:'#a7f3d0', stack:'s', order:2 },
+      { type:'bar', label:'D_PAUSE+CANCELLED', data: flowD, backgroundColor:'#dc2626', stack:'s', order:2 },
+      { type:'bar', label:'E_他ブランドへ乗換流出', data: flowE, backgroundColor:'#fca5a5', stack:'s', order:2 },
+      { type:'bar', label:'F_乗換と同時に休止解約', data: flowF, backgroundColor:'#fecaca', stack:'s', order:2 },
+      { type:'line', label:'実測ストック純増', data: flowNetActual, borderColor:'#1c1917', backgroundColor:'#1c1917', borderWidth:3, pointRadius:5, pointBackgroundColor:'#1c1917', tension:0.1, order:1 }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:12,font:{size:10.5}}}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw}件`}}}, scales:{ x:{stacked:true, ticks:{font:{size:10}}}, y:{stacked:true, ticks:{callback:v=>`${v}件`}} } }
+});
+
+// ===== 7-3. 解約・休止 継続回数分布（純粋新規のみ） =====
+new Chart(document.getElementById('chartCancelDist'), {
+  type:'bar',
+  data:{
+    labels:['1回目','2回目','3〜4回目','5〜6回目','7〜12回目','13回目以上'],
+    datasets:[
+      { label:'PAUSE', data:[246,313,459,343,530,376], backgroundColor:'#f59e0b' },
+      { label:'CANCELLED', data:[189,229,271,193,338,195], backgroundColor:'#dc2626' }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw}件`}}}, scales:{ y:{ ticks:{callback:v=>`${v}件`} } } }
+});
+
+// ===== 7-4. 他ブランド定期併用状況（ドーナツ） =====
+new Chart(document.getElementById('chartBrandOverlap'), {
+  type:'doughnut',
+  data:{
+    labels:['C+Dのみ(73.8%)','VCのみ併用(19.6%)','C+Ceraのみ併用(2.1%)','MINERALionのみ併用(1.9%)','SKINBEAUTYのみ併用(0.8%)','その他の組み合わせ(1.8%)'],
+    datasets:[{ data:[7188,1913,202,181,74,185], backgroundColor:['#7ED8A0','#FF7A30','#FF6B9D','#1E3A8A','#C4934A','#d1d5db'] }]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:10.5}}}, tooltip:{callbacks:{label:ctx=>`${ctx.label.split('(')[0]}: ${ctx.raw.toLocaleString()}人`}}} }
+});
+
+// ===== 9. 都度買い/定期 売上比率 月次推移（100%積み上げ） =====
+const revSplitMonths = ['2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08'];
+const onetimeRevM = [20.093,20.187,21.663,34.409,17.335,18.877,18.229,19.278,23.534,17.799,21.306,20.163];
+const subRevM = [81.077,83.213,84.451,84.624,78.076,75.785,75.759,73.730,75.791,71.312,71.683,71.424];
+const onetimePct = onetimeRevM.map((v,i)=> Math.round(v/(v+subRevM[i])*1000)/10 );
+const subPct = onetimePct.map(v => Math.round((100 - v)*10)/10 );
+new Chart(document.getElementById('chartRevSplit'), {
+  type:'bar',
+  data:{
+    labels: revSplitMonths,
+    datasets:[
+      { label:'都度買い', data: onetimePct, backgroundColor:'#c7ecd9', stack:'s' },
+      { label:'定期', data: subPct, backgroundColor:'#1a9e63', stack:'s' }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw}%`}}}, scales:{ x:{stacked:true}, y:{stacked:true, max:100, ticks:{callback:v=>`${v}%`}} } }
+});
+
+// ===== 9(補足). 都度買い/定期 売上比率 ブランド比較（2026年8月） =====
+const brandLabels5b = ['C+D','VC','C+Cera','SKINBEAUTY','MINERALion'];
+new Chart(document.getElementById('chartRevSplitByBrand'), {
+  type:'bar',
+  data:{
+    labels: brandLabels5b,
+    datasets:[
+      { label:'都度買い', data:[22.0,30.0,33.6,35.8,54.1], backgroundColor:'#93c5fd', stack:'s' },
+      { label:'定期', data:[78.0,70.0,66.4,64.2,45.9], backgroundColor:'#1c1917', stack:'s' }
+    ]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw}%`}} },
+    scales:{ x:{ max:100, ticks:{callback:v=>v+'%'} } }
+  }
+});
+
+// ===== 9-2. 顧客チャネル構成（C+D） =====
+new Chart(document.getElementById('chartChannelSeg'), {
+  type:'doughnut',
+  data:{
+    labels:['A.定期継続中とみられる(48.7%)','B.定期経験ありだが直近は都度買い(2.1%)','C.都度買いリピーター2回以上(15.9%)','D.都度買い1回のみ(33.3%)'],
+    datasets:[{ data:[21029,886,6867,14425], backgroundColor:['#1a9e63','#c7ecd9','#a78bfa','#d1d5db'] }]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:11}}}, tooltip:{callbacks:{label:ctx=>`${ctx.label.split('(')[0]}: ${ctx.raw.toLocaleString()}人`}}} }
+});
+
+// ===== 9-3(補足). 純粋新規獲得数 ブランド比較（2026年8月） =====
+new Chart(document.getElementById('chartPureNewByBrand'), {
+  type:'bar',
+  data:{
+    labels: ['VC','C+D','MINERALion','SKINBEAUTY','C+Cera'],
+    datasets:[
+      { label:'アイテム新規', data:[1126,653,210,138,167], backgroundColor:'#d1d5db' },
+      { label:'純粋新規', data:[845,372,63,61,46], backgroundColor:['#FF7A30','#7ED8A0','#1E3A8A','#C4934A','#FF6B9D'] }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}, scales:{y:{ticks:{callback:v=>`${v}人`}}} }
+});
+
+// ===== 9-5. 2回目定期引き上げ率比較（2026年限定） =====
+const brandColors5c = ['#7ED8A0','#1E3A8A','#FF7A30','#FF6B9D','#C4934A'];
+new Chart(document.getElementById('chartUpgradeRate'), {
+  type:'bar',
+  data:{
+    labels: ['C+D','MINERALion','VC','C+Cera','SKINBEAUTY'],
+    datasets:[
+      { label:'2回目到達率', data:[45.4,42.8,40.5,37.1,33.5], backgroundColor:'#d1d5db' },
+      { label:'2回目が定期の比率（2回目到達者中）', data:[53.1,26.4,43.6,37.8,48.2], backgroundColor:brandColors5c }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}, scales:{y:{max:70,ticks:{callback:v=>v+'%'}}} }
+});
+
+// ===== 9-6. F2転換までの日数（2026年限定） =====
+new Chart(document.getElementById('chartF2Days'), {
+  data:{
+    labels: ['SKINBEAUTY','VC','C+D','C+Cera','MINERALion'],
+    datasets:[
+      { type:'bar', label:'平均日数', data:[32.2,38.1,42.2,49.8,49.3], backgroundColor:['#C4934A88','#FF7A3088','#7ED8A088','#FF6B9D88','#1E3A8A88'] },
+      { type:'line', label:'中央値', data:[28,30,31,34,32], borderColor:'#1c1917', backgroundColor:'#1c1917', pointRadius:5, tension:0 }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}, scales:{y:{title:{display:true,text:'日数'}}} }
+});
+</script>
+
+</body>
+</html>

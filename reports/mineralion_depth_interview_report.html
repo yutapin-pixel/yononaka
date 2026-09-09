@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<title>MINERALion 顧客理解レポート｜デプスインタビュー グループE（11名）</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg:     #faf9f7;
+  --card:   #fff;
+  --border: #e7e3dd;
+  --text:   #211c17;
+  --muted:  #7a7167;
+  --accent: #B8763E; /* 花崗岩・鉄をイメージしたアースブラウン系 */
+
+  --green:  #16a34a;
+  --red:    #dc2626;
+  --blue:   #2563eb;
+
+  --cat-direct: #B8763E; /* 直接症状型（鉄・貧血） */
+  --cat-second: #5B8A9A; /* 二次症状型（睡眠・疲労） */
+  --cat-brand:  #C4934A; /* ブランドクロスセル型 */
+  --cat-data:   #64748b; /* データ・懐疑型 */
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.75;
+}
+.wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+.hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 3px solid var(--text);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.hdr h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin: 0; }
+.hdr .meta { font-size: 13px; color: var(--muted); }
+
+.stitle {
+  font-size: 16px; font-weight: 700;
+  margin: 36px 0 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.stitle::before {
+  content: '';
+  display: inline-block;
+  width: 4px; height: 17px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.ssub { font-size: 12px; color: var(--muted); margin: -6px 0 14px 12px; }
+
+.sg { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.sc { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; }
+.sc .lb { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.sc .vl { font-size: 26px; font-weight: 700; letter-spacing: -1px; margin-top: 4px; }
+.sc .note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.up { color: var(--green); font-weight: 600; }
+.dn { color: var(--red); font-weight: 600; }
+.rf { color: var(--blue); font-weight: 600; }
+
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 12px 0; }
+.kpi { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; text-align: center; }
+.kpi .kl { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi .kv { font-size: 21px; font-weight: 700; margin-top: 4px; }
+.kpi .ks { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+.badge { display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 11px; font-weight: 600; }
+.badge.direct { background: #fdf1e7; color: #9a5b21; }
+.badge.second { background: #eaf3f5; color: #2f6273; }
+.badge.brand  { background: #fdf6e6; color: #a06f16; }
+.badge.data   { background: #eef0f2; color: #475569; }
+.badge.n { background: #eff6ff; color: #2563eb; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 8px; }
+th { text-align: left; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; padding: 8px 10px; border-bottom: 2px solid var(--text); }
+td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+
+.notes { background: #fdf6ec; border: 1px solid #f0dbb8; border-radius: 8px; padding: 14px 18px; font-size: 13px; line-height: 1.8; margin-bottom: 16px; }
+.notes .nt { font-weight: 700; font-size: 12px; color: #8a5a1e; margin-bottom: 6px; }
+
+.finding-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 8px; }
+.finding-card { border-radius: 8px; padding: 16px; border: 1px solid var(--border); background: var(--card); border-top: 4px solid var(--muted); }
+.fc-amber  { border-top-color: #f59e0b; }
+.fc-brown  { border-top-color: var(--accent); }
+.fc-blue   { border-top-color: #5B8A9A; }
+.fc-slate  { border-top-color: #64748b; }
+.fc-red    { border-top-color: var(--red); }
+.fc-green  { border-top-color: var(--green); }
+.fc-index { font-size: 10.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+.fc-metric { font-size: 24px; font-weight: 700; letter-spacing: -1px; margin-bottom: 4px; }
+.fc-title { font-size: 13.5px; font-weight: 700; margin-bottom: 6px; }
+.fc-body { font-size: 12.5px; color: var(--text); margin-bottom: 8px; }
+.fc-insight { font-size: 12.5px; font-weight: 600; color: var(--muted); border-top: 1px dashed var(--border); padding-top: 8px; }
+
+.quote {
+  background: #fbfaf8; border-left: 3px solid var(--accent);
+  padding: 10px 14px; font-size: 13px; color: #3a332b;
+  margin: 8px 0; border-radius: 0 6px 6px 0;
+}
+.quote .who { font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 3px; display: block; }
+.quote.second { border-left-color: var(--cat-second); }
+.quote.second .who { color: var(--cat-second); }
+.quote.data { border-left-color: var(--cat-data); }
+.quote.data .who { color: var(--cat-data); }
+.quote.brand { border-left-color: var(--cat-brand); }
+.quote.brand .who { color: #a06f16; }
+
+.persona-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.persona-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+.persona-card h4 { margin: 0 0 4px; font-size: 15px; }
+.persona-card .p-sub { font-size: 11.5px; color: var(--muted); margin-bottom: 10px; }
+.persona-card .p-quote { font-size: 12.5px; color: var(--muted); font-style: italic; margin-top: 10px; border-left: 3px solid var(--accent); padding-left: 8px; }
+.persona-card ul { margin: 8px 0 0; padding-left: 18px; font-size: 12.5px; }
+.persona-card li { margin-bottom: 5px; }
+
+.action-card { border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; background: var(--card); }
+.action-card .a-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.action-card .a-pri { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+.pri-high { background: #fef2f2; color: #dc2626; }
+.pri-mid  { background: #fff7ed; color: #c2410c; }
+.pri-low  { background: #eff6ff; color: #2563eb; }
+.action-card .a-title { font-size: 14px; font-weight: 700; }
+.action-card .a-body { font-size: 13px; color: var(--text); }
+.action-card .a-evidence { font-size: 12px; color: var(--muted); margin-top: 6px; border-left: 3px solid var(--border); padding-left: 10px; }
+
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+
+.footer { margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+
+@media(max-width:768px){
+  .sg { grid-template-columns: 1fr; }
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .finding-grid { grid-template-columns: 1fr; }
+  .persona-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hdr">
+    <h1>MINERALion 顧客理解レポート</h1>
+    <div class="meta">デプスインタビュー グループE（MINERALionデプスインタビュー・11名）｜実施期間：2026年8月24日〜9月4日｜作成日：2026-09-04</div>
+  </div>
+
+  <div class="notes">
+    <div class="nt">📌 このレポートのスコープと狙い</div>
+    本レポートは、MINERALion購入者11名（10ファイル。うちMK様・SK様は母娘ペアで1ファイル）へのデプスインタビュー（グループE）を主データソースとして作成した。当初の狙いは「①ユーザーは明確に鉄分摂取目的で購入しているのか」「②貧血の方以外に、鉄分摂取を求める顧客にはどのような層がいるのか」を確認することであり、加えて「③MINERALionのF2転換・VC顧客へのクロスセルにどのような訴求切り口が有効か」「④顧客のニーズ・ペイン・インサイトは何だったか」を明らかにすることを目的とする。グループA〜D（Lypo-C VC・CBD等）とは商品ライン・購買文脈が異なるため、既存の分析軸をそのまま適用せず、MINERALion独自の軸（鉄分摂取意識の強弱／購入経路／効果実感と継続行動の関係）で分析している。引用は個人が特定されないようイニシャル表記とし、原文のニュアンスを損なわない範囲で一部整形している。
+  </div>
+
+  <div class="stitle">サマリー</div>
+  <div class="ssub">今回の10本インタビューで見えた、最も構造的な2つの事実</div>
+  <div class="sg">
+    <div class="sc">
+      <div class="lb">「鉄分摂取目的」で購入した人の割合</div>
+      <div class="vl">6<span style="font-size:16px;color:var(--muted);font-weight:500;"> / 11名</span></div>
+      <div class="note">貧血・鉄不足を明確に自覚し、鉄分補給を主目的に購入したのは11名中6名（NM・IA・IS・KN・MK・SK）。残り5名（MT・AI・MM・SR・TS）は睡眠・疲労・冷え・むくみ・健康診断数値など「鉄」以外の入口から購入し、鉄はあくまで機序として後から認識している。<b>「鉄分サプリ」という商品訴求と、顧客の実際の購入動機は半数程度しか一致していない。</b></div>
+    </div>
+    <div class="sc">
+      <div class="lb">効果実感は高いが、継続行動は一様ではない</div>
+      <div class="vl">5/5評価 <span style="font-size:16px; color:var(--muted); font-weight:500;">→</span> 継続はまちまち</div>
+      <div class="note">効果実感を5段階中「5」と回答した人は6〜7名と高評価が目立つ一方、NM様（効果5/5）は「体感は良かったが、注文が数週間途絶えている」休眠状態。IS様・SR様は追加購入を検討中で未決定。効果実感の高さが必ずしも定期継続に直結していない、満足と行動のギャップが確認された。</div>
+    </div>
+  </div>
+
+  <div class="stitle">対象者11名の分類（購入動機の起点別）</div>
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kl">直接症状型</div>
+      <div class="kv">6名</div>
+      <div class="ks">貧血・鉄不足の自覚が起点</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">二次症状型</div>
+      <div class="kv">5名</div>
+      <div class="ks">睡眠・疲労・数値が起点、鉄は機序</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">ブランドクロスセル起点</div>
+      <div class="kv">5名</div>
+      <div class="ks">Lypo-C信頼から派生購入</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">併用・二枚看板</div>
+      <div class="kv">4名</div>
+      <div class="ks">他の鉄剤を並行/使い分け継続</div>
+    </div>
+  </div>
+
+  <div class="stitle">購入者属性分析：どんな人が、どうやってMINERALionに辿り着いたか</div>
+  <div class="ssub">トライアル経路・食生活自己採点・併用サプリの傾向から見る11名の素顔</div>
+
+  <h4 style="font-size:14px; margin:20px 0 6px;">(a) 220円トライアル経由の購入者に見られる傾向</h4>
+  <p style="font-size:13.5px;">11名の入手経路を分けると、<b>本人が能動的に220円の自己完結型トライアルを購入した層（7名）</b>と、<b>家族・Lypo-C購入特典など「信頼できる誰か・何か」を介して間接的にMINERALionに触れた層（3名）</b>、<b>トライアルの言及自体がなく本商品からいきなり購入した層（1名＝TS様）</b>に分かれる。</p>
+
+  <table>
+    <tr><th>入手経路</th><th>該当者</th><th>効果実感・継続傾向</th></tr>
+    <tr><td>本人が220円トライアルを自己購入</td><td>MK・MM・MT・NM・IA・IS・SR（7名）</td><td>効果実感自体は高い（4〜5評価が中心）が、<b>継続の可否で迷っている／休眠している人が3名（NM・IS・SR）</b>含まれる。「安いから試した」という参入障壁の低さが、そのまま継続への心理的コミットメントの弱さにもつながっている可能性がある。</td></tr>
+    <tr><td>家族・知人から手渡し／Lypo-C購入特典経由</td><td>SK（娘から）・AI（Lypo-C同梱2個セット）・KN（姉から）（3名）</td><td>3名とも効果実感5/5、かつ継続意向が明確。<b>「信頼する人からの推薦」を介してMINERALionに出会った層は、匿名の自己完結型トライアルよりも定着率が高い</b>傾向が見られる。</td></tr>
+    <tr><td>トライアル言及なし・本商品から購入</td><td>TS（1名）</td><td>効果実感3/5とやや懐疑的。健康診断（フェリチン値）という外部の客観指標で継続可否を判断する構え。</td></tr>
+  </table>
+  <div class="quote">
+    <span class="who">AI様（50歳・飲食店経営）｜Lypo-C同梱特典経由</span>
+    「Lypo-Cさんからのお試し2個セットでしたっけ、あれでとりあえず『Lypo-Cさんが出してるものは全部いい』と思ってるんで、試してみて。良かったです」
+  </div>
+  <div class="quote data">
+    <span class="who">IS様（40歳・販売接客業）｜自己購入トライアル経由・検討中</span>
+    「この220円のお試しを飲んでいただいた後で30本お買い上げいただいていますが」という問いに一定の効果は認めつつ、追加購入は「今ちょっと考え中ですね」
+  </div>
+  <p style="font-size:13.5px;"><b>示唆：</b>220円トライアルは「試してもらうハードルを下げる」施策として機能している一方、そのぶん購入時点でのコミットメントは弱く、離脱リスクも内包している。一方、家族紹介やLypo-C購入特典など<b>既存の信頼関係に乗った経路は、少人数ながら継続率・満足度ともに高い</b>。トライアル獲得数の量を追う施策と、家族紹介・クロスセル特典による質の高い獲得を伸ばす施策は、分けてKPI設計するのが望ましい。</p>
+
+  <h4 style="font-size:14px; margin:24px 0 6px;">(b) 食生活自己採点（100点満点）の傾向</h4>
+  <p style="font-size:13.5px;">全員に「ご自身の食生活を100点満点で採点すると？」と質問しており、11名中10名から回答を得た（SK様は明示的な採点なし）。点数と、購入動機・サプリメントへの依存度の関係を見ると、興味深い傾向が出ている。</p>
+  <table>
+    <tr><th>顧客</th><th>自己採点</th><th>備考</th></tr>
+    <tr><td>MK</td><td>30〜40点</td><td>産後で運動・睡眠・食事すべてが「めちゃくちゃ」と自認。生活全体の崩れが鉄不足の一因と自己分析。</td></tr>
+    <tr><td>SK</td><td>（未評価）</td><td>健康習慣は60点評価だが食事単体の採点はなし。</td></tr>
+    <tr><td>MM</td><td>60点</td><td>「仕事でお菓子が出ちゃったりして」と間食が課題。栄養素より体感重視でサプリに頼る設計。</td></tr>
+    <tr><td>MT</td><td>70点</td><td>「なかなか手の込んだものを作れない」。ダイエット系の複数サプリ（電解質・青粒等）を併用中。</td></tr>
+    <tr><td>AI</td><td>80点</td><td>自炊比率8割・栄養バランス良好と自認。それでも複数サプリを高額投資しており「食事で足りない分の保険」という発想ではなく「上乗せ」志向。</td></tr>
+    <tr><td>NM</td><td>50点</td><td>「いらない油、あと糖質も多い」と外食時の乱れを自覚。鉄剤を10年来ローテーションしている割に食生活の土台は改善できていない。</td></tr>
+    <tr><td>TS</td><td>80点</td><td>自炊中心・野菜好きで栄養バランス良好。にもかかわらず健康診断の数値のみで購入しており、<b>食生活の自信の高さが、逆にサプリへの必要性の実感の低さ（効果実感3/5）につながっている</b>可能性がある。</td></tr>
+    <tr><td>IA</td><td>70点</td><td>「海藻系が少ない」「外食が多い」。妊活を機に食事の見直しと並行してサプリで補完する堅実タイプ。</td></tr>
+    <tr><td>IS</td><td>80点</td><td>自炊中心の生活で自己評価は高いが、鉄分を意識した食材摂取までは踏み込めていないと自認。</td></tr>
+    <tr><td>SR</td><td>50点</td><td>「夜に結構しっかり食べちゃう」と栄養バランスの崩れを自覚。冷え・むくみの体感的不調とも符合する。</td></tr>
+    <tr><td>KN</td><td>70点</td><td>間食・飲酒はあるものの主食の見直し（パン食→もち麦米）に着手し始めた改善途上タイプ。</td></tr>
+  </table>
+  <p style="font-size:13.5px;"><b>示唆：</b>食生活の自己採点が高い人（AI・TS・IS＝80点）ほど「今の生活に大きな不満はないが、なんとなく良くなりたい」というQOL上乗せ型の動機で購入しており、効果実感の評価が相対的に割れやすい（TS＝3、IS＝検討中）。逆に採点が低い人（MK・NM・SR＝30〜50点）は生活の乱れに対する切実な自覚があり、効果実感も高評価（MK＝4、NM＝5、SR＝体感ありだが継続は模索中）に振れる傾向が見える。<b>「今の生活に自信がある層」への訴求は効能の明確さと客観データ、「生活の乱れを自覚している層」への訴求は体感の即効性を打ち出すのが理にかなっている。</b></p>
+
+  <h4 style="font-size:14px; margin:24px 0 6px;">(c) 併用サプリメントの傾向から見る「サプリメント適性」タイプ</h4>
+  <p style="font-size:13.5px;">MINERALion以外に飲んでいるサプリメントの種類・入手先・継続年数から、11名を4つの「サプリメント適性」タイプに分類した。</p>
+
+  <div class="persona-grid">
+    <div class="persona-card">
+      <h4>知識探求・エビデンス型</h4>
+      <div class="p-sub">該当：MK・KN</div>
+      <ul>
+        <li>遺伝子検査・分子栄養学など専門的な情報源を持ち、成分・含有量まで理解した上で選定</li>
+        <li>「摂りすぎ」への懸念など、リスク面まで自律的に判断できる</li>
+        <li>一度納得すれば長期継続しやすいが、情報開示が不十分だと離脱リスクもある</li>
+      </ul>
+      <div class="p-quote">「ミネラルって蓄積しないのかなと個人的に思っていて」（MK様）／「18mgも摂りすぎだと分かってきて」（KN様）</div>
+    </div>
+    <div class="persona-card">
+      <h4>コミュニティ学習・紹介ネットワーク型</h4>
+      <div class="p-sub">該当：MT・AI・SK</div>
+      <ul>
+        <li>オンラインサロンの勉強会、家族・友人のネットワーク（MLM含む）など「人」経由で情報を得る</li>
+        <li>成分のロジックより「あの人が良いと言っていた」という社会的証明を重視</li>
+        <li>紹介者への信頼が続く限り継続しやすい、比較的安定した顧客層</li>
+      </ul>
+      <div class="p-quote">「今、美容系のオンラインサロンに所属していて、その方が月一とかで企業さんとコラボして…ミネラリオンさんもそういう経緯で知って買った」（MT様）</div>
+    </div>
+    <div class="persona-card">
+      <h4>コスパ重視・ローテーション型</h4>
+      <div class="p-sub">該当：NM・IS</div>
+      <ul>
+        <li>「同じものをずっと飲み続けるのはどうなのか」という発想で複数商品を使い分ける</li>
+        <li>安価な日常使いの商品と、体感が良い商品を目的別に併用する合理的な消費者</li>
+        <li>MINERALionが「唯一の選択」になることは少なく、価格・利便性次第で他商品にスイッチしうる</li>
+      </ul>
+      <div class="p-quote">「マツキヨの方はやっぱり価格がすごい安くて手頃なので、毎日飲む用で、MINERALionは本当に疲れている時とか…求めてるものは違うかもしれないです」（IS様）</div>
+    </div>
+    <div class="persona-card">
+      <h4>新商品トレンド追随・低継続型</h4>
+      <div class="p-sub">該当：TS・SR</div>
+      <ul>
+        <li>新しいもの・話題のものを積極的に試すが、「効果がないと分かればすぐやめる」割り切りがある</li>
+        <li>本人も「サプリぐらいです。いろいろ試すみたいな。だけど続かないです」（SR様）と自認</li>
+        <li>初期エンゲージメントは作りやすいが、中長期の定期継続化にはひと工夫必要</li>
+      </ul>
+      <div class="p-quote">「新しいと思ってて、新しい製品なんだと思ってそれで試すってなりました」（SR様）</div>
+    </div>
+  </div>
+  <p style="font-size:13.5px; margin-top:10px;">MM様のみ上記4タイプに完全には当てはまらない<b>「自己流探究・高額投資型」</b>（アミノフライト等の高単価サプリを4〜5年単位で継続し、体感のみで判断するが、いったん決めたものへの忠誠度は高い）という独自パターンを示しており、<b>「情報を積極的に集めるが、決め手は常に体感」という一見矛盾したロイヤルティ構造</b>を持つ点は、CRM設計上ユニークな示唆となる。</p>
+
+  <h4 style="font-size:14px; margin:24px 0 6px;">(d) 「MINERALionの理想的な顧客」とは何か</h4>
+  <p style="font-size:13.5px;">上記(a)〜(c)の属性を掛け合わせると、今回の11名の中で最も「理想的なMINERALion顧客」に近いのは<b>KN様（40歳・専業主婦・マレーシア在住）</b>だった。理由は以下の通り複合的である。</p>
+  <table>
+    <tr><th>評価軸</th><th>KN様の状況</th></tr>
+    <tr><td>実需要の強さ</td><td>妊娠・出産・授乳という明確な生理学的必要性があり、立ちくらみという自覚症状も伴う「直接症状型」</td></tr>
+    <tr><td>情報リテラシー</td><td>元パーソナルトレーナーとして分子栄養学を独学中。「高濃度＝正義」という誤解から脱却し、適量摂取という科学的に妥当な理解に到達している</td></tr>
+    <tr><td>価格許容度</td><td>月1.5〜2万円のサプリ代について「体に合っているのであれば大丈夫です」と即答。価格が継続のボトルネックになっていない</td></tr>
+    <tr><td>コンテンツ・エンゲージメント</td><td>同封のチェックリストを「実際にはチェックは入れていないが、期待してもいい効果が可視化できて分かりやすかった」と好意的に評価し、購入後もしばらく保管するなど、情報接点への関与度が高い</td></tr>
+    <tr><td>ブランドとの接続</td><td>姉が長年のLypo-C愛用者であり、既に一定のブランド信頼を引き継いだ状態でMINERALionに接触</td></tr>
+    <tr><td>継続意向</td><td>「日本にいれば定期便にしたいくらいです」と明言。海外在住という物理的制約がなければ即座に定期化する状態</td></tr>
+  </table>
+  <div class="quote brand">
+    <span class="who">KN様（40歳・専業主婦）</span>
+    「体に合っているのであれば大丈夫です」「日本にいれば定期便にしたいくらいです」
+  </div>
+  <p style="font-size:13.5px;">次点として、<b>MM様</b>は「効果実感5/5・1日2本に自主増量・競合品からの完全乗り換え」という<b>行動面でのロイヤルティは最高水準</b>にあるが、購入前にLypo-Cブランドを認知しておらず、同封物もほぼ読まないなど<b>情報エンゲージメントは低い「体感ロイヤル型」</b>である点でKN様とは性質が異なる。<b>「理想的な顧客」は単一ではなく、①知識・ブランド・価格すべてが噛み合う『総合型』（KN）と、②体感さえ良ければ他の要素を問わず突き進む『体感ロイヤル型』（MM・AI）の、少なくとも2つの勝ちパターンがある</b>ことがわかる。CRM上は、前者には情報提供・ブランドストーリーを、後者には体感を裏付ける事実（継続日数・リピート率等）を軸にしたコミュニケーションが効果的と考えられる。</p>
+
+  <div class="stitle">重要発見</div>
+  <div class="ssub">「鉄分摂取目的」の実態と、貧血以外の顧客像</div>
+  <div class="finding-grid">
+    <div class="finding-card fc-brown">
+      <div class="fc-index">発見01｜購入動機</div>
+      <div class="fc-metric">6 / 11</div>
+      <div class="fc-title">「鉄が欲しくて買った」は約半数にとどまる</div>
+      <div class="fc-body">明確に鉄分・貧血対策として購入したのはNM（20代からの貧血自覚・婦人科で毎回指摘）、IS（20代からの軽度貧血・マツキヨ鉄剤常用）、IA（妊活・産後の隠れ貧血）、KN（妊娠出産授乳期の鉄需要）、MK・SK（産後のヘモグロビン低値／退職後の疲労・爪症状）の6名。</div>
+      <div class="fc-insight">→ 「鉄分サプリ」という商品ポジショニングは、購入者の半数の実態と一致するに過ぎない。</div>
+    </div>
+    <div class="finding-card fc-blue">
+      <div class="fc-index">発見02｜貧血以外の顧客像</div>
+      <div class="fc-metric">5 / 11</div>
+      <div class="fc-title">睡眠・疲労・数値管理という「別の入口」から来る層</div>
+      <div class="fc-body">MT（睡眠の質が10割、貧血は「低め」の悩み）、AI（鉄不足の自覚ゼロ、Lypo-Cのついで購入）、MM（脳疲労・頭痛が主訴）、SR（貧血自覚なし、冷え・むくみ・倦怠感からミネラル摂取）、TS（体感症状はゼロ、健康診断の鉄数値のみが動機）。</div>
+      <div class="fc-insight">→ 「疲労回復・睡眠の質」を主訴とする顧客層と、「健康診断の数値だけを気にするQOL層」という、貧血自覚のない2つの新しいセグメントが存在する。</div>
+    </div>
+    <div class="finding-card fc-amber">
+      <div class="fc-index">発見03｜温度感のばらつき</div>
+      <div class="fc-metric">4 / 11</div>
+      <div class="fc-title">MINERALionを買っても、他の鉄剤をやめない人がいる</div>
+      <div class="fc-body">MT（ベアジャパンの鉄剤と「ずっと並行して飲んでいこうかな」）、IS（マツキヨの鉄タブレットは毎日用、MINERALionは「疲れている日のブースト」）、MK（病院の鉄剤在庫を消化しながら併用）、NM（MINERALion在庫切れ中はメソシューティカルに戻る）。</div>
+      <div class="fc-insight">→ MINERALionを「唯一の鉄源」と捉えている人ばかりではなく、安価な鉄剤と使い分ける「二枚看板」的な位置づけの人が一定数いる。</div>
+    </div>
+    <div class="finding-card fc-slate">
+      <div class="fc-index">発見04｜効果実感と継続行動の乖離</div>
+      <div class="fc-metric">3 / 11</div>
+      <div class="fc-title">「効いた」のに買っていない、または迷っている</div>
+      <div class="fc-body">NM（効果5/5だが定期未実行で数週間注文が途絶えている休眠状態）、IS（効果を感じつつ追加購入は「今ちょっと考え中」）、SR（体感はあるが単発か定期か「悩んでます」）。</div>
+      <div class="fc-insight">→ 満足度と継続購買行動は別軸。休眠・迷い中の顧客に対する能動的なリマインド施策の余地が大きい。</div>
+    </div>
+    <div class="finding-card fc-green">
+      <div class="fc-index">発見05｜ブランドクロスセルの強さ</div>
+      <div class="fc-metric">5 / 11</div>
+      <div class="fc-title">「Lypo-Cの会社だから」が購入の後押しになっている</div>
+      <div class="fc-body">AI「Lypo-Cの会社じゃなかったとしたら、出会ってないと思います」。NM「もしMINERALionがLypo-Cのブランドから出ていなかったら、多分買わなかったと思います」。IA・KN・SRも同様にブランド信頼を明言。</div>
+      <div class="fc-insight">→ Lypo-C既存顧客（特にVC顧客）へのクロスセルは、鉄分の効能訴求よりも「ブランドの延長線上にある新商品」という信頼移転の訴求の方が刺さりやすい。</div>
+    </div>
+    <div class="finding-card fc-red">
+      <div class="fc-index">発見06｜情報開示への渇望</div>
+      <div class="fc-metric">複数名</div>
+      <div class="fc-title">「具体的に何mg入っているか」を知りたい人が複数</div>
+      <div class="fc-body">KN「鉄分がこの一包でどのくらい何mg摂れるのか、また他のミネラルもそれぞれどのくらい摂れるのかを知りたいです」。AI「鉄とミネラルがなければどうなっていくんだっていうことがわかれば」。TS「調べたことはなくて、下川先生のあれのみ」（第三者の説明に依存）。</div>
+      <div class="fc-insight">→ 薬機法上の制約はあるが、成分量・作用機序への説明ニーズは知識欲の高い層ほど強く、現状の同梱物・LPでは満たしきれていない。</div>
+    </div>
+  </div>
+
+  <div class="stitle">対象者一覧（グループE・11名）</div>
+  <table>
+    <tr><th>イニシャル</th><th>属性</th><th>購入起点</th><th>効果実感</th><th>現在の状態</th></tr>
+    <tr><td>MK</td><td>38歳・専業主婦</td><td><span class="badge direct">直接症状型</span> 産後貧血（Hb10以下）</td><td>4/5</td><td>継続中（頻度は徐々に低下）</td></tr>
+    <tr><td>SK</td><td>65歳・元教員（MKの母）</td><td><span class="badge direct">直接症状型</span> 長年の疲労・爪症状</td><td>5/5</td><td>毎日継続中</td></tr>
+    <tr><td>MM</td><td>50歳・一般事務</td><td><span class="badge second">二次症状型</span> 脳疲労・頭痛</td><td>5/5</td><td>1日2本に増量、継続中</td></tr>
+    <tr><td>MT</td><td>36歳・金融業（育休中）</td><td><span class="badge second">二次症状型</span> 睡眠の質（10割）</td><td>5/5</td><td>継続中、鉄剤も並行</td></tr>
+    <tr><td>AI</td><td>50歳・飲食店経営</td><td><span class="badge brand">ブランド起点</span> 鉄不足自覚なし</td><td>5/5</td><td>継続中</td></tr>
+    <tr><td>NM</td><td>44歳・パート（飲食）</td><td><span class="badge direct">直接症状型</span> 20代からの慢性貧血</td><td>5/5</td><td>休眠（注文数週間停止）</td></tr>
+    <tr><td>TS</td><td>36歳・営業事務</td><td><span class="badge data">データ型</span> 健診数値のみ・体感ゼロ</td><td>3/5</td><td>健診結果待ち・継続可否未定</td></tr>
+    <tr><td>IA</td><td>39歳・ピラティス講師</td><td><span class="badge direct">直接症状型</span> 妊活・隠れ貧血</td><td>半々</td><td>定期継続中</td></tr>
+    <tr><td>IS</td><td>40歳・販売接客業</td><td><span class="badge direct">直接症状型</span> 20代からの軽度貧血</td><td>体感あり</td><td>ブースト的使用、追加購入検討中</td></tr>
+    <tr><td>SR</td><td>29歳・美容鍼灸師</td><td><span class="badge brand">ブランド起点</span> 貧血自覚なし・冷え/むくみ</td><td>体感やや弱</td><td>単発か定期か検討中</td></tr>
+    <tr><td>KN</td><td>40歳・専業主婦（マレーシア在住）</td><td><span class="badge direct">直接症状型</span> 妊娠出産授乳期の鉄需要</td><td>5/5</td><td>継続意向（一時帰国時にまとめ買い）</td></tr>
+  </table>
+
+  <div class="stitle">① ユーザーは明確に鉄分摂取目的で購入しているのか</div>
+  <div class="ssub">「鉄分サプリ」という訴求と実態のギャップ</div>
+  <p style="font-size:13.5px;">MINERALionは「鉄分サプリ」としてマーケティングされているが、実際のインタビューでは<b>鉄分摂取を明確な目的として購入した人と、そうでない人がほぼ半々</b>だった。以下、両極の発言を並べる。</p>
+
+  <div class="quote">
+    <span class="who">NM様（44歳・パート）｜直接症状型</span>
+    「やっぱり貧血なので、鉄を取りたいんですけど、病院で処方された薬がいまいち効かなくて、いろいろ試していたら、そのサプリが結構体感が良かったので。」
+  </div>
+  <div class="quote">
+    <span class="who">IS様（40歳・販売接客業）｜直接症状型</span>
+    「自分に足りていないのは鉄分だからこそ、鉄分を探して買っているという感じです」（インタビュアーの問いかけへの回答）
+  </div>
+
+  <div class="quote second">
+    <span class="who">AI様（50歳・飲食店経営）｜鉄分意識ゼロ</span>
+    「直接お困りに対しての効果を期待してというよりは、興味本位を含めてまず1回飲んでみるかっていう感じでスタートしたところ、思いのほか効果があったぞっていう感じですね」「鉄分がそんなに足りてなかったとも思ってなかったですし、そこまで（気にしていなかった）」「これまで健康診断で貧血を疑われたとか、ヘモグロビン値が低いとか言われたことは基本的になかった」
+  </div>
+  <div class="quote second">
+    <span class="who">MT様（36歳・金融業）｜睡眠が10割</span>
+    「睡眠が。（中略）貧血よりも結構睡眠が。（中略）もう本当に10割って感じです」「ただ単に鉄分の吸収効率が高いんだよって言われても買わなかった可能性ありますか、という質問に対して）それだけだったら、もしかしたら買ってないかもしれません」
+  </div>
+  <div class="quote data">
+    <span class="who">TS様（36歳・営業事務）｜体感ゼロ・数値のみ</span>
+    「鉄分の値が低いことに対して、体の不調として現れたりっていう記憶はございますか」という問いに対し「ないんですよ」「これ全部が主観じゃないですか、疲れてるも起きれないも。（中略）ただ取ったらもっとレベルアップするのかな、もっとバージョンアップみたいなことができるのかな」
+  </div>
+
+  <p style="font-size:13.5px;">この結果から言えることは、MINERALionは<b>「鉄分サプリ」という単一の入口だけでなく、少なくとも3つの異なる入口（①貧血・鉄不足の自覚、②睡眠・疲労という体感課題、③健康診断数値というデータドリブンな動機）</b>を持つ商品であるという点だ。西守様が当初想定していた「10人聞いてみて温度感がまちまち」という仮説は、インタビュー結果からも明確に裏付けられた。</p>
+
+  <div class="stitle">② 貧血の方以外に、鉄分摂取を求めるユーザーにはどのような顧客がいるのか</div>
+  <div class="ssub">貧血の自覚がない5名の内訳</div>
+
+  <table>
+    <tr><th>顧客</th><th>主訴</th><th>特徴</th></tr>
+    <tr><td>MT（36歳）</td><td>睡眠の質</td><td>妊娠検診での軽い貧血指摘はあるが優先度は低い。ランニング等はせず、育児による夜間覚醒からくる慢性的な睡眠の質の低下が最大の悩み。</td></tr>
+    <tr><td>AI（50歳）</td><td>疲労回復・アンチエイジング</td><td>Lypo-C同梱のお試しで偶然出会い、「たまたま飲んで、たまたま良かった」。鉄不足の自覚は皆無。</td></tr>
+    <tr><td>MM（50歳）</td><td>脳疲労・頭痛</td><td>長年の頭痛持ちを「脳疲労」と自己解釈し、ネット検索でヒットしたサプリ（アミノフライト、レストレート等）を渡り歩いてきた実践派。</td></tr>
+    <tr><td>SR（29歳）</td><td>冷え・むくみ・倦怠感</td><td>デスクワーク（施術中の立ち仕事＋冷房環境）による「循環の悪さ」が主訴。貧血の自覚は明確に「あんまりない」と回答。</td></tr>
+    <tr><td>TS（36歳）</td><td>健康診断の鉄数値</td><td>ランニング（週3〜4、月間数十km）による鉄消費を自己分析し、体感症状はゼロのままフェリチン値の改善を期待して購入。「人体実験」という言葉を繰り返し使う自己実験志向。</td></tr>
+  </table>
+
+  <div class="quote second">
+    <span class="who">MM様（50歳・一般事務）</span>
+    「若い時から頭痛持ちだったのと、疲れやすいのが昔からあったので、（中略）年を取るにつれてもっとちゃんと調べるようになって、自分の疲労は頭痛からくることが多いから脳疲労かな、みたいな感じで調べました」
+  </div>
+  <div class="quote second">
+    <span class="who">SR様（29歳・美容鍼灸師）</span>
+    「仕事中はクーラーが効いたところにずっといるので、なんとなくだるいみたいなのがあって、冷えとかなのかな」「循環悪い感じがずっとある。だるさで」（貧血の自覚については）「あんまりないです」
+  </div>
+  <div class="quote data">
+    <span class="who">TS様（36歳・営業事務）</span>
+    「もともと高くはないんですけど、ランニング始めたのは2年ぐらい前で、（中略）去年一年間ずっと走って、去年が今までで一番低かった」「なんで低いんだろうって、他の自分の健康診断の気になる数値を検索したら、ランニングしてるからそうなってるのかな、みたいな」
+  </div>
+
+  <p style="font-size:13.5px;"><b>示唆：</b>貧血の自覚がない購入者は、①育児・仕事による慢性疲労を「脳疲労」「なんとなくのだるさ」と自己解釈する層、②ランニング等の運動習慣者で鉄消費を自覚的に補おうとする層、③冷え・むくみなど女性特有の体感的な不調を訴える層、の3タイプに大別できる。これらの層は「鉄分」というキーワードよりも「疲れが取れない」「朝起きられない」「むくみ・冷え」といった<b>生活実感の言語</b>で検索・情報収集をしている（既存メモリの学びと整合）。</p>
+
+  <div class="stitle">③ 温度感のばらつき：MINERALionを買っても、鉄分サプリを飲み続ける人</div>
+  <div class="ssub">西守様の懸念どおり、購入者の中に明確な「併用・使い分け」層が存在した</div>
+
+  <div class="quote">
+    <span class="who">IS様（40歳・販売接客業）｜マツキヨ鉄タブレットと使い分け</span>
+    「マツキヨの方はやっぱり価格がすごい安くて手頃なので、毎日飲む用で、MINERALionは本当に疲れている時とか遅番の時とかで、求めてるものは違うかもしれないです」
+  </div>
+  <div class="quote">
+    <span class="who">MT様（36歳・金融業）｜ベアジャパンの鉄剤と並行</span>
+    「基本的にもうずっと一緒に並行して飲んでいこうかなって、今のところは考えてます」
+  </div>
+  <div class="quote">
+    <span class="who">NM様（44歳・パート）｜在庫切れ時はメソシューティカルに戻る</span>
+    「今MINERALionを切らしてしまっているとのお話でしたが、その間に代わりに鉄分を取るという意味合いでメソシューティカルさんを飲まれていた期間もあったりしましたか」という問いに対し「そうですね、最近飲んでいました」
+  </div>
+  <div class="quote">
+    <span class="who">MK様（38歳・専業主婦）｜病院の鉄剤を消化しながら併用</span>
+    「まだ病院から出された液体の鉄剤がちょっと残っていたんですけど、それと交互に飲んでみて、なんとなくやっぱり体感がいい感じがしたので」「今在庫として残っている医薬品の鉄剤を飲み切ったら、ミネラリオンを1日1回に戻るのか（という問いに）3日に1回ぐらいになっちゃうかも」
+  </div>
+
+  <p style="font-size:13.5px;">一方で、KN様のように<b>明確に「乗り換え」た人</b>もいる。「高濃度でどんどん摂ればいいんじゃないかという考えで、最初は36mgの鉄サプリを飲んでいたんですけど、それが効いているのかよく分からなくて。その後18mgに変えたんですが、（中略）だんだん18mgも摂りすぎだと分かってきて」という過剰摂取への懸念から、iHerbの高濃度鉄剤をやめてMINERALionに完全移行した例もある。<b>つまり温度感は「鉄命の人」から「MINERALionはサブ、既存の安い鉄剤がメイン」という人まで連続的に分布しており、二者択一ではなく併用がむしろ標準的な行動パターンである。</b></p>
+
+  <div class="stitle">顧客ペルソナ（代表的な4類型）</div>
+  <div class="persona-grid">
+    <div class="persona-card">
+      <h4>① 直接症状・慢性鉄不足型</h4>
+      <div class="p-sub">代表：NM・IS・IA・KN／推定ボリューム：最重要ロイヤル予備軍</div>
+      <ul>
+        <li>10代〜20代から貧血・立ちくらみ・爪の変形などの自覚症状あり</li>
+        <li>健診・婦人科で繰り返し鉄不足を指摘されてきた慢性的な悩み</li>
+        <li>既に安価な鉄剤（マツキヨ・iHerb等）を常用しており、MINERALionはその代替 or 補完として位置づけられる</li>
+        <li>成分量・作用機序への情報ニーズが強い（KN「1本で何mg摂れるのか知りたい」）</li>
+      </ul>
+      <div class="p-quote">「立ちくらみが、今でこそだいぶ改善されていますが、以前はすごくありました」（KN様）</div>
+    </div>
+    <div class="persona-card">
+      <h4>② 二次症状・QOL訴求型</h4>
+      <div class="p-sub">代表：MT・MM・SR／推定ボリューム：潜在的に最大の拡張余地</div>
+      <ul>
+        <li>睡眠の質・疲労・冷え・むくみが主訴で、鉄分不足は自覚が薄いか無い</li>
+        <li>「鉄分サプリ」という枕詞よりも「翌朝の目覚めが良くなる」という体感訴求に強く反応</li>
+        <li>インフルエンサー・オンラインサロン経由の紹介で偶然出会うケースが多い</li>
+        <li>MT「それだけだったら、もしかしたら買ってないかもしれません」＝鉄分単独の訴求では取れない層</li>
+      </ul>
+      <div class="p-quote">「起きた瞬間しんどいみたいな。（中略）飲み忘れた日の翌朝『やっちまった』って感じ」（AI様）</div>
+    </div>
+    <div class="persona-card">
+      <h4>③ ブランドクロスセル・無自覚型</h4>
+      <div class="p-sub">代表：AI・SR／推定ボリューム：VC顧客クロスセルの主戦場</div>
+      <ul>
+        <li>Lypo-C（VC等）へのブランド信頼が先にあり、MINERALion自体への予備知識はほぼゼロ</li>
+        <li>「Lypo-Cが出しているなら間違いない」という安心感だけで購入を決断</li>
+        <li>成分や機序への関心は薄く、体感（効いた／効かなかった）のみで継続を判断</li>
+        <li>この層はLypo-C VC定期購入者への「ついで訴求」でリーチしやすい</li>
+      </ul>
+      <div class="p-quote">「Lypo-Cの会社じゃなかったとしたら、今井さんはこのミネラリオンに出会ったと思いますか」「出会ってないと思います」（AI様）</div>
+    </div>
+    <div class="persona-card">
+      <h4>④ データドリブン・懐疑型</h4>
+      <div class="p-sub">代表：TS／推定ボリューム：少数だが説得コストが高い層</div>
+      <ul>
+        <li>主観的な体感を信用せず、健康診断の客観数値（フェリチン値等）のみを判断材料にする</li>
+        <li>体感ベースの同梱物・LP訴求（「ふんわりした表現」）には懐疑的だが、誇大表現を嫌う姿勢は好感材料にもなっている</li>
+        <li>効果実感は3/5とやや低いが、健診結果が出るまでは離脱せず「継続して検証する」意向</li>
+        <li>この層には成分エビデンス・第三者権威（専門家インスタ等）の説明の方が刺さる</li>
+      </ul>
+      <div class="p-quote">「サプリってどうしてもこういう効果がありますって明言できないんですよね。（中略）変に書きすぎるとうさんくささも出ますもんね」（TS様）</div>
+    </div>
+  </div>
+
+  <div class="stitle">④ 今後のCRM活動への示唆：F2転換・VC顧客へのクロスセル訴求</div>
+  <div class="ssub">「顧客のニーズ・ペイン・インサイトは何だったのか」への回答を含む</div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-high">優先度：高</span><span class="a-title">クロスセル訴求は「鉄の効能」より「ブランドの延長」を前面に</span></div>
+    <div class="a-body">VC顧客（既存Lypo-C定期購入者）へのMINERALionクロスセルでは、鉄分の科学的効能を詳しく語るより、「Lypo-Cが手がけた新商品」という信頼移転メッセージを主軸にする方が有効。AI様・NM様・SR様は揃って「Lypo-Cの会社が出していなければ買わなかった」と明言しており、この層はカテゴリ（鉄・ミネラル）への関心の有無に関わらずブランド起点で動く。</div>
+    <div class="a-evidence">根拠：NM「もしMINERALionがLypo-Cのブランドから出ていなかったら、全く新しいブランドだった場合でも買われていたと思いますか」「いや、多分買わなかったと思います」</div>
+  </div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-high">優先度：高</span><span class="a-title">F2転換施策は「症状タイプ別」にメッセージを出し分ける</span></div>
+    <div class="a-body">直接症状型（鉄・貧血自覚あり）には成分量・エビデンス情報を、二次症状型（睡眠・疲労）には「翌朝の目覚め」という体感ベンチマークを、データ型には健診数値の改善見込みという切り口を、それぞれ出し分けるのが望ましい。現状の同梱物・LPは一律の説明になっており、症状タイプによって刺さり方に差が出ている。</div>
+    <div class="a-evidence">根拠：AI「鉄とミネラルがなければどうなっていくんだっていうことがわかれば」／MT「翌朝いきなり効果を感じるって人はやっぱりあんまりいなくて」という西守様自身の観察とも整合</div>
+  </div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-high">優先度：高</span><span class="a-title">「効果実感5/5」なのに休眠している顧客への能動リマインド</span></div>
+    <div class="a-body">NM様は効果実感が最高評価でありながら、単に「注文するタイミングを逃した」だけで数週間注文が途絶えている。IS様・SR様も継続に前向きだが「検討中」のまま止まっている。満足度が高い休眠顧客は、製品への不満ではなく「思い出すきっかけの欠如」が離脱理由であるため、在庫切れタイミングを見計らったリマインドLINE・在庫アラート機能などが有効。</div>
+    <div class="a-evidence">根拠：NM「切らして結構何週間か飲んでいないと思うんですけど、比べるとやっぱり飲んでいた時の方が調子が良かったかも」</div>
+  </div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-mid">優先度：中</span><span class="a-title">「併用」を前提としたCRM設計（唯一の鉄源という誤ったゴール設定をしない）</span></div>
+    <div class="a-body">MT・IS・MK・NMのように、安価な既存鉄剤とMINERALionを使い分ける行動は一定数存在し、これ自体は不自然でも問題でもない。「MINERALion一本に絞らせる」ことをF2転換のゴールに置くのではなく、「疲れている日・生理中・遅番の日のブースト」としての定期利用（＝毎日ではなくとも継続購入）を許容するCRM設計（少量パッケージや都度買いのしやすさ）が実態に即している。</div>
+    <div class="a-evidence">根拠：IS「MINERALionの今の立ち位置というのは、慢性的な鉄分不足はマツキヨさんのタブレットで対処しているけど、それじゃ足りない時にちょっとブースト的にMINERALionが位置している」</div>
+  </div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-mid">優先度：中</span><span class="a-title">価格の壁：5,000円台が継続可能な上限ライン</span></div>
+    <div class="a-body">IS様・TS様が揃って「もし7,700円だったら（Lypo-C VC本体と同水準）買っていなかった」と明言。トライアル価格（220円）の効果は非常に大きいが、本商品の価格帯（現状5,000円前後）は複数名にとって「続けられるギリギリの上限」として認識されている。値上げには慎重な検討が必要。</div>
+    <div class="a-evidence">根拠：TS「5,000円ぐらいが限界かなみたいな。（中略）1万円ぐらいしちゃうと続けるのは無理だな」／IS「7776円だったら…買っていなかったかもしれないです」</div>
+  </div>
+
+  <div class="action-card">
+    <div class="a-head"><span class="a-pri pri-low">優先度：中〜低</span><span class="a-title">成分・数値開示ニーズへの対応（薬機法の範囲内で）</span></div>
+    <div class="a-body">知識欲の高い層（MK・IA・KN・AI）から「具体的に何mg入っているか」「なぜ鉄が睡眠に効くのか」という説明を求める声が複数上がった。薬機法上の直接的な効能表示はできないが、成分含有量の一覧表示や、第三者専門家（インスタインフルエンサー等）とのタイアップによる説明コンテンツの強化は検討の余地がある。</div>
+    <div class="a-evidence">根拠：KN「鉄分がこの一包でどのくらい何mg摂れるのか、また他のミネラルもそれぞれどのくらい摂れるのかを知りたいです」</div>
+  </div>
+
+  <div class="stitle">ニーズ・ペイン・インサイトの総括</div>
+  <table>
+    <tr><th>分類</th><th>内容</th></tr>
+    <tr><td><b>ニーズ</b></td><td>疲労回復・睡眠の質改善（二次症状型の最大公約数）／妊活・産後の鉄不足対応（直接症状型の一角）／「今困っていないが、もっと調子良くなりたい」というQOL向上ニーズ（データ型）／冷え・むくみなど女性特有の体感的不調の緩和</td></tr>
+    <tr><td><b>ペイン</b></td><td>従来の高濃度鉄剤（36mg等）の過剰摂取懸念・吸収されない実感／病院処方の鉄剤の副作用（胃の不快感）／サプリを何種類も並行摂取することへの管理の煩雑さ・成分バッティングへの不安／ビタミンCとの飲み合わせタイミングが分からない（同時摂取で酸化が進むという情報不足）／価格の高さ（7,700円は継続不可、5,000円が上限）</td></tr>
+    <tr><td><b>インサイト</b></td><td>液体という形状が「胃に優しい」「まずくない」という予想外の好印象につながっている（複数名が味への先入観を覆されたと発言）／「岩からできている」という珍しい原料ストーリーは購入後も記憶に定着しにくく、購入の決め手にはなっていない／効果実感のタイミングは「初回から」「3日目」「1週間」など個人差が大きく、画一的な訴求は難しい／貧血の自覚がない層ほど、購入後に体感してから初めて「なぜ効いたのか」を知りたくなる（西守様の指摘する「情報提供と本人の知りたいタイミングのズレ」が複数名で再現された）</td></tr>
+  </table>
+
+  <div class="stitle">補足：直接的な原文コメント抜粋集</div>
+  <div class="ssub">今後のLP・同梱物・CRM文面のトーン調整に活用できる生の声</div>
+
+  <div class="quote">
+    <span class="who">SK様（65歳・元教員）｜効果実感5/5</span>
+    「前の錠剤の方は吸収されにくいものだったのかなと、爪のことを考えても思います。それに比べると、御社のミネラリオンさんはスプーン爪みたいなものとか、割れることがゼロではないですけど、少なくなりましたし、ささくれたりするのも少なくなりました」
+  </div>
+  <div class="quote">
+    <span class="who">MM様（50歳・一般事務）｜効果実感5/5</span>
+    「私的にはもうほとんど5と言っていいと思います」「なんとなく吸収がいい感じがして、疲労回復とか脳疲労にすごく確かにいいなっていう実感はありました」
+  </div>
+  <div class="quote">
+    <span class="who">AI様（50歳・飲食店経営）｜効果実感5/5</span>
+    「めちゃくちゃあったんですよ。次の日の朝起きたら、私『しんどい』って言ったじゃないですか、それがなかったんですよ。びっくりしたの」「今までで一番かもしれません、こんなに飲んですぐ即効性が出たの」
+  </div>
+  <div class="quote">
+    <span class="who">KN様（40歳・専業主婦）｜効果実感5/5</span>
+    「朝起きて、いつも疲れが残っている感じがあったんですが、それがなかったです」「今聞かれて、そういえば最近立ちくらみをしていないなと気づきました」
+  </div>
+  <div class="quote data">
+    <span class="who">TS様（36歳・営業事務）｜効果実感3/5・懐疑的</span>
+    「体調上は別に困ってないよっていう」「うん、鈍感なんだろうなと思ってます」
+  </div>
+  <div class="quote">
+    <span class="who">NM様（44歳・パート）｜液体という形状への評価</span>
+    「胃が痛いとか、そういうのがないですよね」「味も全然美味しいというか、Lypo-Cは多少飲みにくいところがあるんですけど、こっちは全然大丈夫です」
+  </div>
+  <div class="quote brand">
+    <span class="who">IA様（39歳・ピラティス講師）｜情報開示ニーズ</span>
+    「鉄分が必要だと感じている方が少ないと思うので、女性が生理で悩んでいても鉄が足りていないことをあまり自覚してなかったりするので、そういうところを発信していくと興味が湧くのかな」
+  </div>
+
+  <div class="footer">
+    <span>データソース：MINERALionデプスインタビュー グループE（10ファイル・11名／2026年8月24日〜9月4日実施）</span>
+    <span>作成：株式会社スピック コンシューマー本部</span>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1129,7 +1129,7 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
       <div class="sb">100〜180日ぶりの再購入</div>
       <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
         <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">うち定期注文</div>
-        <div style="font-size:20px;font-weight:700;color:var(--blue)">256人 <span style="font-size:14px;font-weight:600">38.9%</span></div>
+        <div style="font-size:20px;font-weight:700;color:var(--blue)">341人 <span style="font-size:14px;font-weight:600">51.8%</span></div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px">復活時に定期商品で再開</div>
       </div>
     </div>
@@ -1139,7 +1139,7 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
       <div class="sb">181〜365日ぶりの再購入</div>
       <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
         <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">うち定期注文</div>
-        <div style="font-size:20px;font-weight:700;color:var(--green)">157人 <span style="font-size:14px;font-weight:600">31.5%</span></div>
+        <div style="font-size:20px;font-weight:700;color:var(--green)">231人 <span style="font-size:14px;font-weight:600">46.4%</span></div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px">復活時に定期商品で再開</div>
       </div>
     </div>
@@ -1149,12 +1149,17 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
       <div class="sb">366日以上ぶりの再購入</div>
       <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
         <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">うち定期注文</div>
-        <div style="font-size:20px;font-weight:700;color:var(--accent)">16人 <span style="font-size:14px;font-weight:600">3.8%</span></div>
+        <div style="font-size:20px;font-weight:700;color:var(--accent)">110人 <span style="font-size:14px;font-weight:600">26.3%</span></div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px">復活時に定期商品で再開</div>
       </div>
     </div>
   </div>
-  <div style="font-size:11px;color:var(--muted);margin:-10px 0 16px;padding-left:2px">※ 定期注文の判定：復活購入の source_name が subscription_contract / subscription_contract_checkout_one であるもの</div>
+  <div style="font-size:11px;color:var(--muted);margin:-10px 0 16px;padding-left:2px">※ 定期注文の判定：復活購入のline_itemsに<code>shopify_sku_brand_master.product_type='定期'</code>のSKUが含まれるもの（2026-09-14修正：旧source_name判定は初回契約分を検知できず大幅な過小評価があったため変更。詳細は<code>reference_brand_crm_report_pitfalls.md</code>㉘参照）</div>
+  <div style="background:#eef6ff;border:1px solid #bfdbfe;border-radius:6px;padding:8px 14px;margin:-4px 0 16px;font-size:11px;color:#1e3a5f;line-height:1.7">
+    ⚠️ <strong>本カードの定期再開率は「復活した全員」を分母にした値です（定期購入経験の有無・CYS/OGS等の¥220前後の低単価施策由来かどうかを問わない）。</strong>
+    <code>reference_campaign_history.md</code>「長期休眠顧客と定期購入行動に関する恒久的知見」に記載の複数年ベンチマーク（短期80.6%／中期79.5%／長期68.5%）は、<strong>①過去に定期購入経験がある顧客に限定し、②CYS/OGS等の施策タグ付き注文を除外</strong>した、性質の異なる指標です。
+    2026年8月の長期休眠（本カード26.3%）を同じ条件で分解すると、定期未経験者56.5%（定期再開0%で固定）・施策経由9.6%（2.5%）・純粋な通常復活34.0%（76.8%＝ベンチマークと整合）という内訳になっており、両指標に矛盾はありません。分母の異なる2つの指標を混同して比較しないよう注意してください。
+  </div>
 
   <!-- 凡例 -->
   <div style="display:flex;gap:20px;margin-bottom:8px;font-size:12px;color:var(--muted);flex-wrap:wrap">
@@ -1170,7 +1175,7 @@ td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-a
     <ul>
       <li><strong>2026年8月の短期休眠復活は658人で前月（804人）比▲18.2%。</strong>7月は804人と標準バンド（600〜790人台）をわずかに上回っていたが、8月は正常バンド内へ回帰した。7月に見られたCTC・MINERALion 2606施策終了に伴う既存顧客への働きかけ（リマインド・オファー等）の効果が一巡したことを示唆する。</li>
       <li><strong>中期休眠（498人）・長期休眠（418人）はともに前月（761人・440人）から減少したが、依然として2024年下半期の平均水準（中期350〜529人・長期200〜300人台）を上回る。</strong>特に長期休眠418人は7月（440人）とほぼ同水準を維持しており、休眠顧客全体の復活力自体は7月の一時的な高まりから完全には反落していない。</li>
-      <li><strong>短期復活の定期再開率は38.9%で前月（32.0%）から大幅上昇、中期も31.5%（前月24.3%）と上昇した一方、長期は3.8%（前月5.4%）に低下。</strong>復活全体の母数が減った中で定期商品での再開が相対的に増えたことを示し、短期・中期の休眠復活は定期便への回帰という「質」の面では改善している。長期休眠は引き続き都度買いでの復活が中心という構造に変化はない。</li>
+      <li><strong>短期復活の定期再開率は51.8%で前月（41.7%）から上昇、中期も46.4%（前月36.1%）と上昇、長期も26.3%（前月26.1%）とほぼ横ばいで、全区分で定期再開率が上昇または高水準を維持。</strong>復活全体の母数が減った中で定期商品での再開が相対的に増えたことを示し、短期・中期・長期いずれの休眠復活も定期便への回帰という「質」の面で堅調。<strong>⚠️2026-09-14修正：</strong>本項目の定期判定ロジックを`source_name`から`shopify_sku_brand_master.product_type='定期'`に切り替えた（旧`source_name`判定は初回契約分の定期を検知できず、特に長期休眠の定期再開率を実態の1/7程度に過小評価していた）。長期休眠層も約4人に1人が定期便で復活しており、「長期休眠は都度買いでの復活が中心」という旧来の解釈は誤りだったと判明。詳細は`reference_campaign_history.md`「長期休眠顧客と定期購入行動に関する恒久的知見」参照。</li>
       <li><strong>2026年1月の急増（短期1,081・中期575・長期511）は年始需要喚起の特殊事象であり、8月は7月のCTC・2606施策効果の反動一巡を経て、より平常運転に近い水準に落ち着いた。</strong>PAUSED 21,169件（タブ④・VC）への再開施策と合わせて、休眠顧客ウィンバックを統合CRM施策として設計する方針は継続して有効。</li>
     </ul>
   </div>

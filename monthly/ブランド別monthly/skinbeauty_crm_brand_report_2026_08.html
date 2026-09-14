@@ -419,9 +419,46 @@ tr.tot td{border-top:2px solid var(--border)}
     </ul>
   </div>
 
+  <!-- ===== 7-1. 定期コース別ACTIVE件数構成 ===== -->
+  <div class="stitle">7-1. 定期コース別 ACTIVE件数構成（2026年8月末）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view（snapshot_ym = 2026-08）　SKINBEAUTY × 周期（1ヶ月・2ヶ月・3ヶ月・28日）の現在地点の内訳<br>
+  <strong>集計方法：</strong>snapshot_ym='2026-08'でフィルタ → has_skinbeautyフラグ × 周期（cycle_count×cycle_unit）でGROUP BY COUNT。Mixed契約を含めた正確値。</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
+    <div>
+      <table>
+        <thead><tr><th>SKINBEAUTY コース別ACTIVE</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>停止率</th></tr></thead>
+        <tbody>
+          <tr><td>28日定期</td><td>281</td><td>171</td><td>169</td><td><span class="badge b">37.8%</span></td></tr>
+          <tr><td>2ヶ月定期</td><td>94</td><td>24</td><td>17</td><td><span class="badge n">20.3%</span></td></tr>
+          <tr><td>3ヶ月定期</td><td>51</td><td>21</td><td>9</td><td><span class="badge w">29.2%</span></td></tr>
+          <tr><td>1ヶ月定期</td><td>39</td><td>14</td><td>10</td><td><span class="badge w">26.4%</span></td></tr>
+          <tr class="tot"><td>合計</td><td>465</td><td>230</td><td>205</td><td><span class="badge w">33.1%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div></div>
+  </div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 コース別構成の考察</div>
+    <ul>
+      <li><strong>SKINBEAUTYは28日定期がACTIVEの60.4%（281件/465件）を占め、他の周期（1〜3ヶ月）を大きく上回る構成。</strong>短周期であるがゆえに停止率も37.8%と4コース中最も高く、合計停止率33.1%を押し上げる主因になっている。</li>
+      <li><strong>2ヶ月定期は停止率20.3%と相対的に最も健全な水準。</strong>3ヶ月定期（29.2%）・1ヶ月定期（26.4%）は母数が小さく（各51件・39件）単月の増減で変動しやすい点に留意。</li>
+    </ul>
+  </div>
+
   <!-- ===== 7-2. 毎月の新規定期 vs 一時休止+解約 ===== -->
   <div class="stitle">7-2. 毎月の新規ACTIVE vs PAUSE+CANCELLED発生（グロスフロー・ブランド比較）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末SS</span></div>
   <div class="ssub">SKINBEAUTY単体：2025-12〜2026-08。真の健全性は「新規と解約のどちらが多いか」で判断すべき</div>
+
+  <div class="notes">
+    <div class="nt">⚠️ 「PAUSE・CANCELLED発生」の二重計上防止ルールについて（2026-09-11検証済み）</div>
+    <ul>
+      <li>当社の定期便は無期限PAUSEが可能な仕様のため、<strong>一度PAUSEした契約がその後CANCELLEDに移行するケースが発生する。</strong>この場合、「新規PAUSE」と「新規CANCELLED」を単純合算すると、実質的には1契約の離脱1回分を2回カウントしてしまう二重計上リスクがある。</li>
+      <li><strong>本表の「新規CANCELLED」は「前月ステータスがACTIVEだった契約が当月CANCELLEDになった件数」のみを計上しており、「前月PAUSEDだった契約が当月CANCELLEDになった件数」は含めていない。</strong>PAUSE経由の解約は、PAUSEに移行した月にすでに「新規PAUSE」としてマイナス面に計上済みのため、二重計上を避けるためここでは対象外としている（`reference_subscription_history.md`「落とし穴①」のルールに準拠）。</li>
+      <li>2026-09-11にBigQueryで実測検証済み：SKINBEAUTYの場合、2026-04〜08の5ヶ月間で「PAUSE経由解約のため除外された件数」は月あたり0〜4件（累計13件）。本表に掲載中の月次値（36／46／47／53／59）はすべてこの正しい定義で再現でき、既存の数値に誤りはなかった。ただし全社ベースではVC・C+Dで除外対象が月間70〜169件規模に達することがあり、この点は今後もブランド横断で必ず意識すべき構造的な論点である。</li>
+    </ul>
+  </div>
+
   <div class="chart-wrap"><canvas id="chartGrossFlow"></canvas></div>
   <div class="monthly-insight">
     <div class="mi-title">💡 グロスフロー 考察（SKINBEAUTY単体）</div>

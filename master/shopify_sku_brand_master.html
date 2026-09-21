@@ -453,11 +453,11 @@
     <div class="header-title-block">
       <div class="header-label">SPIC Internal · Shopify × NE</div>
       <div class="header-title">統合商品マスタ</div>
-      <div class="header-meta">spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master &nbsp;|&nbsp; 生成: 2026-09-11（簡易パッチ版・C+D+K新設ほか9SKU追加）</div>
+      <div class="header-meta">spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master &nbsp;|&nbsp; 生成: 2026-09-21（簡易パッチ版・110-teiki-4新規追加）</div>
     </div>
     <div class="header-stats">
       <div class="stat-chip">
-        <span class="num" id="stat-total">244</span>
+        <span class="num" id="stat-total">245</span>
         <span class="lbl">Total SKUs</span>
       </div>
       <div class="stat-chip">
@@ -499,7 +499,7 @@
 </div>
 
 <div class="result-bar">
-  表示件数: <span class="result-count" id="resultCount">244</span> 件
+  表示件数: <span class="result-count" id="resultCount">245</span> 件
 </div>
 
 <div class="table-wrap">
@@ -709,12 +709,14 @@ const RAW = [
   {sku:"3027",name:"【プレゼント】Lypo-C Vitamin C＋D 4包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:1856,first:"2025-11-26",last:"2026-01-05"},
   {sku:"3031-cp",name:"Lypo-C Vitamin C+D 3包トライアル",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:1297,first:"2026-07-16",last:"2026-09-01"},
   // C+D+K - 単価あり（2026-09-16発売・2026-09-11 SKU登録。-set-2/-set-3/-teiki-2/-teiki-3は確認できた注文が全てテスト・キャンセル済みのため本番受注cnt=0扱い。次回フルリビルドで再集計）
+  // 110-teiki-4は2026-09-21に簡易パッチで新規追加（未登録SKUアラートで検出・本番/入金済み1件を確認）
   {sku:"110-set",name:"Lypo-C Vitamin C+D+K 30包入",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"都度",price:11016,cnt:1,first:"2026-09-07",last:"2026-09-07"},
   {sku:"110-set-2",name:"Lypo-C Vitamin C+D+K 30包",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"都度",price:10800,cnt:0,first:null,last:null},
   {sku:"110-set-3",name:"Lypo-C Vitamin C+D+K 30包",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"都度",price:10530,cnt:0,first:null,last:null},
   {sku:"110-teiki",name:"【定期購入】Lypo-C Vitamin C+D+K 1箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:10530,cnt:1,first:"2026-09-07",last:"2026-09-07"},
   {sku:"110-teiki-2",name:"【定期購入】Lypo-C Vitamin C＋D＋K 2箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:20700,cnt:0,first:null,last:null},
   {sku:"110-teiki-3",name:"【定期購入】Lypo-C Vitamin C＋D＋K 3箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:30600,cnt:0,first:null,last:null},
+  {sku:"110-teiki-4",name:"【定期購入】Lypo-C Vitamin C＋D＋K 4箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:40800,cnt:1,first:"2026-09-17",last:"2026-09-17"},
   // C+Cera - 単価あり
   {sku:"106-teiki",name:"【定期購入】Lypo-C Vitamin C＋Cera 1箱",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:12960,cnt:3505,first:"2026-02-16",last:"2026-09-01"},
   {sku:"106-set",name:"Lypo-C Vitamin C＋Cera 28包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13460,cnt:1768,first:"2026-02-16",last:"2026-09-01"},

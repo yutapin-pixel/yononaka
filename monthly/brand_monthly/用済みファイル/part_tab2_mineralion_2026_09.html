@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MINERALion CRMブランドレポート 2026_09（part: コホートチャート）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#1E3A8A;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--ccera:#DB2777;--sb:#C4934A;--mi:#1E3A8A;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0;max-width:1200px;margin:0 auto}
+.page-wrap{padding:24px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted)}
+.month-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 14px;border-radius:4px;font-size:13px;font-weight:700;margin-bottom:20px;letter-spacing:0.3px}
+.stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px;align-items:stretch}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+thead th.c{text-align:center}
+tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid #f5f5f4;font-size:13px}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td.c{text-align:center}
+tbody tr:last-child td{border-bottom:none}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.tot td{border-top:2px solid var(--border)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600}
+.badge.a{background:#dcfce7;color:#15803d}.badge.b{background:#fef2f2;color:#dc2626}
+.badge.n{background:#eff6ff;color:#2563eb}.badge.w{background:#fff8f0;color:#92400e}
+.monthly-insight{background:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0284c7;border-radius:8px;padding:14px 18px;margin-top:12px;margin-bottom:20px;font-size:13px;line-height:1.9}
+.monthly-insight .mi-title{font-weight:700;font-size:12px;margin-bottom:6px;color:#0369a1;display:flex;align-items:center;gap:6px}
+.monthly-insight ul{padding-left:18px}.monthly-insight li{margin-bottom:5px}
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.9}
+.notes .nt{font-weight:700;font-size:12px;margin-bottom:6px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:4px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;position:relative;height:290px}
+.chart-wrap canvas{display:block;width:100% !important}
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.cohort-wrap{overflow-x:auto;margin-bottom:12px}
+.cohort-table{border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:900px}
+.cohort-table th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cohort-table th:first-child{text-align:left;min-width:90px}
+.cohort-table td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11px;line-height:1.4}
+.cohort-table td:first-child{text-align:left;font-weight:500;padding:5px 10px;font-size:12px}
+.cohort-table tr.ogs-row td:first-child{color:#92400e;font-weight:700}
+.cohort-table tr.highlight-row td{background:#fafafa}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.insight-card .ic-num{font-size:30px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:-1px}
+.insight-card .ic-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.insight-card .ic-body{font-size:13px;color:var(--muted);line-height:1.7}
+.insight-card.positive .ic-num{color:var(--green)}
+.insight-card.negative .ic-num{color:var(--red)}
+.insight-card.warning .ic-num{color:#f59e0b}
+.crm-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px}
+.crm-card .crm-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.crm-card .crm-priority{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.crm-card .crm-priority.p1{background:#fef2f2;color:#dc2626}
+.crm-card .crm-priority.p2{background:#fff8f0;color:#92400e}
+.crm-card .crm-priority.p3{background:#eff6ff;color:#2563eb}
+.crm-card .crm-title{font-size:14px;font-weight:700}
+.crm-card .crm-body{font-size:13px;color:var(--muted);line-height:1.7}
+.crm-card .crm-kpi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:500}
+.crm-card .crm-update{font-size:11px;margin-top:6px;padding:4px 8px;background:#f0fdf4;border-radius:4px;color:#15803d;font-weight:500}
+.kpi-change{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;margin-left:6px}
+.kpi-change.up{background:#dcfce7;color:#15803d}
+.kpi-change.dn{background:#fef2f2;color:#dc2626}
+.kpi-change.flat{background:#f5f5f4;color:#78716c}
+.summary-verdict{background:#1c1917;border-radius:10px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.summary-verdict-icon{font-size:22px;flex-shrink:0}
+.summary-verdict-text{font-size:13.5px;font-weight:600;color:#fff;line-height:1.65;letter-spacing:0.1px}
+.summary-verdict-text em{font-style:normal;color:#e8c589}
+.finding-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.finding-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.finding-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.finding-card.fc-green::before{background:#16a34a}
+.finding-card.fc-red::before{background:#dc2626}
+.finding-card.fc-amber::before{background:#f59e0b}
+.finding-card.fc-orange::before{background:var(--accent)}
+.finding-card.fc-blue::before{background:#2563eb}
+.finding-card.fc-slate::before{background:#64748b}
+.fc-index{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.fc-metric{font-size:26px;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.finding-card.fc-green .fc-metric{color:#16a34a}
+.finding-card.fc-red .fc-metric{color:#dc2626}
+.finding-card.fc-amber .fc-metric{color:#d97706}
+.finding-card.fc-orange .fc-metric{color:var(--accent)}
+.finding-card.fc-blue .fc-metric{color:#2563eb}
+.finding-card.fc-slate .fc-metric{color:#475569}
+.fc-title{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.4}
+.fc-body{font-size:12px;color:var(--muted);line-height:1.75;flex:1}
+.fc-body strong{color:var(--text)}
+.fc-insight{margin-top:4px;padding:6px 10px;border-radius:5px;font-size:11.5px;font-weight:600;line-height:1.5}
+.finding-card.fc-green .fc-insight{background:#f0fdf4;color:#15803d}
+.finding-card.fc-red .fc-insight{background:#fff5f5;color:#dc2626}
+.finding-card.fc-amber .fc-insight{background:#fffbeb;color:#92400e}
+.finding-card.fc-orange .fc-insight{background:#fff8f0;color:#c2410c}
+.finding-card.fc-blue .fc-insight{background:#eff6ff;color:#1e40af}
+.finding-card.fc-slate .fc-insight{background:#f8fafc;color:#475569}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.ds-cust{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-order,.sc .lb .ds-snap,.sc .lb .ds-cust{font-size:9px;padding:1px 5px;margin-left:3px}
+.ltv-all{display:inline-flex;align-items:center;gap:2px;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;margin-left:4px;white-space:nowrap}
+.ltv-brand{display:inline-flex;align-items:center;gap:2px;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:#fff1f2;color:#be123c;border:1px solid #fecdd3;margin-left:4px;white-space:nowrap}
+.sc .lb .ltv-all,.sc .lb .ltv-brand{font-size:9px;padding:1px 5px;margin-left:3px}
+th .ltv-all,th .ltv-brand{margin-left:2px;font-size:9px;padding:0 4px;font-weight:700}
+.ltv-rev-row td{background:#fafaf9;border-top:none}
+.correction{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid #dc2626;border-radius:8px;padding:12px 16px;margin:12px 0;font-size:12.5px;line-height:1.8;color:#7f1d1d}
+.correction .cr-title{font-weight:700;color:#dc2626;margin-bottom:4px}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .finding-grid{grid-template-columns:1fr}
+}
+
+/* ===== Report tabs（基本レポート／コホートチャート） ===== */
+.tab-nav{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);overflow-x:auto;white-space:nowrap}
+.tab-btn{padding:9px 22px;font-size:14px;font-weight:700;font-family:'Noto Sans JP',sans-serif;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ===== チャート直下に「x軸の月」と列を揃えて並べる表（3章・3-1章） ===== */
+.ct-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 10px;margin-bottom:12px}
+.ct-scroll{overflow-x:auto}
+.ct-inner{min-width:var(--ct-min,940px)}
+.ct-canvas{position:relative;height:290px}
+.ct-canvas canvas{display:block;width:100% !important}
+table.ct-table{table-layout:fixed;width:100%;border:none;border-radius:0;background:transparent;margin:6px 0 0;font-size:11px;border-top:1px solid var(--border)}
+table.ct-table td{padding:5px 2px;text-align:center;font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums;border-bottom:1px solid #f5f5f4}
+table.ct-table td:first-child{text-align:left;font-weight:600;white-space:normal;line-height:1.35;padding:5px 6px 5px 4px}
+table.ct-table tr.sub td{color:var(--muted);font-size:10.5px}
+table.ct-table tr.sub td:first-child{font-weight:500}
+table.ct-table tr.tot td{background:#f5f5f4;font-weight:700;border-top:1px solid var(--border)}
+table.ct-table td.last{background:#fff3e0;font-weight:700}
+table.ct-table tr.tot td.last{background:#ffe8c7}
+table.ct-table tr td.up{color:var(--green);font-weight:600}
+table.ct-table tr td.dn{color:var(--red);font-weight:600}
+.ct-note{font-size:11px;color:var(--muted);line-height:1.7;margin:-4px 0 12px 2px}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="hdr">
+    <h1>MINERALion CRMブランドレポート</h1>
+    <div class="meta">作成日：2026-10-02 ｜ 基準日：2026-09-30（月次確定分は2026年9月末まで）</div>
+  </div>
+  <div class="month-badge">MINERALion単独ブランド深掘り版（2026-09月次確定）</div>
+
+  <div id="tab2" class="tab-pane active">
+  <!-- ===== 5. コホート継続率 ===== -->
+  <div class="stitle">5. コホート継続率（M+1〜M+12ヒートマップ）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span><span class="ds-snap">Shopify定期DB（周期別区分のみ）</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders × sandbox_nishimori.shopify_sku_brand_master・brand='MINERALion'・item_price&gt;0・有償注文条件〔total_price − current_total_tax &gt; 0〕・CYS0810除外）。周期別区分のみShopify定期DB（sandbox_nishimori.subscription_history_view・has_mineralion=1・スナップショット2026-09まで）を併用。<br>初回有料注文が<strong>MINERALion</strong>だった顧客のコホート分析（＝<strong>アイテム新規</strong>ベース。他ブランドを先に購入していた顧客が後からMINERALionを初めて買った月も「初回」としてカウントする。会社にとって生涯初の有償購入＝「純粋新規」限定ではない点に注意）。トライアル3016・プレゼント3021は<code>item_price=0</code>のため本品に数えない（除外SKUの指定は不要）。同ブランドへの再購入のみを継続としてカウント（他ブランドリピートは含まない「真のブランド内リピート率」）。基準日2026-09-30。8月版はM+1〜M+9の1枚のみだったが、今回からM+12まで拡張した。<strong>2026年9月が完全に経過したことで、全コホート行の「M+N＝2026年9月」に該当するセルが新たに確定した（対角線が1マス進行）。M+11・M+12は全コホート未確定。</strong></div>
+
+  <div class="correction">
+    <div class="cr-title">📝 8月版（旧形式・canvas19）からの訂正・変更点</div>
+    <ul style="padding-left:18px">
+      <li><strong>2026-08コホートのM0：8月版掲載210人→209人。</strong>有償注文条件（total_price − current_total_tax &gt; 0）を全章で統一した結果、純額¥0の本品注文1件（2026-08・1人）が除外されたため。8月版掲載の確定55セルを同一クエリ・基準日2026-08-31で再計算した結果は54セル一致（不一致は上記M0の1セルのみ）で、チャート配列（M+1・M+6）も全一致。8/31→9/30基準で既確定セルの変化は0件。</li>
+      <li><strong>5-1〜5-4章と周期別区分は今回の新設。</strong>8月版は5章のヒートマップ1枚のみだったため前月掲載値は存在せず、前月比較が必要な箇所は同一クエリ・基準日2026-08-31で再計算した値を併記する。</li>
+      <li><strong>5-4章（LTVマップ）の確定判定は「コホート月末日＋期間日数 ≦ 基準日」。</strong>月初日基準では観測が終わっていない月後半の購入者を含んだまま確定扱いになるため、2026-09-30時点の旧ルール該当4セル（2026-04の180日／2026-06の120日／2026-07の90日／2026-08の60日）は未確定として「未確定」表示にしている。</li>
+    </ul>
+  </div>
+
+  <div class="notes">
+    <div class="nt">⚠️ 「1ヶ月／2ヶ月／3ヶ月周期」区分の定義について（2026-09-11確定・初回固定）</div>
+    <ul>
+      <li><strong>周期は「その顧客の最初に有効だった定期契約の、最初のスナップショット時点の周期」で固定している。</strong>28日（cycle_unit='日'・cycle_count=28）は1ヶ月区分に含める。その後に周期変更があっても区分は初回のまま変わらない（コホート月自体が「初回購入月」で固定される設計と同じ考え方）。</li>
+      <li><strong>🚨 2ヶ月周期・3ヶ月周期は母数が小さい（2ヶ月周期のM0は3〜36人、3ヶ月周期は8〜47人）。</strong>1人の増減で継続率が大きく動くため、複数月をまとめた傾向で見ること。また2ヶ月・3ヶ月周期のM+1は、次回注文が2・3ヶ月後になる周期の性質上低く出る。M+1の優劣比較は「1ヶ月周期」と「都度買いのみ」で見る。</li>
+      <li><strong>整合性検証済み：</strong>「1ヶ月周期」＋「2ヶ月周期」＋「3ヶ月周期」＋「都度買いのみ」の各月アイテム新規数（M0）を合計すると、「全ての注文方法」のM0と全月で完全一致する（例：2026-09　24+14+15+83=136人。「その他」区分は0件）。</li>
+      <li><strong>区分の割り当ては2026-09スナップショットまでの定期加入状況で行うため、直近コホートの区分別母数は更新のたびに動く。</strong>2026-08コホートは、8/31基準で都度買いのみ143・1ヶ月30・2ヶ月18・3ヶ月18人だったものが、9/30基準で都度買いのみ135・1ヶ月35・2ヶ月19・3ヶ月20人に移った（コホート月より後に定期便へ加入した顧客は「都度買いのみ」から「○ヶ月周期」へ移る）。2026-07も同様に、8/31基準の1ヶ月88・2ヶ月36・3ヶ月45・都度271人が、9/30基準で92・36・47・265人になった。定期便開始（2026-03-05）より前のコホート（2025-11〜2026-02）の周期区分は、コホート月より後に定期便へ加入した顧客で構成される。定期便へ移った顧客はその時点で継続購入が発生しているため、直近コホートほど定期区分の継続率は高く、都度買い区分は低く出やすい点に留意すること。</li>
+      <li><strong>ラベルの読み方：</strong>2025-11〜2026-02は定期便の未提供期間（定期便開始は2026-03-05）のイレギュラー月。★施策①②＝無償同梱＋¥220試供品（2026-01）、★定期便開始(3/5)＝2026-03、★2606＝2606トライアル施策（2026-06・07）。</li>
+    </ul>
+  </div>
+
+  <!-- 周期セレクター -->
+  <div style="display:flex;gap:8px;margin:10px 0 12px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:12px;font-weight:600;color:var(--muted)">コホート対象：</span>
+    <button id="sbCohortBtn_all" class="cohort-mode-btn active-mode" onclick="switchSBCohortMode('all',this)">全ての注文方法</button>
+    <button id="sbCohortBtn_1m" class="cohort-mode-btn" onclick="switchSBCohortMode('1m',this)">1ヶ月周期（28日含む）</button>
+    <button id="sbCohortBtn_2m" class="cohort-mode-btn" onclick="switchSBCohortMode('2m',this)">2ヶ月周期</button>
+    <button id="sbCohortBtn_3m" class="cohort-mode-btn" onclick="switchSBCohortMode('3m',this)">3ヶ月周期</button>
+    <button id="sbCohortBtn_spot" class="cohort-mode-btn" onclick="switchSBCohortMode('spot',this)">都度買いのみ（定期経験なし）</button>
+    <span id="sbCohortModeNote" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+  </div>
+  <style>
+  .cohort-mode-btn{background:#f5f5f4;border:1px solid var(--border);padding:5px 14px;border-radius:20px;font-family:inherit;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s}
+  .cohort-mode-btn:hover{background:#e7e5e4;color:var(--text)}
+  .cohort-mode-btn.active-mode{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+  </style>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortSB"></table></div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortSB"></canvas></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 コホート 考察</div>
+    <ul>
+      <li><strong>2026-08コホートのM+1継続率は21.5%（45/209人）で、定期便開始後の6コホート（2026-03〜08）で最低となった。</strong>2026-03〜07の5点（26.4〜32.7%）を下回り、発売来でも2025-11（16.2%）に次ぐ低さ。内訳（5-2章）は純粋新規19.0%（12/63人）・トライアル先行0/1人・アイテム新規（クロスセル）22.8%（33/145人）。周期別（上のセレクタ）では都度買いのみの比率が64.6%（135/209人）へ上昇し（2026-07は60.2%・2026-06は59.0%）、M+1は1ヶ月周期77.1%（27/35人）・2ヶ月周期21.1%（4/19人）・3ヶ月周期10.0%（2/20人）・都度買いのみ8.9%（12/135人）。2026-07は同83.7%／16.7%／14.9%／11.3%だった。</li>
+      <li><strong>2026-07コホート（440人・2606施策期）のM+2は26.4%（116人）で、M+1（27.3%）からほぼ横ばい。</strong>M+2の他コホート（21.8〜35.0%）の範囲内にあり、翌々月に落ち込む動きは出ていない。純粋新規はM+2=28.3%（28/99人）、トライアル先行はM+2=25.8%（8/31人）。</li>
+      <li><strong>2026-03コホート（定期便開始月）のM+6は16.5%（47/284人）で新たに確定した。</strong>8月版が次の検証ポイントとしていた比較では、2026-01（19.4%）を下回り、2026-02（13.2%）を上回る中間の水準。M+6は確定済みの5コホート（2025-11〜2026-03）で11.9〜19.4%に収まっており、「定期便開始後はM+6が2026-01・02を明確に上回る」とは言えない。</li>
+      <li><strong>定期便開始前後のM+1の差は、9月分を足すと縮小した。</strong>開始前4コホート（2025-11〜2026-02）の単純平均25.2%（人数加重26.2%）に対し、開始後6コホート（2026-03〜08）は単純平均27.3%（人数加重27.2%）で、差は+2.1pt（単純平均）／+1.0pt（人数加重）。8月版（開始後5点の平均28.5%・差+3.3pt）から縮小した。月ごとの振れ幅（16.2〜33.1%）の方がこの差より大きい。</li>
+      <li><strong>9月に新たに確定したセル：</strong>2025-11 M+10=11.4%（21人）／2025-12 M+9=14.6%（53人）／2026-01 M+8=15.6%（70人）／2026-02 M+7=14.3%（38人）／2026-03 M+6=16.5%（47人）／2026-04 M+5=18.2%（29人）／2026-05 M+4=19.0%（26人）／2026-06 M+3=18.4%（40人）／2026-07 M+2=26.4%（116人）／2026-08 M+1=21.5%（45人）。2025-11コホートはM+8=16.8%（31人）→M+9=6.5%（12人）→M+10=11.4%（21人）と上下しているが、母数が185人と小さいため単月の振れとして解釈しない。</li>
+      <li>2025-12コホートのM+1=33.1%（120/363人）は引き続き最高水準（施策①〔無償同梱〕が並行実施された月）。純粋新規に限ると40.0%（12/30人）。</li>
+      <li>2026-09コホートは136人（2026-08比▲35%・2026-07比▲69%）。M+1は2026年10月末に確定する。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 5-1. 初回購入商品別 F2転換率 ===== -->
+  <div class="stitle">5-1. 初回購入商品別 F2転換率（30日／60日／90日以内）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders × sandbox_nishimori.shopify_sku_brand_master・brand='MINERALion'・item_price&gt;0・有償注文条件〔total_price − current_total_tax &gt; 0〕・CYS0810除外）<br>
+  <strong>集計方法：</strong>MINERALionは本品が30包のみで7包／28包の区別がないため、初回の入口を<strong>①単品／②定期／③トライアル</strong>で比較する。初回＝ブランド初回注文（<code>order_date, order_name</code>昇順で最初）。F2＝MINERALionへの2回目の有償注文（都度買い・定期便いずれでも可）までの日数が30／60／90日以内。<strong>①単品</strong>＝初回注文が<code>130-set</code>（30包・都度・¥5,832）を含み、定期SKU・まとめ買いSKUを含まない顧客。<strong>②定期</strong>＝初回注文が<code>130-teiki</code>（1箱・定期・¥5,616）を含み、<code>130-set</code>系・まとめ買いSKUを含まない顧客。<strong>③トライアル</strong>＝<code>3016</code>（4包トライアル・¥220）購入者の「トライアル→本品」転換（起点は顧客ごとの初回3016購入日）。観測未到達（コホート月の月末＋N日が基準日2026-09-30時点で未経過）のセルは「—」表示。</div>
+
+  <div class="notes">
+    <div class="nt">📌 集計上の注記</div>
+    <ul>
+      <li><strong>無視するSKU：</strong><code>130-set-2／-3／-4</code>（都度のまとめ買い）と<code>130-teiki-2／-3／-4</code>（定期の2・3・4箱）。これらを初回に含む顧客は①②の対象外。<strong>5章M0に対する①②の合計カバー率</strong>は2026-07＝75.5%（332/440人）、08＝74.6%（156/209人）、09＝69.1%（94/136人）。2026-03〜09の初回でまとめ買い・複数箱を含む人数は計433人。2025-11〜2026-02は初回が全て<code>130-set</code>でM0と一致する（カバー率100%）。初回注文が①②の両方のSKUを含む顧客・対象SKU以外の本品を含む顧客は全月0件。</li>
+      <li><strong>5章M+N（暦月ベース・全ての初回注文）と5-1の30日F2（日数ベース・①単品／②定期の初回のみ）は母集団と定義が異なる</strong>ため、水準が違って正常。</li>
+      <li>純粋新規＝初回注文日が生涯初の有償注文日と一致する顧客（4区分の第1）。<strong>トライアル先行・クロスセルはアイテム新規側に含む。</strong>F2転換率は累積（60日以内に30日以内分も含む）。</li>
+      <li><strong>②定期の「30日以内F2」は暦月日数の影響で月ごとに9〜66%と大きく振れる。</strong>1ヶ月周期の2回目注文は、30日月（4月・6月）では初回の30日後に、31日月（3月・5月・7月）では31日後に集中する（初回注文から2回目注文までの日数：2026-04は30日目18件・31日目0件／2026-06は30日目20件・31日目0件／2026-03は31日目16件・30日目1件／2026-05は31日目12件・30日目1件／2026-07は31日目42件・30日目1件）。このため2026-04（52.0%）・06（65.8%）は30日以内に入り、03（12.3%）・05（14.7%）・07（11.7%）・08（9.1%）は入らない。<strong>②の評価は60日・90日以内で行い、30日以内は参考値として扱う。</strong>②は2025-11〜2026-02に定期便が存在しないため「対象なし」。</li>
+    </ul>
+  </div>
+
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:10.5px;color:var(--muted);margin:12px 0 4px">
+    <span style="font-weight:600">ヒートマップ凡例：</span>
+    <span><span style="display:inline-block;width:11px;height:11px;background:#fecaca;border-radius:2px;vertical-align:middle"></span> 〜14%</span>
+    <span><span style="display:inline-block;width:11px;height:11px;background:#fef3c7;border-radius:2px;vertical-align:middle"></span> 15〜24%</span>
+    <span><span style="display:inline-block;width:11px;height:11px;background:#fef9c3;border-radius:2px;vertical-align:middle"></span> 25〜34%</span>
+    <span><span style="display:inline-block;width:11px;height:11px;background:#dcfce7;border-radius:2px;vertical-align:middle"></span> 35〜44%</span>
+    <span><span style="display:inline-block;width:11px;height:11px;background:#bbf7d0;border-radius:2px;vertical-align:middle"></span> 45%〜</span>
+    <span>「—」＝観測未到達／対象なし</span>
+  </div>
+  <div style="font-size:13px;font-weight:700;margin:8px 0 6px">① 単品（130-set・30包・都度）：アイテム新規 vs 純粋新規</div>
+  <div class="ssub" style="margin-top:0">左＝アイテム新規（他ブランド購入歴の有無は問わない。トライアル先行・クロスセルを含む）、右＝純粋新規（会社にとって生涯初の有償注文＝MINERALionだった顧客に限定＝4区分の第1。判定は<code>shopify_orders</code>から直接算出した生涯初有償注文日と、初回注文日が一致する顧客のみ抽出）</div>
+  <div class="sg2">
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px;color:#1e40af">アイテム新規のF2転換率</div>
+      <table>
+        <thead><tr><th>初回購入月</th><th>アイテム新規数</th><th class="c">30日</th><th class="c">60日</th><th class="c">90日</th></tr></thead>
+        <tbody>
+<tr><td>2025-11 ★発売月</td><td style="font-weight:600;text-align:center">185</td><td style="background:#fecaca;color:#dc2626;text-align:center;">14.6%<br><span style="font-size:10px;opacity:.75">27人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">31.9%<br><span style="font-size:10px;opacity:.75">59人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">38.4%<br><span style="font-size:10px;opacity:.75">71人</span></td></tr>
+<tr><td>2025-12</td><td style="font-weight:600;text-align:center">363</td><td style="background:#fef3c7;color:#92400e;text-align:center;">18.2%<br><span style="font-size:10px;opacity:.75">66人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">41.3%<br><span style="font-size:10px;opacity:.75">150人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">48.8%<br><span style="font-size:10px;opacity:.75">177人</span></td></tr>
+<tr><td>2026-01 ★施策①②</td><td style="font-weight:600;text-align:center">449</td><td style="background:#fef3c7;color:#92400e;text-align:center;">16.7%<br><span style="font-size:10px;opacity:.75">75人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">35.6%<br><span style="font-size:10px;opacity:.75">160人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">41.4%<br><span style="font-size:10px;opacity:.75">186人</span></td></tr>
+<tr><td>2026-02</td><td style="font-weight:600;text-align:center">266</td><td style="background:#fef3c7;color:#92400e;text-align:center;">21.4%<br><span style="font-size:10px;opacity:.75">57人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">39.1%<br><span style="font-size:10px;opacity:.75">104人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">45.9%<br><span style="font-size:10px;opacity:.75">122人</span></td></tr>
+<tr><td>2026-03 ★定期便開始(3/5)</td><td style="font-weight:600;text-align:center">152</td><td style="background:#fef3c7;color:#92400e;text-align:center;">19.7%<br><span style="font-size:10px;opacity:.75">30人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">31.6%<br><span style="font-size:10px;opacity:.75">48人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">34.2%<br><span style="font-size:10px;opacity:.75">52人</span></td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">61</td><td style="background:#fecaca;color:#dc2626;text-align:center;">11.5%<br><span style="font-size:10px;opacity:.75">7人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;">19.7%<br><span style="font-size:10px;opacity:.75">12人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">27.9%<br><span style="font-size:10px;opacity:.75">17人</span></td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">67</td><td style="background:#fecaca;color:#dc2626;text-align:center;">13.4%<br><span style="font-size:10px;opacity:.75">9人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">29.9%<br><span style="font-size:10px;opacity:.75">20人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">38.8%<br><span style="font-size:10px;opacity:.75">26人</span></td></tr>
+<tr><td>2026-06 ★2606</td><td style="font-weight:600;text-align:center">108</td><td style="background:#fef3c7;color:#92400e;text-align:center;">21.3%<br><span style="font-size:10px;opacity:.75">23人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">37.0%<br><span style="font-size:10px;opacity:.75">40人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">38.9%<br><span style="font-size:10px;opacity:.75">42人</span></td></tr>
+<tr><td>2026-07 ★2606</td><td style="font-weight:600;text-align:center">238</td><td style="background:#fef3c7;color:#92400e;text-align:center;">16.8%<br><span style="font-size:10px;opacity:.75">40人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">30.3%<br><span style="font-size:10px;opacity:.75">72人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-08</td><td style="font-weight:600;text-align:center">112</td><td style="background:#fecaca;color:#dc2626;text-align:center;">12.5%<br><span style="font-size:10px;opacity:.75">14人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-09 ★今月</td><td style="font-weight:600;text-align:center">64</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+        </tbody>
+      </table>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartF2Combined"></canvas></div>
+    </div>
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px;color:#166534">純粋新規のF2転換率</div>
+      <table>
+        <thead><tr><th>初回購入月</th><th>純粋新規数</th><th class="c">30日</th><th class="c">60日</th><th class="c">90日</th></tr></thead>
+        <tbody>
+<tr><td>2025-11 ★発売月</td><td style="font-weight:600;text-align:center">16</td><td style="background:#fecaca;color:#dc2626;text-align:center;">12.5%<br><span style="font-size:10px;opacity:.75">2人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">25.0%<br><span style="font-size:10px;opacity:.75">4人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">25.0%<br><span style="font-size:10px;opacity:.75">4人</span></td></tr>
+<tr><td>2025-12</td><td style="font-weight:600;text-align:center">30</td><td style="background:#fef9c3;color:#854d0e;text-align:center;">26.7%<br><span style="font-size:10px;opacity:.75">8人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">40.0%<br><span style="font-size:10px;opacity:.75">12人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">46.7%<br><span style="font-size:10px;opacity:.75">14人</span></td></tr>
+<tr><td>2026-01 ★施策①②</td><td style="font-weight:600;text-align:center">59</td><td style="background:#fecaca;color:#dc2626;text-align:center;">13.6%<br><span style="font-size:10px;opacity:.75">8人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">32.2%<br><span style="font-size:10px;opacity:.75">19人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">33.9%<br><span style="font-size:10px;opacity:.75">20人</span></td></tr>
+<tr><td>2026-02</td><td style="font-weight:600;text-align:center">39</td><td style="background:#fef9c3;color:#854d0e;text-align:center;">28.2%<br><span style="font-size:10px;opacity:.75">11人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">43.6%<br><span style="font-size:10px;opacity:.75">17人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">48.7%<br><span style="font-size:10px;opacity:.75">19人</span></td></tr>
+<tr><td>2026-03 ★定期便開始(3/5)</td><td style="font-weight:600;text-align:center">61</td><td style="background:#fef9c3;color:#854d0e;text-align:center;">27.9%<br><span style="font-size:10px;opacity:.75">17人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">41.0%<br><span style="font-size:10px;opacity:.75">25人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">44.3%<br><span style="font-size:10px;opacity:.75">27人</span></td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">17</td><td style="background:#fef3c7;color:#92400e;text-align:center;">17.6%<br><span style="font-size:10px;opacity:.75">3人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;">17.6%<br><span style="font-size:10px;opacity:.75">3人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;">17.6%<br><span style="font-size:10px;opacity:.75">3人</span></td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">19</td><td style="background:#fef3c7;color:#92400e;text-align:center;">21.1%<br><span style="font-size:10px;opacity:.75">4人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">47.4%<br><span style="font-size:10px;opacity:.75">9人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">52.6%<br><span style="font-size:10px;opacity:.75">10人</span></td></tr>
+<tr><td>2026-06 ★2606</td><td style="font-weight:600;text-align:center">24</td><td style="background:#fef3c7;color:#92400e;text-align:center;">20.8%<br><span style="font-size:10px;opacity:.75">5人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">41.7%<br><span style="font-size:10px;opacity:.75">10人</span></td><td style="background:#dcfce7;color:#166534;text-align:center;">41.7%<br><span style="font-size:10px;opacity:.75">10人</span></td></tr>
+<tr><td>2026-07 ★2606</td><td style="font-weight:600;text-align:center">65</td><td style="background:#fef3c7;color:#92400e;text-align:center;">15.4%<br><span style="font-size:10px;opacity:.75">10人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center;">30.8%<br><span style="font-size:10px;opacity:.75">20人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-08</td><td style="font-weight:600;text-align:center">39</td><td style="background:#fef3c7;color:#92400e;text-align:center;">20.5%<br><span style="font-size:10px;opacity:.75">8人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-09 ★今月</td><td style="font-weight:600;text-align:center">17</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+        </tbody>
+      </table>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartF2CombinedPure"></canvas></div>
+    </div>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ① 単品入口のF2転換率の考察</div>
+    <ul>
+      <li><strong>①単品入口の90日F2は、定期便開始前の44.0%（556/1,263人・2025-11〜2026-02の人数加重）から、開始後の確定4か月（2026-03〜06）で35.3%（137/388人）へ低下した。</strong>開始前の4か月は38.4〜48.8%、開始後の4か月は27.9〜38.9%。定期を選ぶ意向の高い層が定期入口（②）へ分かれた結果である可能性があるが、これは推定で未検証。</li>
+      <li>直近で確定した90日F2は2026-06の38.9%（42/108人・純粋新規は41.7%〔10/24人〕）。2026-07の60日F2は30.3%（72/238人・純粋新規30.8%〔20/65人〕）、2026-08の30日F2は12.5%（14/112人・純粋新規20.5%〔8/39人〕）。</li>
+      <li>①単品の初回人数は2026-03 152→04 61→05 67→06 108→07 238→08 112→09 64人と推移（2025-11〜2026-02は初回が全て130-setでM0と同数の185／363／449／266人）。純粋新規は母数が16〜65人と小さく、1〜2人の差で数pt動く（例：2026-04は17人中3人で17.6%）ため、単月ではなく複数月の傾向で見ること。</li>
+      <li>2026-09コホート（①単品64人・純粋新規17人）は30日が未到達のため、F2転換率は10月版以降に確定する（30日F2は2026-10-30以降に観測完了）。</li>
+    </ul>
+  </div>
+
+  <div style="font-size:13px;font-weight:700;margin:20px 0 6px">② 定期（130-teiki・1箱・定期）：アイテム新規 vs 純粋新規</div>
+  <div class="ssub" style="margin-top:0">母集団は定期便開始日（2026-03-05）以降にしか存在しない。<strong>30日以内は暦月日数の影響が大きいため参考値</strong>（上記注記）。純粋新規は母数が3〜12人と小さく参考扱い。</div>
+  <div class="sg2">
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px;color:#1e40af">アイテム新規のF2転換率</div>
+      <table>
+        <thead><tr><th>初回購入月</th><th>アイテム新規数</th><th class="c">30日</th><th class="c">60日</th><th class="c">90日</th></tr></thead>
+        <tbody>
+<tr><td>2025-11 ★発売月</td><td style="color:#999;text-align:center;font-size:11px">対象なし</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2025-12</td><td style="color:#999;text-align:center;font-size:11px">対象なし</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-01 ★施策①②</td><td style="color:#999;text-align:center;font-size:11px">対象なし</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-02</td><td style="color:#999;text-align:center;font-size:11px">対象なし</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-03 ★定期便開始(3/5)</td><td style="font-weight:600;text-align:center">57</td><td style="background:#fecaca;color:#dc2626;text-align:center;">12.3%<br><span style="font-size:10px;opacity:.75">7人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">54.4%<br><span style="font-size:10px;opacity:.75">31人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">66.7%<br><span style="font-size:10px;opacity:.75">38人</span></td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">50</td><td style="background:#bbf7d0;color:#15803d;text-align:center;">52.0%<br><span style="font-size:10px;opacity:.75">26人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">64.0%<br><span style="font-size:10px;opacity:.75">32人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">74.0%<br><span style="font-size:10px;opacity:.75">37人</span></td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">34</td><td style="background:#fecaca;color:#dc2626;text-align:center;">14.7%<br><span style="font-size:10px;opacity:.75">5人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">64.7%<br><span style="font-size:10px;opacity:.75">22人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">73.5%<br><span style="font-size:10px;opacity:.75">25人</span></td></tr>
+<tr><td>2026-06 ★2606</td><td style="font-weight:600;text-align:center">38</td><td style="background:#bbf7d0;color:#15803d;text-align:center;">65.8%<br><span style="font-size:10px;opacity:.75">25人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">78.9%<br><span style="font-size:10px;opacity:.75">30人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">81.6%<br><span style="font-size:10px;opacity:.75">31人</span></td></tr>
+<tr><td>2026-07 ★2606</td><td style="font-weight:600;text-align:center">94</td><td style="background:#fecaca;color:#dc2626;text-align:center;">11.7%<br><span style="font-size:10px;opacity:.75">11人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">64.9%<br><span style="font-size:10px;opacity:.75">61人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-08</td><td style="font-weight:600;text-align:center">44</td><td style="background:#fecaca;color:#dc2626;text-align:center;">9.1%<br><span style="font-size:10px;opacity:.75">4人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-09 ★今月</td><td style="font-weight:600;text-align:center">30</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+        </tbody>
+      </table>
+      <div class="chart-wrap" style="height:230px"><canvas id="chartF2Sku120"></canvas></div>
+    </div>
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px;color:#166534">純粋新規のF2転換率（母数が小さく参考）</div>
+      <table>
+        <thead><tr><th>初回購入月</th><th>純粋新規数</th><th class="c">30日</th><th class="c">60日</th><th class="c">90日</th></tr></thead>
+        <tbody>
+<tr><td>2025-11 ★発売月</td><td style="color:#999;text-align:center;font-size:11px">対象なし</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2025-12</td><td style="color:#999;text-align:center;font-size:11px">対象なし</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-01 ★施策①②</td><td style="color:#999;text-align:center;font-size:11px">対象なし</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-02</td><td style="color:#999;text-align:center;font-size:11px">対象なし</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-03 ★定期便開始(3/5)</td><td style="font-weight:600;text-align:center">12</td><td style="background:#fef9c3;color:#854d0e;text-align:center;">25.0%<br><span style="font-size:10px;opacity:.75">3人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">58.3%<br><span style="font-size:10px;opacity:.75">7人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">66.7%<br><span style="font-size:10px;opacity:.75">8人</span></td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">6</td><td style="background:#bbf7d0;color:#15803d;text-align:center;">66.7%<br><span style="font-size:10px;opacity:.75">4人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">66.7%<br><span style="font-size:10px;opacity:.75">4人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">66.7%<br><span style="font-size:10px;opacity:.75">4人</span></td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">3</td><td style="background:#fef9c3;color:#854d0e;text-align:center;">33.3%<br><span style="font-size:10px;opacity:.75">1人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">66.7%<br><span style="font-size:10px;opacity:.75">2人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">66.7%<br><span style="font-size:10px;opacity:.75">2人</span></td></tr>
+<tr><td>2026-06 ★2606</td><td style="font-weight:600;text-align:center">3</td><td style="background:#bbf7d0;color:#15803d;text-align:center;">100.0%<br><span style="font-size:10px;opacity:.75">3人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">100.0%<br><span style="font-size:10px;opacity:.75">3人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">100.0%<br><span style="font-size:10px;opacity:.75">3人</span></td></tr>
+<tr><td>2026-07 ★2606</td><td style="font-weight:600;text-align:center">11</td><td style="background:#dcfce7;color:#166534;text-align:center;">36.4%<br><span style="font-size:10px;opacity:.75">4人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center;">81.8%<br><span style="font-size:10px;opacity:.75">9人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-08</td><td style="font-weight:600;text-align:center">6</td><td style="background:#fef3c7;color:#92400e;text-align:center;">16.7%<br><span style="font-size:10px;opacity:.75">1人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-09 ★今月</td><td style="font-weight:600;text-align:center">6</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ② 定期入口のF2転換率の考察</div>
+    <ul>
+      <li><strong>定期入口の90日F2は、確定4か月（2026-03〜06・人数加重）で73.2%（131/179人）と、①単品入口（35.3%）の約2.1倍。</strong>月別の90日F2は2026-03 66.7%（38/57人）・04 74.0%（37/50人）・05 73.5%（25/34人）・06 81.6%（31/38人）。60日でも、2026-03〜05の人数加重で②定期60.3%（85/141人）に対し①単品28.6%（80/280人）。</li>
+      <li>2026-07の60日F2は64.9%（61/94人）。30日F2は2026-03 12.3%／04 52.0%／05 14.7%／06 65.8%／07 11.7%／08 9.1%と振れるが、これは30日月は30日目・31日月は31日目に2回目注文が集中するためで、入口の質の変動とは別（上記注記）。2026-09は30日月のため、10/31基準で30日F2が確定するときは2026-04・06型（30日以内に入る側）になる可能性が高い。</li>
+      <li>5章の周期別でも、2026-08のM+1は1ヶ月周期が77.1%で最も高い（都度買いのみは8.9%）。②定期入口の初回人数（130-teikiのみ）は2026-07 94人→08 44人→09 30人と減少している。</li>
+    </ul>
+  </div>
+
+  <div style="font-size:13px;font-weight:700;margin:20px 0 6px">③ トライアル（3016・4包・¥220）：初回3016購入→本品の転換</div>
+  <div class="ssub" style="margin-top:0">コホート月＝初回3016購入月。母集団＝起点（初回3016購入日）より前に本品の有償購入歴がない顧客。<strong>採用定義＝起点日以後（同日を含む）の最初のMINERALion有償（item_price&gt;0）注文までの日数が30／60／90日以内。</strong>参考として「起点同日に本品を購入した顧客を除く」版と、起点同日に本品を購入した人数を併記する。純粋新規の内訳は出さない。</div>
+  <div class="cohort-wrap"><table>
+        <thead><tr><th>初回3016購入月</th><th>母集団</th><th class="c">うち起点同日に本品購入</th><th class="c">30日</th><th class="c">60日</th><th class="c">90日</th><th class="c">参考：同日除外 30日</th><th class="c">60日</th><th class="c">90日</th><th class="c">参考：3016が生涯初注文の人数</th></tr></thead>
+        <tbody>
+<tr><td>2026-01 ★施策①②</td><td style="font-weight:600;text-align:center">1,861</td><td style="text-align:center">57</td><td style="background:#fecaca;color:#dc2626;text-align:center;">9.6%<br><span style="font-size:10px;opacity:.75">178人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">10.9%<br><span style="font-size:10px;opacity:.75">203人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">11.7%<br><span style="font-size:10px;opacity:.75">217人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">6.5%<br><span style="font-size:10px;opacity:.75">121人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">7.8%<br><span style="font-size:10px;opacity:.75">146人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">8.6%<br><span style="font-size:10px;opacity:.75">160人</span></td><td style="text-align:center">284</td></tr>
+<tr><td>2026-02</td><td style="font-weight:600;text-align:center">225</td><td style="text-align:center">22</td><td style="background:#fef3c7;color:#92400e;text-align:center;">20.4%<br><span style="font-size:10px;opacity:.75">46人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;">21.8%<br><span style="font-size:10px;opacity:.75">49人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;">23.1%<br><span style="font-size:10px;opacity:.75">52人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">10.7%<br><span style="font-size:10px;opacity:.75">24人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">12.0%<br><span style="font-size:10px;opacity:.75">27人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">13.3%<br><span style="font-size:10px;opacity:.75">30人</span></td><td style="text-align:center">60</td></tr>
+<tr><td>2026-03 ★定期便開始(3/5)</td><td style="font-weight:600;text-align:center">827</td><td style="text-align:center">37</td><td style="background:#fecaca;color:#dc2626;text-align:center;">11.2%<br><span style="font-size:10px;opacity:.75">93人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">12.9%<br><span style="font-size:10px;opacity:.75">107人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">13.9%<br><span style="font-size:10px;opacity:.75">115人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">6.8%<br><span style="font-size:10px;opacity:.75">56人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">8.5%<br><span style="font-size:10px;opacity:.75">70人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">9.4%<br><span style="font-size:10px;opacity:.75">78人</span></td><td style="text-align:center">156</td></tr>
+<tr><td>2026-04 <span style="font-size:10px;color:#999">（母集団6人・参考外）</span></td><td style="font-weight:600;text-align:center">6</td><td style="text-align:center">0</td><td style="background:#fecaca;color:#dc2626;text-align:center;opacity:.55;">0.0%<br><span style="font-size:10px;opacity:.75">0人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;opacity:.55;">16.7%<br><span style="font-size:10px;opacity:.75">1人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;opacity:.55;">16.7%<br><span style="font-size:10px;opacity:.75">1人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;opacity:.55;">0.0%<br><span style="font-size:10px;opacity:.75">0人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;opacity:.55;">16.7%<br><span style="font-size:10px;opacity:.75">1人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;opacity:.55;">16.7%<br><span style="font-size:10px;opacity:.75">1人</span></td><td style="text-align:center">2</td></tr>
+<tr><td>2026-05</td><td colspan="9" style="text-align:center;color:#999;font-size:11px">—（母集団なし）</td></tr>
+<tr><td>2026-06 ★2606</td><td style="font-weight:600;text-align:center">946</td><td style="text-align:center">20</td><td style="background:#fef3c7;color:#92400e;text-align:center;">15.1%<br><span style="font-size:10px;opacity:.75">143人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;">15.4%<br><span style="font-size:10px;opacity:.75">146人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center;">15.9%<br><span style="font-size:10px;opacity:.75">150人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">13.0%<br><span style="font-size:10px;opacity:.75">123人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">13.3%<br><span style="font-size:10px;opacity:.75">126人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">13.7%<br><span style="font-size:10px;opacity:.75">130人</span></td><td style="text-align:center">210</td></tr>
+<tr><td>2026-07 ★2606</td><td style="font-weight:600;text-align:center">901</td><td style="text-align:center">13</td><td style="background:#fecaca;color:#dc2626;text-align:center;">11.9%<br><span style="font-size:10px;opacity:.75">107人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">12.5%<br><span style="font-size:10px;opacity:.75">113人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td style="background:#fecaca;color:#dc2626;text-align:center;">10.4%<br><span style="font-size:10px;opacity:.75">94人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center;">11.1%<br><span style="font-size:10px;opacity:.75">100人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td style="text-align:center">260</td></tr>
+<tr><td>2026-08</td><td colspan="9" style="text-align:center;color:#999;font-size:11px">—（母集団なし）</td></tr>
+<tr><td>2026-09 ★今月</td><td colspan="9" style="text-align:center;color:#999;font-size:11px">—（母集団なし）</td></tr>
+        </tbody>
+      </table></div>
+  <div class="chart-wrap" style="height:230px"><canvas id="chartF2Sku121"></canvas></div>
+
+  <div class="notes">
+    <div class="nt">📌 ③の注記</div>
+    <ul>
+      <li>「母集団なし」＝その月に初回3016購入者がいない、または全員が起点時点で本品の有償購入歴がある（両者の区別は未確認）。2026-04は母集団6人のみのため参考外（グラフでは非表示）。</li>
+      <li>3016は<code>item_price=0</code>＋送料¥220で、注文の純額は有償条件（total_price − current_total_tax &gt; 0）を満たすため対象になる。</li>
+      <li><strong>2606参加者との関係：</strong>2606タグ付き顧客2,266人（2026-06月初参加1,236人＋2026-07月初参加1,030人・全員がタグ付き有償注文を持つ）のうち、③の2026-06母集団（946人）・2026-07母集団（901人）に入るのは計1,847人。残り419人（06タグ290人＋07タグ129人）は初回3016購入日が2026-06より前（過去の施策等で3016を受領済み）で、③では過去の起点月に帰属する。起点より前に本品の有償購入歴があって母集団から除外された人は0人。</li>
+      <li>③の2026-01〜04の母集団合計は2,919人で、施策②（¥220試供品・2026-01〜04）の受領者2,958人との差は39人（原因は未確認）。施策②の転換率とは母集団・観測窓・F2定義が異なり、直接比較しない。</li>
+    </ul>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ③ トライアル→本品転換の考察</div>
+    <ul>
+      <li><strong>2026-06起点の転換は30日15.1%（143/946人）・90日15.9%（150/946人）、2026-07起点は30日11.9%（107/901人）・60日12.5%（113/901人）。</strong>起点同日の本品購入を除くと、2026-06の30日は13.0%、2026-07の30日は10.4%。起点同日に本品を購入した人は2026-01 57人／02 22人／03 37人／06 20人／07 13人。</li>
+      <li>90日転換（同日を含む）は2026-01 11.7%（217/1,861人）・02 23.1%（52/225人）・03 13.9%（115/827人）・06 15.9%（150/946人）。2026-02が最も高いが母集団は225人と小さい。</li>
+      <li>2026-09コホート（初回3016購入者なし）・2026-05・2026-08は母集団なし。2026-07の90日は10/31基準で確定する。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 5-2. コホート継続率（アイテム新規 vs 純粋新規） ===== -->
+  <div class="stitle">5-2. コホート継続率：アイテム新規 vs 純粋新規（M+1〜M+12ヒートマップ）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders × sandbox_nishimori.shopify_sku_brand_master・brand='MINERALion'・item_price&gt;0・有償注文条件〔total_price − current_total_tax &gt; 0〕・CYS0810除外）。5章のヒートマップを、コホート対象母集団で切り替えられる形に複製したもの。<strong>アイテム新規</strong>＝5章の「全ての注文方法」と同じ母集団（他ブランド購入歴の有無は問わない）。<strong>純粋新規</strong>＝会社にとって生涯初の有償注文がMINERALionだった顧客に限定（<code>shopify_orders</code>から直接算出した生涯初有償注文日とMINERALion初回購入日が一致する顧客のみ＝<strong>4区分の第1</strong>）。<strong>アイテム新規計＝純粋新規＋トライアル先行＋アイテム新規（クロスセル）</strong>で、トライアル先行（初回有償購入より前の有償注文がすべて<code>item_price=0</code>の商品のみ＝トライアル3016等のみの顧客）はアイテム新規側に含まれ、純粋新規側には含まれない。デフォルトは<strong>アイテム新規</strong>。<br><strong>※ 顧客マスター定義の純粋新規（6章・7-3・9-3章）はトライアル先行を含むため人数が異なる。章ごとに分子の定義を確認すること。</strong></div>
+
+  <!-- 母集団セレクター -->
+  <div style="display:flex;gap:8px;margin:10px 0 12px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:12px;font-weight:600;color:var(--muted)">コホート対象：</span>
+    <button id="sbCohort2Btn_item" class="cohort-mode-btn active-mode" onclick="switchSBCohortMode2('item',this)">アイテム新規</button>
+    <button id="sbCohort2Btn_pure" class="cohort-mode-btn" onclick="switchSBCohortMode2('pure',this)">純粋新規</button>
+    <span id="sbCohort2ModeNote" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+  </div>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortSB2"></table></div>
+
+  <div class="sg2" style="margin-top:12px">
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px">M0の内訳（4区分）</div>
+      <table>
+        <thead><tr><th>コホート月</th><th class="c">M0（アイテム新規計）</th><th class="c">純粋新規（4区分第1）</th><th class="c">トライアル先行</th><th class="c">アイテム新規（クロスセル）</th></tr></thead>
+        <tbody>
+<tr><td>2025-11 ★発売月</td><td style="font-weight:600;text-align:center">185</td><td class="c">16</td><td class="c">0</td><td class="c">169</td></tr>
+<tr><td>2025-12</td><td style="font-weight:600;text-align:center">363</td><td class="c">30</td><td class="c">0</td><td class="c">333</td></tr>
+<tr><td>2026-01 ★施策①②</td><td style="font-weight:600;text-align:center">449</td><td class="c">59</td><td class="c">9</td><td class="c">381</td></tr>
+<tr><td>2026-02</td><td style="font-weight:600;text-align:center">266</td><td class="c">39</td><td class="c">12</td><td class="c">215</td></tr>
+<tr><td>2026-03 ★定期便開始(3/5)</td><td style="font-weight:600;text-align:center">284</td><td class="c">92</td><td class="c">30</td><td class="c">162</td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">159</td><td class="c">34</td><td class="c">3</td><td class="c">122</td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">137</td><td class="c">35</td><td class="c">6</td><td class="c">96</td></tr>
+<tr><td>2026-06 ★2606</td><td style="font-weight:600;text-align:center">217</td><td class="c">43</td><td class="c">13</td><td class="c">161</td></tr>
+<tr><td>2026-07 ★2606</td><td style="font-weight:600;text-align:center">440</td><td class="c">99</td><td class="c">31</td><td class="c">310</td></tr>
+<tr><td>2026-08</td><td style="font-weight:600;text-align:center">209</td><td class="c">63</td><td class="c">1</td><td class="c">145</td></tr>
+<tr><td>2026-09 ★今月</td><td style="font-weight:600;text-align:center">136</td><td class="c">36</td><td class="c">2</td><td class="c">98</td></tr>
+<tr class="tot"><td>合計</td><td class="c">2,845</td><td class="c">546</td><td class="c">107</td><td class="c">2,192</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px">M+1継続率の内訳比較（分子/分母）</div>
+      <table>
+        <thead><tr><th>コホート月</th><th class="c">アイテム新規計</th><th class="c">純粋新規</th><th class="c">トライアル先行</th><th class="c">クロスセル</th></tr></thead>
+        <tbody>
+<tr><td>2025-11 ★発売月</td><td style="background:#fef3c7;color:#92400e;text-align:center">16.2%<br><span style="font-size:10px;opacity:.75">30/185人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center">12.5%<br><span style="font-size:10px;opacity:.75">2/16人</span></td><td class="c" style="color:#999">—（0人）</td><td style="background:#fef3c7;color:#92400e;text-align:center">16.6%<br><span style="font-size:10px;opacity:.75">28/169人</span></td></tr>
+<tr><td>2025-12</td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.1%<br><span style="font-size:10px;opacity:.75">120/363人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">40.0%<br><span style="font-size:10px;opacity:.75">12/30人</span></td><td class="c" style="color:#999">—（0人）</td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.4%<br><span style="font-size:10px;opacity:.75">108/333人</span></td></tr>
+<tr><td>2026-01 ★施策①②</td><td style="background:#fef3c7;color:#92400e;text-align:center">23.8%<br><span style="font-size:10px;opacity:.75">107/449人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.1%<br><span style="font-size:10px;opacity:.75">16/59人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">44.4%<br><span style="font-size:10px;opacity:.75">4/9人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center">22.8%<br><span style="font-size:10px;opacity:.75">87/381人</span></td></tr>
+<tr><td>2026-02</td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.8%<br><span style="font-size:10px;opacity:.75">74/266人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">25.6%<br><span style="font-size:10px;opacity:.75">10/39人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.3%<br><span style="font-size:10px;opacity:.75">4/12人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.9%<br><span style="font-size:10px;opacity:.75">60/215人</span></td></tr>
+<tr><td>2026-03 ★定期便開始(3/5)</td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.4%<br><span style="font-size:10px;opacity:.75">75/284人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.5%<br><span style="font-size:10px;opacity:.75">29/92人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.7%<br><span style="font-size:10px;opacity:.75">8/30人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center">23.5%<br><span style="font-size:10px;opacity:.75">38/162人</span></td></tr>
+<tr><td>2026-04</td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.7%<br><span style="font-size:10px;opacity:.75">44/159人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.5%<br><span style="font-size:10px;opacity:.75">9/34人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.3%<br><span style="font-size:10px;opacity:.75">1/3人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.9%<br><span style="font-size:10px;opacity:.75">34/122人</span></td></tr>
+<tr><td>2026-05</td><td style="background:#fef9c3;color:#854d0e;text-align:center">28.5%<br><span style="font-size:10px;opacity:.75">39/137人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">25.7%<br><span style="font-size:10px;opacity:.75">9/35人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.3%<br><span style="font-size:10px;opacity:.75">2/6人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.2%<br><span style="font-size:10px;opacity:.75">28/96人</span></td></tr>
+<tr><td>2026-06 ★2606</td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.7%<br><span style="font-size:10px;opacity:.75">71/217人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.9%<br><span style="font-size:10px;opacity:.75">15/43人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.8%<br><span style="font-size:10px;opacity:.75">4/13人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.3%<br><span style="font-size:10px;opacity:.75">52/161人</span></td></tr>
+<tr><td>2026-07 ★2606</td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.3%<br><span style="font-size:10px;opacity:.75">120/440人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center">23.2%<br><span style="font-size:10px;opacity:.75">23/99人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.3%<br><span style="font-size:10px;opacity:.75">10/31人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">28.1%<br><span style="font-size:10px;opacity:.75">87/310人</span></td></tr>
+<tr><td>2026-08</td><td style="background:#fef3c7;color:#92400e;text-align:center">21.5%<br><span style="font-size:10px;opacity:.75">45/209人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center">19.0%<br><span style="font-size:10px;opacity:.75">12/63人</span></td><td style="background:#fecaca;color:#dc2626;text-align:center">0.0%<br><span style="font-size:10px;opacity:.75">0/1人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center">22.8%<br><span style="font-size:10px;opacity:.75">33/145人</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 母集団比較の考察</div>
+    <ul>
+      <li><strong>2026-03以降の純粋新規は、アイテム新規計の約2〜3割（19.8〜32.4%）で推移している。</strong>2026-09は36/136人（26.5%）、2026-08は63/209人（30.1%）、2026-07は99/440人（22.5%）。トライアル先行は2026-01〜09の合計107人（各月1〜31人）で、アイテム新規計2,845人のうち純粋新規546人・トライアル先行107人・アイテム新規（クロスセル）2,192人。トライアル先行の先行注文は105人が3016のみ、2人が他ブランドの¥0トライアル（2026-08の1人＝VC 3包、2026-09の1人＝C+D 3包）。</li>
+      <li>広告等で獲得した純粋新規の定着を見る場合は、本セクションで純粋新規のみのM+1〜M+12を単独確認し、アイテム新規全体と乖離がないかを月次で追跡すること。トライアル先行は母数が小さく振れが大きいため、率の解釈は人数とあわせて行う。</li>
+    </ul>
+  </div>
+
+  <div class="ssub" style="margin-top:16px">M+1継続率の比較（アイテム新規 vs 純粋新規）。M+6は考慮せず、両者のM+1継続率のみを比較</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortSBCompare"></canvas></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 M+1継続率比較の考察</div>
+    <ul>
+      <li><strong>2026-08コホートは純粋新規19.0%（12/63人）がアイテム新規計21.5%（45/209人）を2.5pt下回り、2026-07（純粋23.2%〔23/99人〕・アイテム新規計27.3%）に続いて2か月連続で純粋新規の方が低い。</strong>純粋新規の19.0%は発売来2番目の低さで、最低は2025-11の12.5%（2/16人）。2026-08のクロスセルは22.8%（33/145人）、2026-07は28.1%（87/310人）・トライアル先行は32.3%（10/31人）。</li>
+      <li>純粋新規がアイテム新規計を下回ったのは2025-11・2026-02・04・05・07・08の6コホート（2025-12・2026-01・03・06は上回る）。純粋新規が最も高かったのは2025-12の40.0%（12/30人）、次いで2026-06の34.9%（15/43人）。</li>
+      <li>定期便開始後（2026-03〜08）の純粋新規M+1は19.0〜34.9%、アイテム新規計は21.5〜32.7%。いずれも母数の小さい月は1〜2人の差で数pt動くため、単月の差は誤差の範囲を含めて解釈すること。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 5-3. F2/F3/F4コホート転換率（累計到達ベース） ===== -->
+  <div class="stitle">5-3. F2/F3/F4コホート転換率（累計到達ベース・回数基準）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders × sandbox_nishimori.shopify_sku_brand_master・brand='MINERALion'・item_price&gt;0・有償注文条件〔total_price − current_total_tax &gt; 0〕・CYS0810除外）<br><strong>5・5-2章のM+1〜M+12ヒートマップは「暦月内に注文が発生したか」（時間軸基準）を見る指標だが、本セクションは「何ヶ月かかっても、通算N回目の注文（F2＝2回目・F3＝3回目...）が発生したか」（回数基準・時間を問わない）を見る指標。</strong>2ヶ月・3ヶ月周期の定期便であっても、その周期通りに注文が来ればF2・F3にカウントされるため、<strong>M+1継続率よりF2・F3の数字は高く出るのが自然な設計。</strong>母集団はアイテム新規（5章「全ての注文方法」と同一・他ブランド購入歴の有無は問わない）。「―」は該当回数に到達した人がまだいない右側打ち切り（ゼロ確定ではなく今後の更新で伸びうる）。集計対象は基準日2026-09-30以前の注文のみ。<strong>累積到達人数は時間とともに増える値のため、前月（8/31基準）との差は「確定セルの変化」ではなく経過期間の伸びを表す。</strong></div>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortSBFreq"></table></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 M+1（時間軸）とF2（回数軸）の違いについての考察</div>
+    <ul>
+      <li><strong>同じ2025-12コホートで比較すると、M+1継続率（5章・暦月内に2回目が来たか）は33.1%だったのに対し、F2転換率（本セクション・いつでもいいから2回目が来たか）は59.5%（216/363人）と約1.8倍。</strong>5-3の全コホートの中でF2・F3・F4がいずれも最高（F3 40.5%・F4 29.8%）。暦月を跨いでズレて発生した2回目購入を、本セクションでは「転換」としてカウントできるため。</li>
+      <li><strong>成熟コホート（2026-01・観測9か月・449人）はF2=52.1%（234人）・F3=34.3%（154人）・F4=25.4%（114人）。</strong>2026-03コホート（定期便開始月）はF2=54.2%（154/284人）・F3=35.9%（102人）・F4=24.6%（70人）で、2026-01と同水準。</li>
+      <li><strong>2026-08コホート（209人）のF2は24.4%（51人）・F3は3.3%（7人）まで確定。</strong>8/31基準ではF2=11人（5.3%）で、1か月で40人増えた。同じ観測期間（コホート月の翌月末時点）で比べると、2026-07コホートは8/31基準でF2=30.5%（134/440人）だったため、2026-08コホートの24.4%は▲6.1pt。ただし2ヶ月・3ヶ月周期の2回目が未到来の分を含む途上の値のため、10月版以降で再確認する。2026-07コホートのF2は9/30基準で40.2%（177人）に伸びた。2026-09コホート（136人）はF2=5人（3.7%）。</li>
+    </ul>
+  </div>
+
+  <div class="ssub" style="margin-top:16px">F2／F3／F4転換率の推移（コホート月別）</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortSBFreqTrend"></canvas></div>
+
+  <!-- ===== 5-3-2. F2→F3→F4 段階別残存率（前段階基準） ===== -->
+  <div class="stitle" style="margin-top:24px">5-3-2. F2→F3→F4 段階別残存率（前段階基準・回数基準）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub"><strong>5-3章はF2・F3・F4のいずれも「初回購入者数（M0）を分母」とした累積到達率だったが、本セクションは分母を1段階前の到達者数に置き換えた「段階別残存率」。</strong>F2＝初回購入者のうち2回目に到達した比率（5-3章と同じ・分母M0）。<strong>F3＝2回目に到達した人のうち3回目にも到達した比率（分母F2）。F4＝3回目に到達した人のうち4回目にも到達した比率（分母F3）。</strong>以降F5〜F8も同様に直前段階を分母とする。使用する到達人数は5-3章と完全に同一のデータで、計算式（分母）のみが異なる。「―」は5-3章と同じ右側打ち切り。</div>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortSBFreqStep"></table></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 累積到達率と段階別残存率の見え方の違い</div>
+    <ul>
+      <li><strong>2026-01コホートで比較すると、5-3章の累積F3転換率は34.3%だったが、本セクションのF3段階残存率（F2到達者のうち何%がF3に到達したか）は65.8%（154/234人）、F4段階残存率（F3到達者のうちF4に到達）は74.0%（114/154人）と高い。</strong>最初の壁（F2到達=52.1%）の通過率が最も低く、通過後の段階別残存率は高まる形になっている。2025-12コホートもF2=59.5%→F3 68.1%（147/216人）→F4 73.5%（108/147人）→F5 79.6%（86/108人）と段階が進むほど残存率が高い。</li>
+      <li>一方、2026-02コホートはF3 64.5%（100/155人）→F4 61.0%（61/100人）、2026-03コホートはF3 66.2%（102/154人）→F4 68.6%（70/102人）と、段階が進んでも上がり続けるわけではなく、コホートによって形が異なる。</li>
+      <li>2026-04〜07コホートのF3段階残存率は58.6%（51/87人）・58.7%（44/75人）・45.7%（48/105人）・44.6%（79/177人）と低めに出ているが、3回目の到来が遅い2ヶ月・3ヶ月周期の顧客などの未成熟分を含む可能性があるため、次月以降の更新で再確認する（2026-08はF3 13.7%〔7/51人〕・2026-09はF3 20.0%〔1/5人〕で観測途上）。</li>
+    </ul>
+  </div>
+
+  <div class="ssub" style="margin-top:16px">F2／F3／F4段階別残存率の推移（コホート月別）</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortSBFreqStepTrend"></canvas></div>
+
+  <!-- ===== 5-3-3. 初回定期注文月コホート：F2→F3→F4 段階別残存率 ===== -->
+  <div class="stitle" style="margin-top:24px">5-3-3. 初回定期注文月コホート：F2→F3→F4 段階別残存率（前段階基準・回数基準）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（<code>shopify_orders</code> × <code>shopify_sku_brand_master</code>・brand='MINERALion'・<code>product_type='定期'</code>で定期注文を判定・有償注文条件・CYS0810除外）<br><strong>5-3・5-3-2章はいずれも「MINERALionを初めて購入した月」（アイテム新規＝都度買いも含む）を基準にコホート化していたが、本セクションは基準そのものを変更する。</strong>コホートの基準日を<strong>「初めてMINERALionの定期便を選択した月」（初回定期注文月）</strong>に置き換え、そこを起点（1回目＝F1）としてF2・F3・F4…（通算2回目・3回目・4回目…の注文発生）が起きたかを、5-3-2章と同じ「前段階基準の段階別残存率」で見る。<strong>2026-03を基準にする場合、2026-03に何らかの形でMINERALionを初めて購入した人ではなく、2026-03に「初めて定期便を選択した」人が母集団になる点に注意（都度買いでの初回購入がそれ以前にあった人も含む）。</strong>F2以降の注文は都度買い・定期便いずれでも「再購入」としてカウントする（5-3章と同じ規則）。母集団はMINERALion定期便開始日（2026-03-05）以降にしか発生しないため、コホートは2026-03から始まる。「―」は到達人数が0になった段階以降の右側打ち切り（観測期間不足。ゼロ確定ではない）。</div>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortSBTeikiFreqStep"></table></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 「アイテム新規」基準と「初回定期注文」基準の残存率の違い</div>
+    <ul>
+      <li><strong>初回定期注文月コホートのF2到達率は、2026-03 88.4%（198/224人）・04 83.1%（133/160人）・05 84.9%（79/93人）と、5-3章のアイテム新規基準（同月54.2%・54.7%・54.7%）を大きく上回る。</strong>都度買いも含む初回購入者全体ではなく「初回から定期便を選んだ人」に絞ると、2回目到達のハードルが下がることが確認できる。F3段階残存率は2026-03 83.3%（165/198人）・04 63.2%（84/133人）・05 69.6%（55/79人）、2026-03のF4段階は69.7%（115/165人）。</li>
+      <li><strong>⚠️ 2026-06以降は成熟途上のため、「低下」と断定しない。</strong>F2到達率は2026-06 72.2%（70/97人）→07 61.9%（120/194人）→08 38.6%（39/101人）と低下して見えるが、2ヶ月・3ヶ月周期の契約は2回目が60〜90日後になるため、直近コホートは観測未了で低く出る。実際に2026-06コホートのF2は8/31基準で59.8%（58/97人）→9/30基準で72.2%（70/97人）へ1か月で+12人伸びた。10月版で再確認する。</li>
+      <li>初回定期注文月別の人数は2026-03 224／04 160／05 93／06 97／07 194／08 101／09 77人で、2026-09が最少。なお、7-2章（グロスフロー）は契約単位のイベント集計で、本章（初回定期注文月の顧客数）とは定義が異なる点に注意。</li>
+    </ul>
+  </div>
+
+  <div class="ssub" style="margin-top:16px">初回定期注文月コホート：F2／F3／F4段階別残存率の推移</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortSBTeikiFreqStepTrend"></canvas></div>
+
+  <!-- ===== 5-4. コホート別 期間別LTV推移マップ（MINERALion単独ブランド版） ===== -->
+  <div class="stitle" style="margin-top:24px">5-4. コホート別 期間別LTV推移マップ（MINERALion単独ブランド版）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">全ブランド基準の月次コホートLTVマップ（タブ③）のMINERALion単独ブランド版。<strong>本表のLTVは6章（顧客マスター・SPLIT定義・全商品合算）と異なり、他ブランドへのクロスセル分を含まない「MINERALion本品の購入額のみ」<span class="ltv-brand">単一ブランド集計</span>を集計している。</strong>データソース：<code>shopify_orders</code>の line_items をSKU単位で<code>shopify_sku_brand_master</code>にJOINし、MINERALionブランドの行だけを抽出（<code>item_price&gt;0</code>・有償注文条件・CYS0810除外・税抜換算÷1.08）。集計方法：コホートの起点日（コホート月の初回有償購入日）から30/60/90/120/180/365日以内のMINERALion購入額（同ブランドへの再購入・定期継続分を含む）をAVGで平均化。基準日は2026-09-30固定。<strong>各セルの確定判定は「コホート月末日＋期間日数 ≦ 2026-09-30」を基準とする（月の後半に初回購入した顧客も含め、全員の観測期間が経過したセルのみ確定表示）。</strong> <strong>各行の下に「└ 累計受注金額」のサブ行を追加し、同じコホートが各LTV時点までに生み出したMINERALion購入額の合計（SUM。1人当たり平均のAVGではなく実額の総和・税抜）を表示している。</strong>未確定の期間はサブ行も「—」表示とする。純粋新規＝<code>shopify_orders</code>から直接算出した生涯初有償注文日と起点日が一致する顧客（顧客マスターは使用しない）。</div>
+
+  <!-- 母集団セレクター -->
+  <div style="display:flex;gap:8px;margin:10px 0 12px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:12px;font-weight:600;color:var(--muted)">コホート対象：</span>
+    <button id="sbLtvBtn_item" class="cohort-mode-btn active-mode" onclick="switchSBLtvMode('item',this)">アイテム新規顧客</button>
+    <button id="sbLtvBtn_pure" class="cohort-mode-btn" onclick="switchSBLtvMode('pure',this)">純粋新規顧客</button>
+    <span id="sbLtvModeNote" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+  </div>
+  <div style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+    <strong>アイテム新規顧客</strong>＝MINERALionを初めて購入した月でコホート化（他ブランドの購入歴の有無は問わない・クロスセル・トライアル先行を含む）。<strong>純粋新規顧客</strong>＝会社にとって生涯初の有償注文がMINERALionだった顧客に限定（4区分の第1。トライアル先行は含まない）。いずれも「MINERALion単独ではなく複数ブランドを初回に購入した顧客」を除外していない点に注意。
+  </div>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortSBLtvMap" style="min-width:800px"></table></div>
+
+  <div class="monthly-insight" style="margin-top:12px">
+    <div class="mi-title">💡 MINERALion単一ブランド集計LTVコホート 考察</div>
+    <ul>
+      <li><strong>30日LTV（アイテム新規）は、定期便開始前（2025-11〜2026-02）の¥7,589〜¥8,726から、開始後（2026-03〜06）は¥8,185〜¥9,658へ緩やかに上昇した。</strong>2026-07は¥8,375、2026-08は¥8,129で、2026-08は開始前の水準に近い。純粋新規の30日LTVは2026-08が¥8,898、2026-07が¥8,212（アイテム新規は¥8,129・¥8,375）。純粋新規の2026-04（34人）は30日¥13,412と高いが、母数が小さい点に注意。</li>
+      <li><strong>90日LTV（確定済み・アイテム新規）は2025-11 ¥10,712→12月 ¥12,361→2026-01 ¥11,525→02 ¥12,338→03 ¥12,746→04 ¥12,937→05 ¥13,352→06 ¥12,982。</strong>180日LTV（確定済み）は2025-11 ¥14,106／12月 ¥17,131／2026-01 ¥15,635／02 ¥17,071／03 ¥17,820で、2026-03コホートは純粋新規が¥18,885とアイテム新規（¥17,820）をやや上回る。</li>
+      <li><strong>観測期間バイアスの注記：</strong>確定判定は「コホート月末日＋期間日数 ≦ 基準日（2026-09-30）」で、月後半に初回購入した顧客も含め全員の観測期間が経過したセルのみ確定として表示する。<strong>365日LTVは全コホート未確定</strong>（最も早い2025-11コホートの確定は2026-11末）。2026-09コホートは全期間が未確定（30日LTVは10月末）。2026-07の90日・2026-08の60日・2026-09の30日LTVは10/31基準で確定する。</li>
+    </ul>
+  </div>
+
+
+  </div>
+
+</div>
+
+<script>
+// ===== PART FILE: tab2（コホートチャート） / mineralion / 2026_09 =====
+// switchReportTab はno-op（このファイルは単一タブのプレビュー用）
+function switchReportTab(id, btn) {}
+
+// @@TAB2_JS_START@@
+// ===== 5. コホートテーブル =====
+const cohortSBData = [
+  {m:'2025-11 ★発売月', m0:185, m1:30, m2:46, m3:34, m4:29, m5:24, m6:22, m7:18, m8:31, m9:12, m10:21, m11:null, m12:null},
+  {m:'2025-12', m0:363, m1:120, m2:83, m3:89, m4:69, m5:73, m6:64, m7:79, m8:65, m9:53, m10:null, m11:null, m12:null},
+  {m:'2026-01 ★施策①②', m0:449, m1:107, m2:98, m3:85, m4:70, m5:78, m6:87, m7:67, m8:70, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:266, m1:74, m2:63, m3:52, m4:53, m5:60, m6:35, m7:38, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03 ★定期便開始(3/5)', m0:284, m1:75, m2:68, m3:75, m4:73, m5:51, m6:47, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:159, m1:44, m2:42, m3:50, m4:32, m5:29, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:137, m1:39, m2:48, m3:38, m4:26, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06 ★2606', m0:217, m1:71, m2:60, m3:40, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★2606', m0:440, m1:120, m2:116, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08', m0:209, m1:45, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★今月', m0:136, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+// ===== 5-1. 定期周期別コホート（初回加入時周期で固定・2026-09-11検証済み） =====
+const cohortSB_1m = [
+  {m:'2025-11 ★発売月', m0:15, m1:5, m2:8, m3:8, m4:5, m5:8, m6:8, m7:7, m8:10, m9:8, m10:6, m11:null, m12:null},
+  {m:'2025-12', m0:49, m1:27, m2:25, m3:36, m4:38, m5:41, m6:37, m7:42, m8:34, m9:29, m10:null, m11:null, m12:null},
+  {m:'2026-01 ★施策①②', m0:57, m1:29, m2:32, m3:38, m4:39, m5:41, m6:40, m7:34, m8:37, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:39, m1:28, m2:25, m3:28, m4:23, m5:21, m6:20, m7:16, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03 ★定期便開始(3/5)', m0:68, m1:46, m2:44, m3:42, m4:38, m5:31, m6:21, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:40, m1:31, m2:21, m3:20, m4:15, m5:15, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:30, m1:24, m2:22, m3:19, m4:15, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06 ★2606', m0:46, m1:36, m2:30, m3:23, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★2606', m0:92, m1:77, m2:63, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08', m0:35, m1:27, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★今月', m0:24, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+const cohortSB_2m = [
+  {m:'2025-11 ★発売月', m0:3, m1:2, m2:1, m3:2, m4:1, m5:1, m6:2, m7:0, m8:3, m9:0, m10:2, m11:null, m12:null},
+  {m:'2025-12', m0:17, m1:8, m2:7, m3:9, m4:7, m5:7, m6:9, m7:9, m8:8, m9:7, m10:null, m11:null, m12:null},
+  {m:'2026-01 ★施策①②', m0:23, m1:6, m2:13, m3:9, m4:12, m5:7, m6:16, m7:6, m8:11, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:18, m1:9, m2:6, m3:7, m4:10, m5:8, m6:3, m7:6, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03 ★定期便開始(3/5)', m0:21, m1:3, m2:10, m3:5, m4:11, m5:3, m6:8, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:21, m1:7, m2:10, m3:10, m4:8, m5:6, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:16, m1:2, m2:8, m3:4, m4:5, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06 ★2606', m0:21, m1:3, m2:14, m3:4, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★2606', m0:36, m1:6, m2:22, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08', m0:19, m1:4, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★今月', m0:14, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+const cohortSB_3m = [
+  {m:'2025-11 ★発売月', m0:8, m1:1, m2:4, m3:1, m4:6, m5:1, m6:1, m7:3, m8:2, m9:0, m10:3, m11:null, m12:null},
+  {m:'2025-12', m0:15, m1:8, m2:6, m3:7, m4:2, m5:4, m6:5, m7:5, m8:4, m9:5, m10:null, m11:null, m12:null},
+  {m:'2026-01 ★施策①②', m0:33, m1:11, m2:18, m3:13, m4:5, m5:13, m6:9, m7:8, m8:12, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:23, m1:9, m2:10, m3:1, m4:6, m5:12, m6:3, m7:6, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03 ★定期便開始(3/5)', m0:33, m1:2, m2:4, m3:12, m4:8, m5:3, m6:10, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:20, m1:0, m2:3, m3:9, m4:1, m5:1, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:15, m1:2, m2:4, m3:3, m4:0, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06 ★2606', m0:22, m1:4, m2:2, m3:6, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★2606', m0:47, m1:7, m2:4, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08', m0:20, m1:2, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★今月', m0:15, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+const cohortSB_spot = [
+  {m:'2025-11 ★発売月', m0:159, m1:22, m2:33, m3:23, m4:17, m5:14, m6:11, m7:8, m8:16, m9:4, m10:10, m11:null, m12:null},
+  {m:'2025-12', m0:282, m1:77, m2:45, m3:37, m4:22, m5:21, m6:13, m7:23, m8:19, m9:12, m10:null, m11:null, m12:null},
+  {m:'2026-01 ★施策①②', m0:336, m1:61, m2:35, m3:25, m4:14, m5:17, m6:22, m7:19, m8:10, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:186, m1:28, m2:22, m3:16, m4:14, m5:19, m6:9, m7:10, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03 ★定期便開始(3/5)', m0:162, m1:24, m2:10, m3:16, m4:16, m5:14, m6:8, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:78, m1:6, m2:8, m3:11, m4:8, m5:7, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:76, m1:11, m2:14, m3:12, m4:6, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06 ★2606', m0:128, m1:28, m2:14, m3:7, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★2606', m0:265, m1:30, m2:27, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08', m0:135, m1:12, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★今月', m0:83, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+function getSBCohortData(mode) {
+  if (mode === '1m') return cohortSB_1m;
+  if (mode === '2m') return cohortSB_2m;
+  if (mode === '3m') return cohortSB_3m;
+  if (mode === 'spot') return cohortSB_spot;
+  return cohortSBData;
+}
+function switchSBCohortMode(mode, btn) {
+  document.querySelectorAll('#sbCohortBtn_all, #sbCohortBtn_1m, #sbCohortBtn_2m, #sbCohortBtn_3m, #sbCohortBtn_spot').forEach(b => b.classList.remove('active-mode'));
+  btn.classList.add('active-mode');
+  const notes = {
+    all: '',
+    '1m': '※ 初回定期加入時点の周期が「28日」または「1ヶ月」だった顧客（初回固定・2026-09-11検証済み）',
+    '2m': '※ 初回定期加入時点の周期が「2ヶ月」だった顧客（母数が小さい点に注意）',
+    '3m': '※ 初回定期加入時点の周期が「3ヶ月」だった顧客（母数が小さい点に注意）',
+    'spot': '※ 定期購入経験が一度もない顧客のみ（都度買いのみ・実BQデータ）'
+  };
+  document.getElementById('sbCohortModeNote').textContent = notes[mode];
+  buildItemCohortTable('cohortSB', getSBCohortData(mode), ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12']);
+}
+
+function buildItemCohortTable(tableId, data, keys) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const kLen = keys.length;
+  let hd = '<thead><tr><th>コホート月</th><th>アイテム新規数</th>';
+  keys.forEach(k => { hd += `<th>${k}</th>`; });
+  hd += '</tr></thead><tbody>';
+  let html2 = hd;
+  data.forEach(row => {
+    const isOgsRow = !!row.ogs;
+    const isThisR = !!row.thisMonth;
+    const isNew  = !!row.newThisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = '';
+    if (isThisR) labelSuffix = ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>';
+    if (isNew)   labelSuffix = ' <span style="font-size:10px;background:#bbf7d0;color:#15803d;padding:1px 4px;border-radius:2px">8月確定</span>';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    ['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11','m12'].slice(0, kLen).forEach(k => {
+      const v = row[k];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>'; return; }
+      const pct = Math.round(v / row.m0 * 100);
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 45) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 35) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 25) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 15) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}</span></td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+buildItemCohortTable('cohortSB', cohortSBData, ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12']);
+
+const sbCohortMonths = ['2025-11★発売月','2025-12','2026-01★施策①②','2026-02','2026-03★定期便開始(3/5)','2026-04','2026-05','2026-06★2606','2026-07★2606','2026-08','2026-09★今月'];
+const sbM1 = [16.2,33.1,23.8,27.8,26.4,27.7,28.5,32.7,27.3,21.5,null];
+const sbM3 = [18.4,24.5,18.9,19.5,26.4,31.4,27.7,18.4,null,null,null];
+const sbM6 = [11.9,17.6,19.4,13.2,16.5,null,null,null,null,null,null];
+new Chart(document.getElementById('chartCohortSB'), {
+  type: 'line',
+  data: {
+    labels: sbCohortMonths,
+    datasets: [
+      {label:'M+1継続率', data:sbM1, borderColor:'#1E3A8A', backgroundColor:'rgba(30,58,138,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'M+3継続率', data:sbM3, borderColor:'#1E3A8A', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[2,3]},
+      {label:'M+6継続率', data:sbM6, borderColor:'#1E3A8A', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:50, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:10}} } }
+  }
+});
+
+// ===== 5-1. 初回購入商品別F2転換率チャート（①単品／②定期／③トライアル） =====
+const f2CombinedLabels = ['2025-11★発売月','2025-12','2026-01★施策①②','2026-02','2026-03★定期便開始(3/5)','2026-04','2026-05','2026-06★2606','2026-07★2606','2026-08','2026-09★今月'];
+const f2CombinedP30 = [14.6,18.2,16.7,21.4,19.7,11.5,13.4,21.3,16.8,12.5,null];
+const f2CombinedP90 = [38.4,48.8,41.4,45.9,34.2,27.9,38.8,38.9,null,null,null];
+new Chart(document.getElementById('chartF2Combined'), {
+  type: 'line',
+  data: {
+    labels: f2CombinedLabels,
+    datasets: [
+      {label:'30日F2転換率', data:f2CombinedP30, borderColor:'#1E3A8A', backgroundColor:'rgba(30,58,138,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'90日F2転換率', data:f2CombinedP90, borderColor:'#1E3A8A', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:60, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-1. ①単品 純粋新規 =====
+const f2CombinedPureP30 = [12.5,26.7,13.6,28.2,27.9,17.6,21.1,20.8,15.4,20.5,null];
+const f2CombinedPureP90 = [25.0,46.7,33.9,48.7,44.3,17.6,52.6,41.7,null,null,null];
+new Chart(document.getElementById('chartF2CombinedPure'), {
+  type: 'line',
+  data: {
+    labels: f2CombinedLabels,
+    datasets: [
+      {label:'30日F2転換率', data:f2CombinedPureP30, borderColor:'#1E7A5C', backgroundColor:'rgba(30,122,92,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'90日F2転換率', data:f2CombinedPureP90, borderColor:'#1E7A5C', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:60, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-1. ②定期（130-teiki・アイテム新規。30日は暦月日数の影響が大きい参考値） =====
+const f2Sku120Labels = ['2026-03★定期便開始(3/5)','2026-04','2026-05','2026-06★2606','2026-07★2606','2026-08','2026-09★今月'];
+const f2Sku120P30 = [12.3,52.0,14.7,65.8,11.7,9.1,null];
+const f2Sku120P60 = [54.4,64.0,64.7,78.9,64.9,null,null];
+const f2Sku120P90 = [66.7,74.0,73.5,81.6,null,null,null];
+new Chart(document.getElementById('chartF2Sku120'), {
+  type: 'line',
+  data: {
+    labels: f2Sku120Labels,
+    datasets: [
+      {label:'30日F2転換率（暦月日数の影響・参考）', data:f2Sku120P30, borderColor:'#1E3A8A', backgroundColor:'rgba(30,58,138,0.1)', tension:0.3, fill:false, pointRadius:4},
+      {label:'60日F2転換率', data:f2Sku120P60, borderColor:'#1E3A8A', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[2,3]},
+      {label:'90日F2転換率', data:f2Sku120P90, borderColor:'#1E3A8A', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:100, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-1. ③トライアル（3016→本品・起点同日を含む・母集団10人未満の月は非表示） =====
+const f2Sku121Labels = ['2026-01★施策①②','2026-02','2026-03★定期便開始(3/5)','2026-04','2026-05','2026-06★2606','2026-07★2606','2026-08','2026-09★今月'];
+const f2Sku121P30 = [9.6,20.4,11.2,null,null,15.1,11.9,null,null];
+const f2Sku121P60 = [10.9,21.8,12.9,null,null,15.4,12.5,null,null];
+const f2Sku121P90 = [11.7,23.1,13.9,null,null,15.9,null,null,null];
+new Chart(document.getElementById('chartF2Sku121'), {
+  type: 'line',
+  data: {
+    labels: f2Sku121Labels,
+    datasets: [
+      {label:'30日転換率', data:f2Sku121P30, borderColor:'#1E3A8A', backgroundColor:'rgba(30,58,138,0.1)', tension:0.3, fill:false, pointRadius:4},
+      {label:'60日転換率', data:f2Sku121P60, borderColor:'#1E3A8A', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[2,3]},
+      {label:'90日転換率', data:f2Sku121P90, borderColor:'#1E3A8A', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:30, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-2. コホート継続率：アイテム新規 vs 純粋新規（切替ヒートマップ） =====
+const cohortSB_pure = [
+  {m:'2025-11 ★発売月', m0:16, m1:2, m2:2, m3:2, m4:2, m5:2, m6:1, m7:0, m8:1, m9:0, m10:0, m11:null, m12:null},
+  {m:'2025-12', m0:30, m1:12, m2:4, m3:9, m4:5, m5:6, m6:5, m7:6, m8:6, m9:2, m10:null, m11:null, m12:null},
+  {m:'2026-01 ★施策①②', m0:59, m1:16, m2:9, m3:7, m4:8, m5:7, m6:8, m7:7, m8:8, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:39, m1:10, m2:7, m3:7, m4:6, m5:4, m6:2, m7:1, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03 ★定期便開始(3/5)', m0:92, m1:29, m2:20, m3:28, m4:18, m5:22, m6:11, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:34, m1:9, m2:5, m3:6, m4:5, m5:7, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:35, m1:9, m2:13, m3:10, m4:3, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06 ★2606', m0:43, m1:15, m2:13, m3:9, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★2606', m0:99, m1:23, m2:28, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08', m0:63, m1:12, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★今月', m0:36, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+// ===== 5-4. コホート別期間別LTV推移マップ（MINERALion単独ブランド版・アイテム新規/純粋新規切替） =====
+// データソース：Shopify受注 shopify_orders line_items × shopify_sku_brand_master（brand='MINERALion'・item_price>0・有償注文条件・CYS0810除外・税抜÷1.08）
+// 単独ブランドLTV（他ブランドへのクロスセル分は含まない）。基準日2026-09-30。BQ実行日2026-10-02（handoff_tab2_mineralion_2026_09.md 6-8章の確定値）。確定判定はコホート月末日＋期間日数≦基準日。
+const sbLtvMap_item = [
+  {m:'2025-11 ★発売月', cust:185, d30:7589, d60:9370, d90:10712, d120:12235, d180:14106, d365:null, r30:1404000, r60:1733400, r90:1981800, r120:2263400, r180:2609600, r365:null},
+  {m:'2025-12', cust:363, d30:7974, d60:10473, d90:12361, d120:14228, d180:17131, d365:null, r30:2894400, r60:3801600, r90:4487200, r120:5164800, r180:6218400, r365:null},
+  {m:'2026-01 ★施策①②', cust:449, d30:7829, d60:9846, d90:11525, d120:12788, d180:15635, d365:null, r30:3515400, r60:4421000, r90:5174600, r120:5741800, r180:7020100, r365:null},
+  {m:'2026-02', cust:266, d30:8726, d60:10809, d90:12338, d120:13950, d180:17071, d365:null, r30:2321200, r60:2875200, r90:3282000, r120:3710600, r180:4540800, r365:null},
+  {m:'2026-03 ★定期便開始(3/5)', cust:284, d30:8968, d60:10920, d90:12746, d120:14818, d180:17820, d365:null, r30:2546800, r60:3101400, r90:3619800, r120:4208400, r180:5061000, r365:null},
+  {m:'2026-04', cust:159, d30:9658, d60:10892, d90:12937, d120:15166, d180:null, d365:null, r30:1535600, r60:1731800, r90:2057000, r120:2411400, r180:null, r365:null},
+  {m:'2026-05', cust:137, d30:8185, d60:10759, d90:13352, d120:15467, d180:null, d365:null, r30:1121400, r60:1474000, r90:1829200, r120:2119000, r180:null, r365:null},
+  {m:'2026-06 ★2606', cust:217, d30:9529, d60:11117, d90:12982, d120:null, d180:null, d365:null, r30:2067800, r60:2412400, r90:2817000, r120:null, r180:null, r365:null},
+  {m:'2026-07 ★2606', cust:440, d30:8375, d60:10360, d90:null, d120:null, d180:null, d365:null, r30:3685100, r60:4558500, r90:null, r120:null, r180:null, r365:null},
+  {m:'2026-08', cust:209, d30:8129, d60:null, d90:null, d120:null, d180:null, d365:null, r30:1699000, r60:null, r90:null, r120:null, r180:null, r365:null},
+  {m:'2026-09 ★今月', cust:136, d30:null, d60:null, d90:null, d120:null, d180:null, d365:null, r30:null, r60:null, r90:null, r120:null, r180:null, r365:null, thisMonth:true},
+];
+const sbLtvMap_pure = [
+  {m:'2025-11 ★発売月', cust:16, d30:6750, d60:7425, d90:8100, d120:9325, d180:10300, d365:null, r30:108000, r60:118800, r90:129600, r120:149200, r180:164800, r365:null},
+  {m:'2025-12', cust:30, d30:8460, d60:10620, d90:12400, d120:13960, d180:16040, d365:null, r30:253800, r60:318600, r90:372000, r120:418800, r180:481200, r365:null},
+  {m:'2026-01 ★施策①②', cust:59, d30:7780, d60:9312, d90:10658, d120:11288, d180:12847, d365:null, r30:459000, r60:549400, r90:628800, r120:666000, r180:758000, r365:null},
+  {m:'2026-02', cust:39, d30:10754, d60:12995, d90:13667, d120:15769, d180:17451, d365:null, r30:419400, r60:506800, r90:533000, r120:615000, r180:680600, r365:null},
+  {m:'2026-03 ★定期便開始(3/5)', cust:92, d30:9600, d60:11746, d90:13687, d120:15676, d180:18885, d365:null, r30:883200, r60:1080600, r90:1259200, r120:1442200, r180:1737400, r365:null},
+  {m:'2026-04', cust:34, d30:13412, d60:14694, d90:17006, d120:17918, d180:null, d365:null, r30:456000, r60:499600, r90:578200, r120:609200, r180:null, r365:null},
+  {m:'2026-05', cust:35, d30:9286, d60:12069, d90:15423, d120:16897, d180:null, d365:null, r30:325000, r60:422400, r90:539800, r120:591400, r180:null, r365:null},
+  {m:'2026-06 ★2606', cust:43, d30:9693, d60:11484, d90:14205, d120:null, d180:null, d365:null, r30:416800, r60:493800, r90:610800, r120:null, r180:null, r365:null},
+  {m:'2026-07 ★2606', cust:99, d30:8212, d60:10321, d90:null, d120:null, d180:null, d365:null, r30:813000, r60:1021800, r90:null, r120:null, r180:null, r365:null},
+  {m:'2026-08', cust:63, d30:8898, d60:null, d90:null, d120:null, d180:null, d365:null, r30:560600, r60:null, r90:null, r120:null, r180:null, r365:null},
+  {m:'2026-09 ★今月', cust:36, d30:null, d60:null, d90:null, d120:null, d180:null, d365:null, r30:null, r60:null, r90:null, r120:null, r180:null, r365:null, thisMonth:true},
+];
+const sbLtvMapKeys = ['d30','d60','d90','d120','d180','d365'];
+const sbLtvMapHeaders = ['30日LTV','60日LTV','90日LTV','120日LTV','180日LTV','365日LTV'];
+
+function sbLtvColStats(data, key) {
+  return data.map(r => r[key]).filter(v => v !== null && v !== undefined).sort((a,b) => a-b);
+}
+function sbLtvColorFor(v, sortedVals) {
+  if (v === null || v === undefined) return null;
+  const n = sortedVals.length;
+  if (n <= 1) return {bg:'#dcfce7', tc:'#166534'};
+  const idx = sortedVals.indexOf(v);
+  const pct = idx / (n - 1);
+  if (pct >= 0.8) return {bg:'#bbf7d0', tc:'#15803d'};
+  if (pct >= 0.6) return {bg:'#dcfce7', tc:'#166534'};
+  if (pct >= 0.4) return {bg:'#fef9c3', tc:'#854d0e'};
+  if (pct >= 0.2) return {bg:'#fef3c7', tc:'#92400e'};
+  return {bg:'#fed7aa', tc:'#c2410c'};
+}
+const sbLtvMapRevKeys = ['r30','r60','r90','r120','r180','r365'];
+function buildSBLtvMapTable(tableId, data) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const colStats = sbLtvMapKeys.map(k => sbLtvColStats(data, k));
+  let html2 = '<thead><tr><th style="text-align:left;min-width:170px">購入月</th><th style="text-align:right">顧客数</th>';
+  sbLtvMapHeaders.forEach(h => { html2 += `<th style="text-align:right">${h}</th>`; });
+  html2 += '</tr></thead><tbody>';
+  data.forEach(row => {
+    const isThisR = !!row.thisMonth;
+    html2 += `<tr class="${isThisR ? 'highlight-row' : ''}">`;
+    let labelSuffix = isThisR ? ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>' : '';
+    html2 += `<td style="font-size:11px;font-weight:${isThisR ? 700 : 400}">${row.m}${labelSuffix}</td><td style="text-align:right;font-weight:600;font-size:11px">${row.cust.toLocaleString()}人</td>`;
+    sbLtvMapKeys.forEach((k, i) => {
+      const v = row[k];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td>'; return; }
+      const c = sbLtvColorFor(v, colStats[i]);
+      html2 += `<td style="background:${c.bg};color:${c.tc};font-size:11px;text-align:right">¥${v.toLocaleString()}</td>`;
+    });
+    html2 += '</tr>';
+    // 累計受注金額サブ行（コホート当月の顧客が生み出した各LTV時点での累計受注金額。SUM(平均LTVではなく実額合計)。未確定期間は空欄）
+    html2 += `<tr class="ltv-rev-row"><td style="font-size:10px;color:var(--muted);padding-top:2px;padding-bottom:6px">└ 累計受注金額</td><td></td>`;
+    sbLtvMapRevKeys.forEach(rk => {
+      const rv = row[rk];
+      if (rv === null || rv === undefined) { html2 += '<td style="font-size:10px;color:#ccc;text-align:right;padding-top:2px;padding-bottom:6px">—</td>'; return; }
+      html2 += `<td style="font-size:10px;color:var(--muted);text-align:right;padding-top:2px;padding-bottom:6px">¥${rv.toLocaleString()}</td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+function getSBLtvMapData(mode) { return mode === 'pure' ? sbLtvMap_pure : sbLtvMap_item; }
+function switchSBLtvMode(mode, btn) {
+  document.querySelectorAll('#sbLtvBtn_item, #sbLtvBtn_pure').forEach(b => b.classList.remove('active-mode'));
+  btn.classList.add('active-mode');
+  const notes = {
+    item: '＝MINERALionを初めて購入した月でコホート化（クロスセル・トライアル先行含む）',
+    pure: '＝生涯初の有償注文がMINERALionだった顧客のみ（4区分の第1・トライアル先行を含まない）'
+  };
+  document.getElementById('sbLtvModeNote').textContent = notes[mode];
+  buildSBLtvMapTable('cohortSBLtvMap', getSBLtvMapData(mode));
+}
+switchSBLtvMode('item', document.getElementById('sbLtvBtn_item'));
+
+function buildCohortTable2(tableId, data, keys, colLabel) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const kLen = keys.length;
+  let hd = `<thead><tr><th>コホート月</th><th>${colLabel}</th>`;
+  keys.forEach(k => { hd += `<th>${k}</th>`; });
+  hd += '</tr></thead><tbody>';
+  let html2 = hd;
+  data.forEach(row => {
+    const isOgsRow = !!row.ogs;
+    const isThisR = !!row.thisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = '';
+    if (isThisR) labelSuffix = ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    ['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11','m12'].slice(0, kLen).forEach(k => {
+      const v = row[k];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>'; return; }
+      const pct = Math.round(v / row.m0 * 100);
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 45) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 35) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 25) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 15) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}</span></td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+function getSBCohortData2(mode) { return mode === 'pure' ? cohortSB_pure : cohortSBData; }
+function switchSBCohortMode2(mode, btn) {
+  document.querySelectorAll('#sbCohort2Btn_item, #sbCohort2Btn_pure').forEach(b => b.classList.remove('active-mode'));
+  btn.classList.add('active-mode');
+  const notes = {
+    item: '※ アイテム新規（他ブランド購入歴の有無は問わない・5章「全ての注文方法」と同一母集団）',
+    pure: '※ 純粋新規（会社にとって生涯初の有償注文がMINERALionだった顧客のみ＝4区分の第1・トライアル先行を含まない・母数が小さい月は変動に注意）'
+  };
+  document.getElementById('sbCohort2ModeNote').textContent = notes[mode];
+  const colLabel = mode === 'pure' ? '純粋新規数' : 'アイテム新規数';
+  buildCohortTable2('cohortSB2', getSBCohortData2(mode), ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12'], colLabel);
+}
+switchSBCohortMode2('item', document.getElementById('sbCohort2Btn_item'));
+
+const sbCompareMonths = ['2025-11★発売月','2025-12','2026-01★施策①②','2026-02','2026-03★定期便開始(3/5)','2026-04','2026-05','2026-06★2606','2026-07★2606','2026-08','2026-09★今月'];
+const sbM1ItemCmp = [16.2,33.1,23.8,27.8,26.4,27.7,28.5,32.7,27.3,21.5,null];
+const sbM1PureCmp = [12.5,40,27.1,25.6,31.5,26.5,25.7,34.9,23.2,19,null];
+new Chart(document.getElementById('chartCohortSBCompare'), {
+  type: 'line',
+  data: {
+    labels: sbCompareMonths,
+    datasets: [
+      {label:'アイテム新規 M+1継続率', data:sbM1ItemCmp, borderColor:'#1E3A8A', backgroundColor:'rgba(30,58,138,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'純粋新規 M+1継続率', data:sbM1PureCmp, borderColor:'#1E7A5C', backgroundColor:'rgba(30,122,92,0.1)', tension:0.3, fill:false, pointRadius:5},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:50, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:10}} } }
+  }
+});
+
+// ===== 5-3. F2/F3/F4コホート転換率（累計到達ベース） =====
+const cohortSBFreqData = [
+  {m:'2025-11 ★発売月', m0:185, f2:88, f3:61, f4:40, f5:31, f6:22, f7:14, f8:8},
+  {m:'2025-12', m0:363, f2:216, f3:147, f4:108, f5:86, f6:67, f7:48, f8:37},
+  {m:'2026-01 ★施策①②', m0:449, f2:234, f3:154, f4:114, f5:75, f6:45, f7:35, f8:24},
+  {m:'2026-02', m0:266, f2:155, f3:100, f4:61, f5:37, f6:24, f7:17, f8:10},
+  {m:'2026-03 ★定期便開始(3/5)', m0:284, f2:154, f3:102, f4:70, f5:46, f6:27, f7:18, f8:3},
+  {m:'2026-04', m0:159, f2:87, f3:51, f4:34, f5:23, f6:13, f7:4, f8:1},
+  {m:'2026-05', m0:137, f2:75, f3:44, f4:24, f5:12, f6:5, f7:null, f8:null},
+  {m:'2026-06 ★2606', m0:217, f2:105, f3:48, f4:28, f5:3, f6:1, f7:null, f8:null},
+  {m:'2026-07 ★2606', m0:440, f2:177, f3:79, f4:11, f5:1, f6:null, f7:null, f8:null},
+  {m:'2026-08', m0:209, f2:51, f3:7, f4:null, f5:null, f6:null, f7:null, f8:null},
+  {m:'2026-09 ★今月', m0:136, f2:5, f3:1, f4:null, f5:null, f6:null, f7:null, f8:null, thisMonth:true},
+];
+
+function buildFreqCohortTable(tableId, data, keys) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  let hd = '<thead><tr><th>コホート月</th><th>アイテム新規数</th>';
+  keys.forEach(k => { hd += `<th>${k}</th>`; });
+  hd += '</tr></thead><tbody>';
+  let html2 = hd;
+  data.forEach(row => {
+    const isOgsRow = !!row.ogs;
+    const isThisR = !!row.thisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = isThisR ? ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>' : '';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    keys.forEach(k => {
+      const key = k.toLowerCase();
+      const v = row[key];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>'; return; }
+      const pct = Math.round(v / row.m0 * 100);
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 45) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 35) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 25) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 15) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}</span></td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+buildFreqCohortTable('cohortSBFreq', cohortSBFreqData, ['F2','F3','F4','F5','F6','F7','F8']);
+
+const sbFreqMonths = ['2025-11★発売月','2025-12','2026-01★施策①②','2026-02','2026-03★定期便開始(3/5)','2026-04','2026-05','2026-06★2606','2026-07★2606','2026-08','2026-09★今月'];
+const sbF2Trend = cohortSBFreqData.map(r => r.f2!==null ? Math.round(r.f2/r.m0*1000)/10 : null);
+const sbF3Trend = cohortSBFreqData.map(r => r.f3!==null ? Math.round(r.f3/r.m0*1000)/10 : null);
+const sbF4Trend = cohortSBFreqData.map(r => r.f4!==null ? Math.round(r.f4/r.m0*1000)/10 : null);
+new Chart(document.getElementById('chartCohortSBFreqTrend'), {
+  type: 'line',
+  data: {
+    labels: sbFreqMonths,
+    datasets: [
+      {label:'F2転換率', data:sbF2Trend, borderColor:'#1E3A8A', backgroundColor:'rgba(30,58,138,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F3転換率', data:sbF3Trend, borderColor:'#1E7A5C', backgroundColor:'rgba(30,122,92,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F4転換率', data:sbF4Trend, borderColor:'#EA580C', backgroundColor:'rgba(234,88,12,0.1)', tension:0.3, fill:false, pointRadius:5},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:60, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-3-2. F2→F3→F4 段階別残存率（前段階基準） =====
+// 使用データはcohortSBFreqDataと完全同一（m0・f2〜f8）。計算式（分母）のみ5-3章と異なる：
+// F2=f2/m0（5-3章と同じ）、F3=f3/f2、F4=f4/f3、F5=f5/f4、F6=f6/f5、F7=f7/f6、F8=f8/f7
+function buildStepFreqCohortTable(tableId, data, keys, monthLabel, m0Label) {
+  monthLabel = monthLabel || 'コホート月';
+  m0Label = m0Label || 'アイテム新規数';
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  let hd = `<thead><tr><th>${monthLabel}</th><th>${m0Label}</th>`;
+  keys.forEach(k => { hd += `<th>${k}</th>`; });
+  hd += '</tr></thead><tbody>';
+  let html2 = hd;
+  data.forEach(row => {
+    const isOgsRow = !!row.ogs;
+    const isThisR = !!row.thisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = isThisR ? ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>' : '';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    let prev = row.m0;
+    keys.forEach(k => {
+      const key = k.toLowerCase();
+      const v = row[key];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>'; return; }
+      const pct = Math.round(v / prev * 1000) / 10;
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 75) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 60) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 45) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 30) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}/${prev.toLocaleString()}人</span></td>`;
+      prev = v;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+buildStepFreqCohortTable('cohortSBFreqStep', cohortSBFreqData, ['F2','F3','F4','F5','F6','F7','F8']);
+
+const sbF2StepTrend = cohortSBFreqData.map(r => r.f2!==null ? Math.round(r.f2/r.m0*1000)/10 : null);
+const sbF3StepTrend = cohortSBFreqData.map(r => (r.f3!==null && r.f2) ? Math.round(r.f3/r.f2*1000)/10 : null);
+const sbF4StepTrend = cohortSBFreqData.map(r => (r.f4!==null && r.f3) ? Math.round(r.f4/r.f3*1000)/10 : null);
+new Chart(document.getElementById('chartCohortSBFreqStepTrend'), {
+  type: 'line',
+  data: {
+    labels: sbFreqMonths,
+    datasets: [
+      {label:'F2段階残存率（初回→2回目）', data:sbF2StepTrend, borderColor:'#1E3A8A', backgroundColor:'rgba(30,58,138,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F3段階残存率（2回目→3回目）', data:sbF3StepTrend, borderColor:'#1E7A5C', backgroundColor:'rgba(30,122,92,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F4段階残存率（3回目→4回目）', data:sbF4StepTrend, borderColor:'#EA580C', backgroundColor:'rgba(234,88,12,0.1)', tension:0.3, fill:false, pointRadius:5},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:100, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-3-3. 初回定期注文月コホート：F2→F3→F4 段階別残存率 =====
+// コホート基準を「MINERALionの初回定期(teiki)注文月」に変更（アイテム新規＝初回購入月ではない）。
+// データソース：Shopify受注 shopify_orders×shopify_sku_brand_master（brand='MINERALion'・product_type='定期'で定期判定・有償注文条件・CYS0810除外）。
+// 顧客ごとの通算注文順位から、定期SKUを含む最初の注文（初回定期注文）を起点(seq=1)に再採番した到達人数（handoff 6-7章の確定値）。
+// F2以降は都度買い・定期便いずれでも「再購入」としてカウント（5-3章と同じ規則）。基準日2026-09-30。BQ実行日2026-10-02。
+// 到達人数が0になった段階以降は右側打ち切りとしてnull化（未確定＝ゼロ確定ではない）。
+const cohortSBTeikiFreqData = [
+  {m:'2026-03 ★定期便開始(3/5)', m0:224, f2:198, f3:165, f4:115, f5:80, f6:58, f7:40, f8:4},
+  {m:'2026-04', m0:160, f2:133, f3:84, f4:61, f5:49, f6:32, f7:5, f8:3},
+  {m:'2026-05', m0:93, f2:79, f3:55, f4:32, f5:19, f6:3, f7:null, f8:null},
+  {m:'2026-06 ★2606', m0:97, f2:70, f3:32, f4:21, f5:2, f6:null, f7:null, f8:null},
+  {m:'2026-07 ★2606', m0:194, f2:120, f3:68, f4:6, f5:1, f6:null, f7:null, f8:null},
+  {m:'2026-08', m0:101, f2:39, f3:4, f4:null, f5:null, f6:null, f7:null, f8:null},
+  {m:'2026-09 ★今月', m0:77, f2:2, f3:1, f4:null, f5:null, f6:null, f7:null, f8:null, thisMonth:true},
+];
+buildStepFreqCohortTable('cohortSBTeikiFreqStep', cohortSBTeikiFreqData, ['F2','F3','F4','F5','F6','F7','F8'], '初回定期注文月', '初回定期顧客数');
+
+const sbTeikiMonths = cohortSBTeikiFreqData.map(r => r.m);
+const sbTeikiF2StepTrend = cohortSBTeikiFreqData.map(r => r.f2!==null ? Math.round(r.f2/r.m0*1000)/10 : null);
+const sbTeikiF3StepTrend = cohortSBTeikiFreqData.map(r => (r.f3!==null && r.f2) ? Math.round(r.f3/r.f2*1000)/10 : null);
+const sbTeikiF4StepTrend = cohortSBTeikiFreqData.map(r => (r.f4!==null && r.f3) ? Math.round(r.f4/r.f3*1000)/10 : null);
+new Chart(document.getElementById('chartCohortSBTeikiFreqStepTrend'), {
+  type: 'line',
+  data: {
+    labels: sbTeikiMonths,
+    datasets: [
+      {label:'F2段階残存率（初回定期→2回目）', data:sbTeikiF2StepTrend, borderColor:'#1E3A8A', backgroundColor:'rgba(30,58,138,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F3段階残存率（2回目→3回目）', data:sbTeikiF3StepTrend, borderColor:'#1E7A5C', backgroundColor:'rgba(30,122,92,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F4段階残存率（3回目→4回目）', data:sbTeikiF4StepTrend, borderColor:'#EA580C', backgroundColor:'rgba(234,88,12,0.1)', tension:0.3, fill:false, pointRadius:5},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:100, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+// @@TAB2_JS_END@@
+
+</script>
+</body>
+</html>

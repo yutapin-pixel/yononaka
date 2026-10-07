@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lypo-C 月次分析レポート 2026-08 ｜ ③ コホート分析</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--cdk:#5BC882;--cbd:#1B7A4A;
+  --ccera:#FF6B9D;--sb:#C4934A;--mi:#1E3A8A;--lypo:#FFB070;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0;max-width:1200px;margin:0 auto}
+.page-wrap{padding:24px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted)}
+.month-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 14px;border-radius:4px;font-size:13px;font-weight:700;margin-bottom:20px;letter-spacing:0.3px}
+.stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px;align-items:stretch}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+thead th.c{text-align:center}
+tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid #f5f5f4;font-size:13px}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td.c{text-align:center}
+tbody tr:last-child td{border-bottom:none}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.tot td{border-top:2px solid var(--border)}
+tr.ogs{background:#fff8f0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600}
+.badge.a{background:#dcfce7;color:#15803d}.badge.b{background:#fef2f2;color:#dc2626}
+.badge.n{background:#eff6ff;color:#2563eb}.badge.w{background:#fff8f0;color:#92400e}
+.monthly-insight{background:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0284c7;border-radius:8px;padding:14px 18px;margin-top:12px;margin-bottom:20px;font-size:13px;line-height:1.9}
+.monthly-insight .mi-title{font-weight:700;font-size:12px;margin-bottom:6px;color:#0369a1;display:flex;align-items:center;gap:6px}
+.monthly-insight ul{padding-left:18px}.monthly-insight li{margin-bottom:5px}
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.9}
+.notes .nt{font-weight:700;font-size:12px;margin-bottom:6px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:4px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;position:relative;height:290px}
+.chart-wrap canvas{display:block;width:100% !important}
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;overflow-x:auto}
+.tab-btn{background:none;border:none;padding:10px 18px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.cohort-wrap{overflow-x:auto;margin-bottom:12px}
+.cohort-table{border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:900px}
+.cohort-table th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cohort-table th:first-child{text-align:left;min-width:90px}
+.cohort-table td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11px;line-height:1.4}
+.cohort-table td:first-child{text-align:left;font-weight:500;padding:5px 10px;font-size:12px}
+.cohort-table tr.ogs-row td:first-child{color:#92400e;font-weight:700}
+.cohort-table tr.highlight-row td{background:#fafafa}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.insight-card .ic-num{font-size:30px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:-1px}
+.insight-card .ic-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.insight-card .ic-body{font-size:13px;color:var(--muted);line-height:1.7}
+.insight-card.positive .ic-num{color:var(--green)}
+.insight-card.negative .ic-num{color:var(--red)}
+.insight-card.warning .ic-num{color:#f59e0b}
+.crm-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px}
+.crm-card .crm-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.crm-card .crm-priority{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.crm-card .crm-priority.p1{background:#fef2f2;color:#dc2626}
+.crm-card .crm-priority.p2{background:#fff8f0;color:#92400e}
+.crm-card .crm-priority.p3{background:#eff6ff;color:#2563eb}
+.crm-card .crm-title{font-size:14px;font-weight:700}
+.crm-card .crm-body{font-size:13px;color:var(--muted);line-height:1.7}
+.crm-card .crm-kpi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:500}
+.crm-card .crm-update{font-size:11px;margin-top:6px;padding:4px 8px;background:#f0fdf4;border-radius:4px;color:#15803d;font-weight:500}
+.kpi-change{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;margin-left:6px}
+.kpi-change.up{background:#dcfce7;color:#15803d}
+.kpi-change.dn{background:#fef2f2;color:#dc2626}
+.kpi-change.flat{background:#f5f5f4;color:#78716c}
+.analysis{border-radius:8px;margin:10px 0 20px;overflow:hidden;font-size:13px;line-height:1.8}
+.analysis-head{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.analysis-body{padding:12px 16px 14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.an-col{padding:0 14px;border-right:1px solid rgba(0,0,0,0.07)}
+.an-col:first-child{padding-left:0}
+.an-col:last-child{border-right:none;padding-right:0}
+.an-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;opacity:0.7}
+.an-text{font-size:12.5px;line-height:1.75}
+.an-text strong{font-weight:700}
+.analysis.blue{background:#eff6ff;border:1px solid #bfdbfe}
+.analysis.blue .analysis-head{background:#dbeafe;color:#1e40af}
+.analysis.blue .an-col{color:#1e3a8a}
+.analysis.green{background:#f0fdf4;border:1px solid #bbf7d0}
+.analysis.green .analysis-head{background:#dcfce7;color:#14532d}
+.analysis.green .an-col{color:#166534}
+.analysis.orange{background:#fff7ed;border:1px solid #fed7aa}
+.analysis.orange .analysis-head{background:#ffedd5;color:#7c2d12}
+.analysis.orange .an-col{color:#9a3412}
+.teiki-funnel{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.teiki-stage{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.teiki-stage .ts-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:4px}
+.teiki-stage .ts-count{font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.teiki-stage .ts-ltv{font-size:11px;color:var(--muted);margin-top:2px}
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ship{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-mixed{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f8fafc;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-ship,.sc .lb .ds-order,.sc .lb .ds-mixed{font-size:9px;padding:1px 5px;margin-left:3px}
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-snap{font-size:9px;padding:1px 5px;margin-left:3px}
+.ds-adebis{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-click{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-adebis,.sc .lb .ds-click{font-size:9px;padding:1px 5px;margin-left:3px}
+.adebis-rank{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-right:4px;flex-shrink:0}
+.adebis-rank.r1{background:#f59e0b;color:#fff}
+.adebis-rank.r2{background:#9ca3af;color:#fff}
+.adebis-rank.r3{background:#b45309;color:#fff}
+.adebis-rank.rx{background:#f3f4f6;color:#6b7280}
+.adebis-warn{font-size:10px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.adebis-new{font-size:10px;background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.cvr-high{color:#15803d;font-weight:700}
+.cvr-mid{color:#92400e}
+.cvr-low{color:#9ca3af}
+td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-all;line-height:1.4}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .analysis-body{grid-template-columns:1fr}
+  .an-col{border-right:none;border-bottom:1px solid rgba(0,0,0,0.07);padding:8px 0;margin:0}
+  .an-col:last-child{border-bottom:none}
+  .teiki-funnel{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ===== tab6 (まとめと提言) 固有CSS ===== */
+/* 総評セクション */
+.summary-section{margin-bottom:40px}
+.summary-header{display:flex;align-items:baseline;gap:10px;margin:28px 0 6px}
+.summary-header-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.summary-header-title::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.summary-header-badge{font-size:12px;font-weight:400;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:3px;margin-left:8px}
+.summary-verdict{background:#1c1917;border-radius:10px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.summary-verdict-icon{font-size:22px;flex-shrink:0}
+.summary-verdict-text{font-size:13.5px;font-weight:600;color:#fff;line-height:1.65;letter-spacing:0.1px}
+.summary-verdict-text em{font-style:normal;color:#FFB070}
+.finding-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.finding-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.finding-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.finding-card.fc-green::before{background:#16a34a}
+.finding-card.fc-red::before{background:#dc2626}
+.finding-card.fc-amber::before{background:#f59e0b}
+.finding-card.fc-orange::before{background:var(--accent)}
+.finding-card.fc-blue::before{background:#2563eb}
+.finding-card.fc-slate::before{background:#64748b}
+.fc-index{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.fc-metric{font-size:26px;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.finding-card.fc-green .fc-metric{color:#16a34a}
+.finding-card.fc-red .fc-metric{color:#dc2626}
+.finding-card.fc-amber .fc-metric{color:#d97706}
+.finding-card.fc-orange .fc-metric{color:var(--accent)}
+.finding-card.fc-blue .fc-metric{color:#2563eb}
+.finding-card.fc-slate .fc-metric{color:#475569}
+.fc-title{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.4}
+.fc-body{font-size:12px;color:var(--muted);line-height:1.75;flex:1}
+.fc-body strong{color:var(--text)}
+.fc-insight{margin-top:4px;padding:6px 10px;border-radius:5px;font-size:11.5px;font-weight:600;line-height:1.5}
+.finding-card.fc-green .fc-insight{background:#f0fdf4;color:#15803d}
+.finding-card.fc-red .fc-insight{background:#fff5f5;color:#dc2626}
+.finding-card.fc-amber .fc-insight{background:#fffbeb;color:#92400e}
+.finding-card.fc-orange .fc-insight{background:#fff8f0;color:#c2410c}
+.finding-card.fc-blue .fc-insight{background:#eff6ff;color:#1e40af}
+.finding-card.fc-slate .fc-insight{background:#f8fafc;color:#475569}
+/* スコアカード */
+.scorecard-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px}
+.sc-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.sc-item-axis{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.sc-item-label{font-size:11.5px;font-weight:600;color:var(--text);line-height:1.35}
+.sc-item-value{font-size:17px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-top:2px}
+.sc-item-sub{font-size:10.5px;color:var(--muted);line-height:1.5}
+.sc-item-rationale{font-size:10.5px;color:var(--muted);line-height:1.55;margin-top:2px;border-top:1px solid var(--border);padding-top:5px}
+.sc-item-verdict{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;width:fit-content;margin-top:2px}
+.sc-v-ok{background:#dcfce7;color:#15803d}
+.sc-v-warn{background:#fff7ed;color:#c2410c}
+.sc-v-bad{background:#fff5f5;color:#dc2626}
+.sc-v-ref{background:#eff6ff;color:#1e40af}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .finding-grid{grid-template-columns:1fr}
+  .scorecard-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ===== タブ固有CSS（tab2〜tab7） ===== */
+/* ===== VC/C+D フロー分析 統合セクション 追加CSS ===== */
+.flow-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px}
+.flow-kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.flow-kpi .lb{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.03em;margin-bottom:6px}
+.flow-kpi .vl{font-size:24px;font-weight:700;letter-spacing:-0.02em}
+.flow-kpi .sb{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+.flow-group-label{font-size:12px;font-weight:700;color:var(--muted);margin:18px 0 8px;padding-left:2px}
+.th-vc{background:#fff3e0 !important;color:#c2410c}
+.th-cd{background:#f0fdf4 !important;color:#166534}
+.th-ccera{background:#fdf2f8 !important;color:#9d174d}
+.th-mi{background:#eff6ff !important;color:#1e40af}
+.th-sb{background:#fefce8 !important;color:#92400e}
+.flow-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:8px}
+.flow-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px}
+.flow-label{width:110px;font-weight:600;text-align:right;flex-shrink:0}
+.flow-bar-wrap{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.flow-bar{height:24px;border-radius:5px;min-width:4px;flex-shrink:0}
+.flow-num{font-size:12.5px;color:var(--text);white-space:nowrap;font-weight:600}
+.flow-num .pct{color:var(--muted);font-weight:400;margin-left:4px}
+.frozen-divider{display:flex;align-items:center;gap:14px;margin:44px 0 28px}
+.frozen-divider::before,.frozen-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.frozen-divider .fd-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#78716c;background:#f5f5f4;border:1px solid var(--border);padding:5px 14px;border-radius:99px;white-space:nowrap}
+.frozen-section{opacity:0.92}
+.frozen-note{font-size:11.5px;color:var(--muted);background:#f5f5f4;border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:18px;line-height:1.7}
+@media(max-width:768px){
+  .flow-kpi-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<div class="hdr">
+  <h1>🔬 Lypo-C 月次分析レポート</h1>
+  <div class="meta">データ取得：2026年9月1日 ｜ 売上：NE受注（shop_id=17）出荷基準 ｜ 顧客：Shopify受注基準（コホート分析はshopify_orders直接抽出／sandbox_nishimori.shopify_customer_masterのis_teiki_customer・LTVカラムを併用）｜ ⚠️ 2026-09-01時点でspic-core.publicへの月次バッチ未反映のため、customer_master系は今回に限りsandbox_nishimori側を直接参照（翌日以降は通常運用に戻す）</div>
+</div>
+<div class="month-badge">📅 2026年8月度</div>
+
+<div class="tab-nav" style="overflow-x:auto;white-space:nowrap">
+  <button class="tab-btn active" onclick="void(0)">③ コホート分析</button>
+  <span style="font-size:11px;color:#9a9088;padding:10px 14px;display:inline-block">⚠️ part ファイル（更新4番目）― merge_monthly.py で結合後に noindex 確認</span>
+</div>
+
+<div id="tab3" class="tab-pane active">
+
+  <div class="stitle">コホート継続率ヒートマップ<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：spic-core.public.shopify_orders（customer_id基準・初回有償購入月でコホート定義）　M+0=初回月新規顧客数　M+1以降=該当月に再購入した顧客数（括弧内は継続率%）　★=OGSキャンペーン期間　灰色=未到達 ｜ <strong>今月更新：2026-07コホートのM+1（28.8%）確定、2026-08コホート新規追加（1,700人）</strong><br>
+  <strong>集計方法：</strong>初回有償注文月でコホート定義 → 各M+N月に同一customer_idで再購入があればカウント（test=0・cancelled_at IS NULL・売上&gt;0、または無償トライアル注文〈subtotal_price=0〉を初回月として許容）。OGS月（2025-07〜09）はogs:trueフラグ付き別行表示。集計対象は2026年8月31日までに確定した注文のみ（9月分の部分データは含めない）。<br>
+  <strong style="color:#7c2d12">⚠️ 今回のみの運用：</strong>2026-09-01時点でspic-core側への月次バッチが未反映のため、コホート定義自体はshopify_orders直接抽出（バッチ非依存）で実施し前月までと連続性を確保。teiki/spot区分・LTVマップの算出にのみsandbox_nishimori.shopify_customer_masterを使用。なお`is_teiki_customer`フラグは「以後の定期加入実績」を反映する遡及的な属性のため、過去コホートの teiki/spot 内訳は毎月BQ再実行のたびに数十〜百人単位で変動しうる（総数=teiki+spotは常にコホート全体人数と一致・異常ではない）。</div>
+
+  <!-- 注文方法セレクター -->
+  <div style="display:flex;gap:8px;margin:10px 0 12px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:12px;font-weight:600;color:var(--muted)">コホート対象：</span>
+    <button id="cohortBtn_all" class="cohort-mode-btn active-mode" onclick="switchCohortMode('all',this)">全ての注文方法</button>
+    <button id="cohortBtn_teiki" class="cohort-mode-btn" onclick="switchCohortMode('teiki',this)">定期経験あり顧客</button>
+    <button id="cohortBtn_spot" class="cohort-mode-btn" onclick="switchCohortMode('spot',this)">都度買い顧客（定期経験なし）</button>
+    <span id="cohortModeNote" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+  </div>
+
+  <style>
+  .cohort-mode-btn{background:#f5f5f4;border:1px solid var(--border);padding:5px 14px;border-radius:20px;font-family:inherit;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s}
+  .cohort-mode-btn:hover{background:#e7e5e4;color:var(--text)}
+  .cohort-mode-btn.active-mode{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+  </style>
+
+  <div class="cohort-wrap">
+    <table class="cohort-table" id="cohortTable"></table>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 コホート分析 考察（2026年8月 新規確定データ）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
+    <ul>
+      <li><strong>⚠️ 2026年7月コホートのM+1継続率：28.8%（確定・561/1,947人）。</strong>前月（2026-06コホートのM+1：35.5%）から▲6.7ptの大幅低下で、通常ベンチマーク（33〜42%）を明確に下回る今年最低水準。タブ⑤で判明した「CYS動画広告（Meta/Google）の大規模投下による『獲得_商品特定なし』カテゴリの急拡大（+471%・CVR2.51%→0.96%）」が7月新規獲得の質を押し下げた可能性が高く、量（新規1,947人・6月比+35.4%）は伸びたが質が伴わなかった月だったとみられる。</li>
+      <li><strong>2026年8月新規コホート：1,700人（7月比▲12.7%）。</strong>タブ④で確認された「新規アクティブのグロス件数急減（1,558件→1,419件）」・タブ①⑤で指摘の全般的な新規獲得力鈍化と方向性が一致する。M+1継続率は9月末に確定するが、CYS施策の広告構成が7月から大きく変わっていなければ、引き続き通常レンジ未達のリスクを想定しておくべき。</li>
+      <li><strong>2026年2月コホートのM+6継続率：25.9%（315/1,215人・新規確定）。</strong>直近の通常月M+6（2026-01: 24.3%・2025-12: 23.0%・2025-11: 25.1%）と同水準で、高いM+1（41.1%）を記録したコホートが長期でも崩れていないことを裏付ける。</li>
+      <li><strong>OGS期間（2025-08コホート）のM+12が新規確定：3.6%（594/16,519人）。</strong>7月コホート（2.9%・確定済み）よりわずかに高いが、無償トライアル起点としては想定内の低水準。teiki（定期経験あり）区分に絞ると同コホートのM+12は22.1%（525/2,375人）と大きく異なり、7月コホート同様「定期転換の有無」が長期継続の分水嶺になっている。</li>
+      <li><strong>通常月（OGS除く）のM+1継続率の推移：2026-02（41.1%）→03（36.7%）→04（34.6%）→05（32.2%）→06（35.5%）→07（28.8%）と、直近2ヶ月連続で低下し7月は明確なレンジ割れ。</strong>単月の振れとして様子見できる水準を超えており、8月コホートのM+1が9月末にどう出るかが「CYS施策の質の問題が一時的か構造的か」を判断する重要な観測点になる。</li>
+      <li><strong>teiki/spot区分の再集計について：</strong>`is_teiki_customer`フラグは時間経過とともに定期加入した顧客を遡及的にteiki側へ組み込む属性のため、2026-07コホートのteiki人数は前月速報値（518人）から今回660人へ増加（1ヶ月分の定期転換が進んだ結果であり、コホート定義自体の変更ではない）。teiki+spotの合計は常にコホート全体人数と一致することをBQで確認済み。</li>
+    </ul>
+  </div>
+
+
+  <!-- コホート 期間別LTVマップ -->
+  <div class="stitle" style="margin-top:24px">コホート別 期間別LTV推移マップ（全ブランド基準）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.shopify_customer_master　カラム：first_paid_order_dt・ltv_30d/60d/90d/120d/180d/365d<br>
+  <strong>集計方法：</strong>first_paid_order_dtでコホート月を定義 → 各期間LTVの平均値（AVG）を月別に集計（単位：千円）。値が大きいほど濃い色で表示。OGS月（2025-07〜09）は通常コホートと切り離し除外（ogs_entry=true顧客を除外）。ltv_*dはShopify有料受注ベースの税抜累計LTV。<br>
+  <strong style="color:#7c2d12">⚠️ v10対応（shopify_customer_master v10）：</strong>v10よりsubtotal_price=0の注文（OGS送料¥220・MINERALionトライアル送料¥220等）がLTV計上から完全除外。OGS月（2025-07〜09）は当LTVマップ上も引き続き除外（通常コホートとの比較精度維持のため）。<strong>各セルの確定判定は「コホート月初日＋期間日数 ≦ 対象月末日（2026-08-31）」を基準とする（月末までの部分的なデータ混入を避けるため月初日を基準に保守的に判定）。</strong>⚠️ 今回のみ、customer_masterはバッチ遅延のためsandbox_nishimori側を直接参照。</div>
+  <div class="cohort-wrap">
+<table class="cohort-table" id="cohortLtvMap" style="min-width:800px">
+<thead><tr><th style="text-align:left;min-width:80px">購入月</th><th style="text-align:right">30日LTV</th><th style="text-align:right">60日LTV</th><th style="text-align:right">90日LTV</th><th style="text-align:right">120日LTV</th><th style="text-align:right">180日LTV</th><th style="text-align:right">365日LTV</th></tr></thead>
+<tbody>
+<tr><td style="font-size:11px;font-weight:400">2024-04</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥5,616</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥6,636</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥8,267</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥9,894</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥12,306</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥18,721</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2024-05</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥12,426</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥16,276</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥20,134</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥23,525</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥28,724</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥41,597</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2024-06</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥14,207</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥16,686</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥20,508</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥23,960</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥29,401</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥43,615</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2024-07</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥12,773</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥16,580</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥20,311</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥23,687</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥28,966</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥42,391</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2024-08</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥12,291</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥16,337</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥20,358</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥23,942</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥29,388</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥44,612</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2024-09</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥12,886</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥15,051</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥18,808</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥22,113</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥27,712</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥41,597</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2024-10</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥12,576</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥16,607</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥20,735</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥24,624</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥30,613</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥46,801</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2024-11</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥13,893</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥16,425</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥20,369</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥25,522</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥30,079</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥45,961</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2024-12</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥12,826</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥17,176</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥23,086</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥25,237</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥31,125</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥48,109</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2025-01</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥12,541</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥18,514</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥22,363</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥25,665</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥30,381</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥46,629</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2025-02</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥14,798</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥19,423</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥23,961</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥27,585</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥32,641</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥50,176</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2025-03</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥12,425</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥16,030</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥19,545</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥23,011</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥28,588</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥43,666</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2025-04</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥13,530</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥16,009</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥20,127</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥24,193</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥30,434</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥46,874</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2025-05</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥12,259</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥16,297</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥20,107</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥24,007</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥29,870</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥45,655</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2025-06</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥12,359</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥14,524</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥18,283</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥21,596</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥26,703</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥39,608</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2025-10</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥13,232</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥17,749</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥21,518</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥25,523</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥31,769</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2025-11</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥16,661</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥19,057</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥23,147</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥28,321</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥33,572</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2025-12</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥14,757</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥19,024</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥24,331</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥26,461</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥32,653</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2026-01</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥11,230</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥16,200</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥19,700</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥22,750</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥27,536</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2026-02</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥15,368</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥19,876</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥24,004</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥27,633</td><td style="background:#bbf7d0;color:#15803d;font-size:11px;text-align:right">¥32,806</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2026-03</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥13,040</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥16,842</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥20,635</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥24,286</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥29,320</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2026-04</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥14,385</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥16,757</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥20,394</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥23,846</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2026-05</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥14,106</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥17,949</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥21,561</td><td style="background:#fef3c7;color:#92400e;font-size:11px;text-align:right">¥23,960</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2026-06</td><td style="background:#dcfce7;color:#166534;font-size:11px;text-align:right">¥14,216</td><td style="background:#fef9c3;color:#854d0e;font-size:11px;text-align:right">¥16,648</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥18,974</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+<tr><td style="font-size:11px;font-weight:400">2026-07</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥12,207</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥14,311</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+<tr class="highlight-row"><td style="font-size:11px;font-weight:700">2026-08★今月</td><td style="background:#fed7aa;color:#c2410c;font-size:11px;text-align:right">¥9,510</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td><td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td></tr>
+</tbody>
+</table>
+  </div>
+  <div class="monthly-insight" style="margin-top:12px">
+    <div class="mi-title">💡 コホート期間別LTV 考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
+    <ul>
+      <li><strong>購入月が古いコホートほど累積LTVが高く、「時間＝LTV積み上げ」の構造は変わらず明確。</strong>2024年後半〜2025年前半（¥43K〜¥50K台）が365日LTVのピーク水準である点も従来通り。</li>
+      <li><strong>2026年3月コホートの180日LTVが今月新規確定：¥29,320。</strong>前後月（2026-02：¥32,806・2026-01：¥27,536）の範囲内に収まっており、C+Cera先行予約層の混在（2026-01）を除けば通常獲得の質を反映した水準。</li>
+      <li><strong>⚠️ 2026年7月新規コホートの30日LTV：¥12,207（確定）。</strong>6月（¥14,216）から▲14.1%の低下で、本タブ冒頭の「M+1継続率28.8%（今年最低）」と整合する結果。タブ⑤で判明したCYS動画広告経由の廉価トライアル層混在が、継続率だけでなく初動LTVの水準にも表れている可能性が高い。</li>
+      <li><strong>2026年8月新規コホートの30日LTV：¥9,510（確定・観測開始）。</strong>7月（¥12,207）からさらに▲22.1%と2ヶ月連続の低下。新規獲得の「量」は7月をピークに減速している一方、単価面でも弱含みが続いており、CYS施策の広告構成が9月にどう変化するかがLTV回復の鍵になる。</li>
+      <li><strong>OGS期間（2025-07〜09）コホートは引き続き除外（通常コホートとの比較精度維持のため）。M+0のLTVが極端に低い（送料¥220のみ負担）ため他月と並べると歪みが生じる。</strong></li>
+      <li><strong>2026年以降のコホートは観測期間がまだ短く、MINERALionトライアル顧客（ltv≒¥0）混在によりコホート平均LTVが押し下げられている点に留意。</strong>C+Cera・MINERALionの初回購入者が将来的に高LTV層へ育つかは、今後6〜12ヶ月の重要観測点として継続監視する。</li>
+    </ul>
+  </div>
+
+  <!-- M+1・M+6継続率推移 -->
+  <div class="stitle">M+1継続率・M+6継続率 推移<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：spic-core.public.shopify_orders（cohortData配列）　通常月（OGS除く）のM+1・M+6継続率の月次推移　OGS期間（2025-07〜09）は破線で別表示　最新確定値：2026-07コホートM+1 = 28.8%<br>
+  <strong>集計方法：</strong>cohortData[n].m1 / cohortData[n].m0 × 100 でM+1継続率を算出。M+6も同様。OGS行（ogs:true）は破線グラフへ。通常期ベンチマーク：M+1 33〜42%・M+6 17〜26%（2024-04〜2025-06実績）。<br>
+  <strong style="color:#7c2d12">⚠️ 2026年7月コホートはこのベンチマークを大きく下回る28.8%。</strong>タブ⑤で判明したCYS動画広告シフト（獲得_商品特定なしカテゴリの急拡大）による新規獲得の質低下が一因とみられる。8月コホートのM+1（9月末確定）で一時的な落ち込みか構造変化かを見極める必要がある。</div>
+  <div class="chart-wrap"><canvas id="chartCohortRate"></canvas></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 M+1・M+6継続率トレンド 考察（2026年8月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
+    <ul>
+      <li><strong>⚠️ 2026-07コホートのM+1継続率：28.8%（確定）。</strong>33〜42%の通常ベンチマークを下回り、直近1年で最低水準。前月（2026-06：35.5%）から▲6.7ptの明確な悪化で、単月のノイズとは言い切れない下げ幅。</li>
+      <li><strong>M+1継続率の傾向：2026-02（41.1%）→ 03（36.7%）→ 04（34.6%）→ 05（32.2%）→ 06（35.5%）→ 07（28.8%）と、直近2ヶ月は連続で低下。</strong>07が最も低いのはCYS動画広告シフトによる新規獲得の質低下が主因とみられる。2026-02が高い要因は現時点で未特定。</li>
+      <li><strong>M+6継続率：2026-02コホートで25.9%（新規確定）。</strong>前後月（2026-01: 24.3%・2025-12: 23.0%）とほぼ同水準で、M+1が高かった2月コホート（41.1%）の質が長期でも崩れていない（ただし高かった要因自体は未特定）。</li>
+      <li><strong>OGS期間（破線・2025年7〜9月）のM+1は7〜13%と低水準。2025-08コホートのM+12が今月新規確定（594人・3.6%）。</strong>無償トライアル起点コホートとしては想定内の低水準だが、teiki（定期経験あり）区分の同コホートM+12は25.4%（525/2,063人）と大きく異なり、定期転換の有無が長期継続の分水嶺であることが改めて確認された。</li>
+    </ul>
+  </div>
+
+  <!-- アイテム別コホート継続率 -->
+  <div class="stitle" style="margin-top:24px">アイテム別コホート継続率ヒートマップ<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：spic-core.public.shopify_orders × sandbox_nishimori.shopify_sku_brand_master（SKUベースブランド判別・item_price &gt; 0で¥0プレゼント品除外）　初回購入がSKINBEAUTY・MINERALion・C+Ceraだった顧客のコホート継続率分析<br>
+  <strong>集計方法：</strong>初回有料注文のSKUからブランドを特定（shopify_sku_brand_masterでJOIN）→ 同ブランドへの再購入のみを継続としてカウント（他ブランドリピートは含まない「真のブランド内リピート率」）。MINERALionはSKU 3021/3016（無償同梱・試供品）を除いた有償購買のみ対象。SKINBEAUTYはSKU 3009（定価¥1,500だが実態無償配布品）を追加除外。SKINBEAUTY・C+Ceraは事前予約期間含むコホートに★注記。<br>
+  ⚠️ <strong>2026-06月次より正式手法（Shopify SKU × shopify_sku_brand_master + item_price &gt; 0）に統一。</strong>前月以前のレポートは異なる抽出条件（NE goods_tag手法または不完全なSKU定義）で集計されており、本月以降との数値の連続性はありません。発売記念セット（875121-set・121-set-A等）の有償品も正しく含まれています。</div>
+
+  <!-- SKINBEAUTY コホート -->
+  <div style="margin-top:16px">
+    <div style="font-size:13px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px">
+      <span class="dot" style="background:var(--sb)"></span>SKINBEAUTY 初回購入顧客 コホート継続率
+      <span style="font-size:11px;font-weight:400;background:#fff3cd;color:#856404;padding:2px 8px;border-radius:4px">⚠️ 注：2025年8月以前の売上は事前予約期間を含む可能性あり（イレギュラー月）</span>
+    </div>
+    <div class="cohort-wrap">
+      <table class="cohort-table" id="cohortSB"></table>
+    </div>
+    <div class="chart-wrap" style="height:250px;margin-top:12px"><canvas id="chartCohortSB"></canvas></div>
+    <div class="monthly-insight" style="margin-top:10px">
+      <div class="mi-title">💡 SKINBEAUTY コホート 考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
+      <ul>
+        <li><strong>⚠️ このコホートは「SKINBEAUTYを再度購入した顧客のみ」を継続としてカウントしています（ブランド限定）。</strong>全体コホートより継続率が大幅に低い数値になりますが、これがSKINBEAUTY単体の真のリピート実態です。</li>
+        <li><strong>⚠️ 2026-07コホートのM+1継続率：14.1%（63/447人）が確定。</strong>前月（2026-06：25.8%）から大幅に低下し、SKINBEAUTYの通常リピート水準（25〜35%）を大きく下回る。タブ⑤・タブ②で指摘されていた「オンライン体験会」向け廉価トライアル商品の事前購入急増（447人・6月の約2.8倍）が、額面通りの新規獲得ではなく質の低いトライアル層の混入だったことが今回のM+1で裏付けられた形。</li>
+        <li><strong>2026年8月新規コホート：138人（7月比▲69.1%）。</strong>体験会由来の急増（447人）が一巡し、通常水準（月100〜160人台）に反落。7月コホートの継続率低迷と合わせて見ると、体験会施策は新規「量」を一時的に押し上げたが「質」は伴わなかったと総括できる。</li>
+        <li><strong>2026-02コホートのM+6継続率：18.9%（45/238人）が今月新規確定。</strong>M+5（42/238=17.6%）からわずかに上昇し、SKINBEAUTYの中期継続層は緩やかに積み上がっている。</li>
+        <li><strong>2025-10コホートのM+10継続率（47/490=9.6%）が確定（新規）。</strong>M+9（58/490=11.8%）から一時的な低下だが、発売初期コホートの長期定着自体は継続している。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MINERALion コホート -->
+  <div style="margin-top:24px">
+    <div style="font-size:13px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px">
+      <span class="dot" style="background:var(--mi)"></span>MINERALion 初回購入顧客 コホート継続率
+      <span style="font-size:11px;font-weight:400;background:#e7f3ff;color:#0969da;padding:2px 8px;border-radius:4px">発売：2025年11月〜</span>
+    </div>
+    <div class="cohort-wrap">
+      <table class="cohort-table" id="cohortMI"></table>
+    </div>
+    <div class="chart-wrap" style="height:250px;margin-top:12px"><canvas id="chartCohortMI"></canvas></div>
+    <div class="monthly-insight" style="margin-top:10px">
+      <div class="mi-title">💡 MINERALion コホート 考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
+      <ul>
+        <li><strong>⚠️ このコホートは「MINERALionを再度購入した顧客のみ」を継続としてカウントしています（ブランド限定）。</strong>無償同梱受取（SKU 3021）・試供品受取（SKU 3016）による擬似的な初回は除外し、自発的有償購買者のみが対象です。</li>
+        <li><strong>2026-07コホートのM+1継続率：27.3%（120/440人）が確定。</strong>前月（2026-06：27.6%）とほぼ横ばいで、通常レンジ内を維持。全体コホート・SKINBEAUTYが7月に大きく質を落とした中、MINERALionは施策参加層の質が相対的に保たれた形。タブ④の「MINERALion新規アクティブ急減（162→78件）」とは対照的に、コホート継続率自体は崩れていない点に注意。</li>
+        <li><strong>2026年8月新規コホート：209人（7月比▲52.5%）。</strong>7月の急増（440人）が一巡し反動減となったが、MI2606施策の反動という点はタブ①④⑤の全般的な新規獲得減速と方向性が一致する。</li>
+        <li><strong>2026-02コホートのM+6継続率：13.2%（35/266人）が今月新規確定。</strong>前後月（2026-01: 19.4%・2025-12: 17.6%）と比べて明確に低く、5ブランド中最下位圏の水準。MINERALionの長期継続率のブランド内ばらつきが大きい点は引き続き要注意。</li>
+        <li><strong>2025-12コホートのM+8継続率（65/363=17.9%）・2025-11コホートのM+9継続率（12/185=6.5%）がともに確定（新規）。</strong>2025-11コホートは発売初期の少人数コホートのため、単月の変動が比率に大きく効きやすい点に留意。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- C+Cera コホート -->
+  <div style="margin-top:24px">
+    <div style="font-size:13px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px">
+      <span class="dot" style="background:var(--ccera)"></span>C+Cera 初回購入顧客 コホート継続率
+      <span style="font-size:11px;font-weight:400;background:#fff3cd;color:#856404;padding:2px 8px;border-radius:4px">⚠️ 注：2026年1月の売上は事前予約期間を含む可能性あり（イレギュラー月）</span>
+    </div>
+    <div class="cohort-wrap">
+      <table class="cohort-table" id="cohortCCera"></table>
+    </div>
+    <div class="chart-wrap" style="height:250px;margin-top:12px"><canvas id="chartCohortCCera"></canvas></div>
+    <div class="monthly-insight" style="margin-top:10px">
+      <div class="mi-title">💡 C+Cera コホート 考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-order" style="font-size:9px;vertical-align:middle">受注</span></div>
+      <ul>
+        <li><strong>⚠️ このコホートは「C+Ceraを再度購入した顧客のみ」を継続としてカウントしています（ブランド限定）。</strong>全体コホートのように他ブランドへのリピートは含まず、C+Cera専用の純粋なリピート実態を示します。</li>
+        <li><strong>2026-07コホートのM+1継続率：24.0%（150/626人）が確定。</strong>前月（2026-06：22.9%）からわずかに改善したが、通常レンジ（25〜35%）の下限をやや割り込む水準。タブ④で指摘された「C+Cera初のACTIVE純減（新規アクティブ191→77件）」と合わせると、7月コホート自体の質は大きく崩れていないものの、8月以降の定期定着力の弱さが数字に表れ始めている可能性がある。</li>
+        <li><strong>2026年8月新規コホート：166人（7月比▲73.5%）。</strong>CTC施策終了後の急増（626人）が完全に一巡し、通常水準（月400〜550人台）を下回る低水準まで反落。タブ④の「CTC・MI2606施策終了に伴う獲得_Cera▲89.5%」と時間軸が一致しており、施策終了の影響が新規獲得にも波及したことが確認できる。</li>
+        <li><strong>2026-02コホートのM+6継続率：18.8%（190/1,013人）が今月新規確定。</strong>通常規模で最大級のコホート（1,013人）の長期継続実態が判明し、2026-01コホート（M+6：17.6%）とほぼ同水準。C+Ceraの「第3の柱」としての中期的な継続力は安定している。</li>
+        <li><strong>2026-01コホートのM+7継続率（60/426=14.1%）が確定（新規）。</strong>M+6（75/426=17.6%）から一時的な低下だが、事前予約層混在コホートとしては想定内の振れ幅。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div class="nt">📌 コホート分析 総合注目ポイント（2026年8月度）</div>
+    <ul>
+      <li><strong>⚠️ コホート品質の悪化が最大のシグナル：2026-07コホートM+1継続率は28.8%と、通常ベンチマーク（33〜42%）を明確に下回る直近1年最低水準</strong> ─ タブ⑤で判明した「CYS動画広告シフトによる新規獲得の質低下（獲得_商品特定なし+471%・CVR2.51%→0.96%）」が主因とみられる。SKINBEAUTYの同コホートM+1（14.1%）はさらに深刻で、体験会由来の廉価トライアル層の質の低さが顕著に表れた。</li>
+      <li><strong>新規獲得の「量」も7月をピークに全ブランドで急減速：全体1,700人（▲12.7%）・SKINBEAUTY 138人（▲69.1%）・MINERALion 209人（▲52.5%）・C+Cera 166人（▲73.5%）</strong> ─ タブ④の定期便新規アクティブ急減、タブ⑤の広告出稿構成変化と時間軸が一致しており、7月の各種施策・急増要因（CTC・MI2606・体験会）が軒並み一巡した結果と整理できる。9月度コホート（8月分の新規獲得次第）の推移を注視すべき局面。</li>
+      <li><strong>C+Ceraの中期継続力は安定：2026-02コホート（通常規模で最大級・1,013人）のM+6継続率が18.8%で確定</strong> ─ 2026-01コホート（17.6%）とほぼ同水準で、新規獲得の量の増減とは別に、獲得できた顧客の中期的な定着力自体は崩れていない。</li>
+      <li><strong>OGS期間（2025-08コホート）のM+12が新規確定（3.6%）</strong> ─ 7月コホート（2.9%）よりやや高いが、無償トライアル起点としては想定内の低水準。teiki区分の同コホートM+12（25.4%）との対比が、定期転換の有無による長期価値の差を象徴的に示している。</li>
+      <li><strong>次月（9月度）の最重要観測点：8月コホートのM+1継続率</strong> ─ 7月の質低下が一時的なノイズか、CYS施策の構造的な問題かを判断する分水嶺になる。あわせてMINERALionの2026-02コホートM+6（13.2%）が5ブランド中最下位水準である点も、CRM施策の優先候補として継続監視すべき。</li>
+    </ul>
+  </div>
+</div>
+<!-- /TAB 3 -->
+<!-- ===== TAB 4: 定期便ヘルス ===== -->
+<!-- @@SPLIT:tab3:END@@ -->
+
+
+<div class="footer">
+  <span>【データソース】<strong>KGI①②④売上：</strong>spic-core.public.ne_order_items（ship_date出荷基準・cancel_date IS NULL）　<strong>KGI③⑥⑦⑧顧客：</strong>spic-core.public.shopify_orders（customer_idベース）／sandbox_nishimori.shopify_customer_master（is_teiki_customer・LTVカラム、今回のみバッチ遅延によりsandbox直接参照）　<strong>KGI⑤定期便：</strong>sandbox_nishimori.subscription_history_view（今回のみsandbox直接参照）　⚠️ receive_order（旧テーブル）は廃止済み・使用禁止</span>
+  <span>【集計基準】出荷基準 ｜ データ取得日：2026-09-01 ｜ 対象月：2026年8月（2026-08-01〜2026-08-31）｜ spic-com-2025-apr-00</span>
+</div>
+
+</div><!-- /page-wrap -->
+<script>
+// ===== PART FILE: tab3 / 更新4番目 =====
+// switchTab はno-op（このファイルはシングルタブ）
+function switchTab(id, btn) {}
+
+// @@SPLIT:tab3_data:START@@
+const cohortData = [
+  {m:'2024-04', m0:8163, m1:1234, m2:1263, m3:1152, m4:1021, m5:812, m6:922, m7:703, m8:719, m9:700, m10:622, m11:589, m12:634, note:true},
+  {m:'2024-05', m0:2407, m1:847, m2:808, m3:694, m4:605, m5:487, m6:510, m7:395, m8:401, m9:373, m10:381, m11:316, m12:362},
+  {m:'2024-06', m0:2348, m1:815, m2:781, m3:639, m4:604, m5:483, m6:538, m7:425, m8:433, m9:425, m10:405, m11:359, m12:372},
+  {m:'2024-07', m0:2696, m1:941, m2:847, m3:740, m4:670, m5:551, m6:619, m7:424, m8:479, m9:419, m10:428, m11:373, m12:464},
+  {m:'2024-08', m0:2663, m1:942, m2:932, m3:772, m4:693, m5:563, m6:646, m7:518, m8:499, m9:498, m10:475, m11:426, m12:516},
+  {m:'2024-09', m0:2062, m1:659, m2:660, m3:569, m4:531, m5:438, m6:493, m7:366, m8:376, m9:380, m10:350, m11:330, m12:349},
+  {m:'2024-10', m0:1431, m1:509, m2:497, m3:466, m4:399, m5:338, m6:350, m7:282, m8:295, m9:287, m10:282, m11:257, m12:274},
+  {m:'2024-11', m0:1610, m1:595, m2:581, m3:517, m4:487, m5:385, m6:422, m7:339, m8:379, m9:352, m10:325, m11:287, m12:303},
+  {m:'2024-12', m0:1573, m1:581, m2:571, m3:528, m4:449, m5:363, m6:416, m7:344, m8:348, m9:339, m10:312, m11:264, m12:313},
+  {m:'2025-01', m0:2271, m1:858, m2:868, m3:700, m4:649, m5:545, m6:608, m7:504, m8:493, m9:458, m10:461, m11:398, m12:442},
+  {m:'2025-02', m0:1837, m1:740, m2:709, m3:648, m4:561, m5:478, m6:523, m7:425, m8:401, m9:394, m10:372, m11:350, m12:356},
+  {m:'2025-03', m0:2212, m1:800, m2:727, m3:693, m4:597, m5:527, m6:562, m7:472, m8:459, m9:437, m10:419, m11:373, m12:376},
+  {m:'2025-04', m0:1689, m1:664, m2:642, m3:586, m4:536, m5:445, m6:448, m7:390, m8:369, m9:341, m10:327, m11:305, m12:328},
+  {m:'2025-05', m0:1911, m1:802, m2:722, m3:653, m4:594, m5:486, m6:498, m7:441, m8:413, m9:387, m10:365, m11:358, m12:356},
+  {m:'2025-06', m0:2352, m1:943, m2:832, m3:725, m4:613, m5:543, m6:556, m7:432, m8:430, m9:419, m10:419, m11:357, m12:379},
+  {m:'2025-07 ★', m0:27185, m1:1895, m2:1391, m3:1201, m4:1028, m5:902, m6:1107, m7:754, m8:799, m9:710, m10:708, m11:720, m12:797, ogs:true},
+  {m:'2025-08 ★', m0:16519, m1:1407, m2:1193, m3:1041, m4:962, m5:948, m6:795, m7:735, m8:669, m9:645, m10:647, m11:651, m12:594, ogs:true},
+  {m:'2025-09 ★', m0:6511, m1:813, m2:702, m3:631, m4:594, m5:451, m6:504, m7:400, m8:406, m9:397, m10:401, m11:368, m12:null, ogs:true},
+  {m:'2025-10', m0:1248, m1:486, m2:466, m3:405, m4:351, m5:315, m6:318, m7:283, m8:268, m9:280, m10:248, m11:null, m12:null},
+  {m:'2025-11', m0:985, m1:376, m2:338, m3:311, m4:278, m5:234, m6:247, m7:207, m8:224, m9:201, m10:null, m11:null, m12:null},
+  {m:'2025-12', m0:978, m1:352, m2:311, m3:292, m4:253, m5:231, m6:225, m7:215, m8:190, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:1323, m1:435, m2:405, m3:377, m4:340, m5:288, m6:321, m7:230, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:1215, m1:499, m2:433, m3:408, m4:356, m5:312, m6:315, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:1203, m1:442, m2:412, m3:370, m4:353, m5:294, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:1103, m1:382, m2:318, m3:322, m4:287, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:1456, m1:469, m2:468, m3:409, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:1438, m1:510, m2:446, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07', m0:1947, m1:561, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, newThisMonth:true},
+  {m:'2026-08 ★今月', m0:1700, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+
+// ===== COHORT MODE SWITCHING =====
+// 定期経験あり顧客コホートデータ（実BQデータ・is_teiki_customer=1・shopify_customer_master）
+// ※ M+7以降はM+6までのデータで代替（M+7〜M+12は取得済みの全体コホートより小さい値になるため一旦null）
+const cohortDataTeiki = [
+  {m:'2024-04', m0:2145, m1:1011, m2:1064, m3:1042, m4:930, m5:726, m6:867, m7:657, m8:666, m9:648, m10:596, m11:541, m12:595, note:true},
+  {m:'2024-05', m0:1080, m1:654, m2:648, m3:591, m4:513, m5:425, m6:446, m7:341, m8:345, m9:334, m10:332, m11:278, m12:326},
+  {m:'2024-06', m0:1068, m1:626, m2:652, m3:559, m4:533, m5:414, m6:472, m7:381, m8:382, m9:370, m10:357, m11:324, m12:337},
+  {m:'2024-07', m0:1260, m1:733, m2:723, m3:643, m4:595, m5:479, m6:557, m7:380, m8:436, m9:387, m10:395, m11:333, m12:420},
+  {m:'2024-08', m0:1394, m1:739, m2:803, m3:692, m4:624, m5:491, m6:595, m7:453, m8:455, m9:457, m10:430, m11:388, m12:478},
+  {m:'2024-09', m0:886, m1:523, m2:563, m3:476, m4:467, m5:388, m6:435, m7:321, m8:345, m9:332, m10:316, m11:287, m12:325},
+  {m:'2024-10', m0:674, m1:389, m2:406, m3:390, m4:337, m5:282, m6:325, m7:242, m8:256, m9:255, m10:249, m11:231, m12:245},
+  {m:'2024-11', m0:789, m1:467, m2:484, m3:449, m4:430, m5:338, m6:368, m7:303, m8:330, m9:315, m10:289, m11:263, m12:272},
+  {m:'2024-12', m0:753, m1:467, m2:482, m3:446, m4:391, m5:315, m6:361, m7:306, m8:310, m9:298, m10:271, m11:231, m12:265},
+  {m:'2025-01', m0:1130, m1:701, m2:730, m3:615, m4:568, m5:481, m6:550, m7:452, m8:449, m9:423, m10:417, m11:361, m12:405},
+  {m:'2025-02', m0:992, m1:629, m2:621, m3:585, m4:503, m5:419, m6:481, m7:390, m8:378, m9:368, m10:349, m11:323, m12:335},
+  {m:'2025-03', m0:1081, m1:707, m2:652, m3:624, m4:546, m5:486, m6:529, m7:437, m8:427, m9:415, m10:383, m11:351, m12:351},
+  {m:'2025-04', m0:869, m1:562, m2:548, m3:536, m4:493, m5:406, m6:417, m7:362, m8:337, m9:318, m10:302, m11:279, m12:301},
+  {m:'2025-05', m0:1051, m1:710, m2:653, m3:603, m4:556, m5:447, m6:473, m7:414, m8:384, m9:370, m10:344, m11:334, m12:327},
+  {m:'2025-06', m0:1174, m1:814, m2:742, m3:664, m4:572, m5:505, m6:518, m7:398, m8:402, m9:384, m10:382, m11:328, m12:353},
+  {m:'2025-07 ★', m0:2375, m1:1726, m2:1294, m3:1126, m4:965, m5:841, m6:832, m7:700, m8:668, m9:646, m10:650, m11:576, m12:639, ogs:true},
+  {m:'2025-08 ★', m0:2063, m1:1292, m2:1100, m3:982, m4:913, m5:797, m6:749, m7:645, m8:620, m9:605, m10:575, m11:557, m12:525, ogs:true},
+  {m:'2025-09 ★', m0:1134, m1:727, m2:632, m3:580, m4:521, m5:419, m6:452, m7:358, m8:373, m9:359, m10:356, m11:302, m12:null, ogs:true},
+  {m:'2025-10', m0:610, m1:417, m2:388, m3:354, m4:290, m5:270, m6:274, m7:242, m8:232, m9:236, m10:218, m11:null, m12:null},
+  {m:'2025-11', m0:481, m1:316, m2:285, m3:268, m4:237, m5:200, m6:217, m7:188, m8:195, m9:173, m10:null, m11:null, m12:null},
+  {m:'2025-12', m0:464, m1:290, m2:271, m3:259, m4:219, m5:193, m6:196, m7:183, m8:166, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:592, m1:372, m2:357, m3:331, m4:300, m5:252, m6:282, m7:205, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:625, m1:421, m2:372, m3:358, m4:311, m5:266, m6:283, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:562, m1:363, m2:344, m3:311, m4:291, m5:247, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:460, m1:305, m2:258, m3:259, m4:237, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:597, m1:377, m2:356, m3:336, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:550, m1:373, m2:353, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07', m0:660, m1:430, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, newThisMonth:true},
+  {m:'2026-08 ★今月', m0:457, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+// 都度買いのみ顧客コホートデータ（実BQデータ・is_teiki_customer=0・shopify_customer_master）
+const cohortDataSpot = [
+  {m:'2024-04', m0:6018, m1:223, m2:199, m3:110, m4:91, m5:86, m6:55, m7:46, m8:53, m9:52, m10:26, m11:48, m12:39, note:true},
+  {m:'2024-05', m0:1327, m1:193, m2:160, m3:103, m4:92, m5:62, m6:64, m7:54, m8:56, m9:39, m10:49, m11:38, m12:36},
+  {m:'2024-06', m0:1280, m1:189, m2:129, m3:80, m4:71, m5:69, m6:66, m7:44, m8:51, m9:55, m10:48, m11:35, m12:35},
+  {m:'2024-07', m0:1436, m1:208, m2:124, m3:97, m4:75, m5:72, m6:62, m7:44, m8:43, m9:32, m10:33, m11:40, m12:44},
+  {m:'2024-08', m0:1269, m1:203, m2:129, m3:80, m4:69, m5:72, m6:51, m7:65, m8:44, m9:41, m10:45, m11:38, m12:38},
+  {m:'2024-09', m0:1176, m1:136, m2:97, m3:93, m4:64, m5:50, m6:58, m7:45, m8:31, m9:48, m10:34, m11:43, m12:24},
+  {m:'2024-10', m0:757, m1:120, m2:91, m3:76, m4:62, m5:56, m6:25, m7:40, m8:39, m9:32, m10:33, m11:26, m12:29},
+  {m:'2024-11', m0:821, m1:128, m2:97, m3:68, m4:57, m5:47, m6:54, m7:36, m8:49, m9:37, m10:36, m11:24, m12:31},
+  {m:'2024-12', m0:820, m1:114, m2:89, m3:82, m4:58, m5:48, m6:55, m7:38, m8:38, m9:41, m10:41, m11:33, m12:48},
+  {m:'2025-01', m0:1141, m1:157, m2:138, m3:85, m4:81, m5:64, m6:58, m7:52, m8:44, m9:35, m10:44, m11:37, m12:37},
+  {m:'2025-02', m0:845, m1:111, m2:88, m3:63, m4:58, m5:59, m6:42, m7:35, m8:23, m9:26, m10:23, m11:27, m12:21},
+  {m:'2025-03', m0:1131, m1:93, m2:75, m3:69, m4:51, m5:41, m6:33, m7:35, m8:32, m9:22, m10:36, m11:22, m12:25},
+  {m:'2025-04', m0:820, m1:102, m2:94, m3:50, m4:43, m5:39, m6:31, m7:28, m8:32, m9:23, m10:25, m11:26, m12:27},
+  {m:'2025-05', m0:860, m1:92, m2:69, m3:50, m4:38, m5:39, m6:25, m7:27, m8:29, m9:17, m10:21, m11:24, m12:29},
+  {m:'2025-06', m0:1178, m1:129, m2:90, m3:61, m4:41, m5:38, m6:38, m7:34, m8:28, m9:35, m10:37, m11:29, m12:26},
+  {m:'2025-07 ★', m0:24810, m1:169, m2:97, m3:75, m4:63, m5:61, m6:275, m7:54, m8:131, m9:64, m10:58, m11:144, m12:158, ogs:true},
+  {m:'2025-08 ★', m0:14456, m1:115, m2:93, m3:59, m4:49, m5:151, m6:46, m7:90, m8:49, m9:40, m10:72, m11:94, m12:69, ogs:true},
+  {m:'2025-09 ★', m0:5377, m1:86, m2:70, m3:51, m4:73, m5:32, m6:52, m7:42, m8:33, m9:38, m10:45, m11:66, m12:null, ogs:true},
+  {m:'2025-10', m0:638, m1:69, m2:78, m3:51, m4:61, m5:45, m6:44, m7:41, m8:36, m9:44, m10:30, m11:null, m12:null},
+  {m:'2025-11', m0:504, m1:60, m2:53, m3:43, m4:41, m5:34, m6:30, m7:19, m8:29, m9:28, m10:null, m11:null, m12:null},
+  {m:'2025-12', m0:514, m1:62, m2:40, m3:33, m4:34, m5:38, m6:29, m7:32, m8:24, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:731, m1:63, m2:48, m3:46, m4:40, m5:36, m6:39, m7:25, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:590, m1:78, m2:61, m3:50, m4:45, m5:46, m6:32, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:641, m1:79, m2:68, m3:59, m4:62, m5:47, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:643, m1:77, m2:60, m3:63, m4:50, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:859, m1:92, m2:112, m3:73, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:888, m1:137, m2:93, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07', m0:1287, m1:131, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, newThisMonth:true},
+  {m:'2026-08 ★今月', m0:1243, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+let currentCohortMode = 'all';
+function getCohortData(mode) {
+  if (mode === 'teiki') return cohortDataTeiki;
+  if (mode === 'spot') return cohortDataSpot;
+  return cohortData;
+}
+
+function switchCohortMode(mode, btn) {
+  currentCohortMode = mode;
+  document.querySelectorAll('.cohort-mode-btn').forEach(b => b.classList.remove('active-mode'));
+  btn.classList.add('active-mode');
+  const notes = {
+    all: '',
+    teiki: '※ 定期購入経験あり顧客（subscription_history_viewベース・実BQデータ）',
+    spot: '※ 定期購入経験なし顧客（都度買いのみ）の実BQデータ）'
+  };
+  document.getElementById('cohortModeNote').textContent = notes[mode];
+  buildCohortTable(getCohortData(mode));
+}
+
+function buildCohortTable(data) {
+  const t = document.getElementById('cohortTable');
+  let html2 = '<thead><tr><th>コホート月</th><th>新規数</th><th>M+1</th><th>M+2</th><th>M+3</th><th>M+4</th><th>M+5</th><th>M+6</th><th>M+7</th><th>M+8</th><th>M+9</th><th>M+10</th><th>M+11</th><th>M+12</th></tr></thead><tbody>';
+  data.forEach(row => {
+    const isOgsRow = !!row.ogs;
+    const isThisR = !!row.thisMonth;
+    const isNew  = !!row.newThisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = '';
+    if (isThisR) labelSuffix = ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>';
+    if (isNew)   labelSuffix = ' <span style="font-size:10px;background:#bbf7d0;color:#15803d;padding:1px 4px;border-radius:2px">M+1確定</span>';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    ['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11','m12'].forEach(k => {
+      const v = row[k];
+      if (v === null || v === undefined) {
+        html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>';
+        return;
+      }
+      const pct = Math.round(v / row.m0 * 100);
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 40) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 35) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 30) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 20) { bg = '#fef3c7'; tc = '#92400e'; }
+      else if (pct >= 10) { bg = '#fed7aa'; tc = '#c2410c'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}</span></td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+
+// ===== COHORT TABLE BUILD (初期表示) =====
+buildCohortTable(cohortData);
+
+
+// ===== CHARTS =====
+Chart.defaults.font.family = "'Noto Sans JP', sans-serif";
+
+// Revenue bar chart
+// @@SPLIT:tab3_data:END@@
+// @@SPLIT:tab3_cohortrate:START@@
+const cohortRateMonths = ['2024-04','2024-05','2024-06','2024-07','2024-08','2024-09','2024-10','2024-11','2024-12','2025-01','2025-02','2025-03','2025-04','2025-05','2025-06','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'];
+const m1rates = [15.1,35.2,34.7,34.9,35.4,32.0,35.6,37.0,36.9,37.8,40.3,36.2,39.3,42.0,40.1,38.9,38.2,36.0,32.9,41.1,36.7,34.6,32.2,35.5,28.8];
+const m6rates = [11.3,21.2,22.9,23.0,24.3,23.9,24.5,26.2,26.4,26.8,28.5,25.4,26.5,26.1,23.6,25.5,25.1,23.0,24.3,25.9,null,null,null,null,null];
+new Chart(document.getElementById('chartCohortRate'), {
+  type: 'line',
+  data: {
+    labels: [...cohortRateMonths, '2025-07★','2025-08★','2025-09★'],
+    datasets: [
+      {label:'M+1継続率（通常）', data:[...m1rates, null,null,null], borderColor:'#FF7A30', backgroundColor:'rgba(255,122,48,0.1)', tension:0.3, fill:false, pointRadius:4},
+      {label:'M+6継続率（通常）', data:[...m6rates, null,null,null], borderColor:'#7ED8A0', backgroundColor:'rgba(126,216,160,0.1)', tension:0.3, fill:false, pointRadius:4},
+      {label:'M+1継続率（★OGS）', data:[...cohortRateMonths.map(()=>null), 7.0,8.5,12.5], borderColor:'rgba(255,122,48,0.4)', backgroundColor:'rgba(255,122,48,0.05)', tension:0.3, fill:false, pointRadius:5, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw != null ? ctx.raw + '%' : '—'}`}}},
+    scales: {y: {ticks:{callback:v=>`${v}%`}, min:0, max:50}}
+  }
+});
+
+// Subscription status monthly trend
+// @@SPLIT:tab3_cohortrate:END@@
+// @@SPLIT:tab3_item:START@@
+// ===== ITEM COHORT TABLES =====
+// SKINBEAUTY コホートデータ（2025-08〜2026-04）
+// SKINBEAUTY コホート（SKINBEAUTY限定購入のみカウント・実BQデータ）
+// ⚠️注：2025-08〜09は事前予約期間を含むためイレギュラー
+const cohortSBData = [
+  {m:'2025-08 ★事前予約含む', m0:308, m1:8, m2:38, m3:18, m4:35, m5:25, m6:28, m7:21, m8:20, m9:24, m10:21, m11:22, m12:15, ogs:true},
+  {m:'2025-09 ★事前予約含む', m0:461, m1:60, m2:68, m3:70, m4:35, m5:35, m6:48, m7:41, m8:35, m9:34, m10:46, m11:32, m12:null, ogs:true},
+  {m:'2025-10', m0:490, m1:77, m2:74, m3:52, m4:49, m5:49, m6:52, m7:58, m8:51, m9:58, m10:47, m11:null, m12:null},
+  {m:'2025-11', m0:247, m1:38, m2:33, m3:18, m4:28, m5:26, m6:27, m7:21, m8:24, m9:15, m10:null, m11:null, m12:null},
+  {m:'2025-12', m0:376, m1:59, m2:51, m3:43, m4:38, m5:36, m6:30, m7:41, m8:32, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:221, m1:64, m2:50, m3:40, m4:47, m5:34, m6:44, m7:32, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:238, m1:96, m2:83, m3:67, m4:60, m5:42, m6:45, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:110, m1:38, m2:28, m3:21, m4:21, m5:20, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:109, m1:30, m2:23, m3:24, m4:20, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:145, m1:40, m2:37, m3:28, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:159, m1:45, m2:41, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07', m0:447, m1:63, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, newThisMonth:true},
+  {m:'2026-08 ★今月', m0:138, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+// MINERALion コホートデータ（2025-11〜2026-04）
+// MINERALion コホート（MINERALion限定購入のみカウント・実BQデータ・SKU 3021/3016除外済み）
+const cohortMIData = [
+  {m:'2025-11', m0:185, m1:30, m2:46, m3:34, m4:29, m5:24, m6:22, m7:18, m8:31, m9:12, m10:null, m11:null, m12:null},
+  {m:'2025-12', m0:363, m1:120, m2:83, m3:89, m4:69, m5:73, m6:64, m7:79, m8:65, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:449, m1:107, m2:98, m3:85, m4:70, m5:78, m6:87, m7:67, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:266, m1:74, m2:63, m3:52, m4:53, m5:60, m6:35, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:284, m1:75, m2:68, m3:75, m4:73, m5:51, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:159, m1:44, m2:42, m3:50, m4:32, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:137, m1:39, m2:48, m3:38, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:217, m1:71, m2:60, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07', m0:440, m1:120, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, newThisMonth:true},
+  {m:'2026-08 ★今月', m0:209, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+// C+Cera コホートデータ（2026-01〜2026-04）
+// C+Cera コホート（C+Cera限定購入のみカウント・実BQデータ）
+// ⚠️注：2026-01は事前予約期間を含むためイレギュラー
+const cohortCCeraData = [
+  {m:'2026-01 ★事前予約含む', m0:426, m1:37, m2:81, m3:89, m4:73, m5:75, m6:75, m7:60, m8:null, m9:null, m10:null, m11:null, m12:null, ogs:true},
+  {m:'2026-02', m0:1013, m1:249, m2:281, m3:233, m4:236, m5:202, m6:190, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:547, m1:184, m2:178, m3:166, m4:153, m5:120, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:702, m1:145, m2:135, m3:137, m4:100, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:396, m1:103, m2:106, m3:88, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:490, m1:125, m2:112, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07', m0:626, m1:150, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, newThisMonth:true},
+  {m:'2026-08 ★今月', m0:166, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+function buildItemCohortTable(tableId, data, keys) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const kLen = keys.length;
+  let hd = '<thead><tr><th>コホート月</th><th>新規数</th>';
+  keys.forEach(k => { hd += `<th>${k}</th>`; });
+  hd += '</tr></thead><tbody>';
+  let html2 = hd;
+  data.forEach(row => {
+    const isOgsRow = !!row.ogs || !!row.note;
+    const isThisR = !!row.thisMonth;
+    const isNew  = !!row.newThisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = '';
+    if (isThisR) labelSuffix = ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>';
+    if (isNew)   labelSuffix = ' <span style="font-size:10px;background:#bbf7d0;color:#15803d;padding:1px 4px;border-radius:2px">M+1確定</span>';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    ['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11','m12'].slice(0, kLen).forEach(k => {
+      const v = row[k];
+      if (v === null || v === undefined) {
+        html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>';
+        return;
+      }
+      const pct = Math.round(v / row.m0 * 100);
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 45) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 35) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 25) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 15) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}</span></td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+
+buildItemCohortTable('cohortSB', cohortSBData, ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12']);
+buildItemCohortTable('cohortMI', cohortMIData, ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12']);
+buildItemCohortTable('cohortCCera', cohortCCeraData, ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12']);
+
+// アイテム別M+1・M+6継続率チャート (SKINBEAUTY)
+const sbCohortMonths = ['2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'];
+const sbM1Rates = [15.7, 15.4, 15.7, 29.0, 40.3, 34.5, 27.5, 27.6, 28.3, 14.1];
+new Chart(document.getElementById('chartCohortSB'), {
+  type: 'line',
+  data: {
+    labels: [...['2025-08 ★', '2025-09 ★'], ...sbCohortMonths],
+    datasets: [
+      {label:'M+1継続率', data:[2.6, 13.0, ...sbM1Rates], borderColor:'#C4934A', backgroundColor:'rgba(196,147,74,0.1)', tension:0.3, fill:false, pointRadius:5,
+       segment: { borderColor: ctx => ctx.p0DataIndex < 2 ? 'rgba(196,147,74,0.4)' : '#C4934A', borderDash: ctx => ctx.p0DataIndex < 2 ? [4,4] : [] }
+      },
+      {label:'M+6継続率', data:[9.1, 10.4, 10.6, 10.9, 8.0, 19.9, 18.9, null, null, null, null, null], borderColor:'#C4934A', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position:'bottom' },
+      tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}` } },
+      annotation: { annotations: { note: { type:'label', xValue:1, yValue:45, content:['★事前予約期間含むためイレギュラー'], font:{size:10}, color:'#92400e' } } }
+    },
+    scales: { y: { min:0, max:60, ticks: { callback: v => v + '%' } } }
+  }
+});
+
+// MINERALion M+1チャート
+const miCohortMonths = ['2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'];
+const miM1Rates = [16.2, 33.1, 23.8, 27.8, 26.4, 27.7, 28.5, 32.7, 27.3];
+new Chart(document.getElementById('chartCohortMI'), {
+  type: 'line',
+  data: {
+    labels: miCohortMonths,
+    datasets: [
+      {label:'M+1継続率', data:miM1Rates, borderColor:'#1E3A8A', backgroundColor:'rgba(30,58,138,0.1)', tension:0.3, fill:false, pointRadius:5,
+       pointBackgroundColor: miCohortMonths.map((m,i) => '#1E3A8A')
+      },
+      {label:'M+6継続率', data:[11.9,17.6,19.4,13.2,null,null,null,null,null], borderColor:'#1E3A8A', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:50, ticks: { callback: v => v + '%' } } }
+  }
+});
+
+// C+Cera M+1チャート
+const ceraMonths = ['2026-01 ★事前予約含む','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'];
+const ceraM1 = [8.7, 24.6, 33.6, 20.7, 26.0, 25.5, 24.0];
+new Chart(document.getElementById('chartCohortCCera'), {
+  type: 'line',
+  data: {
+    labels: ceraMonths,
+    datasets: [
+      {label:'M+1継続率', data:ceraM1, borderColor:'#FF6B9D', backgroundColor:'rgba(255,107,157,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'M+6継続率', data:[17.6,18.8,null,null,null,null,null], borderColor:'#FF6B9D', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:60, ticks: { callback: v => v + '%' } } }
+  }
+});
+
+// ===== CROSS-BUY TREND CHART =====
+
+// ===== ④ 定期便ヘルス =====
+// @@SPLIT:tab3_item:END@@
+
+</script>
+</body>
+</html>

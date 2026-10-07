@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lypo-C 月次分析レポート 2026-08 ｜ ⑦ 目標進捗管理</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--cdk:#5BC882;--cbd:#1B7A4A;
+  --ccera:#FF6B9D;--sb:#C4934A;--mi:#1E3A8A;--lypo:#FFB070;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0;max-width:1200px;margin:0 auto}
+.page-wrap{padding:24px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted)}
+.month-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 14px;border-radius:4px;font-size:13px;font-weight:700;margin-bottom:20px;letter-spacing:0.3px}
+.stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px;align-items:stretch}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+thead th.c{text-align:center}
+tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid #f5f5f4;font-size:13px}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td.c{text-align:center}
+tbody tr:last-child td{border-bottom:none}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.tot td{border-top:2px solid var(--border)}
+tr.ogs{background:#fff8f0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600}
+.badge.a{background:#dcfce7;color:#15803d}.badge.b{background:#fef2f2;color:#dc2626}
+.badge.n{background:#eff6ff;color:#2563eb}.badge.w{background:#fff8f0;color:#92400e}
+.monthly-insight{background:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0284c7;border-radius:8px;padding:14px 18px;margin-top:12px;margin-bottom:20px;font-size:13px;line-height:1.9}
+.monthly-insight .mi-title{font-weight:700;font-size:12px;margin-bottom:6px;color:#0369a1;display:flex;align-items:center;gap:6px}
+.monthly-insight ul{padding-left:18px}.monthly-insight li{margin-bottom:5px}
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.9}
+.notes .nt{font-weight:700;font-size:12px;margin-bottom:6px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:4px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;position:relative;height:290px}
+.chart-wrap canvas{display:block;width:100% !important}
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;overflow-x:auto}
+.tab-btn{background:none;border:none;padding:10px 18px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.cohort-wrap{overflow-x:auto;margin-bottom:12px}
+.cohort-table{border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:900px}
+.cohort-table th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cohort-table th:first-child{text-align:left;min-width:90px}
+.cohort-table td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11px;line-height:1.4}
+.cohort-table td:first-child{text-align:left;font-weight:500;padding:5px 10px;font-size:12px}
+.cohort-table tr.ogs-row td:first-child{color:#92400e;font-weight:700}
+.cohort-table tr.highlight-row td{background:#fafafa}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.insight-card .ic-num{font-size:30px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:-1px}
+.insight-card .ic-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.insight-card .ic-body{font-size:13px;color:var(--muted);line-height:1.7}
+.insight-card.positive .ic-num{color:var(--green)}
+.insight-card.negative .ic-num{color:var(--red)}
+.insight-card.warning .ic-num{color:#f59e0b}
+.crm-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px}
+.crm-card .crm-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.crm-card .crm-priority{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.crm-card .crm-priority.p1{background:#fef2f2;color:#dc2626}
+.crm-card .crm-priority.p2{background:#fff8f0;color:#92400e}
+.crm-card .crm-priority.p3{background:#eff6ff;color:#2563eb}
+.crm-card .crm-title{font-size:14px;font-weight:700}
+.crm-card .crm-body{font-size:13px;color:var(--muted);line-height:1.7}
+.crm-card .crm-kpi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:500}
+.crm-card .crm-update{font-size:11px;margin-top:6px;padding:4px 8px;background:#f0fdf4;border-radius:4px;color:#15803d;font-weight:500}
+.kpi-change{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;margin-left:6px}
+.kpi-change.up{background:#dcfce7;color:#15803d}
+.kpi-change.dn{background:#fef2f2;color:#dc2626}
+.kpi-change.flat{background:#f5f5f4;color:#78716c}
+.analysis{border-radius:8px;margin:10px 0 20px;overflow:hidden;font-size:13px;line-height:1.8}
+.analysis-head{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.analysis-body{padding:12px 16px 14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.an-col{padding:0 14px;border-right:1px solid rgba(0,0,0,0.07)}
+.an-col:first-child{padding-left:0}
+.an-col:last-child{border-right:none;padding-right:0}
+.an-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;opacity:0.7}
+.an-text{font-size:12.5px;line-height:1.75}
+.an-text strong{font-weight:700}
+.analysis.blue{background:#eff6ff;border:1px solid #bfdbfe}
+.analysis.blue .analysis-head{background:#dbeafe;color:#1e40af}
+.analysis.blue .an-col{color:#1e3a8a}
+.analysis.green{background:#f0fdf4;border:1px solid #bbf7d0}
+.analysis.green .analysis-head{background:#dcfce7;color:#14532d}
+.analysis.green .an-col{color:#166534}
+.analysis.orange{background:#fff7ed;border:1px solid #fed7aa}
+.analysis.orange .analysis-head{background:#ffedd5;color:#7c2d12}
+.analysis.orange .an-col{color:#9a3412}
+.teiki-funnel{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.teiki-stage{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.teiki-stage .ts-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:4px}
+.teiki-stage .ts-count{font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.teiki-stage .ts-ltv{font-size:11px;color:var(--muted);margin-top:2px}
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ship{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-mixed{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f8fafc;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-ship,.sc .lb .ds-order,.sc .lb .ds-mixed{font-size:9px;padding:1px 5px;margin-left:3px}
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-snap{font-size:9px;padding:1px 5px;margin-left:3px}
+.ds-adebis{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-click{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-adebis,.sc .lb .ds-click{font-size:9px;padding:1px 5px;margin-left:3px}
+.adebis-rank{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-right:4px;flex-shrink:0}
+.adebis-rank.r1{background:#f59e0b;color:#fff}
+.adebis-rank.r2{background:#9ca3af;color:#fff}
+.adebis-rank.r3{background:#b45309;color:#fff}
+.adebis-rank.rx{background:#f3f4f6;color:#6b7280}
+.adebis-warn{font-size:10px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.adebis-new{font-size:10px;background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.cvr-high{color:#15803d;font-weight:700}
+.cvr-mid{color:#92400e}
+.cvr-low{color:#9ca3af}
+td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-all;line-height:1.4}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .analysis-body{grid-template-columns:1fr}
+  .an-col{border-right:none;border-bottom:1px solid rgba(0,0,0,0.07);padding:8px 0;margin:0}
+  .an-col:last-child{border-bottom:none}
+  .teiki-funnel{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ===== tab6 (まとめと提言) 固有CSS ===== */
+/* 総評セクション */
+.summary-section{margin-bottom:40px}
+.summary-header{display:flex;align-items:baseline;gap:10px;margin:28px 0 6px}
+.summary-header-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.summary-header-title::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.summary-header-badge{font-size:12px;font-weight:400;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:3px;margin-left:8px}
+.summary-verdict{background:#1c1917;border-radius:10px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.summary-verdict-icon{font-size:22px;flex-shrink:0}
+.summary-verdict-text{font-size:13.5px;font-weight:600;color:#fff;line-height:1.65;letter-spacing:0.1px}
+.summary-verdict-text em{font-style:normal;color:#FFB070}
+.finding-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.finding-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.finding-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.finding-card.fc-green::before{background:#16a34a}
+.finding-card.fc-red::before{background:#dc2626}
+.finding-card.fc-amber::before{background:#f59e0b}
+.finding-card.fc-orange::before{background:var(--accent)}
+.finding-card.fc-blue::before{background:#2563eb}
+.finding-card.fc-slate::before{background:#64748b}
+.fc-index{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.fc-metric{font-size:26px;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.finding-card.fc-green .fc-metric{color:#16a34a}
+.finding-card.fc-red .fc-metric{color:#dc2626}
+.finding-card.fc-amber .fc-metric{color:#d97706}
+.finding-card.fc-orange .fc-metric{color:var(--accent)}
+.finding-card.fc-blue .fc-metric{color:#2563eb}
+.finding-card.fc-slate .fc-metric{color:#475569}
+.fc-title{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.4}
+.fc-body{font-size:12px;color:var(--muted);line-height:1.75;flex:1}
+.fc-body strong{color:var(--text)}
+.fc-insight{margin-top:4px;padding:6px 10px;border-radius:5px;font-size:11.5px;font-weight:600;line-height:1.5}
+.finding-card.fc-green .fc-insight{background:#f0fdf4;color:#15803d}
+.finding-card.fc-red .fc-insight{background:#fff5f5;color:#dc2626}
+.finding-card.fc-amber .fc-insight{background:#fffbeb;color:#92400e}
+.finding-card.fc-orange .fc-insight{background:#fff8f0;color:#c2410c}
+.finding-card.fc-blue .fc-insight{background:#eff6ff;color:#1e40af}
+.finding-card.fc-slate .fc-insight{background:#f8fafc;color:#475569}
+/* スコアカード */
+.scorecard-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px}
+.sc-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.sc-item-axis{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.sc-item-label{font-size:11.5px;font-weight:600;color:var(--text);line-height:1.35}
+.sc-item-value{font-size:17px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-top:2px}
+.sc-item-sub{font-size:10.5px;color:var(--muted);line-height:1.5}
+.sc-item-rationale{font-size:10.5px;color:var(--muted);line-height:1.55;margin-top:2px;border-top:1px solid var(--border);padding-top:5px}
+.sc-item-verdict{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;width:fit-content;margin-top:2px}
+.sc-v-ok{background:#dcfce7;color:#15803d}
+.sc-v-warn{background:#fff7ed;color:#c2410c}
+.sc-v-bad{background:#fff5f5;color:#dc2626}
+.sc-v-ref{background:#eff6ff;color:#1e40af}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .finding-grid{grid-template-columns:1fr}
+  .scorecard-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ===== タブ固有CSS（tab2〜tab7） ===== */
+/* ===== VC/C+D フロー分析 統合セクション 追加CSS ===== */
+.flow-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px}
+.flow-kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.flow-kpi .lb{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.03em;margin-bottom:6px}
+.flow-kpi .vl{font-size:24px;font-weight:700;letter-spacing:-0.02em}
+.flow-kpi .sb{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+.flow-group-label{font-size:12px;font-weight:700;color:var(--muted);margin:18px 0 8px;padding-left:2px}
+.th-vc{background:#fff3e0 !important;color:#c2410c}
+.th-cd{background:#f0fdf4 !important;color:#166534}
+.th-ccera{background:#fdf2f8 !important;color:#9d174d}
+.th-mi{background:#eff6ff !important;color:#1e40af}
+.th-sb{background:#fefce8 !important;color:#92400e}
+.flow-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:8px}
+.flow-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px}
+.flow-label{width:110px;font-weight:600;text-align:right;flex-shrink:0}
+.flow-bar-wrap{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.flow-bar{height:24px;border-radius:5px;min-width:4px;flex-shrink:0}
+.flow-num{font-size:12.5px;color:var(--text);white-space:nowrap;font-weight:600}
+.flow-num .pct{color:var(--muted);font-weight:400;margin-left:4px}
+.frozen-divider{display:flex;align-items:center;gap:14px;margin:44px 0 28px}
+.frozen-divider::before,.frozen-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.frozen-divider .fd-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#78716c;background:#f5f5f4;border:1px solid var(--border);padding:5px 14px;border-radius:99px;white-space:nowrap}
+.frozen-section{opacity:0.92}
+.frozen-note{font-size:11.5px;color:var(--muted);background:#f5f5f4;border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:18px;line-height:1.7}
+@media(max-width:768px){
+  .flow-kpi-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<div class="hdr">
+  <h1>🔬 Lypo-C 月次分析レポート</h1>
+  <div class="meta">データ取得：2026年9月1日 ｜ 売上：NE受注（shop_id=17ほか）出荷基準 ｜ 顧客：Shopify受注基準（sandbox_nishimori.shopify_customer_master・9/1時点でspic-core側月次バッチ未反映のため今回のみsandbox直接参照）｜ 定期：sandbox_nishimori.subscription_history_view（snapshot_ym='2026-08'・同上の理由でsandbox直接参照）</div>
+</div>
+<div class="month-badge">📅 2026年8月度</div>
+
+<div class="tab-nav" style="overflow-x:auto;white-space:nowrap">
+  <button class="tab-btn active" onclick="void(0)">⑦ 目標進捗管理</button>
+  <span style="font-size:11px;color:#9a9088;padding:10px 14px;display:inline-block">⚠️ part ファイル（更新6番目）― merge_monthly.py で結合後に noindex 確認</span>
+</div>
+
+<div id="tab7" class="tab-pane active">
+
+<div class="stitle">FY2027 コンシューマー本部 KGI 目標進捗管理<span class="ds-ne">NE</span><span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span><span style="font-size:12px;font-weight:400;background:#dcfce7;color:#15803d;padding:2px 7px;border-radius:3px;margin-left:8px">毎月更新</span></div>
+
+<style>
+/* ===== TAB7 専用スタイル ===== */
+.kgi-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.kgi-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.kgi-card-left{display:flex;align-items:flex-start;gap:12px;flex:1;min-width:0}
+.kgi-card-num{width:32px;height:32px;border-radius:50%;background:#f5f5f4;color:var(--muted);font-size:13px;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.kgi-card-name{font-size:14px;font-weight:700;margin-bottom:3px}
+.kgi-card-desc{font-size:12px;color:var(--muted);line-height:1.6}
+/* 達成見込みバッジ */
+.achv-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.achv-badge.green{background:#dcfce7;color:#15803d}
+.achv-badge.yellow{background:#fef9c3;color:#854d0e}
+.achv-badge.red{background:#fef2f2;color:#dc2626}
+.achv-badge.blue{background:#eff6ff;color:#1d4ed8}
+.achv-badge.gray{background:#f5f5f4;color:#78716c}
+/* メトリクスグリッド */
+.kgi-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.kgi-metric{background:#f9f9f8;border-radius:8px;padding:10px 12px;text-align:center}
+.kgi-metric .km-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.5px;margin-bottom:3px}
+.kgi-metric .km-val{font-size:18px;font-weight:700;letter-spacing:-0.5px}
+.kgi-metric .km-sub{font-size:10px;color:var(--muted);margin-top:2px}
+/* 差分ベース達成率バー */
+.diff-prog-wrap{margin:14px 0 4px}
+.diff-prog-title{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.3px}
+.diff-prog-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.diff-prog-label{font-size:11px;color:var(--muted);width:130px;flex-shrink:0;font-weight:500}
+.diff-prog-bar-bg{flex:1;height:12px;background:#f5f5f4;border-radius:6px;overflow:hidden;position:relative}
+.diff-prog-bar-base{height:100%;background:#d4d4d4;position:absolute;left:0;top:0;border-radius:6px 0 0 6px}
+.diff-prog-bar-fill{height:100%;border-radius:0 6px 6px 0;position:absolute;top:0;transition:width .3s}
+.diff-prog-bar-fill.g{background:#16a34a}
+.diff-prog-bar-fill.y{background:#ca8a04}
+.diff-prog-bar-fill.r{background:#dc2626}
+.diff-prog-bar-fill.b{background:#2563eb}
+.diff-prog-bar-label50{position:absolute;top:-1px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--muted);white-space:nowrap}
+.diff-prog-pct{font-size:13px;font-weight:700;width:44px;text-align:right;flex-shrink:0}
+.diff-note{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.5}
+/* 月次トラッキングテーブル */
+.track-table{width:100%;border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:10px}
+.track-table thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 8px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border);white-space:nowrap}
+.track-table thead th:first-child{text-align:left}
+.track-table tbody td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11.5px}
+.track-table tbody td:first-child{text-align:left;font-weight:500;font-size:12px}
+.track-table tbody tr:last-child td{border-bottom:none}
+.track-table td.this{background:#fff8f0;font-weight:700}
+.track-table td.ok{color:#16a34a;font-weight:700}
+.track-table td.ng{color:#dc2626;font-weight:700}
+.track-table td.na{color:#d4d4d4}
+.track-table tr.tot td{background:#f5f5f4;font-weight:700;border-top:2px solid var(--border)}
+/* 予測ボックス */
+.forecast-box{border-radius:8px;padding:12px 16px;font-size:12.5px;line-height:1.8;margin-top:10px;border-left-width:4px;border-left-style:solid}
+.forecast-box.ok{background:#f0fdf4;border-color:#bbf7d0;border-left-color:#16a34a}
+.forecast-box.warn{background:#fffbeb;border-color:#fde68a;border-left-color:#ca8a04}
+.forecast-box.danger{background:#fef2f2;border-color:#fecaca;border-left-color:#dc2626}
+.forecast-box.info{background:#f0f9ff;border-color:#bae6fd;border-left-color:#0284c7}
+.forecast-title{font-weight:700;font-size:12px;margin-bottom:5px}
+/* 全体サマリー */
+.kgi-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.kgi-summary-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center}
+.kgi-summary-card .ks-num{font-size:28px;font-weight:700;letter-spacing:-1px}
+.kgi-summary-card .ks-label{font-size:11px;color:var(--muted);margin-top:3px}
+/* 差分説明 */
+.diff-explain{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);padding:6px 10px;background:#f9f9f8;border-radius:6px;margin-bottom:10px;flex-wrap:wrap}
+.diff-explain strong{color:var(--text)}
+.diff-explain .arrow{font-size:14px;color:var(--muted)}
+
+/* データソース・集計基準バッジ */
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ship{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-mixed{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f8fafc;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+/* KPIカード内のバッジ（ラベル行用・小さめ） */
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-ship,.sc .lb .ds-order,.sc .lb .ds-mixed{font-size:9px;padding:1px 5px;margin-left:3px}
+
+/* スナップショット基準バッジ（定期便ヘルス用） */
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-snap{font-size:9px;padding:1px 5px;margin-left:3px}
+/* Adebis・クリック日基準バッジ */
+.ds-adebis{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-click{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-adebis,.sc .lb .ds-click{font-size:9px;padding:1px 5px;margin-left:3px}
+/* アドエビス専用テーブルスタイル */
+.adebis-rank{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-right:4px;flex-shrink:0}
+.adebis-rank.r1{background:#f59e0b;color:#fff}
+.adebis-rank.r2{background:#9ca3af;color:#fff}
+.adebis-rank.r3{background:#b45309;color:#fff}
+.adebis-rank.rx{background:#f3f4f6;color:#6b7280}
+.adebis-warn{font-size:10px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.adebis-new{font-size:10px;background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.cvr-high{color:#15803d;font-weight:700}
+.cvr-mid{color:#92400e}
+.cvr-low{color:#9ca3af}
+td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-all;line-height:1.4}
+@media(max-width:768px){
+  .kgi-metrics{grid-template-columns:1fr 1fr}
+  .kgi-summary-grid{grid-template-columns:1fr 1fr}
+  .diff-prog-label{width:80px}
+}
+</style>
+
+<!-- ヘッダースコアカード -->
+<style>
+.sc8-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.sc8-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;position:relative;overflow:hidden}
+.sc8-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:4px 0 0 4px}
+.sc8-card.green::before{background:#16a34a}
+.sc8-card.yellow::before{background:#ca8a04}
+.sc8-card.red::before{background:#dc2626}
+.sc8-card.gray::before{background:#a8a29e}
+.sc8-num{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.5px;margin-bottom:4px}
+.sc8-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4}
+.sc8-vals{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px}
+.sc8-actual{font-size:17px;font-weight:700;letter-spacing:-0.5px;line-height:1}
+.sc8-target{font-size:10px;color:var(--muted);text-align:right;line-height:1.4}
+.sc8-bar-bg{width:100%;height:6px;background:#f5f5f4;border-radius:3px;overflow:hidden;margin-bottom:4px;position:relative}
+.sc8-bar-base{position:absolute;left:0;top:0;height:100%;background:#e7e5e4;border-radius:3px}
+.sc8-bar-fill{position:absolute;top:0;height:100%;border-radius:0 3px 3px 0}
+.sc8-bar-fill.g{background:#16a34a}
+.sc8-bar-fill.y{background:#ca8a04}
+.sc8-bar-fill.r{background:#dc2626}
+.sc8-bar-fill.b{background:#2563eb}
+.sc8-footer{display:flex;justify-content:space-between;align-items:center}
+.sc8-pct{font-size:14px;font-weight:700}
+.sc8-badge{font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;white-space:nowrap}
+.sc8-badge.green{background:#dcfce7;color:#15803d}
+.sc8-badge.yellow{background:#fef9c3;color:#854d0e}
+.sc8-badge.red{background:#fef2f2;color:#dc2626}
+.sc8-badge.gray{background:#f5f5f4;color:#78716c}
+
+/* データソース・集計基準バッジ */
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ship{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-mixed{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f8fafc;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+/* KPIカード内のバッジ（ラベル行用・小さめ） */
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-ship,.sc .lb .ds-order,.sc .lb .ds-mixed{font-size:9px;padding:1px 5px;margin-left:3px}
+
+/* スナップショット基準バッジ（定期便ヘルス用） */
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-snap{font-size:9px;padding:1px 5px;margin-left:3px}
+/* Adebis・クリック日基準バッジ */
+.ds-adebis{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-click{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-adebis,.sc .lb .ds-click{font-size:9px;padding:1px 5px;margin-left:3px}
+/* アドエビス専用テーブルスタイル */
+.adebis-rank{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-right:4px;flex-shrink:0}
+.adebis-rank.r1{background:#f59e0b;color:#fff}
+.adebis-rank.r2{background:#9ca3af;color:#fff}
+.adebis-rank.r3{background:#b45309;color:#fff}
+.adebis-rank.rx{background:#f3f4f6;color:#6b7280}
+.adebis-warn{font-size:10px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.adebis-new{font-size:10px;background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.cvr-high{color:#15803d;font-weight:700}
+.cvr-mid{color:#92400e}
+.cvr-low{color:#9ca3af}
+td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-all;line-height:1.4}
+@media(max-width:768px){.sc8-grid{grid-template-columns:1fr 1fr}}
+</style>
+
+<div class="sc8-grid">
+
+  <!-- KGI 1: toC売上合算 -->
+  <div class="sc8-card yellow">
+    <div class="sc8-num">KGI ① toC売上合算</div>
+    <div class="sc8-name">toC全チャネル売上</div>
+    <div class="sc8-vals">
+      <div class="sc8-actual" style="color:#ca8a04">¥4.24億<span style="font-size:11px;font-weight:400;color:var(--muted)"> /月</span></div>
+      <div class="sc8-target">目標 ¥59.76億/年<br>月次 ¥4.98億ペース必要</div>
+    </div>
+    <div class="sc8-bar-bg">
+      <div class="sc8-bar-base" style="width:50%"></div>
+      <div class="sc8-bar-fill y" style="left:50%;width:13.1%"></div>
+    </div>
+    <div class="sc8-footer">
+      <div class="sc8-pct" style="color:#ca8a04">63.1%</div>
+      <div class="sc8-badge yellow">⚠ 要観察</div>
+    </div>
+  </div>
+
+  <!-- KGI 2: 売上内訳 -->
+  <div class="sc8-card yellow">
+    <div class="sc8-num">KGI ② 売上内訳（NE）</div>
+    <div class="sc8-name">自社EC / モール / ふるさと</div>
+    <div class="sc8-vals">
+      <div style="font-size:11px;line-height:1.7;color:var(--text)">
+        EC <strong style="color:#2563eb">¥220.3M</strong> / 目標¥283.3M<br>
+        モール <strong style="color:var(--accent)">¥192.4M</strong> / 目標¥204.4M<br>
+        ふるさと <strong style="color:#7c3aed">¥11.4M</strong> / 目標¥11.9M
+      </div>
+    </div>
+    <div class="sc8-bar-bg">
+      <div class="sc8-bar-base" style="width:50%"></div>
+      <div class="sc8-bar-fill y" style="left:50%;width:13.1%"></div>
+    </div>
+    <div class="sc8-footer">
+      <div class="sc8-pct" style="color:#ca8a04">63.1%</div>
+      <div class="sc8-badge yellow">⚠ 要観察</div>
+    </div>
+  </div>
+
+  <!-- KGI 3: M+1継続率 -->
+  <div class="sc8-card red">
+    <div class="sc8-num">KGI ③ M+1継続率平均</div>
+    <div class="sc8-name">初回購入翌月リピート率</div>
+    <div class="sc8-vals">
+      <div class="sc8-actual" style="color:#dc2626">32.7%<span style="font-size:11px;font-weight:400;color:var(--muted)"> FY2027 4M平均</span></div>
+      <div class="sc8-target">目標 39.0%以上<br>7月コホート28.8%（直近1年最低）</div>
+    </div>
+    <div class="sc8-bar-bg">
+      <div class="sc8-bar-base" style="width:50%"></div>
+      <div class="sc8-bar-fill r" style="left:50%;width:0%"></div>
+    </div>
+    <div class="sc8-footer">
+      <div class="sc8-pct" style="color:#dc2626">50.0%</div>
+      <div class="sc8-badge red">🔴 要アクション</div>
+    </div>
+  </div>
+
+  <!-- KGI 4: 公式EC比率 -->
+  <div class="sc8-card yellow">
+    <div class="sc8-num">KGI ④ 公式EC比率</div>
+    <div class="sc8-name">自社EC ÷ toC合算（NE）</div>
+    <div class="sc8-vals">
+      <div class="sc8-actual" style="color:#ca8a04">52.0%</div>
+      <div class="sc8-target">目標 55.4%（絶対距離方式）<br>5月0.7pt・6月2.4pt・7月6.4pt・8月3.4pt</div>
+    </div>
+    <div class="sc8-bar-bg">
+      <div class="sc8-bar-base" style="width:50%"></div>
+      <div class="sc8-bar-fill y" style="left:50%;width:1.5%"></div>
+    </div>
+    <div class="sc8-footer">
+      <div class="sc8-pct" style="color:#ca8a04">50.8%</div>
+      <div class="sc8-badge yellow">⚠ 要観察</div>
+    </div>
+  </div>
+
+  <!-- KGI 5: 定期便ACTIVE -->
+  <div class="sc8-card red">
+    <div class="sc8-num">KGI ⑤ 定期便ACTIVE件数</div>
+    <div class="sc8-name">Lypo-C全コース合計</div>
+    <div class="sc8-vals">
+      <div class="sc8-actual" style="color:#ca8a04">22,258件</div>
+      <div class="sc8-target">目標 27,000件（3月末）<br>前月比 +7件（純増は継続もほぼ横ばい）</div>
+    </div>
+    <div class="sc8-bar-bg">
+      <div class="sc8-bar-base" style="width:50%"></div>
+      <div class="sc8-bar-fill y" style="left:50%;width:2.55%"></div>
+    </div>
+    <div class="sc8-footer">
+      <div class="sc8-pct" style="color:#ca8a04">52.6%</div>
+      <div class="sc8-badge red">🔴 要アクション</div>
+    </div>
+  </div>
+
+  <!-- KGI 6: 年間購入回数 -->
+  <div class="sc8-card green">
+    <div class="sc8-num">KGI ⑥ 年間購入回数</div>
+    <div class="sc8-name">直近12ヶ月ローリング（0円購入除外）</div>
+    <div class="sc8-vals">
+      <div class="sc8-actual" style="color:#16a34a">4.58回</div>
+      <div class="sc8-target">目標 4.71回（差分+0.30回）<br>8月+0.02回 / 5ヶ月連続改善</div>
+    </div>
+    <div class="sc8-bar-bg">
+      <div class="sc8-bar-base" style="width:50%"></div>
+      <div class="sc8-bar-fill g" style="left:50%;width:14.0%"></div>
+    </div>
+    <div class="sc8-footer">
+      <div class="sc8-pct" style="color:#16a34a">78.0%</div>
+      <div class="sc8-badge green">✅ 順調（5ヶ月連続改善）</div>
+    </div>
+  </div>
+
+  <!-- KGI 7: AOV -->
+  <div class="sc8-card yellow">
+    <div class="sc8-num">KGI ⑦ AOV（平均注文単価）</div>
+    <div class="sc8-name">0円購入除外・Shopifyベース</div>
+    <div class="sc8-vals">
+      <div class="sc8-actual" style="color:#ca8a04">¥12,325</div>
+      <div class="sc8-target">目標 ¥12,713（差分¥707）<br>¥319埋（45.1%達成・反発）</div>
+    </div>
+    <div class="sc8-bar-bg">
+      <div class="sc8-bar-base" style="width:50%"></div>
+      <div class="sc8-bar-fill y" style="left:50%;width:22.6%"></div>
+    </div>
+    <div class="sc8-footer">
+      <div class="sc8-pct" style="color:#ca8a04">72.6%</div>
+      <div class="sc8-badge yellow">⚠ 要観察（2ヶ月連続下落から反発）</div>
+    </div>
+  </div>
+
+  <!-- KGI 8: 月次新規顧客 -->
+  <div class="sc8-card yellow">
+    <div class="sc8-num">KGI ⑧ 月次新規顧客数</div>
+    <div class="sc8-name">0円購入除外・ベース1,200人</div>
+    <div class="sc8-vals">
+      <div class="sc8-actual" style="color:#ca8a04">1,426人</div>
+      <div class="sc8-target">目標 1,700人/月<br>目標比▲274人（83.9%）</div>
+    </div>
+    <div class="sc8-bar-bg">
+      <div class="sc8-bar-base" style="width:50%"></div>
+      <div class="sc8-bar-fill y" style="left:50%;width:22.6%"></div>
+    </div>
+    <div class="sc8-footer">
+      <div class="sc8-pct" style="color:#ca8a04">72.6%</div>
+      <div class="sc8-badge yellow">⚠ 要観察（目標未達に反転）</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="notes" style="margin-bottom:20px">
+  <div class="nt">📌 達成率の読み方（差分ベース 50%スタート方式）</div>
+  <ul>
+    <li><strong>スタートライン50%</strong>：FY2027開始時点（FY2026実績ベース）を50%とし、そこから目標差分をどれだけ埋められたかを0〜100%で表示する。</li>
+    <li>例：年間購入回数 4.41回（FY2026・0円除外）→ 4.71回（目標）、差分0.30回。現時点4.52回なら差分0.11回 = 差分の36.7%埋まった → 表示: <strong>68.3%</strong>（50% + 36.7%×0.5）</li>
+    <li>100%に達した = 目標達成。未達でも50%未満には下がらない。</li>
+    <li><strong>売上・定期ACTIVE</strong>は月次で直接追えるため、累積進捗率（実績/目標）を50%スタートに換算して表示。</li>
+    <li>売上①②のデータソース：<strong>spic-core.public.ne_order_items（ship_date出荷基準）</strong>　自社EC:shop_id=17 / モール:31,32,33,35,41 / ふるさと納税&LINEギフト:21　<span class="ds-ne">NE</span><span class="ds-ship">出荷</span>　⚠️ receive_orderは廃止済み・使用禁止</li>
+  </ul>
+</div>
+
+<!-- ===== KGI 1: toC売上合算 ===== -->
+<div class="kgi-card">
+  <div class="kgi-card-head">
+    <div class="kgi-card-left">
+      <div class="kgi-card-num">1</div>
+      <div class="kgi-card-info">
+        <div class="kgi-card-name">toC売上合算（自社EC ＋ モール ＋ ふるさと納税）</div>
+        <div class="kgi-card-desc">FY2027目標：<strong>¥59.76億</strong>　│　FY2026実績（NEベース）：¥47.17億　│　データソース：<strong>spic-core.public.ne_order_items</strong>（ship_date出荷基準）　全チャネル: shop_id除外=toB(7,8,12,18,20,23,26,27,42,43)+テスト(10,19,22,25,29,30,37,45)+リポスフェリック(1,5,6,15,34,36,40)　<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+      </div>
+    </div>
+    <div class="achv-badge yellow">⚠ 要観察</div>
+  </div>
+
+  <div class="diff-explain">
+    <span>FY2026実績</span><strong>¥47.17億</strong><span class="arrow">→</span><span>FY2027目標</span><strong>¥59.76億</strong><span class="arrow">＝</span><span>差分</span><strong>+¥12.59億</strong><span>を埋めていく</span>
+  </div>
+
+  <div class="diff-prog-wrap">
+    <div class="diff-prog-title">達成率（差分ベース・50%スタート）── 累積5ヶ月を年換算しFY2026実績と比較</div>
+    <div class="diff-prog-row">
+      <div class="diff-prog-label">FY2027累積（5ヶ月）</div>
+      <div class="diff-prog-bar-bg">
+        <div class="diff-prog-bar-base" style="width:50%"></div>
+        <div class="diff-prog-bar-fill y" style="left:50%;width:13.1%"></div>
+        <div class="diff-prog-bar-label50">スタート50%</div>
+      </div>
+      <div class="diff-prog-pct" style="color:#ca8a04" id="kgi1-pct">63.1%</div>
+    </div>
+    <div class="diff-note">2026-04〜08累積¥21.03億 / 年間目標¥59.76億の35.2%進捗（残7ヶ月で¥38.73億必要・月次¥5.533億ペース必要）。<strong>達成率の算出方法：</strong>累積5ヶ月実績を年換算（¥21.03億×12/5＝¥50.47億）し、FY2026実績¥47.17億との差分¥3.30億が目標差分¥12.59億の26.2%を埋めた → 表示63.1%（50%＋26.2%×50%）。8月は自社EC・モールともに7月から減速（後述）したが、7月の好調が残る累積年換算ベースでは小幅な改善を維持。</div>
+  </div>
+
+  <div class="kgi-metrics">
+    <div class="kgi-metric"><div class="km-label">FY2026実績（NE年間）</div><div class="km-val">¥47.17億</div><div class="km-sub">2025-04〜2026-03</div></div>
+    <div class="kgi-metric"><div class="km-label">FY2027目標</div><div class="km-val" style="color:#2563eb">¥59.76億</div><div class="km-sub">差分 +¥12.59億</div></div>
+    <div class="kgi-metric"><div class="km-label">2026-08実績（NE出荷）<span class="ds-ne" style="font-size:8px">NE</span><span class="ds-ship" style="font-size:8px">出荷</span></div><div class="km-val this" style="background:transparent;color:#ca8a04">¥4.241億</div><div class="km-sub">EC+モール+ふるさと（前月比▲11.5%）</div></div>
+    <div class="kgi-metric"><div class="km-label">月次目標ペース</div><div class="km-val" style="color:var(--accent)">¥498M×7</div><div class="km-sub">¥59.76億÷12≒¥498M/月</div></div>
+  </div>
+
+  <table class="track-table" style="margin-top:14px">
+    <thead>
+      <tr><th style="text-align:left">月</th><th>自社EC（M）</th><th>モール（M）</th><th>ふるさと（M）</th><th>月合計（M）</th><th>月次目標（M）</th><th>月達成率</th><th>累積合計（億）</th><th>累積目標（億）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2026-04</td><td>210.9</td><td>161.5</td><td>7.4</td><td>379.8</td><td>498.0</td><td class="ng">76.3%</td><td>3.80</td><td>4.98</td></tr>
+      <tr><td>2026-05</td><td>224.4</td><td>175.8</td><td>9.9</td><td>410.1</td><td>498.0</td><td class="ng">82.3%</td><td>7.90</td><td>9.96</td></tr>
+      <tr><td>2026-06</td><td>217.2</td><td>181.9</td><td>10.6</td><td>409.7</td><td>498.0</td><td class="ng">82.3%</td><td>12.00</td><td>14.94</td></tr>
+      <tr><td>2026-07</td><td>235.0</td><td>233.0</td><td>11.4</td><td>479.4</td><td>498.0</td><td class="ok">96.3%</td><td>16.79</td><td>19.92</td></tr>
+      <tr style="background:#fff8f0;font-weight:700"><td>2026-08 ★</td><td class="this">220.3</td><td class="this">192.4</td><td class="this">11.4</td><td class="this">424.1</td><td>498.0</td><td class="ng this">85.2%</td><td class="this">21.03</td><td>24.90</td></tr>
+      <tr><td>2026-09</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td>498.0</td><td class="na">—</td><td class="na">—</td><td>29.88</td></tr>
+      <tr><td>2026-10</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td>498.0</td><td class="na">—</td><td class="na">—</td><td>34.86</td></tr>
+      <tr><td>2026-11</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td>498.0</td><td class="na">—</td><td class="na">—</td><td>39.84</td></tr>
+      <tr><td>2026-12</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td>498.0</td><td class="na">—</td><td class="na">—</td><td>44.82</td></tr>
+      <tr><td>2027-01</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td>498.0</td><td class="na">—</td><td class="na">—</td><td>49.80</td></tr>
+      <tr><td>2027-02</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td>498.0</td><td class="na">—</td><td class="na">—</td><td>54.78</td></tr>
+      <tr><td>2027-03</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td>498.0</td><td class="na">—</td><td class="na">—</td><td>59.76</td></tr>
+    </tbody>
+  </table>
+  <div class="forecast-box warn" style="margin-top:10px">
+    <div class="forecast-title">⚠ 着地予測：7月の押し上げが一巡し、直近3ヶ月平均ペースは減速</div>
+    直近3ヶ月平均ペース（2026-06〜08：¥437.7M/月、7月単月¥479.4Mから8月は¥424.1Mへ▲11.5%）継続の場合、年間着地 ≒ <strong>¥51.67億</strong>（目標¥59.76億の <strong>86.5%</strong>）。8月の減速はKGI⑤・タブ①⑤で確認された「CTC（C+Cera）・MINERALion2606施策終了に伴う反動減」がEC・モール双方に波及したもの。目標達成には残7ヶ月で月次¥553.3Mペースへの引き上げが必要（現ペース比+¥115.6M）。
+  </div>
+</div>
+
+<!-- ===== KGI 2: 売上内訳 ===== -->
+<div class="kgi-card">
+  <div class="kgi-card-head">
+    <div class="kgi-card-left">
+      <div class="kgi-card-num">2</div>
+      <div class="kgi-card-info">
+        <div class="kgi-card-name">売上内訳：自社EC / モール合算 / ふるさと納税&LINEギフト</div>
+        <div class="kgi-card-desc">データソース：<strong>spic-core.public.ne_order_items</strong>（ship_date出荷基準）　自社EC（shop_id=17）/ モール（31,32,33,35,41）/ ふるさと納税&LINEギフト（shop_id=21）　cancel_date IS NULL　<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+      </div>
+    </div>
+    <div class="achv-badge yellow">⚠ 要観察</div>
+  </div>
+
+  <!-- 自社EC -->
+  <div style="margin-bottom:14px">
+    <div style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--text)">▎自社EC（shop_id=17）</div>
+    <div class="diff-explain">
+      <span>FY2026実績</span><strong>¥27.80億</strong><span class="arrow">→</span><span>FY2027目標</span><strong>¥33.1億</strong><span class="arrow">＝</span><span>差分</span><strong>+¥5.30億</strong>
+    </div>
+    <div class="diff-prog-row" style="margin-top:6px">
+      <div class="diff-prog-label" style="width:140px;font-size:11px;color:var(--muted)">差分ベース達成率</div>
+      <div class="diff-prog-bar-bg">
+        <div class="diff-prog-bar-base" style="width:50%"></div>
+        <div class="diff-prog-bar-fill b" style="left:50%;width:0%"></div>
+        <div class="diff-prog-bar-label50">50%</div>
+      </div>
+      <div class="diff-prog-pct" style="color:#dc2626">50.0%</div>
+    </div>
+    <div class="diff-note">2026-08: ¥220.3M（月次目標¥283.3Mの77.8%・前月比▲6.3%）。累積5ヶ月: ¥11.078億 / 目標¥33.1億。5ヶ月累積を年換算（¥26.59億）してもFY2026実績¥27.80億を下回り差分達成率は下限（50.0%）のまま。7月の一時的な好調は一巡し、4〜6月と同水準の低調（78〜85%水準）に戻った。</div>
+  </div>
+
+  <!-- モール -->
+  <div style="margin-bottom:14px">
+    <div style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--text)">▎モール合算（shop_id=31,32,33,35,41）</div>
+    <div class="diff-explain">
+      <span>FY2026実績</span><strong>¥17.92億</strong><span class="arrow">→</span><span>FY2027目標</span><strong>¥24.9億</strong><span class="arrow">＝</span><span>差分</span><strong>+¥6.98億</strong>
+    </div>
+    <div class="diff-prog-row" style="margin-top:6px">
+      <div class="diff-prog-label" style="width:140px;font-size:11px;color:var(--muted)">差分ベース達成率</div>
+      <div class="diff-prog-bar-bg">
+        <div class="diff-prog-bar-base" style="width:50%"></div>
+        <div class="diff-prog-bar-fill g" style="left:50%;width:34.0%"></div>
+        <div class="diff-prog-bar-label50">50%</div>
+      </div>
+      <div class="diff-prog-pct" style="color:#16a34a">84.0%</div>
+    </div>
+    <div class="diff-note">2026-08: ¥192.4M（月次目標¥204.4Mの94.1%・前月比▲17.4%）。累積5ヶ月: ¥9.446億 / 目標¥24.9億。<strong>7月に指摘した「Amazon Prime Dayの一時的押し上げ」の反動がそのまま的中：Amazon¥147.6M→¥109.2M（▲26.0%）と大幅減。</strong>楽天も¥68.5M→¥63.9M（▲6.8%）で軟化した一方、その他モール（Yahoo・Qoo10・auPAY）は¥16.9M→¥19.3M（+14.7%）と回復。5ヶ月累積の年換算ベースではなお前年実績を上回り達成率84.0%を維持しているが、7月の一時的な伸びに引っ張られていた分の反動である点に留意。</div>
+  </div>
+
+  <!-- ふるさと -->
+  <div>
+    <div style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--text)">▎ふるさと納税&LINEギフト（shop_id=21）</div>
+    <div class="diff-explain">
+      <span>FY2026実績</span><strong>¥1.44億</strong><span class="arrow">→</span><span>FY2027目標</span><strong>¥1.76億</strong><span class="arrow">＝</span><span>差分</span><strong>+¥0.32億</strong>
+    </div>
+    <div class="diff-prog-row" style="margin-top:6px">
+      <div class="diff-prog-label" style="width:140px;font-size:11px;color:var(--muted)">差分ベース達成率</div>
+      <div class="diff-prog-bar-bg">
+        <div class="diff-prog-bar-base" style="width:50%"></div>
+        <div class="diff-prog-bar-fill b" style="left:50%;width:0%"></div>
+        <div class="diff-prog-bar-label50">50%</div>
+      </div>
+      <div class="diff-prog-pct" style="color:#dc2626">50.0%</div>
+    </div>
+    <div class="diff-note">2026-08: ¥11.4M（月次目標¥11.9Mの95.9%）。累積5ヶ月: ¥0.479億。季節変動大のため年間累積で管理（例年11月〜1月がピーク、4〜10月は閑散期）。7月とほぼ同水準を維持。</div>
+  </div>
+
+  <table class="track-table" style="margin-top:14px">
+    <thead>
+      <tr><th style="text-align:left">月</th><th>自社EC（M）</th><th>モール（M）</th><th>ふるさと（M）</th><th>合計（M）</th><th>自社EC累積（億）</th><th>モール累積（億）</th><th>ふるさと累積（億）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td style="color:var(--muted);font-size:11px">FY2026実績（参考）</td><td>2,780.4÷12=231.7</td><td>1,792.1÷12=149.3</td><td>144.2÷12=12.0</td><td>—</td><td>27.80</td><td>17.92</td><td>1.44</td></tr>
+      <tr><td>2026-04</td><td>210.9</td><td>161.5</td><td>7.4</td><td>379.8</td><td>2.109</td><td>1.615</td><td>0.074</td></tr>
+      <tr><td>2026-05</td><td>224.4</td><td>175.8</td><td>9.9</td><td>410.1</td><td>4.353</td><td>3.373</td><td>0.173</td></tr>
+      <tr><td>2026-06</td><td>217.2</td><td>181.9</td><td>10.6</td><td>409.7</td><td>6.525</td><td>5.192</td><td>0.278</td></tr>
+      <tr><td>2026-07</td><td>235.0</td><td>233.0</td><td>11.4</td><td>479.4</td><td>8.875</td><td>7.522</td><td>0.392</td></tr>
+      <tr style="background:#fff8f0;font-weight:700"><td>2026-08 ★</td><td class="this">220.3</td><td class="this">192.4</td><td class="this">11.4</td><td class="this">424.1</td><td class="this">11.078</td><td class="this">9.446</td><td class="this">0.479</td></tr>
+      <tr><td>2026-09〜2027-03</td><td class="na" colspan="7">毎月更新</td></tr>
+      <tr class="tot"><td>FY2027目標（年間）</td><td colspan="3" style="text-align:center">自社EC ¥33.1億 / モール ¥24.9億 / ふるさと ¥1.76億</td><td colspan="4" style="text-align:center;color:#2563eb">合計 ¥59.76億</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== KGI 3: M+1継続率 ===== -->
+<div class="kgi-card">
+  <div class="kgi-card-head">
+    <div class="kgi-card-left">
+      <div class="kgi-card-num">3</div>
+      <div class="kgi-card-info">
+        <div class="kgi-card-name">M+1継続率（初回購入翌月）の平均値底上げ</div>
+        <div class="kgi-card-desc">FY2026実績（OGS除外12ヶ月平均）：<strong>37.3%</strong>　→　FY2027目標：<strong>39.0%以上</strong>（ストレッチ：40%）　<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span>　shopify_orders/shopify_customer_master（customer_idベース）</div>
+      </div>
+    </div>
+    <div class="achv-badge red">🔴 要アクション（7月コホート急落）</div>
+  </div>
+
+  <div class="diff-explain">
+    <span>FY2026平均</span><strong>37.3%</strong><span class="arrow">→</span><span>FY2027目標</span><strong>39.0%</strong><span class="arrow">＝</span><span>差分</span><strong>+1.7pt</strong>を埋めていく
+  </div>
+
+  <div class="diff-prog-wrap">
+    <div class="diff-prog-title">達成率（差分ベース・50%スタート）── FY2027 5ヶ月目時点</div>
+    <div class="diff-prog-row">
+      <div class="diff-prog-label">FY2027累積平均（4ヶ月）</div>
+      <div class="diff-prog-bar-bg">
+        <div class="diff-prog-bar-base" style="width:50%"></div>
+        <div class="diff-prog-bar-fill r" style="left:50%;width:0%"></div>
+        <div class="diff-prog-bar-label50">スタート50%</div>
+      </div>
+      <div class="diff-prog-pct" style="color:#dc2626">50.0%</div>
+    </div>
+    <div class="diff-note">2026-04コホートM+1=34.0%（確定）・2026-05コホートM+1=32.4%（確定）・2026-06コホートM+1=35.5%（確定）・<strong>2026-07コホートM+1=28.8%（今回確定・561/1,947人・直近1年最低水準で通常ベンチマーク33〜42%を明確に下回る）</strong>。FY2027 4ヶ月平均=32.7%（目標39%比▲6.3pt）。差分達成率がマイナスのため下限 → 表示50.0%。2026-08コホートM+1は2026-09末確定。<br><span style="font-size:11px;color:var(--muted)">※タブ⑤・③の知見：7月コホートの急落はCYS動画広告シフト（「獲得_商品特定なし」+471%・CVR2.51%→0.96%）による新規獲得の質低下が主因とみられる。M0新規数はコホート分析（タブ③）と同一の`first_paid_order_dt`基準（0円購入含む・v10）に統一。</span></div>
+  </div>
+
+  <table class="track-table" style="margin-top:12px">
+    <thead>
+      <tr><th style="text-align:left">コホート月</th><th>M0新規数</th><th>M+1継続率</th><th>目標39%対比</th><th>FY2027累積平均</th><th>差分達成率（表示）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td style="color:var(--muted);font-size:11px">FY2026参考: 04〜03平均</td><td>—</td><td>37.3%</td><td class="ng">▲1.7pt</td><td>—</td><td style="color:var(--muted)">スタート50%</td></tr>
+      <tr><td>2026-04（FY2027 1ヶ月目）</td><td>1,096</td><td class="ng">34.0%</td><td class="ng">▲5.0pt</td><td>34.0%</td><td class="ng">50.0%</td></tr>
+      <tr><td>2026-05（FY2027 2ヶ月目）</td><td>1,437</td><td class="ng">32.4%</td><td class="ng">▲6.6pt</td><td>33.2%</td><td class="ng">50.0%</td></tr>
+      <tr><td>2026-06（FY2027 3ヶ月目）</td><td>1,438</td><td class="ok">35.5%</td><td class="ng">▲3.5pt</td><td>34.0%</td><td class="ng">50.0%</td></tr>
+      <tr style="background:#fff8f0;font-weight:700"><td>2026-07 ★（FY2027 4ヶ月目）</td><td class="this">1,947</td><td class="ng this">28.8%（確定）</td><td class="ng this">▲10.2pt</td><td class="this">32.7%</td><td class="ng this">50.0%</td></tr>
+      <tr><td>2026-08（FY2027 5ヶ月目）</td><td>1,700</td><td class="na">未確定（9月末）</td><td class="na">—</td><td class="na">—</td><td class="na">—</td></tr>
+      <tr><td>2026-09〜2027-03</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td></tr>
+    </tbody>
+  </table>
+  <div class="forecast-box danger" style="margin-top:10px">
+    <div class="forecast-title">🔴 着地予測：7月コホートM+1が直近1年最低の28.8%に急落。目標39%との差は▲10.2ptに拡大</div>
+    FY2027累積4ヶ月平均32.7%はFY2026基準37.3%を▲4.6pt下回り目標39.0%からは▲6.3pt。6月の35.5%（通常レンジ復帰）から一転、7月は28.8%へ急落し4ヶ月平均を押し下げた。タブ⑤・③の知見の通り、CYS施策の動画広告シフトによる新規獲得の質低下（「獲得_商品特定なし」クリック+471%・CVR2.51%→0.96%）が主因とみられる。継続率1pt改善 ≒ 年間<strong>+¥2.2億の売上貢献</strong>（月次新規1,700人前提）。8月コホート（M0=1,700人）のM+1が9月末に確定する。これが「一時的なノイズか、CYS施策継続中の構造的な問題か」の重要な判定材料になるため、初回30〜45日リマインドメール強化・獲得広告の質改善（診断LP誘導の再強化）を最優先で検討すべき局面。
+  </div>
+
+  <div class="forecast-box info" style="margin-top:8px">
+    <div class="forecast-title" style="color:#0369a1">💡 ワンポイントアドバイス：M+1継続率を上げる施策</div>
+    <strong>即効性が高い順に3つ。</strong><br>
+    <strong>① 初回購入後30〜45日のステップメール強化</strong>（最高ROI）──
+    M+1継続の決定打は「飲み切りタイミングでの再注文」。初回購入から28〜35日後（Lypo-C 30包の消費目安）に「もうすぐ飲み切りませんか？」リマインドと定期便メリット訴求メールを配信。件名に「残り〇日分」などを入れると開封率が上がる。<br>
+    <strong>② 初回購入直後のオンボーディング改善</strong>──
+    購入後1〜3日以内に「正しい飲み方・効果実感ガイド」を配信し、商品価値の理解促進と期待値設定を行う。離脱の主因「実感がない」を先手で防ぐ。継続率の低い月（1月・9月）は初回体験の質が下がっている可能性を確認する。<br>
+    <strong>③ 定期便への初回切り替えオファー設計</strong>──
+    M+0（初回購入当月）に「定期便に切り替えると次回から¥×,×××お得」のポップアップ・LINEメッセージを送る。定期便は購入回数を平準化し、M+1離脱そのものを構造的に減らす。特に3ヶ月コース誘導は「余らない＝解約理由を先消し」になる。
+  </div>
+</div>
+
+<!-- ===== KGI 4: 公式EC比率 ===== -->
+<div class="kgi-card">
+  <div class="kgi-card-head">
+    <div class="kgi-card-left">
+      <div class="kgi-card-num">4</div>
+      <div class="kgi-card-info">
+        <div class="kgi-card-name">toC内における公式EC比率（自社EC ÷ toC合算）</div>
+        <div class="kgi-card-desc">FY2027目標：<strong>55.4%</strong>（絶対距離方式：55.4%から離れるほど未達）　│　算式：自社EC ¥33.1億 ÷ toC ¥59.76億 ＝ 55.4%　│　データソース：<strong>spic-core.public.ne_order_items</strong>（ship_date出荷基準）　<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+      </div>
+    </div>
+    <div class="achv-badge yellow">⚠ 要観察（8月に反発）</div>
+  </div>
+
+  <div class="diff-explain">
+    <span>FY2026実績（NE）</span><strong>58.9%</strong>
+    <span style="font-size:11px;color:var(--muted)">（¥27.80億 / ¥47.17億）目標距離 3.5pt→スタート50%</span>
+    <span class="arrow">→</span><span>FY2027目標</span><strong>55.4%</strong>
+    <span style="font-size:11px;color:var(--muted)">※絶対距離方式：55.4%から離れるほど未達</span>
+  </div>
+
+  <div class="diff-prog-wrap">
+    <div class="diff-prog-title">達成率（絶対距離方式・50%スタート）── 55.4%から離れるほど未達（高低どちらでも）</div>
+    <div class="diff-prog-row">
+      <div class="diff-prog-label">8月 距離3.4pt</div>
+      <div class="diff-prog-bar-bg">
+        <div class="diff-prog-bar-base" style="width:50%"></div>
+        <div class="diff-prog-bar-fill y" style="left:50%;width:0.9%"></div>
+        <div class="diff-prog-bar-label50">スタート50%（FY2026距離3.5pt）</div>
+      </div>
+      <div class="diff-prog-pct" style="color:#ca8a04">50.8%</div>
+    </div>
+    <div class="diff-note">
+      2026-08実績：自社EC ¥220.3M ÷ 合計 ¥424.1M ＝ <strong>52.0%</strong>。目標55.4%との距離 <strong style="color:#ca8a04">3.4pt</strong>（FY2026基準距離3.5ptをわずかに下回り改善）。<br>
+      絶対距離方式：距離 ＝ |実績% − 55.4%|。4月0.1pt→5月0.7pt→6月2.4pt→7月6.4pt→8月3.4ptと、7月をピークに乖離幅が縮小した。要因はKGI②で述べた通り、Amazonの一時的な伸長（7月Prime Day由来）が8月に反動減（▲26.0%）となり、モール比率が押し下げられたことでEC比率が相対的に回復したため。自社EC自体は減速している中での「見かけ上の改善」である点に注意が必要。
+    </div>
+  </div>
+
+  <div class="kgi-metrics">
+    <div class="kgi-metric"><div class="km-label">FY2026実績 EC比率<span class="ds-ne" style="font-size:8px">NE</span></div><div class="km-val">58.9%</div><div class="km-sub">目標距離 3.5pt → スタート50%</div></div>
+    <div class="kgi-metric"><div class="km-label">FY2027目標（絶対距離方式）</div><div class="km-val" style="color:#2563eb">55.4%</div><div class="km-sub">距離0pt = 100%達成</div></div>
+    <div class="kgi-metric"><div class="km-label">2026-08実績比率<span class="ds-ne" style="font-size:8px">NE</span><span class="ds-ship" style="font-size:8px">出荷</span></div><div class="km-val this" style="background:transparent;color:#ca8a04">52.0%</div><div class="km-sub">距離 3.4pt / 達成率 50.8%</div></div>
+    <div class="kgi-metric"><div class="km-label">月別距離推移（目標55.4%から）</div><div class="km-val" style="color:#ca8a04">7月ピークから縮小</div><div class="km-sub">5月0.7pt→6月2.4pt→7月6.4pt→8月3.4pt</div></div>
+  </div>
+
+  <div class="forecast-box warn" style="margin-top:10px">
+    <div class="forecast-title">⚠ 着地予測：距離が6.4ptから3.4ptへ縮小したが、EC自体の減速による「見かけ上の改善」である点に注意</div>
+    絶対距離方式では「55.4%から近いほど達成」。7月（49.0%・6.4pt）でFY2026基準距離（3.5pt）すら上回る事態となっていたが、8月はモール（特にAmazon）の反動減（¥147.6M→¥109.2M・▲26.0%）によりEC比率が52.0%まで回復し距離3.4ptに縮小、FY2026基準をわずかに下回った。ただしKGI①・②で見た通り、8月は自社EC自体も¥220.3Mへ減速（前月比▲6.3%）しており、「自社ECが強くなった」のではなく「モールがより弱くなった」結果の比率改善である。この指標の設計上、両者の減速が相殺し合う局面では実態を見誤りやすいため、絶対額（KGI①②）と併せて判断する必要がある。
+  </div>
+</div>
+
+<!-- ===== KGI 5: 定期便ACTIVE ===== -->
+<div class="kgi-card">
+  <div class="kgi-card-head">
+    <div class="kgi-card-left">
+      <div class="kgi-card-num">5</div>
+      <div class="kgi-card-info">
+        <div class="kgi-card-name">定期便ACTIVE件数（2027年3月末 27,000件達成）</div>
+        <div class="kgi-card-desc">FY2026期末実績：22,003件（2026-04）　現在：<strong>22,258件</strong>（2026-08スナップショット）　→　FY2027末目標：<strong>27,000件</strong>（+4,742件）　<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span>　sandbox_nishimori.subscription_history_view（2026-09-01時点でspic-core側月次バッチ未反映のため今回はsandbox直接参照）</div>
+      </div>
+    </div>
+    <div class="achv-badge red">🔴 要アクション</div>
+  </div>
+
+  <div class="diff-explain">
+    <span>2026-08実績</span><strong>22,258件</strong><span class="arrow">→</span><span>FY2027目標</span><strong>27,000件</strong><span class="arrow">＝</span><span>差分</span><strong>+4,742件</strong>
+  </div>
+
+  <div class="diff-prog-wrap">
+    <div class="diff-prog-title">達成率（差分ベース・50%スタート）</div>
+    <div class="diff-prog-row">
+      <div class="diff-prog-label">現在進捗</div>
+      <div class="diff-prog-bar-bg">
+        <div class="diff-prog-bar-base" style="width:50%"></div>
+        <div class="diff-prog-bar-fill y" style="left:50%;width:2.55%"></div>
+        <div class="diff-prog-bar-label50">スタート50%</div>
+      </div>
+      <div class="diff-prog-pct" style="color:#ca8a04">52.6%</div>
+    </div>
+    <div class="diff-note">2026-08: 22,258件（前月比+7件・純増は継続するもほぼ横ばいに失速）。FY2026末比+255件。目標差分4,742件。残7ヶ月で必要月次純増+677件/月（前月時点+594件/月から必要ペースがさらに上昇）。タブ⑤で判明した「CTC（C+Cera）・MINERALion2606施策終了に伴う広告出稿急減」が施策終了の1ヶ月遅れで定期便獲得力にも波及し、新規アクティブのグロス件数が1,558件→1,419件へ急減。C+Ceraは統計開始以来初のACTIVE純減（▲39件）に転じた。</div>
+  </div>
+
+  <div class="kgi-metrics">
+    <div class="kgi-metric"><div class="km-label">現在ACTIVE件数</div><div class="km-val this" style="background:transparent;color:#ca8a04">22,258件</div><div class="km-sub">2026-08スナップショット</div></div>
+    <div class="kgi-metric"><div class="km-label">目標（2027年3月末）</div><div class="km-val" style="color:#16a34a">27,000件</div><div class="km-sub">差分+4,742件</div></div>
+    <div class="kgi-metric"><div class="km-label">必要月次純増</div><div class="km-val" style="color:var(--accent)">+677件/月</div><div class="km-sub">残7ヶ月換算</div></div>
+    <div class="kgi-metric"><div class="km-label">2026-08前月比</div><div class="km-val" style="color:#ca8a04">+7件</div><div class="km-sub">純増継続もほぼ横ばい・急減速</div></div>
+  </div>
+
+  <table class="track-table" style="margin-top:12px">
+    <thead><tr><th style="text-align:left">月</th><th>ACTIVE件数</th><th>前月比</th><th>目標ペース（累積）</th><th>差分残り</th><th>差分ベース達成率</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--muted);font-size:11px">スタート（FY2026末）</td><td>22,003</td><td>—</td><td>22,003</td><td>+4,997</td><td style="color:var(--muted)">50.0%（スタート）</td></tr>
+      <tr><td>2026-04</td><td class="ng">22,003</td><td class="ng">▲33件</td><td>22,457</td><td class="ng">+4,997</td><td class="ng">50.0%</td></tr>
+      <tr><td>2026-05</td><td class="ok">22,102</td><td class="ok">+99件</td><td>22,911</td><td class="ok">+4,898</td><td class="ok">51.0%</td></tr>
+      <tr><td>2026-06</td><td class="ng">22,061</td><td class="ng">▲41件</td><td>23,365</td><td class="ng">+4,939</td><td class="ng">50.6%</td></tr>
+      <tr><td>2026-07</td><td class="ok">22,251</td><td class="ok">+190件</td><td>23,820</td><td class="ok">+4,749</td><td class="ok">52.5%</td></tr>
+      <tr style="background:#fff8f0;font-weight:700"><td>2026-08 ★</td><td class="ok this">22,258</td><td class="ok this">+7件</td><td>24,274</td><td class="ok this">+4,742</td><td class="ok this">52.6%</td></tr>
+      <tr><td>2026-09〜2027-03</td><td class="na">—</td><td class="na">—</td><td>+677/月</td><td class="na">—</td><td class="na">—</td></tr>
+      <tr class="tot"><td>FY2027末目標</td><td colspan="2" style="text-align:center;color:#16a34a">27,000件</td><td colspan="2" style="text-align:center">差分ベース100%達成</td><td style="color:#16a34a;text-align:center">100%</td></tr>
+    </tbody>
+  </table>
+  <div class="forecast-box danger" style="margin-top:10px">
+    <div class="forecast-title">🔴 着地予測：純増はほぼ止まり、必要ペースとの差はさらに拡大。</div>
+    2026-08は+7件とほぼ横ばい（7月+190件から急減速）。シナリオA（+7件/月継続）→残7ヶ月着地22,307件（差分達成率：50.1%）。シナリオB（+677件/月）→27,000件達成（差分達成率：100%）。8月の急減速はタブ④・⑤で確認された「CTC・MINERALion2606施策終了に伴う広告出稿急減が定期便獲得力にも1ヶ月遅れで波及」したことが主因。VC PAUSED（21,169件・+301件）への再開施策の緊急性はむしろ高まっており、月3%再開＝+635件/月が最速の達成ルート。
+  </div>
+
+  <div class="forecast-box info" style="margin-top:8px">
+    <div class="forecast-title" style="color:#0369a1">💡 ワンポイントアドバイス：定期便ACTIVEを増やす施策</div>
+    <strong>ACTIVE増加の方程式は「新規定期化率 UP ＋ PAUSED再開 UP ＋ 解約率 DOWN」の3つ。</strong><br>
+    <strong>① PAUSED（20,868件・VC）再開施策が最速レバー</strong>──
+    停止中顧客への特典付きリマインドメール（停止30日後・60日後・90日後の3段階）。「再開で次回1,000円OFF」や「2〜3ヶ月コースへの変更で送料無料」など消費ペース不一致を解消するコース変更提案が効果的。月3%再開で+626件/月＝目標達成ペース。<br>
+    <strong>② 単品→定期への初回切り替え率を上げる</strong>──
+    新規顧客が2回目以降を単品で買い続けている間は定期ACTIVEに計上されない。M+1リピーター（KGI③で獲得した継続者）に対して「2回目購入後すぐ定期提案」する導線を設計する。M+2以降の定期化率は83〜95%と高いため、M+1〜M+2の間に定期申込ページへの誘導を強化する。<br>
+    <strong>③ 解約理由「余っている」「高い」の先手対処</strong>──
+    解約理由1位「余っている」は2〜3ヶ月コースへの変更提案で対処。解約前の「コース変更を先に提案するポップアップ」をShopify解約フローに実装することで、解約そのものをコース変更に転換できる。「高い」は継続特典・ポイント還元の設計で対処。
+  </div>
+</div>
+
+<!-- ===== KGI 6: 年間購入回数 ===== -->
+<div class="kgi-card">
+  <div class="kgi-card-head">
+    <div class="kgi-card-left">
+      <div class="kgi-card-num">6</div>
+      <div class="kgi-card-info">
+        <div class="kgi-card-name">年間購入回数（直近12ヶ月ローリング・0円購入除外）</div>
+        <div class="kgi-card-desc">集計方法：常に<strong>算出時点から遡った直近12ヶ月</strong>の購入顧客1人あたり注文件数（<strong>0円購入除外: subtotal_price &gt; 0</strong>）。　<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span>　shopify_orders（customer_idベース・subtotal_price &gt; 0）</div>
+      </div>
+    </div>
+    <div class="achv-badge green">✅ 順調（改善継続）</div>
+  </div>
+
+  <div class="diff-explain">
+    <span>FY2026実績</span><strong>4.41回</strong><span class="arrow">→</span><span>FY2027目標</span><strong>4.71回</strong><span class="arrow">＝</span><span>差分</span><strong>+0.30回</strong>を埋めていく
+  </div>
+
+  <div class="diff-prog-wrap">
+    <div class="diff-prog-title">達成率（差分ベース・50%スタート）── 直近12ヶ月: 2025-09〜2026-08</div>
+    <div class="diff-prog-row">
+      <div class="diff-prog-label">直近12ヶ月（4.58回）</div>
+      <div class="diff-prog-bar-bg">
+        <div class="diff-prog-bar-base" style="width:50%"></div>
+        <div class="diff-prog-bar-fill g" style="left:50%;width:14.0%"></div>
+        <div class="diff-prog-bar-label50">スタート50%</div>
+      </div>
+      <div class="diff-prog-pct" style="color:#16a34a">78.0%</div>
+    </div>
+    <div class="diff-note">
+      直近12ヶ月（2025-09〜2026-08）実績：<strong>4.58回</strong>（0円購入除外: subtotal_price &gt; 0）。FY2026基準4.41回から+0.17回上昇。5ヶ月連続改善（4.46→4.49→4.52→4.56→4.58回）。差分達成率：+0.17/+0.30＝56.7% → 表示達成率 <strong>78.0%</strong>（改善ペースはやや鈍化しつつも継続）。
+    </div>
+  </div>
+
+  <div class="kgi-metrics">
+    <div class="kgi-metric"><div class="km-label">FY2026基準（0円購入除外）</div><div class="km-val">4.41回</div><div class="km-sub">2025-04〜2026-03 / subtotal&gt;0</div></div>
+    <div class="kgi-metric"><div class="km-label">FY2027目標</div><div class="km-val" style="color:#16a34a">4.71回</div><div class="km-sub">差分 +0.30回</div></div>
+    <div class="kgi-metric"><div class="km-label">直近12ヶ月実績（現在）</div><div class="km-val this" style="background:transparent;color:#16a34a">4.58回</div><div class="km-sub">2025-09〜2026-08（0円購入除外）</div></div>
+    <div class="kgi-metric"><div class="km-label">差分ベース達成率</div><div class="km-val" style="color:#16a34a">78.0%</div><div class="km-sub">+0.17/+0.30 = 56.7%埋</div></div>
+  </div>
+
+  <table class="track-table" style="margin-top:12px">
+    <thead><tr><th style="text-align:left">算出月</th><th>直近12ヶ月範囲</th><th>購入回数（OGS除外）</th><th>FY2026比差分</th><th>差分達成率</th><th>表示達成率（50%スタート）</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--muted);font-size:11px">FY2026基準（0円除外）</td><td style="color:var(--muted)">2025-04〜2026-03</td><td>4.41回</td><td>0.00回</td><td>0.0%</td><td style="color:var(--muted)">50.0%（スタート）</td></tr>
+      <tr><td>2026-05</td><td>2025-06〜2026-05</td><td class="ok">4.49回</td><td class="ok">+0.08回</td><td class="ok">26.7%</td><td class="ok">63.3%</td></tr>
+      <tr><td>2026-06</td><td>2025-07〜2026-06</td><td class="ok">4.52回</td><td class="ok">+0.11回</td><td class="ok">36.7%</td><td class="ok">68.3%</td></tr>
+      <tr><td>2026-07</td><td>2025-08〜2026-07</td><td class="ok">4.56回</td><td class="ok">+0.15回</td><td class="ok">50.0%</td><td class="ok">75.0%</td></tr>
+      <tr style="background:#fff8f0;font-weight:700"><td>2026-08 ★</td><td class="this">2025-09〜2026-08</td><td class="ok this">4.58回</td><td class="ok this">+0.17回</td><td class="ok this">56.7%</td><td class="ok this">78.0%</td></tr>
+      <tr><td>2026-09〜2027-03</td><td class="na">毎月ローリング更新</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td></tr>
+      <tr class="tot"><td>FY2027目標</td><td colspan="2" style="text-align:center;color:#16a34a">4.71回（直近12ヶ月が4.71以上）</td><td colspan="2" style="text-align:center">差分0.30回埋まる = 達成</td><td style="color:#16a34a;text-align:center">100%</td></tr>
+    </tbody>
+  </table>
+  <div class="forecast-box ok" style="margin-top:10px">
+    <div class="forecast-title">✅ 着地予測：5ヶ月連続改善を継続。差分の半分超（56.7%）が埋まった。</div>
+    直近12ヶ月4.58回（0円購入除外）はFY2026基準4.41回を+0.17回上回り、5ヶ月連続改善（4.46→4.49→4.52→4.56→4.58回）。月次の伸び幅は+0.03→+0.03→+0.04→+0.02回とやや鈍化したが、改善トレンド自体は継続。定期便ACTIVE増加ペースの鈍化（KGI⑤参照）が今後の伸び幅にブレーキをかける可能性があるため、⑤の再開施策実行が⑥の改善ペース維持にも直結する。目標4.71回まで残り+0.13回（残差43.3%）。
+  </div>
+
+  <div class="forecast-box info" style="margin-top:8px">
+    <div class="forecast-title" style="color:#0369a1">💡 ワンポイントアドバイス：年間購入回数を増やす施策</div>
+    <strong>購入回数を増やす最短ルートは「定期化」と「クロスセル」の2本柱。</strong><br>
+    <strong>① 定期便への誘導強化が最大レバー</strong>──
+    1ヶ月コースの定期便顧客は年間12回購入、2ヶ月コースでも6回。単品リピーターが年平均2〜3回にとどまるのに対して圧倒的に多い。単品で2回以上リピートした顧客への定期切り替えオファー（「次回から定期にすると¥×××お得」）を積極的に展開する。<br>
+    <strong>② VC単独顧客へのC+Dクロスセルで購入タイミングを分散</strong>──
+    VC（1ヶ月コース）に加えてC+D（2ヶ月コース）も持つ顧客は、それぞれの消費サイクルで購入が発生するため自然に購入頻度が上がる。VC 3〜4回目購入者（20万人以上）への「C+Dお試しセット案内」が効果的。C+D保有率は現在20.4%で伸び代が大きい。<br>
+    <strong>③ 消費サイクルに合わせたリマインドプッシュ</strong>──
+    単品顧客の購入間隔データ（avg_days_between_orders）を活用し、個人の消費ペースに合わせた「そろそろ補充の時期では？」プッシュを送る。1ヶ月放置するだけで次回購入率が大きく下がるため、33〜35日目のタイミングでのアプローチが重要。
+  </div>
+</div>
+
+<!-- ===== KGI 7: AOV ===== -->
+<div class="kgi-card">
+  <div class="kgi-card-head">
+    <div class="kgi-card-left">
+      <div class="kgi-card-num">7</div>
+      <div class="kgi-card-info">
+        <div class="kgi-card-name">購入単価（AOV：平均注文単価）0円購入除外</div>
+        <div class="kgi-card-desc">FY2026実績（0円購入除外年間平均）：<strong>¥12,006</strong>　→　FY2027目標：<strong>¥12,713</strong>（+¥707・+5.9%）　<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span>　<span style="font-size:10px;color:var(--muted)">※0円購入除外: subtotal_price &gt; 0（OGS・MINERALionトライアル等の0円注文を除外）</span></div>
+      </div>
+    </div>
+    <div class="achv-badge yellow">⚠ 要観察（2ヶ月連続下落から反発）</div>
+  </div>
+
+  <div class="diff-explain">
+    <span>FY2026実績</span><strong>¥12,006</strong><span class="arrow">→</span><span>FY2027目標</span><strong>¥12,713</strong><span class="arrow">＝</span><span>差分</span><strong>+¥707</strong>を埋めていく
+  </div>
+
+  <div class="diff-prog-wrap">
+    <div class="diff-prog-title">達成率（差分ベース・50%スタート）── 2026-08実績</div>
+    <div class="diff-prog-row">
+      <div class="diff-prog-label">2026-08 AOV（¥12,325）</div>
+      <div class="diff-prog-bar-bg">
+        <div class="diff-prog-bar-base" style="width:50%"></div>
+        <div class="diff-prog-bar-fill y" style="left:50%;width:22.6%"></div>
+        <div class="diff-prog-bar-label50">スタート50%</div>
+      </div>
+      <div class="diff-prog-pct" style="color:#ca8a04">72.6%</div>
+    </div>
+    <div class="diff-note">
+      2026-08 0円購入除外 AOV：<strong>¥12,325</strong>（Shopify受注基準・subtotal_price &gt; 0）。FY2026基準¥12,006からの差分¥707のうち¥319（45.1%）埋まった → 表示達成率 <strong>72.6%</strong>（50% + 45.1%×50%）。前月¥12,180から+¥145反発し、2ヶ月連続の下落から転換。0円購入除外後の3ヶ月移動平均は¥12,281。
+    </div>
+  </div>
+
+  <div class="kgi-metrics">
+    <div class="kgi-metric"><div class="km-label">FY2026基準AOV（0円除外）</div><div class="km-val">¥12,006</div><div class="km-sub">subtotal_price&gt;0 / 年間平均</div></div>
+    <div class="kgi-metric"><div class="km-label">FY2027目標AOV</div><div class="km-val" style="color:#16a34a">¥12,713</div><div class="km-sub">差分+¥707（+5.9%）</div></div>
+    <div class="kgi-metric"><div class="km-label">2026-08実績AOV</div><div class="km-val this" style="background:transparent;color:#ca8a04">¥12,325</div><div class="km-sub">差分 +¥319埋まった（前月比+¥145）</div></div>
+    <div class="kgi-metric"><div class="km-label">差分ベース達成率</div><div class="km-val" style="color:#ca8a04">72.6%</div><div class="km-sub">¥319 / ¥707 = 45.1%埋</div></div>
+  </div>
+
+  <table class="track-table" style="margin-top:12px">
+    <thead><tr><th style="text-align:left">月</th><th>月次AOV（OGS除外）</th><th>FY2026比差分</th><th>差分達成率</th><th>表示達成率（50%スタート）</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--muted);font-size:11px">FY2026基準（0円除外）</td><td>¥12,006</td><td>¥0</td><td>0%</td><td style="color:var(--muted)">50.0%（スタート）</td></tr>
+      <tr><td>2026-05</td><td>¥12,611</td><td class="ok">+¥605</td><td class="ok">85.6%</td><td class="ok">92.8%</td></tr>
+      <tr><td>2026-06</td><td>¥12,339</td><td class="ok">+¥333</td><td class="ok">47.1%</td><td class="ok">73.5%</td></tr>
+      <tr><td>2026-07</td><td class="ng">¥12,180</td><td class="ok">+¥174</td><td class="ng">24.6%</td><td class="ng">62.3%</td></tr>
+      <tr style="background:#fff8f0;font-weight:700"><td>2026-08 ★</td><td class="ok this">¥12,325</td><td class="ok this">+¥319</td><td class="ok this">45.1%</td><td class="ok this">72.6%</td></tr>
+      <tr><td>2026-09〜2027-03</td><td class="na">毎月更新</td><td class="na">—</td><td class="na">—</td><td class="na">—</td></tr>
+      <tr class="tot"><td>FY2027目標</td><td colspan="2" style="text-align:center;color:#16a34a">¥12,713（累積年平均）</td><td colspan="2" style="text-align:center">差分¥707埋まる = 100%</td></tr>
+    </tbody>
+  </table>
+  <div class="forecast-box ok" style="margin-top:10px">
+    <div class="forecast-title">✅ 着地予測：2ヶ月連続下落から反発。差分達成率は62.3%→72.6%へ回復。</div>
+    2026-08の¥12,325は前月¥12,180から+¥145反発（0円購入除外ベース）・2ヶ月連続下落からの転換。FY2026基準¥12,006からは+¥319のプラス圏で差分達成率72.6%まで回復。0円購入除外後の3ヶ月移動平均¥12,281（2026-06〜08：¥12,339・¥12,180・¥12,325）。KGI④で見た通り8月はモール比率の低下（Amazon反動減）に伴い自社EC構成比が相対的に回復した月であり、AOVの高い自社EC・定期便経由の構成比改善がAOV反発の一因と考えられる。
+  </div>
+
+  <div class="forecast-box info" style="margin-top:8px">
+    <div class="forecast-title" style="color:#0369a1">💡 ワンポイントアドバイス：AOVを上げる施策</div>
+    <strong>AOV向上の方程式は「高単価品の比率UP ＋ セット購入の促進 ＋ 定期比率UP」の3つ。</strong><br>
+    <strong>① 定期便比率の向上が最も安定的なAOV底上げ策</strong>──
+    定期便AOVは単品比15〜20%高い水準（定期初回¥13,000超 vs 単品¥11,000台）。定期顧客の比率が上がるほど全体AOVが自然に引き上がる。KGI⑤の定期ACTIVE増加施策とセットで追求すると相乗効果がある。<br>
+    <strong>② C+Cera・MINERALionなど高単価品の定着促進</strong>──
+    C+Ceraの定期初回AOVは¥18,776（全ブランド中最高）。MINERALionも単価が高い。これらの新ブランドが既存VC・C+D顧客への追加購入として定着すれば、1注文あたりの金額が自然に上昇する。VC顧客へのC+Cera提案（美容・健康のセット訴求）を強化する。<br>
+    <strong>③ まとめ買い・セットアップセルの設計</strong>──
+    Lypo-Cは連続摂取での効果が出るため「3ヶ月分まとめ買い」の訴求が有効。定期3ヶ月コース（AOV高い傾向）への誘導や、「初回から3ヶ月分購入でプレゼント」形式のまとめ買いオファーを設計する。1月のAOV低下（¥11,297）はGE施策の反動で小口注文が増えたためと推測。まとめ買い訴求で底上げできる。
+  </div>
+</div>
+
+<!-- ===== KGI 8: 月次新規顧客 ===== -->
+<div class="kgi-card">
+  <div class="kgi-card-head">
+    <div class="kgi-card-left">
+      <div class="kgi-card-num">8</div>
+      <div class="kgi-card-info">
+        <div class="kgi-card-name">月次新規顧客獲得数（ベース1,200人 ＋ 純増500人/月）</div>
+        <div class="kgi-card-desc">FY2026実績（0円購入除外・12ヶ月平均）：<strong>1,802人</strong>（年間21,619人 ÷ 12）　→　FY2027目標実質：<strong>1,700人/月</strong>（ベース1,200 ＋ 純増500）　<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span>　shopify_orders（<strong>0円購入除外: subtotal_price &gt; 0 / 初回非ゼロ購入日で集計</strong>）</div>
+      </div>
+    </div>
+    <div class="achv-badge yellow">⚠ 要観察（目標未達に反転）</div>
+  </div>
+
+  <div class="diff-explain">
+    <span>ベース設定</span><strong>1,200人/月</strong><span class="arrow">→</span><span>目標（純増後）</span><strong>1,700人/月</strong><span class="arrow">＝</span><span>純増差分</span><strong>+500人</strong>を毎月積む
+  </div>
+
+  <div class="diff-prog-wrap">
+    <div class="diff-prog-title">達成率（差分ベース・50%スタート）── ベース1,200人に対する純増500人の達成率</div>
+    <div class="diff-prog-row">
+      <div class="diff-prog-label">2026-08実績（1,426人）</div>
+      <div class="diff-prog-bar-bg">
+        <div class="diff-prog-bar-base" style="width:50%"></div>
+        <div class="diff-prog-bar-fill y" style="left:50%;width:22.6%"></div>
+        <div class="diff-prog-bar-label50">スタート50%（ベース1,200達成）</div>
+      </div>
+      <div class="diff-prog-pct" style="color:#ca8a04">72.6%</div>
+    </div>
+    <div class="diff-note">
+      2026-08実績1,426人はベース1,200人を+226人上回るが、目標1,700人には届かず。純増差分=1,426-1,200=+226人 → 達成率226/500=45.2% → 表示達成率<strong>72.6%</strong>（50%+45.2%×50%）。<strong>目標1,700人/月を7月に初めて突破した反動で、8月は目標比▲274人（83.9%）に反転。</strong><br>
+      <span style="font-size:11px;color:var(--muted)">※タブ①・⑤知見：7月の新規急増はCYS施策開始直後・MAQUIA受賞・SKINBEAUTY体験会の複合要因による一時的な押し上げだった。8月はそれらの反動一巡に加え、タブ③で確認された「2026年8月新規コホート：1,700人（前月比▲12.7%）」とも整合する減速。なおタブ①の「新規顧客1,700人」はv10定義（`first_paid_order_dt`基準・0円購入含む）の値であり、本KGIの0円除外基準（1,426人）とは算出方法が異なる点に留意。</span>
+    </div>
+  </div>
+
+  <div class="forecast-box info" style="margin-top:10px;margin-bottom:10px">
+    <div class="forecast-title" style="color:#0369a1">📌 KGI⑧ 定義変更：0円購入除外（subtotal_price &gt; 0）による集計</div>
+    <strong>定義：</strong> 「新規顧客」を <strong>subtotal_price &gt; 0 の最初の購入日</strong>で集計（shopify_ordersから直接集計）。OGS（送料¥220のみ）・MINERALionトライアル（送料¥220のみ）・CYSトライアル（送料¥220のみ）等の0円購入は除外。<br>
+    <strong>旧定義との比較：</strong> 旧: shopify_customer_master.first_paid_order_dt（0円購入日も含む可能性）→ 新: shopify_orders で subtotal_price &gt; 0 の MIN(created_at)<br>
+    <strong>FY2026 月別変化（主要月）：</strong> 2025-07: 26,952→2,812 / 2025-08: 16,636→3,547 / 2025-09: 6,689→2,308（OGS follow-through顧客が非OGS月に移動）<br>
+    <strong>FY2026年間合計（新定義）：</strong> 21,619人（12ヶ月） / 月平均1,802人<br>
+    <span style="background:#fff3cd;padding:4px 8px;border-radius:4px;display:inline-block;margin:4px 0"><strong>⚠️ FY2026月平均が旧定義1,428人→新定義1,802人に大幅増した理由</strong></span><br>
+    旧定義（<code>ogs_entry IS NOT TRUE</code>除外）は、OGS参加者を有償転換後も一生カウント対象外にしていた。新定義（<code>subtotal_price &gt; 0</code>の初回注文日）では、OGS後に有償購入した顧客（OGS follow-through顧客）をその転換月の新規顧客としてカウントする。このため旧定義で除外されていた約4,488人分が各転換月（主に2025-10〜2026-03）に加算され、FY2026年間合計・月平均が増大している。<br>
+    <strong>FY2027月は影響なし</strong>（OGSキャンペーンは2025年7〜9月のみで終了済み）。<br>
+    <strong>FY2027（新定義）：</strong> 4月1,157人・5月1,497人・6月1,334人・7月1,731人・8月1,426人
+  </div>
+
+  <div class="kgi-metrics">
+    <div class="kgi-metric"><div class="km-label">FY2026月平均（0円除外）</div><div class="km-val">1,802人</div><div class="km-sub">年間21,619人 ÷ 12<br><span style="color:#ca8a04;font-weight:600">⚠️ 旧定義1,428人から大幅増（後述）</span></div></div>
+    <div class="kgi-metric"><div class="km-label">目標（実質・月次）</div><div class="km-val" style="color:#16a34a">1,700人/月</div><div class="km-sub">1,200ベース + 500純増</div></div>
+    <div class="kgi-metric"><div class="km-label">2026-08実績</div><div class="km-val this" style="background:transparent;color:#ca8a04">1,426人</div><div class="km-sub">ベース比+226人（前月比▲305人）</div></div>
+    <div class="kgi-metric"><div class="km-label">目標1,700人比</div><div class="km-val" style="color:#ca8a04">83.9%</div><div class="km-sub">▲274人（未達に反転）</div></div>
+  </div>
+
+  <table class="track-table" style="margin-top:12px">
+    <thead><tr><th style="text-align:left">月</th><th>新規顧客数</th><th>ベース1,200比</th><th>目標1,700比</th><th>純増分（-1,200）</th><th>差分達成率（表示）</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--muted);font-size:11px">FY2026月平均（参考・0円除外）</td><td>1,802人</td><td class="ok">+602人</td><td class="ok">+102人</td><td>+602</td><td style="color:#92400e;font-size:10.5px">⚠️ OGS転換顧客加算で旧1,428人→1,802人（FY2027比較不可）</td></tr>
+      <tr><td>2026-05</td><td class="ok">1,497人</td><td class="ok">+297人</td><td class="ng">▲203人（88.1%）</td><td class="ok">+297</td><td class="ok">79.7%</td></tr>
+      <tr><td>2026-06</td><td class="ok">1,334人</td><td class="ok">+134人</td><td class="ng">▲366人（78.5%）</td><td class="ok">+134</td><td class="ok">63.4%</td></tr>
+      <tr><td>2026-07</td><td class="ok">1,731人</td><td class="ok">+531人</td><td class="ok">+31人（101.8%）</td><td class="ok">+531</td><td class="ok">100%（達成）</td></tr>
+      <tr style="background:#fff8f0;font-weight:700"><td>2026-08 ★</td><td class="ng this">1,426人</td><td class="ok this">+226人</td><td class="ng this">▲274人（83.9%）</td><td class="ok this">+226</td><td class="ng this">72.6%</td></tr>
+      <tr><td>2026-09〜2027-03</td><td class="na">毎月更新</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td></tr>
+      <tr class="tot"><td>FY2027年間目標</td><td colspan="2" style="text-align:center;color:#16a34a">20,400人（1,700人×12）</td><td colspan="2" style="text-align:center">純増分 500×12 = 6,000人</td><td style="color:#16a34a;text-align:center">100%</td></tr>
+    </tbody>
+  </table>
+  <div class="forecast-box warn" style="margin-top:10px">
+    <div class="forecast-title">⚠ 着地予測：7月の初達成から一転、目標未達（83.9%）に反落。</div>
+    2026-08実績1,426人（0円購入除外）。4ヶ月推移：5月1,497人→6月1,334人→7月1,731人→8月1,426人と、7月の急増が一時的な押し上げだったことを裏付ける反動減。<strong>5ヶ月平均ペース（1,497人/月）継続 → 年間着地17,964人（目標20,400人の88.1%）</strong>。最新月ペース（1,426人）継続 → 年間17,112人（83.9%）。タブ①・③で確認された「8月新規顧客数▲12.7%・全ブランドで新規獲得力が鈍化」という全社的な傾向と整合しており、CYS施策の継続（9/17まで）による下支えがどこまで効くかが9月以降の焦点。
+  </div>
+</div>
+
+<!-- 更新ガイド -->
+<div class="stitle" style="margin-top:24px">📋 毎月の更新手順</div>
+<div class="notes">
+  <div class="nt">🔄 更新ルール（毎月レポート完成後に実施）</div>
+  <ul>
+    <li><strong>KGI①②（売上・NE出荷）：</strong><code>spic-core.public.ne_order_items</code>（ship_date基準・cancel_date IS NULL・toB/テスト/リポスフェリック除外）から当月の shop_id別 SUM(sales)を取得し「当月実績」欄・各チャネル累積列を更新。差分ベース達成率を再計算。⚠️ 旧テーブル<code>receive_order</code>は廃止済み・使用禁止。</li>
+    <li><strong>KGI③（M+1継続率）：</strong>前月コホートのM+1確定値をBQ shopify_ordersから取得し追記。FY2027累積平均を算出して達成率を更新。</li>
+    <li><strong>KGI④（公式EC比率）：</strong>KGI①②の更新後、自社EC÷合計で比率を計算し更新。差分の方向（低下）に注意。</li>
+    <li><strong>KGI⑤（定期便ACTIVE）：</strong>subscription_history_viewの当月スナップショットから取得。前月比と目標ペース差分を更新。</li>
+    <li><strong>KGI⑥（購入回数・Shopify受注）：</strong>shopify_ordersで「当月末から遡った直近12ヶ月」の<code>subtotal_price &gt; 0</code>注文件数÷購入顧客数を毎月再計算して更新。<strong>0円購入除外（OGS・MINERALionトライアル等のsubtotal=0注文を除外）</strong>。FY2026基準：4.41回。</li>
+    <li><strong>KGI⑦（AOV・Shopify受注）：</strong>shopify_ordersから<code>subtotal_price &gt; 0</code>の注文のみを対象にAVG(total_price - current_total_tax)を算出。<strong>0円購入除外（subtotal_price = 0の注文を除外）</strong>。FY2026基準：¥12,006。差分達成率を再計算。</li>
+    <li><strong>KGI⑧（新規顧客・Shopify受注）：</strong>shopify_ordersから<code>subtotal_price &gt; 0</code>の注文のみを対象に、顧客毎の最初の注文日（MIN(created_at)）で集計。<strong>0円購入除外（OGS送料¥220・MINERALionトライアル等）</strong>。FY2026基準月平均：1,802人（年間21,619人 / OGS follow-through含む12ヶ月）。ベース1,200・目標1,700対比を更新。</li>
+    <li><strong>ヘッダーサマリー（順調/要観察/要アクション）：</strong>全KGI更新後に手動集計。</li>
+  </ul>
+</div>
+
+</div>
+<!-- @@SPLIT:tab7:END@@ -->
+
+
+<div class="footer">
+  <span>【データソース】<strong>KGI①②④売上：</strong>spic-core.public.ne_order_items（ship_date出荷基準・cancel_date IS NULL）　<strong>KGI③⑥⑦⑧顧客：</strong>sandbox_nishimori.shopify_customer_master / shopify_orders（customer_idベース・Shopify受注）　<strong>KGI⑤定期便：</strong>sandbox_nishimori.subscription_history_view（月末スナップショット・snapshot_ym='2026-08'・2026-09-01時点でspic-core側月次バッチ未反映のため今回のみsandbox直接参照。翌日以降は通常運用のsn_*テーブルに戻す）　⚠️ receive_order（旧テーブル）は廃止済み・使用禁止</span>
+  <span>【集計基準】出荷基準 ｜ データ取得日：2026-09-01 ｜ 対象月：2026年8月（2026-08-01〜2026-08-31）｜ spic-com-2025-apr-00</span>
+</div>
+
+</div><!-- /page-wrap -->
+<script>
+function switchTab(id, btn) {}
+</script>
+</body>
+</html>

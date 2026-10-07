@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VC CRMブランドレポート 2026_09（part: コホートチャート）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--ccera:#DB2777;--sb:#C4934A;--mi:#1E3A8A;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0;max-width:1200px;margin:0 auto}
+.page-wrap{padding:24px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted)}
+.month-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 14px;border-radius:4px;font-size:13px;font-weight:700;margin-bottom:20px;letter-spacing:0.3px}
+.stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px;align-items:stretch}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+thead th.c{text-align:center}
+tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid #f5f5f4;font-size:13px}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td.c{text-align:center}
+tbody tr:last-child td{border-bottom:none}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.tot td{border-top:2px solid var(--border)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600}
+.badge.a{background:#dcfce7;color:#15803d}.badge.b{background:#fef2f2;color:#dc2626}
+.badge.n{background:#eff6ff;color:#2563eb}.badge.w{background:#fff8f0;color:#92400e}
+.monthly-insight{background:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0284c7;border-radius:8px;padding:14px 18px;margin-top:12px;margin-bottom:20px;font-size:13px;line-height:1.9}
+.monthly-insight .mi-title{font-weight:700;font-size:12px;margin-bottom:6px;color:#0369a1;display:flex;align-items:center;gap:6px}
+.monthly-insight ul{padding-left:18px}.monthly-insight li{margin-bottom:5px}
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.9}
+.notes .nt{font-weight:700;font-size:12px;margin-bottom:6px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:4px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;position:relative;height:290px}
+.chart-wrap canvas{display:block;width:100% !important}
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.cohort-wrap{overflow-x:auto;margin-bottom:12px}
+.cohort-table{border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:900px}
+.cohort-table th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cohort-table th:first-child{text-align:left;min-width:90px}
+.cohort-table td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11px;line-height:1.4}
+.cohort-table td:first-child{text-align:left;font-weight:500;padding:5px 10px;font-size:12px}
+.cohort-table tr.ogs-row td:first-child{color:#92400e;font-weight:700}
+.cohort-table tr.highlight-row td{background:#fafafa}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.insight-card .ic-num{font-size:30px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:-1px}
+.insight-card .ic-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.insight-card .ic-body{font-size:13px;color:var(--muted);line-height:1.7}
+.insight-card.positive .ic-num{color:var(--green)}
+.insight-card.negative .ic-num{color:var(--red)}
+.insight-card.warning .ic-num{color:#f59e0b}
+.crm-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px}
+.crm-card .crm-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.crm-card .crm-priority{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.crm-card .crm-priority.p1{background:#fef2f2;color:#dc2626}
+.crm-card .crm-priority.p2{background:#fff8f0;color:#92400e}
+.crm-card .crm-priority.p3{background:#eff6ff;color:#2563eb}
+.crm-card .crm-title{font-size:14px;font-weight:700}
+.crm-card .crm-body{font-size:13px;color:var(--muted);line-height:1.7}
+.crm-card .crm-kpi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:500}
+.crm-card .crm-update{font-size:11px;margin-top:6px;padding:4px 8px;background:#f0fdf4;border-radius:4px;color:#15803d;font-weight:500}
+.kpi-change{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;margin-left:6px}
+.kpi-change.up{background:#dcfce7;color:#15803d}
+.kpi-change.dn{background:#fef2f2;color:#dc2626}
+.kpi-change.flat{background:#f5f5f4;color:#78716c}
+.summary-verdict{background:#1c1917;border-radius:10px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.summary-verdict-icon{font-size:22px;flex-shrink:0}
+.summary-verdict-text{font-size:13.5px;font-weight:600;color:#fff;line-height:1.65;letter-spacing:0.1px}
+.summary-verdict-text em{font-style:normal;color:#FFB27F}
+.finding-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.finding-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.finding-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.finding-card.fc-green::before{background:#16a34a}
+.finding-card.fc-red::before{background:#dc2626}
+.finding-card.fc-amber::before{background:#f59e0b}
+.finding-card.fc-orange::before{background:var(--accent)}
+.finding-card.fc-blue::before{background:#2563eb}
+.finding-card.fc-slate::before{background:#64748b}
+.fc-index{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.fc-metric{font-size:26px;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.finding-card.fc-green .fc-metric{color:#16a34a}
+.finding-card.fc-red .fc-metric{color:#dc2626}
+.finding-card.fc-amber .fc-metric{color:#d97706}
+.finding-card.fc-orange .fc-metric{color:var(--accent)}
+.finding-card.fc-blue .fc-metric{color:#2563eb}
+.finding-card.fc-slate .fc-metric{color:#475569}
+.fc-title{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.4}
+.fc-body{font-size:12px;color:var(--muted);line-height:1.75;flex:1}
+.fc-body strong{color:var(--text)}
+.fc-insight{margin-top:4px;padding:6px 10px;border-radius:5px;font-size:11.5px;font-weight:600;line-height:1.5}
+.finding-card.fc-green .fc-insight{background:#f0fdf4;color:#15803d}
+.finding-card.fc-red .fc-insight{background:#fff5f5;color:#dc2626}
+.finding-card.fc-amber .fc-insight{background:#fffbeb;color:#92400e}
+.finding-card.fc-orange .fc-insight{background:#fff8f0;color:#c2410c}
+.finding-card.fc-blue .fc-insight{background:#eff6ff;color:#1e40af}
+.finding-card.fc-slate .fc-insight{background:#f8fafc;color:#475569}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.ds-cust{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-order,.sc .lb .ds-snap,.sc .lb .ds-cust{font-size:9px;padding:1px 5px;margin-left:3px}
+.ltv-all{display:inline-flex;align-items:center;gap:2px;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;margin-left:4px;white-space:nowrap}
+.ltv-brand{display:inline-flex;align-items:center;gap:2px;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:#fff1f2;color:#be123c;border:1px solid #fecdd3;margin-left:4px;white-space:nowrap}
+.sc .lb .ltv-all,.sc .lb .ltv-brand{font-size:9px;padding:1px 5px;margin-left:3px}
+th .ltv-all,th .ltv-brand{margin-left:2px;font-size:9px;padding:0 4px;font-weight:700}
+.ltv-rev-row td{background:#fafaf9;border-top:none}
+.correction{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid #dc2626;border-radius:8px;padding:12px 16px;margin:12px 0;font-size:12.5px;line-height:1.8;color:#7f1d1d}
+.correction .cr-title{font-weight:700;color:#dc2626;margin-bottom:4px}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .finding-grid{grid-template-columns:1fr}
+}
+
+/* ===== Report tabs（基本レポート／コホートチャート） ===== */
+.tab-nav{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);overflow-x:auto;white-space:nowrap}
+.tab-btn{padding:9px 22px;font-size:14px;font-weight:700;font-family:'Noto Sans JP',sans-serif;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ===== チャート直下に「x軸の月」と列を揃えて並べる表（3章・3-1章） ===== */
+.ct-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 10px;margin-bottom:12px}
+.ct-scroll{overflow-x:auto}
+.ct-inner{min-width:var(--ct-min,940px)}
+.ct-canvas{position:relative;height:290px}
+.ct-canvas canvas{display:block;width:100% !important}
+table.ct-table{table-layout:fixed;width:100%;border:none;border-radius:0;background:transparent;margin:6px 0 0;font-size:11px;border-top:1px solid var(--border)}
+table.ct-table td{padding:5px 2px;text-align:center;font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums;border-bottom:1px solid #f5f5f4}
+table.ct-table td:first-child{text-align:left;font-weight:600;white-space:normal;line-height:1.35;padding:5px 6px 5px 4px}
+table.ct-table tr.sub td{color:var(--muted);font-size:10.5px}
+table.ct-table tr.sub td:first-child{font-weight:500}
+table.ct-table tr.tot td{background:#f5f5f4;font-weight:700;border-top:1px solid var(--border)}
+table.ct-table td.last{background:#fff3e0;font-weight:700}
+table.ct-table tr.tot td.last{background:#ffe8c7}
+table.ct-table tr td.up{color:var(--green);font-weight:600}
+table.ct-table tr td.dn{color:var(--red);font-weight:600}
+.ct-note{font-size:11px;color:var(--muted);line-height:1.7;margin:-4px 0 12px 2px}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="hdr">
+    <h1>VC CRMブランドレポート</h1>
+    <div class="meta">作成日：2026-10-06 ｜ 対象データ：基準日2026-09-30（Shopify受注・Shopify定期DB）／コホートチャート（5〜5-4章）</div>
+  </div>
+  <div class="month-badge">VC（Lypo-C Vitamin C）単独ブランド深掘り版（2026-09月次確定）</div>
+
+  <div id="tab2" class="tab-pane active">
+  <!-- ===== 5. コホート継続率 ===== -->
+  <div class="stitle">5. コホート継続率（M+1〜M+12ヒートマップ）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span><span class="ds-snap">Shopify定期DB（周期別のみ）</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders × spic-core.public.sn_shopify_sku_brand_master（brand='VC'・item_price&gt;0））。周期別の区分のみShopify定期DB（sandbox_nishimori.subscription_history_viewで取得。spic-core.public.sn_subscription_history_viewで区分を再割当した結果と全89,226人で差分0を確認済み）。初回有償注文が<strong>VC（Lypo-C Vitamin C）</strong>だった顧客のコホート分析（＝<strong>アイテム新規</strong>ベース。他ブランドを先に購入していた顧客が後からVCを初めて買った月も「初回」としてカウントする。会社にとって生涯初のLypo-C購入＝「純粋新規」限定ではない点に注意）。5章のM0＝<strong>既存を除く3区分（純粋新規＋トライアル新規＋アイテム新規）の合計</strong>。同ブランドへの再購入のみを継続としてカウント（他ブランドリピートは含まない「真のブランド内リピート率」）。除外条件：test=0・cancelled_at IS NULL・customer_id IS NOT NULL・有償注文条件 (total_price−current_total_tax)&gt;0（全章統一）・割引コードCYS0810を含む注文を除外。無償SKU（2968-prezent・3023・3023-cp等）はitem_price&gt;0で自動除外（除外SKUの個別指定なし）。基準日2026-09-30。<strong>2026年9月が完全に経過したことで、全コホート行の「M+N＝2026年9月」に該当するセルが新たに確定した（対角線が1マス進行）。</strong><br>
+  データ反映状況：shopify_orders MAX(created_at)＝2026-10-05（基準日以降の注文は全章で除外）／sn_subscription_history_view MAX(snapshot_ym)＝2026-09／sn_shopify_sku_brand_master（VC 101SKU）。</div>
+
+  <div class="correction">
+    <div class="cr-title">⚠️ 定義変更・訂正：有償注文条件の全章統一により、8月版掲載の5章表（M0・M+N）は全面差し替え</div>
+    <ul style="padding-left:18px">
+      <li><strong>原因：eギフト受取（GIFT…・SEGF_…コード）の純額¥0先行注文。</strong>旧定義（CYS0810除外のみ・有償条件なし）ではこの先行注文がVC初回にカウントされ、受取者が後日自分で購入した時点の「新規」が後の月に現れる／全注文が純額0以下の顧客がM0に入っていた。新定義では有償注文のみを数えるため、M0は増える月が大半（表示月で+1〜+10人。2025-11のみ変化なし）。例：2026-08のM0は旧971→新981人（+10）、2026-09は旧651→新660人（+9）。</li>
+      <li><strong>確定セルの再現性：</strong>基準日2026-08-31の同一クエリで再計算した確定セル（5章・5-2・トライアル 390セル／5-1 351セル／5-4 436セル）は、基準日2026-09-30の再計算で<strong>変化0</strong>。確定判定の定義は再現可能。なお旧定義の同一クエリ再計算と8月版掲載値（5章130セル）は125セル一致・5セルが▲1〜▲4人で不一致（8月版掲載後のキャンセル等の反映と推定・原因未特定）のため、前月との比較は同一クエリで再計算した値との差で行う。</li>
+      <li>THANKYOU-LypoC10K（デプスインタビュー参加者向け1万円無料クーポン）の影響は2026-06の1人のみで、VCの新規ではなく既存側の事象。CYS0810は純額＞0の注文（8月8件・9月1件）が有償条件だけでは残るため、コード除外を継続している。</li>
+    </ul>
+    <details style="margin-top:6px"><summary style="cursor:pointer;font-weight:600">旧M0（CYS除外のみ）→新M0（有償条件統一）の月別内訳（2025-05〜2026-09）</summary>
+      <div class="cohort-wrap" style="margin-top:8px"><table class="cohort-table" style="min-width:640px">
+        <thead><tr><th>月</th><th>旧M0</th><th>新M0</th><th>差</th><th>他月から入ってきた（ずれ込み）</th><th>旧M0に入っていたが新定義で消えた</th></tr></thead>
+        <tbody><tr><td>2025-05</td><td>1,596</td><td>1,603</td><td>+7</td><td>7</td><td>0</td></tr><tr><td>2025-06</td><td>2,025</td><td>2,031</td><td>+6</td><td>7</td><td>1</td></tr><tr><td>2025-07（除外月）</td><td>26,927</td><td>26,973</td><td>+46</td><td>46</td><td>0</td></tr><tr><td>2025-08（除外月）</td><td>16,286</td><td>16,300</td><td>+14</td><td>14</td><td>0</td></tr><tr><td>2025-09（除外月）</td><td>6,213</td><td>6,216</td><td>+3</td><td>5</td><td>2</td></tr><tr><td>2025-10</td><td>860</td><td>861</td><td>+1</td><td>2</td><td>1</td></tr><tr><td>2025-11</td><td>652</td><td>652</td><td>+0</td><td>3</td><td>0</td></tr><tr><td>2025-12</td><td>570</td><td>574</td><td>+4</td><td>5</td><td>0</td></tr><tr><td>2026-01</td><td>698</td><td>703</td><td>+5</td><td>7</td><td>2</td></tr><tr><td>2026-02</td><td>717</td><td>723</td><td>+6</td><td>6</td><td>0</td></tr><tr><td>2026-03</td><td>676</td><td>683</td><td>+7</td><td>9</td><td>2</td></tr><tr><td>2026-04</td><td>766</td><td>776</td><td>+10</td><td>11</td><td>1</td></tr><tr><td>2026-05</td><td>1,070</td><td>1,077</td><td>+7</td><td>12</td><td>5</td></tr><tr><td>2026-06</td><td>832</td><td>834</td><td>+2</td><td>5</td><td>3</td></tr><tr><td>2026-07</td><td>1,069</td><td>1,071</td><td>+2</td><td>3</td><td>1</td></tr><tr><td>2026-08</td><td>971</td><td>981</td><td>+10</td><td>10</td><td>0</td></tr><tr><td>2026-09</td><td>651</td><td>660</td><td>+9</td><td>9</td><td>0</td></tr></tbody>
+      </table></div>
+      <div style="font-size:11px;color:var(--muted)">※「他月へ出た」は表示月のいずれも0のため省略。2024年夏（2024-07〜09）には純額0以下のeギフト受取だけのVC顧客が計約1,800人おり、旧定義では新規に計上されていた（2024-07のM0：旧2,843→新2,078）。表示コホートの2024-07〜09 M0は新定義値。</div>
+    </details>
+  </div>
+
+  <details class="notes"><summary class="nt" style="cursor:pointer;margin-bottom:0">📌 表示コホートと除外コホートについて（確定・2026-10-05承認）（クリックで開閉）</summary>
+    <ul>
+      <li><strong>表示：2024-05〜2026-09の26行。</strong>VCは最古ブランドのため2024年から表示する。★は2026-07＝CYS開始（7/22）・2026-08＝CYS・2026-09＝CYS終了（9/17）の施策期間の目印であり、継続率の変動要因がCYSであると断定するものではない。</li>
+      <li><strong>除外①（OGS汚染）：2025-07／2025-08／2025-09。</strong>M0が26,973／16,300／6,216人と通常月（574〜2,078人）と桁違いで、M+1継続率は6.0／7.2／9.7%（表示26行の最小は25.6%）。初回注文の大半がOGSのモニター品（1004496）等の「その他」（25,016／14,994／5,223人）。ヒートマップの算出・色・平均から除外している。</li>
+      <li><strong>除外②（2024-04）：</strong>M0が7,572人でM+1継続率は11.5%（他の通常月は25.6%〜38.7%）。初回注文の大半が「その他」（5,933人＝449-set-980・TVCM連動品¥980）のため、OGS汚染月と同様に除外する（西守さん承認）。</li>
+      <li>除外4コホートの参考値（アイテム新規ベース・基準日2026-09-30）：</li>
+    </ul>
+    <div class="cohort-wrap"><table class="cohort-table" style="min-width:760px">
+      <thead><tr><th>コホート（除外）</th><th>M0</th><th>M+1</th><th>M+3</th><th>M+6</th><th>M+12</th><th>F2累積</th><th>31日LTV（アイテム新規）</th><th>備考</th></tr></thead>
+      <tbody><tr><td>2024-04</td><td>7,572</td><td>11.5%</td><td>10.3%</td><td>7.6%</td><td>4.8%</td><td>25.6%</td><td>4,344円</td><td>TVCM連動品449-set-980（除外・承認済み）</td></tr><tr><td>2025-07</td><td>26,973</td><td>6.0%</td><td>3.5%</td><td>2.2%</td><td>1.5%</td><td>8.6%</td><td>3,803円</td><td>OGS汚染（M0がほぼ全て1004496）</td></tr><tr><td>2025-08</td><td>16,300</td><td>7.2%</td><td>4.9%</td><td>3.3%</td><td>2.1%</td><td>11.9%</td><td>4,267円</td><td>OGS汚染</td></tr><tr><td>2025-09</td><td>6,216</td><td>9.7%</td><td>6.7%</td><td>4.9%</td><td>3.3%</td><td>16.1%</td><td>5,200円</td><td>OGS残存（M+1 9.7%）</td></tr></tbody>
+    </table></div>
+  </details>
+
+  <details class="notes"><summary class="nt" style="cursor:pointer;margin-bottom:0">⚠️ 「1ヶ月／2ヶ月／3ヶ月周期」区分の定義について（クリックで開閉）</summary>
+    <ul>
+      <li><strong>周期は「その顧客の最初の有効な定期契約の、最初のスナップショット時点の周期」で固定している</strong>（28日は1ヶ月周期に含める）。その後に周期変更があっても区分は初回加入時のまま変わらない。コホート月自体が「初回購入月」で固定される設計と同じ考え方に揃えた意図的な設計で、月次更新のたびに過去コホートの所属区分が書き換わる不安定さを避けるためのもの。周期変更の頻度・方向はVCでは未測定のため、本表の「1ヶ月周期」区分に後年2ヶ月・3ヶ月へ移った顧客が初回区分のまま含まれうる点に留意すること。</li>
+      <li><strong>🚨 2ヶ月周期・3ヶ月周期は母数が小さい</strong>（2026年コホートで月40〜111人）。1人の増減で継続率が大きく動くため、単月の数値変動ではなく複数月の傾向で見ること。</li>
+      <li><strong>整合性検証済み：</strong>「1ヶ月周期」＋「2ヶ月周期」＋「3ヶ月周期」＋「都度買いのみ」の各月M0を合計すると「全ての注文方法」のM0と全30コホート（表示26行＋除外4行）で完全一致（「その他」区分は0件）。例：2026-09　137＋49＋43＋431＝660人。</li>
+      <li><strong>区分の割り当ては2026-09スナップショットまでの定期加入状況で行うため、直近コホートの区分別母数は更新のたびに動く。</strong>コホート月より後に初めて定期便へ加入した顧客は「都度買いのみ」から「○ヶ月周期」へ移り、その時点で継続購入が発生しているため、直近コホートほど定期区分の継続率は高く、都度買い区分は低く出やすい。</li>
+      <li><strong>定期DBは2025-05開始のため、2024年コホートは定期経験者の一部が「都度買いのみ」に入る</strong>（初回注文に定期SKUを含む顧客のうち定期DB不在の人数：2024-05〜12で月13〜39人、2025-05以降は0〜5人）。2024年コホートの周期別は注記付きの参考扱い。定期DBのcustomer_idは平文で解除済み（顧客マスターと99.8%一致）で、受注と直接JOINしている。</li>
+    </ul>
+  </details>
+
+  <!-- 周期セレクター -->
+  <div style="display:flex;gap:8px;margin:10px 0 12px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:12px;font-weight:600;color:var(--muted)">コホート対象：</span>
+    <button id="vcCohortBtn_all" class="cohort-mode-btn active-mode" onclick="switchVcCohortMode('all',this)">全ての注文方法</button>
+    <button id="vcCohortBtn_1m" class="cohort-mode-btn" onclick="switchVcCohortMode('1m',this)">1ヶ月周期（28日含む）</button>
+    <button id="vcCohortBtn_2m" class="cohort-mode-btn" onclick="switchVcCohortMode('2m',this)">2ヶ月周期</button>
+    <button id="vcCohortBtn_3m" class="cohort-mode-btn" onclick="switchVcCohortMode('3m',this)">3ヶ月周期</button>
+    <button id="vcCohortBtn_spot" class="cohort-mode-btn" onclick="switchVcCohortMode('spot',this)">都度買いのみ（定期経験なし）</button>
+    <span id="vcCohortModeNote" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+  </div>
+  <style>
+  .cohort-mode-btn{background:#f5f5f4;border:1px solid var(--border);padding:5px 14px;border-radius:20px;font-family:inherit;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s}
+  .cohort-mode-btn:hover{background:#e7e5e4;color:var(--text)}
+  .cohort-mode-btn.active-mode{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+  </style>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortVc"></table></div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortVC"></canvas></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 コホート 考察</div>
+    <ul>
+      <li><strong>2026-08コホート（M0=981人）のM+1継続率は27.5%（270人）。</strong>2025-10〜2026-07の通常レンジ（25.6%〜38.7%）の下限寄りで、2026-05（25.6%）に次ぐ低さ。純粋新規は27.2%（228/837人）、トライアル新規43人は30.2%（13人）で全体並み（5-2章参照）。</li>
+      <li><strong>2026-09コホートはM0=660人（2026-08比-32.7%・2026-07比-38.4%）で、2026-01以降の最小。</strong>M0は2026-07の1,071人→08の981人→09の660人と縮小した。CYS（2026-07-22〜09-17）終了後の9月に新規が約3割減っているが、広告・季節要因とは分離できていないため要因は断定しない。M+1は2026-10-31に確定する。</li>
+      <li><strong>M+1継続率の水準：</strong>2025-10〜2026-03の6コホートは34.1%〜38.7%（定期便比率が高い成熟期）。2026-04 31.4%、05 25.6%、06 34.7%、07 31.0%、08 27.5%と、2026-04以降は低下・変動している。2026-05の低さの時期には、M0に占める②定期入口の比率の低下（2026-03 25.3%→05 14.0%）と①30包単品入口の比率の上昇（同39.5%→60.9%）が重なっている（5-1章）。ただし2024-06も同様の入口構成（②14.3%・①61.2%）でM+1は30.3%と低くなかったため、入口構成だけでは説明できず、因果は未検証。</li>
+      <li><strong>M+6継続率：</strong>2025-10〜2026-03の6コホートで19.9%〜24.7%（2026-01は22.8%・2026-02は22.3%）。OGS前の2024-05〜2025-06（16.4%〜20.8%）より高い水準にある。M+12は2024-05〜2025-06で10.6%〜13.8%に収まり、1年後の定着は通常期でおおむね1割強。</li>
+      <li><strong>周期別（切替ボタン）：</strong>2026-01〜08コホートの1ヶ月周期のM+1継続率は74.6%〜85.1%、都度買いのみは7.1%〜12.9%で、1ヶ月周期の最小値が都度買いのみの最大値を大きく上回る。2026-09の区分別M0は1ヶ月周期137・2ヶ月周期49・3ヶ月周期43・都度買いのみ431人で、定期区分（229人＝34.7%）は後日の加入を含む。初回定期選択率の正式値は4章（product_type判定）に従う。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 5-1. 初回購入商品別 F2転換率 ===== -->
+  <div class="stitle">5-1. 初回購入商品別 F2転換率（30日／60日／90日以内）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：spic-core.public.shopify_orders × spic-core.public.sn_shopify_sku_brand_master（brand='VC'・item_price&gt;0）。<br>
+  <strong>集計方法：</strong>VCの初回有償注文（order_date・order_name昇順で最初）の構成で、<strong>①30包単品／②定期／③11包トライアル</strong>の3入口に排他的に区分し、月別コホート化（＝<strong>アイテム新規</strong>ベース。他ブランド購入歴の有無は問わない）。F2＝VCへの2回目の有償注文（都度・定期、30包・11包のいずれも可）の発生が初回から<strong>31／62／93日以内</strong>か。純粋新規＝初回日が生涯初の有償注文日の顧客（トライアル新規は純粋でない側＝アイテム新規に含む）。確定判定＝コホート月末日＋31／62／93日 ≦ 基準日2026-09-30（未確定＝「—」）。<span style="font-size:10.5px;color:var(--muted)">★CYS＝CYS施策（2026-07-22〜09-17）の実施月の目印</span></div>
+
+  <details class="notes"><summary class="nt" style="cursor:pointer;margin-bottom:0">📌 集計上の注記（クリックで開閉）</summary>
+    <ul>
+      <li><strong>画面見出しは「30日／60日／90日」、内部の判定は31日／62日／93日以内</strong>（プロジェクト全KPI共通の原則：暦月の日数〔30日月・31日月〕による見かけ上の差を避けるため）。5-4章のLTV（30／60／90日）も同様に31／62／93日で算出し、120／180／365日は従来の日数のまま。</li>
+      <li><strong>①30包単品：</strong>初回注文が875-set／875-set-a／-b／-c（30包・都度）を含み、定期・複数箱・90包・PRESS・ギフト／プレゼント・その他を含まない顧客。<strong>②定期：</strong>875-teiki（1箱）を含み、①のSKU・複数箱等を含まない顧客。<strong>③11包トライアル：</strong>449-set（11包・都度）を含み、①②のSKU・複数箱等を含まない顧客（1004496〔OGSモニター品〕・449-set-980〔TVCM連動品〕は対象外）。</li>
+      <li><strong>対象外（①②③のいずれにも含めない）：</strong>複数箱（875-set-2/3/4・875-teiki-2/3/4）／90包（453-teiki・453-teiki2系・453-set）／PRESS（875-teiki-pr・875-set-pr）／ギフト・プレゼント種別／その他（1004496・449-set-980・875-set-vp-*等）。①と②を同時に購入した顧客（2024-06以降の累計9人）はいずれにも含めず、補助表の「①②同時」に計上している。</li>
+      <li>F2転換率は31日／62日／93日以内の累積比率（62日以内には31日以内分も含まれる）。①②③は排他的なので、3表のnを合計すると5章M0に対する「5-1対象計」になる（下の補助表）。</li>
+    </ul>
+  </details>
+
+  <div style="font-size:13px;font-weight:700;margin:26px 0 6px">① 30包単品（875-set／-a／-b／-c）：アイテム新規 vs 純粋新規</div>
+  <div class="ssub" style="margin-top:0">初回注文が30包・都度の単品。左＝アイテム新規（他ブランド購入歴の有無は問わない）、右＝純粋新規（会社にとって生涯初の有償注文＝VCだった顧客に限定）。</div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:10.5px;color:var(--muted);margin:8px 0 4px"><span style="font-weight:600">ヒートマップ凡例：</span><span><span style="display:inline-block;width:11px;height:11px;background:#fecaca;border-radius:2px;vertical-align:middle"></span> 〜14%</span><span><span style="display:inline-block;width:11px;height:11px;background:#fef3c7;border-radius:2px;vertical-align:middle"></span> 15〜24%</span><span><span style="display:inline-block;width:11px;height:11px;background:#fef9c3;border-radius:2px;vertical-align:middle"></span> 25〜34%</span><span><span style="display:inline-block;width:11px;height:11px;background:#dcfce7;border-radius:2px;vertical-align:middle"></span> 35〜44%</span><span><span style="display:inline-block;width:11px;height:11px;background:#bbf7d0;border-radius:2px;vertical-align:middle"></span> 45%〜</span></div>
+  <div class="sg2">
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px;color:#92400e">アイテム新規のF2転換率</div>
+      <table id="f2VcT1Item">
+<thead><tr><th>初回購入月</th><th>アイテム新規数</th><th class="c" title="判定：31日以内">30日</th><th class="c" title="判定：62日以内">60日</th><th class="c" title="判定：93日以内">90日</th></tr></thead>
+<tbody>
+<tr><td>2024-05</td><td style="font-weight:600;text-align:center">1,189</td><td style="background:#fef3c7;color:#92400e;text-align:center">16.7%<br><span style="font-size:10px;opacity:.75">199人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.2%<br><span style="font-size:10px;opacity:.75">347人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.9%<br><span style="font-size:10px;opacity:.75">391人</span></td></tr>
+<tr><td>2024-06</td><td style="font-weight:600;text-align:center">1,185</td><td style="background:#fef3c7;color:#92400e;text-align:center">16.8%<br><span style="font-size:10px;opacity:.75">199人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.0%<br><span style="font-size:10px;opacity:.75">356人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.2%<br><span style="font-size:10px;opacity:.75">394人</span></td></tr>
+<tr><td>2024-07</td><td style="font-weight:600;text-align:center">1,229</td><td style="background:#fef3c7;color:#92400e;text-align:center">17.5%<br><span style="font-size:10px;opacity:.75">215人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.2%<br><span style="font-size:10px;opacity:.75">359人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.0%<br><span style="font-size:10px;opacity:.75">405人</span></td></tr>
+<tr><td>2024-08</td><td style="font-weight:600;text-align:center">1,023</td><td style="background:#fef3c7;color:#92400e;text-align:center">18.3%<br><span style="font-size:10px;opacity:.75">187人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.8%<br><span style="font-size:10px;opacity:.75">315人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.7%<br><span style="font-size:10px;opacity:.75">345人</span></td></tr>
+<tr><td>2024-09</td><td style="font-weight:600;text-align:center">798</td><td style="background:#fef3c7;color:#92400e;text-align:center">16.4%<br><span style="font-size:10px;opacity:.75">131人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.6%<br><span style="font-size:10px;opacity:.75">220人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.2%<br><span style="font-size:10px;opacity:.75">265人</span></td></tr>
+<tr><td>2024-10</td><td style="font-weight:600;text-align:center">605</td><td style="background:#fecaca;color:#dc2626;text-align:center">14.4%<br><span style="font-size:10px;opacity:.75">87人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.3%<br><span style="font-size:10px;opacity:.75">159人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.2%<br><span style="font-size:10px;opacity:.75">195人</span></td></tr>
+<tr><td>2024-11</td><td style="font-weight:600;text-align:center">656</td><td style="background:#fef3c7;color:#92400e;text-align:center">16.0%<br><span style="font-size:10px;opacity:.75">105人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.7%<br><span style="font-size:10px;opacity:.75">195人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.3%<br><span style="font-size:10px;opacity:.75">225人</span></td></tr>
+<tr><td>2024-12</td><td style="font-weight:600;text-align:center">635</td><td style="background:#fecaca;color:#dc2626;text-align:center">14.5%<br><span style="font-size:10px;opacity:.75">92人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.6%<br><span style="font-size:10px;opacity:.75">169人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.5%<br><span style="font-size:10px;opacity:.75">200人</span></td></tr>
+<tr><td>2025-01</td><td style="font-weight:600;text-align:center">984</td><td style="background:#fef3c7;color:#92400e;text-align:center">17.9%<br><span style="font-size:10px;opacity:.75">176人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.9%<br><span style="font-size:10px;opacity:.75">304人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.1%<br><span style="font-size:10px;opacity:.75">345人</span></td></tr>
+<tr><td>2025-02</td><td style="font-weight:600;text-align:center">690</td><td style="background:#fef3c7;color:#92400e;text-align:center">19.1%<br><span style="font-size:10px;opacity:.75">132人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.6%<br><span style="font-size:10px;opacity:.75">204人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.2%<br><span style="font-size:10px;opacity:.75">236人</span></td></tr>
+<tr><td>2025-03</td><td style="font-weight:600;text-align:center">882</td><td style="background:#fef3c7;color:#92400e;text-align:center">22.6%<br><span style="font-size:10px;opacity:.75">199人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.0%<br><span style="font-size:10px;opacity:.75">300人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.3%<br><span style="font-size:10px;opacity:.75">338人</span></td></tr>
+<tr><td>2025-04</td><td style="font-weight:600;text-align:center">810</td><td style="background:#fef3c7;color:#92400e;text-align:center">18.9%<br><span style="font-size:10px;opacity:.75">153人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.6%<br><span style="font-size:10px;opacity:.75">280人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">37.9%<br><span style="font-size:10px;opacity:.75">307人</span></td></tr>
+<tr><td>2025-05</td><td style="font-weight:600;text-align:center">970</td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.2%<br><span style="font-size:10px;opacity:.75">254人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">36.3%<br><span style="font-size:10px;opacity:.75">352人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">39.4%<br><span style="font-size:10px;opacity:.75">382人</span></td></tr>
+<tr><td>2025-06</td><td style="font-weight:600;text-align:center">846</td><td style="background:#fef9c3;color:#854d0e;text-align:center">25.1%<br><span style="font-size:10px;opacity:.75">212人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.9%<br><span style="font-size:10px;opacity:.75">295人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">37.8%<br><span style="font-size:10px;opacity:.75">320人</span></td></tr>
+<tr><td>2025-10</td><td style="font-weight:600;text-align:center">329</td><td style="background:#fef3c7;color:#92400e;text-align:center">24.0%<br><span style="font-size:10px;opacity:.75">79人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.7%<br><span style="font-size:10px;opacity:.75">114人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">37.1%<br><span style="font-size:10px;opacity:.75">122人</span></td></tr>
+<tr><td>2025-11</td><td style="font-weight:600;text-align:center">189</td><td style="background:#fef3c7;color:#92400e;text-align:center">18.5%<br><span style="font-size:10px;opacity:.75">35人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.2%<br><span style="font-size:10px;opacity:.75">57人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.8%<br><span style="font-size:10px;opacity:.75">62人</span></td></tr>
+<tr><td>2025-12</td><td style="font-weight:600;text-align:center">176</td><td style="background:#fef3c7;color:#92400e;text-align:center">23.3%<br><span style="font-size:10px;opacity:.75">41人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.2%<br><span style="font-size:10px;opacity:.75">62人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">40.3%<br><span style="font-size:10px;opacity:.75">71人</span></td></tr>
+<tr><td>2026-01</td><td style="font-weight:600;text-align:center">236</td><td style="background:#fef3c7;color:#92400e;text-align:center">22.0%<br><span style="font-size:10px;opacity:.75">52人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.5%<br><span style="font-size:10px;opacity:.75">72人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.3%<br><span style="font-size:10px;opacity:.75">81人</span></td></tr>
+<tr><td>2026-02</td><td style="font-weight:600;text-align:center">204</td><td style="background:#fef3c7;color:#92400e;text-align:center">22.1%<br><span style="font-size:10px;opacity:.75">45人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.4%<br><span style="font-size:10px;opacity:.75">66人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">37.3%<br><span style="font-size:10px;opacity:.75">76人</span></td></tr>
+<tr><td>2026-03</td><td style="font-weight:600;text-align:center">270</td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.0%<br><span style="font-size:10px;opacity:.75">81人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.1%<br><span style="font-size:10px;opacity:.75">103人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">40.4%<br><span style="font-size:10px;opacity:.75">109人</span></td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">425</td><td style="background:#fef3c7;color:#92400e;text-align:center">18.1%<br><span style="font-size:10px;opacity:.75">77人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.6%<br><span style="font-size:10px;opacity:.75">126人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.1%<br><span style="font-size:10px;opacity:.75">149人</span></td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">656</td><td style="background:#fef3c7;color:#92400e;text-align:center">18.8%<br><span style="font-size:10px;opacity:.75">123人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.0%<br><span style="font-size:10px;opacity:.75">190人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.1%<br><span style="font-size:10px;opacity:.75">224人</span></td></tr>
+<tr><td>2026-06</td><td style="font-weight:600;text-align:center">444</td><td style="background:#fef3c7;color:#92400e;text-align:center">18.5%<br><span style="font-size:10px;opacity:.75">82人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.6%<br><span style="font-size:10px;opacity:.75">136人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-07 ★CYS開始(7/22)</td><td style="font-weight:600;text-align:center">613</td><td style="background:#fef3c7;color:#92400e;text-align:center">20.6%<br><span style="font-size:10px;opacity:.75">126人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-08 ★CYS</td><td style="font-weight:600;text-align:center">571</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-09 ★CYS終了(9/17) <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span></td><td style="font-weight:600;text-align:center">360</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+</tbody>
+</table>
+    </div>
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px;color:#166534">純粋新規のF2転換率</div>
+      <table id="f2VcT1Pure">
+<thead><tr><th>初回購入月</th><th>純粋新規数</th><th class="c" title="判定：31日以内">30日</th><th class="c" title="判定：62日以内">60日</th><th class="c" title="判定：93日以内">90日</th></tr></thead>
+<tbody>
+<tr><td>2024-05</td><td style="font-weight:600;text-align:center">1,139</td><td style="background:#fef3c7;color:#92400e;text-align:center">16.9%<br><span style="font-size:10px;opacity:.75">192人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">28.8%<br><span style="font-size:10px;opacity:.75">328人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.6%<br><span style="font-size:10px;opacity:.75">371人</span></td></tr>
+<tr><td>2024-06</td><td style="font-weight:600;text-align:center">1,140</td><td style="background:#fef3c7;color:#92400e;text-align:center">17.1%<br><span style="font-size:10px;opacity:.75">195人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.4%<br><span style="font-size:10px;opacity:.75">346人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.2%<br><span style="font-size:10px;opacity:.75">379人</span></td></tr>
+<tr><td>2024-07</td><td style="font-weight:600;text-align:center">1,186</td><td style="background:#fef3c7;color:#92400e;text-align:center">17.5%<br><span style="font-size:10px;opacity:.75">208人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.3%<br><span style="font-size:10px;opacity:.75">348人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.8%<br><span style="font-size:10px;opacity:.75">389人</span></td></tr>
+<tr><td>2024-08</td><td style="font-weight:600;text-align:center">979</td><td style="background:#fef3c7;color:#92400e;text-align:center">18.6%<br><span style="font-size:10px;opacity:.75">182人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.3%<br><span style="font-size:10px;opacity:.75">306人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.0%<br><span style="font-size:10px;opacity:.75">333人</span></td></tr>
+<tr><td>2024-09</td><td style="font-weight:600;text-align:center">755</td><td style="background:#fef3c7;color:#92400e;text-align:center">16.4%<br><span style="font-size:10px;opacity:.75">124人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.8%<br><span style="font-size:10px;opacity:.75">210人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.1%<br><span style="font-size:10px;opacity:.75">250人</span></td></tr>
+<tr><td>2024-10</td><td style="font-weight:600;text-align:center">576</td><td style="background:#fecaca;color:#dc2626;text-align:center">14.8%<br><span style="font-size:10px;opacity:.75">85人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.4%<br><span style="font-size:10px;opacity:.75">152人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.3%<br><span style="font-size:10px;opacity:.75">186人</span></td></tr>
+<tr><td>2024-11</td><td style="font-weight:600;text-align:center">626</td><td style="background:#fef3c7;color:#92400e;text-align:center">16.5%<br><span style="font-size:10px;opacity:.75">103人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.4%<br><span style="font-size:10px;opacity:.75">190人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.0%<br><span style="font-size:10px;opacity:.75">219人</span></td></tr>
+<tr><td>2024-12</td><td style="font-weight:600;text-align:center">596</td><td style="background:#fecaca;color:#dc2626;text-align:center">14.6%<br><span style="font-size:10px;opacity:.75">87人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.0%<br><span style="font-size:10px;opacity:.75">161人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.5%<br><span style="font-size:10px;opacity:.75">188人</span></td></tr>
+<tr><td>2025-01</td><td style="font-weight:600;text-align:center">940</td><td style="background:#fef3c7;color:#92400e;text-align:center">17.9%<br><span style="font-size:10px;opacity:.75">168人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.9%<br><span style="font-size:10px;opacity:.75">290人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.9%<br><span style="font-size:10px;opacity:.75">328人</span></td></tr>
+<tr><td>2025-02</td><td style="font-weight:600;text-align:center">656</td><td style="background:#fef3c7;color:#92400e;text-align:center">19.5%<br><span style="font-size:10px;opacity:.75">128人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.7%<br><span style="font-size:10px;opacity:.75">195人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.3%<br><span style="font-size:10px;opacity:.75">225人</span></td></tr>
+<tr><td>2025-03</td><td style="font-weight:600;text-align:center">843</td><td style="background:#fef3c7;color:#92400e;text-align:center">23.3%<br><span style="font-size:10px;opacity:.75">196人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.6%<br><span style="font-size:10px;opacity:.75">292人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.6%<br><span style="font-size:10px;opacity:.75">325人</span></td></tr>
+<tr><td>2025-04</td><td style="font-weight:600;text-align:center">764</td><td style="background:#fef3c7;color:#92400e;text-align:center">19.5%<br><span style="font-size:10px;opacity:.75">149人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.3%<br><span style="font-size:10px;opacity:.75">270人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.1%<br><span style="font-size:10px;opacity:.75">291人</span></td></tr>
+<tr><td>2025-05</td><td style="font-weight:600;text-align:center">924</td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.8%<br><span style="font-size:10px;opacity:.75">248人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">36.6%<br><span style="font-size:10px;opacity:.75">338人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">39.3%<br><span style="font-size:10px;opacity:.75">363人</span></td></tr>
+<tr><td>2025-06</td><td style="font-weight:600;text-align:center">799</td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.0%<br><span style="font-size:10px;opacity:.75">208人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.5%<br><span style="font-size:10px;opacity:.75">284人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.5%<br><span style="font-size:10px;opacity:.75">308人</span></td></tr>
+<tr><td>2025-10</td><td style="font-weight:600;text-align:center">319</td><td style="background:#fef3c7;color:#92400e;text-align:center">24.1%<br><span style="font-size:10px;opacity:.75">77人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.5%<br><span style="font-size:10px;opacity:.75">110人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">37.0%<br><span style="font-size:10px;opacity:.75">118人</span></td></tr>
+<tr><td>2025-11</td><td style="font-weight:600;text-align:center">175</td><td style="background:#fef3c7;color:#92400e;text-align:center">17.7%<br><span style="font-size:10px;opacity:.75">31人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.1%<br><span style="font-size:10px;opacity:.75">51人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.0%<br><span style="font-size:10px;opacity:.75">56人</span></td></tr>
+<tr><td>2025-12</td><td style="font-weight:600;text-align:center">171</td><td style="background:#fef3c7;color:#92400e;text-align:center">24.0%<br><span style="font-size:10px;opacity:.75">41人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.7%<br><span style="font-size:10px;opacity:.75">61人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">40.4%<br><span style="font-size:10px;opacity:.75">69人</span></td></tr>
+<tr><td>2026-01</td><td style="font-weight:600;text-align:center">227</td><td style="background:#fef3c7;color:#92400e;text-align:center">22.9%<br><span style="font-size:10px;opacity:.75">52人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.3%<br><span style="font-size:10px;opacity:.75">71人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.4%<br><span style="font-size:10px;opacity:.75">78人</span></td></tr>
+<tr><td>2026-02</td><td style="font-weight:600;text-align:center">192</td><td style="background:#fef3c7;color:#92400e;text-align:center">22.9%<br><span style="font-size:10px;opacity:.75">44人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.3%<br><span style="font-size:10px;opacity:.75">64人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.0%<br><span style="font-size:10px;opacity:.75">73人</span></td></tr>
+<tr><td>2026-03</td><td style="font-weight:600;text-align:center">248</td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.2%<br><span style="font-size:10px;opacity:.75">75人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.3%<br><span style="font-size:10px;opacity:.75">95人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">39.9%<br><span style="font-size:10px;opacity:.75">99人</span></td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">391</td><td style="background:#fef3c7;color:#92400e;text-align:center">18.7%<br><span style="font-size:10px;opacity:.75">73人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.2%<br><span style="font-size:10px;opacity:.75">118人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">36.1%<br><span style="font-size:10px;opacity:.75">141人</span></td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">607</td><td style="background:#fef3c7;color:#92400e;text-align:center">18.8%<br><span style="font-size:10px;opacity:.75">114人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.3%<br><span style="font-size:10px;opacity:.75">178人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.4%<br><span style="font-size:10px;opacity:.75">209人</span></td></tr>
+<tr><td>2026-06</td><td style="font-weight:600;text-align:center">416</td><td style="background:#fef3c7;color:#92400e;text-align:center">19.0%<br><span style="font-size:10px;opacity:.75">79人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.5%<br><span style="font-size:10px;opacity:.75">127人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-07 ★CYS開始(7/22)</td><td style="font-weight:600;text-align:center">574</td><td style="background:#fef3c7;color:#92400e;text-align:center">21.1%<br><span style="font-size:10px;opacity:.75">121人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-08 ★CYS</td><td style="font-weight:600;text-align:center">515</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-09 ★CYS終了(9/17) <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span></td><td style="font-weight:600;text-align:center">319</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+</tbody>
+</table>
+    </div>
+  </div>
+  <div class="ssub" style="margin:2px 0 6px">下のチャート：実線＝31日以内（表示30日）、破線＝93日以内（表示90日）。オレンジ＝アイテム新規、緑＝純粋新規。未確定は欠損（—）。</div>
+  <div class="chart-wrap" style="height:300px"><canvas id="chartF2VcT1"></canvas></div>
+  <div class="ct-note">※表示の「30日／60日／90日」は内部判定の<strong>31日／62日／93日以内</strong>（コホート月末日＋31／62／93日 ≦ 基準日2026-09-30で確定。未確定は「—」）。</div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ①30包単品の F2転換率 考察</div>
+    <ul>
+      <li><strong>31日F2は2025-10〜2026-07の確定コホートで18.1%〜30.0%、93日F2は2025-10〜2026-05で32.8%〜40.4%。</strong>31日・93日とも最高は2026-03（30.0%・40.4%）、最低は31日が2026-04（18.1%）・93日が2025-11（32.8%）。</li>
+      <li><strong>直近の確定値：</strong>2026-07の31日F2は20.6%（126/613人・純粋新規21.1%）、2026-06の62日F2は30.6%（136/444人）、2026-05の93日F2は34.1%（224/656人）。アイテム新規と純粋新規の差は小さい（純粋新規は①の88.6%〜97.2%を占める）。</li>
+      <li><strong>初回構成の変化（事実のみ・原因は断定しない）：</strong>①の初回は2026-03の270人→04の425人→05の656人に増え、5章M0に対する比率は39.5%→54.8%→60.9%（2026-04〜09は53.2%〜60.9%）。同じ時期に、複数箱を含む初回（カバー率の補助表「複数箱含む」）は2026-03の156人→04の87人に減った。参考として、事前の別集計（実行計画書の付録B・2026-10-02時点）では、都度の複数箱（875-set-2/3/4）を初回に含む顧客が月80〜127人→0〜5人へ急減している（本章では再測定していない）。商品・価格・販促の変更等が背景にある可能性はあるが、原因は確認していない。</li>
+      <li><strong>CYS期間（2026-08・09）：</strong>①のうちトライアル新規は8人（08）・7人（09）。2026-08コホートの31日F2は2026-10-01以降、2026-09コホートは2026-10-31以降に観測が完了する。</li>
+    </ul>
+  </div>
+
+
+  <div style="font-size:13px;font-weight:700;margin:26px 0 6px">② 定期（875-teiki・1箱）：アイテム新規 vs 純粋新規</div>
+  <div class="ssub" style="margin-top:0">初回注文が定期（1箱）。F2には定期契約の継続（2回目の定期注文）を含む。</div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:10.5px;color:var(--muted);margin:8px 0 4px"><span style="font-weight:600">ヒートマップ凡例（②定期は水準が高いため閾値を別設定）：</span><span><span style="display:inline-block;width:11px;height:11px;background:#fecaca;border-radius:2px;vertical-align:middle"></span> 〜64%</span><span><span style="display:inline-block;width:11px;height:11px;background:#fef3c7;border-radius:2px;vertical-align:middle"></span> 65〜69%</span><span><span style="display:inline-block;width:11px;height:11px;background:#fef9c3;border-radius:2px;vertical-align:middle"></span> 70〜74%</span><span><span style="display:inline-block;width:11px;height:11px;background:#dcfce7;border-radius:2px;vertical-align:middle"></span> 75〜79%</span><span><span style="display:inline-block;width:11px;height:11px;background:#bbf7d0;border-radius:2px;vertical-align:middle"></span> 80%〜</span></div>
+  <div class="sg2">
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px;color:#92400e">アイテム新規のF2転換率</div>
+      <table id="f2VcT2Item">
+<thead><tr><th>初回購入月</th><th>アイテム新規数</th><th class="c" title="判定：31日以内">30日</th><th class="c" title="判定：62日以内">60日</th><th class="c" title="判定：93日以内">90日</th></tr></thead>
+<tbody>
+<tr><td>2024-05</td><td style="font-weight:600;text-align:center">363</td><td style="background:#fef9c3;color:#854d0e;text-align:center">71.9%<br><span style="font-size:10px;opacity:.75">261人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.4%<br><span style="font-size:10px;opacity:.75">299人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.0%<br><span style="font-size:10px;opacity:.75">305人</span></td></tr>
+<tr><td>2024-06</td><td style="font-weight:600;text-align:center">277</td><td style="background:#fef9c3;color:#854d0e;text-align:center">72.2%<br><span style="font-size:10px;opacity:.75">200人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">81.6%<br><span style="font-size:10px;opacity:.75">226人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.4%<br><span style="font-size:10px;opacity:.75">231人</span></td></tr>
+<tr><td>2024-07</td><td style="font-weight:600;text-align:center">346</td><td style="background:#fef9c3;color:#854d0e;text-align:center">73.1%<br><span style="font-size:10px;opacity:.75">253人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.4%<br><span style="font-size:10px;opacity:.75">285人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.4%<br><span style="font-size:10px;opacity:.75">292人</span></td></tr>
+<tr><td>2024-08</td><td style="font-weight:600;text-align:center">439</td><td style="background:#fecaca;color:#dc2626;text-align:center">58.3%<br><span style="font-size:10px;opacity:.75">256人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">70.8%<br><span style="font-size:10px;opacity:.75">311人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">74.9%<br><span style="font-size:10px;opacity:.75">329人</span></td></tr>
+<tr><td>2024-09</td><td style="font-weight:600;text-align:center">257</td><td style="background:#fef9c3;color:#854d0e;text-align:center">70.0%<br><span style="font-size:10px;opacity:.75">180人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">81.7%<br><span style="font-size:10px;opacity:.75">210人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.9%<br><span style="font-size:10px;opacity:.75">213人</span></td></tr>
+<tr><td>2024-10</td><td style="font-weight:600;text-align:center">199</td><td style="background:#fecaca;color:#dc2626;text-align:center">63.8%<br><span style="font-size:10px;opacity:.75">127人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">78.9%<br><span style="font-size:10px;opacity:.75">157人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.4%<br><span style="font-size:10px;opacity:.75">166人</span></td></tr>
+<tr><td>2024-11</td><td style="font-weight:600;text-align:center">185</td><td style="background:#fef3c7;color:#92400e;text-align:center">69.7%<br><span style="font-size:10px;opacity:.75">129人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">77.8%<br><span style="font-size:10px;opacity:.75">144人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.7%<br><span style="font-size:10px;opacity:.75">153人</span></td></tr>
+<tr><td>2024-12</td><td style="font-weight:600;text-align:center">183</td><td style="background:#fef3c7;color:#92400e;text-align:center">66.7%<br><span style="font-size:10px;opacity:.75">122人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">79.8%<br><span style="font-size:10px;opacity:.75">146人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.0%<br><span style="font-size:10px;opacity:.75">150人</span></td></tr>
+<tr><td>2025-01</td><td style="font-weight:600;text-align:center">319</td><td style="background:#fef9c3;color:#854d0e;text-align:center">72.7%<br><span style="font-size:10px;opacity:.75">232人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">81.2%<br><span style="font-size:10px;opacity:.75">259人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.4%<br><span style="font-size:10px;opacity:.75">266人</span></td></tr>
+<tr><td>2025-02</td><td style="font-weight:600;text-align:center">219</td><td style="background:#dcfce7;color:#166534;text-align:center">75.3%<br><span style="font-size:10px;opacity:.75">165人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">81.7%<br><span style="font-size:10px;opacity:.75">179人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">85.4%<br><span style="font-size:10px;opacity:.75">187人</span></td></tr>
+<tr><td>2025-03</td><td style="font-weight:600;text-align:center">285</td><td style="background:#fef9c3;color:#854d0e;text-align:center">74.4%<br><span style="font-size:10px;opacity:.75">212人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">85.6%<br><span style="font-size:10px;opacity:.75">244人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">87.4%<br><span style="font-size:10px;opacity:.75">249人</span></td></tr>
+<tr><td>2025-04</td><td style="font-weight:600;text-align:center">267</td><td style="background:#dcfce7;color:#166534;text-align:center">75.3%<br><span style="font-size:10px;opacity:.75">201人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.8%<br><span style="font-size:10px;opacity:.75">221人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.6%<br><span style="font-size:10px;opacity:.75">226人</span></td></tr>
+<tr><td>2025-05</td><td style="font-weight:600;text-align:center">309</td><td style="background:#fef9c3;color:#854d0e;text-align:center">73.1%<br><span style="font-size:10px;opacity:.75">226人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.8%<br><span style="font-size:10px;opacity:.75">256人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.5%<br><span style="font-size:10px;opacity:.75">261人</span></td></tr>
+<tr><td>2025-06</td><td style="font-weight:600;text-align:center">327</td><td style="background:#dcfce7;color:#166534;text-align:center">76.5%<br><span style="font-size:10px;opacity:.75">250人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.1%<br><span style="font-size:10px;opacity:.75">275人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">86.9%<br><span style="font-size:10px;opacity:.75">284人</span></td></tr>
+<tr><td>2025-10</td><td style="font-weight:600;text-align:center">210</td><td style="background:#fef9c3;color:#854d0e;text-align:center">70.5%<br><span style="font-size:10px;opacity:.75">148人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">78.1%<br><span style="font-size:10px;opacity:.75">164人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">81.4%<br><span style="font-size:10px;opacity:.75">171人</span></td></tr>
+<tr><td>2025-11</td><td style="font-weight:600;text-align:center">178</td><td style="background:#fef9c3;color:#854d0e;text-align:center">71.3%<br><span style="font-size:10px;opacity:.75">127人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">80.9%<br><span style="font-size:10px;opacity:.75">144人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.7%<br><span style="font-size:10px;opacity:.75">149人</span></td></tr>
+<tr><td>2025-12</td><td style="font-weight:600;text-align:center">153</td><td style="background:#fecaca;color:#dc2626;text-align:center">60.8%<br><span style="font-size:10px;opacity:.75">93人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">72.5%<br><span style="font-size:10px;opacity:.75">111人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">76.5%<br><span style="font-size:10px;opacity:.75">117人</span></td></tr>
+<tr><td>2026-01</td><td style="font-weight:600;text-align:center">191</td><td style="background:#fef3c7;color:#92400e;text-align:center">65.4%<br><span style="font-size:10px;opacity:.75">125人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">77.0%<br><span style="font-size:10px;opacity:.75">147人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">80.1%<br><span style="font-size:10px;opacity:.75">153人</span></td></tr>
+<tr><td>2026-02</td><td style="font-weight:600;text-align:center">202</td><td style="background:#fef3c7;color:#92400e;text-align:center">67.8%<br><span style="font-size:10px;opacity:.75">137人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">75.7%<br><span style="font-size:10px;opacity:.75">153人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">80.2%<br><span style="font-size:10px;opacity:.75">162人</span></td></tr>
+<tr><td>2026-03</td><td style="font-weight:600;text-align:center">173</td><td style="background:#fecaca;color:#dc2626;text-align:center">63.6%<br><span style="font-size:10px;opacity:.75">110人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">76.3%<br><span style="font-size:10px;opacity:.75">132人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.7%<br><span style="font-size:10px;opacity:.75">143人</span></td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">138</td><td style="background:#fecaca;color:#dc2626;text-align:center">62.3%<br><span style="font-size:10px;opacity:.75">86人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">74.6%<br><span style="font-size:10px;opacity:.75">103人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">78.3%<br><span style="font-size:10px;opacity:.75">108人</span></td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">151</td><td style="background:#fecaca;color:#dc2626;text-align:center">62.9%<br><span style="font-size:10px;opacity:.75">95人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">76.2%<br><span style="font-size:10px;opacity:.75">115人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">80.8%<br><span style="font-size:10px;opacity:.75">122人</span></td></tr>
+<tr><td>2026-06</td><td style="font-weight:600;text-align:center">161</td><td style="background:#fef9c3;color:#854d0e;text-align:center">74.5%<br><span style="font-size:10px;opacity:.75">120人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.6%<br><span style="font-size:10px;opacity:.75">133人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-07 ★CYS開始(7/22)</td><td style="font-weight:600;text-align:center">168</td><td style="background:#fef3c7;color:#92400e;text-align:center">67.3%<br><span style="font-size:10px;opacity:.75">113人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-08 ★CYS</td><td style="font-weight:600;text-align:center">158</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-09 ★CYS終了(9/17) <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span></td><td style="font-weight:600;text-align:center">125</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+</tbody>
+</table>
+    </div>
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px;color:#166534">純粋新規のF2転換率</div>
+      <table id="f2VcT2Pure">
+<thead><tr><th>初回購入月</th><th>純粋新規数</th><th class="c" title="判定：31日以内">30日</th><th class="c" title="判定：62日以内">60日</th><th class="c" title="判定：93日以内">90日</th></tr></thead>
+<tbody>
+<tr><td>2024-05</td><td style="font-weight:600;text-align:center">330</td><td style="background:#fef9c3;color:#854d0e;text-align:center">73.3%<br><span style="font-size:10px;opacity:.75">242人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.3%<br><span style="font-size:10px;opacity:.75">275人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.5%<br><span style="font-size:10px;opacity:.75">279人</span></td></tr>
+<tr><td>2024-06</td><td style="font-weight:600;text-align:center">249</td><td style="background:#fef9c3;color:#854d0e;text-align:center">74.3%<br><span style="font-size:10px;opacity:.75">185人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.7%<br><span style="font-size:10px;opacity:.75">206人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.7%<br><span style="font-size:10px;opacity:.75">211人</span></td></tr>
+<tr><td>2024-07</td><td style="font-weight:600;text-align:center">325</td><td style="background:#fef9c3;color:#854d0e;text-align:center">74.5%<br><span style="font-size:10px;opacity:.75">242人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.2%<br><span style="font-size:10px;opacity:.75">267人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.3%<br><span style="font-size:10px;opacity:.75">274人</span></td></tr>
+<tr><td>2024-08</td><td style="font-weight:600;text-align:center">421</td><td style="background:#fecaca;color:#dc2626;text-align:center">59.1%<br><span style="font-size:10px;opacity:.75">249人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">71.5%<br><span style="font-size:10px;opacity:.75">301人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">75.3%<br><span style="font-size:10px;opacity:.75">317人</span></td></tr>
+<tr><td>2024-09</td><td style="font-weight:600;text-align:center">240</td><td style="background:#fef9c3;color:#854d0e;text-align:center">71.7%<br><span style="font-size:10px;opacity:.75">172人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.1%<br><span style="font-size:10px;opacity:.75">197人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.3%<br><span style="font-size:10px;opacity:.75">200人</span></td></tr>
+<tr><td>2024-10</td><td style="font-weight:600;text-align:center">180</td><td style="background:#fecaca;color:#dc2626;text-align:center">63.9%<br><span style="font-size:10px;opacity:.75">115人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">79.4%<br><span style="font-size:10px;opacity:.75">143人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.3%<br><span style="font-size:10px;opacity:.75">150人</span></td></tr>
+<tr><td>2024-11</td><td style="font-weight:600;text-align:center">162</td><td style="background:#fef9c3;color:#854d0e;text-align:center">72.8%<br><span style="font-size:10px;opacity:.75">118人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">79.6%<br><span style="font-size:10px;opacity:.75">129人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.3%<br><span style="font-size:10px;opacity:.75">135人</span></td></tr>
+<tr><td>2024-12</td><td style="font-weight:600;text-align:center">167</td><td style="background:#fef3c7;color:#92400e;text-align:center">68.9%<br><span style="font-size:10px;opacity:.75">115人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.6%<br><span style="font-size:10px;opacity:.75">138人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.8%<br><span style="font-size:10px;opacity:.75">140人</span></td></tr>
+<tr><td>2025-01</td><td style="font-weight:600;text-align:center">293</td><td style="background:#fef9c3;color:#854d0e;text-align:center">74.7%<br><span style="font-size:10px;opacity:.75">219人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.3%<br><span style="font-size:10px;opacity:.75">241人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.6%<br><span style="font-size:10px;opacity:.75">248人</span></td></tr>
+<tr><td>2025-02</td><td style="font-weight:600;text-align:center">196</td><td style="background:#dcfce7;color:#166534;text-align:center">76.5%<br><span style="font-size:10px;opacity:.75">150人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.2%<br><span style="font-size:10px;opacity:.75">163人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">85.2%<br><span style="font-size:10px;opacity:.75">167人</span></td></tr>
+<tr><td>2025-03</td><td style="font-weight:600;text-align:center">247</td><td style="background:#dcfce7;color:#166534;text-align:center">78.9%<br><span style="font-size:10px;opacity:.75">195人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">87.4%<br><span style="font-size:10px;opacity:.75">216人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">89.1%<br><span style="font-size:10px;opacity:.75">220人</span></td></tr>
+<tr><td>2025-04</td><td style="font-weight:600;text-align:center">234</td><td style="background:#dcfce7;color:#166534;text-align:center">77.4%<br><span style="font-size:10px;opacity:.75">181人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.6%<br><span style="font-size:10px;opacity:.75">198人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">86.3%<br><span style="font-size:10px;opacity:.75">202人</span></td></tr>
+<tr><td>2025-05</td><td style="font-weight:600;text-align:center">276</td><td style="background:#fef9c3;color:#854d0e;text-align:center">73.6%<br><span style="font-size:10px;opacity:.75">203人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.7%<br><span style="font-size:10px;opacity:.75">231人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.8%<br><span style="font-size:10px;opacity:.75">234人</span></td></tr>
+<tr><td>2025-06</td><td style="font-weight:600;text-align:center">298</td><td style="background:#dcfce7;color:#166534;text-align:center">77.2%<br><span style="font-size:10px;opacity:.75">230人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">84.2%<br><span style="font-size:10px;opacity:.75">251人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">86.9%<br><span style="font-size:10px;opacity:.75">259人</span></td></tr>
+<tr><td>2025-10</td><td style="font-weight:600;text-align:center">182</td><td style="background:#fef9c3;color:#854d0e;text-align:center">71.4%<br><span style="font-size:10px;opacity:.75">130人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">79.7%<br><span style="font-size:10px;opacity:.75">145人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.0%<br><span style="font-size:10px;opacity:.75">151人</span></td></tr>
+<tr><td>2025-11</td><td style="font-weight:600;text-align:center">154</td><td style="background:#fef9c3;color:#854d0e;text-align:center">71.4%<br><span style="font-size:10px;opacity:.75">110人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">81.2%<br><span style="font-size:10px;opacity:.75">125人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.1%<br><span style="font-size:10px;opacity:.75">128人</span></td></tr>
+<tr><td>2025-12</td><td style="font-weight:600;text-align:center">123</td><td style="background:#fef3c7;color:#92400e;text-align:center">68.3%<br><span style="font-size:10px;opacity:.75">84人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">77.2%<br><span style="font-size:10px;opacity:.75">95人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">79.7%<br><span style="font-size:10px;opacity:.75">98人</span></td></tr>
+<tr><td>2026-01</td><td style="font-weight:600;text-align:center">168</td><td style="background:#fef3c7;color:#92400e;text-align:center">68.5%<br><span style="font-size:10px;opacity:.75">115人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">79.8%<br><span style="font-size:10px;opacity:.75">134人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">82.1%<br><span style="font-size:10px;opacity:.75">138人</span></td></tr>
+<tr><td>2026-02</td><td style="font-weight:600;text-align:center">175</td><td style="background:#fef3c7;color:#92400e;text-align:center">68.6%<br><span style="font-size:10px;opacity:.75">120人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">75.4%<br><span style="font-size:10px;opacity:.75">132人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">79.4%<br><span style="font-size:10px;opacity:.75">139人</span></td></tr>
+<tr><td>2026-03</td><td style="font-weight:600;text-align:center">137</td><td style="background:#fef3c7;color:#92400e;text-align:center">66.4%<br><span style="font-size:10px;opacity:.75">91人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">76.6%<br><span style="font-size:10px;opacity:.75">105人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">81.0%<br><span style="font-size:10px;opacity:.75">111人</span></td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">107</td><td style="background:#fef3c7;color:#92400e;text-align:center">67.3%<br><span style="font-size:10px;opacity:.75">72人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">77.6%<br><span style="font-size:10px;opacity:.75">83人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">79.4%<br><span style="font-size:10px;opacity:.75">85人</span></td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">116</td><td style="background:#fef3c7;color:#92400e;text-align:center">67.2%<br><span style="font-size:10px;opacity:.75">78人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">78.4%<br><span style="font-size:10px;opacity:.75">91人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">81.9%<br><span style="font-size:10px;opacity:.75">95人</span></td></tr>
+<tr><td>2026-06</td><td style="font-weight:600;text-align:center">133</td><td style="background:#dcfce7;color:#166534;text-align:center">77.4%<br><span style="font-size:10px;opacity:.75">103人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">83.5%<br><span style="font-size:10px;opacity:.75">111人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-07 ★CYS開始(7/22)</td><td style="font-weight:600;text-align:center">140</td><td style="background:#fef9c3;color:#854d0e;text-align:center">70.0%<br><span style="font-size:10px;opacity:.75">98人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-08 ★CYS</td><td style="font-weight:600;text-align:center">98</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-09 ★CYS終了(9/17) <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span></td><td style="font-weight:600;text-align:center">71</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+</tbody>
+</table>
+    </div>
+  </div>
+  <div class="ssub" style="margin:2px 0 6px">下のチャート：実線＝31日以内（表示30日）、破線＝93日以内（表示90日）。オレンジ＝アイテム新規、緑＝純粋新規。未確定は欠損（—）。</div>
+  <div class="chart-wrap" style="height:300px"><canvas id="chartF2VcT2"></canvas></div>
+  <div class="ct-note">※表示の「30日／60日／90日」は内部判定の<strong>31日／62日／93日以内</strong>（コホート月末日＋31／62／93日 ≦ 基準日2026-09-30で確定。未確定は「—」）。</div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ②定期の F2転換率 考察</div>
+    <ul>
+      <li><strong>31日F2は2025-10〜2026-07で60.8%〜74.5%、93日F2は2025-10〜2026-05で76.5%〜83.7%。</strong>②のF2は定期契約の継続（2回目の定期注文）を含むため、都度入口（①・③）より水準が大幅に高い。</li>
+      <li><strong>31日判定の採用で、旧30日判定で出ていた暦月日数のアーティファクト（ナレッジ㊲）が解消した。</strong>旧30日判定では②の30日F2が2025-10〜2026-07で5.9%〜73.9%と暦月ごとに大きく振れていた（例：2025-12 5.9%→31日判定60.8%）が、31日判定では60.8%〜74.5%に収まる（②は次回注文が28日／1ヶ月周期の初回後ほぼ31日付近に集中するため）。②の評価は31日判定で行ってよい。</li>
+      <li><strong>純粋新規の比率が低下した：</strong>②のアイテム新規に占める純粋新規は2026-05〜07の76.8%〜83.3%から、2026-08は62.0%（98/158人）、2026-09は56.8%（71/125人）へ低下した。②の純粋新規以外（08：60人／09：54人）のうち、トライアル新規が27人（08）・23人（09）を占める（アイテム新規側に計上。CYSの¥220エントリー経由と推定。CYS参加者との個別突合は未実施）。</li>
+      <li><strong>入口構成：</strong>5章M0に占める②の比率は2026-03 25.3%→04 17.8%→05 14.0%→06 19.3%→07 15.7%→08 16.1%→09 18.9%。</li>
+    </ul>
+    <details style="margin-top:6px"><summary style="cursor:pointer;font-weight:600;font-size:12px">参考：旧30／60／90日判定との差の例（②定期・アイテム新規・F2転換率）</summary>
+      <div class="cohort-wrap" style="margin-top:8px"><table class="cohort-table" style="min-width:520px">
+        <thead><tr><th>コホート</th><th>30日→31日</th><th>60日→62日</th><th>90日→93日</th></tr></thead>
+        <tbody><tr><td>2025-10</td><td>13.3→70.5%</td><td>74.3→78.1%</td><td>79.0→81.4%</td></tr><tr><td>2025-12</td><td>5.9→60.8%</td><td>68.0→72.5%</td><td>75.8→76.5%</td></tr><tr><td>2026-01</td><td>20.9→65.4%</td><td>77.0→77.0%</td><td>79.6→80.1%</td></tr><tr><td>2026-03</td><td>12.1→63.6%</td><td>71.7→76.3%</td><td>78.0→82.7%</td></tr><tr><td>2026-05</td><td>11.3→62.9%</td><td>69.5→76.2%</td><td>78.1→80.8%</td></tr><tr><td>2026-06</td><td>73.9→74.5%</td><td>78.9→82.6%</td><td>83.9→未確定</td></tr><tr><td>2026-07</td><td>7.7→67.3%</td><td>73.8→未確定</td><td>—</td></tr></tbody>
+      </table></div>
+      <div style="font-size:11px;color:var(--muted)">旧判定の確定は月末+30／60／90日、新判定は月末+31／62／93日。「未確定」は新判定の観測窓が基準日2026-09-30時点で未到達。</div>
+    </details>
+  </div>
+
+
+  <div style="font-size:13px;font-weight:700;margin:26px 0 6px">③ 11包トライアル（449-set）：アイテム新規 vs 純粋新規</div>
+  <div class="ssub" style="margin-top:0">初回注文が11包のお試し（都度）。母数が小さい点に注意。</div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:10.5px;color:var(--muted);margin:8px 0 4px"><span style="font-weight:600">ヒートマップ凡例：</span><span><span style="display:inline-block;width:11px;height:11px;background:#fecaca;border-radius:2px;vertical-align:middle"></span> 〜14%</span><span><span style="display:inline-block;width:11px;height:11px;background:#fef3c7;border-radius:2px;vertical-align:middle"></span> 15〜24%</span><span><span style="display:inline-block;width:11px;height:11px;background:#fef9c3;border-radius:2px;vertical-align:middle"></span> 25〜34%</span><span><span style="display:inline-block;width:11px;height:11px;background:#dcfce7;border-radius:2px;vertical-align:middle"></span> 35〜44%</span><span><span style="display:inline-block;width:11px;height:11px;background:#bbf7d0;border-radius:2px;vertical-align:middle"></span> 45%〜</span></div>
+  <div class="sg2">
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px;color:#92400e">アイテム新規のF2転換率</div>
+      <table id="f2VcT3Item">
+<thead><tr><th>初回購入月</th><th>アイテム新規数</th><th class="c" title="判定：31日以内">30日</th><th class="c" title="判定：62日以内">60日</th><th class="c" title="判定：93日以内">90日</th></tr></thead>
+<tbody>
+<tr><td>2024-05</td><td style="font-weight:600;text-align:center">131</td><td style="background:#fef3c7;color:#92400e;text-align:center">19.1%<br><span style="font-size:10px;opacity:.75">25人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center">22.9%<br><span style="font-size:10px;opacity:.75">30人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.0%<br><span style="font-size:10px;opacity:.75">34人</span></td></tr>
+<tr><td>2024-06</td><td style="font-weight:600;text-align:center">118</td><td style="background:#fef9c3;color:#854d0e;text-align:center">28.8%<br><span style="font-size:10px;opacity:.75">34人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.7%<br><span style="font-size:10px;opacity:.75">35人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.4%<br><span style="font-size:10px;opacity:.75">37人</span></td></tr>
+<tr><td>2024-07</td><td style="font-weight:600;text-align:center">137</td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.1%<br><span style="font-size:10px;opacity:.75">44人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.0%<br><span style="font-size:10px;opacity:.75">48人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">37.2%<br><span style="font-size:10px;opacity:.75">51人</span></td></tr>
+<tr><td>2024-08</td><td style="font-weight:600;text-align:center">126</td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.4%<br><span style="font-size:10px;opacity:.75">37人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.3%<br><span style="font-size:10px;opacity:.75">42人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.1%<br><span style="font-size:10px;opacity:.75">43人</span></td></tr>
+<tr><td>2024-09</td><td style="font-weight:600;text-align:center">98</td><td style="background:#fef3c7;color:#92400e;text-align:center">24.5%<br><span style="font-size:10px;opacity:.75">24人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">25.5%<br><span style="font-size:10px;opacity:.75">25人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.6%<br><span style="font-size:10px;opacity:.75">27人</span></td></tr>
+<tr><td>2024-10</td><td style="font-weight:600;text-align:center">105</td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.4%<br><span style="font-size:10px;opacity:.75">33人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.3%<br><span style="font-size:10px;opacity:.75">35人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.3%<br><span style="font-size:10px;opacity:.75">36人</span></td></tr>
+<tr><td>2024-11</td><td style="font-weight:600;text-align:center">128</td><td style="background:#dcfce7;color:#166534;text-align:center">35.2%<br><span style="font-size:10px;opacity:.75">45人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.3%<br><span style="font-size:10px;opacity:.75">49人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">41.4%<br><span style="font-size:10px;opacity:.75">53人</span></td></tr>
+<tr><td>2024-12</td><td style="font-weight:600;text-align:center">94</td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.8%<br><span style="font-size:10px;opacity:.75">28人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.0%<br><span style="font-size:10px;opacity:.75">32人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.0%<br><span style="font-size:10px;opacity:.75">32人</span></td></tr>
+<tr><td>2025-01</td><td style="font-weight:600;text-align:center">118</td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.5%<br><span style="font-size:10px;opacity:.75">36人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.1%<br><span style="font-size:10px;opacity:.75">39人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.7%<br><span style="font-size:10px;opacity:.75">41人</span></td></tr>
+<tr><td>2025-02</td><td style="font-weight:600;text-align:center">86</td><td style="background:#fef3c7;color:#92400e;text-align:center">20.9%<br><span style="font-size:10px;opacity:.75">18人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center">24.4%<br><span style="font-size:10px;opacity:.75">21人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">27.9%<br><span style="font-size:10px;opacity:.75">24人</span></td></tr>
+<tr><td>2025-03</td><td style="font-weight:600;text-align:center">103</td><td style="background:#fef9c3;color:#854d0e;text-align:center">25.2%<br><span style="font-size:10px;opacity:.75">26人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.1%<br><span style="font-size:10px;opacity:.75">32人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.0%<br><span style="font-size:10px;opacity:.75">33人</span></td></tr>
+<tr><td>2025-04</td><td style="font-weight:600;text-align:center">81</td><td style="background:#fef9c3;color:#854d0e;text-align:center">28.4%<br><span style="font-size:10px;opacity:.75">23人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.1%<br><span style="font-size:10px;opacity:.75">26人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.6%<br><span style="font-size:10px;opacity:.75">28人</span></td></tr>
+<tr><td>2025-05</td><td style="font-weight:600;text-align:center">92</td><td style="background:#dcfce7;color:#166534;text-align:center">40.2%<br><span style="font-size:10px;opacity:.75">37人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">43.5%<br><span style="font-size:10px;opacity:.75">40人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">43.5%<br><span style="font-size:10px;opacity:.75">40人</span></td></tr>
+<tr><td>2025-06</td><td style="font-weight:600;text-align:center">654</td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.0%<br><span style="font-size:10px;opacity:.75">196人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.5%<br><span style="font-size:10px;opacity:.75">219人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.9%<br><span style="font-size:10px;opacity:.75">222人</span></td></tr>
+<tr><td>2025-10</td><td style="font-weight:600;text-align:center">59</td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.5%<br><span style="font-size:10px;opacity:.75">18人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.5%<br><span style="font-size:10px;opacity:.75">18人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.5%<br><span style="font-size:10px;opacity:.75">18人</span></td></tr>
+<tr><td>2025-11</td><td style="font-weight:600;text-align:center">50</td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.0%<br><span style="font-size:10px;opacity:.75">15人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.0%<br><span style="font-size:10px;opacity:.75">15人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.0%<br><span style="font-size:10px;opacity:.75">15人</span></td></tr>
+<tr><td>2025-12</td><td style="font-weight:600;text-align:center">45</td><td style="background:#dcfce7;color:#166534;text-align:center">40.0%<br><span style="font-size:10px;opacity:.75">18人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">44.4%<br><span style="font-size:10px;opacity:.75">20人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">44.4%<br><span style="font-size:10px;opacity:.75">20人</span></td></tr>
+<tr><td>2026-01</td><td style="font-weight:600;text-align:center">62</td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.3%<br><span style="font-size:10px;opacity:.75">20人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">37.1%<br><span style="font-size:10px;opacity:.75">23人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.7%<br><span style="font-size:10px;opacity:.75">24人</span></td></tr>
+<tr><td>2026-02</td><td style="font-weight:600;text-align:center">72</td><td style="background:#dcfce7;color:#166534;text-align:center">36.1%<br><span style="font-size:10px;opacity:.75">26人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.9%<br><span style="font-size:10px;opacity:.75">28人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.9%<br><span style="font-size:10px;opacity:.75">28人</span></td></tr>
+<tr><td>2026-03</td><td style="font-weight:600;text-align:center">60</td><td style="background:#dcfce7;color:#166534;text-align:center">41.7%<br><span style="font-size:10px;opacity:.75">25人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">46.7%<br><span style="font-size:10px;opacity:.75">28人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">50.0%<br><span style="font-size:10px;opacity:.75">30人</span></td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">101</td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.7%<br><span style="font-size:10px;opacity:.75">35人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">36.6%<br><span style="font-size:10px;opacity:.75">37人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">39.6%<br><span style="font-size:10px;opacity:.75">40人</span></td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">94</td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.9%<br><span style="font-size:10px;opacity:.75">30人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">40.4%<br><span style="font-size:10px;opacity:.75">38人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">45.7%<br><span style="font-size:10px;opacity:.75">43人</span></td></tr>
+<tr><td>2026-06</td><td style="font-weight:600;text-align:center">107</td><td style="background:#dcfce7;color:#166534;text-align:center">39.3%<br><span style="font-size:10px;opacity:.75">42人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">40.2%<br><span style="font-size:10px;opacity:.75">43人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-07 ★CYS開始(7/22)</td><td style="font-weight:600;text-align:center">149</td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.6%<br><span style="font-size:10px;opacity:.75">50人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-08 ★CYS</td><td style="font-weight:600;text-align:center">118</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-09 ★CYS終了(9/17) <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span></td><td style="font-weight:600;text-align:center">78</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+</tbody>
+</table>
+    </div>
+    <div>
+      <div style="font-size:12.5px;font-weight:700;margin-bottom:6px;color:#166534">純粋新規のF2転換率</div>
+      <table id="f2VcT3Pure">
+<thead><tr><th>初回購入月</th><th>純粋新規数</th><th class="c" title="判定：31日以内">30日</th><th class="c" title="判定：62日以内">60日</th><th class="c" title="判定：93日以内">90日</th></tr></thead>
+<tbody>
+<tr><td>2024-05</td><td style="font-weight:600;text-align:center">129</td><td style="background:#fef3c7;color:#92400e;text-align:center">18.6%<br><span style="font-size:10px;opacity:.75">24人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center">22.5%<br><span style="font-size:10px;opacity:.75">29人</span></td><td style="background:#fef3c7;color:#92400e;text-align:center">24.8%<br><span style="font-size:10px;opacity:.75">32人</span></td></tr>
+<tr><td>2024-06</td><td style="font-weight:600;text-align:center">117</td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.1%<br><span style="font-size:10px;opacity:.75">34人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">29.9%<br><span style="font-size:10px;opacity:.75">35人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.6%<br><span style="font-size:10px;opacity:.75">37人</span></td></tr>
+<tr><td>2024-07</td><td style="font-weight:600;text-align:center">133</td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.3%<br><span style="font-size:10px;opacity:.75">43人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.3%<br><span style="font-size:10px;opacity:.75">47人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">37.6%<br><span style="font-size:10px;opacity:.75">50人</span></td></tr>
+<tr><td>2024-08</td><td style="font-weight:600;text-align:center">120</td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.0%<br><span style="font-size:10px;opacity:.75">36人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.3%<br><span style="font-size:10px;opacity:.75">40人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.2%<br><span style="font-size:10px;opacity:.75">41人</span></td></tr>
+<tr><td>2024-09</td><td style="font-weight:600;text-align:center">95</td><td style="background:#fef3c7;color:#92400e;text-align:center">24.2%<br><span style="font-size:10px;opacity:.75">23人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">25.3%<br><span style="font-size:10px;opacity:.75">24人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.3%<br><span style="font-size:10px;opacity:.75">25人</span></td></tr>
+<tr><td>2024-10</td><td style="font-weight:600;text-align:center">103</td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.0%<br><span style="font-size:10px;opacity:.75">33人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.0%<br><span style="font-size:10px;opacity:.75">35人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.0%<br><span style="font-size:10px;opacity:.75">36人</span></td></tr>
+<tr><td>2024-11</td><td style="font-weight:600;text-align:center">120</td><td style="background:#dcfce7;color:#166534;text-align:center">36.7%<br><span style="font-size:10px;opacity:.75">44人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">40.0%<br><span style="font-size:10px;opacity:.75">48人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">43.3%<br><span style="font-size:10px;opacity:.75">52人</span></td></tr>
+<tr><td>2024-12</td><td style="font-weight:600;text-align:center">89</td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.5%<br><span style="font-size:10px;opacity:.75">28人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">36.0%<br><span style="font-size:10px;opacity:.75">32人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">36.0%<br><span style="font-size:10px;opacity:.75">32人</span></td></tr>
+<tr><td>2025-01</td><td style="font-weight:600;text-align:center">115</td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.4%<br><span style="font-size:10px;opacity:.75">35人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.0%<br><span style="font-size:10px;opacity:.75">38人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.8%<br><span style="font-size:10px;opacity:.75">40人</span></td></tr>
+<tr><td>2025-02</td><td style="font-weight:600;text-align:center">81</td><td style="background:#fef3c7;color:#92400e;text-align:center">22.2%<br><span style="font-size:10px;opacity:.75">18人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">25.9%<br><span style="font-size:10px;opacity:.75">21人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">28.4%<br><span style="font-size:10px;opacity:.75">23人</span></td></tr>
+<tr><td>2025-03</td><td style="font-weight:600;text-align:center">102</td><td style="background:#fef9c3;color:#854d0e;text-align:center">25.5%<br><span style="font-size:10px;opacity:.75">26人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.4%<br><span style="font-size:10px;opacity:.75">32人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.4%<br><span style="font-size:10px;opacity:.75">33人</span></td></tr>
+<tr><td>2025-04</td><td style="font-weight:600;text-align:center">77</td><td style="background:#fef9c3;color:#854d0e;text-align:center">28.6%<br><span style="font-size:10px;opacity:.75">22人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.5%<br><span style="font-size:10px;opacity:.75">25人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">35.1%<br><span style="font-size:10px;opacity:.75">27人</span></td></tr>
+<tr><td>2025-05</td><td style="font-weight:600;text-align:center">90</td><td style="background:#dcfce7;color:#166534;text-align:center">41.1%<br><span style="font-size:10px;opacity:.75">37人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">44.4%<br><span style="font-size:10px;opacity:.75">40人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">44.4%<br><span style="font-size:10px;opacity:.75">40人</span></td></tr>
+<tr><td>2025-06</td><td style="font-weight:600;text-align:center">645</td><td style="background:#fef9c3;color:#854d0e;text-align:center">30.2%<br><span style="font-size:10px;opacity:.75">195人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.8%<br><span style="font-size:10px;opacity:.75">218人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.3%<br><span style="font-size:10px;opacity:.75">221人</span></td></tr>
+<tr><td>2025-10</td><td style="font-weight:600;text-align:center">56</td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.8%<br><span style="font-size:10px;opacity:.75">15人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.8%<br><span style="font-size:10px;opacity:.75">15人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">26.8%<br><span style="font-size:10px;opacity:.75">15人</span></td></tr>
+<tr><td>2025-11</td><td style="font-weight:600;text-align:center">48</td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.2%<br><span style="font-size:10px;opacity:.75">15人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.2%<br><span style="font-size:10px;opacity:.75">15人</span></td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.2%<br><span style="font-size:10px;opacity:.75">15人</span></td></tr>
+<tr><td>2025-12</td><td style="font-weight:600;text-align:center">42</td><td style="background:#dcfce7;color:#166534;text-align:center">40.5%<br><span style="font-size:10px;opacity:.75">17人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">45.2%<br><span style="font-size:10px;opacity:.75">19人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">45.2%<br><span style="font-size:10px;opacity:.75">19人</span></td></tr>
+<tr><td>2026-01</td><td style="font-weight:600;text-align:center">60</td><td style="background:#fef9c3;color:#854d0e;text-align:center">31.7%<br><span style="font-size:10px;opacity:.75">19人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">36.7%<br><span style="font-size:10px;opacity:.75">22人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.3%<br><span style="font-size:10px;opacity:.75">23人</span></td></tr>
+<tr><td>2026-02</td><td style="font-weight:600;text-align:center">71</td><td style="background:#dcfce7;color:#166534;text-align:center">35.2%<br><span style="font-size:10px;opacity:.75">25人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.0%<br><span style="font-size:10px;opacity:.75">27人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.0%<br><span style="font-size:10px;opacity:.75">27人</span></td></tr>
+<tr><td>2026-03</td><td style="font-weight:600;text-align:center">58</td><td style="background:#dcfce7;color:#166534;text-align:center">41.4%<br><span style="font-size:10px;opacity:.75">24人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">46.6%<br><span style="font-size:10px;opacity:.75">27人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">50.0%<br><span style="font-size:10px;opacity:.75">29人</span></td></tr>
+<tr><td>2026-04</td><td style="font-weight:600;text-align:center">97</td><td style="background:#fef9c3;color:#854d0e;text-align:center">34.0%<br><span style="font-size:10px;opacity:.75">33人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">36.1%<br><span style="font-size:10px;opacity:.75">35人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">38.1%<br><span style="font-size:10px;opacity:.75">37人</span></td></tr>
+<tr><td>2026-05</td><td style="font-weight:600;text-align:center">93</td><td style="background:#fef9c3;color:#854d0e;text-align:center">32.3%<br><span style="font-size:10px;opacity:.75">30人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">40.9%<br><span style="font-size:10px;opacity:.75">38人</span></td><td style="background:#bbf7d0;color:#15803d;text-align:center">46.2%<br><span style="font-size:10px;opacity:.75">43人</span></td></tr>
+<tr><td>2026-06</td><td style="font-weight:600;text-align:center">102</td><td style="background:#dcfce7;color:#166534;text-align:center">40.2%<br><span style="font-size:10px;opacity:.75">41人</span></td><td style="background:#dcfce7;color:#166534;text-align:center">41.2%<br><span style="font-size:10px;opacity:.75">42人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-07 ★CYS開始(7/22)</td><td style="font-weight:600;text-align:center">147</td><td style="background:#fef9c3;color:#854d0e;text-align:center">33.3%<br><span style="font-size:10px;opacity:.75">49人</span></td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-08 ★CYS</td><td style="font-weight:600;text-align:center">113</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+<tr><td>2026-09 ★CYS終了(9/17) <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span></td><td style="font-weight:600;text-align:center">72</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td><td class="c" style="background:#f9f9f9;color:#ccc">—</td></tr>
+</tbody>
+</table>
+    </div>
+  </div>
+  <div class="ssub" style="margin:2px 0 6px">下のチャート：実線＝31日以内（表示30日）、破線＝93日以内（表示90日）。オレンジ＝アイテム新規、緑＝純粋新規。未確定は欠損（—）。</div>
+  <div class="chart-wrap" style="height:300px"><canvas id="chartF2VcT3"></canvas></div>
+  <div class="ct-note">※表示の「30日／60日／90日」は内部判定の<strong>31日／62日／93日以内</strong>（コホート月末日＋31／62／93日 ≦ 基準日2026-09-30で確定。未確定は「—」）。</div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ③11包トライアルの F2転換率 考察</div>
+    <ul>
+      <li><strong>31日F2は2025-10〜2026-07で30.0%〜41.7%、93日F2は2025-10〜2026-05で30.0%〜50.0%。</strong>最高は2026-03（31日41.7%・93日50.0%）。2026-05の93日F2は45.7%（43/94人）。</li>
+      <li><strong>③は母数が小さい</strong>（2025-10〜2026-09で45〜149人）ため、1人の増減で最大2.2pt動く。単月ではなく複数月の傾向で見ること。2026-04〜09の初回は78〜149人（2026-01〜03は60〜72人）。</li>
+      <li><strong>2025-06コホートは③が654人</strong>（5章M0 2,031人の32.2%）と、他月（M0に占める比率5.7%〜13.9%）より突出して多い。事実のみの記載で、原因は本handoffでは未確認。</li>
+      <li>OGSのモニター品（1004496）・TVCM連動品（449-set-980）は③の対象外（「その他」に区分され、除外コホートの初回の大半を占める）。</li>
+    </ul>
+  </div>
+
+
+  <div style="font-size:13px;font-weight:700;margin:26px 0 6px">入口別F2転換率の比較（アイテム新規）</div>
+  <div class="ssub" style="margin-top:0">①30包単品（オレンジ）・②定期（緑）・③11包（青）の31日F2（実線）と93日F2（破線）の推移。②は水準が他の入口より大幅に高い点に注意（縦軸は0〜100%）。</div>
+  <div class="chart-wrap" style="height:320px"><canvas id="chartF2VcEntry"></canvas></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 入口別F2転換率の比較 考察</div>
+    <ul>
+      <li><strong>入口によってF2の性質が大きく異なる。</strong>2025-10〜2026-05の93日F2は②定期76.5%〜83.7%、③11包30.0%〜50.0%、①30包単品32.8%〜40.4%。②は定期契約の継続を含むため別格で、①③（都度入口）の2回目は顧客の再購入意思に依存する。</li>
+      <li><strong>5章M0に対するカバー率は64.0%（2025-11）〜90.0%（2025-06）。</strong>複数箱・90包・PRESS・ギフト／プレゼント種別・その他を初回に含む顧客は5-1の対象外のため、<strong>5章M+Nと5-1の水準が異なるのは正常</strong>。排他的な内訳は下の補助表を参照。</li>
+      <li><strong>入口構成だけでは2026-05の低さは説明できない。</strong>2026-05（5章M+1 25.6%）は、M0に占める②の比率が表示26コホートで最小（14.0%）、①の比率が2025-10以降で最大（60.9%）の月だが、2024-06も②14.3%・①61.2%と同様の入口構成でM+1は30.3%と低くなかった。入口構成の偏りは継続率低下の背景候補の1つにとどまり、因果は未検証。</li>
+    </ul>
+  </div>
+
+  <details style="margin:8px 0 16px">
+    <summary style="cursor:pointer;font-weight:600;font-size:12.5px">補助表：5章M0に対する5-1対象のカバー率（初回注文の排他的内訳・表示26コホート）</summary>
+    <div style="font-size:11px;color:var(--muted);margin:6px 0">初回注文の区分は排他的で、優先順位は 複数箱→90包→PRESS→ギフト／プレゼント→その他→①②同時→①→②→③。「5-1対象計」＝①＋②＋③＝5-1のn合計（①②③のnと全コホートで一致確認済み）。表の単位は人。</div>
+    <div class="cohort-wrap"><table class="cohort-table" style="min-width:900px">
+      <thead><tr><th>コホート月</th><th>M0</th><th>①30包単品</th><th>②定期</th><th>③11包</th><th>①②同時</th><th>複数箱含む</th><th>90包含む</th><th>PRESS含む</th><th>ギフト等含む</th><th>その他</th><th>5-1対象計</th><th>カバー率</th></tr></thead>
+      <tbody><tr><td>2024-05</td><td>1,994</td><td>1189</td><td>363</td><td>131</td><td>0</td><td>235</td><td>18</td><td>0</td><td>40</td><td>18</td><td>1,683</td><td>84.4%</td></tr><tr><td>2024-06</td><td>1,937</td><td>1185</td><td>277</td><td>118</td><td>2</td><td>306</td><td>15</td><td>1</td><td>33</td><td>0</td><td>1,580</td><td>81.6%</td></tr><tr><td>2024-07</td><td>2,078</td><td>1229</td><td>346</td><td>137</td><td>1</td><td>252</td><td>21</td><td>2</td><td>90</td><td>0</td><td>1,712</td><td>82.4%</td></tr><tr><td>2024-08</td><td>2,070</td><td>1023</td><td>439</td><td>126</td><td>0</td><td>281</td><td>27</td><td>0</td><td>174</td><td>0</td><td>1,588</td><td>76.7%</td></tr><tr><td>2024-09</td><td>1,642</td><td>798</td><td>257</td><td>98</td><td>1</td><td>192</td><td>5</td><td>0</td><td>291</td><td>0</td><td>1,153</td><td>70.2%</td></tr><tr><td>2024-10</td><td>1,055</td><td>605</td><td>199</td><td>105</td><td>1</td><td>113</td><td>7</td><td>0</td><td>25</td><td>0</td><td>909</td><td>86.2%</td></tr><tr><td>2024-11</td><td>1,143</td><td>656</td><td>185</td><td>128</td><td>0</td><td>131</td><td>10</td><td>0</td><td>33</td><td>0</td><td>969</td><td>84.8%</td></tr><tr><td>2024-12</td><td>1,092</td><td>635</td><td>183</td><td>94</td><td>0</td><td>111</td><td>10</td><td>0</td><td>59</td><td>0</td><td>912</td><td>83.5%</td></tr><tr><td>2025-01</td><td>1,635</td><td>984</td><td>319</td><td>118</td><td>0</td><td>161</td><td>12</td><td>0</td><td>41</td><td>0</td><td>1,421</td><td>86.9%</td></tr><tr><td>2025-02</td><td>1,242</td><td>690</td><td>219</td><td>86</td><td>0</td><td>169</td><td>15</td><td>0</td><td>63</td><td>0</td><td>995</td><td>80.1%</td></tr><tr><td>2025-03</td><td>1,685</td><td>882</td><td>285</td><td>103</td><td>0</td><td>215</td><td>12</td><td>2</td><td>186</td><td>0</td><td>1,270</td><td>75.4%</td></tr><tr><td>2025-04</td><td>1,363</td><td>810</td><td>267</td><td>81</td><td>0</td><td>136</td><td>14</td><td>1</td><td>54</td><td>0</td><td>1,158</td><td>85.0%</td></tr><tr><td>2025-05</td><td>1,603</td><td>970</td><td>309</td><td>92</td><td>0</td><td>159</td><td>7</td><td>0</td><td>66</td><td>0</td><td>1,371</td><td>85.5%</td></tr><tr><td>2025-06</td><td>2,031</td><td>846</td><td>327</td><td>654</td><td>0</td><td>162</td><td>8</td><td>0</td><td>34</td><td>0</td><td>1,827</td><td>90.0%</td></tr><tr><td>2025-10</td><td>861</td><td>329</td><td>210</td><td>59</td><td>0</td><td>249</td><td>0</td><td>1</td><td>13</td><td>0</td><td>598</td><td>69.5%</td></tr><tr><td>2025-11</td><td>652</td><td>189</td><td>178</td><td>50</td><td>0</td><td>222</td><td>0</td><td>1</td><td>12</td><td>0</td><td>417</td><td>64.0%</td></tr><tr><td>2025-12</td><td>574</td><td>176</td><td>153</td><td>45</td><td>0</td><td>179</td><td>0</td><td>0</td><td>21</td><td>0</td><td>374</td><td>65.2%</td></tr><tr><td>2026-01</td><td>703</td><td>236</td><td>191</td><td>62</td><td>0</td><td>202</td><td>0</td><td>0</td><td>12</td><td>0</td><td>489</td><td>69.6%</td></tr><tr><td>2026-02</td><td>723</td><td>204</td><td>202</td><td>72</td><td>0</td><td>226</td><td>1</td><td>0</td><td>18</td><td>0</td><td>478</td><td>66.1%</td></tr><tr><td>2026-03</td><td>683</td><td>270</td><td>173</td><td>60</td><td>0</td><td>156</td><td>0</td><td>1</td><td>23</td><td>0</td><td>503</td><td>73.6%</td></tr><tr><td>2026-04</td><td>776</td><td>425</td><td>138</td><td>101</td><td>0</td><td>87</td><td>0</td><td>0</td><td>25</td><td>0</td><td>664</td><td>85.6%</td></tr><tr><td>2026-05</td><td>1,077</td><td>656</td><td>151</td><td>94</td><td>0</td><td>135</td><td>1</td><td>0</td><td>40</td><td>0</td><td>901</td><td>83.7%</td></tr><tr><td>2026-06</td><td>834</td><td>444</td><td>161</td><td>107</td><td>0</td><td>101</td><td>1</td><td>0</td><td>20</td><td>0</td><td>712</td><td>85.4%</td></tr><tr><td>2026-07 ★CYS開始(7/22)</td><td>1,071</td><td>613</td><td>168</td><td>149</td><td>0</td><td>121</td><td>0</td><td>0</td><td>20</td><td>0</td><td>930</td><td>86.8%</td></tr><tr><td>2026-08 ★CYS</td><td>981</td><td>571</td><td>158</td><td>118</td><td>0</td><td>106</td><td>0</td><td>0</td><td>28</td><td>0</td><td>847</td><td>86.3%</td></tr><tr><td>2026-09 ★CYS終了(9/17)</td><td>660</td><td>360</td><td>125</td><td>78</td><td>0</td><td>84</td><td>2</td><td>0</td><td>11</td><td>0</td><td>563</td><td>85.3%</td></tr></tbody>
+    </table></div>
+  </details>
+
+  <!-- ===== 5-2. コホート継続率（アイテム新規 vs 純粋新規） ===== -->
+  <div class="stitle">5-2. コホート継続率：アイテム新規 vs 純粋新規（M+1〜M+12ヒートマップ）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders × spic-core.public.sn_shopify_sku_brand_master（brand='VC'・item_price&gt;0））。5章のヒートマップを、コホート対象母集団で切り替えられる形に複製したもの。<strong>アイテム新規</strong>＝5章の「全ての注文方法」と同じ母集団（他ブランド購入歴の有無は問わない。トライアル新規を含む）。<strong>純粋新規</strong>＝会社にとって生涯初の有償注文がVCだった顧客に限定（shopify_ordersから直接算出した生涯初有償注文日とVC初回購入日が一致する顧客のみ＝4区分の第1区分）。同ブランドへの再購入のみを継続としてカウント。デフォルトは<strong>アイテム新規</strong>。表示コホートは5章と同じ26行（除外コホートは5章の注記参照）。</div>
+
+  <details class="notes"><summary class="nt" style="cursor:pointer;margin-bottom:0">📌 4区分（純粋新規／トライアル新規／アイテム新規／既存）の定義とM0の内訳（クリックで開閉）</summary>
+    <ul>
+      <li><strong>純粋新規：</strong>VCの初回有償注文日＝生涯初の有償注文日。<strong>トライアル新規：</strong>生涯初の有償注文日がVC初回日より前で、かつVC初回日より前の有償注文がすべてitem_price=0のみ（CYSの無償VP 3023-cp＋送料等）。<strong>アイテム新規（クロスセル）：</strong>上記以外（他ブランドの有償購入歴あり）。<strong>既存：</strong>VC初回日以外のVC注文（3-1章のみ）。5章・5-2章は2区分（アイテム新規／純粋新規）で表示し、<strong>トライアル新規はアイテム新規側に含める</strong>（5章M0＝純粋＋トライアル＋アイテム新規）。</li>
+      <li><strong>純粋新規の定義は4区分の第1区分（初回日が生涯初の有償注文日）</strong>で、5ブランド横断表の純粋新規（SPLIT定義の「含む」判定）とは別の定義。混同しないこと。</li>
+      <li>トライアル新規は2024-05〜2026-01は0人、2026-02〜07は月1〜4人だったが、<strong>2026-08＝43人（M0の4.4%）・2026-09＝37人（5.6%）</strong>に増えた（CYSの¥220エントリー経由と推定。CYS参加者との個別突合は未実施）。</li>
+    </ul>
+    <div class="cohort-wrap"><table class="cohort-table" style="min-width:640px">
+      <thead><tr><th>コホート月</th><th>M0（5章）</th><th>純粋新規</th><th>トライアル新規</th><th>アイテム新規（クロスセル）</th><th>純粋新規率</th></tr></thead>
+      <tbody><tr><td>2026-01</td><td>703</td><td>644</td><td>0</td><td>59</td><td>91.6%</td></tr><tr><td>2026-02</td><td>723</td><td>658</td><td>1</td><td>64</td><td>91.0%</td></tr><tr><td>2026-03</td><td>683</td><td>599</td><td>4</td><td>80</td><td>87.7%</td></tr><tr><td>2026-04</td><td>776</td><td>687</td><td>1</td><td>88</td><td>88.5%</td></tr><tr><td>2026-05</td><td>1,077</td><td>963</td><td>3</td><td>111</td><td>89.4%</td></tr><tr><td>2026-06</td><td>834</td><td>759</td><td>2</td><td>73</td><td>91.0%</td></tr><tr><td>2026-07 ★CYS開始(7/22)</td><td>1,071</td><td>986</td><td>1</td><td>84</td><td>92.1%</td></tr><tr><td>2026-08 ★CYS</td><td>981</td><td>837</td><td>43</td><td>101</td><td>85.3%</td></tr><tr><td>2026-09 ★CYS終了(9/17) <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span></td><td>660</td><td>530</td><td>37</td><td>93</td><td>80.3%</td></tr></tbody>
+    </table></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px">表示は2026-01〜09（2024-05〜2025-12のトライアル新規は全月0人）。トライアル新規のM+N（注記用）：2026-02：1人→M+1 1人 ／ 2026-03：4人→M+1 4人 ／ 2026-04：1人→M+1 0人 ／ 2026-05：3人→M+1 0人 ／ 2026-06：2人→M+1 1人 ／ 2026-07：1人→M+1 0人 ／ 2026-08：43人→M+1 13人。</div>
+  </details>
+
+  <!-- 母集団セレクター -->
+  <div style="display:flex;gap:8px;margin:10px 0 12px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:12px;font-weight:600;color:var(--muted)">コホート対象：</span>
+    <button id="vcCohort2Btn_item" class="cohort-mode-btn active-mode" onclick="switchVcCohortMode2('item',this)">アイテム新規</button>
+    <button id="vcCohort2Btn_pure" class="cohort-mode-btn" onclick="switchVcCohortMode2('pure',this)">純粋新規</button>
+    <span id="vcCohort2ModeNote" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+  </div>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortVc2"></table></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 母集団比較の考察</div>
+    <ul>
+      <li><strong>純粋新規率（M0に占める純粋新規）は2026-07の92.1%→08の85.3%→09の80.3%と低下した。</strong>2026-01〜07は87.7%〜92.1%で推移していたが、2026-09はM0660人のうち純粋新規530人・トライアル新規37人（5.6%）・アイテム新規93人（14.1%）と、トライアル新規とアイテム新規の相対的な比率が上昇している。8月版が「要因未特定」とした純粋新規率の低下（92.2%→87.0%）は、同一定義の再計算（92.1%→85.3%）ではトライアル新規（CYS¥220エントリー経由と推定）の出現が説明材料になる。</li>
+      <li>純粋新規の新規獲得とアイテム新規（他ブランド購入者のクロスセル）のどちらが主導かは月ごとに異なる。新規獲得の質を評価する際は、本セクションの純粋新規のM+1〜M+12継続率を単独で確認し、アイテム新規全体と乖離がないか（＝生涯初の購入でVCに入った顧客が他ブランド経由の顧客と同じ定着率を持つか）を月次で追跡すること。</li>
+    </ul>
+  </div>
+
+  <div class="ssub" style="margin-top:16px">M+1継続率の比較（アイテム新規 vs 純粋新規）。M+6は考慮せず、両者のM+1継続率のみを比較。確定済みの25コホート（2024-05〜2026-08）を表示</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortVCCompare"></canvas></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 M+1継続率比較の考察</div>
+    <ul>
+      <li><strong>アイテム新規と純粋新規のM+1継続率はほぼ同水準で推移している。</strong>確定済みの全25コホートで差（アイテム新規−純粋新規）は-1.1pt（2025-12）〜+1.1pt（2026-06）に収まり、2025-10〜2026-08でも-1.1〜+1.1ptと小さい。これはアイテム新規の大半が純粋新規で構成されているため（2024-05〜2025-06は92.1%〜95.6%）。純粋新規以外（トライアル新規＋アイテム新規）だけで見たM+1継続率は、2025-10〜2026-08で25.4%（2026-01）〜45.3%（2026-06）、2026-08は29.2%（42/144人）。母数が59〜144人と小さく月ごとの変動が大きいため、単月ではなく複数月で見ること。</li>
+      <li><strong>2026-08コホート：</strong>アイテム新規27.5%（270/981人）に対し純粋新規27.2%（228/837人）で、差は+0.3pt。トライアル新規43人のM+1継続率は30.2%（13人）で全体並みで、トライアル新規の混入によってアイテム新規側のM+1継続率が純粋新規より大きく下がる動きは2026-08には見られない。</li>
+      <li>M+1継続率が最も低かったのは2026-05（アイテム新規25.6%・純粋新規25.4%）。両母集団とも同じ方向に動いており、特定の母集団に固有の現象ではない。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 5-3. F2/F3/F4コホート転換率（累計到達ベース） ===== -->
+  <div class="stitle">5-3. F2/F3/F4コホート転換率（累計到達ベース・回数基準）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders × spic-core.public.sn_shopify_sku_brand_master（brand='VC'・item_price&gt;0））。<strong>5・5-2章のM+1〜M+12ヒートマップは「暦月内に注文が発生したか」（時間軸基準）を見る指標だが、本セクションは「何ヶ月かかっても、通算N回目の注文（F2＝2回目・F3＝3回目...）が発生したか」（回数基準・時間を問わない）を見る指標。</strong>2ヶ月・3ヶ月周期の定期便であっても、その周期通りに注文が来ればF2・F3にカウントされるため、<strong>M+1継続率よりF2・F3の数字は高く出るのが自然な設計。</strong>母集団はアイテム新規（5章「全ての注文方法」と同一・他ブランド購入歴の有無は問わない）。除外SKUなし。「―」は該当回数にまだ到達する時間的余地が乏しい右側打ち切り（ゼロ確定ではなく今後の更新で伸びうる。実測値が0になった段階以降は全て打ち切り扱い）。集計対象は基準日2026-09-30以前の注文のみ。m0は5章M0と全コホートで一致確認済み。</div>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortVcFreq"></table></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 M+1（時間軸）とF2（回数軸）の違いについての考察</div>
+    <ul>
+      <li><strong>同じ2025-10コホートで比較すると、M+1継続率（5章・暦月内に2回目が来たか）は35.5%だったのに対し、F2転換率（本セクション・いつでもいいから2回目が来たか）は58.0%（499/861人）と約1.6倍。</strong>暦月を跨いでズレて発生した2回目購入（次の暦月にずれ込むケース等）を、本セクションでは「転換」としてカウントできるため。</li>
+      <li><strong>成熟した2025-10〜2026-03の6コホートではF2累積が56.3%〜58.9%・F3累積が40.7%〜45.1%・F4累積が29.2%〜36.0%</strong>で安定している（2024-05〜2025-06のF2累積は50.9%〜57.6%）。</li>
+      <li><strong>2026-04コホートのF2累積は50.1%（389/776人）と、成熟コホートの56.3%〜58.9%を下回った。</strong>2026-04は基準日時点で経過5ヶ月（2026-03は経過6ヶ月で56.5%）。続く2026-05は47.2%、2026-06は51.2%、2026-07は42.3%で、経過月数が短い分は今後の更新で伸びる余地がある（F3・F4はさらに未成熟）。</li>
+      <li>2026-08コホート（981人）はF2=316人（32.2%）・F3=41人（4.2%）まで確定。2026-09コホート（660人）はF2=33人（5.0%）で、F3以降は今後の月次更新で伸びていく。</li>
+    </ul>
+  </div>
+
+  <div class="ssub" style="margin-top:16px">F2／F3／F4転換率の推移（コホート月別）</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortVCFreqTrend"></canvas></div>
+
+  <!-- ===== 5-3-2. F2→F3→F4 段階別残存率（前段階基準） ===== -->
+  <div class="stitle" style="margin-top:24px">5-3-2. F2→F3→F4 段階別残存率（前段階基準・回数基準）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders × spic-core.public.sn_shopify_sku_brand_master（brand='VC'・item_price&gt;0））。<strong>5-3章はF2・F3・F4のいずれも「初回購入者数（m0）を分母」とした累積到達率だったが、本セクションは分母を1段階前の到達者数に置き換えた「段階別残存率」。</strong>F2＝初回購入者のうち2回目に到達した比率（5-3章と同じ・分母m0）。<strong>F3＝2回目に到達した人のうち3回目にも到達した比率（分母f2）。F4＝3回目に到達した人のうち4回目にも到達した比率（分母f3）。</strong>以降F5〜F8も同様に直前段階を分母とする。使用する到達人数（m0・f2〜f8）自体は5-3章と完全に同一のデータで、計算式（分母）のみが異なる。「―」は5-3章と同じ右側打ち切り（観測期間不足）。</div>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortVcFreqStep"></table></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 累積到達率と段階別残存率の見え方の違い</div>
+    <ul>
+      <li><strong>2026-02コホートで比較すると、5-3章の累積F3転換率は40.7%だったが、本セクションのF3段階別残存率（F2到達者のうち何%がF3に到達したか）は71.0%（294/414人）と大きく高い。</strong>離脱の大半は1回目→2回目（F2）の間に集中しており、2回目に到達した顧客のその後の継続率は高い。累積到達率だけを見ると「F3以降も同じペースで離脱が続く」と誤解しやすい。</li>
+      <li><strong>成熟した2025-10〜2026-03の6コホートでは、F2段階（初回→2回目）が56.3%〜58.9%にとどまる一方、F3段階（2回目→3回目）は71.0%〜79.3%、F4段階（3回目→4回目）は70.7%〜79.9%、F5段階は69.0%〜80.0%。</strong>「最初の壁（F2到達）」を越えれば、その後の定着は強い（2024-05〜2025-06のF3段階は72.5%〜80.6%・F4段階は77.9%〜84.0%）。</li>
+      <li><strong>F4段階は2026-01〜03の73.6%・71.8%・70.7%と、2025-10〜12（79.4%・79.9%・76.2%）より低めに出ている。</strong>2026-04〜06コホートのF3段階残存は63.8%・60.2%・54.1%と、成熟コホート（71.0%〜79.3%）より低い。3回目以降の到来が遅い2〜3ヶ月周期の顧客など未成熟分を含むため、次月以降の更新で再確認する。</li>
+    </ul>
+  </div>
+
+  <div class="ssub" style="margin-top:16px">F2／F3／F4段階別残存率の推移（コホート月別）</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortVCFreqStepTrend"></canvas></div>
+
+  <!-- ===== 5-3-3. 初回定期注文月コホート：F2→F3→F4 段階別残存率 ===== -->
+  <div class="stitle" style="margin-top:24px">5-3-3. 初回定期注文月コホート：F2→F3→F4 段階別残存率（前段階基準・回数基準）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders × spic-core.public.sn_shopify_sku_brand_master（brand='VC'・item_price&gt;0）。定期／都度はproduct_type='定期'で判定）。<strong>5-3・5-3-2章はいずれも「VCを初めて購入した月」（アイテム新規＝都度買いも含む）を基準にコホート化していたが、本セクションは基準そのものを変更する。</strong>コホートの基準を<strong>「product_type='定期'を含む最初のVC注文の月」（初回定期注文月）</strong>に置き換え、そこを起点（1回目＝F1）としてF2・F3・F4…（通算2回目・3回目・4回目…の注文発生）が起きたかを、5-3-2章と同じ「前段階基準の段階別残存率」で見る。F2以降の注文は都度買い・定期便いずれでも「再購入」としてカウントする（5-3章と同じ規則）。VCは創業時から定期便があるため、表示コホート範囲（2024-05〜、OGS汚染月・2024-04を除く）で取得している。<strong>母集団は「2024-04以降に初めて定期注文した顧客」（それ以前にVCを都度で初購入していた人を含む）で、5章M0とは一致しない。</strong>「―」は前段階の値が0人になった時点からの右側打ち切り（観測期間不足）。</div>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortVcTeikiFreqStep"></table></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 「アイテム新規」基準と「初回定期注文」基準の残存率の違い</div>
+    <ul>
+      <li><strong>初回定期注文月コホートのF2段階残存率は、成熟した2025-10〜2026-03の6コホートで83.1%〜84.9%。</strong>5-3-2章のアイテム新規基準のF2段階残存率（56.3%〜58.9%）より25.7〜28.3pt高く、「定期便を選ぶこと自体が強い継続シグナル」であることを示す（都度買いも含む初回購入者全体ではなく、初回から定期便を選んだ人に絞ると、2回目到達のハードルが大きく下がる）。</li>
+      <li><strong>2024-05〜2025-06のF2段階残存率は83.5%〜89.6%で、2025-10〜2026-03（83.1%〜84.9%）はそのレンジの下端付近に位置する。</strong>2026-04は81.1%・2026-05は77.8%と成熟コホートより低く、2026-06は84.1%。2026-04以降の低下には未成熟分（2〜3ヶ月周期の2回目が未到来）を含む可能性があるため、次月以降も追跡する。</li>
+      <li>F3段階（77.4%〜84.1%）・F4段階（75.3%〜85.1%）も成熟コホートで高水準を維持しており、F2の壁を越えたあとの定着が強いパターンは初回定期注文基準でも変わらない。</li>
+    </ul>
+  </div>
+
+  <div class="ssub" style="margin-top:16px">初回定期注文月コホート：F2／F3／F4段階別残存率の推移</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortVCTeikiFreqStepTrend"></canvas></div>
+
+  <!-- ===== 5-4. コホート別 期間別LTV推移マップ（VC単独ブランド版） ===== -->
+  <div class="stitle" style="margin-top:24px">5-4. コホート別 期間別LTV推移マップ（VC単独ブランド版）<span class="ltv-brand">単一ブランド集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">全ブランド基準の月次コホートLTVマップ（タブ③）のVC単独ブランド版。<strong>本表のLTVは6章と異なり、他ブランドへのクロスセル分を含まない「VC単体の購入額のみ」<span class="ltv-brand">単一ブランド集計</span>を集計している。</strong>データソース：Shopify受注（spic-core.public.shopify_orders）の line_items をSKU単位で sn_shopify_sku_brand_master にJOINし、VCブランド（item_price&gt;0）の行だけを抽出（税抜換算÷1.08）。集計方法：コホートの起点日から<strong>31／62／93日（表示30／60／90日）</strong>および120／180／365日以内のVC購入額（同ブランドへの再購入・定期継続分を含む）をAVGで平均化。基準日は2026-09-30固定。<strong>各セルの確定判定は「コホート月末日＋期間日数（31／62／93／120／180／365日）≦ 2026-09-30」を基準とする（月の後半に初回購入した顧客も含め、全員の観測期間が経過したセルのみ確定表示）。</strong>表示の「30日LTV／60日LTV／90日LTV」は内部で31日／62日／93日以内の累計で算出（プロジェクト全KPI共通の原則）、120／180／365日は従来の日数のまま（現状維持で確定）。<strong>各行の下に「└ 累計受注金額」のサブ行を追加し、同じコホートが各LTV時点までに生み出したVC単独購入額の合計（SUM。1人当たり平均のAVGではなく実額の総和）を表示している。</strong>未確定の期間はサブ行も「—」表示とする。</div>
+
+  <!-- 母集団セレクター -->
+  <div style="display:flex;gap:8px;margin:10px 0 12px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:12px;font-weight:600;color:var(--muted)">コホート対象：</span>
+    <button id="vcLtvBtn_item" class="cohort-mode-btn active-mode" onclick="switchVcLtvMode('item',this)">アイテム新規顧客</button>
+    <button id="vcLtvBtn_pure" class="cohort-mode-btn" onclick="switchVcLtvMode('pure',this)">純粋新規顧客</button>
+    <span id="vcLtvModeNote" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+  </div>
+  <div style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+    <strong>アイテム新規顧客</strong>＝VCを初めて購入した月でコホート化（他ブランドの購入歴の有無は問わない・クロスセル含む。トライアル新規を含む）。<strong>純粋新規顧客</strong>＝会社にとって生涯初の有償注文がVCだった顧客に限定（4区分の第1区分）。LTVはVC単独の購入額のみで、他ブランドの購入額は含まない。表示コホートは5章と同じ26行（OGS汚染月・2024-04は除外）。
+  </div>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortVcLtvMap" style="min-width:800px"></table></div>
+
+  <div class="monthly-insight" style="margin-top:12px">
+    <div class="mi-title">💡 VC単一ブランド集計LTVコホート 考察</div>
+    <ul>
+      <li><strong>31日LTV（アイテム新規）は2025-10〜2026-07の確定コホートで¥12,819（2026-07）〜¥13,789（2025-11）の範囲に収まっている。</strong>2024-05〜2025-06は¥10,754（2025-06）〜¥13,076（2024-06）で、2025-10以降はやや高めの水準で推移している。2026-04・05の31日LTVは¥12,927・¥13,041で通常レンジ内。2026-07は¥12,819（純粋新規¥12,806）。</li>
+      <li><strong>93日LTVは2025-10〜2026-05の確定コホートで¥18,467〜¥21,386、180日LTVは2025-10〜2026-03で¥25,345〜¥27,951。</strong>93日LTVは2026-04（¥18,514）・2026-05（¥18,467）が2025-10以降の確定コホートで最も低く、5-3章でF2累積が下がったコホート（2026-04 50.1%・2026-05 47.2%）と同じ時期にあたる（因果は未検証）。365日LTVは2024-05〜2025-06で¥28,849（2025-06）〜¥35,246（2025-04）。</li>
+      <li><strong>アイテム新規と純粋新規のLTV差は小さい。</strong>2025-10〜2026-07の31日LTVの差は最大¥254（2026-05）、2025-10〜2026-05の93日LTVの差は最大¥448（2026-05）。アイテム新規の大半が純粋新規で構成されているため、両者の水準はほぼ同じ（トライアル新規が増えた2026-08・09コホートは31日LTVが未確定で、10月以降に確認する）。</li>
+      <li><strong>31／62／93日ルールの影響：</strong>旧30日LTVは暦月の日数の影響を受けていた。31日月（2025-10, 2025-12, 2026-01, 2026-03, 2026-05, 2026-07）では旧30日LTVが31日LTVより7.3〜12.6%（+¥957〜+¥1,687）低く、30日月・2月（2025-11, 2026-02, 2026-04, 2026-06）では0.3〜1.1%（+¥42〜+¥147）の差にとどまる（例：2026-07 旧30日LTV¥11,745→31日LTV¥12,819、+¥1,074）。下の参考表を参照。</li>
+      <li><strong>観測期間バイアスの注記：</strong>本表は6章と異なり単独ブランドLTVのため、絶対額は6章より小さく出る（他ブランドへのクロスセル分を含まないため）。確定判定は「コホート月末日＋期間日数 ≦ 基準日（2026-09-30）」で、全員の観測期間が経過したセルのみ確定として表示する。365日LTVは2025-06コホートまで確定で、2025-10以降は観測期間未到達のため「未確定」。2026-08コホートの31日LTVは2026-10-01以降、2026-09コホートは2026-10-31以降に確定する。</li>
+    </ul>
+    <details style="margin-top:6px"><summary style="cursor:pointer;font-weight:600;font-size:12px">参考：旧30／60／90日判定のLTVと新31／62／93日判定のLTVの比較（アイテム新規・円）</summary>
+      <div class="cohort-wrap" style="margin-top:8px"><table class="cohort-table" style="min-width:760px">
+        <thead><tr><th>コホート</th><th>旧30日</th><th>新31日</th><th>差（31日−旧30日）</th><th>旧60日</th><th>新62日</th><th>旧90日</th><th>新93日</th></tr></thead>
+        <tbody><tr><td>2025-10</td><td>11,769</td><td>13,312</td><td>+1,543</td><td>15,267</td><td>16,749</td><td>18,102</td><td>19,545</td></tr><tr><td>2025-11</td><td>13,747</td><td>13,789</td><td>+42</td><td>15,751</td><td>17,557</td><td>19,607</td><td>21,386</td></tr><tr><td>2025-12</td><td>11,739</td><td>13,426</td><td>+1,687</td><td>15,266</td><td>16,804</td><td>19,783</td><td>19,868</td></tr><tr><td>2026-01</td><td>11,700</td><td>13,149</td><td>+1,449</td><td>16,563</td><td>16,632</td><td>19,638</td><td>19,749</td></tr><tr><td>2026-02</td><td>13,100</td><td>13,195</td><td>+95</td><td>16,280</td><td>16,431</td><td>19,505</td><td>19,683</td></tr><tr><td>2026-03</td><td>12,120</td><td>13,472</td><td>+1,352</td><td>15,346</td><td>16,906</td><td>18,459</td><td>19,978</td></tr><tr><td>2026-04</td><td>12,856</td><td>12,927</td><td>+71</td><td>14,587</td><td>15,732</td><td>17,278</td><td>18,514</td></tr><tr><td>2026-05</td><td>12,084</td><td>13,041</td><td>+957</td><td>14,579</td><td>15,678</td><td>17,198</td><td>18,467</td></tr><tr><td>2026-06</td><td>12,966</td><td>13,113</td><td>+147</td><td>14,828</td><td>16,374</td><td>17,676</td><td>—</td></tr><tr><td>2026-07</td><td>11,745</td><td>12,819</td><td>+1,074</td><td>14,515</td><td>—</td><td>—</td><td>—</td></tr><tr><td>2026-08</td><td>11,628</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>2026-09</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody>
+      </table></div>
+      <div style="font-size:11px;color:var(--muted)">旧判定の確定は月末+30／60／90日、新判定は月末+31／62／93日（—は未確定）。</div>
+    </details>
+  </div>
+
+
+  </div>
+
+</div>
+
+<script>
+// ===== PART FILE: tab2（コホートチャート） / vc / 2026_09 =====
+// switchReportTab はno-op（このファイルは単一タブのプレビュー用）
+function switchReportTab(id, btn) {}
+
+// @@TAB2_JS_START@@
+// ===== 5. コホートテーブル =====
+// データソース：Shopify受注（shopify_orders × sn_shopify_sku_brand_master・brand='VC'・item_price>0・有償注文条件・CYS0810除外）／周期別のみShopify定期DB（sandbox_nishimori.subscription_history_viewで取得・spic-core.public.sn_subscription_history_view再割当で差分0確認済み）
+// 基準日2026-09-30。表示コホート2024-05〜2026-09の26行（OGS汚染2025-07〜09・2024-04は除外）。月ラベルは必ず文字列。null＝観測未到達（0ではない）。
+const cohortVcData = [
+  {m:'2024-05', m0:1994, m1:626, m2:576, m3:486, m4:428, m5:322, m6:336, m7:247, m8:261, m9:234, m10:229, m11:200, m12:227},
+  {m:'2024-06', m0:1937, m1:586, m2:546, m3:439, m4:413, m5:325, m6:346, m7:260, m8:256, m9:255, m10:232, m11:217, m12:217},
+  {m:'2024-07', m0:2078, m1:648, m2:549, m3:462, m4:404, m5:325, m6:350, m7:229, m8:253, m9:243, m10:226, m11:206, m12:248},
+  {m:'2024-08', m0:2070, m1:643, m2:597, m3:468, m4:408, m5:325, m6:358, m7:283, m8:267, m9:274, m10:262, m11:226, m12:262},
+  {m:'2024-09', m0:1642, m1:426, m2:414, m3:350, m4:301, m5:236, m6:269, m7:198, m8:212, m9:210, m10:204, m11:189, m12:178},
+  {m:'2024-10', m0:1055, m1:307, m2:299, m3:265, m4:221, m5:182, m6:203, m7:144, m8:170, m9:149, m10:144, m11:125, m12:133},
+  {m:'2024-11', m0:1143, m1:343, m2:321, m3:288, m4:255, m5:201, m6:225, m7:174, m8:194, m9:180, m10:167, m11:156, m12:147},
+  {m:'2024-12', m0:1092, m1:315, m2:287, m3:282, m4:226, m5:180, m6:204, m7:164, m8:160, m9:159, m10:149, m11:111, m12:134},
+  {m:'2025-01', m0:1635, m1:522, m2:532, m3:397, m4:366, m5:306, m6:313, m7:270, m8:251, m9:227, m10:225, m11:186, m12:196},
+  {m:'2025-02', m0:1242, m1:408, m2:352, m3:346, m4:269, m5:236, m6:243, m7:207, m8:171, m9:176, m10:154, m11:145, m12:142},
+  {m:'2025-03', m0:1685, m1:517, m2:477, m3:456, m4:370, m5:317, m6:350, m7:281, m8:249, m9:242, m10:227, m11:203, m12:201},
+  {m:'2025-04', m0:1363, m1:474, m2:458, m3:404, m4:358, m5:306, m6:282, m7:259, m8:212, m9:199, m10:182, m11:177, m12:179},
+  {m:'2025-05', m0:1603, m1:571, m2:513, m3:458, m4:418, m5:322, m6:326, m7:270, m8:239, m9:234, m10:211, m11:217, m12:221},
+  {m:'2025-06', m0:2031, m1:730, m2:598, m3:536, m4:407, m5:360, m6:342, m7:257, m8:266, m9:239, m10:245, m11:211, m12:215},
+  {m:'2025-10', m0:861, m1:306, m2:264, m3:238, m4:192, m5:184, m6:174, m7:164, m8:140, m9:150, m10:133, m11:132, m12:null},
+  {m:'2025-11', m0:652, m1:252, m2:230, m3:214, m4:174, m5:150, m6:161, m7:128, m8:126, m9:133, m10:111, m11:null, m12:null},
+  {m:'2025-12', m0:574, m1:196, m2:194, m3:161, m4:137, m5:115, m6:114, m7:93, m8:92, m9:84, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:703, m1:245, m2:237, m3:212, m4:184, m5:139, m6:160, m7:108, m8:120, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:723, m1:250, m2:237, m3:214, m4:171, m5:156, m6:161, m7:111, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:683, m1:253, m2:227, m3:193, m4:169, m5:148, m6:138, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:776, m1:244, m2:193, m3:198, m4:175, m5:148, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:1077, m1:276, m2:280, m3:256, m4:217, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:834, m1:289, m2:253, m3:241, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★CYS開始(7/22)', m0:1071, m1:332, m2:300, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08 ★CYS', m0:981, m1:270, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★CYS終了(9/17)', m0:660, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+// ===== 5. 周期別コホート（初回加入時周期で固定） =====
+const cohortVc_1m = [
+  {m:'2024-05', m0:506, m1:374, m2:333, m3:295, m4:257, m5:207, m6:188, m7:171, m8:153, m9:142, m10:145, m11:128, m12:137},
+  {m:'2024-06', m0:458, m1:343, m2:307, m3:264, m4:247, m5:211, m6:195, m7:172, m8:167, m9:153, m10:147, m11:142, m12:130},
+  {m:'2024-07', m0:497, m1:371, m2:315, m3:271, m4:245, m5:212, m6:183, m7:158, m8:150, m9:145, m10:139, m11:134, m12:142},
+  {m:'2024-08', m0:559, m1:388, m2:333, m3:284, m4:244, m5:207, m6:204, m7:192, m8:171, m9:170, m10:173, m11:158, m12:157},
+  {m:'2024-09', m0:380, m1:267, m2:249, m3:208, m4:178, m5:174, m6:157, m7:135, m8:143, m9:142, m10:133, m11:132, m12:113},
+  {m:'2024-10', m0:246, m1:174, m2:160, m3:145, m4:128, m5:112, m6:114, m7:100, m8:99, m9:96, m10:84, m11:86, m12:76},
+  {m:'2024-11', m0:304, m1:209, m2:191, m3:177, m4:170, m5:143, m6:135, m7:124, m8:124, m9:123, m10:113, m11:111, m12:96},
+  {m:'2024-12', m0:281, m1:202, m2:186, m3:170, m4:149, m5:136, m6:118, m7:118, m8:107, m9:104, m10:92, m11:80, m12:70},
+  {m:'2025-01', m0:503, m1:353, m2:339, m3:276, m4:252, m5:232, m6:218, m7:208, m8:190, m9:181, m10:159, m11:150, m12:140},
+  {m:'2025-02', m0:360, m1:279, m2:244, m3:223, m4:183, m5:170, m6:158, m7:147, m8:127, m9:120, m10:116, m11:111, m12:100},
+  {m:'2025-03', m0:503, m1:376, m2:358, m3:326, m4:280, m5:252, m6:252, m7:218, m8:198, m9:192, m10:172, m11:169, m12:146},
+  {m:'2025-04', m0:442, m1:331, m2:312, m3:286, m4:255, m5:236, m6:199, m7:197, m8:163, m9:144, m10:133, m11:126, m12:124},
+  {m:'2025-05', m0:590, m1:438, m2:398, m3:355, m4:315, m5:263, m6:240, m7:221, m8:191, m9:181, m10:158, m11:175, m12:151},
+  {m:'2025-06', m0:697, m1:554, m2:482, m3:411, m4:328, m5:302, m6:256, m7:216, m8:208, m9:176, m10:182, m11:160, m12:153},
+  {m:'2025-10', m0:301, m1:246, m2:191, m3:170, m4:133, m5:131, m6:124, m7:118, m8:105, m9:104, m10:100, m11:104, m12:null},
+  {m:'2025-11', m0:260, m1:208, m2:175, m3:156, m4:136, m5:120, m6:112, m7:107, m8:101, m9:101, m10:92, m11:null, m12:null},
+  {m:'2025-12', m0:226, m1:159, m2:148, m3:117, m4:97, m5:88, m6:75, m7:71, m8:67, m9:57, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:274, m1:205, m2:174, m3:152, m4:131, m5:110, m6:104, m7:87, m8:86, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:270, m1:203, m2:166, m3:147, m4:131, m5:124, m6:106, m7:93, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:256, m1:191, m2:166, m3:133, m4:118, m5:110, m6:88, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:211, m1:161, m2:130, m3:114, m4:113, m5:105, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:262, m1:197, m2:175, m3:156, m4:141, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:241, m1:205, m2:177, m3:154, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★CYS開始(7/22)', m0:274, m1:233, m2:202, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08 ★CYS', m0:251, m1:190, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★CYS終了(9/17)', m0:137, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+const cohortVc_2m = [
+  {m:'2024-05', m0:130, m1:42, m2:65, m3:32, m4:57, m5:32, m6:42, m7:22, m8:38, m9:24, m10:36, m11:28, m12:34},
+  {m:'2024-06', m0:159, m1:48, m2:90, m3:41, m4:66, m5:38, m6:50, m7:36, m8:39, m9:37, m10:33, m11:33, m12:37},
+  {m:'2024-07', m0:158, m1:49, m2:78, m3:44, m4:66, m5:33, m6:60, m7:21, m8:47, m9:25, m10:45, m11:23, m12:38},
+  {m:'2024-08', m0:179, m1:43, m2:113, m3:36, m4:82, m5:35, m6:64, m7:30, m8:46, m9:31, m10:44, m11:25, m12:44},
+  {m:'2024-09', m0:97, m1:27, m2:51, m3:23, m4:42, m5:14, m6:37, m7:14, m8:32, m9:10, m10:25, m11:13, m12:26},
+  {m:'2024-10', m0:91, m1:21, m2:55, m3:22, m4:38, m5:20, m6:35, m7:15, m8:32, m9:15, m10:34, m11:11, m12:28},
+  {m:'2024-11', m0:81, m1:25, m2:43, m3:20, m4:32, m5:19, m6:33, m7:15, m8:29, m9:16, m10:26, m11:15, m12:22},
+  {m:'2024-12', m0:75, m1:18, m2:37, m3:20, m4:29, m5:14, m6:27, m7:13, m8:26, m9:8, m10:22, m11:6, m12:20},
+  {m:'2025-01', m0:100, m1:27, m2:63, m3:20, m4:42, m5:19, m6:33, m7:17, m8:21, m9:12, m10:23, m11:10, m12:19},
+  {m:'2025-02', m0:93, m1:33, m2:42, m3:24, m4:34, m5:17, m6:30, m7:18, m8:24, m9:19, m10:18, m11:14, m12:10},
+  {m:'2025-03', m0:109, m1:40, m2:41, m3:31, m4:38, m5:28, m6:29, m7:25, m8:21, m9:17, m10:21, m11:16, m12:21},
+  {m:'2025-04', m0:90, m1:29, m2:49, m3:22, m4:44, m5:25, m6:29, m7:22, m8:22, m9:19, m10:23, m11:17, m12:17},
+  {m:'2025-05', m0:103, m1:24, m2:51, m3:19, m4:44, m5:14, m6:32, m7:17, m8:24, m9:15, m10:23, m11:15, m12:18},
+  {m:'2025-06', m0:117, m1:43, m2:43, m3:25, m4:42, m5:20, m6:32, m7:14, m8:32, m9:17, m10:24, m11:18, m12:22},
+  {m:'2025-10', m0:50, m1:12, m2:27, m3:12, m4:20, m5:10, m6:14, m7:12, m8:15, m9:9, m10:13, m11:7, m12:null},
+  {m:'2025-11', m0:38, m1:8, m2:22, m3:8, m4:17, m5:8, m6:14, m7:8, m8:8, m9:7, m10:7, m11:null, m12:null},
+  {m:'2025-12', m0:32, m1:7, m2:21, m3:4, m4:18, m5:8, m6:11, m7:6, m8:12, m9:7, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:55, m1:12, m2:32, m3:11, m4:30, m5:5, m6:25, m7:9, m8:18, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:50, m1:12, m2:32, m3:12, m4:22, m5:5, m6:21, m7:2, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:46, m1:11, m2:30, m3:14, m4:21, m5:9, m6:19, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:52, m1:19, m2:26, m3:19, m4:25, m5:14, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:69, m1:18, m2:45, m3:17, m4:31, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:49, m1:19, m2:25, m3:14, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★CYS開始(7/22)', m0:66, m1:14, m2:36, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08 ★CYS', m0:56, m1:14, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★CYS終了(9/17)', m0:49, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+const cohortVc_3m = [
+  {m:'2024-05', m0:125, m1:28, m2:30, m3:56, m4:27, m5:20, m6:45, m7:13, m8:17, m9:32, m10:9, m11:11, m12:31},
+  {m:'2024-06', m0:139, m1:30, m2:29, m3:53, m4:28, m5:13, m6:40, m7:18, m8:13, m9:24, m10:21, m11:13, m12:24},
+  {m:'2024-07', m0:159, m1:39, m2:33, m3:62, m4:28, m5:17, m6:53, m7:14, m8:16, m9:40, m10:14, m11:15, m12:35},
+  {m:'2024-08', m0:189, m1:28, m2:38, m3:81, m4:24, m5:27, m6:56, m7:17, m8:14, m9:43, m10:16, m11:15, m12:33},
+  {m:'2024-09', m0:102, m1:14, m2:18, m3:42, m4:21, m5:12, m6:33, m7:16, m8:11, m9:24, m10:17, m11:11, m12:23},
+  {m:'2024-10', m0:73, m1:12, m2:9, m3:39, m4:6, m5:9, m6:31, m7:6, m8:10, m9:19, m10:8, m11:9, m12:15},
+  {m:'2024-11', m0:81, m1:9, m2:11, m3:34, m4:12, m5:9, m6:23, m7:8, m8:14, m9:18, m10:9, m11:16, m12:14},
+  {m:'2024-12', m0:68, m1:14, m2:10, m3:34, m4:14, m5:5, m6:26, m7:11, m8:7, m9:22, m10:11, m11:6, m12:19},
+  {m:'2025-01', m0:99, m1:18, m2:24, m3:39, m4:13, m5:10, m6:27, m7:6, m8:9, m9:19, m10:11, m11:8, m12:22},
+  {m:'2025-02', m0:106, m1:15, m2:16, m3:56, m4:18, m5:12, m6:28, m7:20, m8:8, m9:23, m10:12, m11:7, m12:22},
+  {m:'2025-03', m0:116, m1:23, m2:16, m3:47, m4:13, m5:13, m6:43, m7:12, m8:9, m9:23, m10:11, m11:7, m12:19},
+  {m:'2025-04', m0:94, m1:21, m2:15, m3:47, m4:20, m5:12, m6:31, m7:19, m8:7, m9:21, m10:10, m11:13, m12:18},
+  {m:'2025-05', m0:121, m1:33, m2:10, m3:46, m4:24, m5:11, m6:40, m7:17, m8:9, m9:28, m10:12, m11:9, m12:28},
+  {m:'2025-06', m0:112, m1:27, m2:8, m3:46, m4:11, m5:7, m6:30, m7:8, m8:4, m9:24, m10:13, m11:11, m12:24},
+  {m:'2025-10', m0:63, m1:10, m2:7, m3:29, m4:9, m5:13, m6:19, m7:9, m8:3, m9:15, m10:6, m11:5, m12:null},
+  {m:'2025-11', m0:44, m1:5, m2:7, m3:25, m4:4, m5:6, m6:15, m7:7, m8:7, m9:10, m10:2, m11:null, m12:null},
+  {m:'2025-12', m0:46, m1:10, m2:3, m3:26, m4:7, m5:2, m6:17, m7:7, m8:3, m9:12, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:54, m1:5, m2:8, m3:30, m4:6, m5:10, m6:19, m7:5, m8:9, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:50, m1:6, m2:5, m3:31, m4:4, m5:5, m6:21, m7:4, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:40, m1:7, m2:3, m3:22, m4:2, m5:4, m6:14, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:60, m1:13, m2:4, m3:27, m4:11, m5:6, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:111, m1:16, m2:9, m3:46, m4:19, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:66, m1:8, m2:7, m3:38, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★CYS開始(7/22)', m0:83, m1:15, m2:9, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08 ★CYS', m0:73, m1:8, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★CYS終了(9/17)', m0:43, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+const cohortVc_spot = [
+  {m:'2024-05', m0:1233, m1:182, m2:148, m3:103, m4:87, m5:63, m6:61, m7:41, m8:53, m9:36, m10:39, m11:33, m12:25},
+  {m:'2024-06', m0:1181, m1:165, m2:120, m3:81, m4:72, m5:63, m6:61, m7:34, m8:37, m9:41, m10:31, m11:29, m12:26},
+  {m:'2024-07', m0:1264, m1:189, m2:123, m3:85, m4:65, m5:63, m6:54, m7:36, m8:40, m9:33, m10:28, m11:34, m12:33},
+  {m:'2024-08', m0:1143, m1:184, m2:113, m3:67, m4:58, m5:56, m6:34, m7:44, m8:36, m9:30, m10:29, m11:28, m12:28},
+  {m:'2024-09', m0:1063, m1:118, m2:96, m3:77, m4:60, m5:36, m6:42, m7:33, m8:26, m9:34, m10:29, m11:33, m12:16},
+  {m:'2024-10', m0:645, m1:100, m2:75, m3:59, m4:49, m5:41, m6:23, m7:23, m8:29, m9:19, m10:18, m11:19, m12:14},
+  {m:'2024-11', m0:677, m1:100, m2:76, m3:57, m4:41, m5:30, m6:34, m7:27, m8:27, m9:23, m10:19, m11:14, m12:15},
+  {m:'2024-12', m0:668, m1:81, m2:54, m3:58, m4:34, m5:25, m6:33, m7:22, m8:20, m9:25, m10:24, m11:19, m12:25},
+  {m:'2025-01', m0:933, m1:124, m2:106, m3:62, m4:59, m5:45, m6:35, m7:39, m8:31, m9:15, m10:32, m11:18, m12:15},
+  {m:'2025-02', m0:683, m1:81, m2:50, m3:43, m4:34, m5:37, m6:27, m7:22, m8:12, m9:14, m10:8, m11:13, m12:10},
+  {m:'2025-03', m0:957, m1:78, m2:62, m3:52, m4:39, m5:24, m6:26, m7:26, m8:21, m9:10, m10:23, m11:11, m12:15},
+  {m:'2025-04', m0:737, m1:93, m2:82, m3:49, m4:39, m5:33, m6:23, m7:21, m8:20, m9:15, m10:16, m11:21, m12:20},
+  {m:'2025-05', m0:789, m1:76, m2:54, m3:38, m4:35, m5:34, m6:14, m7:15, m8:15, m9:10, m10:18, m11:18, m12:24},
+  {m:'2025-06', m0:1105, m1:106, m2:65, m3:54, m4:26, m5:31, m6:24, m7:19, m8:22, m9:22, m10:26, m11:22, m12:16},
+  {m:'2025-10', m0:447, m1:38, m2:39, m3:27, m4:30, m5:30, m6:17, m7:25, m8:17, m9:22, m10:14, m11:16, m12:null},
+  {m:'2025-11', m0:310, m1:31, m2:26, m3:25, m4:17, m5:16, m6:20, m7:6, m8:10, m9:15, m10:10, m11:null, m12:null},
+  {m:'2025-12', m0:270, m1:20, m2:22, m3:14, m4:15, m5:17, m6:11, m7:9, m8:10, m9:8, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:320, m1:23, m2:23, m3:19, m4:17, m5:14, m6:12, m7:7, m8:7, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:353, m1:29, m2:34, m3:24, m4:14, m5:22, m6:13, m7:12, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:341, m1:44, m2:28, m3:24, m4:28, m5:25, m6:17, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:453, m1:51, m2:33, m3:38, m4:26, m5:23, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:635, m1:45, m2:51, m3:37, m4:26, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:478, m1:57, m2:44, m3:35, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★CYS開始(7/22)', m0:648, m1:70, m2:53, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08 ★CYS', m0:601, m1:58, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★CYS終了(9/17)', m0:431, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+function getVcCohortData(mode) {
+  if (mode === '1m') return cohortVc_1m;
+  if (mode === '2m') return cohortVc_2m;
+  if (mode === '3m') return cohortVc_3m;
+  if (mode === 'spot') return cohortVc_spot;
+  return cohortVcData;
+}
+function switchVcCohortMode(mode, btn) {
+  document.querySelectorAll('#vcCohortBtn_all, #vcCohortBtn_1m, #vcCohortBtn_2m, #vcCohortBtn_3m, #vcCohortBtn_spot').forEach(b => b.classList.remove('active-mode'));
+  btn.classList.add('active-mode');
+  const notes = {
+    all: '',
+    '1m': '※ 初回定期加入時点の周期が「28日」または「1ヶ月」だった顧客（初回固定）',
+    '2m': '※ 初回定期加入時点の周期が「2ヶ月」だった顧客（母数が小さい点に注意）',
+    '3m': '※ 初回定期加入時点の周期が「3ヶ月」だった顧客（母数が小さい点に注意）',
+    'spot': '※ 定期購入経験が一度もない顧客のみ（都度買いのみ）'
+  };
+  document.getElementById('vcCohortModeNote').textContent = notes[mode];
+  buildItemCohortTable('cohortVc', getVcCohortData(mode), ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12']);
+}
+
+function buildItemCohortTable(tableId, data, keys) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const kLen = keys.length;
+  let hd = '<thead><tr><th>コホート月</th><th>アイテム新規数</th>';
+  keys.forEach(k => { hd += `<th>${k}</th>`; });
+  hd += '</tr></thead><tbody>';
+  let html2 = hd;
+  data.forEach(row => {
+    const isOgsRow = !!row.ogs;
+    const isThisR = !!row.thisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = '';
+    if (isThisR) labelSuffix = ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    ['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11','m12'].slice(0, kLen).forEach(k => {
+      const v = row[k];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>'; return; }
+      const pct = Math.round(v / row.m0 * 100);
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 45) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 35) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 25) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 15) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}</span></td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+buildItemCohortTable('cohortVc', cohortVcData, ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12']);
+
+const vcCohortMonths = ['2024-05','2024-06','2024-07','2024-08','2024-09','2024-10','2024-11','2024-12','2025-01','2025-02','2025-03','2025-04','2025-05','2025-06','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07 ★CYS開始(7/22)','2026-08 ★CYS','2026-09 ★CYS終了(9/17)'];
+const vcM1 = [31.4,30.3,31.2,31.1,25.9,29.1,30.0,28.8,31.9,32.9,30.7,34.8,35.6,35.9,35.5,38.7,34.1,34.9,34.6,37.0,31.4,25.6,34.7,31.0,27.5,null];
+const vcM6 = [16.9,17.9,16.8,17.3,16.4,19.2,19.7,18.7,19.1,19.6,20.8,20.7,20.3,16.8,20.2,24.7,19.9,22.8,22.3,20.2,null,null,null,null,null,null];
+new Chart(document.getElementById('chartCohortVC'), {
+  type: 'line',
+  data: {
+    labels: vcCohortMonths,
+    datasets: [
+      {label:'M+1継続率', data:vcM1, borderColor:'#FF7A30', backgroundColor:'rgba(255,122,48,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'M+6継続率', data:vcM6, borderColor:'#FF7A30', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:50, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-1. 初回購入商品別F2転換率チャート（①30包単品／②定期／③11包） =====
+// 判定は内部31／62／93日以内（表示30／60／90日）。値はhandoff_tab2 §3-3のn・f31・f93・pn・pf31・pf93から算出（小数1桁）。null＝観測未到達。
+const f2VcLabels = ['2024-05','2024-06','2024-07','2024-08','2024-09','2024-10','2024-11','2024-12','2025-01','2025-02','2025-03','2025-04','2025-05','2025-06','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07 ★CYS開始(7/22)','2026-08 ★CYS','2026-09 ★CYS終了(9/17)'];
+function buildF2VcChart(canvasId, i31, i93, p31, p93, yMax) {
+  new Chart(document.getElementById(canvasId), {
+    type: 'line',
+    data: {
+      labels: f2VcLabels,
+      datasets: [
+        {label:'アイテム新規 30日F2転換率（31日判定）', data:i31, borderColor:'#FF7A30', backgroundColor:'rgba(255,122,48,0.1)', tension:0.3, fill:false, pointRadius:4},
+        {label:'アイテム新規 90日F2転換率（93日判定）', data:i93, borderColor:'#FF7A30', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:3, borderDash:[4,4]},
+        {label:'純粋新規 30日F2転換率（31日判定）', data:p31, borderColor:'#1E7A5C', backgroundColor:'rgba(30,122,92,0.1)', tension:0.3, fill:false, pointRadius:4},
+        {label:'純粋新規 90日F2転換率（93日判定）', data:p93, borderColor:'#1E7A5C', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:3, borderDash:[4,4]},
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+      scales: { y: { min:0, max:yMax, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+    }
+  });
+}
+const f2VcT1 = {i31:[16.7,16.8,17.5,18.3,16.4,14.4,16.0,14.5,17.9,19.1,22.6,18.9,26.2,25.1,24.0,18.5,23.3,22.0,22.1,30.0,18.1,18.8,18.5,20.6,null,null], i93:[32.9,33.2,33.0,33.7,33.2,32.2,34.3,31.5,35.1,34.2,38.3,37.9,39.4,37.8,37.1,32.8,40.3,34.3,37.3,40.4,35.1,34.1,null,null,null,null], p31:[16.9,17.1,17.5,18.6,16.4,14.8,16.5,14.6,17.9,19.5,23.3,19.5,26.8,26.0,24.1,17.7,24.0,22.9,22.9,30.2,18.7,18.8,19.0,21.1,null,null], p93:[32.6,33.2,32.8,34.0,33.1,32.3,35.0,31.5,34.9,34.3,38.6,38.1,39.3,38.5,37.0,32.0,40.4,34.4,38.0,39.9,36.1,34.4,null,null,null,null]};
+const f2VcT2 = {i31:[71.9,72.2,73.1,58.3,70.0,63.8,69.7,66.7,72.7,75.3,74.4,75.3,73.1,76.5,70.5,71.3,60.8,65.4,67.8,63.6,62.3,62.9,74.5,67.3,null,null], i93:[84.0,83.4,84.4,74.9,82.9,83.4,82.7,82.0,83.4,85.4,87.4,84.6,84.5,86.9,81.4,83.7,76.5,80.1,80.2,82.7,78.3,80.8,null,null,null,null], p31:[73.3,74.3,74.5,59.1,71.7,63.9,72.8,68.9,74.7,76.5,78.9,77.4,73.6,77.2,71.4,71.4,68.3,68.5,68.6,66.4,67.3,67.2,77.4,70.0,null,null], p93:[84.5,84.7,84.3,75.3,83.3,83.3,83.3,83.8,84.6,85.2,89.1,86.3,84.8,86.9,83.0,83.1,79.7,82.1,79.4,81.0,79.4,81.9,null,null,null,null]};
+const f2VcT3 = {i31:[19.1,28.8,32.1,29.4,24.5,31.4,35.2,29.8,30.5,20.9,25.2,28.4,40.2,30.0,30.5,30.0,40.0,32.3,36.1,41.7,34.7,31.9,39.3,33.6,null,null], i93:[26.0,31.4,37.2,34.1,27.6,34.3,41.4,34.0,34.7,27.9,32.0,34.6,43.5,33.9,30.5,30.0,44.4,38.7,38.9,50.0,39.6,45.7,null,null,null,null], p31:[18.6,29.1,32.3,30.0,24.2,32.0,36.7,31.5,30.4,22.2,25.5,28.6,41.1,30.2,26.8,31.2,40.5,31.7,35.2,41.4,34.0,32.3,40.2,33.3,null,null], p93:[24.8,31.6,37.6,34.2,26.3,35.0,43.3,36.0,34.8,28.4,32.4,35.1,44.4,34.3,26.8,31.2,45.2,38.3,38.0,50.0,38.1,46.2,null,null,null,null]};
+buildF2VcChart('chartF2VcT1', f2VcT1.i31, f2VcT1.i93, f2VcT1.p31, f2VcT1.p93, 50);
+buildF2VcChart('chartF2VcT2', f2VcT2.i31, f2VcT2.i93, f2VcT2.p31, f2VcT2.p93, 100);
+buildF2VcChart('chartF2VcT3', f2VcT3.i31, f2VcT3.i93, f2VcT3.p31, f2VcT3.p93, 60);
+
+// ===== 5-1. 入口別F2転換率の比較（アイテム新規） =====
+new Chart(document.getElementById('chartF2VcEntry'), {
+  type: 'line',
+  data: {
+    labels: f2VcLabels,
+    datasets: [
+      {label:'①30包単品 31日', data:f2VcT1.i31, borderColor:'#FF7A30', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4},
+      {label:'①30包単品 93日', data:f2VcT1.i93, borderColor:'#FF7A30', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:3, borderDash:[4,4]},
+      {label:'②定期 31日', data:f2VcT2.i31, borderColor:'#1E7A5C', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4},
+      {label:'②定期 93日', data:f2VcT2.i93, borderColor:'#1E7A5C', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:3, borderDash:[4,4]},
+      {label:'③11包 31日', data:f2VcT3.i31, borderColor:'#2563eb', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:4},
+      {label:'③11包 93日', data:f2VcT3.i93, borderColor:'#2563eb', backgroundColor:'transparent', tension:0.3, fill:false, pointRadius:3, borderDash:[4,4]},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:100, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-2. コホート継続率：アイテム新規 vs 純粋新規（切替ヒートマップ） =====
+const cohortVc_pure = [
+  {m:'2024-05', m0:1886, m1:590, m2:536, m3:454, m4:398, m5:303, m6:303, m7:231, m8:238, m9:215, m10:215, m11:189, m12:210},
+  {m:'2024-06', m0:1826, m1:554, m2:511, m3:403, m4:387, m5:297, m6:320, m7:241, m8:236, m9:232, m10:215, m11:200, m12:200},
+  {m:'2024-07', m0:1986, m1:621, m2:520, m3:440, m4:385, m5:314, m6:332, m7:219, m8:240, m9:227, m10:212, m11:194, m12:231},
+  {m:'2024-08', m0:1969, m1:620, m2:576, m3:447, m4:391, m5:312, m6:345, m7:271, m8:257, m9:256, m10:250, m11:215, m12:247},
+  {m:'2024-09', m0:1558, m1:404, m2:390, m3:333, m4:289, m5:221, m6:252, m7:186, m8:198, m9:194, m10:188, m11:172, m12:163},
+  {m:'2024-10', m0:994, m1:289, m2:274, m3:248, m4:200, m5:166, m6:188, m7:132, m8:155, m9:135, m10:132, m11:112, m12:120},
+  {m:'2024-11', m0:1066, m1:324, m2:298, m3:270, m4:242, m5:188, m6:210, m7:165, m8:186, m9:167, m10:162, m11:145, m12:143},
+  {m:'2024-12', m0:1011, m1:301, m2:269, m3:260, m4:214, m5:166, m6:188, m7:151, m8:150, m9:149, m10:142, m11:101, m12:126},
+  {m:'2025-01', m0:1547, m1:491, m2:502, m3:380, m4:349, m5:288, m6:299, m7:258, m8:238, m9:219, m10:212, m11:178, m12:187},
+  {m:'2025-02', m0:1160, m1:378, m2:327, m3:324, m4:248, m5:217, m6:227, m7:192, m8:160, m9:165, m10:144, m11:134, m12:134},
+  {m:'2025-03', m0:1577, m1:485, m2:439, m3:425, m4:333, m5:296, m6:318, m7:259, m8:232, m9:224, m10:210, m11:186, m12:187},
+  {m:'2025-04', m0:1256, m1:439, m2:417, m3:365, m4:331, m5:282, m6:257, m7:241, m8:198, m9:187, m10:171, m11:165, m12:169},
+  {m:'2025-05', m0:1496, m1:531, m2:477, m3:412, m4:386, m5:302, m6:298, m7:251, m8:220, m9:214, m10:191, m11:203, m12:202},
+  {m:'2025-06', m0:1916, m1:693, m2:562, m3:505, m4:382, m5:338, m6:319, m7:244, m8:246, m9:225, m10:230, m11:199, m12:200},
+  {m:'2025-10', m0:798, m1:282, m2:242, m3:219, m4:181, m5:168, m6:165, m7:152, m8:132, m9:141, m10:124, m11:122, m12:null},
+  {m:'2025-11', m0:586, m1:225, m2:207, m3:190, m4:155, m5:135, m6:144, m7:114, m8:109, m9:117, m10:101, m11:null, m12:null},
+  {m:'2025-12', m0:512, m1:180, m2:168, m3:145, m4:118, m5:101, m6:94, m7:85, m8:78, m9:74, m10:null, m11:null, m12:null},
+  {m:'2026-01', m0:644, m1:230, m2:214, m3:195, m4:165, m5:128, m6:141, m7:95, m8:107, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-02', m0:658, m1:222, m2:208, m3:191, m4:145, m5:138, m6:141, m7:100, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-03', m0:599, m1:217, m2:190, m3:161, m4:147, m5:129, m6:120, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-04', m0:687, m1:215, m2:168, m3:173, m4:142, m5:132, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-05', m0:963, m1:245, m2:238, m3:227, m4:182, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-06', m0:759, m1:255, m2:224, m3:215, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-07 ★CYS開始(7/22)', m0:986, m1:305, m2:275, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-08 ★CYS', m0:837, m1:228, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null},
+  {m:'2026-09 ★CYS終了(9/17)', m0:530, m1:null, m2:null, m3:null, m4:null, m5:null, m6:null, m7:null, m8:null, m9:null, m10:null, m11:null, m12:null, thisMonth:true},
+];
+
+// ===== 5-4. コホート別期間別LTV推移マップ（VC単独ブランド版・アイテム新規/純粋新規切替） =====
+// データソース：shopify_orders line_items × sn_shopify_sku_brand_master（brand='VC'・item_price>0）。税抜換算÷1.08。
+// 単独ブランドLTV（他ブランドへのクロスセル分は含まない）。基準日2026-09-30。確定判定はコホート月末日＋期間日数≦基準日。
+// d30/d60/d90は内部で31/62/93日以内の1人当たり平均（AVG）、r30/r60/r90は同期間の累計受注金額（SUM）。d120〜d365・r120〜r365は従来の日数。
+const vcLtvMap_item = [
+  {m:'2024-05', cust:1994, d30:12668, d60:15895, d90:18756, d120:20047, d180:23901, d365:33100, r30:25260796, r60:31694309, r90:37400053, r120:39974325, r180:47659368, r365:66002131},
+  {m:'2024-06', cust:1937, d30:13076, d60:16474, d90:19138, d120:20536, d180:24467, d365:33975, r30:25329003, r60:31910862, r90:37070675, r120:39778971, r180:47392308, r365:65810191},
+  {m:'2024-07', cust:2078, d30:12958, d60:15977, d90:18617, d120:19835, d180:23332, d365:31827, r30:26925725, r60:33201173, r90:38685693, r120:41217196, r180:48484708, r365:66135606},
+  {m:'2024-08', cust:2070, d30:12537, d60:16033, d90:18714, d120:19889, d180:23612, d365:33260, r30:25950881, r60:33188287, r90:38738112, r120:41169347, r180:48877027, r365:68848297},
+  {m:'2024-09', cust:1642, d30:12250, d60:15002, d90:17482, d120:18635, d180:22044, d365:30775, r30:20113694, r60:24633264, r90:28705970, r120:30598680, r180:36195989, r365:50533068},
+  {m:'2024-10', cust:1055, d30:12451, d60:15578, d90:18554, d120:19936, d180:24008, d365:34621, r30:13136307, r60:16434466, r90:19574964, r120:21032321, r180:25328571, r365:36524960},
+  {m:'2024-11', cust:1143, d30:11626, d60:14590, d90:17115, d120:19287, d180:22201, d365:32287, r30:13288331, r60:16676214, r90:19562737, r120:22045110, r180:25376070, r365:36904366},
+  {m:'2024-12', cust:1092, d30:12138, d60:15206, d90:17977, d120:19301, d180:22854, d365:32866, r30:13254959, r60:16604454, r90:19630403, r120:21076906, r180:24956418, r365:35889502},
+  {m:'2025-01', cust:1635, d30:11976, d60:15290, d90:17944, d120:19958, d180:23076, d365:32512, r30:19581300, r60:24999875, r90:29338107, r120:32630596, r180:37728822, r365:53156556},
+  {m:'2025-02', cust:1242, d30:12463, d60:15459, d90:18612, d120:20875, d180:24169, d365:33833, r30:15478779, r60:19200540, r90:23116530, r120:25926203, r180:30018457, r365:42021150},
+  {m:'2025-03', cust:1685, d30:12236, d60:15009, d90:17727, d120:19008, d180:23032, d365:32630, r30:20617535, r60:25289658, r90:29869980, r120:32028263, r180:38809601, r365:54981325},
+  {m:'2025-04', cust:1363, d30:11968, d60:15459, d90:18725, d120:20327, d180:24947, d365:35246, r30:16312886, r60:21070806, r90:25521930, r120:27705044, r180:34002815, r365:48040754},
+  {m:'2025-05', cust:1603, d30:12217, d60:15252, d90:18233, d120:19743, d180:24086, d365:34010, r30:19583308, r60:24448252, r90:29227678, r120:31648488, r180:38610209, r365:54518141},
+  {m:'2025-06', cust:2031, d30:10754, d60:13560, d90:16311, d120:17667, d180:20963, d365:28849, r30:21842132, r60:27539501, r90:33127290, r120:35881705, r180:42576782, r365:58591567},
+  {m:'2025-10', cust:861, d30:13312, d60:16749, d90:19545, d120:20999, d180:25345, d365:null, r30:11461496, r60:14420641, r90:16828617, r120:18079928, r180:21821776, r365:null},
+  {m:'2025-11', cust:652, d30:13789, d60:17557, d90:21386, d120:24090, d180:27951, d365:null, r30:8990539, r60:11447150, r90:13943416, r120:15706668, r180:18224063, r365:null},
+  {m:'2025-12', cust:574, d30:13426, d60:16804, d90:19868, d120:21109, d180:25563, d365:null, r30:7706757, r60:9645594, r90:11404516, r120:12116742, r180:14672921, r365:null},
+  {m:'2026-01', cust:703, d30:13149, d60:16632, d90:19749, d120:22405, d180:25840, d365:null, r30:9243729, r60:11692353, r90:13883843, r120:15751037, r180:18165478, r365:null},
+  {m:'2026-02', cust:723, d30:13195, d60:16431, d90:19683, d120:22069, d180:25407, d365:null, r30:9539744, r60:11879960, r90:14230840, r120:15955617, r180:18369244, r365:null},
+  {m:'2026-03', cust:683, d30:13472, d60:16906, d90:19978, d120:21410, d180:25564, d365:null, r30:9201300, r60:11547035, r90:13644849, r120:14622915, r180:17460206, r365:null},
+  {m:'2026-04', cust:776, d30:12927, d60:15732, d90:18514, d120:19987, d180:null, d365:null, r30:10031702, r60:12207905, r90:14366813, r120:15510041, r180:null, r365:null},
+  {m:'2026-05', cust:1077, d30:13041, d60:15678, d90:18467, d120:19686, d180:null, d365:null, r30:14045460, r60:16885444, r90:19889136, r120:21201906, r180:null, r365:null},
+  {m:'2026-06', cust:834, d30:13113, d60:16374, d90:null, d120:null, d180:null, d365:null, r30:10936207, r60:13655939, r90:null, r120:null, r180:null, r365:null},
+  {m:'2026-07 ★CYS開始(7/22)', cust:1071, d30:12819, d60:null, d90:null, d120:null, d180:null, d365:null, r30:13728901, r60:null, r90:null, r120:null, r180:null, r365:null},
+  {m:'2026-08 ★CYS', cust:981, d30:null, d60:null, d90:null, d120:null, d180:null, d365:null, r30:null, r60:null, r90:null, r120:null, r180:null, r365:null},
+  {m:'2026-09 ★CYS終了(9/17)', cust:660, d30:null, d60:null, d90:null, d120:null, d180:null, d365:null, r30:null, r60:null, r90:null, r120:null, r180:null, r365:null, thisMonth:true},
+];
+const vcLtvMap_pure = [
+  {m:'2024-05', cust:1886, d30:12642, d60:15849, d90:18690, d120:19967, d180:23798, d365:32796, r30:23843501, r60:29890920, r90:35250131, r120:37657897, r180:44883375, r365:61852752},
+  {m:'2024-06', cust:1826, d30:12974, d60:16347, d90:18966, d120:20327, d180:24212, d365:33384, r30:23690126, r60:29848881, r90:34631518, r120:37117777, r180:44210232, r365:60959185},
+  {m:'2024-07', cust:1986, d30:12956, d60:15978, d90:18615, d120:19837, d180:23361, d365:31723, r30:25731168, r60:31732008, r90:36968974, r120:39395985, r180:46394190, r365:63002115},
+  {m:'2024-08', cust:1969, d30:12605, d60:16178, d90:18867, d120:20010, d180:23783, d365:33446, r30:24819741, r60:31854719, r90:37148640, r120:39399202, r180:46828222, r365:65855139},
+  {m:'2024-09', cust:1558, d30:12251, d60:14981, d90:17438, d120:18603, d180:21952, d365:30469, r30:19087054, r60:23340349, r90:27168144, r120:28983355, r180:34201149, r365:47471115},
+  {m:'2024-10', cust:994, d30:12465, d60:15500, d90:18486, d120:19796, d180:23779, d365:34034, r30:12390261, r60:15406960, r90:18375488, r120:19677590, r180:23636429, r365:33829525},
+  {m:'2024-11', cust:1066, d30:11681, d60:14620, d90:17161, d120:19402, d180:22345, d365:32475, r30:12451457, r60:15585121, r90:18293170, r120:20682348, r180:23820294, r365:34618559},
+  {m:'2024-12', cust:1011, d30:12167, d60:15309, d90:18091, d120:19399, d180:22983, d365:33081, r30:12300976, r60:15477596, r90:18290253, r120:19612054, r180:23235983, r365:33444527},
+  {m:'2025-01', cust:1547, d30:11962, d60:15264, d90:17959, d120:19979, d180:23081, d365:32627, r30:18504711, r60:23613031, r90:27783231, r120:30907106, r180:35706142, r365:50473586},
+  {m:'2025-02', cust:1160, d30:12485, d60:15526, d90:18698, d120:20950, d180:24195, d365:33849, r30:14482948, r60:18010034, r90:21690003, r120:24301828, r180:28065701, r365:39264477},
+  {m:'2025-03', cust:1577, d30:12257, d60:14994, d90:17697, d120:18980, d180:22901, d365:32316, r30:19329224, r60:23645697, r90:27908511, r120:29932232, r180:36114722, r365:50961735},
+  {m:'2025-04', cust:1256, d30:11911, d60:15381, d90:18540, d120:20174, d180:24804, d365:35258, r30:14960406, r60:19318456, r90:23286706, r120:25339169, r180:31153439, r365:44283618},
+  {m:'2025-05', cust:1496, d30:12092, d60:15126, d90:17922, d120:19452, d180:23726, d365:33364, r30:18089479, r60:22629067, r90:26811219, r120:29100288, r180:35494109, r365:49912626},
+  {m:'2025-06', cust:1916, d30:10626, d60:13368, d90:16117, d120:17490, d180:20748, d365:28479, r30:20359581, r60:25613869, r90:30880172, r120:33511135, r180:39754057, r365:54564898},
+  {m:'2025-10', cust:798, d30:13220, d60:16603, d90:19414, d120:20896, d180:25190, d365:null, r30:10549822, r60:13249311, r90:15492680, r120:16674731, r180:20101787, r365:null},
+  {m:'2025-11', cust:586, d30:13737, d60:17563, d90:21357, d120:24085, d180:27951, d365:null, r30:8049715, r60:10291904, r90:12514951, r120:14113573, r180:16379394, r365:null},
+  {m:'2025-12', cust:512, d30:13556, d60:16900, d90:19986, d120:21242, d180:25484, d365:null, r30:6940713, r60:8652719, r90:10232682, r120:10875834, r180:13047684, r365:null},
+  {m:'2026-01', cust:644, d30:13064, d60:16547, d90:19631, d120:22220, d180:25690, d365:null, r30:8413212, r60:10656395, r90:12642331, r120:14309498, r180:16544124, r365:null},
+  {m:'2026-02', cust:658, d30:13044, d60:16136, d90:19307, d120:21564, d180:24725, d365:null, r30:8582927, r60:10617681, r90:12703764, r120:14189189, r180:16268994, r365:null},
+  {m:'2026-03', cust:599, d30:13513, d60:16852, d90:19870, d120:21230, d180:25413, d365:null, r30:8094385, r60:10094331, r90:11902305, r120:12716596, r180:15222310, r365:null},
+  {m:'2026-04', cust:687, d30:12772, d60:15524, d90:18318, d120:19740, d180:null, d365:null, r30:8774206, r60:10664690, r90:12584756, r120:13561226, r180:null, r365:null},
+  {m:'2026-05', cust:963, d30:12787, d60:15279, d90:18019, d120:19253, d180:null, d365:null, r30:12313819, r60:14713363, r90:17352656, r120:18540999, r180:null, r365:null},
+  {m:'2026-06', cust:759, d30:13099, d60:16331, d90:null, d120:null, d180:null, d365:null, r30:9941771, r60:12394856, r90:null, r120:null, r180:null, r365:null},
+  {m:'2026-07 ★CYS開始(7/22)', cust:986, d30:12806, d60:null, d90:null, d120:null, d180:null, d365:null, r30:12626540, r60:null, r90:null, r120:null, r180:null, r365:null},
+  {m:'2026-08 ★CYS', cust:837, d30:null, d60:null, d90:null, d120:null, d180:null, d365:null, r30:null, r60:null, r90:null, r120:null, r180:null, r365:null},
+  {m:'2026-09 ★CYS終了(9/17)', cust:530, d30:null, d60:null, d90:null, d120:null, d180:null, d365:null, r30:null, r60:null, r90:null, r120:null, r180:null, r365:null, thisMonth:true},
+];
+const vcLtvMapKeys = ['d30','d60','d90','d120','d180','d365'];
+const vcLtvMapHeaders = ['30日LTV','60日LTV','90日LTV','120日LTV','180日LTV','365日LTV'];
+
+function vcLtvColStats(data, key) {
+  return data.map(r => r[key]).filter(v => v !== null && v !== undefined).sort((a,b) => a-b);
+}
+function vcLtvColorFor(v, sortedVals) {
+  if (v === null || v === undefined) return null;
+  const n = sortedVals.length;
+  if (n <= 1) return {bg:'#dcfce7', tc:'#166534'};
+  const idx = sortedVals.indexOf(v);
+  const pct = idx / (n - 1);
+  if (pct >= 0.8) return {bg:'#bbf7d0', tc:'#15803d'};
+  if (pct >= 0.6) return {bg:'#dcfce7', tc:'#166534'};
+  if (pct >= 0.4) return {bg:'#fef9c3', tc:'#854d0e'};
+  if (pct >= 0.2) return {bg:'#fef3c7', tc:'#92400e'};
+  return {bg:'#fed7aa', tc:'#c2410c'};
+}
+const vcLtvMapRevKeys = ['r30','r60','r90','r120','r180','r365'];
+function buildVcLtvMapTable(tableId, data) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const colStats = vcLtvMapKeys.map(k => vcLtvColStats(data, k));
+  let html2 = '<thead><tr><th style="text-align:left;min-width:110px">購入月</th><th style="text-align:right">顧客数</th>';
+  vcLtvMapHeaders.forEach(h => { html2 += `<th style="text-align:right">${h}</th>`; });
+  html2 += '</tr></thead><tbody>';
+  data.forEach(row => {
+    const isThisR = !!row.thisMonth;
+    html2 += `<tr class="${isThisR ? 'highlight-row' : ''}">`;
+    let labelSuffix = isThisR ? ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>' : '';
+    html2 += `<td style="font-size:11px;font-weight:${isThisR ? 700 : 400}">${row.m}${labelSuffix}</td><td style="text-align:right;font-weight:600;font-size:11px">${row.cust.toLocaleString()}人</td>`;
+    vcLtvMapKeys.forEach((k, i) => {
+      const v = row[k];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td>'; return; }
+      const c = vcLtvColorFor(v, colStats[i]);
+      html2 += `<td style="background:${c.bg};color:${c.tc};font-size:11px;text-align:right">¥${v.toLocaleString()}</td>`;
+    });
+    html2 += '</tr>';
+    // 累計受注金額サブ行（コホートが各LTV時点までに生み出した累計受注金額。SUM（平均LTVではなく実額合計）。未確定期間は「—」）
+    html2 += `<tr class="ltv-rev-row"><td style="font-size:10px;color:var(--muted);padding-top:2px;padding-bottom:6px">└ 累計受注金額</td><td></td>`;
+    vcLtvMapRevKeys.forEach(rk => {
+      const rv = row[rk];
+      if (rv === null || rv === undefined) { html2 += '<td style="font-size:10px;color:#ccc;text-align:right;padding-top:2px;padding-bottom:6px">—</td>'; return; }
+      html2 += `<td style="font-size:10px;color:var(--muted);text-align:right;padding-top:2px;padding-bottom:6px">¥${rv.toLocaleString()}</td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+function getVcLtvMapData(mode) { return mode === 'pure' ? vcLtvMap_pure : vcLtvMap_item; }
+function switchVcLtvMode(mode, btn) {
+  document.querySelectorAll('#vcLtvBtn_item, #vcLtvBtn_pure').forEach(b => b.classList.remove('active-mode'));
+  btn.classList.add('active-mode');
+  const notes = {
+    item: '＝VCを初めて購入した月でコホート化（クロスセル含む）',
+    pure: '＝生涯初の有償注文がVCだった顧客のみ'
+  };
+  document.getElementById('vcLtvModeNote').textContent = notes[mode];
+  buildVcLtvMapTable('cohortVcLtvMap', getVcLtvMapData(mode));
+}
+switchVcLtvMode('item', document.getElementById('vcLtvBtn_item'));
+
+function buildCohortTable2(tableId, data, keys, colLabel) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const kLen = keys.length;
+  let hd = `<thead><tr><th>コホート月</th><th>${colLabel}</th>`;
+  keys.forEach(k => { hd += `<th>${k}</th>`; });
+  hd += '</tr></thead><tbody>';
+  let html2 = hd;
+  data.forEach(row => {
+    const isOgsRow = !!row.ogs;
+    const isThisR = !!row.thisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = '';
+    if (isThisR) labelSuffix = ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    ['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11','m12'].slice(0, kLen).forEach(k => {
+      const v = row[k];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>'; return; }
+      const pct = Math.round(v / row.m0 * 100);
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 45) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 35) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 25) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 15) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}</span></td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+function getVcCohortData2(mode) { return mode === 'pure' ? cohortVc_pure : cohortVcData; }
+function switchVcCohortMode2(mode, btn) {
+  document.querySelectorAll('#vcCohort2Btn_item, #vcCohort2Btn_pure').forEach(b => b.classList.remove('active-mode'));
+  btn.classList.add('active-mode');
+  const notes = {
+    item: '※ アイテム新規（他ブランド購入歴の有無は問わない・5章「全ての注文方法」と同一母集団。トライアル新規を含む）',
+    pure: '※ 純粋新規（会社にとって生涯初の有償注文がVCだった顧客のみ・4区分の第1区分）'
+  };
+  document.getElementById('vcCohort2ModeNote').textContent = notes[mode];
+  const colLabel = mode === 'pure' ? '純粋新規数' : 'アイテム新規数';
+  buildCohortTable2('cohortVc2', getVcCohortData2(mode), ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12'], colLabel);
+}
+switchVcCohortMode2('item', document.getElementById('vcCohort2Btn_item'));
+
+const vcCompareMonths = ['2024-05','2024-06','2024-07','2024-08','2024-09','2024-10','2024-11','2024-12','2025-01','2025-02','2025-03','2025-04','2025-05','2025-06','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07 ★CYS開始(7/22)','2026-08 ★CYS'];
+const vcM1ItemCmp = [31.4,30.3,31.2,31.1,25.9,29.1,30.0,28.8,31.9,32.9,30.7,34.8,35.6,35.9,35.5,38.7,34.1,34.9,34.6,37.0,31.4,25.6,34.7,31.0,27.5];
+const vcM1PureCmp = [31.3,30.3,31.3,31.5,25.9,29.1,30.4,29.8,31.7,32.6,30.8,35.0,35.5,36.2,35.3,38.4,35.2,35.7,33.7,36.2,31.3,25.4,33.6,30.9,27.2];
+new Chart(document.getElementById('chartCohortVCCompare'), {
+  type: 'line',
+  data: {
+    labels: vcCompareMonths,
+    datasets: [
+      {label:'アイテム新規 M+1継続率', data:vcM1ItemCmp, borderColor:'#FF7A30', backgroundColor:'rgba(255,122,48,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'純粋新規 M+1継続率', data:vcM1PureCmp, borderColor:'#1E7A5C', backgroundColor:'rgba(30,122,92,0.1)', tension:0.3, fill:false, pointRadius:5},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:50, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-3. F2/F3/F4コホート転換率（累計到達ベース） =====
+// 回数基準（時間無制限）。m0＝5章M0と全コホートで一致確認済み。null＝右側打ち切り（実測値が0になった段階以降）。
+const cohortVcFreqData = [
+  {m:'2024-05', m0:1994, f2:1065, f3:796, f4:641, f5:527, f6:444, f7:393, f8:342},
+  {m:'2024-06', m0:1937, f2:1027, f3:773, f4:618, f5:527, f6:455, f7:402, f8:339},
+  {m:'2024-07', m0:2078, f2:1134, f3:822, f4:669, f5:542, f6:441, f7:377, f8:315},
+  {m:'2024-08', m0:2070, f2:1192, f3:901, f4:702, f5:608, f6:482, f7:403, f8:354},
+  {m:'2024-09', m0:1642, f2:938, f3:732, f4:606, f5:492, f6:382, f7:327, f8:282},
+  {m:'2024-10', m0:1055, f2:585, f3:438, f4:368, f5:304, f6:261, f7:220, f8:187},
+  {m:'2024-11', m0:1143, f2:615, f3:457, f4:380, f5:338, f6:288, f7:245, f8:217},
+  {m:'2024-12', m0:1092, f2:572, f3:429, f4:358, f5:306, f6:267, f7:222, f8:185},
+  {m:'2025-01', m0:1635, f2:910, f3:680, f4:543, f5:469, f6:382, f7:323, f8:279},
+  {m:'2025-02', m0:1242, f2:683, f3:517, f4:431, f5:360, f6:291, f7:252, f8:206},
+  {m:'2025-03', m0:1685, f2:858, f3:678, f4:541, f5:459, f6:393, f7:342, f8:296},
+  {m:'2025-04', m0:1363, f2:762, f3:609, f4:505, f5:423, f6:344, f7:289, f8:253},
+  {m:'2025-05', m0:1603, f2:895, f3:721, f4:581, f5:481, f6:398, f7:330, f8:275},
+  {m:'2025-06', m0:2031, f2:1062, f3:803, f4:650, f5:518, f6:430, f7:343, f8:283},
+  {m:'2025-10', m0:861, f2:499, f3:364, f4:289, f5:230, f6:184, f7:144, f8:126},
+  {m:'2025-11', m0:652, f2:384, f3:294, f4:235, f5:188, f6:162, f7:131, f8:113},
+  {m:'2025-12', m0:574, f2:323, f3:256, f4:195, f5:137, f6:104, f7:78, f8:59},
+  {m:'2026-01', m0:703, f2:407, f3:295, f4:217, f5:171, f6:127, f7:102, f8:87},
+  {m:'2026-02', m0:723, f2:414, f3:294, f4:211, f5:155, f6:111, f7:94, f8:71},
+  {m:'2026-03', m0:683, f2:386, f3:287, f4:203, f5:140, f6:112, f7:61, f8:12},
+  {m:'2026-04', m0:776, f2:389, f3:248, f4:173, f5:111, f6:81, f7:18, f8:4},
+  {m:'2026-05', m0:1077, f2:508, f3:306, f4:174, f5:117, f6:17, f7:4, f8:1},
+  {m:'2026-06', m0:834, f2:427, f3:231, f4:164, f5:21, f6:5, f7:1, f8:1},
+  {m:'2026-07 ★CYS開始(7/22)', m0:1071, f2:453, f3:233, f4:39, f5:9, f6:2, f7:1, f8:null},
+  {m:'2026-08 ★CYS', m0:981, f2:316, f3:41, f4:3, f5:null, f6:null, f7:null, f8:null},
+  {m:'2026-09 ★CYS終了(9/17)', m0:660, f2:33, f3:1, f4:null, f5:null, f6:null, f7:null, f8:null, thisMonth:true},
+];
+
+function buildFreqCohortTable(tableId, data, keys) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  let hd = '<thead><tr><th>コホート月</th><th>アイテム新規数</th>';
+  keys.forEach(k => { hd += `<th>${k}</th>`; });
+  hd += '</tr></thead><tbody>';
+  let html2 = hd;
+  data.forEach(row => {
+    const isOgsRow = !!row.ogs;
+    const isThisR = !!row.thisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = isThisR ? ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>' : '';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    keys.forEach(k => {
+      const key = k.toLowerCase();
+      const v = row[key];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>'; return; }
+      const pct = Math.round(v / row.m0 * 100);
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 45) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 35) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 25) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 15) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}</span></td>`;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+buildFreqCohortTable('cohortVcFreq', cohortVcFreqData, ['F2','F3','F4','F5','F6','F7','F8']);
+
+const vcFreqMonths = cohortVcFreqData.map(r => r.m);
+const vcF2Trend = cohortVcFreqData.map(r => r.f2!==null ? Math.round(r.f2/r.m0*1000)/10 : null);
+const vcF3Trend = cohortVcFreqData.map(r => r.f3!==null ? Math.round(r.f3/r.m0*1000)/10 : null);
+const vcF4Trend = cohortVcFreqData.map(r => r.f4!==null ? Math.round(r.f4/r.m0*1000)/10 : null);
+new Chart(document.getElementById('chartCohortVCFreqTrend'), {
+  type: 'line',
+  data: {
+    labels: vcFreqMonths,
+    datasets: [
+      {label:'F2転換率', data:vcF2Trend, borderColor:'#FF7A30', backgroundColor:'rgba(255,122,48,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F3転換率', data:vcF3Trend, borderColor:'#1E7A5C', backgroundColor:'rgba(30,122,92,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F4転換率', data:vcF4Trend, borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,0.1)', tension:0.3, fill:false, pointRadius:5},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:70, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-3-2. F2→F3→F4 段階別残存率（前段階基準） =====
+// 使用データはcohortVcFreqDataと完全同一（m0・f2〜f8）。計算式（分母）のみ5-3章と異なる：
+// F2=f2/m0（5-3章と同じ）、F3=f3/f2、F4=f4/f3、F5=f5/f4、F6=f6/f5、F7=f7/f6、F8=f8/f7
+function buildStepFreqCohortTable(tableId, data, keys, monthLabel, m0Label) {
+  monthLabel = monthLabel || 'コホート月';
+  m0Label = m0Label || 'アイテム新規数';
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  let hd = `<thead><tr><th>${monthLabel}</th><th>${m0Label}</th>`;
+  keys.forEach(k => { hd += `<th>${k}</th>`; });
+  hd += '</tr></thead><tbody>';
+  let html2 = hd;
+  data.forEach(row => {
+    const isOgsRow = !!row.ogs;
+    const isThisR = !!row.thisMonth;
+    const rowClass = isOgsRow ? 'ogs-row' : (isThisR ? 'highlight-row' : '');
+    html2 += `<tr class="${rowClass}">`;
+    let labelSuffix = isThisR ? ' <span style="font-size:10px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:2px">今月</span>' : '';
+    html2 += `<td>${row.m}${labelSuffix}</td><td style="font-weight:600">${row.m0.toLocaleString()}</td>`;
+    let prev = row.m0;
+    keys.forEach(k => {
+      const key = k.toLowerCase();
+      const v = row[key];
+      if (v === null || v === undefined) { html2 += '<td style="background:#f9f9f9;color:#ccc">—</td>'; return; }
+      const pct = Math.round(v / prev * 1000) / 10;
+      let bg, tc;
+      if (isOgsRow) { bg = '#fff0e0'; tc = '#92400e'; }
+      else if (pct >= 75) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 60) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 45) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 30) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      html2 += `<td style="background:${bg};color:${tc}">${pct.toFixed(1)}%<br><span style="color:var(--muted);font-size:10px">${v.toLocaleString()}/${prev.toLocaleString()}人</span></td>`;
+      prev = v;
+    });
+    html2 += '</tr>';
+  });
+  html2 += '</tbody>';
+  t.innerHTML = html2;
+}
+buildStepFreqCohortTable('cohortVcFreqStep', cohortVcFreqData, ['F2','F3','F4','F5','F6','F7','F8']);
+
+const vcF2StepTrend = cohortVcFreqData.map(r => r.f2!==null ? Math.round(r.f2/r.m0*1000)/10 : null);
+const vcF3StepTrend = cohortVcFreqData.map(r => (r.f3!==null && r.f2) ? Math.round(r.f3/r.f2*1000)/10 : null);
+const vcF4StepTrend = cohortVcFreqData.map(r => (r.f4!==null && r.f3) ? Math.round(r.f4/r.f3*1000)/10 : null);
+new Chart(document.getElementById('chartCohortVCFreqStepTrend'), {
+  type: 'line',
+  data: {
+    labels: vcFreqMonths,
+    datasets: [
+      {label:'F2段階残存率（初回→2回目）', data:vcF2StepTrend, borderColor:'#FF7A30', backgroundColor:'rgba(255,122,48,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F3段階残存率（2回目→3回目）', data:vcF3StepTrend, borderColor:'#1E7A5C', backgroundColor:'rgba(30,122,92,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F4段階残存率（3回目→4回目）', data:vcF4StepTrend, borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,0.1)', tension:0.3, fill:false, pointRadius:5},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:100, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+
+// ===== 5-3-3. 初回定期注文月コホート：F2→F3→F4 段階別残存率 =====
+// コホート基準を「VCの初回定期注文（product_type='定期'を含む最初のVC注文）の月」に変更（アイテム新規＝初回購入月ではない）。
+// 母集団＝2024-04以降に初めて定期注文した顧客（それ以前にVCを都度で初購入していた人を含む）。5章M0とは一致しない。
+// F2以降は都度買い・定期便いずれでも「再購入」としてカウント（5-3章と同じ規則）。基準日2026-09-30。
+// 到達人数が0になった段階以降は右側打ち切りとしてnull（未確定＝ゼロ確定ではない）。
+const cohortVcTeikiFreqData = [
+  {m:'2024-05', m0:932, f2:808, f3:701, f4:608, f5:525, f6:450, f7:400, f8:350},
+  {m:'2024-06', m0:794, f2:688, f3:590, f4:501, f5:435, f6:376, f7:334, f8:294},
+  {m:'2024-07', m0:927, f2:802, f3:674, f4:564, f5:476, f6:409, f7:351, f8:309},
+  {m:'2024-08', m0:1135, f2:948, f3:794, f4:659, f5:561, f6:481, f7:418, f8:365},
+  {m:'2024-09', m0:664, f2:590, f3:493, f4:428, f5:365, f6:323, f7:294, f8:263},
+  {m:'2024-10', m0:520, f2:466, f3:403, f4:355, f5:306, f6:280, f7:241, f8:207},
+  {m:'2024-11', m0:483, f2:404, f3:342, f4:289, f5:266, f6:230, f7:209, f8:187},
+  {m:'2024-12', m0:487, f2:428, f3:377, f4:334, f5:295, f6:264, f7:222, f8:195},
+  {m:'2025-01', m0:705, f2:614, f3:527, f4:450, f5:393, f6:337, f7:296, f8:251},
+  {m:'2025-02', m0:573, f2:506, f3:431, f4:373, f5:308, f6:253, f7:228, f8:198},
+  {m:'2025-03', m0:744, f2:656, f3:554, f4:466, f5:397, f6:349, f7:296, f8:250},
+  {m:'2025-04', m0:683, f2:605, f3:527, f4:458, f5:392, f6:338, f7:283, f8:251},
+  {m:'2025-05', m0:812, f2:711, f3:614, f4:529, f5:444, f6:374, f7:311, f8:263},
+  {m:'2025-06', m0:940, f2:833, f3:703, f4:597, f5:497, f6:424, f7:338, f8:290},
+  {m:'2025-10', m0:672, f2:563, f3:447, f4:373, f5:297, f6:233, f7:189, f8:160},
+  {m:'2025-11', m0:469, f2:398, f3:328, f4:279, f5:219, f6:190, f7:154, f8:136},
+  {m:'2025-12', m0:372, f2:309, f3:260, f4:211, f5:158, f6:115, f7:90, f8:77},
+  {m:'2026-01', m0:475, f2:397, f3:312, f4:246, f5:201, f6:151, f7:116, f8:103},
+  {m:'2026-02', m0:445, f2:372, f3:288, f4:217, f5:161, f6:117, f7:100, f8:76},
+  {m:'2026-03', m0:402, f2:341, f3:264, f4:200, f5:150, f6:124, f7:79, f8:7},
+  {m:'2026-04', m0:386, f2:313, f3:221, f4:159, f5:119, f6:85, f7:10, f8:1},
+  {m:'2026-05', m0:474, f2:369, f3:249, f4:154, f5:112, f6:12, f7:1, f8:null},
+  {m:'2026-06', m0:427, f2:359, f3:223, f4:164, f5:9, f6:4, f7:null, f8:null},
+  {m:'2026-07 ★CYS開始(7/22)', m0:484, f2:340, f3:214, f4:12, f5:1, f6:1, f7:null, f8:null},
+  {m:'2026-08 ★CYS', m0:486, f2:256, f3:6, f4:1, f5:null, f6:null, f7:null, f8:null},
+  {m:'2026-09 ★CYS終了(9/17)', m0:369, f2:9, f3:null, f4:null, f5:null, f6:null, f7:null, f8:null, thisMonth:true},
+];
+buildStepFreqCohortTable('cohortVcTeikiFreqStep', cohortVcTeikiFreqData, ['F2','F3','F4','F5','F6','F7','F8'], '初回定期注文月', '初回定期顧客数');
+
+const vcTeikiMonths = cohortVcTeikiFreqData.map(r => r.m);
+const vcTeikiF2StepTrend = cohortVcTeikiFreqData.map(r => r.f2!==null ? Math.round(r.f2/r.m0*1000)/10 : null);
+const vcTeikiF3StepTrend = cohortVcTeikiFreqData.map(r => (r.f3!==null && r.f2) ? Math.round(r.f3/r.f2*1000)/10 : null);
+const vcTeikiF4StepTrend = cohortVcTeikiFreqData.map(r => (r.f4!==null && r.f3) ? Math.round(r.f4/r.f3*1000)/10 : null);
+new Chart(document.getElementById('chartCohortVCTeikiFreqStepTrend'), {
+  type: 'line',
+  data: {
+    labels: vcTeikiMonths,
+    datasets: [
+      {label:'F2段階残存率（初回定期→2回目）', data:vcTeikiF2StepTrend, borderColor:'#FF7A30', backgroundColor:'rgba(255,122,48,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F3段階残存率（2回目→3回目）', data:vcTeikiF3StepTrend, borderColor:'#1E7A5C', backgroundColor:'rgba(30,122,92,0.1)', tension:0.3, fill:false, pointRadius:5},
+      {label:'F4段階残存率（3回目→4回目）', data:vcTeikiF4StepTrend, borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,0.1)', tension:0.3, fill:false, pointRadius:5},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw !== null ? ctx.raw + '%' : '未確定'}`}} },
+    scales: { y: { min:0, max:100, ticks: { callback: v => v + '%' } }, x:{ ticks:{font:{size:9}} } }
+  }
+});
+// @@TAB2_JS_END@@
+
+</script>
+</body>
+</html>

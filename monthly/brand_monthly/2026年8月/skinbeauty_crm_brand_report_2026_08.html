@@ -142,6 +142,24 @@ th .ltv-all,th .ltv-brand{margin-left:2px;font-size:9px;padding:0 4px;font-weigh
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
 .tab-pane{display:none}
 .tab-pane.active{display:block}
+
+/* ===== チャート直下に「x軸の月」と列を揃えて並べる表（3章・3-1章） ===== */
+.ct-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 10px;margin-bottom:12px}
+.ct-scroll{overflow-x:auto}
+.ct-inner{min-width:var(--ct-min,940px)}
+.ct-canvas{position:relative;height:290px}
+.ct-canvas canvas{display:block;width:100% !important}
+table.ct-table{table-layout:fixed;width:100%;border:none;border-radius:0;background:transparent;margin:6px 0 0;font-size:11px;border-top:1px solid var(--border)}
+table.ct-table td{padding:5px 2px;text-align:center;font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums;border-bottom:1px solid #f5f5f4}
+table.ct-table td:first-child{text-align:left;font-weight:600;white-space:normal;line-height:1.35;padding:5px 6px 5px 4px}
+table.ct-table tr.sub td{color:var(--muted);font-size:10.5px}
+table.ct-table tr.sub td:first-child{font-weight:500}
+table.ct-table tr.tot td{background:#f5f5f4;font-weight:700;border-top:1px solid var(--border)}
+table.ct-table td.last{background:#fff3e0;font-weight:700}
+table.ct-table tr.tot td.last{background:#ffe8c7}
+table.ct-table tr td.up{color:var(--green);font-weight:600}
+table.ct-table tr td.dn{color:var(--red);font-weight:600}
+.ct-note{font-size:11px;color:var(--muted);line-height:1.7;margin:-4px 0 12px 2px}
 </style>
 </head>
 <body>
@@ -220,12 +238,37 @@ th .ltv-all,th .ltv-brand{margin-left:2px;font-size:9px;padding:0 4px;font-weigh
   <!-- ===== 3. 月次成長トレンド ===== -->
   <div class="stitle">3. 月次成長トレンド：NE出荷売上×定期ACTIVE件数<span class="ds-ne">NE出荷</span><span class="ds-shopify">Shopify</span></div>
   <div class="ssub">データソース：spic-core.public.ne_order_items（shop_id=17・ship_date基準・goods_tag='[Lypo-C SKINBEAUTY]'）／sandbox_nishimori.subscription_history_view（has_skinbeauty=1・月末スナップショット）</div>
-  <div class="chart-wrap"><canvas id="chartMonthlyRevActive"></canvas></div>
+  <div class="ct-card">
+    <div class="ct-scroll"><div class="ct-inner" style="--ct-min:1000px">
+      <div class="ct-canvas"><canvas id="chartMonthlyRevActive"></canvas></div>
+      <table class="ct-table" id="tblMonthlyRevActive"></table>
+    </div></div>
+  </div>
+  <div class="ct-note">表の出典：NE出荷売上＝spic-core.public.ne_order_items（shop_id=17・ship_date基準・cancel_date IS NULL・goods_tag='[Lypo-C SKINBEAUTY]'・税抜sales合計。千円未満四捨五入）／定期ACTIVE件数＝sandbox_nishimori.subscription_history_view（has_skinbeauty=1・ACTIVE・月末スナップショット。2025-12〜）。2025-10がSKINBEAUTY発売月（それ以前は売上なし）。BQ実行日2026-10-02。</div>
   <div class="monthly-insight">
     <div class="mi-title">💡 月次トレンド 考察</div>
     <ul>
-      <li><strong>2025-10の¥15.2M（発売初月特需）を除くと、以降は¥5〜7M帯で安定的に推移している。</strong>2026-08は¥6.53Mで前月比▲4.9%。7月の¥6.87M（体験会トライアル購入の影響で一時的に上振れ）から反落し、¥5〜7M帯という「定常水準」へ回帰した。</li>
+      <li><strong>2025-10の¥15.2M（発売初月特需）を除くと、以降は¥5〜7M帯で安定的に推移している。</strong>2026-08は¥6.53Mで前月比▲5.0%。7月の¥6.87M（体験会トライアル購入の影響で一時的に上振れ）から反落し、¥5〜7M帯という「定常水準」へ回帰した。</li>
       <li><strong>定期ACTIVEは2025-12の68件から2026-08の465件まで一貫して右肩上がりだが、月次の純増ペースは7月+17件→8月+6件へ明確に鈍化。</strong>NE出荷売上が定常水準に落ち着く一方、定期ACTIVEの伸びも鈍化しており、7-2章のグロスフロー分析が示すとおり新規優位フェーズの終焉が近づいている。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 3-1. 月次売上の内訳（新規／既存） ===== -->
+  <div class="stitle">3-1. 月次売上の内訳：新規売上（純粋新規／アイテム新規）× 既存売上<span class="ds-ne">NE出荷</span><span class="ds-shopify">Shopify受注</span></div>
+  <div class="ssub">データソース：売上＝spic-core.public.ne_order_items（shop_id=17・ship_date基準・cancel_date IS NULL・goods_tag='[Lypo-C SKINBEAUTY]'・税抜sales）。新規／既存の判定＝同テーブルのshop_order_idをspic-core.public.shopify_orders.nameに突合し<strong>注文単位</strong>で判定（4-2章と同一ロジック：顧客ごとの「SKINBEAUTY初回有償購入日」〔SKU 3009サンプル品・CYS0810除外〕当日の注文＝新規、それ以降の注文＝既存）。新規のうち、その日がShopifyでの生涯初の有償注文日と一致すれば<strong>純粋新規</strong>、それ以前に有償購入歴があれば<strong>アイテム新規</strong>（既存顧客によるSKINBEAUTY初購入）。月は出荷日基準のため3章の棒グラフと合計が一致。対象：2025-10（発売月）〜2026-08、BQ実行日2026-10-02。</div>
+  <div class="ct-card">
+    <div class="ct-scroll"><div class="ct-inner" style="--ct-min:940px">
+      <div class="ct-canvas"><canvas id="chartMonthlyRevBreakdown"></canvas></div>
+      <table class="ct-table" id="tblMonthlyRevBreakdown"></table>
+    </div></div>
+  </div>
+  <div class="ct-note">※Shopify受注側でSKINBEAUTYの有償購入注文として突合できなかった3行（2025-10：FIRST KIT ¥1,389／2025-12：ギフトセット¥6,232・定期セット¥20,160）は既存売上に含めている（影響は各月0.4%未満）。金額は円単位の実額（税抜）。</div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 売上内訳 考察</div>
+    <ul>
+      <li><strong>売上の土台は既存売上へ移っている。</strong>発売月2025-10は新規売上が85.1%（¥12.9M）を占める特需だったが、その後の新規比率は2025-11〜2026-02の4割前後から2026-03以降は2割前後へ低下。既存売上は2026-03〜06に¥4.5〜4.6M台で推移したのち、7月¥5.31M・8月¥5.39Mへ一段上昇し、8月は売上¥6.53Mの82.6%を占めた。</li>
+      <li><strong>8月の新規売上は¥1.13M（17.4%）で、2026年では4月（17.1%）に次ぐ低水準。</strong>内訳は純粋新規¥0.52M（7月¥0.91M比▲43.6%）、アイテム新規¥0.62M（同▲5.3%）。純粋新規が減った分が新規全体の減少につながっている（体験会トライアル購入が集中した7月との比較であり、4-2章の週次新規獲得数と合わせて確認すること）。</li>
+      <li>出荷日基準のため、月末の注文は翌月の出荷（＝翌月の新規売上）に計上される。月の境目の増減は、注文日基準の4章・4-2章の新規獲得数と併せて読むこと。</li>
     </ul>
   </div>
 
@@ -1223,6 +1266,31 @@ const brandMonths = ['2025-04','2025-05','2025-06','2025-07','2025-08','2025-09'
 const sbRev = [0,0,0,0,0,0,15.20,5.48,6.73,5.78,5.71,5.99,5.55,5.93,6.23,6.87,6.53];
 const sbActiveMonths = ['2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08'];
 const sbActive = [68,222,348,380,395,418,442,459,465];
+// 表用の実額（円・税抜）。2025-04〜09は発売前のため0。3章バー(sbRev)の元データ（BQ再集計で全月一致を確認済み）
+const sbRevYen = [0,0,0,0,0,0,15199769,5479460,6731466,5781104,5710888,5989724,5554628,5931336,6227900,6873432,6528724];
+
+// ---- チャート直下の月次表（x軸カテゴリと列を揃える共通ヘルパー） ----
+// 左軸領域（見出し列）と右軸領域の幅を固定(afterFit)し、表側も同じ幅にすることで、
+// チャートの各月スロットと表の各月セルが同じ縦位置に並ぶ。
+const CT_LABEL_W = 132;   // 左軸領域＝表の見出し列の幅(px)
+const CT_RIGHT_W = 64;    // 右軸領域（3章の定期ACTIVE軸）の幅(px)
+function ctFixAxisWidth(w){ return function(scale){ scale.width = w; }; }
+function ctYen(n){ return n>0 ? '¥'+n.toLocaleString('ja-JP') : '–'; }
+function ctSignPct(v){ return v===null ? {t:'–'} : (v<0 ? {t:'▲'+Math.abs(v).toFixed(1)+'%', cls:'dn'} : {t:'+'+v.toFixed(1)+'%', cls:'up'}); }
+function ctSignInt(v){ return v===null ? {t:'–'} : (v<0 ? {t:'▲'+Math.abs(v).toLocaleString('ja-JP'), cls:'dn'} : {t:'+'+v.toLocaleString('ja-JP'), cls:'up'}); }
+function renderCtTable(id, months, rows, rightW){
+  const tbl = document.getElementById(id); if(!tbl) return;
+  let h = '<colgroup><col style="width:'+CT_LABEL_W+'px">'+months.map(function(){return '<col>';}).join('')+(rightW?'<col style="width:'+rightW+'px">':'')+'</colgroup><tbody>';
+  rows.forEach(function(r){
+    h += '<tr'+(r.tr?' class="'+r.tr+'"':'')+'><td>'+(r.dot?'<span class="dot" style="background:'+r.dot+'"></span>':'')+r.label+'</td>';
+    r.cells.forEach(function(c,i){
+      const cls = ((c.cls||'')+(i===months.length-1?' last':'')).trim();
+      h += '<td'+(cls?' class="'+cls+'"':'')+'>'+c.t+'</td>';
+    });
+    h += (rightW?'<td></td>':'')+'</tr>';
+  });
+  tbl.innerHTML = h+'</tbody>';
+}
 new Chart(document.getElementById('chartMonthlyRevActive'), {
   data: {
     labels: brandMonths,
@@ -1235,11 +1303,73 @@ new Chart(document.getElementById('chartMonthlyRevActive'), {
     responsive:true, maintainAspectRatio:false,
     plugins:{ legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=> ctx.dataset.yAxisID==='y' ? `${ctx.dataset.label}: ¥${ctx.raw}M` : `${ctx.dataset.label}: ${ctx.raw}件` }} },
     scales:{
-      y:{ position:'left', title:{display:true,text:'¥M'}, ticks:{callback:v=>`¥${v}M`} },
-      y1:{ position:'right', title:{display:true,text:'件'}, grid:{drawOnChartArea:false}, ticks:{callback:v=>`${v}件`} }
+      x:{ ticks:{ autoSkip:false, maxRotation:0, font:{size:10} } },
+      y:{ position:'left', title:{display:true,text:'¥M'}, ticks:{callback:v=>`¥${v}M`}, afterFit: ctFixAxisWidth(CT_LABEL_W) },
+      y1:{ position:'right', title:{display:true,text:'件'}, grid:{drawOnChartArea:false}, ticks:{callback:v=>`${v}件`}, afterFit: ctFixAxisWidth(CT_RIGHT_W) }
     }
   }
 });
+// 3章：チャート直下の表（NE出荷売上・定期ACTIVE件数）
+(function(){
+  const rev = sbRevYen.map(v=> v>0 ? {t:Math.round(v/1000).toLocaleString('ja-JP')} : {t:'–'});
+  const revMom = sbRevYen.map((v,i)=> (i>0 && v>0 && sbRevYen[i-1]>0) ? ctSignPct((v/sbRevYen[i-1]-1)*100) : {t:'–'});
+  const act = brandMonths.map(m=>{ const i=sbActiveMonths.indexOf(m); return i>=0 ? {t:sbActive[i].toLocaleString('ja-JP')} : {t:'–'}; });
+  const actDiff = brandMonths.map(m=>{ const i=sbActiveMonths.indexOf(m); return i>0 ? ctSignInt(sbActive[i]-sbActive[i-1]) : {t:'–'}; });
+  renderCtTable('tblMonthlyRevActive', brandMonths, [
+    { label:'NE出荷売上<br>（千円・税抜）', dot:'#C4934A', tr:'tot', cells:rev },
+    { label:'前月比', tr:'sub', cells:revMom },
+    { label:'定期ACTIVE<br>（件・月末）', dot:'#1c1917', cells:act },
+    { label:'前月差（件）', tr:'sub', cells:actDiff }
+  ], CT_RIGHT_W);
+})();
+
+// ===== 3-1. 月次売上の内訳（純粋新規／アイテム新規／既存） =====
+// 出所：ne_order_items(shop_id=17,ship_date基準) × shopify_orders（注文単位判定・BQ実行日2026-10-02）。3章の月次売上と全月一致を確認済み。
+// 判定不能3行（2025-10 ¥1,389／2025-12 ¥26,392）は既存に含む。
+const brkMonths   = ['2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08'];
+const brkPureYen  = [2432920,939560,1224560,923166,836304,647300,377948,437984,927392,912940,515080];   // 純粋新規
+const brkItemYen  = [10501000,1607400,1770598,1258696,1571396,769008,569704,845944,762116,654900,619900];   // アイテム新規
+const brkExistYen = [2265849,2932500,3736308,3599242,3303188,4573416,4606976,4647408,4538392,5305592,5393744];   // 既存
+new Chart(document.getElementById('chartMonthlyRevBreakdown'), {
+  type:'bar',
+  data:{
+    labels: brkMonths,
+    datasets:[
+      { label:'既存売上（SKINBEAUTY 2回目以降の注文）', data: brkExistYen.map(v=>v/1e6), backgroundColor:'#78716c', stack:'rev' },
+      { label:'新規：アイテム新規（既存顧客のSKINBEAUTY初購入）', data: brkItemYen.map(v=>v/1e6), backgroundColor:'#e3c9a6', stack:'rev' },
+      { label:'新規：純粋新規（生涯初の有償購入）', data: brkPureYen.map(v=>v/1e6), backgroundColor:'#C4934A', stack:'rev' }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{ position:'bottom', reverse:true },
+      tooltip:{ callbacks:{
+        label:ctx=>`${ctx.dataset.label}: ¥${Math.round(ctx.raw*1e6).toLocaleString('ja-JP')}`,
+        footer:items=>`合計: ¥${Math.round(items.reduce((s,x)=>s+x.raw,0)*1e6).toLocaleString('ja-JP')}`
+      } }
+    },
+    scales:{
+      x:{ stacked:true, ticks:{ autoSkip:false, maxRotation:0, font:{size:10} } },
+      y:{ stacked:true, min:0, title:{display:true,text:'¥M'}, ticks:{callback:v=>`¥${v}M`}, afterFit: ctFixAxisWidth(CT_LABEL_W) }
+    }
+  }
+});
+(function(){
+  const n = brkMonths.length;
+  const sum = (a,i)=>a[i];
+  const newTot = brkMonths.map((m,i)=> brkPureYen[i]+brkItemYen[i]);
+  const tot    = brkMonths.map((m,i)=> newTot[i]+brkExistYen[i]);
+  renderCtTable('tblMonthlyRevBreakdown', brkMonths, [
+    { label:'純粋新規', dot:'#C4934A', cells:brkPureYen.map(v=>({t:ctYen(v)})) },
+    { label:'アイテム新規', dot:'#e3c9a6', cells:brkItemYen.map(v=>({t:ctYen(v)})) },
+    { label:'新規売上 計', cells:newTot.map(v=>({t:ctYen(v)})) },
+    { label:'既存売上', dot:'#78716c', cells:brkExistYen.map(v=>({t:ctYen(v)})) },
+    { label:'合計（NE出荷売上）', tr:'tot', cells:tot.map(v=>({t:ctYen(v)})) },
+    { label:'新規比率', tr:'sub', cells:newTot.map((v,i)=>({t:(v/tot[i]*100).toFixed(1)+'%'})) },
+    { label:'純粋新規比率', tr:'sub', cells:brkPureYen.map((v,i)=>({t:(v/tot[i]*100).toFixed(1)+'%'})) }
+  ], 0);
+})();
 
 // ===== 3-2. 週次売上 =====
 const weeklyRevWeeks = ['03/30','04/06','04/13','04/20','04/27','05/04','05/11','05/18','05/25','06/01','06/08','06/15','06/22','06/29','07/06','07/13','07/20','07/27','08/03','08/10','08/17','08/24','08/31'];

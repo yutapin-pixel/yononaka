@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lypo-C 月次分析レポート 2026-08 ｜ ⑥ まとめと提言</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--cdk:#5BC882;--cbd:#1B7A4A;
+  --ccera:#FF6B9D;--sb:#C4934A;--mi:#1E3A8A;--lypo:#FFB070;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0;max-width:1200px;margin:0 auto}
+.page-wrap{padding:24px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted)}
+.month-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 14px;border-radius:4px;font-size:13px;font-weight:700;margin-bottom:20px;letter-spacing:0.3px}
+.stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px;align-items:stretch}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+thead th.c{text-align:center}
+tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid #f5f5f4;font-size:13px}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td.c{text-align:center}
+tbody tr:last-child td{border-bottom:none}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.tot td{border-top:2px solid var(--border)}
+tr.ogs{background:#fff8f0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600}
+.badge.a{background:#dcfce7;color:#15803d}.badge.b{background:#fef2f2;color:#dc2626}
+.badge.n{background:#eff6ff;color:#2563eb}.badge.w{background:#fff8f0;color:#92400e}
+.monthly-insight{background:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0284c7;border-radius:8px;padding:14px 18px;margin-top:12px;margin-bottom:20px;font-size:13px;line-height:1.9}
+.monthly-insight .mi-title{font-weight:700;font-size:12px;margin-bottom:6px;color:#0369a1;display:flex;align-items:center;gap:6px}
+.monthly-insight ul{padding-left:18px}.monthly-insight li{margin-bottom:5px}
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.9}
+.notes .nt{font-weight:700;font-size:12px;margin-bottom:6px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:4px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;position:relative;height:290px}
+.chart-wrap canvas{display:block;width:100% !important}
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;overflow-x:auto}
+.tab-btn{background:none;border:none;padding:10px 18px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.cohort-wrap{overflow-x:auto;margin-bottom:12px}
+.cohort-table{border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:900px}
+.cohort-table th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cohort-table th:first-child{text-align:left;min-width:90px}
+.cohort-table td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11px;line-height:1.4}
+.cohort-table td:first-child{text-align:left;font-weight:500;padding:5px 10px;font-size:12px}
+.cohort-table tr.ogs-row td:first-child{color:#92400e;font-weight:700}
+.cohort-table tr.highlight-row td{background:#fafafa}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.insight-card .ic-num{font-size:30px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:-1px}
+.insight-card .ic-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.insight-card .ic-body{font-size:13px;color:var(--muted);line-height:1.7}
+.insight-card.positive .ic-num{color:var(--green)}
+.insight-card.negative .ic-num{color:var(--red)}
+.insight-card.warning .ic-num{color:#f59e0b}
+.crm-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px}
+.crm-card .crm-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.crm-card .crm-priority{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.crm-card .crm-priority.p1{background:#fef2f2;color:#dc2626}
+.crm-card .crm-priority.p2{background:#fff8f0;color:#92400e}
+.crm-card .crm-priority.p3{background:#eff6ff;color:#2563eb}
+.crm-card .crm-title{font-size:14px;font-weight:700}
+.crm-card .crm-body{font-size:13px;color:var(--muted);line-height:1.7}
+.crm-card .crm-kpi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:500}
+.crm-card .crm-update{font-size:11px;margin-top:6px;padding:4px 8px;background:#f0fdf4;border-radius:4px;color:#15803d;font-weight:500}
+.kpi-change{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;margin-left:6px}
+.kpi-change.up{background:#dcfce7;color:#15803d}
+.kpi-change.dn{background:#fef2f2;color:#dc2626}
+.kpi-change.flat{background:#f5f5f4;color:#78716c}
+.analysis{border-radius:8px;margin:10px 0 20px;overflow:hidden;font-size:13px;line-height:1.8}
+.analysis-head{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.analysis-body{padding:12px 16px 14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.an-col{padding:0 14px;border-right:1px solid rgba(0,0,0,0.07)}
+.an-col:first-child{padding-left:0}
+.an-col:last-child{border-right:none;padding-right:0}
+.an-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;opacity:0.7}
+.an-text{font-size:12.5px;line-height:1.75}
+.an-text strong{font-weight:700}
+.analysis.blue{background:#eff6ff;border:1px solid #bfdbfe}
+.analysis.blue .analysis-head{background:#dbeafe;color:#1e40af}
+.analysis.blue .an-col{color:#1e3a8a}
+.analysis.green{background:#f0fdf4;border:1px solid #bbf7d0}
+.analysis.green .analysis-head{background:#dcfce7;color:#14532d}
+.analysis.green .an-col{color:#166534}
+.analysis.orange{background:#fff7ed;border:1px solid #fed7aa}
+.analysis.orange .analysis-head{background:#ffedd5;color:#7c2d12}
+.analysis.orange .an-col{color:#9a3412}
+.teiki-funnel{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.teiki-stage{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.teiki-stage .ts-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:4px}
+.teiki-stage .ts-count{font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.teiki-stage .ts-ltv{font-size:11px;color:var(--muted);margin-top:2px}
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ship{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-mixed{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f8fafc;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-ship,.sc .lb .ds-order,.sc .lb .ds-mixed{font-size:9px;padding:1px 5px;margin-left:3px}
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-snap{font-size:9px;padding:1px 5px;margin-left:3px}
+.ds-adebis{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-click{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-adebis,.sc .lb .ds-click{font-size:9px;padding:1px 5px;margin-left:3px}
+.adebis-rank{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-right:4px;flex-shrink:0}
+.adebis-rank.r1{background:#f59e0b;color:#fff}
+.adebis-rank.r2{background:#9ca3af;color:#fff}
+.adebis-rank.r3{background:#b45309;color:#fff}
+.adebis-rank.rx{background:#f3f4f6;color:#6b7280}
+.adebis-warn{font-size:10px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.adebis-new{font-size:10px;background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.cvr-high{color:#15803d;font-weight:700}
+.cvr-mid{color:#92400e}
+.cvr-low{color:#9ca3af}
+td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-all;line-height:1.4}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .analysis-body{grid-template-columns:1fr}
+  .an-col{border-right:none;border-bottom:1px solid rgba(0,0,0,0.07);padding:8px 0;margin:0}
+  .an-col:last-child{border-bottom:none}
+  .teiki-funnel{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ===== tab6 (まとめと提言) 固有CSS ===== */
+/* 総評セクション */
+.summary-section{margin-bottom:40px}
+.summary-header{display:flex;align-items:baseline;gap:10px;margin:28px 0 6px}
+.summary-header-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.summary-header-title::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.summary-header-badge{font-size:12px;font-weight:400;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:3px;margin-left:8px}
+.summary-verdict{background:#1c1917;border-radius:10px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.summary-verdict-icon{font-size:22px;flex-shrink:0}
+.summary-verdict-text{font-size:13.5px;font-weight:600;color:#fff;line-height:1.65;letter-spacing:0.1px}
+.summary-verdict-text em{font-style:normal;color:#FFB070}
+.finding-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.finding-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.finding-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.finding-card.fc-green::before{background:#16a34a}
+.finding-card.fc-red::before{background:#dc2626}
+.finding-card.fc-amber::before{background:#f59e0b}
+.finding-card.fc-orange::before{background:var(--accent)}
+.finding-card.fc-blue::before{background:#2563eb}
+.finding-card.fc-slate::before{background:#64748b}
+.fc-index{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.fc-metric{font-size:26px;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.finding-card.fc-green .fc-metric{color:#16a34a}
+.finding-card.fc-red .fc-metric{color:#dc2626}
+.finding-card.fc-amber .fc-metric{color:#d97706}
+.finding-card.fc-orange .fc-metric{color:var(--accent)}
+.finding-card.fc-blue .fc-metric{color:#2563eb}
+.finding-card.fc-slate .fc-metric{color:#475569}
+.fc-title{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.4}
+.fc-body{font-size:12px;color:var(--muted);line-height:1.75;flex:1}
+.fc-body strong{color:var(--text)}
+.fc-insight{margin-top:4px;padding:6px 10px;border-radius:5px;font-size:11.5px;font-weight:600;line-height:1.5}
+.finding-card.fc-green .fc-insight{background:#f0fdf4;color:#15803d}
+.finding-card.fc-red .fc-insight{background:#fff5f5;color:#dc2626}
+.finding-card.fc-amber .fc-insight{background:#fffbeb;color:#92400e}
+.finding-card.fc-orange .fc-insight{background:#fff8f0;color:#c2410c}
+.finding-card.fc-blue .fc-insight{background:#eff6ff;color:#1e40af}
+.finding-card.fc-slate .fc-insight{background:#f8fafc;color:#475569}
+/* スコアカード */
+.scorecard-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px}
+.sc-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.sc-item-axis{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.sc-item-label{font-size:11.5px;font-weight:600;color:var(--text);line-height:1.35}
+.sc-item-value{font-size:17px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-top:2px}
+.sc-item-sub{font-size:10.5px;color:var(--muted);line-height:1.5}
+.sc-item-rationale{font-size:10.5px;color:var(--muted);line-height:1.55;margin-top:2px;border-top:1px solid var(--border);padding-top:5px}
+.sc-item-verdict{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;width:fit-content;margin-top:2px}
+.sc-v-ok{background:#dcfce7;color:#15803d}
+.sc-v-warn{background:#fff7ed;color:#c2410c}
+.sc-v-bad{background:#fff5f5;color:#dc2626}
+.sc-v-ref{background:#eff6ff;color:#1e40af}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .finding-grid{grid-template-columns:1fr}
+  .scorecard-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ===== タブ固有CSS（tab2〜tab7） ===== */
+/* ===== VC/C+D フロー分析 統合セクション 追加CSS ===== */
+.flow-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px}
+.flow-kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.flow-kpi .lb{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.03em;margin-bottom:6px}
+.flow-kpi .vl{font-size:24px;font-weight:700;letter-spacing:-0.02em}
+.flow-kpi .sb{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+.flow-group-label{font-size:12px;font-weight:700;color:var(--muted);margin:18px 0 8px;padding-left:2px}
+.th-vc{background:#fff3e0 !important;color:#c2410c}
+.th-cd{background:#f0fdf4 !important;color:#166534}
+.th-ccera{background:#fdf2f8 !important;color:#9d174d}
+.th-mi{background:#eff6ff !important;color:#1e40af}
+.th-sb{background:#fefce8 !important;color:#92400e}
+.flow-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:8px}
+.flow-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px}
+.flow-label{width:110px;font-weight:600;text-align:right;flex-shrink:0}
+.flow-bar-wrap{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.flow-bar{height:24px;border-radius:5px;min-width:4px;flex-shrink:0}
+.flow-num{font-size:12.5px;color:var(--text);white-space:nowrap;font-weight:600}
+.flow-num .pct{color:var(--muted);font-weight:400;margin-left:4px}
+.frozen-divider{display:flex;align-items:center;gap:14px;margin:44px 0 28px}
+.frozen-divider::before,.frozen-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.frozen-divider .fd-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#78716c;background:#f5f5f4;border:1px solid var(--border);padding:5px 14px;border-radius:99px;white-space:nowrap}
+.frozen-section{opacity:0.92}
+.frozen-note{font-size:11.5px;color:var(--muted);background:#f5f5f4;border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:18px;line-height:1.7}
+@media(max-width:768px){
+  .flow-kpi-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<div class="hdr">
+  <h1>🔬 Lypo-C 月次分析レポート</h1>
+  <div class="meta">データ取得：2026年9月1日 ｜ 売上：NE受注（shop_id=17）出荷基準 ｜ 顧客：Shopify受注基準（sandbox_nishimori.shopify_customer_master・snapshot 2026-09-01）｜ 定期：sandbox_nishimori.subscription_history_view（snapshot_ym='2026-08'・spic-core側は月次バッチ未反映のため直接参照）</div>
+</div>
+<div class="month-badge">📅 2026年8月度</div>
+
+<div class="tab-nav" style="overflow-x:auto;white-space:nowrap">
+  <button class="tab-btn active" onclick="void(0)">⑥ まとめと提言</button>
+  <span style="font-size:11px;color:#9a9088;padding:10px 14px;display:inline-block">⚠️ part ファイル（更新7番目）― merge_monthly.py で結合後に noindex 確認</span>
+</div>
+
+<div id="tab6" class="tab-pane active">
+
+  <!-- ===== 前月比売上差分分析 ===== -->
+  <div class="stitle">2026年8月度 前月比 売上差分分析<span class="ds-ne">NE</span><span class="ds-ship">出荷</span><span class="ds-order">受注</span><span style="font-size:12px;font-weight:400;background:#fef2f2;color:#dc2626;padding:2px 7px;border-radius:3px;margin-left:8px">出荷▲¥14.7M（▲6.3%）/ 受注▲¥12.0M（▲5.2%）── 7月の反発から一転して全ブランド減速</span></div>
+
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-left:4px solid #dc2626;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;line-height:1.9">
+    <div style="font-weight:700;font-size:12px;margin-bottom:8px;color:#dc2626">
+      📉 NE出荷：8月¥220.3M vs 7月¥235.0M → <strong style="color:#dc2626">▲¥14.7M（▲6.3%）</strong>　
+      NE受注：8月¥219.9M vs 7月¥231.9M → <strong style="color:#dc2626">▲¥12.0M（▲5.2%）</strong>
+    </div>
+    <ul style="padding-left:18px">
+      <li><strong>要因① CTC（C+Cera）・MINERALion2606の2施策終了に伴う反動減が主因：</strong>C+Cera▲31.3%（¥23.6M→¥16.2M）・MINERALion▲30.2%（¥7.6M→¥5.3M）。タブ⑤で確認された広告出稿急減（獲得_Cera▲89.5%・獲得_MION▲61.7%）が、施策終了の1ヶ月遅れで出荷面にも波及した。VC▲1.8%・C+D▲2.3%は軽微な調整にとどまり、主力2ブランドの落ち込みは限定的。</li>
+      <li><strong>要因② 新ブランド3者計¥28.0M（前月¥38.0M・過去最高から▲26.3%）が全体減速の中心：</strong>7月の過去最高更新（施策終了に伴う駆け込み出荷）の反動が明確に出た。単月の急伸が「地力」ではなく「施策依存」だったことが裏付けられた。</li>
+      <li><strong>VC+C+D売上シェアは87.3%（前月83.8%→+3.5pt）へ反転上昇。</strong>ただしこれは「ポートフォリオ分散の後退」ではなく「新ブランド急減速による一時的な巻き戻し」と解釈すべき点に注意——主力ブランド自体（VC▲1.8%・C+D▲2.3%）は伸びていない。</li>
+      <li><strong>受注▲5.2%が出荷▲6.3%をやや上回るペースで減少：</strong>8月受注¥219.9M・出荷¥220.3Mとほぼ拮抗しており、7月に見られた「受注が出荷を上回る繰越発生」の構図は解消。需要・供給とも同水準で縮小した月。</li>
+      <li><strong>定期便面でも同時期に減速が確認された：</strong>全社定期ACTIVE純増が+190件（7月）→+7件（8月）へ急減速し、C+Ceraは統計開始以来初のACTIVE純減（▲39件）。売上・定期便の両面でCTC・MINERALion2606施策終了の反動が定量的に一致した。</li>
+      <li><strong>総括：</strong>8月は「7月の施策終了ラッシュによる駆け込み出荷」の反動が全ブランド・全指標に及んだ月。C+Cera・MINERALionの新ブランド2社が減速の中心である一方、VC・C+Dの主力2ブランドも横ばい〜微減であり、8月は「新ブランドの反動減」＋「主力ブランドの伸び悩み」が重なった総崩れの月と総括できる。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 月次総評：重要発見 ===== -->
+  <div class="summary-section">
+    <div class="summary-header">
+      <div class="summary-header-title">
+        2026年8月度 月次総評 ─ 重要発見
+        <span class="summary-header-badge">全タブデータを統合した重要発見</span>
+      </div>
+    </div>
+
+    <!-- 総括コールアウト -->
+    <div class="summary-verdict">
+      <div class="summary-verdict-icon">📌</div>
+      <div class="summary-verdict-text">
+        今月を一言で：<em>「7月の“歴代最高”は施策依存だったことが検算された月。CYS施策はOGS・MINERALion施策と同様、送料¥220のみ負担という低ハードルオファーで新規獲得の“量”を狙う施策であり、CVR悪化・コホート品質の目減りはその成功に伴う織り込み済みのトレードオフ。むしろ反省すべきは、そのトレードオフを払ってなお新規獲得数がOGS規模には届かず、量の飛躍が実現できなかった点にある。一方でF2転換率はOGSより高く、獲得できた顧客の質自体はOGSより優れている——“量が伸び切らなかった”ことが8月最大の課題。」</em>
+      </div>
+    </div>
+
+    <!-- 発見カード 6枚 -->
+    <div class="finding-grid">
+
+      <!-- 発見① -->
+      <div class="finding-card fc-red">
+        <div class="fc-index">発見 ①  ─  成長　<span class="ds-ne" style="font-size:9px">NE</span><span class="ds-ship" style="font-size:9px">出荷</span></div>
+        <div class="fc-metric">¥220.3M</div>
+        <div class="fc-title">7月の全ブランド増収から一転、CTC・MINERALion2606施策終了の反動で全ブランド減速。</div>
+        <div class="fc-body">
+          NE出荷¥220.3M（前月比▲6.3%・¥235.0M→¥220.3M）。C+Cera▲31.3%（¥16.2M）・MINERALion▲30.2%（¥5.3M）の新ブランド2社が減速を牽引し、VC▲1.8%・C+D▲2.3%も軽微ながら揃って減速した。新ブランド3者計¥28.0M（過去最高¥38.0Mから▲26.3%）。7月の増収が「地力向上」ではなく「施策終了駆け込み」だったことが検算された形。
+        </div>
+        <div class="fc-insight">→ VC+C+Dシェアは87.3%（+3.5pt）へ反転上昇したが、これは新ブランド急減速による一時的な巻き戻しであり、主力ブランド自体の伸びを意味しない点に要注意。</div>
+      </div>
+
+      <!-- 発見② -->
+      <div class="finding-card fc-red">
+        <div class="fc-index">発見 ②  ─  定期便ACTIVE　<span class="ds-snap" style="font-size:9px">月末スナップ</span></div>
+        <div class="fc-metric">+7件</div>
+        <div class="fc-title">全社定期ACTIVE純増がほぼ停止。C+Ceraは統計開始以来初のACTIVE純減に転落。</div>
+        <div class="fc-body">
+          全社ACTIVE 22,258件（前月比+7件）と、7月の2ヶ月ぶり純増（+190件）から一転してほぼ横ばいに失速。新規アクティブのグロス件数が1,558件→1,419件（▲139件）へ急減し、PAUSE・CANCELLED発生も1,364件→1,427件（+63件）へ増加。<strong>C+Ceraは統計開始以来初のACTIVE純減（1,150→1,111件・▲39件）</strong>、停止率も15.6%→19.6%へ上昇。MINERALionは+22件（642→664件）で純増を維持したが、新規アクティブが162件→78件へ急減（過去最大の減速）しており、9月度に純減転化するリスクがある。
+        </div>
+        <div class="fc-insight">→ CTC（C+Cera）・MINERALion2606施策終了に伴う広告出稿の急減（獲得_Cera▲89.5%・獲得_MION▲61.7%）が、施策終了の1ヶ月遅れで定期便獲得力にも波及したことが定量的に確認された。</div>
+      </div>
+
+      <!-- 発見③ -->
+      <div class="finding-card fc-amber">
+        <div class="fc-index">発見 ③  ─  広告効率　<span class="ds-adebis" style="font-size:9px">Adebis</span></div>
+        <div class="fc-metric">CVR 2.53%</div>
+        <div class="fc-title">CVR悪化はOGS型の低ハードル獲得施策に伴う想定内のトレードオフ。問題は「量」が伸びなかったこと。</div>
+        <div class="fc-body">
+          Adebis総クリック118,258（前月比+25.5%）・総CV 2,996（▲35.2%）・CVR 2.53%（前月4.91%から▲2.38pt）。「獲得_商品特定なし」カテゴリが10,056→57,416クリック（+471%）に急拡大したが、CVRは2.51%→0.96%に低下。CYS施策は送料¥220のみ負担という低ハードルオファーで幅広い層にリーチする「量」重視の獲得施策であり、OGS施策の時と同様にCVRが希薄化するのは織り込み済みの構造。加えてCTC・MINERALion2606施策終了に伴う高効率カテゴリの消失（獲得_Cera▲89.5%・獲得_MION▲61.7%）もCV総数減少に寄与。
+        </div>
+        <div class="fc-insight">→ 本質的な課題はCVRの希薄化そのものではなく、そのトレードオフを払ってもなお新規獲得数（1,700人・目標比▲12.7%）がOGS規模の伸びに届かなかったこと。「量を作りきれなかった」点が最大の反省材料。</div>
+      </div>
+
+      <!-- 発見④ -->
+      <div class="finding-card fc-amber">
+        <div class="fc-index">発見 ④  ─  コホート品質　<span class="ds-shopify" style="font-size:9px">Shopify</span></div>
+        <div class="fc-metric">28.8%</div>
+        <div class="fc-title">2026年7月コホートM+1継続率は直近1年最低だが、OGS規模の毀損には至らず。</div>
+        <div class="fc-body">
+          2026年7月コホートのM+1継続率が<strong>28.8%（確定・561/1,947人）</strong>で、前月（2026-06：35.5%）から▲6.7ptの低下。通常ベンチマーク（33〜42%）を下回る直近1年最低水準ではあるが、OGSのような特需期に見られる大規模な質の毀損（同コホートの全体M+12がわずか3.6%まで沈む水準）には至っていない。CYS施策は低ハードルオファーで新規母数を広げる設計上、一定の継続率低下は避けられないトレードオフであり、今回はその範囲内の「多少の目減り」にとどまった。アイテム別ではSKINBEAUTY14.1%（体験会由来トライアル層）が相対的に深刻。FY2027累積4ヶ月平均は32.7%まで低下し、目標39.0%との差は▲6.3ptに拡大したためKGI③のバッジは「⚠要観察」から「🔴要アクション」に格上げした。
+        </div>
+        <div class="fc-insight">→ 継続率の目減り自体はCYS施策成功の裏返しとして想定内。むしろ課題は、そのトレードオフに見合うだけの新規獲得数の伸び（=OGS並みの規模）が実現できなかったことにある。2026年8月新規コホート（1,700人）のM+1が9月末に確定する。</div>
+      </div>
+
+      <!-- 発見⑤ -->
+      <div class="finding-card fc-blue">
+        <div class="fc-index">発見 ⑤  ─  LTV構造　<span class="ds-shopify" style="font-size:9px">Shopify</span></div>
+        <div class="fc-metric">+15.0%</div>
+        <div class="fc-title">C+Cera初回LTVが5ブランド中最大の伸び。一方クロス購買の月次増加は全ブランドで急減速。</div>
+        <div class="fc-body">
+          C+Cera初回LTVが¥23,964→¥27,566（+15.0%）と5ブランド中最大の伸び。タブ⑤で確定したCTC施策30日F2転換率22.8%（確定・下方修正）の効果が反映されている。一方でブランドクロス購買の月次トレンドは、VC+C+D+359人・C+Cera+164人・SKINBEAUTY+139人・MINERALion+186人と、いずれも7月（+456／+626／+456／+1,085）から大幅減速。VC通常LTVの伸びも+7.4%→+0.9%へ鈍化。総顧客数197,248人・平均LTV¥53,289（ほぼ横ばい）。上位14.8%（Tier6以上）の売上シェアは72.5%（前月72.2%）で3ヶ月連続の強化を継続。
+        </div>
+        <div class="fc-insight">→ C+CeraのLTV改善はCTC施策の確定効果として明るい材料。一方クロス購買急減速はMINERALionトライアル終了・SKINBEAUTY体験会反動一巡が主因で、7月の伸びが一過性だったことを裏付ける。</div>
+      </div>
+
+      <!-- 発見⑥ -->
+      <div class="finding-card fc-slate">
+        <div class="fc-index">発見 ⑥  ─  KGI総括　<span class="ds-shopify" style="font-size:9px">Shopify</span><span class="ds-snap" style="font-size:9px">月末スナップ</span></div>
+        <div class="fc-metric">83.9%</div>
+        <div class="fc-title">KGI⑧月次新規顧客が目標未達に反転。8指標中5指標が悪化・要アクションに。</div>
+        <div class="fc-body">
+          KGI⑧月次新規顧客（0円除外・shopify_orders直接算出）は1,426人で、目標1,700人比▲274人（83.9%）に反落。7月の初達成（1,731人・101.8%）が一時的な押し上げだったことを裏付けた。KGI⑤定期便ACTIVE純増もほぼ停止（+7件）し、必要月次純増ペースが+677件/月へ上昇。8指標中、悪化・要アクション系が5（①②③④⑤の一部）、改善系が2（⑥⑦）、反転悪化が1（⑧）という総合スコアカードで、8月は「7月の反動減が広範囲に及んだ月」との総括が妥当。
+        </div>
+        <div class="fc-insight">→ KGI④公式EC比率・KGI⑦AOVの「改善」は、自社EC自体の減速がモール（特にAmazon▲26.0%）の減速でより緩和されて見えているだけの側面がある点に留意。</div>
+      </div>
+
+    </div><!-- /finding-grid -->
+  </div><!-- /summary-section -->
+
+  <!-- ===== 事業健全性スコアカード ===== -->
+  <div class="summary-header" style="margin-top:32px">
+    <div class="summary-header-title">
+      事業健全性スコアカード
+      <span class="ds-ne" style="margin-left:8px">NE</span><span class="ds-shopify">Shopify</span><span style="font-size:11px;color:var(--muted);margin-left:6px">売上=NE出荷 / 顧客・定期=Shopify受注</span>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin:-4px 0 14px 12px">各指標の「値」だけでなく「なぜその判定か」の根拠を1行で付記。</p>
+
+  <div class="scorecard-grid">
+
+    <div class="sc-item">
+      <div class="sc-item-axis">成長</div>
+      <div class="sc-item-label">月次出荷売上 前月比<span class="ds-ne" style="font-size:8px;margin-left:2px">NE</span><span class="ds-ship" style="font-size:8px">出荷</span></div>
+      <div class="sc-item-value" style="color:#dc2626">▲6.3%</div>
+      <div class="sc-item-sub">¥220.3M（YoY▲6.0%・2025-08比）</div>
+      <div class="sc-item-verdict sc-v-bad">⚠ 要観察</div>
+      <div class="sc-item-rationale">CTC・MINERALion2606施策終了の反動減が主因。C+Cera▲31.3%・MINERALion▲30.2%が牽引し、VC・C+Dも軽微に減速。</div>
+    </div>
+
+    <div class="sc-item">
+      <div class="sc-item-axis">成長</div>
+      <div class="sc-item-label">月次新規顧客獲得数<span class="ds-shopify" style="font-size:8px;margin-left:2px">Shopify</span></div>
+      <div class="sc-item-value" style="color:#dc2626">1,700人</div>
+      <div class="sc-item-sub">目標1,900人/月（FY2027）比▲12.7%</div>
+      <div class="sc-item-verdict sc-v-warn">△ 要観察</div>
+      <div class="sc-item-rationale">7月1,948人からの反動。KGI⑧（0円除外算出）では1,426人・目標比83.9%とさらに厳しい水準で、7月の初達成が一時的な押し上げだったと確認。</div>
+    </div>
+
+    <div class="sc-item">
+      <div class="sc-item-axis">品質</div>
+      <div class="sc-item-label">M+1継続率（2026-07確定）<span class="ds-shopify" style="font-size:8px;margin-left:2px">Shopify</span></div>
+      <div class="sc-item-value" style="color:#dc2626">28.8%</div>
+      <div class="sc-item-sub">FY2027目標39.0%・累積4ヶ月平均32.7%</div>
+      <div class="sc-item-verdict sc-v-bad">⚠ 要アクション</div>
+      <div class="sc-item-rationale">前月35.5%から▲6.7pt低下、直近1年最低だがOGS特需期ほどの毀損ではない。CYS施策（低ハードル獲得）成功に伴う想定内のトレードオフだが、目標39.0%との乖離拡大によりバッジを要アクションに格上げ。</div>
+    </div>
+
+    <div class="sc-item">
+      <div class="sc-item-axis">品質</div>
+      <div class="sc-item-label">リピート率（2回以上）<span class="ds-shopify" style="font-size:8px;margin-left:2px">Shopify</span></div>
+      <div class="sc-item-value" style="color:#16a34a">45.5%</div>
+      <div class="sc-item-sub">累計顧客数197,248人中（前月45.3%）</div>
+      <div class="sc-item-verdict sc-v-ok">○ 微改善</div>
+      <div class="sc-item-rationale">前月比+0.2ptで2回目転換施策の効果は継続的に積み上がっている。全体的な新規獲得力の鈍化とは独立して緩やかに改善。</div>
+    </div>
+
+    <div class="sc-item">
+      <div class="sc-item-axis">定期便</div>
+      <div class="sc-item-label">全社定期ACTIVE<span class="ds-snap" style="font-size:8px;margin-left:2px">月末スナップ</span></div>
+      <div class="sc-item-value" style="color:#dc2626">22,258件</div>
+      <div class="sc-item-sub">FY2027末目標27,000件（KGI⑤進捗52.6%）</div>
+      <div class="sc-item-verdict sc-v-bad">⚠ 要アクション</div>
+      <div class="sc-item-rationale">+7件で7月の+190件から急減速。必要月次純増ペースが+677件/月へ拡大（前月+594件からさらに上昇）。</div>
+    </div>
+
+    <div class="sc-item">
+      <div class="sc-item-axis">定期便</div>
+      <div class="sc-item-label">VC PAUSED件数<span class="ds-snap" style="font-size:8px;margin-left:2px">月末スナップ</span></div>
+      <div class="sc-item-value" style="color:#dc2626">21,169件</div>
+      <div class="sc-item-sub">前月比+301件（再開試算は6月度時点で凍結中）</div>
+      <div class="sc-item-verdict sc-v-bad">⚠ 要対処</div>
+      <div class="sc-item-rationale">ACTIVE純増がほぼ止まる中、PAUSEDの積み上がりが継続。再開施策の緊急性はむしろ高まっている。</div>
+    </div>
+
+    <div class="sc-item">
+      <div class="sc-item-axis">ポートフォリオ</div>
+      <div class="sc-item-label">VC+C+D 売上シェア<span class="ds-ne" style="font-size:8px;margin-left:2px">NE</span><span class="ds-ship" style="font-size:8px">出荷</span></div>
+      <div class="sc-item-value" style="color:#f59e0b">87.3%</div>
+      <div class="sc-item-sub">前月83.8%（+3.5pt）</div>
+      <div class="sc-item-verdict sc-v-warn">△ 留意</div>
+      <div class="sc-item-rationale">新ブランド3者の急減速（¥38.0M→¥28.0M・▲26.3%）による一時的な巻き戻しであり、主力ブランド自体の伸びを意味しない。</div>
+    </div>
+
+    <div class="sc-item">
+      <div class="sc-item-axis">ポートフォリオ</div>
+      <div class="sc-item-label">新ブランド3者計 月次出荷売上<span class="ds-ne" style="font-size:8px;margin-left:2px">NE</span><span class="ds-ship" style="font-size:8px">出荷</span></div>
+      <div class="sc-item-value" style="color:var(--ccera)">¥28.0M</div>
+      <div class="sc-item-sub">C+Cera¥16.2M・SB非公表・MION¥5.3M</div>
+      <div class="sc-item-verdict sc-v-bad">⚠ 要観察</div>
+      <div class="sc-item-rationale">前月¥38.0M（過去最高）から▲26.3%の急減速。CTC・MINERALion2606施策終了の反動減が施策終了1ヶ月遅れで出荷に波及。</div>
+    </div>
+
+    <div class="sc-item">
+      <div class="sc-item-axis">LTV構造</div>
+      <div class="sc-item-label">上位14.8%の売上シェア<span class="ds-shopify" style="font-size:8px;margin-left:2px">Shopify</span></div>
+      <div class="sc-item-value" style="color:#16a34a">72.5%</div>
+      <div class="sc-item-sub">29,125人（Tier6以上）・前月72.2%</div>
+      <div class="sc-item-verdict sc-v-ok">○ 安定強化</div>
+      <div class="sc-item-rationale">前月72.2%→+0.3ptで3ヶ月連続の強化。Tier0（低LTV層）平均も¥427→¥428でほぼ横ばいに落ち着いた。</div>
+    </div>
+
+    <div class="sc-item">
+      <div class="sc-item-axis">LTV構造</div>
+      <div class="sc-item-label">C+Cera初回顧客LTV成長率<span class="ds-shopify" style="font-size:8px;margin-left:2px">Shopify</span></div>
+      <div class="sc-item-value" style="color:#2563eb">+15.0%</div>
+      <div class="sc-item-sub">¥23,964→¥27,566・5ブランド中最大の伸び</div>
+      <div class="sc-item-verdict sc-v-ok">○ 特筆</div>
+      <div class="sc-item-rationale">CTC施策の30日F2転換率22.8%（確定）の効果が反映。一方クロス購買の月次増加数は全ブランドで大幅減速している点は要留意。</div>
+    </div>
+
+  </div><!-- /scorecard-grid -->
+
+  <!-- ===== CRM施策提言 ===== -->
+  <div class="stitle">CRM・プロモーション施策提言（2026年8月度 優先度更新）<span class="ds-shopify">Shopify</span><span class="ds-adebis">Adebis</span><span class="ds-snap">月末スナップ</span></div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p1">🔴 最高優先</span><span class="crm-title">① CYS施策の反省点は「質」ではなく「量」── OGS規模に届かなかった新規獲得を残り期間で最大化する</span></div>
+    <div class="crm-body">
+      CYS施策はOGS・MINERALion施策と同様、送料¥220のみ負担という低ハードルオファーで新規獲得の「量」を狙う施策であり、CVR悪化（4.91%→2.53%）・M+1継続率の目減り（28.8%）はその成功に伴う想定内のトレードオフ。実際、コホート品質の毀損度はOGS特需期ほどには至っておらず、<strong>むしろF2転換率はOGSより高く、獲得できた顧客の質自体はOGSより優れている</strong>と評価できる。真に反省すべきは、そのトレードオフを払ってもなお新規獲得数（1,700人・目標比▲12.7%）がOGS規模の伸びには届かず、「量」の飛躍を実現できなかったこと。CYS施策は9/17まで継続中であり、残り期間で獲得数そのものを最大化できるかが最重要課題。<br>
+      ・「獲得_商品特定なし」カテゴリ（+471%）は量の稼ぎ頭であり、CVR低下を理由に絞るのではなく、残り期間でのリーチ拡大余地（予算・クリエイティブ追加投下）を東急エージェンシーと検討<br>
+      ・CYS診断LP本体（EC_LP）経由の「登録後コンテンツ遷移」（CVR18.72%相当）など高CVR導線への送客比率を、量を維持したまま引き上げられないか設計を検討<br>
+      ・2026年8月新規コホート（1,700人）のM+1（9月末確定）とあわせ、9/17終了までの残り期間の獲得数（累計目標）を週次で進捗管理する
+    </div>
+    <div class="crm-kpi">📊 KPI：CYS施策終了（9/17）までの累計新規獲得数（OGS規模との対比で評価）・2026-08コホートM+1（トレードオフの許容範囲内かを確認）</div>
+    <div class="crm-update">📅 8月度新規：CVR・コホート品質の目減りは低ハードル獲得施策として想定内と整理。真の課題は新規獲得数がOGS規模に届かなかったことであり、残り期間での量の最大化に注力する。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p1">🔴 最高優先</span><span class="crm-title">② 定期便ACTIVE純増の急減速（+7件）── C+Cera初の純減・MINERALion9月純減リスク</span></div>
+    <div class="crm-body">
+      全社ACTIVE純増が7月+190件から8月+7件へ急減速。<strong>C+Ceraは統計開始以来初のACTIVE純減（1,150→1,111件・▲39件、停止率19.6%）</strong>に転落し、<strong>MINERALionは新規アクティブが162件→78件へ過去最大の減速</strong>となり9月度に純減転化するリスクがある。CTC・MINERALion2606施策終了に伴う広告出稿急減（獲得_Cera▲89.5%・獲得_MION▲61.7%）が施策終了の1ヶ月遅れで定期便獲得力にも波及したことが定量的に裏付けられた。<br>
+      ・タブ⑤引き継ぎ事項にある「秋の次弾施策（CTW型・MINERALion施策②型）」の設計を9月中に宮崎BM・仲宗根BMと合意<br>
+      ・C+Cera停止率19.6%（前月15.6%）への早期対処（停止理由の内訳分析・早期離脱者への再開オファー検討）<br>
+      ・MINERALion平均定期単価下落（¥10,631→¥10,398・▲2.2%）の要因（2606施策由来の低単価コース顧客の定着）を踏まえたアップセル設計
+    </div>
+    <div class="crm-kpi">📊 KPI：C+Cera・MINERALionの9月度ACTIVE純増回復（純減脱却）・秋施策の設計完了（9月中）</div>
+    <div class="crm-update">📅 8月度新規：C+Cera・MINERALionともに新規契約の急減速が確認され、次弾施策の設計着手が急務となった。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p1">🔴 最高優先</span><span class="crm-title">③ VC PAUSED 21,169件（+301件）── 再開試算が2ヶ月以上前で凍結したまま拡大継続</span></div>
+    <div class="crm-body">
+      全社ACTIVE純増がほぼ止まる中、VC PAUSED件数の積み上がりが継続（前月比+301件）。再開インパクト試算は2026年6月度時点で凍結中・数値未更新のままであり、ステップメール設計も複数月にわたり未着手の状態が続いている。必要月次純増ペースが+677件/月へ拡大した今、PAUSED再開は依然として唯一の即効性ある打ち手である。<br>
+      ・PAUSE開始後30/60/90日のステップメール（消費ペース診断→コース変更提案を先に提示）の設計着手<br>
+      ・復帰オファー（次回1,000円OFF・コースアップグレード割引）の検討再開<br>
+      ・6月度時点の古い試算（月3%再開・約+¥8.6M/月）を最新のPAUSED件数（21,169件）で再計算
+    </div>
+    <div class="crm-kpi">📊 KPI：VC PAUSED月次再開率3%（最新件数ベースで再試算）・ステップメール設計の9月中の着手</div>
+    <div class="crm-update">📅 8月度更新：PAUSEDが前月比+301件でさらに拡大。再開施策の緊急性は一段と高まっているが、試算・設計とも数ヶ月間停滞したままである。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p2">🟠 高優先</span><span class="crm-title">④ KGI⑧月次新規顧客が目標未達（83.9%）に反転 ── CYSトライアル無償獲得の評価設計</span></div>
+    <div class="crm-body">
+      KGI⑧月次新規顧客（0円除外・shopify_orders直接算出）は1,426人・目標1,700人比▲274人（83.9%）に反落。7月の初達成（1,731人・101.8%）が一時的な押し上げだったことが裏付けられた。一方でタブ①の新規発見として、<strong>無償新規急増（304人→413人）の主因がCYSキャンペーン向けVC/C+D 3包トライアル（SKU 3031-cp・3023-cp、送料¥220のみ負担・409人）</strong>と判明し、従来のOGS・MINERALionトライアルに続く3例目の無償獲得パターンとして今後も継続的に発生しうる。<br>
+      ・CYSトライアル409人の本商品・定期便への引き上げ率を計測するトラッキング設計（OGS型・MINERALion型と同様の枠組みで）<br>
+      ・KGI⑧（有償のみ・0円除外）とタブ①1,700人（v10定義・0円含む）の2指標の使い分けを社内で明確化<br>
+      ・`reference_customer_analysis_queries.md`または`reference_campaign_history.md`へのCYSトライアルパターン追記（ナレッジ化）
+    </div>
+    <div class="crm-kpi">📊 KPI：CYSトライアル409人の引き上げ率確定（本商品・定期転換）・KGI⑧の9月度回復（目標1,700人）</div>
+    <div class="crm-update">📅 8月度新規：CYSトライアルが3例目の無償獲得パターンとして定着。KGI⑧は7月の初達成の反動で目標未達に反転した。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p2">🟠 高優先</span><span class="crm-title">⑤ SKINBEAUTY「オンライン体験会」引き上げ率9.6%が確定 ── 額面評価の見直しと次施策への反映</span></div>
+    <div class="crm-body">
+      前月まで「計測設計を8月に確立」としていたSKINBEAUTYオンライン体験会の引き上げ率が<strong>9.6%（31人/322人）で確定</strong>（クーポン期間終了8/7済み）。応募者322人全員がhas_skinbeauty=1（既存Lypo-C顧客への確実なクロスセル）だが、他施策（CTW型18.8%・MINERALion型10.9%）と比較すると低めの水準。タブ③で判明したSKINBEAUTY 2026-07コホートM+1が14.1%（通常25〜35%を大きく下回る）という深刻な結果とも整合しており、体験会由来トライアル層は「量は増えたが質が低かった」ことが複数の指標で裏付けられた。<br>
+      ・9.6%という確定値を踏まえ、体験会施策を「額面通りの成果」として評価しない運用を継続<br>
+      ・次回体験会施策（実施される場合）の設計を、CTW型・MINERALion型の序列を参考に見直し<br>
+      ・体験会参加者のうち引き上げに至らなかった290人（322人-31人）へのフォローCRM検討
+    </div>
+    <div class="crm-kpi">📊 KPI：次回体験会施策（実施時）の引き上げ率目標15%以上（CTW・MINERALion型の中間水準）</div>
+    <div class="crm-update">📅 8月度更新：引き上げ率9.6%で確定。タブ③のM+1継続率14.1%と合わせ、体験会由来トライアル層の質的課題が数値で確定した。</div>
+  </div>
+
+  <div class="crm-card">
+    <div class="crm-head"><span class="crm-priority p3">🔵 中優先</span><span class="crm-title">⑥ 定期継続7〜12回層への引き上げ施策（LTV+75.8%の閾値）・休眠復活の正常化維持</span></div>
+    <div class="crm-body">
+      定期継続7〜12回（¥146,910）は4〜6回（¥83,568）比+75.8%のLTV飛躍で「7回目」閾値の重要性は変わらず。定期顧客61,020人（前月60,254人）・有償顧客190,090人・LTV中央値¥13,636（ほぼ横ばい）・1回→2回転換でLTV+¥14,117（+3.7倍）。休眠顧客月次復活トレンドは8月は短期658人（前月804人・▲18.2%）・中期498人（前月761人）・長期418人（前月440人）と、7月の一時的な高まりから正常バンドへ回帰。定期再開率は短期38.9%・中期31.5%と前月より上昇（質の改善）、長期は3.8%に低下。<br>
+      ・4〜6回層（LTV¥83,568）→7回目突破に向けたCRM（依然として最高ROI帯）を継続<br>
+      ・休眠復活の質改善（短期・中期の再開率上昇）を踏まえ、短期・中期セグメントへの接触強化を優先<br>
+      ・長期休眠（再開率3.8%）は費用対効果が低いため、他セグメントへのリソース再配分を検討
+    </div>
+    <div class="crm-kpi">📊 KPI：定期継続7回超え率の維持・向上、休眠復活率（短期・中期）の正常バンド内での質改善継続</div>
+    <div class="crm-update">📅 8月度更新：休眠復活は7月の一時的な高まりから正常バンドへ回帰。7回目閾値の重要性は変わらず、4〜6回層への引き上げ施策は継続的な最優先ROI帯。</div>
+  </div>
+
+  <!-- ===== 来月確認指標 ===== -->
+  <div class="stitle">📊 2026年9月度レポートで確認すべき指標<span class="ds-ne">NE</span><span class="ds-shopify">Shopify</span></div>
+  <div class="notes">
+    <div class="nt">📌 次月モニタリングポイント（2026年9月度）</div>
+    <ul>
+      <li><strong>2026年8月コホートのM+1継続率（9月末確定）</strong> ─ 1,700人の翌月リピート率。目標：33%以上（561人以上）。7月コホート（28.8%）と同水準のトレードオフ内に収まるか、それとも許容範囲を超えて悪化するかを確認。</li>
+      <li><strong>CYS施策（〜9/17終了）の累計新規獲得数の着地確認</strong> ─ 残り期間でOGS規模に近づく獲得数を積み増せたか。EC_LP等の高CVR導線への送客比率引き上げが「量を減らさずに質を上げる」形で実現できたかもあわせて確認。</li>
+      <li><strong>C+Cera・MINERALionの9月度ACTIVE純増回復有無</strong> ─ C+Ceraは初の純減（▲39件）から回復するか、MINERALionは新規アクティブ急減（78件）を受けて9月に純減転化するかを注視。秋の次弾施策の設計状況もあわせて確認。</li>
+      <li><strong>VC PAUSED再開施策の設計・実装着手有無</strong> ─ 21,169件（+301件）まで拡大し、試算は6月度時点で凍結中のまま。9月中の設計着手・試算更新を「必達」ラインとして坪井BMと合意する。</li>
+      <li><strong>KGI⑧月次新規顧客の9月度回復有無</strong> ─ 8月1,426人（目標比83.9%）から目標1,700人への回復ペースを確認。CYSトライアル409人の引き上げ率トラッキング設計の進捗もあわせて確認する。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 総合考察 ===== -->
+  <div class="monthly-insight" style="margin-top:16px">
+    <div class="mi-title">💡 2026年8月度 総合考察（全タブ統合コメント）</div>
+    <ul>
+      <li><strong>8月の総評：「7月の“歴代最高”は施策依存だったことが検算された月。CYS施策のCVR・コホート品質の目減りは低ハードル獲得施策として想定内のトレードオフであり、真の反省点は新規獲得数がOGS規模の“量”に届かなかったことにある。」</strong>NE出荷¥220.3M（前月比▲6.3%・YoY▲6.0%）。CTC（C+Cera）・MINERALion2606の2施策終了に伴う反動減が、タブ⑤で確認された広告出稿急減（獲得_Cera▲89.5%・獲得_MION▲61.7%）の1ヶ月遅れで出荷・定期便の両面に波及した。</li>
+      <li><strong>新規獲得1,700人（Shopify受注・前月比▲12.7%）はKGI⑧（0円除外・1,426人・目標比83.9%）でも目標未達に反転し、7月の初達成が一時的な押し上げだったことが二重に裏付けられた。</strong>2026年7月コホートM+1継続率28.8%（直近1年最低・▲6.7pt）は、CYS施策（OGS・MINERALion施策と同系統の低ハードル獲得施策）成功に伴う想定内の目減りであり、OGS特需期ほどの毀損には至っていない。むしろF2転換率はOGSより良好で、獲得した顧客の質自体はOGSより上質と評価できる一方、量そのものがOGS規模に届かなかった点が最大の課題であり、KGI③バッジは目標乖離の拡大を理由に「🔴要アクション」に格上げした。</li>
+      <li><strong>定期ACTIVE純増が+190件（7月）→+7件（8月）へ急減速し、C+Ceraは統計開始以来初のACTIVE純減（▲39件）に転落。</strong>MINERALionも新規アクティブが過去最大の減速（78件）となり9月度の純減転化リスクを抱える。VC PAUSED 21,169件（+301件）への再開施策は試算が6月度時点で凍結したまま拡大が続いており、必要月次純増ペース+677件/月への上昇と合わせ、緊急性が一段と高まっている。</li>
+      <li><strong>LTV構造は明暗が分かれた月。</strong>上位14.8%（Tier6以上）の売上シェア72.5%（+0.3pt）で3ヶ月連続の強化を継続し、C+Cera初回LTV+15.0%（CTC効果・5ブランド中最大の伸び）という明るい材料がある一方、VC通常LTVの伸びは+7.4%→+0.9%へ大幅鈍化し、ブランドクロス購買の月次増加数も全ブランドで前月比大幅減速——トライアル・体験会施策の反動一巡が全指標に共通して表れた。</li>
+      <li><strong>SKINBEAUTYオンライン体験会の引き上げ率が9.6%（31人/322人）で確定し、他施策（CTW型18.8%・MINERALion型10.9%）を下回る水準であることが判明した。</strong>タブ③のSKINBEAUTY 2026-07コホートM+1（14.1%・通常レンジを大きく下回る）とも整合しており、「量は増えたが質が低かった」という前月までの留保が数値で確定した。</li>
+      <li><strong>【データソースについて】</strong>売上・出荷件数：NE出荷（ne_order_items・shop_id=17・ship_date基準・cancel_date IS NULL）、新規顧客・コホート・LTV：Shopify受注（sandbox_nishimori.shopify_customer_master / shopify_orders）、定期便：subscription_history_view（snapshot_ym='2026-08'・has_*フラグ集計）、施策効果：Adebis（adebis_lypoc_detail_by_period・クリック日基準）の混在方針を継続。<strong>本日（2026-09-01）時点でspic-core.public側への月次バッチ未反映のため、今回に限りcustomer_master・subscription_history_view・sku_brand_masterの3テーブルはsandbox_nishimori側を直接参照した</strong>（ne_order_items / shopify_ordersは通常通りspic-core.publicを参照・この2テーブルは今回のバッチ遅延の対象外）。翌日以降のバッチ反映後は通常運用（sn_shopify_customer_master等）に戻す。</li>
+    </ul>
+  </div>
+
+</div>
+<!-- /TAB 6 -->
+<!-- @@SPLIT:tab6:END@@ -->
+
+
+<div class="footer">
+  <span>【データソース】<strong>KGI①②④売上：</strong>spic-core.public.ne_order_items（ship_date出荷基準・cancel_date IS NULL）　<strong>KGI③⑥⑦⑧顧客：</strong>sandbox_nishimori.shopify_customer_master / shopify_orders（customer_idベース・Shopify受注）　<strong>KGI⑤定期便：</strong>sandbox_nishimori.subscription_history_view（月末スナップショット・snapshot_ym='2026-08'・spic-core側は月次バッチ未反映のため直接参照）　⚠️ receive_order（旧テーブル）は廃止済み・使用禁止</span>
+  <span>【集計基準】出荷基準 ｜ データ取得日：2026-09-01 ｜ 対象月：2026年8月（2026-08-01〜2026-08-31）｜ spic-com-2025-apr-00</span>
+</div>
+
+</div><!-- /page-wrap -->
+<script>
+function switchTab(id, btn) {}
+</script>
+</body>
+</html>

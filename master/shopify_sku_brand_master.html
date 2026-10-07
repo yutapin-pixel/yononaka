@@ -444,6 +444,26 @@
     color: var(--text-dim);
     text-align: right;
   }
+
+  .item-note { font-size: 10px; color: #92400e; background: #fffbeb; border: 1px solid #fde68a; border-radius: 4px; padding: 2px 6px; margin-top: 3px; line-height: 1.5; font-weight: 400; }
+  .type-badge.type-社販 { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+  .info-panel { margin: 12px 32px 0; border: 1px solid var(--border); border-radius: 8px; background: var(--bg2); font-size: 12px; }
+  .info-panel summary { cursor: pointer; padding: 10px 14px; font-weight: 700; color: var(--text); }
+  .info-panel .info-body { padding: 4px 16px 14px; color: var(--text-muted); line-height: 1.7; }
+  .info-panel table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 11px; }
+  .info-panel th, .info-panel td { border: 1px solid var(--border); padding: 4px 8px; text-align: left; }
+  .info-panel th { background: var(--bg3); color: var(--text-muted); }
+  .info-panel td.num { text-align: right; font-family: var(--mono); }
+  .info-panel code { font-family: var(--mono); background: var(--bg3); padding: 1px 4px; border-radius: 3px; }
+  .info-panel .warn { color: #b91c1c; font-weight: 600; }
+
+  /* v2.1 コンパクト化: ヘッダー・フィルタを従来版の縦幅に */
+  .controls { gap: 8px; }
+  .search-wrap { max-width: 280px; min-width: 180px; }
+  .filter-group { gap: 4px; flex-wrap: nowrap; }
+  .filter-btn { padding: 5px 9px; }
+  .info-panel { margin: 8px 32px 0; }
+  .info-panel summary { padding: 6px 14px; font-weight: 600; font-size: 11px; color: var(--text-muted); }
 </style>
 </head>
 <body>
@@ -453,7 +473,7 @@
     <div class="header-title-block">
       <div class="header-label">SPIC Internal · Shopify × NE</div>
       <div class="header-title">統合商品マスタ</div>
-      <div class="header-meta">spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master &nbsp;|&nbsp; 生成: 2026-09-21（簡易パッチ版・110-teiki-4新規追加）</div>
+      <div class="header-meta">spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master &nbsp;|&nbsp; v2 更新: 2026-10-05（全SKU再集計）</div>
     </div>
     <div class="header-stats">
       <div class="stat-chip">
@@ -461,7 +481,7 @@
         <span class="lbl">Total SKUs</span>
       </div>
       <div class="stat-chip">
-        <span class="num" id="stat-brands">9</span>
+        <span class="num" id="stat-brands">10</span>
         <span class="lbl">Brands</span>
       </div>
       <div class="stat-chip">
@@ -495,9 +515,30 @@
     <button class="filter-btn" data-type="都度">都度</button>
     <button class="filter-btn" data-type="ギフト">ギフト</button>
     <button class="filter-btn" data-type="プレゼント">プレゼント</button>
+    <button class="filter-btn" data-type="PRESS">PRESS</button>
+    <button class="filter-btn" data-type="ノベルティ/チケット">ノベルティ</button>
+    <button class="filter-btn" data-type="社販">社販</button>
   </div>
 </div>
 
+<details class="info-panel">
+  <summary>🌿 CBD／ecforce（NE shop_id=47）はこのマスタの対象外です（2026-10-05追記）</summary>
+  <div class="info-body">
+    <p>本マスタは <strong>Shopify（shop_id=17）のSKU</strong> を対象とします。<strong>CBDはShopify取扱なし</strong>で、CBDの自社サイトは <strong>ecforce（NE shop_id=47・店舗名「Lypo-C ecforce」）</strong>。ecforceの注文は <strong>NE受注（ne_order_items）にのみ</strong>存在し、Shopify受注・Shopify定期DB・本マスタには含まれません（BQ確認: CBD SKU 0件）。</p>
+    <p>ecforceでは<strong>全明細をCBDとして扱う</strong>（goods_tagが<code>[Lypo-C CBD]</code>でない行・goods_id=NULLも含む）。定期/都度は <span class="warn">source_name・product_typeでは判定不可</span>。暫定ルール＝商品名（shop_goods_name／ne_goods_name）に「定期」を含む明細＝定期（西守さん未確認）。</p>
+    <table>
+      <thead><tr><th>NE goods_id</th><th>商品名（NE）</th><th>区分</th><th>累計受注件数<br>（全CH）</th><th>うちecforce<br>（shop_id=47）</th><th>初回〜最終（全CH）</th></tr></thead>
+      <tbody>
+        <tr><td>100</td><td>Lypo-C CBD 9包入（ecforceでは「トライアルセット（9包＋3包）」名）</td><td>都度</td><td class="num">1,063</td><td class="num">101</td><td>2025-09-08〜2026-10-04</td></tr>
+        <tr><td>101</td><td>Lypo-C CBD 27包入（ecforce定期は<code>101-teiki</code>・商品名に「定期購入」・¥7,300）</td><td>都度／定期</td><td class="num">5,758</td><td class="num">17</td><td>2025-05-12〜2026-10-05</td></tr>
+        <tr><td>3026</td><td>Lypo-C CBD バージンパック（3包）・ecforce用</td><td>都度</td><td class="num">2</td><td class="num">2</td><td>2026-09-17〜2026-09-28</td></tr>
+        <tr><td>NULL</td><td>Lypo-C CBD 27包入（定期購入）※NEに商品コード未登録・goods_tag=不明</td><td>定期</td><td class="num">1</td><td class="num">1</td><td>2026-09-28（1注文・21個）</td></tr>
+        <tr><td>1001002 / 1001012</td><td>Lypo-C CBD 9包入／27包入［Amazon］</td><td>—</td><td class="num">2 / 5</td><td class="num">0</td><td>2025-08-08〜2026-09-30</td></tr>
+      </tbody>
+    </table>
+    <p>データソース: <strong>NE受注</strong>（<code>spic-core.public.ne_order_items</code>・cancel_date IS NULL・テスト/社販/リポスフェリック系除外・2026-10-05取得）。sales=0の¥0商品はne_order_itemsに存在しないため集計外。包数・sku_type（CBD_27／CBD_9／<code>CBD_3</code>）は <code>sn_ne_goods_id_master</code>（3026は2026-10-05にsandbox登録済み・spic-core側は日次バッチ同期待ち）。詳細: reference_ecforce_cbd.md</p>
+  </div>
+</details>
 <div class="result-bar">
   表示件数: <span class="result-count" id="resultCount">245</span> 件
 </div>
@@ -536,53 +577,53 @@
 </div>
 
 <div class="footer">
-  ※ 本ファイルはSPIC社内用途限定。noindex設定済み。データ取得: BigQuery spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master
+  ※ 本ファイルはSPIC社内用途限定。noindex設定済み。データソース: Shopify受注（shopify_orders.line_items）→ spic-core.public.sn_shopify_sku_brand_master（sandbox_nishimori.shopify_sku_brand_master の日次同期）。CBD/ecforceパネルのデータソース: NE受注（ne_order_items）。product_type=社販・LypoSpheric は通常のKPI集計から除外すること。 ※BQテーブル本体（sandbox_nishimori.shopify_sku_brand_master）は未リビルドで、本HTMLの集計値（受注数・初回/最終販売日・単価）は読み取り専用の再集計結果のためテーブル値と一部異なる（例: C+D+Kは9月以降の本番注文を反映）。次回フルリビルドで同期予定。
 </div>
 
 <script>
 // ===== データ（BigQueryから取得・ソート済み） =====
 const RAW = [
   // VC - 単価あり
-  {sku:"875-teiki",name:"【定期購入】Lypo-C Vitamin C 1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:7500,cnt:222220,first:"2021-04-12",last:"2026-09-01"},
-  {sku:"875-set",name:"Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7776,cnt:113572,first:"2021-02-25",last:"2026-09-01"},
-  {sku:"875-teiki-2",name:"【定期購入】Lypo-C Vitamin C 2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:14800,cnt:81078,first:"2021-04-12",last:"2026-09-01"},
+  {sku:"875-teiki",name:"【定期購入】Lypo-C Vitamin C 1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:7500,cnt:227440,first:"2021-04-12",last:"2026-10-05"},
+  {sku:"875-set",name:"Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7776,cnt:114350,first:"2021-02-25",last:"2026-10-05"},
+  {sku:"875-teiki-2",name:"【定期購入】Lypo-C Vitamin C 2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:14800,cnt:82592,first:"2021-04-12",last:"2026-10-05"},
   {sku:"1004496",name:"【10万人モニター】 Lypo-C Vitamin C 11包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:2999,cnt:45250,first:"2025-07-17",last:"2025-09-30"},
-  {sku:"875-teiki-3",name:"【定期購入】Lypo-C Vitamin C 3箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:21300,cnt:39709,first:"2021-04-12",last:"2026-09-01"},
-  {sku:"875-set-2",name:"Lypo-C Vitamin C 30包入 2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:15000,cnt:25961,first:"2021-02-25",last:"2026-08-25"},
-  {sku:"875-set-3",name:"Lypo-C Vitamin C 30包入 3箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:21600,cnt:17960,first:"2021-04-12",last:"2026-08-30"},
-  {sku:"875-teiki-4",name:"【定期購入】Lypo-C Vitamin C 4箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:28400,cnt:16878,first:"2021-04-12",last:"2026-09-01"},
-  {sku:"453-teiki",name:"【定期購入】Lypo-C Vitamin C (90包入) 1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:21300,cnt:15430,first:"2022-06-20",last:"2026-09-01"},
-  {sku:"449-set",name:"Lypo-C Vitamin C 11包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:2999,cnt:14533,first:"2021-04-12",last:"2026-08-31"},
-  {sku:"875-set-a",name:"Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7500,cnt:13463,first:"2024-02-05",last:"2026-09-01"},
-  {sku:"875-set-4",name:"Lypo-C Vitamin C 30包入 4箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:28800,cnt:11038,first:"2021-04-12",last:"2026-09-01"},
-  {sku:"875-set-b",name:"Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7200,cnt:10127,first:"2024-02-05",last:"2026-09-01"},
+  {sku:"875-teiki-3",name:"【定期購入】Lypo-C Vitamin C 3箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:21300,cnt:40481,first:"2021-04-12",last:"2026-10-05"},
+  {sku:"875-set-2",name:"Lypo-C Vitamin C 30包入 2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:15000,cnt:25965,first:"2021-02-25",last:"2026-09-26"},
+  {sku:"875-set-3",name:"Lypo-C Vitamin C 30包入 3箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:21600,cnt:17966,first:"2021-04-12",last:"2026-10-04"},
+  {sku:"875-teiki-4",name:"【定期購入】Lypo-C Vitamin C 4箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:28400,cnt:17151,first:"2021-04-12",last:"2026-10-05"},
+  {sku:"453-teiki",name:"【定期購入】Lypo-C Vitamin C (90包入) 1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:21300,cnt:15632,first:"2022-06-20",last:"2026-10-05"},
+  {sku:"449-set",name:"Lypo-C Vitamin C 11包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:2999,cnt:14675,first:"2021-04-12",last:"2026-10-05"},
+  {sku:"875-set-a",name:"Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7500,cnt:13800,first:"2024-02-05",last:"2026-10-05"},
+  {sku:"875-set-4",name:"Lypo-C Vitamin C 30包入 4箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:28800,cnt:11041,first:"2021-04-12",last:"2026-09-18"},
+  {sku:"875-set-b",name:"Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7200,cnt:10558,first:"2024-02-05",last:"2026-10-05"},
   {sku:"449-set-980",name:"【TVCM連動企画商品】Lypo-C Vitamin C 11包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:980,cnt:9752,first:"2024-03-23",last:"2024-05-31"},
   {sku:"leisure-freegift-449",name:"この夏のゲンキとキレイを、つくる【夏のレジャー用】Lypo-C Vitamin C 11包入 - Lypo-C  VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:2999,cnt:9141,first:"2024-07-22",last:"2024-10-01"},
   {sku:"449-1-cottongift-bs-ac",name:"【定期便ご利用者様限定】ギフト Lypo-C(11包入)+コットン巾着（カード：GIFT FOR YOU） - Lypo-C 11包×1箱 / GIFT FOR YOU",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:4370,first:"2023-08-31",last:"2023-09-20"},
-  {sku:"453-teiki2",name:"【定期購入】Lypo-C Vitamin C (90包入 + 30包入) セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:28400,cnt:3715,first:"2022-06-20",last:"2026-08-29"},
+  {sku:"453-teiki2",name:"【定期購入】Lypo-C Vitamin C (90包入 + 30包入) セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:28400,cnt:3760,first:"2022-06-20",last:"2026-10-04"},
   {sku:"449-1-freegift-bs",name:"【ギフト】Lypo-C Vitamin C(11包入)+オーガンジー巾着",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:2999,cnt:2867,first:"2023-08-21",last:"2026-08-27"},
   {sku:"453-set",name:"Lypo-C(90包入)  1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:21600,cnt:2798,first:"2021-02-23",last:"2021-04-07"},
   {sku:"875-cdays",name:"【C-days記念】Lypo-C(30包入)",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7000,cnt:1888,first:"2021-09-06",last:"2021-09-25"},
   {sku:"875-set-c",name:"【LINE連携クーポン適用済み】Lypo-C Vitamin C 30包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7276,cnt:896,first:"2025-07-17",last:"2025-09-22"},
   {sku:"449-1-summer-egift",name:"【ギフト】Lypo-C Vitamin C(11包入)+オーガンジー巾着 eギフト専用商品",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:2999,cnt:682,first:"2024-07-20",last:"2024-09-30"},
-  {sku:"875-teiki-pr",name:"【定期購入】Lypo-C Vitamin C 1箱 PRESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:6220,cnt:473,first:"2021-10-20",last:"2026-08-28"},
+  {sku:"875-teiki-pr",name:"【定期購入】Lypo-C Vitamin C 1箱 PRESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:6220,cnt:479,first:"2021-10-20",last:"2026-10-02"},
   {sku:"875-set-vp-mar",name:"【3包特典付】Lypo-C(30包入)  1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7776,cnt:446,first:"2022-03-16",last:"2023-04-01"},
   {sku:"875-set-pr",name:"Lypo-C Vitamin C 30包入 PRESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"PRESS",price:6220,cnt:376,first:"2021-10-05",last:"2026-03-18"},
   {sku:"875-1-freegift-bs",name:"【ギフト】Lypo-C Vitamin C(30包入)+オーガンジー巾着",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:7776,cnt:370,first:"2023-08-21",last:"2026-08-27"},
   {sku:"1008751-set",name:"Lypo-C(30包入)  1箱 【三井住友銀行 行員さま向け限定】",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:5832,cnt:238,first:"2023-06-01",last:"2023-10-16"},
-  {sku:"birthday-cottongift-449",name:"【ギフト】Lypo-C バースデーギフト 11包入（Vitamin CまたはVitamin C+D）ラッピング付き - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:197,first:"2024-06-01",last:"2026-07-24"},
+  {sku:"birthday-cottongift-449",name:"【ギフト】Lypo-C バースデーギフト 11包入（Vitamin CまたはVitamin C+D）ラッピング付き - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:207,first:"2024-06-01",last:"2026-10-03"},
   {sku:"449-set-prezent-b-1",name:"【プレゼント】 Lypo-C Vitamin C 11包入 B",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:2999,cnt:191,first:"2025-02-13",last:"2025-03-31"},
-  {sku:"449-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)+コットン巾着 - GIFT FOR YOU",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:187,first:"2023-08-21",last:"2026-08-28"},
+  {sku:"449-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)+コットン巾着 - GIFT FOR YOU",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:192,first:"2023-08-21",last:"2026-09-27"},
   {sku:"875-set-2-vp",name:"【3包特典付】Lypo-C(30包入) 2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:15000,cnt:165,first:"2022-02-17",last:"2022-02-28"},
-  {sku:"449-1-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)+コットン巾着 - Thank you!",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:126,first:"2023-08-22",last:"2026-08-24"},
+  {sku:"449-1-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)+コットン巾着 - Thank you!",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:128,first:"2023-08-22",last:"2026-09-30"},
   {sku:"Xmas-cottongift-875",name:"【クリスマス期間限定】Lypo-Cギフト  30包入（Vitamin CまたはVitamin C+D） - Lypo-C  VitaminC 30包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:117,first:"2023-12-06",last:"2025-12-19"},
-  {sku:"453-teiki-press",name:"【定期購入】Lypo-C Vitamin C (90包入) 1箱 PRESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:18660,cnt:98,first:"2022-07-11",last:"2026-07-09"},
-  {sku:"birthday-cottongift-875",name:"【ギフト】Lypo-C バースデーギフト 30包入 （Vitamin CまたはVitamin C+D）ラッピング付き - Lypo-C VitaminC 30包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:76,first:"2024-05-31",last:"2026-08-29"},
+  {sku:"453-teiki-press",name:"【定期購入】Lypo-C Vitamin C (90包入) 1箱 PRESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"定期",price:18660,cnt:99,first:"2022-07-11",last:"2026-09-09"},
+  {sku:"birthday-cottongift-875",name:"【ギフト】Lypo-C バースデーギフト 30包入 （Vitamin CまたはVitamin C+D）ラッピング付き - Lypo-C VitaminC 30包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:77,first:"2024-05-31",last:"2026-09-03"},
   {sku:"449-1-cottongift-cong",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)+コットン巾着 - Congratulations!",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:76,first:"2023-08-22",last:"2026-08-13"},
   {sku:"Xmas-cottongift-449",name:"【クリスマス期間限定】Lypo-Cギフト 11包入（Vitamin CまたはVitamin C+D）ラッピング付 - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:73,first:"2023-12-09",last:"2025-12-24"},
   {sku:"449-1-cottongift-wish",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)+コットン巾着 - Best wishes on your special day",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:72,first:"2023-08-22",last:"2026-08-13"},
   {sku:"875-first",name:"【THE FIRST VITAMIN C】Lypo-C(30包入)",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7276,cnt:64,first:"2021-10-18",last:"2023-06-15"},
-  {sku:"875-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)+コットン巾着 - Lypo-C(30包入) 1箱 / GIFT FOR YOU",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:64,first:"2023-08-22",last:"2026-08-24"},
+  {sku:"875-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)+コットン巾着 - Lypo-C(30包入) 1箱 / GIFT FOR YOU",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:67,first:"2023-08-22",last:"2026-09-17"},
   {sku:"sun-freegift-449",name:"【期間限定】Lypo-C  SUN and FUNギフト＋オーガンジー巾着（Vitamin CまたはVitamin C+D） - Lypo-C VitaminC 11包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:2999,cnt:59,first:"2024-07-13",last:"2025-08-29"},
   {sku:"Xmas-cottongift-875-1",name:"【クリスマス期間限定:3包付】Lypo-Cギフト  30包入（Vitamin CまたはVitamin C+D） - Lypo-C  VitaminC 30包入１箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:7776,cnt:56,first:"2023-12-21",last:"2023-12-25"},
   {sku:"875-set-cc",name:"【C.Cの日:応募者限定!!】Lypo-C(30包入)  1箱",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:7500,cnt:54,first:"2022-03-24",last:"2022-05-01"},
@@ -633,55 +674,55 @@ const RAW = [
   {sku:"30-set2",name:"Lypo-C(30包入) x 2箱セット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:13889,cnt:1,first:"2021-02-23",last:"2021-02-23"},
   {sku:"1302-set",name:"Lypo-Capusule Vitamin C (3 Box)",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:20833,cnt:1,first:"2022-09-23",last:"2022-09-23"},
   {sku:"449-amazake-f",name:"【父の日おいしいギフト】Lypo-C(11包入)1箱+ドリンク2本 - 米麹甘酒2本",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:3988,cnt:1,first:"2021-06-10",last:"2021-06-10"},
-  {sku:"449-1-cottongift-well",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)＋コットン巾着 - For Your WELLNESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:1,first:"2026-09-06",last:"2026-09-06"},
-  {sku:"875-1-cottongift-well",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)＋コットン巾着 - For Your WELLNESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:1,first:"2026-09-09",last:"2026-09-09"},
+  {sku:"449-1-cottongift-well",name:"【選べるギフトカード付】Lypo-C Vitamin C(11包入)＋コットン巾着 - For Your WELLNESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:3329,cnt:2,first:"2026-09-06",last:"2026-09-27"},
+  {sku:"875-1-cottongift-well",name:"【選べるギフトカード付】Lypo-C Vitamin C(30包入)＋コットン巾着 - For Your WELLNESS",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:8106,cnt:2,first:"2026-09-09",last:"2026-09-30"},
   // VC - 単価0円
   {sku:"2968-prezent-1",name:"【初回購入者限定】Lypo-C Vitamin C 3包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:19318,first:"2025-04-01",last:"2026-07-21"},
   {sku:"2968-prezent",name:"【10周年感謝プレゼント】 Lypo-C Vitamin C 3包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:17842,first:"2025-02-27",last:"2025-04-10"},
   {sku:"snow-festival-2024",name:"【2024さっぽろ雪まつり出展記念】フリートライアルセット",brand:"VC",ne_tag:"[Lypo-C]",ptype:"ギフト",price:0,cnt:8039,first:"2024-02-06",last:"2024-03-18"},
-  {sku:"449-set-prezent-b",name:"【プレゼント】 Lypo-C Vitamin C 11包入 A",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:5282,first:"2025-02-27",last:"2026-08-31"},
-  {sku:"3023",name:"【プレゼント】Lypo-C Vitamin C 3包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:1063,first:"2026-07-21",last:"2026-09-01"},
+  {sku:"449-set-prezent-b",name:"【プレゼント】 Lypo-C Vitamin C 11包入 A",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:5342,first:"2025-02-27",last:"2026-10-04"},
+  {sku:"3023",name:"【プレゼント】Lypo-C Vitamin C 3包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:1639,first:"2026-07-21",last:"2026-10-05"},
   {sku:"3023-set",name:"【Lypo-C バリア×ビタミンCチャージセット】 Lypo-C Vitamin C 3包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:0,cnt:724,first:"2026-06-22",last:"2026-07-08"},
-  {sku:"3023-cp",name:"Lypo-C Vitamin C 3包トライアル",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:666,first:"2026-07-16",last:"2026-09-01"},
+  {sku:"3023-cp",name:"Lypo-C Vitamin C 3包トライアル",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:979,first:"2026-07-16",last:"2026-09-17"},
   {sku:"2979",name:"Lypo-C RUN KIT",brand:"VC",ne_tag:"[Lypo-C]",ptype:"都度",price:0,cnt:40,first:"2025-03-10",last:"2025-04-05"},
   {sku:"449-set-prezent",name:"【プレゼント】Lypo-C Vitamin C 11包入",brand:"VC",ne_tag:"[Lypo-C]",ptype:"プレゼント",price:0,cnt:36,first:"2024-07-20",last:"2024-10-06"},
   // C+D - 単価あり
-  {sku:"511-teiki",name:"【定期購入】Lypo-C Vitamin C+D 1箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:8500,cnt:100561,first:"2023-09-23",last:"2026-09-01"},
-  {sku:"875511-teiki-1-1",name:"【定期購入】Lypo-C Vitamin C 1箱 & C+D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:15900,cnt:33120,first:"2023-09-23",last:"2026-09-01"},
-  {sku:"511-set",name:"Lypo-C Vitamin C+D 30包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:8964,cnt:31478,first:"2023-09-23",last:"2026-09-01"},
-  {sku:"511-teiki-2",name:"【定期購入】Lypo-C Vitamin C+D 2箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:17000,cnt:28418,first:"2023-09-23",last:"2026-09-01"},
-  {sku:"511-teiki-3",name:"【定期購入】Lypo-C Vitamin C+D 3箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:24600,cnt:14212,first:"2023-09-23",last:"2026-09-01"},
-  {sku:"511-set-a",name:"Lypo-C Vitamin C+D 30包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:8650,cnt:8610,first:"2024-02-05",last:"2026-09-01"},
-  {sku:"511-set-b",name:"Lypo-C Vitamin C+D 30包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:8300,cnt:7644,first:"2024-02-05",last:"2026-09-01"},
-  {sku:"511-teiki-4",name:"【定期購入】Lypo-C Vitamin C+D 4箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:32800,cnt:6268,first:"2023-09-23",last:"2026-08-31"},
-  {sku:"875511-teiki-2-1",name:"【定期購入】Lypo-C Vitamin C 2箱 & C+D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:22398,cnt:5144,first:"2023-09-23",last:"2026-09-01"},
-  {sku:"875511-teiki-2-2",name:"【定期購入】Lypo-C Vitamin C 2箱 & C+D 2箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:30600,cnt:4369,first:"2023-09-23",last:"2026-08-28"},
-  {sku:"510-set",name:"Lypo-C Vitamin C+D 11包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:3445,cnt:3496,first:"2023-09-23",last:"2026-09-01"},
-  {sku:"875511-teiki-1-2",name:"【定期購入】Lypo-C Vitamin C 1箱 & C+D 2箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:23499,cnt:2825,first:"2023-09-23",last:"2026-08-28"},
-  {sku:"875511-teiki-3-1",name:"【定期購入】Lypo-C Vitamin C 3箱 & C+D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:29496,cnt:1254,first:"2023-09-23",last:"2026-08-28"},
-  {sku:"875511-teiki-1-3",name:"【定期購入】Lypo-C Vitamin C 1箱 & C+D 3箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:31700,cnt:623,first:"2023-09-23",last:"2026-08-26"},
-  {sku:"453511-teiki-1-1",name:"【定期購入】Lypo-C Vitamin C(90包入) 1箱 & C+D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:29496,cnt:585,first:"2023-09-23",last:"2026-08-25"},
-  {sku:"511-teiki-press",name:"【定期購入】Lypo-C Vitamin C+D 1箱 PRESS",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:7171,cnt:511,first:"2023-09-29",last:"2026-08-28"},
+  {sku:"511-teiki",name:"【定期購入】Lypo-C Vitamin C+D 1箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:8500,cnt:104954,first:"2023-09-23",last:"2026-10-05"},
+  {sku:"875511-teiki-1-1",name:"【定期購入】Lypo-C Vitamin C 1箱 & C+D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:15900,cnt:33650,first:"2023-09-23",last:"2026-10-05"},
+  {sku:"511-set",name:"Lypo-C Vitamin C+D 30包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:8964,cnt:32027,first:"2023-09-23",last:"2026-10-05"},
+  {sku:"511-teiki-2",name:"【定期購入】Lypo-C Vitamin C+D 2箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:17000,cnt:29582,first:"2023-09-23",last:"2026-10-05"},
+  {sku:"511-teiki-3",name:"【定期購入】Lypo-C Vitamin C+D 3箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:24600,cnt:14769,first:"2023-09-23",last:"2026-10-05"},
+  {sku:"511-set-a",name:"Lypo-C Vitamin C+D 30包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:8650,cnt:8816,first:"2024-02-05",last:"2026-10-05"},
+  {sku:"511-set-b",name:"Lypo-C Vitamin C+D 30包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:8300,cnt:7901,first:"2024-02-05",last:"2026-10-05"},
+  {sku:"511-teiki-4",name:"【定期購入】Lypo-C Vitamin C+D 4箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:32800,cnt:6483,first:"2023-09-23",last:"2026-10-05"},
+  {sku:"875511-teiki-2-1",name:"【定期購入】Lypo-C Vitamin C 2箱 & C+D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:22398,cnt:5219,first:"2023-09-23",last:"2026-10-04"},
+  {sku:"875511-teiki-2-2",name:"【定期購入】Lypo-C Vitamin C 2箱 & C+D 2箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:30600,cnt:4450,first:"2023-09-23",last:"2026-10-05"},
+  {sku:"510-set",name:"Lypo-C Vitamin C+D 11包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:3445,cnt:3597,first:"2023-09-23",last:"2026-10-04"},
+  {sku:"875511-teiki-1-2",name:"【定期購入】Lypo-C Vitamin C 1箱 & C+D 2箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:23499,cnt:2860,first:"2023-09-23",last:"2026-10-05"},
+  {sku:"875511-teiki-3-1",name:"【定期購入】Lypo-C Vitamin C 3箱 & C+D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:29496,cnt:1271,first:"2023-09-23",last:"2026-10-02"},
+  {sku:"875511-teiki-1-3",name:"【定期購入】Lypo-C Vitamin C 1箱 & C+D 3箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:31700,cnt:634,first:"2023-09-23",last:"2026-09-30"},
+  {sku:"453511-teiki-1-1",name:"【定期購入】Lypo-C Vitamin C(90包入) 1箱 & C+D 1箱セット",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:29496,cnt:590,first:"2023-09-23",last:"2026-09-25"},
+  {sku:"511-teiki-press",name:"【定期購入】Lypo-C Vitamin C+D 1箱 PRESS",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"定期",price:7171,cnt:527,first:"2023-09-29",last:"2026-10-04"},
   {sku:"510-1-freegift-bs",name:"【ギフト】Lypo-C Vitamin C+D(11包入)+オーガンジー巾着",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3445,cnt:298,first:"2023-10-02",last:"2026-08-11"},
   {sku:"511-1-freegift-bs",name:"【ギフト】Lypo-C Vitamin C+D(30包入)+オーガンジー巾着",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:8964,cnt:238,first:"2023-10-02",last:"2026-08-28"},
   {sku:"511-set-press",name:"Lypo-C Vitamin C+D 30包入 PRESS",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"PRESS",price:7171,cnt:196,first:"2023-09-23",last:"2026-02-28"},
   {sku:"Xmas-cottongift-510",name:"【クリスマス期間限定】Lypo-Cギフト 11包入（Vitamin CまたはVitamin C+D）ラッピング付 - Lypo-C Vitamin C+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:54,first:"2023-12-04",last:"2025-12-22"},
-  {sku:"510-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(11包入)+コットン巾着 - GIFT FOR YOU",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:53,first:"2023-10-02",last:"2026-08-27"},
+  {sku:"510-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(11包入)+コットン巾着 - GIFT FOR YOU",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:54,first:"2023-10-02",last:"2026-09-03"},
   {sku:"Xmas-cottongift-511",name:"【クリスマス期間限定】Lypo-Cギフト  30包入（Vitamin CまたはVitamin C+D） - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:52,first:"2023-12-09",last:"2025-12-21"},
   {sku:"510-1-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(11包入)+コットン巾着 - Thank you!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:47,first:"2023-10-27",last:"2026-08-12"},
   {sku:"511-1-cottongift-bs",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱 / GIFT FOR YOU",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:41,first:"2023-10-02",last:"2026-04-19"},
-  {sku:"birthday-cottongift-510",name:"【ギフト】Lypo-C バースデーギフト 11包入（Vitamin CまたはVitamin C+D）+コットン巾着 - Lypo-C  VitaminC+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:35,first:"2024-06-14",last:"2026-06-30"},
+  {sku:"birthday-cottongift-510",name:"【ギフト】Lypo-C バースデーギフト 11包入（Vitamin CまたはVitamin C+D）+コットン巾着 - Lypo-C  VitaminC+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:40,first:"2024-06-14",last:"2026-10-01"},
   {sku:"mother-cottongift-510",name:"【期間限定】Lypo-C母の日ギフト  （Vitamin CまたはVitamin C＋D）ハンドタオル付 - Lypo-C  VitaminC+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:34,first:"2024-04-25",last:"2026-05-10"},
   {sku:"mother-cottongift-511",name:"【期間限定】Lypo-C母の日ギフト  （Vitamin CまたはVitamin C＋D）ハンドタオル付 - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:22,first:"2024-05-02",last:"2026-05-09"},
   {sku:"510-1-cottongift-cong",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(11包入)+コットン巾着 - Congratulations!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:21,first:"2023-10-02",last:"2026-07-01"},
   {sku:"881-set",name:"Lypo-C for SPORTS (C＋D 30包入)",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:11124,cnt:20,first:"2025-12-12",last:"2026-08-25"},
   {sku:"511-1-cottongift-wish",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱 / Best wishes on your special day",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:20,first:"2024-01-21",last:"2026-02-04"},
-  {sku:"birthday-cottongift-511",name:"【ギフト】Lypo-C バースデーギフト 30包入 （Vitamin CまたはVitamin C+D）+コットン巾着 - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:19,first:"2024-06-30",last:"2026-07-15"},
+  {sku:"birthday-cottongift-511",name:"【ギフト】Lypo-C バースデーギフト 30包入 （Vitamin CまたはVitamin C+D）+コットン巾着 - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:21,first:"2024-06-30",last:"2026-09-17"},
   {sku:"510-1-cottongift-wish",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(11包入)+コットン巾着 - Best wishes on your special day",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:17,first:"2024-02-12",last:"2026-08-25"},
   {sku:"511-1-cottongift-thx",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱 / Thank you!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:17,first:"2023-11-17",last:"2026-07-31"},
   {sku:"Xmas-cottongift-511-1",name:"【クリスマス期間限定:3包付】Lypo-Cギフト  30包入（Vitamin CまたはVitamin C+D） - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:8964,cnt:14,first:"2023-12-22",last:"2023-12-25"},
   {sku:"511-1-cottongift-cong",name:"【選べるギフトカード付】Lypo-C Vitamin C+D(30包入)+コットン巾着 - Lypo-C Vitamin C+D(30包入) 1箱 / Congratulations!",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:9294,cnt:14,first:"2023-10-02",last:"2026-05-12"},
-  {sku:"881-set-3",name:"Lypo-C for SPORTS (C+D 30包入)",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:10368,cnt:11,first:"2025-12-18",last:"2026-07-30"},
+  {sku:"881-set-3",name:"Lypo-C for SPORTS (C+D 30包入)",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:10368,cnt:15,first:"2025-12-18",last:"2026-10-02"},
   {sku:"sun-freegift-510",name:"【期間限定】Lypo-C  SUN and FUNギフト＋オーガンジー巾着（Vitamin CまたはVitamin C+D） - Lypo-C  VitaminC+D 11包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3445,cnt:11,first:"2024-07-12",last:"2025-08-28"},
   {sku:"881-set-2",name:"Lypo-C for SPORTS (C＋D 30包入)",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"都度",price:10800,cnt:10,first:"2026-03-11",last:"2026-08-28"},
   {sku:"sun-freegift-511",name:"【期間限定】Lypo-C  SUN and FUNギフト＋オーガンジー巾着（Vitamin CまたはVitamin C+D） - Lypo-C Vitamin C+D 30包入１箱",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:8964,cnt:10,first:"2024-07-27",last:"2025-08-25"},
@@ -702,76 +743,76 @@ const RAW = [
   {sku:"511-2-cottongift-wish",name:"【選べるギフトカード付】Lypo-C Vitamin C＋D(30包入)＋コットン巾着 - Lypo-C Vitamin C+D(30包入) 2箱セット / Best wishes on your special day",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:17630,cnt:1,first:"2026-06-11",last:"2026-06-11"},
   {sku:"510-1-cottongift-well",name:"【選べるギフトカード付】Lypo-C Vitamin C＋D(11包入)＋コットン巾着 - For Your WELLNESS",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"ギフト",price:3775,cnt:2,first:"2026-09-01",last:"2026-09-04"},
   // C+D - 単価0円
-  {sku:"510-set-prezent",name:"【プレゼント】Lypo-C Vitamin C＋D 11包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:11126,first:"2024-03-27",last:"2026-09-01"},
-  {sku:"3031",name:"【プレゼント】Lypo-C C+D バージンパック（3包）",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:5147,first:"2026-04-27",last:"2026-08-22"},
+  {sku:"510-set-prezent",name:"【プレゼント】Lypo-C Vitamin C＋D 11包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:11324,first:"2024-03-27",last:"2026-10-05"},
+  {sku:"3031",name:"【プレゼント】Lypo-C C+D バージンパック（3包）",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:5149,first:"2026-04-27",last:"2026-09-17"},
   {sku:"3018",name:"【初回購入者限定】Lypo-C Vitamin C＋D 3包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:2575,first:"2025-10-10",last:"2026-02-12"},
-  {sku:"3024",name:"【初回購入者限定B】Lypo-C Vitamin C＋D 3包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:2428,first:"2026-02-12",last:"2026-09-01"},
+  {sku:"3024",name:"【初回購入者限定B】Lypo-C Vitamin C＋D 3包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:2839,first:"2026-02-12",last:"2026-10-05"},
   {sku:"3027",name:"【プレゼント】Lypo-C Vitamin C＋D 4包入",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:1856,first:"2025-11-26",last:"2026-01-05"},
-  {sku:"3031-cp",name:"Lypo-C Vitamin C+D 3包トライアル",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:1297,first:"2026-07-16",last:"2026-09-01"},
+  {sku:"3031-cp",name:"Lypo-C Vitamin C+D 3包トライアル",brand:"C+D",ne_tag:"[Lypo-C C+D]",ptype:"プレゼント",price:0,cnt:2103,first:"2026-07-16",last:"2026-09-17"},
   // C+D+K - 単価あり（2026-09-16発売・2026-09-11 SKU登録。-set-2/-set-3/-teiki-2/-teiki-3は確認できた注文が全てテスト・キャンセル済みのため本番受注cnt=0扱い。次回フルリビルドで再集計）
   // 110-teiki-4は2026-09-21に簡易パッチで新規追加（未登録SKUアラートで検出・本番/入金済み1件を確認）
-  {sku:"110-set",name:"Lypo-C Vitamin C+D+K 30包入",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"都度",price:11016,cnt:1,first:"2026-09-07",last:"2026-09-07"},
-  {sku:"110-set-2",name:"Lypo-C Vitamin C+D+K 30包",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"都度",price:10800,cnt:0,first:null,last:null},
-  {sku:"110-set-3",name:"Lypo-C Vitamin C+D+K 30包",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"都度",price:10530,cnt:0,first:null,last:null},
-  {sku:"110-teiki",name:"【定期購入】Lypo-C Vitamin C+D+K 1箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:10530,cnt:1,first:"2026-09-07",last:"2026-09-07"},
-  {sku:"110-teiki-2",name:"【定期購入】Lypo-C Vitamin C＋D＋K 2箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:20700,cnt:0,first:null,last:null},
-  {sku:"110-teiki-3",name:"【定期購入】Lypo-C Vitamin C＋D＋K 3箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:30600,cnt:0,first:null,last:null},
+  {sku:"110-set",name:"Lypo-C Vitamin C+D+K 30包入",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"都度",price:11016,cnt:93,first:"2026-09-07",last:"2026-10-05"},
+  {sku:"110-set-2",name:"Lypo-C Vitamin C+D+K 30包",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"都度",price:10800,cnt:25,first:"2026-09-16",last:"2026-10-02"},
+  {sku:"110-set-3",name:"Lypo-C Vitamin C+D+K 30包",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"都度",price:10530,cnt:25,first:"2026-09-16",last:"2026-10-04"},
+  {sku:"110-teiki",name:"【定期購入】Lypo-C Vitamin C+D+K 1箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:10530,cnt:83,first:"2026-09-07",last:"2026-10-04"},
+  {sku:"110-teiki-2",name:"【定期購入】Lypo-C Vitamin C＋D＋K 2箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:20700,cnt:21,first:"2026-09-16",last:"2026-10-04"},
+  {sku:"110-teiki-3",name:"【定期購入】Lypo-C Vitamin C＋D＋K 3箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:30600,cnt:6,first:"2026-09-16",last:"2026-10-04"},
   {sku:"110-teiki-4",name:"【定期購入】Lypo-C Vitamin C＋D＋K 4箱セット",brand:"C+D+K",ne_tag:"[Lypo-C C+D+K]",ptype:"定期",price:40800,cnt:1,first:"2026-09-17",last:"2026-09-17"},
   // C+Cera - 単価あり
-  {sku:"106-teiki",name:"【定期購入】Lypo-C Vitamin C＋Cera 1箱",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:12960,cnt:3505,first:"2026-02-16",last:"2026-09-01"},
-  {sku:"106-set",name:"Lypo-C Vitamin C＋Cera 28包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13460,cnt:1768,first:"2026-02-16",last:"2026-09-01"},
+  {sku:"106-teiki",name:"【定期購入】Lypo-C Vitamin C＋Cera 1箱",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:12960,cnt:4156,first:"2026-02-16",last:"2026-10-05"},
+  {sku:"106-set",name:"Lypo-C Vitamin C＋Cera 28包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13460,cnt:1921,first:"2026-02-16",last:"2026-10-04"},
   {sku:"106-pre",name:"【先行予約特典付き】Lypo-C Vitamin C＋Cera 28包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13460,cnt:998,first:"2026-01-14",last:"2026-02-13"},
-  {sku:"105-set",name:"Lypo-C Vitamin C＋Cera 7包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:3700,cnt:826,first:"2026-02-09",last:"2026-09-01"},
-  {sku:"106-teiki-2",name:"【定期購入】Lypo-C Vitamin C＋Cera 2箱セット",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:25380,cnt:605,first:"2026-02-16",last:"2026-09-01"},
-  {sku:"106-set-2",name:"Lypo-C Vitamin C＋Cera 28包",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13150,cnt:364,first:"2026-02-16",last:"2026-09-01"},
-  {sku:"106-set-3",name:"Lypo-C Vitamin C＋Cera 28包",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:12920,cnt:251,first:"2026-02-16",last:"2026-08-31"},
-  {sku:"106-teiki-3",name:"【定期購入】Lypo-C Vitamin C＋Cera 3箱セット",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:37260,cnt:237,first:"2026-02-17",last:"2026-08-30"},
+  {sku:"105-set",name:"Lypo-C Vitamin C＋Cera 7包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:3700,cnt:846,first:"2026-02-09",last:"2026-10-04"},
+  {sku:"106-teiki-2",name:"【定期購入】Lypo-C Vitamin C＋Cera 2箱セット",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:25380,cnt:707,first:"2026-02-16",last:"2026-10-05"},
+  {sku:"106-set-2",name:"Lypo-C Vitamin C＋Cera 28包",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13150,cnt:402,first:"2026-02-16",last:"2026-10-05"},
+  {sku:"106-set-3",name:"Lypo-C Vitamin C＋Cera 28包",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:12920,cnt:277,first:"2026-02-16",last:"2026-10-05"},
+  {sku:"106-teiki-3",name:"【定期購入】Lypo-C Vitamin C＋Cera 3箱セット",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:37260,cnt:292,first:"2026-02-17",last:"2026-10-05"},
   {sku:"106-pre-2",name:"【先行予約特典付き】Lypo-C Vitamin C＋Cera 28包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:13150,cnt:56,first:"2026-01-14",last:"2026-02-15"},
-  {sku:"106-teiki-4",name:"【定期購入】Lypo-C Vitamin C＋Cera 4箱セット",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:49680,cnt:47,first:"2026-02-20",last:"2026-08-29"},
+  {sku:"106-teiki-4",name:"【定期購入】Lypo-C Vitamin C＋Cera 4箱セット",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"定期",price:49680,cnt:54,first:"2026-02-20",last:"2026-10-04"},
   {sku:"106-pre-3",name:"【先行予約特典付き】Lypo-C Vitamin C＋Cera 28包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:12920,cnt:33,first:"2026-01-14",last:"2026-02-13"},
   // C+Cera - 単価0円
   {sku:"3014-set",name:"【Lypo-C バリア×ビタミンCチャージセット】Lypo-C Vitamin C＋Cera 3包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:0,cnt:724,first:"2026-06-22",last:"2026-07-08"},
   {sku:"1001055",name:"【プレゼント】Lypo-C Vitamin C＋Cera 7包入",brand:"C+Cera",ne_tag:"[Lypo-C C＋Cera]",ptype:"都度",price:0,cnt:27,first:"2026-05-11",last:"2026-08-26"},
   // SKINBEAUTY - 単価あり
-  {sku:"121",name:"Lypo-C SKINBEAUTY ファースト グロウエッセンス 28包",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:12320,cnt:2095,first:"2025-08-18",last:"2026-09-01"},
-  {sku:"123-teiki",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス レフィル（30包）",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:11458,cnt:1853,first:"2025-12-22",last:"2026-09-01"},
-  {sku:"120",name:"Lypo-C SKINBEAUTY ファーストグロウエッセンス 7 PURE DROPS KIT (7包)",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:3410,cnt:779,first:"2025-10-02",last:"2026-09-01"},
+  {sku:"121",name:"Lypo-C SKINBEAUTY ファースト グロウエッセンス 28包",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:12320,cnt:2188,first:"2025-08-18",last:"2026-10-05"},
+  {sku:"123-teiki",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス レフィル（30包）",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:11458,cnt:2101,first:"2025-12-22",last:"2026-10-05"},
+  {sku:"120",name:"Lypo-C SKINBEAUTY ファーストグロウエッセンス 7 PURE DROPS KIT (7包)",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:3410,cnt:838,first:"2025-10-02",last:"2026-10-04"},
   {sku:"121-set-A",name:"【数量限定】SKINBEAUTY発売記念 Ritual Glow Set",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:22176,cnt:572,first:"2025-10-02",last:"2026-01-29"},
-  {sku:"123-teiki-2",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス レフィル（30包）2箱セット",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:22176,cnt:480,first:"2025-12-18",last:"2026-09-01"},
-  {sku:"121-teiki",name:"【定期購入】 Lypo-C SKINBEAUTY ファースト グロウエッセンス 28包",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:11458,cnt:429,first:"2025-12-30",last:"2026-09-01"},
+  {sku:"123-teiki-2",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス レフィル（30包）2箱セット",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:22176,cnt:546,first:"2025-12-18",last:"2026-10-04"},
+  {sku:"121-teiki",name:"【定期購入】 Lypo-C SKINBEAUTY ファースト グロウエッセンス 28包",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:11458,cnt:509,first:"2025-12-30",last:"2026-10-05"},
   {sku:"3009",name:"Lypo-C SKINBEAUTY FIRST KIT (3包)",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:1500,cnt:332,first:"2025-10-09",last:"2025-10-12"},
   {sku:"sb-onlinetrial",name:"コンディショニングケアセット",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:500,cnt:322,first:"2026-07-13",last:"2026-07-21"},
   {sku:"875121-set",name:"【数量限定】SKINBEAUTY発売記念 Experience C Set",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:18216,cnt:299,first:"2025-10-02",last:"2025-12-22"},
-  {sku:"121-teiki-2",name:"【定期購入】 Lypo-C SKINBEAUTY ファースト グロウエッセンス 28包  2箱セット",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:22176,cnt:96,first:"2025-12-28",last:"2026-08-27"},
-  {sku:"9001203",name:"【ギフト】Lypo-C SKINBEAUTY ファースト グロウエッセンス 7 PURE DROPS KIT",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:3410,cnt:22,first:"2025-12-11",last:"2026-08-18"},
+  {sku:"121-teiki-2",name:"【定期購入】 Lypo-C SKINBEAUTY ファースト グロウエッセンス 28包  2箱セット",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:22176,cnt:109,first:"2025-12-28",last:"2026-10-04"},
+  {sku:"9001203",name:"【ギフト】Lypo-C SKINBEAUTY ファースト グロウエッセンス 7 PURE DROPS KIT",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:3410,cnt:24,first:"2025-12-11",last:"2026-09-08"},
   {sku:"9011203",name:"【数量限定】Lypo-C母の日ギフト Lypo-C SKINBEAUTY ファースト グロウエッセンス 7 PURE DROPS KIT",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:3410,cnt:12,first:"2026-04-18",last:"2026-05-08"},
-  {sku:"123-teiki-press",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス レフィル（30包）PRESS",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:9856,cnt:9,first:"2026-01-07",last:"2026-07-22"},
+  {sku:"123-teiki-press",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス レフィル（30包）PRESS",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:9856,cnt:10,first:"2026-01-07",last:"2026-09-16"},
   {sku:"121-set-press",name:"Lypo-C SKINBEAUTY ファースト グロウエッセンス 28包 PRESS",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"PRESS",price:9856,cnt:4,first:"2025-11-02",last:"2026-03-18"},
   {sku:"9004493",name:"【ギフト】Lypo-C SKINBEAUTY ファースト グロウエッセンス 7 PURE DROPS KIT＋Lypo-C VC 11包入",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"都度",price:6409,cnt:3,first:"2025-12-17",last:"2026-01-05"},
   {sku:"121-teiki-press",name:"【定期購入】Lypo-C SKINBEAUTY ファースト グロウエッセンス（28包）PRESS",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"定期",price:9856,cnt:1,first:"2026-01-15",last:"2026-01-15"},
   // SKINBEAUTY - 単価0円
   {sku:"3020",name:"【プレゼント】Lypo-C SKINBEAUTY ファーストグロウエッセンス FIRST KIT (3包)",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"プレゼント",price:0,cnt:6771,first:"2026-01-08",last:"2026-03-02"},
   {sku:"SKB-set-1",name:"【予約特典】Lypo-C トータルビューティケアセット",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"プレゼント",price:0,cnt:792,first:"2025-08-18",last:"2025-10-01"},
-  {sku:"3001205",name:"【プレゼント】Lypo-C SKINBEAUTY ファーストグロウエッセンス 7 PURE DROPS KIT (7包)",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"プレゼント",price:0,cnt:206,first:"2026-01-08",last:"2026-09-01"},
+  {sku:"3001205",name:"【プレゼント】Lypo-C SKINBEAUTY ファーストグロウエッセンス 7 PURE DROPS KIT (7包)",brand:"SKINBEAUTY",ne_tag:"[Lypo-C SKINBEAUTY]",ptype:"プレゼント",price:0,cnt:217,first:"2026-01-08",last:"2026-10-01"},
   // MINERALion - 単価あり
-  {sku:"130-set",name:"MINERALion 30包入",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5832,cnt:3059,first:"2025-11-26",last:"2026-09-01"},
-  {sku:"130-teiki",name:"【定期購入】MINERALion 1箱",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:5616,cnt:1389,first:"2026-03-05",last:"2026-09-01"},
-  {sku:"130-teiki-2",name:"【定期購入】MINERALion 2箱セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:10800,cnt:404,first:"2026-03-05",last:"2026-09-01"},
-  {sku:"130-set-2",name:"MINERALion 30包",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5616,cnt:345,first:"2026-03-05",last:"2026-08-31"},
-  {sku:"130-teiki-3",name:"【定期購入】MINERALion 3箱セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:15552,cnt:145,first:"2026-03-05",last:"2026-08-31"},
-  {sku:"130-teiki-4",name:"【定期購入】MINERALion 4箱セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:20304,cnt:118,first:"2026-03-05",last:"2026-09-01"},
-  {sku:"130-set-4",name:"MINERALion 30包",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5292,cnt:97,first:"2026-03-05",last:"2026-08-26"},
-  {sku:"130-set-3",name:"MINERALion 30包",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5400,cnt:96,first:"2026-03-05",last:"2026-08-28"},
+  {sku:"130-set",name:"MINERALion 30包入",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5832,cnt:3219,first:"2025-11-26",last:"2026-10-05"},
+  {sku:"130-teiki",name:"【定期購入】MINERALion 1箱",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:5616,cnt:1728,first:"2026-03-05",last:"2026-10-05"},
+  {sku:"130-teiki-2",name:"【定期購入】MINERALion 2箱セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:10800,cnt:492,first:"2026-03-05",last:"2026-10-05"},
+  {sku:"130-set-2",name:"MINERALion 30包",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5616,cnt:399,first:"2026-03-05",last:"2026-10-03"},
+  {sku:"130-teiki-3",name:"【定期購入】MINERALion 3箱セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:15552,cnt:181,first:"2026-03-05",last:"2026-10-05"},
+  {sku:"130-teiki-4",name:"【定期購入】MINERALion 4箱セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"定期",price:20304,cnt:144,first:"2026-03-05",last:"2026-10-04"},
+  {sku:"130-set-4",name:"MINERALion 30包",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5292,cnt:111,first:"2026-03-05",last:"2026-10-01"},
+  {sku:"130-set-3",name:"MINERALion 30包",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:5400,cnt:108,first:"2026-03-05",last:"2026-10-02"},
   // MINERALion - 単価0円
-  {sku:"3021",name:"【プレゼント】MINERALion 4包入",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"プレゼント",price:0,cnt:20394,first:"2025-11-26",last:"2026-08-23"},
+  {sku:"3021",name:"【プレゼント】MINERALion 4包入",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"プレゼント",price:0,cnt:20395,first:"2025-11-26",last:"2026-09-06"},
   {sku:"3016",name:"MINERALionトライアル4包セット",brand:"MINERALion",ne_tag:"[MINERALion]",ptype:"都度",price:0,cnt:5234,first:"2026-01-08",last:"2026-07-13"},
   // Sports - 単価あり
-  {sku:"880-set-3",name:"Lypo-C for SPORTS (VC 30包入)",brand:"Sports",ne_tag:"[Lypo-C for SPORTS]",ptype:"都度",price:9288,cnt:45,first:"2025-10-06",last:"2026-08-30"},
-  {sku:"880-set",name:"Lypo-C for SPORTS (VC 30包入)",brand:"Sports",ne_tag:"[Lypo-C for SPORTS]",ptype:"都度",price:9936,cnt:34,first:"2025-09-04",last:"2026-09-01"},
-  {sku:"880-set-2",name:"Lypo-C for SPORTS (VC 30包入)",brand:"Sports",ne_tag:"[Lypo-C for SPORTS]",ptype:"都度",price:9612,cnt:27,first:"2025-09-04",last:"2026-08-27"},
+  {sku:"880-set-3",name:"Lypo-C for SPORTS (VC 30包入)",brand:"Sports",ne_tag:"[Lypo-C for SPORTS]",ptype:"都度",price:9288,cnt:51,first:"2025-10-06",last:"2026-10-01"},
+  {sku:"880-set",name:"Lypo-C for SPORTS (VC 30包入)",brand:"Sports",ne_tag:"[Lypo-C for SPORTS]",ptype:"都度",price:9936,cnt:38,first:"2025-09-04",last:"2026-09-26"},
+  {sku:"880-set-2",name:"Lypo-C for SPORTS (VC 30包入)",brand:"Sports",ne_tag:"[Lypo-C for SPORTS]",ptype:"都度",price:9612,cnt:29,first:"2025-09-04",last:"2026-09-30"},
   // LPB - 単価あり
-  {sku:"985-set",name:"VCトリカプセルエッセンス",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:821,first:"2021-02-25",last:"2026-08-20"},
-  {sku:"430-set",name:"リヴァイタライズディープセラム",brand:"LPB",ne_tag:null,ptype:"都度",price:18700,cnt:727,first:"2021-02-23",last:"2026-08-28"},
+  {sku:"985-set",name:"VCトリカプセルエッセンス",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:827,first:"2021-02-25",last:"2026-09-30"},
+  {sku:"430-set",name:"リヴァイタライズディープセラム",brand:"LPB",ne_tag:null,ptype:"都度",price:18700,cnt:731,first:"2021-02-23",last:"2026-09-30"},
   {sku:"990-set",name:"プロテクトファンデーション SPF50+/PA++++ - ライトオークル",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:80,first:"2021-02-25",last:"2023-04-02"},
   {sku:"994-set",name:"セラムファンデーション - ベージュ",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:43,first:"2021-02-25",last:"2023-04-02"},
   {sku:"988-set",name:"プロテクトファンデーション SPF50+/PA++++ - ダークオークル",brand:"LPB",ne_tag:null,ptype:"都度",price:11000,cnt:8,first:"2021-02-25",last:"2022-02-03"},
@@ -782,19 +823,19 @@ const RAW = [
   {sku:"985",name:"VC Tri-capsule Essence",brand:"LPB",ne_tag:null,ptype:"都度",price:10000,cnt:1,first:"2021-02-23",last:"2021-02-23"},
   // Others - 単価あり
   {sku:"503",name:"Lypo-C インナー＆アウターケアセット",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:29500,cnt:125,first:"2022-07-11",last:"2023-01-01"},
-  {sku:"830-1",name:"Stem-C（ステム・シー） - 1箱(単品)",brand:"Others",ne_tag:null,ptype:"都度",price:16956,cnt:58,first:"2024-11-28",last:"2026-08-17"},
+  {sku:"830-1",name:"Stem-C（ステム・シー） - 1箱(単品)",brand:"Others",ne_tag:null,ptype:"都度",price:16956,cnt:61,first:"2024-11-28",last:"2026-09-30"},
   {sku:"504",name:"SPIC40周年 メモリアルセット",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:20000,cnt:40,first:"2022-07-22",last:"2022-12-31"},
   {sku:"830-2",name:"Stem-C（ステム・シー） - 2箱セット",brand:"Others",ne_tag:null,ptype:"都度",price:32616,cnt:35,first:"2024-10-20",last:"2026-08-30"},
   {sku:"8000006",name:"Lypo-C コラボワークショップ サウンドバス体験",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:5000,cnt:26,first:"2022-06-29",last:"2022-07-17"},
-  {sku:"830-4",name:"Stem-C（ステム・シー） - 4箱セット",brand:"Others",ne_tag:null,ptype:"都度",price:62424,cnt:21,first:"2025-01-14",last:"2026-08-24"},
+  {sku:"830-4",name:"Stem-C（ステム・シー） - 4箱セット",brand:"Others",ne_tag:null,ptype:"都度",price:62424,cnt:23,first:"2025-01-14",last:"2026-10-01"},
   {sku:"8000008",name:"【8/9(金)開催】VITAMIN CHARGE PARTY at NIGHT チケット",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:3300,cnt:21,first:"2024-07-24",last:"2024-07-28"},
   {sku:"8000007",name:"Lypo-C コラボワークショップ 利きマッチャ体験",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:3500,cnt:20,first:"2022-06-29",last:"2022-07-18"},
   {sku:"8000009",name:"【8/9(金)開催】Lypo-C×山賀琴子さんコラボイベント チケット",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:3300,cnt:18,first:"2024-07-24",last:"2024-07-29"},
-  {sku:"830-3",name:"Stem-C（ステム・シー） - 3箱セット",brand:"Others",ne_tag:null,ptype:"都度",price:46872,cnt:17,first:"2024-12-28",last:"2026-08-22"},
+  {sku:"830-3",name:"Stem-C（ステム・シー） - 3箱セット",brand:"Others",ne_tag:null,ptype:"都度",price:46872,cnt:21,first:"2024-12-28",last:"2026-09-29"},
   {sku:"8000005",name:"Lypo-C コラボワークショップ What s コンブチャ？",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:3500,cnt:9,first:"2022-06-29",last:"2022-07-13"},
-  {sku:"962",name:"SPIC DRESSING 480ml 1本",brand:"Others",ne_tag:"[化粧品]",ptype:"社販",price:6930,cnt:1,first:"2026-07-27",last:"2026-07-27"},
+  {sku:"962",name:"SPIC DRESSING 480ml 1本",brand:"Others",ne_tag:"[化粧品]",ptype:"社販",price:6930,cnt:4,first:"2026-07-27",last:"2026-09-24",note:"社販専用・非公開SKU（2026-08-01確認）。派遣スタッフ等専用のShopify社販動線（tags: spic-staff）経由でのみ購入可能。一般顧客向け販売導線なし。通常の売上・KPI集計対象からは除外すること。"},
   // Others - 単価0円
-  {sku:"7000631",name:"Lypo-Cストッカー（グレー×イエロー）",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:47143,first:"2024-11-01",last:"2026-09-01"},
+  {sku:"7000631",name:"Lypo-Cストッカー（グレー×イエロー）",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:48079,first:"2024-11-01",last:"2026-10-05"},
   {sku:"7000632",name:"【既存定期】Lypo-Cストッカー同梱レター",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:18548,first:"2024-11-01",last:"2025-12-16"},
   {sku:"5010003-kit",name:"ザ ファースト ビタミンC",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:381,first:"2021-11-24",last:"2022-07-02"},
   {sku:"7000611",name:"2024トリカプセルサンクスレター",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:231,first:"2024-07-17",last:"2024-09-11"},
@@ -803,7 +844,7 @@ const RAW = [
   {sku:"5010001-kit",name:"ザ ファースト ビタミンC キット",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:14,first:"2021-11-18",last:"2021-11-24"},
   {sku:"502",name:"約3日分のLypo-C無料サンプル",brand:"Others",ne_tag:null,ptype:"ノベルティ/チケット",price:0,cnt:1,first:"2022-03-15",last:"2022-03-15"},
   // LypoSpheric - 単価あり
-  {sku:"921z",name:"リポスフェリック ビタミンＣ 1箱（30包入り） LivOn社推奨・公式通販 リポソーム ビタミンC サプリメント",brand:"LypoSpheric",ne_tag:"[Lypospheric]",ptype:"都度",price:3690,cnt:1,first:"2020-04-09",last:"2020-04-09"}
+  {sku:"921z",name:"リポスフェリック ビタミンＣ 1箱（30包入り） LivOn社推奨・公式通販 リポソーム ビタミンC サプリメント",brand:"LypoSpheric",ne_tag:"[Lypospheric]",ptype:"都度",price:3690,cnt:1,first:"2020-04-09",last:"2020-04-09",note:"2026-09-01発見。2020-04-09の単発注文のみ・financial_status=pending（未入金・実質未成立）。LypoSpheric（LivOn社製品）はShopify非取扱ブランドのため、通常のブランド別KPI集計・週次/月次レポートの対象外（実売上として扱わない）。"}
 ];
 
 // ブランドカラークラスマッピング
@@ -835,6 +876,7 @@ function typeClass(t) {
   if (t === 'ギフト') return 'type-ギフト';
   if (t === 'プレゼント') return 'type-プレゼント';
   if (t === 'PRESS') return 'type-PRESS';
+  if (t === '社販') return 'type-社販';
   if (t.includes('ノベルティ') || t.includes('チケット')) return 'type-ノベルティ';
   return 'type-other';
 }
@@ -915,7 +957,7 @@ function renderRows(data) {
       </span></td>
       <td class="col-type"><span class="type-badge ${typeClass(d.ptype)}">${d.ptype||'—'}</span></td>
       <td class="col-sku"><span class="sku-code">${d.sku}</span></td>
-      <td class="col-name"><span class="item-name">${d.name}</span></td>
+      <td class="col-name"><span class="item-name">${d.name}</span>${d.note ? `<div class="item-note">📝 ${d.note}</div>` : ''}</td>
       <td class="col-price"><span class="price-cell ${d.price > 0 ? 'price-normal':'price-zero'}">
         ${d.price > 0 ? '¥' + d.price.toLocaleString() : '¥0'}
       </span></td>

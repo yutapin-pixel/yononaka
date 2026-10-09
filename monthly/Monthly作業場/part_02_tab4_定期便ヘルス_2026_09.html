@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lypo-C 月次分析レポート 2026-09 ｜ ④ 定期便ヘルス</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--cdk:#5BC882;--cbd:#1B7A4A;
+  --ccera:#FF6B9D;--sb:#C4934A;--mi:#1E3A8A;--lypo:#FFB070;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0;max-width:1200px;margin:0 auto}
+.page-wrap{padding:24px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted)}
+.month-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 14px;border-radius:4px;font-size:13px;font-weight:700;margin-bottom:20px;letter-spacing:0.3px}
+.stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px;align-items:stretch}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+thead th.c{text-align:center}
+tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid #f5f5f4;font-size:13px}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td.c{text-align:center}
+tbody tr:last-child td{border-bottom:none}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.tot td{border-top:2px solid var(--border)}
+tr.ogs{background:#fff8f0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600}
+.badge.a{background:#dcfce7;color:#15803d}.badge.b{background:#fef2f2;color:#dc2626}
+.badge.n{background:#eff6ff;color:#2563eb}.badge.w{background:#fff8f0;color:#92400e}
+.monthly-insight{background:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0284c7;border-radius:8px;padding:14px 18px;margin-top:12px;margin-bottom:20px;font-size:13px;line-height:1.9}
+.monthly-insight .mi-title{font-weight:700;font-size:12px;margin-bottom:6px;color:#0369a1;display:flex;align-items:center;gap:6px}
+.monthly-insight ul{padding-left:18px}.monthly-insight li{margin-bottom:5px}
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.9}
+.notes .nt{font-weight:700;font-size:12px;margin-bottom:6px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:4px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;position:relative;height:290px}
+.chart-wrap canvas{display:block;width:100% !important}
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;overflow-x:auto}
+.tab-btn{background:none;border:none;padding:10px 18px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.cohort-wrap{overflow-x:auto;margin-bottom:12px}
+.cohort-table{border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:900px}
+.cohort-table th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cohort-table th:first-child{text-align:left;min-width:90px}
+.cohort-table td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11px;line-height:1.4}
+.cohort-table td:first-child{text-align:left;font-weight:500;padding:5px 10px;font-size:12px}
+.cohort-table tr.ogs-row td:first-child{color:#92400e;font-weight:700}
+.cohort-table tr.highlight-row td{background:#fafafa}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.insight-card .ic-num{font-size:30px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:-1px}
+.insight-card .ic-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.insight-card .ic-body{font-size:13px;color:var(--muted);line-height:1.7}
+.insight-card.positive .ic-num{color:var(--green)}
+.insight-card.negative .ic-num{color:var(--red)}
+.insight-card.warning .ic-num{color:#f59e0b}
+.crm-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px}
+.crm-card .crm-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.crm-card .crm-priority{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.crm-card .crm-priority.p1{background:#fef2f2;color:#dc2626}
+.crm-card .crm-priority.p2{background:#fff8f0;color:#92400e}
+.crm-card .crm-priority.p3{background:#eff6ff;color:#2563eb}
+.crm-card .crm-title{font-size:14px;font-weight:700}
+.crm-card .crm-body{font-size:13px;color:var(--muted);line-height:1.7}
+.crm-card .crm-kpi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:500}
+.crm-card .crm-update{font-size:11px;margin-top:6px;padding:4px 8px;background:#f0fdf4;border-radius:4px;color:#15803d;font-weight:500}
+.kpi-change{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;margin-left:6px}
+.kpi-change.up{background:#dcfce7;color:#15803d}
+.kpi-change.dn{background:#fef2f2;color:#dc2626}
+.kpi-change.flat{background:#f5f5f4;color:#78716c}
+.analysis{border-radius:8px;margin:10px 0 20px;overflow:hidden;font-size:13px;line-height:1.8}
+.analysis-head{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.analysis-body{padding:12px 16px 14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.an-col{padding:0 14px;border-right:1px solid rgba(0,0,0,0.07)}
+.an-col:first-child{padding-left:0}
+.an-col:last-child{border-right:none;padding-right:0}
+.an-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;opacity:0.7}
+.an-text{font-size:12.5px;line-height:1.75}
+.an-text strong{font-weight:700}
+.analysis.blue{background:#eff6ff;border:1px solid #bfdbfe}
+.analysis.blue .analysis-head{background:#dbeafe;color:#1e40af}
+.analysis.blue .an-col{color:#1e3a8a}
+.analysis.green{background:#f0fdf4;border:1px solid #bbf7d0}
+.analysis.green .analysis-head{background:#dcfce7;color:#14532d}
+.analysis.green .an-col{color:#166534}
+.analysis.orange{background:#fff7ed;border:1px solid #fed7aa}
+.analysis.orange .analysis-head{background:#ffedd5;color:#7c2d12}
+.analysis.orange .an-col{color:#9a3412}
+.teiki-funnel{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.teiki-stage{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.teiki-stage .ts-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:4px}
+.teiki-stage .ts-count{font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.teiki-stage .ts-ltv{font-size:11px;color:var(--muted);margin-top:2px}
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ship{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-mixed{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f8fafc;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-ship,.sc .lb .ds-order,.sc .lb .ds-mixed{font-size:9px;padding:1px 5px;margin-left:3px}
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-snap{font-size:9px;padding:1px 5px;margin-left:3px}
+.ds-adebis{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-click{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-adebis,.sc .lb .ds-click{font-size:9px;padding:1px 5px;margin-left:3px}
+.adebis-rank{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-right:4px;flex-shrink:0}
+.adebis-rank.r1{background:#f59e0b;color:#fff}
+.adebis-rank.r2{background:#9ca3af;color:#fff}
+.adebis-rank.r3{background:#b45309;color:#fff}
+.adebis-rank.rx{background:#f3f4f6;color:#6b7280}
+.adebis-warn{font-size:10px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.adebis-new{font-size:10px;background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.cvr-high{color:#15803d;font-weight:700}
+.cvr-mid{color:#92400e}
+.cvr-low{color:#9ca3af}
+td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-all;line-height:1.4}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .analysis-body{grid-template-columns:1fr}
+  .an-col{border-right:none;border-bottom:1px solid rgba(0,0,0,0.07);padding:8px 0;margin:0}
+  .an-col:last-child{border-bottom:none}
+  .teiki-funnel{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ===== tab6 (まとめと提言) 固有CSS ===== */
+/* 総評セクション */
+.summary-section{margin-bottom:40px}
+.summary-header{display:flex;align-items:baseline;gap:10px;margin:28px 0 6px}
+.summary-header-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.summary-header-title::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.summary-header-badge{font-size:12px;font-weight:400;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:3px;margin-left:8px}
+.summary-verdict{background:#1c1917;border-radius:10px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.summary-verdict-icon{font-size:22px;flex-shrink:0}
+.summary-verdict-text{font-size:13.5px;font-weight:600;color:#fff;line-height:1.65;letter-spacing:0.1px}
+.summary-verdict-text em{font-style:normal;color:#FFB070}
+.finding-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.finding-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.finding-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.finding-card.fc-green::before{background:#16a34a}
+.finding-card.fc-red::before{background:#dc2626}
+.finding-card.fc-amber::before{background:#f59e0b}
+.finding-card.fc-orange::before{background:var(--accent)}
+.finding-card.fc-blue::before{background:#2563eb}
+.finding-card.fc-slate::before{background:#64748b}
+.fc-index{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.fc-metric{font-size:26px;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.finding-card.fc-green .fc-metric{color:#16a34a}
+.finding-card.fc-red .fc-metric{color:#dc2626}
+.finding-card.fc-amber .fc-metric{color:#d97706}
+.finding-card.fc-orange .fc-metric{color:var(--accent)}
+.finding-card.fc-blue .fc-metric{color:#2563eb}
+.finding-card.fc-slate .fc-metric{color:#475569}
+.fc-title{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.4}
+.fc-body{font-size:12px;color:var(--muted);line-height:1.75;flex:1}
+.fc-body strong{color:var(--text)}
+.fc-insight{margin-top:4px;padding:6px 10px;border-radius:5px;font-size:11.5px;font-weight:600;line-height:1.5}
+.finding-card.fc-green .fc-insight{background:#f0fdf4;color:#15803d}
+.finding-card.fc-red .fc-insight{background:#fff5f5;color:#dc2626}
+.finding-card.fc-amber .fc-insight{background:#fffbeb;color:#92400e}
+.finding-card.fc-orange .fc-insight{background:#fff8f0;color:#c2410c}
+.finding-card.fc-blue .fc-insight{background:#eff6ff;color:#1e40af}
+.finding-card.fc-slate .fc-insight{background:#f8fafc;color:#475569}
+/* スコアカード */
+.scorecard-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px}
+.sc-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.sc-item-axis{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.sc-item-label{font-size:11.5px;font-weight:600;color:var(--text);line-height:1.35}
+.sc-item-value{font-size:17px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-top:2px}
+.sc-item-sub{font-size:10.5px;color:var(--muted);line-height:1.5}
+.sc-item-rationale{font-size:10.5px;color:var(--muted);line-height:1.55;margin-top:2px;border-top:1px solid var(--border);padding-top:5px}
+.sc-item-verdict{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;width:fit-content;margin-top:2px}
+.sc-v-ok{background:#dcfce7;color:#15803d}
+.sc-v-warn{background:#fff7ed;color:#c2410c}
+.sc-v-bad{background:#fff5f5;color:#dc2626}
+.sc-v-ref{background:#eff6ff;color:#1e40af}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .finding-grid{grid-template-columns:1fr}
+  .scorecard-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ===== タブ固有CSS（tab2〜tab7） ===== */
+/* ===== VC/C+D フロー分析 統合セクション 追加CSS ===== */
+.flow-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px}
+.flow-kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.flow-kpi .lb{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.03em;margin-bottom:6px}
+.flow-kpi .vl{font-size:24px;font-weight:700;letter-spacing:-0.02em}
+.flow-kpi .sb{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+.flow-group-label{font-size:12px;font-weight:700;color:var(--muted);margin:18px 0 8px;padding-left:2px}
+.th-vc{background:#fff3e0 !important;color:#c2410c}
+.th-cd{background:#f0fdf4 !important;color:#166534}
+.th-ccera{background:#fdf2f8 !important;color:#9d174d}
+.th-mi{background:#eff6ff !important;color:#1e40af}
+.th-sb{background:#fefce8 !important;color:#92400e}
+.th-cdk{background:#dcfce7 !important;color:#14532d}
+.flow-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:8px}
+.flow-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px}
+.flow-label{width:110px;font-weight:600;text-align:right;flex-shrink:0}
+.flow-bar-wrap{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.flow-bar{height:24px;border-radius:5px;min-width:4px;flex-shrink:0}
+.flow-num{font-size:12.5px;color:var(--text);white-space:nowrap;font-weight:600}
+.flow-num .pct{color:var(--muted);font-weight:400;margin-left:4px}
+.frozen-divider{display:flex;align-items:center;gap:14px;margin:44px 0 28px}
+.frozen-divider::before,.frozen-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.frozen-divider .fd-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#78716c;background:#f5f5f4;border:1px solid var(--border);padding:5px 14px;border-radius:99px;white-space:nowrap}
+.frozen-section{opacity:0.92}
+.frozen-note{font-size:11.5px;color:var(--muted);background:#f5f5f4;border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:18px;line-height:1.7}
+@media(max-width:768px){
+  .flow-kpi-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<div class="hdr">
+  <h1>🔬 Lypo-C 月次分析レポート</h1>
+  <div class="meta">データ取得：2026年10月8日 ｜ 売上：NE受注（shop_id=17）出荷基準 ｜ 顧客：Shopify受注基準（spic-core.public.sn_shopify_customer_master・snapshot_date 2026-10-01）｜ 定期：spic-core.public.sn_subscription_history_view（snapshot_ym='2026-09'・月末スナップショット。通常運用に復帰：8月度のみsandbox_nishimori直接参照でしたが、9月度からspic-core側sn_*を参照）</div>
+</div>
+<div class="month-badge">📅 2026年9月度</div>
+
+<div class="tab-nav" style="overflow-x:auto;white-space:nowrap">
+  <button class="tab-btn active" onclick="void(0)">④ 定期便ヘルス</button>
+  <span style="font-size:11px;color:#9a9088;padding:10px 14px;display:inline-block">⚠️ part ファイル（更新2番目）― merge_monthly.py で結合後に noindex 確認</span>
+</div>
+
+<div id="tab4" class="tab-pane active">
+
+  <!-- 全社概況 -->
+  <div class="stitle">全社 定期便ステータス概況（2026年9月末時点）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view（snapshot_ym = 2026-09）　ブランド別ACTIVE・PAUSED・CANCELLED件数の月末時点の全社概況<br>
+  <strong>集計方法：</strong>snapshot_ymで対象月を指定 → ブランド別にhas_*フラグ（has_vc/has_cd/<strong>has_cdk（C+D+K・2026-09新規）</strong>/has_ccera/has_skinbeauty/has_mineralion）でCOUNTIF集計。Mixed（複数ブランド同時加入）契約も各ブランドのカウントに包含。<strong>has_cdとhas_cdkは独立フラグ</strong>（C+D+KをC+Dに自動合算しない設計）のため、C+Dファミリーとして見る場合は参考行（has_cd OR has_cdk）を参照。スナップショット方式のため過去月への遡及修正は不可。</div>
+
+  <div class="sg4" style="margin-bottom:16px">
+    <div class="sc">
+      <div class="lb">全社 ACTIVE合計</div>
+      <div class="vl" style="color:var(--green)">22,023件</div>
+      <div class="sb">FY2027末目標: <strong>27,000件</strong>（残 4,977件・達成率81.6%）<span class="kpi-change dn">前月比▲235</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">全社 PAUSED合計</div>
+      <div class="vl" style="color:#f59e0b">29,251件</div>
+      <div class="sb">ACTIVE比 <strong>132.8%</strong> — 拡大幅がさらに拡大（前月比+652）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">全社 累計解約</div>
+      <div class="vl" style="color:var(--red)">27,499件</div>
+      <div class="sb">解約率（解約÷全契約）<strong>34.9%</strong>（前月比+617）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">全社 全契約合計</div>
+      <div class="vl">78,773件</div>
+      <div class="sb">ACTIVE+PAUSED+CANCELLED 合計</div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ブランド</th>
+        <th>ACTIVE</th>
+        <th>PAUSED</th>
+        <th>累計解約</th>
+        <th>停止率<br><span style="font-weight:400;font-size:10px">PAUSED÷(A+P)</span></th>
+        <th>解約率<br><span style="font-weight:400;font-size:10px">解約÷全契約</span></th>
+        <th>前月比<br>ACTIVE</th>
+        <th>ヘルス</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot" style="background:var(--vc)"></span>VC</td>
+        <td>12,333</td><td>21,474</td><td>21,429</td>
+        <td><span class="badge b">63.5%</span></td>
+        <td><span class="badge b">38.8%</span></td>
+        <td><span class="dn">▲220</span></td>
+        <td><span class="badge b">⛈️ 要対処</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cd)"></span>C+D</td>
+        <td>9,778</td><td>9,248</td><td>7,151</td>
+        <td><span class="badge b">48.6%</span></td>
+        <td><span class="badge w">27.3%</span></td>
+        <td><span class="dn">▲77</span></td>
+        <td><span class="badge w">⚠️ 注意</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cdk)"></span>C+D+K</td>
+        <td>138</td><td>4</td><td>3</td>
+        <td><span class="badge n">2.8%</span></td>
+        <td><span class="badge n">2.1%</span></td>
+        <td><span class="up">新規 +138</span></td>
+        <td><span class="badge n">🆕 立ち上げ期</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td>
+        <td>1,026</td><td>344</td><td>238</td>
+        <td><span class="badge w">25.1%</span></td>
+        <td><span class="badge n">14.8%</span></td>
+        <td><span class="dn">▲85</span></td>
+        <td><span class="badge w">⚠️ 注意（純減2ヶ月連続）</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td>
+        <td>447</td><td>269</td><td>222</td>
+        <td><span class="badge w">37.6%</span></td>
+        <td><span class="badge w">23.7%</span></td>
+        <td><span class="dn">▲18</span></td>
+        <td><span class="badge w">⚠️ 注意</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--mi)"></span>MINERALion</td>
+        <td>669</td><td>166</td><td>138</td>
+        <td><span class="badge n">19.9%</span></td>
+        <td><span class="badge n">14.2%</span></td>
+        <td><span class="up">+5</span></td>
+        <td><span class="badge a">✅ 健全（初期）</span></td>
+      </tr>
+      <tr style="background:#f0fdf4">
+        <td><span class="dot" style="background:var(--cd)"></span><span class="dot" style="background:var(--cdk);margin-left:-2px"></span>【参考】C+Dファミリー合算<br><span style="font-weight:400;font-size:10px;color:var(--muted)">has_cd=1 OR has_cdk=1（重複契約は1件計上）</span></td>
+        <td>9,915</td><td>9,252</td><td>7,154</td>
+        <td><span class="badge b">48.3%</span></td>
+        <td><span class="badge w">27.2%</span></td>
+        <td><span class="up">+60</span></td>
+        <td><span class="badge n">C+D単体▲77をC+D+Kが補完</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">
+    ⚠️ <strong>指標の解釈上の注意:</strong> PAUSED（一時停止）とCANCELLED（解約）は契約が消えるわけではなく、Shopifyのデータ上に累計で蓄積されます。そのため、歴史の長いブランド（VC・C+D）は必然的に停止率・解約率が高く見えます。C+Cera・MINERALion・SKINBEAUTY・<strong>C+D+K（2026-09発売・観測1ヶ月未満）</strong>のような新興ブランドは数値が低く出ており、単純な横比較は不適切です。停止率・解約率のトレンド（月次変化）で各ブランドの状態変化を判断してください。ブランド別ACTIVEの合計は、Mixed契約の重複計上により全社ACTIVE（22,023件）を上回る場合があります。<br>
+    ※バッジ基準（停止率：40%以上＝赤／22.5%以上＝橙／未満＝青、解約率：30%以上＝赤／20%以上＝橙／未満＝青）は9月度に全ブランド共通ルールへ統一（8月度までは一部ブランドで個別判断）。
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 全社概況 考察（2026年9月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
+    <ul>
+      <li><strong>全社ACTIVEは22,023件（前月▲235件）。2026年1月（▲399件）以来の大幅な純減で、7月（+190件）・8月（+7件）と続いた「下げ止まり」局面が終わった。</strong>PAUSEDは+652件、累計解約は+617件で、ACTIVE比のPAUSEDは128.5%→132.8%へ拡大。</li>
+      <li><strong>ブランド別では「VC▲220・C+Cera▲85・C+D▲77」が減少の中心。</strong>C+D+Kが138件で立ち上がったが、その約5割（71件）は既存契約（C+D・Mixed・C+Cera・VC）からのSKU置換で、純増寄与は限定的。C+Dファミリー合算（C+D＋C+D+K）でみるとACTIVEは+60件（9,855→9,915）で、C+D単体の▲77は「ファミリー内の置換」を含む。</li>
+      <li><strong>C+Ceraは停止率が19.6%→25.1%へ急上昇し、ACTIVEも1,150件（7月ピーク）→1,026件（▲10.8%）。</strong>施策（CTC）終了後に獲得した契約の早期離脱と新規流入の枯渇が同時進行している。MINERALionは+5件で踏みとどまりピークを更新したが、停止率は16.3%→19.9%へ上昇。</li>
+    </ul>
+  </div>
+
+  <!-- 定期便ステータス月次推移 -->
+  <div class="stitle">定期便ステータス月次推移<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view　集計期間：2025年5月〜2026年9月（17ヶ月）<br>
+  <strong>集計方法：</strong>snapshot_ymでグルーピング → 各月末時点のACTIVE・PAUSED・CANCELLED件数をCOUNT集計。ブランド別はhas_*フラグを使用しMixed契約を各ブランドに正確包含。スナップショット方式のため「当月末に契約が存在し、そのステータスが何か」を記録。</div>
+  <div class="chart-wrap"><canvas id="chartSubStatus"></canvas></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 定期便ステータス推移 考察（2026年9月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
+    <ul>
+      <li><strong>ACTIVE 22,023件（前月22,258件から▲235件）。7月（+190件）・8月（+7件）から一転、2026年1月（▲399件）以来の大幅な純減。</strong>契約単位（ユニーク）で見ると、新規アクティブが1,357件→1,147件（▲210件）へ減少し、PAUSE・CANCELLED発生も1,350件→1,382件（+32件）へ増加。差し引き▲235件はACTIVE純増減と完全一致する。純減幅への寄与は<strong>新規獲得の減少が約87%（▲210÷▲242）</strong>、離脱の増加が約13%で、「離脱が増えた」よりも「新規が入ってこない」ことが主因。</li>
+      <li><strong>新規減少はCYS定期引き上げの不発ではなく、それ以外の自然獲得の落ち込み。</strong>CYS定期引き上げ（<code>cys_11cp_get</code>）経由の新規ACTIVE契約は8月144件→9月150件とほぼ横ばい（詳細は下記「CYS定期引き上げと9月新規ACTIVE」参照）。CYSを除く新規ACTIVEは1,213件→997件（▲216件・▲17.8%）と2割弱減少している。タブ⑤で捕捉したGoogle自社運用のクリック急減（GSA指名▲69.7%・P-MAX▲72.3%・要因未特定）と時期が重なるため因果の可能性があるが、定期契約化までのラグがあり現時点では<strong>仮説</strong>（広告運用担当への確認が必要）。</li>
+      <li><strong>PAUSEDは29,251件（前月比+652件）で増加幅が7月（+533件）→8月（+629件）→9月（+652件）と3ヶ月連続で拡大。</strong>ACTIVE比132.8%（前月128.5%）。VC PAUSED 21,474件はVCアクティブ（12,333件）の1.74倍に達し、再開施策の潜在インパクトは引き続き最大の打ち手。累計解約は27,499件（+617件）で解約率34.9%（前月34.6%）。</li>
+      <li><strong>目標27,000件まで残り4,977件（達成率81.6%・前月82.4%から▲0.8pt後退）。</strong>C+D+K（138件）は立ち上がったものの、約5割が既存契約の置換のため全社ACTIVEの純増にはほとんど寄与していない。10月以降の焦点は、①CYS終了（9/17）後の新規ACTIVEの水準、②Google自社運用クリック減の定期獲得への波及、③C+D+Kの新規契約（9月：65件＋復帰2件）の積み上がりペース。</li>
+    </ul>
+  </div>
+
+  <!-- ブランド別ACTIVE件数推移 -->
+  <div class="stitle">ブランド別 ACTIVE件数推移<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view　スナップショット方式のため「その月末時点のACTIVE件数」　月次変化がビジネスの実態を反映<br>
+  <strong>集計方法：</strong>snapshot_ym × has_*フラグ（has_vc/has_cd/<strong>has_cdk</strong>/has_ccera/has_skinbeauty/has_mineralion）でCOUNTIF集計。Mixed契約を含む正確な件数を各ブランドに計上。ブランド合計は総ACTIVE（22,023件）を上回る場合あり（マルチブランド重複計上のため正常）。<strong>C+D+Kは2026-09に初出現（定期SKU 110系・9/16本格ローンチ）</strong>のためグラフ・表とも9月から計上。</div>
+  <div class="chart-wrap"><canvas id="chartSubActive"></canvas></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ブランド</th>
+        <th>2026-03</th><th>2026-04</th><th>2026-05</th><th>2026-06</th><th>2026-07</th><th>2026-08</th>
+        <th style="background:#fff0d8;color:#92400e;font-weight:800">2026-09 ★今月</th><th>前月比</th><th>ピーク比</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot" style="background:var(--vc)"></span>VC</td>
+        <td>13,057</td>
+        <td>12,882</td>
+        <td>12,812</td>
+        <td>12,625</td>
+        <td>12,592</td>
+        <td>12,553</td>
+        <td style="background:#fff8e8;font-weight:700">12,333</td>
+        <td><span class="badge b">▲220</span></td>
+        <td><span class="badge b">▲25.5%</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cd)"></span>C+D</td>
+        <td>10,190</td>
+        <td>10,059</td>
+        <td>10,032</td>
+        <td>9,926</td>
+        <td>9,849</td>
+        <td>9,855</td>
+        <td style="background:#fff8e8;font-weight:700">9,778</td>
+        <td><span class="badge b">▲77</span></td>
+        <td><span class="badge b">▲9.0%</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cdk)"></span>C+D+K <span class="adebis-new">🆕 9月発売</span></td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td style="background:#fff8e8;font-weight:700">138</td>
+        <td><span class="badge a">新規 +138</span></td>
+        <td>—（立ち上げ月）</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--vc)"></span>Mixed（複数ブランド契約・C+D+K併存42件を含む）</td>
+        <td>2,431</td>
+        <td>2,411</td>
+        <td>2,389</td>
+        <td>2,354</td>
+        <td>2,324</td>
+        <td>2,286</td>
+        <td style="background:#fff8e8;font-weight:700">2,263</td>
+        <td><span class="badge b">▲23</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td>
+        <td>645</td>
+        <td>784</td>
+        <td>878</td>
+        <td>1,019</td>
+        <td>1,150</td>
+        <td>1,111</td>
+        <td style="background:#fff8e8;font-weight:700">1,026</td>
+        <td><span class="badge b">▲85</span></td>
+        <td><span class="badge b">▲10.8%</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td>
+        <td>380</td>
+        <td>395</td>
+        <td>418</td>
+        <td>442</td>
+        <td>459</td>
+        <td>465</td>
+        <td style="background:#fff8e8;font-weight:700">447</td>
+        <td><span class="badge b">▲18</span></td>
+        <td><span class="badge w">▲3.9%</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--mi)"></span>MINERALion</td>
+        <td>256</td>
+        <td>371</td>
+        <td>439</td>
+        <td>507</td>
+        <td>642</td>
+        <td>664</td>
+        <td style="background:#fff8e8;font-weight:700">669</td>
+        <td><span class="badge a">+5</span></td>
+        <td><span class="badge a">ピーク更新</span></td>
+      </tr>
+      <tr class="tot">
+        <td>合計（全社ACTIVE）</td>
+        <td>22,036</td>
+        <td>22,003</td>
+        <td>22,102</td>
+        <td>22,061</td>
+        <td>22,251</td>
+        <td>22,258</td>
+        <td style="background:#fff0d8;font-weight:700">22,023</td>
+        <td><span class="badge b">▲235</span></td>
+        <td>▲8.1%</td>
+      </tr>
+      <tr style="background:#f0fdf4">
+        <td>【参考】C+Dファミリー合算（C+D＋C+D+K）</td>
+        <td>10,190</td><td>10,059</td><td>10,032</td><td>9,926</td><td>9,849</td><td>9,855</td>
+        <td style="background:#fff8e8;font-weight:700">9,915</td>
+        <td><span class="badge a">+60</span></td><td>▲7.7%</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">
+    ※ピーク比の基準：VC＝2025-09（16,554件）／C+D＝2025-12（10,746件）／C+Cera＝2026-07（1,150件）／SKINBEAUTY＝2026-08（465件）／全社＝2025-09（23,967件）／C+Dファミリー合算＝C+D単体ピーク（10,746件）。<br>
+    ※Mixedは<code>brand='Mixed'</code>の契約数。2026-09は<strong>C+D+Kを含むMixedが42件</strong>（C+D＋C+D+K同時契約など）含まれ、前月までの「VC+C+D中心」から定義が拡張されている点に注意。
+  </div>
+
+  <!-- 定期ACTIVE顧客の複数ブランド保有比率 -->
+  <div class="stitle">定期ACTIVE顧客の複数ブランド保有比率（クロスセル余地の把握）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view（snapshot_ym = 2026-09、status='ACTIVE'）　顧客単位（customer_id）で保有ブランド種類数を集計<br>
+  <strong>集計方法：</strong>customer_id単位でhas_vc/has_cd/<strong>has_cdk</strong>/has_ccera/has_mineralion/has_skinbeautyをMAX集約し、フラグ合計値（保有ブランド種類数・最大6）でグルーピング。上記「ブランド別ACTIVE件数推移」はsubscription_id単位（Mixed契約を各ブランドに重複計上）のため、本セクションは同じ母集団を顧客単位で捉えた補完指標。<strong>C+D+Kは独立した1ブランドとして計上</strong>（C+DとC+D+Kを同時保有する顧客は2種扱い）。</div>
+
+  <div class="sg3" style="margin-bottom:16px">
+    <div class="sc">
+      <div class="lb">1種のみ保有</div>
+      <div class="vl">18,084人</div>
+      <div class="sb">定期ACTIVE顧客の<strong>86.2%</strong></div>
+    </div>
+    <div class="sc">
+      <div class="lb">2種保有</div>
+      <div class="vl" style="color:var(--blue)">2,689人</div>
+      <div class="sb">定期ACTIVE顧客の<strong>12.8%</strong></div>
+    </div>
+    <div class="sc">
+      <div class="lb">3種以上保有</div>
+      <div class="vl" style="color:var(--green)">214人</div>
+      <div class="sb">定期ACTIVE顧客の<strong>1.0%</strong>（3種192人・4種22人・5種以上0人）</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap"><canvas id="chartBrandItemCount"></canvas></div>
+
+  <table>
+    <thead>
+      <tr><th>保有ブランド種類数</th><th>顧客数</th><th class="c">構成比</th><th class="c">前月（2026-08）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1種のみ</td><td>18,084人</td><td class="c">86.2%</td><td class="c">18,281人（86.1%）</td></tr>
+      <tr><td>2種</td><td>2,689人</td><td class="c">12.8%</td><td class="c">2,740人（12.9%）</td></tr>
+      <tr><td>3種</td><td>192人</td><td class="c">0.9%</td><td class="c">191人（0.9%）</td></tr>
+      <tr><td>4種</td><td>22人</td><td class="c">0.1%</td><td class="c">16人（0.1%）</td></tr>
+      <tr><td>5種</td><td>0人</td><td class="c">0.0%</td><td class="c">0人（0.0%）</td></tr>
+      <tr class="tot"><td>合計（定期ACTIVE顧客数）</td><td>20,987人</td><td class="c">100.0%</td><td class="c">21,228人</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">
+    ⚠️ <strong>母数の注意：</strong>顧客単位の合計20,987人は、subscription_id単位のACTIVE合計22,023件とは一致しない（約1,036人が同一ブランド内で複数契約を保有しているため）。ブランド保有の「種類数」自体には影響しない。<br>
+    ⚠️ <strong>C+D＋C+D+K同時保有の扱い：</strong>独立フラグ集計のため、C+DとC+D+Kの同時保有者（6人）は「別ブランド2種」として計上される。C+Dファミリー合算（has_cd OR has_cdk）で集計し直すと、1種18,088人・2種2,686人・3種192人・4種21人（合計20,987人）となり、複数保有の構成比は13.8%で変わらない。
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 複数ブランド保有比率 考察（2026年9月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
+    <ul>
+      <li>定期ACTIVE顧客20,987人（前月比▲241人）のうち、複数ブランドを同時保有している顧客は2,903人（13.8%）。前月（2,947人・13.9%）から人数は▲44人、構成比はほぼ横ばいで、全社ACTIVEの純減と歩調を合わせて縮小した。</li>
+      <li><strong>C+D+K ACTIVE顧客137人のうち70人（51.1%）が複数ブランドを同時保有しており、全体平均（13.8%）の約3.7倍。</strong>併用先は延べでC+Cera 37人・VC 27人・MINERALion 19人・SKINBEAUTY 7人・C+D 6人。C+D+Kの定期は「単一ブランドの愛用者」ではなく、<strong>既に複数ブランドを購入している上位クロスセル層</strong>が中心に買っていることを示す（新規獲得の入口というより、既存優良顧客の上乗せ・置換）。</li>
+      <li>4種保有は16人→22人、3種以上は207人→214人と増加（C+D+K顧客のうち4種保有は4人）。5ブランド以上の全保有は0人。</li>
+      <li>タブ②「ブランドクロス購買（全期間累計購買経験ベース）」とは母集団の定義が異なる（本セクションは当月ACTIVEの定期便のみが対象）。両者を並記する場合は基準の違いを明記すること。</li>
+    </ul>
+  </div>
+
+  <!-- ブランド別 新規アクティブ件数 月次推移（グロス増加） -->
+  <div class="stitle">ブランド別 新規アクティブ件数 月次推移（グロス増加・プラス面）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view　集計期間：2025年7月〜2026年9月（15ヶ月）<br>
+  <strong>集計方法：</strong>subscription_id単位でLAG(status)により前月ステータスを取得 → status='ACTIVE'かつ（前月レコードなし＝新規契約 or 前月status≠'ACTIVE'＝PAUSE/CANCELLEDからの復帰）を「新規アクティブ」としてブランド別（has_*フラグ）にCOUNTIF集計。新規申込＋PAUSE復帰＋解約後再開の合計値（グロス）。<strong>既存ACTIVE契約が別SKU（C+D→C+D+K等）へ置換されたケースは「前月もACTIVE」のため新規アクティブには含まれない</strong>。純増減（前月比）とは異なり、マイナス要因を相殺していない「獲得力」そのものの指標。</div>
+  <div class="chart-wrap"><canvas id="chartNewActive"></canvas></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ブランド</th>
+        <th>2025-12</th><th>2026-04</th><th>2026-05</th><th>2026-06</th><th>2026-07</th><th>2026-08</th><th style="background:#fff0d8;color:#92400e;font-weight:800">2026-09 ★今月</th><th>前月比</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot" style="background:var(--vc)"></span>VC</td>
+        <td>560</td><td>653</td><td>760</td><td>628</td><td>695</td><td>678</td><td style="background:#fff8e8;font-weight:700">544</td>
+        <td><span class="badge b">▲134</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cd)"></span>C+D</td>
+        <td>604</td><td>479</td><td>509</td><td>410</td><td>444</td><td>519</td><td style="background:#fff8e8;font-weight:700">445</td>
+        <td><span class="badge b">▲74</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cdk)"></span>C+D+K <span class="adebis-new">🆕</span></td>
+        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td style="background:#fff8e8;font-weight:700">67</td>
+        <td><span class="badge n">新規</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td>
+        <td>—</td><td>120</td><td>133</td><td>156</td><td>191</td><td>77</td><td style="background:#fff8e8;font-weight:700">51</td>
+        <td><span class="badge b">▲26</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td>
+        <td>58</td><td>55</td><td>68</td><td>60</td><td>66</td><td>67</td><td style="background:#fff8e8;font-weight:700">42</td>
+        <td><span class="badge b">▲25</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--mi)"></span>MINERALion</td>
+        <td>—</td><td>94</td><td>70</td><td>80</td><td>162</td><td>78</td><td style="background:#fff8e8;font-weight:700">58</td>
+        <td><span class="badge b">▲20</span></td>
+      </tr>
+      <tr class="tot">
+        <td>合計（新規アクティブ・グロス／ブランド別合算）</td>
+        <td>1,222</td><td>1,401</td><td>1,540</td><td>1,334</td><td>1,558</td><td>1,419</td><td style="background:#fff0d8;font-weight:700">1,207</td>
+        <td><span class="badge b">▲212</span></td>
+      </tr>
+      <tr class="">
+        <td>【契約ユニーク】全社 新規アクティブ（Mixed重複なし）</td>
+        <td>1,152</td><td>1,310</td><td>1,461</td><td>1,268</td><td>1,484</td><td>1,357</td><td style="background:#fff0d8;font-weight:700">1,147</td>
+        <td><span class="badge b">▲210</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:12px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">
+    ※「合計（ブランド別合算）」は従来どおり各ブランド行の単純合算で、Mixed契約が複数ブランドに重複計上される（8月度までの定義を踏襲）。<strong>9月度より「契約ユニーク」行を追加</strong>：契約を1件1回で数えるため、<strong>（新規アクティブ − PAUSE・CANCELLED発生）がACTIVE純増減と完全一致</strong>する（9月：1,147 − 1,382 ＝ ▲235 ＝ 22,258→22,023）。ブランド別の増減は前者、全社の純増減の説明は後者を使う。
+  </div>
+
+  <!-- ブランド別 PAUSE・CANCELLED発生件数 月次推移（グロス減少） -->
+  <div class="stitle">ブランド別 PAUSE・CANCELLED発生件数 月次推移（グロス減少・マイナス面）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view　集計期間：2025年7月〜2026年9月（15ヶ月）<br>
+  <strong>集計方法：</strong>「新規PAUSE」= status='PAUSED' AND 前月status='ACTIVE'（ACTIVEからの直接一時停止のみ）。「新規CANCELLED」= status='CANCELLED' AND 前月status='ACTIVE'（ACTIVEからの直接解約のみ）。PAUSED経由の解約（prev_status='PAUSED'）は二重計上防止のためカウント対象外（reference_subscription_history.md「2大落とし穴」準拠）。グラフはブランド別の（新規PAUSE＋新規CANCELLED）合計の月次推移。</div>
+  <div class="chart-wrap"><canvas id="chartPauseCancel"></canvas></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ブランド</th>
+        <th>2025-12</th><th>2026-04</th><th>2026-05</th><th>2026-06</th><th>2026-07</th><th>2026-08</th><th style="background:#fff0d8;color:#92400e;font-weight:800">2026-09 ★今月</th><th>前月比</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot" style="background:var(--vc)"></span>VC</td>
+        <td>1,041</td><td>776</td><td>776</td><td>722</td><td>696</td><td>710</td><td style="background:#fff8e8;font-weight:700">695</td>
+        <td><span class="badge a">▲15</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cd)"></span>C+D</td>
+        <td>634</td><td>520</td><td>541</td><td>511</td><td>476</td><td>496</td><td style="background:#fff8e8;font-weight:700">517</td>
+        <td><span class="badge b">+21</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cdk)"></span>C+D+K <span class="adebis-new">🆕</span></td>
+        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td style="background:#fff8e8;font-weight:700">1</td>
+        <td><span class="badge n">新規</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td>
+        <td>0</td><td>35</td><td>50</td><td>69</td><td>90</td><td>96</td><td style="background:#fff8e8;font-weight:700">118</td>
+        <td><span class="badge b">+22</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td>
+        <td>1</td><td>37</td><td>47</td><td>47</td><td>54</td><td>59</td><td style="background:#fff8e8;font-weight:700">57</td>
+        <td><span class="badge a">▲2</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--mi)"></span>MINERALion</td>
+        <td>—</td><td>21</td><td>27</td><td>31</td><td>48</td><td>66</td><td style="background:#fff8e8;font-weight:700">61</td>
+        <td><span class="badge a">▲5</span></td>
+      </tr>
+      <tr class="tot">
+        <td>合計（PAUSE+CANCELLED・グロス／ブランド別合算）</td>
+        <td>1,676</td><td>1,389</td><td>1,441</td><td>1,380</td><td>1,364</td><td>1,427</td><td style="background:#fff0d8;font-weight:700">1,449</td>
+        <td><span class="badge b">+22</span></td>
+      </tr>
+      <tr class="">
+        <td>【契約ユニーク】全社 PAUSE+CANCELLED（Mixed重複なし）</td>
+        <td>1,541</td><td>1,303</td><td>1,357</td><td>1,309</td><td>1,294</td><td>1,350</td><td style="background:#fff0d8;font-weight:700">1,382</td>
+        <td><span class="badge b">+32</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 新規アクティブ vs PAUSE・CANCELLED発生 考察（2026年9月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
+    <ul>
+      <li><strong>全社（契約ユニーク）：新規アクティブ1,147件 vs PAUSE・CANCELLED発生1,382件 → グロス差▲235件（8月の+7件から反転）。</strong>新規アクティブが前月比▲210件（1,357→1,147）と急減した一方、マイナス面は+32件（1,350→1,382）にとどまった。<strong>ACTIVE減少の主因は離脱の増加ではなく新規獲得の減少</strong>（寄与約87%）。ブランド別合算では1,207件 vs 1,449件で差▲242件（Mixedの重複計上分だけ差が拡大）。</li>
+      <li><strong>VC：新規アクティブ544件（▲134件・▲19.8%）・マイナス695件（▲15件）で差▲151件（8月▲32件から悪化）。</strong>新規減がそのまま純減に直結した形。<strong>C+D：新規445件（▲74件）・マイナス517件（+21件）で差▲72件</strong>。8月まで主力2ブランドで唯一プラス（+23件）を維持していたC+Dも反転し、CYS定期引き上げ（C+D新規ACTIVE 445件中85件＝19.1%を占める）を除くとC+Dの自然獲得は360件（8月449件から▲20%）まで落ち込んでいる。</li>
+      <li><strong>C+Cera：新規51件（▲26件・施策終了後の最低水準）に対し、PAUSE・CANCELLED発生は118件（+22件・過去最大）で、差▲67件（8月▲19件）と純減が拡大。</strong>2ヶ月連続の純減（8月▲39件・9月▲85件）で、停止率の急上昇（19.6%→25.1%）とも整合する。<strong>MINERALion：新規58件（▲20件）に対しマイナス61件（▲5件）で差▲3件</strong>。8月まで維持していた新規＞マイナスの構造が初めて崩れた（ただしACTIVEは契約単位の再分類を含め+5件で踏みとどまり）。SKINBEAUTYも新規42件（▲25件）・マイナス57件で差▲15件。</li>
+      <li><strong>C+D+K：新規67件・マイナス1件（差+66件）。</strong>ただしACTIVE 138件との差の約71件は、既存ACTIVE契約からの置換であり「新規アクティブ」に含まれない（詳細は次の「C+D+K 定期の立ち上がり」参照）。新規の入口としての獲得力は、9月中の新規・復帰67件（9/16本格ローンチ以降が中心）。</li>
+      <li><strong>【指標の意義】</strong>8月の「施策反動減」に続き、9月は新興ブランドだけでなく<strong>VC・C+Dの主力2ブランドでも新規獲得が約2割減</strong>となった。CYS定期引き上げ経由の新規ACTIVEは8月144件→9月150件で横ばいのため、減少分は<strong>CYS以外の自然獲得層</strong>（1,213件→997件・▲17.8%）に起因する。10月度は、この水準が一時的か構造的か（Google自社運用クリック減の波及有無）を重点確認する。</li>
+    </ul>
+  </div>
+
+  <!-- ===== C+D+K 定期の立ち上がり（2026-09新設） ===== -->
+  <div class="stitle">C+D+K 定期の立ち上がりと既存ブランドへのカニバリ検証（2026年9月新設）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view（snapshot_ym = 2026-08 / 2026-09）　対象：has_cdk=1（定期SKU 110系・Lypo-C Vitamin C+D+K・2026-09-16本格ローンチ／9/7に先行契約あり）<br>
+  <strong>集計方法：</strong>subscription_id単位でLAGにより前月のstatus・brand・has_*を取得し、9月ACTIVEのC+D+K契約を「新規契約／PAUSEDからの復帰／既存ACTIVE契約からの置換（前月ブランド別）」に分解。既存ブランド側は、前月ACTIVE契約が9月にどうなったか（継続／PAUSE／解約／ブランド再分類＝ACTIVE継続のままhas_*が変化）を契約単位で追跡。</div>
+
+  <div class="sg4" style="margin-bottom:16px">
+    <div class="sc">
+      <div class="lb">C+D+K ACTIVE（契約）</div>
+      <div class="vl" style="color:var(--cdk)">138件</div>
+      <div class="sb">単独（brand=C+D+K）96件＋Mixed併存42件／顧客137人</div>
+    </div>
+    <div class="sc">
+      <div class="lb">新規契約・復帰由来</div>
+      <div class="vl">67件</div>
+      <div class="sb">ACTIVEの<strong>48.6%</strong>（新規契約65件＋PAUSED復帰2件）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">既存ACTIVE契約からの置換</div>
+      <div class="vl" style="color:#f59e0b">71件</div>
+      <div class="sb">ACTIVEの<strong>51.4%</strong>（＝既存ブランドとのカニバリ／アップグレード）</div>
+    </div>
+    <div class="sc">
+      <div class="lb">複数ブランド併用顧客</div>
+      <div class="vl" style="color:var(--blue)">51.1%</div>
+      <div class="sb">C+D+K顧客137人中70人（全体平均13.8%の約3.7倍）</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
+    <div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:6px"><span class="dot" style="background:var(--cdk)"></span>C+D+K ACTIVE 138件の前月の出自</div>
+      <table>
+        <thead><tr><th>前月の状態・ブランド</th><th>件数</th><th class="c">構成比</th></tr></thead>
+        <tbody>
+          <tr><td>新規契約（前月レコードなし）</td><td>65</td><td class="c">47.1%</td></tr>
+          <tr><td>PAUSEDからの復帰</td><td>2</td><td class="c">1.4%</td></tr>
+          <tr><td>前月ACTIVE：C+D から置換</td><td>37</td><td class="c">26.8%</td></tr>
+          <tr><td>前月ACTIVE：Mixed から置換</td><td>19</td><td class="c">13.8%</td></tr>
+          <tr><td>前月ACTIVE：C+Cera から置換</td><td>10</td><td class="c">7.2%</td></tr>
+          <tr><td>前月ACTIVE：VC から置換</td><td>5</td><td class="c">3.6%</td></tr>
+          <tr class="tot"><td>合計（9月末ACTIVE）</td><td>138</td><td class="c">100.0%</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:8px">※C+D+K単独（brand='C+D+K'）96件の内訳は、新規56件＋置換40件（C+D 28・C+Cera 6・VC 3・Mixed 3）。Mixed併存42件の内訳は、新規9件＋置換31件（Mixed 16・C+D 9・C+Cera 4・VC 2）＋PAUSED復帰2件。</div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:6px">既存ブランド：前月ACTIVE契約の9月の動き</div>
+      <table>
+        <thead><tr><th>起点ブランド（前月ACTIVE）</th><th>VC</th><th>C+D</th></tr></thead>
+        <tbody>
+          <tr><td>前月ACTIVE契約数</td><td>12,553</td><td>9,855</td></tr>
+          <tr><td>継続（同ブランドでACTIVE）</td><td>11,702（93.2%）</td><td>9,201（93.4%）</td></tr>
+          <tr><td>PAUSEDへ</td><td>482（3.8%）</td><td>351（3.6%）</td></tr>
+          <tr><td>CANCELLEDへ</td><td>220（1.8%）</td><td>175（1.8%）</td></tr>
+          <tr><td>ブランド再分類（ACTIVE継続・has_*が変化）</td><td>149（1.2%）</td><td>128（1.3%）</td></tr>
+          <tr><td style="padding-left:22px;color:var(--muted)">→ C+D へ</td><td>125</td><td>—</td></tr>
+          <tr><td style="padding-left:22px;color:var(--muted)">→ VC へ</td><td>—</td><td>65</td></tr>
+          <tr><td style="padding-left:22px;color:var(--muted)">→ <strong>C+D+K へ</strong></td><td>11</td><td><strong>51</strong></td></tr>
+          <tr><td style="padding-left:22px;color:var(--muted)">→ C+Cera へ</td><td>18</td><td>33</td></tr>
+          <tr><td style="padding-left:22px;color:var(--muted)">→ MINERALion へ</td><td>9</td><td>9</td></tr>
+          <tr><td style="padding-left:22px;color:var(--muted)">→ SKINBEAUTY へ</td><td>1</td><td>5</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:8px">※再分類の内訳は1契約が複数ブランドのSKUを含む場合に重複するため、合計は再分類件数と一致しない。</div>
+    </div>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 C+D+K 定期の立ち上がり 考察（2026年9月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
+    <ul>
+      <li><strong>C+D+K ACTIVE 138件のうち「純粋な新規契約・復帰」は67件（48.6%）、残る71件（51.4%）は既存ACTIVE契約（C+D 37・Mixed 19・C+Cera 10・VC 5）からのSKU置換。</strong>置換契約の平均継続回数が長い（C+D→C+D+K単独28件で平均13.2回）ことから、長期C+D継続者が上位商品へ切り替える「アップグレード型」が中心。新規獲得の入口としての寄与は、全社ACTIVE純減（▲235件）を埋めるには小さい。</li>
+      <li><strong>C+Dのカニバリは限定的で、ファミリー合算ではむしろ増加。</strong>C+D前月ACTIVE契約9,855件のうち、C+D+Kへ置換されたのは51件（0.5%）にとどまる。C+D単体ACTIVEは▲77件（9,855→9,778）だが、C+Dファミリー合算（C+D＋C+D+K）は+60件（9,855→9,915）。VCからC+D+Kへの置換は11契約（0.1%）と軽微。</li>
+      <li><strong>C+Ceraからの置換が10契約あり、C+Cera ACTIVE▲85件の一因（約12%）。</strong>C+D+K顧客の併用先はC+Ceraが最多（延べ37人）で、C+Cera利用者がC+D+Kにも手を伸ばす動きがある。C+Ceraの停止率急上昇（25.1%）とあわせ、ブランド間の優先順位が動き始めている兆候として10月度も追跡する。</li>
+      <li><strong>契約内容：</strong>コースは1ヶ月56件（40.6%）・2ヶ月54件（39.1%）・3ヶ月26件（18.8%）・28日2件（1.4%）。単独契約の平均定期単価は¥15,365で、C+D（¥14,166）より+¥1,199。<strong>置換71契約の前月→当月の単価は平均¥18,623→¥21,584（+¥2,962）で、78.9%（56契約）が単価上昇</strong>（C+D→C+D+K単独28契約は¥14,868→¥17,719・+19.2%）。置換は客単価を押し上げるアップグレード型で、離脱防止というより上位化の動き。解約3件・PAUSED4件（停止率2.8%）は観測期間が最大1ヶ月未満のため、評価は10月度以降。</li>
+      <li><strong>【留意】</strong>ACTIVE継続のままブランドが変わる「再分類」はVC 149契約・C+D 128契約（契約単位）。その大半は<strong>VC→C+D（125契約）・C+D→VC（65契約）の相互置換</strong>であり、C+D+Kとは別の動き。C+D+Kは「置換先」としては存在感を持ち始めたが、既存ブランド間の乗り換えのほうが規模は大きい（なお下記フロー分析の脚注の再分類人数は顧客単位のため単位が異なる）。</li>
+    </ul>
+  </div>
+
+  <!-- ===== CYS定期引き上げと新規ACTIVE（2026-09新設） ===== -->
+  <div class="stitle">CYS定期引き上げ（cys_11cp_get）と新規ACTIVEの関係（2026年9月新設）<span class="ds-mixed">Shopify受注（タグ）＋Shopify定期DB</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.shopify_orders（<code>cys_11cp_get</code>タグ保有顧客・2026-09-30までの注文／test=0・キャンセル除外）× spic-core.public.sn_subscription_history_view（snapshot_ym = 2026-08 / 2026-09）<br>
+  <strong>集計方法：</strong>CYSステップ配信（11包プレゼント）で定期へ引き上げた顧客（<code>cys_11cp_get</code>保有・全期間356人＝資格者内355人＋資格者外1人）を顧客IDで定期DBに結合し、当月の新規アクティブ契約（前月ACTIVEでない契約）と9月末の定期状況を抽出。タブ⑤のCYS最終評価（9/30締め）と同一定義。</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
+    <div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:6px">CYS引き上げ経由の新規ACTIVE契約（契約単位・8月 vs 9月）</div>
+      <table>
+        <thead><tr><th>項目</th><th>2026-08</th><th style="background:#fff0d8;color:#92400e;font-weight:800">2026-09 ★今月</th><th>前月比</th></tr></thead>
+        <tbody>
+          <tr><td><span class="dot" style="background:var(--vc)"></span>VC（has_vc）</td><td>77</td><td style="background:#fff8e8;font-weight:700">67</td><td><span class="badge b">▲10</span></td></tr>
+          <tr><td><span class="dot" style="background:var(--cd)"></span>C+D（has_cd）</td><td>70</td><td style="background:#fff8e8;font-weight:700">85</td><td><span class="badge a">+15</span></td></tr>
+          <tr><td><span class="dot" style="background:var(--cdk)"></span>C+D+K（has_cdk）</td><td>0</td><td style="background:#fff8e8;font-weight:700">1</td><td><span class="badge a">+1</span></td></tr>
+          <tr class="tot"><td>CYS引き上げ経由 新規ACTIVE契約（ユニーク）</td><td>144</td><td style="background:#fff0d8;font-weight:700">150</td><td><span class="badge a">+6</span></td></tr>
+          <tr><td>全社 新規ACTIVE契約（ユニーク）</td><td>1,357</td><td style="background:#fff8e8;font-weight:700">1,147</td><td><span class="badge b">▲210</span></td></tr>
+          <tr><td>　CYS引き上げの占有率</td><td>10.6%</td><td style="background:#fff8e8;font-weight:700">13.1%</td><td>+2.5pt</td></tr>
+          <tr class="tot"><td>CYSを除く 新規ACTIVE契約（自然獲得）</td><td>1,213</td><td style="background:#fff0d8;font-weight:700">997</td><td><span class="badge b">▲216（▲17.8%）</span></td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:8px">※VC・C+Dの行はhas_*フラグ基準（Mixed契約が両方に計上されるため、合計とは一致しない）。9月のCYS経由150件の契約ブランド内訳（brand列）：C+D 82・VC 64・Mixed 3・C+D+K 1。</div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:6px">引き上げ顧客（cys_11cp_get）の9月末の定期状況（顧客単位）</div>
+      <table>
+        <thead><tr><th>引き上げ月（初回get）</th><th>人数</th><th>9月末ACTIVE保有</th><th class="c">保有率</th></tr></thead>
+        <tbody>
+          <tr><td>2026-07</td><td>23</td><td>11</td><td class="c">47.8%</td></tr>
+          <tr><td>2026-08</td><td>166</td><td>117</td><td class="c">70.5%</td></tr>
+          <tr><td>2026-09</td><td>167</td><td>148</td><td class="c">88.6%</td></tr>
+          <tr class="tot"><td>合計</td><td>356</td><td>276</td><td class="c">77.5%</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:8px">※「ACTIVE保有」は1契約以上がACTIVEの顧客。9月get分167人のうち148人が9月中に新規ACTIVE契約を発生（残19人は全員契約を持つが、9月末時点でACTIVE契約なし＝PAUSED/CANCELLEDのみ）。8月get分166人の9月末PAUSED契約保有は38人・CANCELLED契約保有は32人（複数契約の重複あり）。</div>
+    </div>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 CYS定期引き上げ 考察（2026年9月）<span class="ds-mixed" style="font-size:9px;vertical-align:middle">Shopify受注＋定期DB</span></div>
+    <ul>
+      <li><strong>CYS定期引き上げ（11包プレゼント）は9月の新規ACTIVE契約の13.1%（150件）を占め、8月（10.6%・144件）から占有率は上昇。</strong>ただし件数はほぼ横ばいであり、全社の新規ACTIVE減（▲210件）はCYS以外の自然獲得（1,213件→997件）の減少が原因。CYS施策は「定期獲得の下支え」にはなったが、獲得全体の減速を打ち消す規模ではない。</li>
+      <li><strong>C+Dの新規ACTIVE（445件）の19.1%（85件）がCYS引き上げ経由</strong>（VCは12.3%・67件）。C+Dは8月にCYS経由70件（13.5%）だったのが9月は85件に増えており、CYS最終リマインド（9/14〜17）の効果がC+D側に強く出た。CYSを除くとC+Dの自然獲得は449件→360件（▲19.8%）。</li>
+      <li><strong>引き上げ顧客の定着：</strong>9月get分は9月末ACTIVE保有率88.6%と高いが、8月get分は70.5%（9月末時点で1ヶ月経過）まで低下。8月get分の約2割強にPAUSED契約、約2割にCANCELLED契約があり、「11包プレゼント目当ての初回のみ受取」による早期離脱が一定割合含まれる。<strong>9月get分（167人）も2回目以降の継続確認が必要</strong>で、10月度は2回目決済の到達率をトラッキングする。</li>
+      <li>タブ⑤のCYS評価（資格者2,150人中355人＝16.5%の引き上げ率・新規22.0%／既存11.6%）と整合。定期引き上げは<strong>既存ACTIVE顧客の上乗せではなく、新規ACTIVE契約の創出</strong>として定期DBに反映されている（150件すべて前月ACTIVEでない契約）。</li>
+    </ul>
+  </div>
+
+  <!-- 定期コース別ACTIVE件数構成 -->
+  <div class="stitle">定期コース別 ACTIVE件数構成（2026年9月末）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view（snapshot_ym = 2026-09）　ブランド × 周期（1ヶ月・2ヶ月・3ヶ月・28日）の現在地点の内訳<br>
+  <strong>集計方法：</strong>snapshot_ym='2026-09'でフィルタ → has_*フラグ（C+D+Kはhas_cdk）× 周期（cycle_count×cycle_unit）でGROUP BY COUNT。Mixed契約を各ブランドに包含した正確値。「前月差」は停止率（PAUSED÷(ACTIVE+PAUSED)）の前月（2026-08）からのポイント差（赤＝悪化）。C+Cera・SKINBEAUTY・MINERALion・C+D+Kは新興ブランドのためACTIVE件数の多い順に表示。</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
+    <div>
+      <table>
+        <thead><tr><th>VC コース別ACTIVE</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>停止率</th><th>前月差</th></tr></thead>
+        <tbody>
+          <tr><td>1ヶ月定期</td><td>5,857</td><td>12,223</td><td>12,697</td><td><span class="badge b">67.6%</span></td><td><span class="dn">+1.0pt</span></td></tr>
+          <tr><td>2ヶ月定期</td><td>2,825</td><td>4,125</td><td>4,048</td><td><span class="badge b">59.4%</span></td><td><span class="dn">+0.6pt</span></td></tr>
+          <tr><td>3ヶ月定期</td><td>3,408</td><td>5,039</td><td>4,624</td><td><span class="badge b">59.7%</span></td><td><span class="dn">+0.4pt</span></td></tr>
+          <tr><td>28日定期</td><td>243</td><td>87</td><td>60</td><td><span class="badge w">26.4%</span></td><td><span class="dn">+3.8pt</span></td></tr>
+          <tr class="tot"><td>合計</td><td>12,333</td><td>21,474</td><td>21,429</td><td><span class="badge b">63.5%</span></td><td><span class="dn">+0.7pt</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>C+D コース別ACTIVE</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>停止率</th><th>前月差</th></tr></thead>
+        <tbody>
+          <tr><td>1ヶ月定期</td><td>4,794</td><td>5,156</td><td>4,156</td><td><span class="badge b">51.8%</span></td><td><span class="dn">+1.0pt</span></td></tr>
+          <tr><td>2ヶ月定期</td><td>2,239</td><td>1,862</td><td>1,383</td><td><span class="badge b">45.4%</span></td><td><span class="dn">+0.5pt</span></td></tr>
+          <tr><td>3ヶ月定期</td><td>2,539</td><td>2,175</td><td>1,568</td><td><span class="badge b">46.1%</span></td><td><span class="dn">+0.5pt</span></td></tr>
+          <tr><td>28日定期</td><td>206</td><td>55</td><td>44</td><td><span class="badge n">21.1%</span></td><td><span class="dn">+3.3pt</span></td></tr>
+          <tr class="tot"><td>合計</td><td>9,778</td><td>9,248</td><td>7,151</td><td><span class="badge b">48.6%</span></td><td><span class="dn">+0.8pt</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
+    <div>
+      <table>
+        <thead><tr><th>C+D+K コース別ACTIVE</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>停止率</th><th>前月差</th></tr></thead>
+        <tbody>
+          <tr><td>1ヶ月定期</td><td>56</td><td>3</td><td>0</td><td><span class="badge n">5.1%</span></td><td>—</td></tr>
+          <tr><td>2ヶ月定期</td><td>54</td><td>0</td><td>2</td><td><span class="badge n">0.0%</span></td><td>—</td></tr>
+          <tr><td>3ヶ月定期</td><td>26</td><td>1</td><td>1</td><td><span class="badge n">3.7%</span></td><td>—</td></tr>
+          <tr><td>28日定期</td><td>2</td><td>0</td><td>0</td><td><span class="badge n">0.0%</span></td><td>—</td></tr>
+          <tr class="tot"><td>合計</td><td>138</td><td>4</td><td>3</td><td><span class="badge n">2.8%</span></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>C+Cera コース別ACTIVE</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>停止率</th><th>前月差</th></tr></thead>
+        <tbody>
+          <tr><td>1ヶ月定期</td><td>339</td><td>78</td><td>53</td><td><span class="badge n">18.7%</span></td><td><span class="dn">+4.5pt</span></td></tr>
+          <tr><td>28日定期</td><td>258</td><td>99</td><td>92</td><td><span class="badge w">27.7%</span></td><td><span class="dn">+4.6pt</span></td></tr>
+          <tr><td>3ヶ月定期</td><td>232</td><td>102</td><td>65</td><td><span class="badge w">30.5%</span></td><td><span class="dn">+8.4pt</span></td></tr>
+          <tr><td>2ヶ月定期</td><td>197</td><td>65</td><td>28</td><td><span class="badge w">24.8%</span></td><td><span class="dn">+4.3pt</span></td></tr>
+          <tr class="tot"><td>合計</td><td>1,026</td><td>344</td><td>238</td><td><span class="badge w">25.1%</span></td><td><span class="dn">+5.5pt</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
+    <div>
+      <table>
+        <thead><tr><th>SKINBEAUTY コース別ACTIVE</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>停止率</th><th>前月差</th></tr></thead>
+        <tbody>
+          <tr><td>28日定期</td><td>263</td><td>200</td><td>180</td><td><span class="badge b">43.2%</span></td><td><span class="dn">+5.4pt</span></td></tr>
+          <tr><td>2ヶ月定期</td><td>93</td><td>29</td><td>21</td><td><span class="badge w">23.8%</span></td><td><span class="dn">+3.5pt</span></td></tr>
+          <tr><td>1ヶ月定期</td><td>46</td><td>15</td><td>11</td><td><span class="badge w">24.6%</span></td><td><span class="up">▲1.8pt</span></td></tr>
+          <tr><td>3ヶ月定期</td><td>45</td><td>25</td><td>10</td><td><span class="badge w">35.7%</span></td><td><span class="dn">+6.5pt</span></td></tr>
+          <tr class="tot"><td>合計</td><td>447</td><td>269</td><td>222</td><td><span class="badge w">37.6%</span></td><td><span class="dn">+4.5pt</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>MINERALion コース別ACTIVE</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>停止率</th><th>前月差</th></tr></thead>
+        <tbody>
+          <tr><td>1ヶ月定期</td><td>287</td><td>89</td><td>84</td><td><span class="badge w">23.7%</span></td><td><span class="dn">+3.8pt</span></td></tr>
+          <tr><td>3ヶ月定期</td><td>199</td><td>44</td><td>30</td><td><span class="badge n">18.1%</span></td><td><span class="dn">+1.3pt</span></td></tr>
+          <tr><td>2ヶ月定期</td><td>162</td><td>30</td><td>20</td><td><span class="badge n">15.6%</span></td><td><span class="dn">+5.9pt</span></td></tr>
+          <tr><td>28日定期</td><td>21</td><td>3</td><td>4</td><td><span class="badge n">12.5%</span></td><td><span class="dn">+6.9pt</span></td></tr>
+          <tr class="tot"><td>合計</td><td>669</td><td>166</td><td>138</td><td><span class="badge n">19.9%</span></td><td><span class="dn">+3.6pt</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--muted);margin-top:-2px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">
+    ※C+D+Kは今月が初出のため「前月差」は算出不可（—）。C+D+Kの停止率2.8%（PAUSED 4件）は観測期間が1ヶ月未満のため評価対象外。
+  </div>
+
+  <!-- ACTIVE顧客継続回数分布 -->
+  <div class="stitle">ACTIVE顧客の継続回数（決済完了回数）分布<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view（snapshot_ym = 2026-09）　ACTIVEユーザーの「何回目か」の分布　ロイヤルティ構造と長期顧客比率を確認<br>
+  <strong>集計方法：</strong>snapshot_ym='2026-09'・status='ACTIVE'でフィルタ → completed_payments（決済完了回数）を1回・2回・3〜6回・7回以上にグルーピングしてCOUNT集計。<strong>brand!='Mixed'かつhas_*=1の契約のみ対象</strong>（8月度までと同一定義・8月値を完全再現して検証済み）。C+D+Kは2026-09から計上。</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
+    <div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px;padding:0 4px">VC ACTIVE — 継続回数分布（2026年9月）</div>
+      <div class="chart-wrap" style="height:200px">
+        <canvas id="chartLoyaltyVC"></canvas>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px;padding:0 4px">C+D ACTIVE — 継続回数分布（2026年9月）</div>
+      <div class="chart-wrap" style="height:200px">
+        <canvas id="chartLoyaltyCD"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <table style="margin-bottom:8px">
+    <thead>
+      <tr>
+        <th>ブランド</th>
+        <th>平均継続回数<br>（2026-09・前月差）</th>
+        <th>1回（新規）</th>
+        <th>2回</th>
+        <th>3〜6回</th>
+        <th>7回以上</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot" style="background:var(--vc)"></span>VC</td>
+        <td><strong>13.6回</strong>（+0.3）</td>
+        <td>835件（8.1%）</td><td>716件（6.9%）</td><td>2,070件（20.0%）</td><td>6,735件（65.0%）</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cd)"></span>C+D</td>
+        <td><strong>13.7回</strong>（+0.3）</td>
+        <td>618件（8.0%）</td><td>497件（6.5%）</td><td>1,452件（18.9%）</td><td>5,130件（66.6%）</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cdk)"></span>C+D+K <span class="adebis-new">🆕</span></td>
+        <td><strong>6.0回</strong>（新規）</td>
+        <td>56件（58.3%）</td><td>7件（7.3%）</td><td>8件（8.3%）</td><td>25件（26.0%）</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td>
+        <td><strong>8.5回</strong>（+0.8）</td>
+        <td>90件（11.8%）</td><td>98件（12.8%）</td><td>276件（36.1%）</td><td>300件（39.3%）</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td>
+        <td><strong>4.9回</strong>（+0.6）</td>
+        <td>56件（13.7%）</td><td>64件（15.6%）</td><td>171件（41.8%）</td><td>118件（28.9%）</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--mi)"></span>MINERALion</td>
+        <td><strong>3.8回</strong>（+0.5）</td>
+        <td>115件（25.0%）</td><td>116件（25.2%）</td><td>173件（37.6%）</td><td>56件（12.2%）</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">
+    ⚠️ <strong>C+D+Kの継続回数の読み方：</strong>completed_paymentsは「契約単位の累計決済回数」であり、C+D等からSKU置換された契約は<strong>旧SKU時代の決済回数を引き継ぐ</strong>。C+D+K単独96件のうち「7回以上」の25件（26.0%）は置換契約由来で、1回目の56件（58.3%）が実質的な新規契約。平均6.0回は新規と置換の混在値のため、他ブランドとの単純比較は不適切。
+  </div>
+
+  <!-- 平均定期単価推移 -->
+  <div class="stitle">ACTIVE顧客の平均定期単価（payment_amount）推移<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view　カラム：payment_amount（税込・円）<br>
+  <strong>集計方法：</strong>snapshot_ym × ブランドでGROUP BY → status='ACTIVE'の顧客のAVG(payment_amount)を算出（税込）。<strong>brand!='Mixed'かつhas_*=1の契約のみ対象</strong>（8月度までと同一定義。8月値を完全再現して検証済み）。単価は定期契約上の予定請求金額であり、実際の決済金額とは一部差異が生じる場合あり（クーポン適用等）。</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ブランド</th>
+        <th>2025-12 ACTIVE</th>
+        <th>2026-03 ACTIVE</th>
+        <th>2026-06 ACTIVE</th>
+        <th>2026-07 ACTIVE</th>
+        <th>2026-08 ACTIVE</th>
+        <th style="background:#fff0d8;color:#92400e;font-weight:800">2026-09 ACTIVE ★今月</th>
+        <th>変化</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot" style="background:var(--vc)"></span>VC</td>
+        <td>¥12,760</td><td>¥12,906</td><td>¥13,077</td><td>¥13,111</td><td>¥13,106</td><td style="background:#fff8e8;font-weight:700">¥13,154</td>
+        <td><span class="badge n">ほぼ横ばい（+¥48）</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cd)"></span>C+D</td>
+        <td>¥14,300</td><td>¥14,136</td><td>¥14,208</td><td>¥14,257</td><td>¥14,185</td><td style="background:#fff8e8;font-weight:700">¥14,166</td>
+        <td><span class="badge n">ほぼ横ばい（▲¥19）</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cdk)"></span>C+D+K <span class="adebis-new">🆕</span></td>
+        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td style="background:#fff8e8;font-weight:700">¥15,365</td>
+        <td><span class="badge n">新規（C+D比 +¥1,199）</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td>
+        <td>—</td><td>¥18,643</td><td>¥18,772</td><td>¥18,754</td><td>¥18,692</td><td style="background:#fff8e8;font-weight:700">¥18,860</td>
+        <td><span class="up">+¥168（+0.9%）</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td>
+        <td>¥14,504</td><td>¥14,269</td><td>¥14,520</td><td>¥14,551</td><td>¥14,646</td><td style="background:#fff8e8;font-weight:700">¥14,608</td>
+        <td><span class="badge n">ほぼ横ばい（▲¥38）</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--mi)"></span>MINERALion</td>
+        <td>—</td><td>¥10,413</td><td>¥10,491</td><td>¥10,631</td><td>¥10,398</td><td style="background:#fff8e8;font-weight:700">¥10,531</td>
+        <td><span class="up">+¥133（+1.3%）</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 定期便4項目 総括考察 -->
+  <div class="monthly-insight" style="margin-top:16px">
+    <div class="mi-title">💡 定期便ヘルス 4項目 総括考察（ACTIVE推移・コース構成・継続回数分布・平均単価）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
+    <ul>
+      <li><strong>【ブランド別ACTIVE推移】全社ACTIVE 22,023件は前月比▲235件の純減に転じた。</strong>VC▲220・C+Cera▲85・C+D▲77・SKINBEAUTY▲18が減少し、MINERALion+5・C+D+K+138（新規計上）が増加。C+D+Kは約半数が既存契約からの置換のため、全社の純減を埋めるには至らなかった。C+Dファミリー合算（C+D＋C+D+K）は+60件で、C+D単体の減少にはC+D+Kへの置換が含まれる。</li>
+      <li><strong>【コース別ACTIVE構成】停止率は新興ブランドを中心に全面的に悪化。</strong>C+Cera 19.6%→25.1%（+5.5pt・全コースで上昇、特に3ヶ月定期22.1%→30.5%）、SKINBEAUTY 33.1%→37.6%（+4.5pt）、MINERALion 16.3%→19.9%（+3.6pt）。VC 62.8%→63.5%・C+D 47.8%→48.6%と主力も小幅悪化。VC1ヶ月定期（5,857件・停止率67.6%）が最大の課題層であることに変わりなし。C+Ceraの停止率上昇は「施策（CTC）で獲得した契約の早期離脱」が全コースで顕在化した形で、10月度も上昇が続くか要確認。</li>
+      <li><strong>【ACTIVE顧客の継続回数分布】VC（13.6回）・C+D（13.7回）は前月からさらに+0.3回、C+Cera（8.5回・+0.8）・SKINBEAUTY（4.9回・+0.6）・MINERALion（3.8回・+0.5）も上昇。</strong>ただし新興ブランドの上昇は、新規流入の減少で「1回目」比率が低下した構成変化によるもの（C+Cera 18.4%→11.8%、MINERALion 29.9%→25.0%、SKINBEAUTY 16.6%→13.7%）であり、既存顧客のロイヤルティが急に高まったわけではない。「新規が入ってこないから平均が上がる」点に注意。</li>
+      <li><strong>【平均定期単価推移】主力・新興ともにほぼ横ばい。</strong>VC ¥13,154（+¥48）・C+D ¥14,166（▲¥19）・SKINBEAUTY ¥14,608（▲¥38）は±0.5%未満。C+Cera ¥18,860（+0.9%）・MINERALion ¥10,531（+1.3%）は小幅上昇し、MINERALionは8月の下落（▲2.2%）から回復して2026-07の水準（¥10,631）に近づいた。<strong>C+D+Kは¥15,365でC+Dより+¥1,199</strong>（単独96件）。置換契約そのものの前月→当月の単価変化を見ると、<strong>C+D→C+D+K置換28契約は¥14,868→¥17,719（+¥2,851・+19.2%・25契約で上昇）</strong>、置換71契約全体でも78.9%（56契約）で単価が上昇しており、置換が進むほど「ファミリー合算の平均単価」を押し上げる構造（アップグレード型）。</li>
+    </ul>
+  </div>
+
+  <!-- ===== VC/C+D定期からのフロー分析（統合） ===== -->
+  <div class="stitle">VC/C+D定期からのフロー分析（統合）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view　分析目的：VCまたはC+DのACTIVEを保有していた顧客が翌月に離脱した際、他ブランドへ「スイッチ」したのか、どこにも移らず「解約」したのかを顧客単位で追跡する。会社としてはVC/C+Dから他アイテムへのスイッチは問題ないが、どこにも移らず解約する層の規模を正確に把握することが目的<br>
+  <strong>集計方法：</strong>customer_id×snapshot_ymでブランド別ACTIVE保有フラグ（has_vc/has_cd/<strong>has_cdk</strong>/has_ccera/has_skinbeauty/has_mineralion）を作成 → LAG関数で前月フラグと比較。「離脱」＝前月ACTIVE保有・当月ACTIVEなし。離脱者のうち他ブランドを1つでも保有していれば「残留」、いずれも保有していなければ「完全離脱」（<strong>2026-09度よりC+D+Kを「他ブランド」の判定に追加</strong>）。「クロスセル」＝元ブランドを継続しつつ新たに別ブランドを追加。<strong>C+D→C+D+Kへの置換は「C+D離脱→他ブランド（C+D+K）残留」として計上される</strong>（会社視点では離脱ではなくアップグレード）。C+D+K起点の離脱分析は、前月保有者がいないため10月度から開始。</div>
+
+  <div class="flow-group-label">① VC定期からのフロー分析 ＋ ② C+D定期からのフロー分析　─　主要KPI（2026年9月）</div>
+  <div class="flow-kpi-grid">
+    <div class="flow-kpi" style="border-top:3px solid var(--vc)">
+      <div class="lb">VC ACTIVE保有者（前月）</div>
+      <div class="vl">12,430</div>
+      <div class="sb">2026-09時点の前月VC保有者数</div>
+    </div>
+    <div class="flow-kpi" style="border-top:3px solid var(--red)">
+      <div class="lb">VC離脱数（2026-09）</div>
+      <div class="vl" style="color:var(--red)">825</div>
+      <div class="sb">離脱率 6.6%（前月6.2%）</div>
+    </div>
+    <div class="flow-kpi" style="border-top:3px solid var(--muted)">
+      <div class="lb">完全離脱（全ブランド脱落）</div>
+      <div class="vl">649</div>
+      <div class="sb">VC離脱者の <strong>78.7%</strong>（前月83.4%）</div>
+    </div>
+    <div class="flow-kpi" style="border-top:3px solid var(--green)">
+      <div class="lb">他ブランドに残留（VC離脱者）</div>
+      <div class="vl" style="color:var(--green)">176</div>
+      <div class="sb">VC離脱者の <strong>21.3%</strong> が他ブランドに流出（C+D 139人・C+D+K 16人）</div>
+    </div>
+    <div class="flow-kpi" style="border-top:3px solid var(--cd)">
+      <div class="lb">C+D ACTIVE保有者（前月）</div>
+      <div class="vl">9,743</div>
+      <div class="sb">2026-09時点の前月C+D保有者数</div>
+    </div>
+    <div class="flow-kpi" style="border-top:3px solid var(--red)">
+      <div class="lb">C+D離脱数（2026-09）</div>
+      <div class="vl" style="color:var(--red)">623</div>
+      <div class="sb">離脱率 6.4%（前月6.1%）</div>
+    </div>
+    <div class="flow-kpi" style="border-top:3px solid var(--muted)">
+      <div class="lb">完全離脱（全ブランド脱落）</div>
+      <div class="vl">463</div>
+      <div class="sb">C+D離脱者の <strong>74.3%</strong>（前月75.2%）</div>
+    </div>
+    <div class="flow-kpi" style="border-top:3px solid var(--green)">
+      <div class="lb">他ブランドに残留（C+D離脱者）</div>
+      <div class="vl" style="color:var(--green)">160</div>
+      <div class="sb">C+D離脱者の <strong>25.7%</strong> が他ブランドに流出（VC 76人・<strong>C+D+K 64人</strong>）</div>
+    </div>
+  </div>
+
+  <!-- VC離脱者の翌月ブランド保有状況 -->
+  <div class="stitle" style="margin-top:24px">VC離脱者の翌月ブランド保有状況（直近6ヶ月）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">前月VC ACTIVE保有者のうち当月VC ACTIVEでなくなった顧客の、当月時点での他ブランド保有状況</div>
+  <div style="overflow-x:auto;margin-bottom:8px">
+  <table style="min-width:820px">
+    <thead>
+      <tr>
+        <th>月</th>
+        <th>VC離脱数</th>
+        <th>完全離脱</th>
+        <th>完全離脱率</th>
+        <th class="th-cd">C+D保有</th>
+        <th class="th-cdk">C+D+K保有</th>
+        <th class="th-ccera">C+Cera保有</th>
+        <th class="th-mi">MINERALion保有</th>
+        <th class="th-sb">SKINBEAUTY保有</th>
+        <th>他ブランド残留合計※</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2026-04</td><td>895</td><td>724</td><td>80.9%</td><td>138</td><td>—</td><td>45</td><td>11</td><td>1</td><td>171</td></tr>
+      <tr><td>2026-05</td><td>895</td><td>671</td><td>75.0%</td><td>192</td><td>—</td><td>34</td><td>17</td><td>6</td><td>224</td></tr>
+      <tr><td>2026-06</td><td>881</td><td>659</td><td>74.8%</td><td>169</td><td>—</td><td>59</td><td>20</td><td>11</td><td>222</td></tr>
+      <tr><td>2026-07</td><td>807</td><td>631</td><td>78.2%</td><td>129</td><td>—</td><td>48</td><td>17</td><td>9</td><td>176</td></tr>
+      <tr><td>2026-08</td><td>769</td><td>641</td><td>83.4%</td><td>106</td><td>—</td><td>27</td><td>9</td><td>7</td><td>128</td></tr>
+      <tr class="tot"><td><strong>2026-09</strong></td><td><strong>825</strong></td><td><strong>649</strong></td><td><strong>78.7%</strong></td><td><strong>139</strong></td><td><strong>16</strong></td><td><strong>25</strong></td><td><strong>18</strong></td><td><strong>4</strong></td><td><strong>176</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div style="font-size:11px;color:var(--muted);margin-top:-4px;margin-bottom:6px">※ 他ブランド残留合計＝離脱数－完全離脱数（重複保有者がいるため、各ブランド列の単純合算とは一致しない）。C+D+K保有は2026-09から計上（それ以前は発売前のため「—」）。</div>
+  <div class="frozen-note" style="margin-top:0;margin-bottom:16px">
+    ⚠️ <strong>「VC離脱数」と「PAUSE・CANCELLED発生件数（上部セクション）」の乖離について：</strong>
+    2026年9月のVC離脱825人に対し、subscription_id単位の新規PAUSE480件＋新規CANCELLED215件＝695件（84.2%）がステータス遷移として捕捉できる規模。
+    残り130人（15.8%・8月の7.7%から拡大）は契約ステータスがACTIVE継続のまま、SKU構成変更等により<code>has_vc</code>ブランド判定フラグのみが0に変化した「ブランド再分類」が中心で、一時停止・解約は発生していない。
+    9月は契約単位で見ると、VCの前月ACTIVE契約12,553件のうち149契約（1.2%）が再分類された（→C+D 125・→C+Cera 18・→C+D+K 11・→MINERALion 9・→SKINBEAUTY 1／複数ブランドSKU含有による重複あり）。VC→C+Dの再分類が8月の「VC離脱→C+D保有106人」から9月139人へ増えたことと整合する。
+    「VC離脱数」（customer_id単位・ブランド保有フラグの変化で判定）と「新規PAUSE＋新規CANCELLED」（subscription_id単位・ステータス遷移で判定）は測定方法が異なり、数値が一致しない（詳細検証：2026年7月9日実施）。
+  </div>
+
+  <!-- C+D離脱者の翌月ブランド保有状況 -->
+  <div class="stitle">C+D離脱者の翌月ブランド保有状況（直近6ヶ月）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">前月C+D ACTIVE保有者のうち当月C+D ACTIVEでなくなった顧客の、当月時点での他ブランド保有状況（VCと同一ロジックでBQから新規抽出）</div>
+  <div style="overflow-x:auto;margin-bottom:8px">
+  <table style="min-width:820px">
+    <thead>
+      <tr>
+        <th>月</th>
+        <th>C+D離脱数</th>
+        <th>完全離脱</th>
+        <th>完全離脱率</th>
+        <th class="th-vc">VC保有</th>
+        <th class="th-cdk">C+D+K保有</th>
+        <th class="th-ccera">C+Cera保有</th>
+        <th class="th-mi">MINERALion保有</th>
+        <th class="th-sb">SKINBEAUTY保有</th>
+        <th>他ブランド残留合計※</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2026-04</td><td>674</td><td>480</td><td>71.2%</td><td>148</td><td>—</td><td>38</td><td>20</td><td>11</td><td>194</td></tr>
+      <tr><td>2026-05</td><td>647</td><td>480</td><td>74.2%</td><td>125</td><td>—</td><td>36</td><td>14</td><td>7</td><td>167</td></tr>
+      <tr><td>2026-06</td><td>615</td><td>441</td><td>71.7%</td><td>118</td><td>—</td><td>47</td><td>21</td><td>10</td><td>174</td></tr>
+      <tr><td>2026-07</td><td>623</td><td>426</td><td>68.4%</td><td>137</td><td>—</td><td>46</td><td>26</td><td>9</td><td>197</td></tr>
+      <tr><td>2026-08</td><td>593</td><td>446</td><td>75.2%</td><td>108</td><td>—</td><td>23</td><td>20</td><td>9</td><td>147</td></tr>
+      <tr class="tot"><td><strong>2026-09</strong></td><td><strong>623</strong></td><td><strong>463</strong></td><td><strong>74.3%</strong></td><td><strong>76</strong></td><td><strong>64</strong></td><td><strong>42</strong></td><td><strong>22</strong></td><td><strong>12</strong></td><td><strong>160</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div style="font-size:11px;color:var(--muted);margin-top:-4px;margin-bottom:8px">※ 他ブランド残留合計＝離脱数－完全離脱数（重複保有者がいるため、各ブランド列の単純合算とは一致しない）。C+D→C+D+Kの置換はここでは「C+D+K保有」として計上され、会社視点では離脱ではなくアップグレード。9月は契約単位でC+Dの前月ACTIVE契約9,855件のうち128契約（1.3%）が再分類（→VC 65・→C+D+K 51・→C+Cera 33・→MINERALion 9・→SKINBEAUTY 5／重複あり）。</div>
+
+  <!-- クロスセル vs 離脱 月次推移（全期間） -->
+  <div class="stitle" style="margin-top:20px">VC/C+D起点：クロスセル vs 離脱 月次推移（全期間）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">左：VC起点／右：C+D起点。「離脱→他ブランド流出」＝元ブランドを離れたが他ブランド（C+D+K含む）に残留した人数。「継続+クロスセル」＝元ブランドを継続しつつ新たに別ブランド（C+D+K含む）を追加した人数（2025-07〜2026-09・15ヶ月）<br>
+  <span style="color:#92400e">※2026-09度より「離脱→他ブランド流出」系列を全期間で「離脱数−完全離脱数」（上表の「他ブランド残留合計」）に統一して再計算した。前回までのチャートは2026-08のみ上表と一致し、2026-07以前は上表と異なる旧集計値だったため置換（「継続+クロスセル」系列は全期間で再現確認済み・変更なし）。</span></div>
+  <div class="sg2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="chart-wrap" style="height:260px"><canvas id="vcCrossFlowChart"></canvas></div>
+    <div class="chart-wrap" style="height:260px"><canvas id="cdCrossFlowChart"></canvas></div>
+  </div>
+
+  <!-- 離脱者の行先内訳推移 -->
+  <div class="stitle" style="margin-top:8px">VC/C+D離脱者の行先内訳推移（月次）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">左：VC離脱者／右：C+D離脱者。当月の離脱者が「完全離脱」か「どのブランドに残留したか」の内訳（直近6ヶ月・積み上げ棒）。C+D+Kは2026-09のみ計上</div>
+  <div class="sg2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px">
+    <div class="chart-wrap" style="height:260px"><canvas id="vcDestFlowChart"></canvas></div>
+    <div class="chart-wrap" style="height:260px"><canvas id="cdDestFlowChart"></canvas></div>
+  </div>
+
+  <!-- ブランド流出サンキー概要 -->
+  <div class="stitle" style="margin-top:20px">ブランド流出サンキー概要（直近3ヶ月平均）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">2026年7〜9月の3ヶ月平均での流出・流入量まとめ。バーの長さ＝相対規模、数値は右側に表示（割合は離脱者の月平均に対する比率で、重複保有があるため合計は100%を超える）</div>
+
+  <div class="flow-block">
+    <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:14px">【VC離脱者（月平均 ~800人）の行先】</div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:var(--muted)">完全離脱</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:80.0%;background:#d1d5db"></div>
+        <div class="flow-num">631〜649人<span class="pct">約80.0%（最多）</span></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:#166534">→ C+D保有</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:15.6%;background:var(--cd)"></div>
+        <div class="flow-num">~125人<span class="pct">約15.6%（9月139人に増加）</span></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:#065f46">→ C+D+K保有</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:1.0%;background:var(--cdk)"></div>
+        <div class="flow-num">~5人<span class="pct">約0.7%（9月のみ16人）</span></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:#9d174d">→ C+Cera保有</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:4.2%;background:var(--ccera)"></div>
+        <div class="flow-num">~33人<span class="pct">約4.2%（縮小傾向）</span></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:#1e40af">→ MI保有</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:1.8%;background:var(--mi)"></div>
+        <div class="flow-num">~15人<span class="pct">約1.8%（9月18人に増加）</span></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:#92400e">→ SB保有</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:1.0%;background:var(--sb)"></div>
+        <div class="flow-num">~7人<span class="pct">約0.8%</span></div>
+      </div>
+    </div>
+
+    <div style="font-size:12px;font-weight:600;color:var(--muted);margin:22px 0 14px">【C+D離脱者（月平均 ~613人）の行先】</div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:var(--muted)">完全離脱</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:72.6%;background:#d1d5db"></div>
+        <div class="flow-num">426〜463人<span class="pct">約72.6%（最多）</span></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:#c2410c">→ VC保有</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:17.5%;background:var(--vc)"></div>
+        <div class="flow-num">~107人<span class="pct">約17.5%（9月76人に減少）</span></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:#065f46">→ C+D+K保有</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:3.5%;background:var(--cdk)"></div>
+        <div class="flow-num">~21人<span class="pct">約3.5%（9月のみ64人＝9月単月10.3%）</span></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:#9d174d">→ C+Cera保有</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:6.0%;background:var(--ccera)"></div>
+        <div class="flow-num">~37人<span class="pct">約6.0%（9月42人に増加）</span></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:#1e40af">→ MI保有</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:3.7%;background:var(--mi)"></div>
+        <div class="flow-num">~23人<span class="pct">約3.7%</span></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label" style="color:#92400e">→ SB保有</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-bar" style="width:1.6%;background:var(--sb)"></div>
+        <div class="flow-num">~10人<span class="pct">約1.6%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 VC/C+D定期フロー分析 総合考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
+    <ul>
+      <li><strong>「他アイテムへのスイッチ」は引き続き少数派で、大半は「どこにも移らない解約」だが、9月はスイッチ率が前月から上昇した。</strong>完全離脱率はVC 78.7%（前月83.4%）・C+D 74.3%（前月75.2%）へ低下し、他ブランドへのスイッチ率はVC 21.3%（前月16.6%）・C+D 25.7%（前月24.8%）へ上昇。ただし離脱率そのものはVC 6.2%→6.6%・C+D 6.1%→6.4%と悪化しており、離脱者数はVC 825人（前月769人）・C+D 623人（前月593人）と増えている。<strong>完全離脱の絶対数はVC 649人（+8人）・C+D 463人（+17人）で、「引き留められず失う」層は微増。</strong></li>
+      <li><strong>C+D+Kが新たな「受け皿」として登場し、C+D離脱者の最大級の行き先に。</strong>C+D離脱者の他ブランド残留160人のうち、VC 76人（47.5%）・<strong>C+D+K 64人（40.0%）</strong>・C+Cera 42人・MINERALion 22人・SKINBEAUTY 12人。C+D離脱者全体の10.3%が実質的な上位商品へのアップグレードで、これを「会社視点の離脱」から除くとC+Dの実質離脱は559人（離脱率5.7%）。VC離脱者のC+D+Kへの流出は16人（1.9%）と軽微。</li>
+      <li><strong>VC↔C+Dの相互流入が非対称化した。</strong>VC離脱者の翌月C+D保有は139人（16.8%・前月106人）へ+33人増加した一方、C+D離脱者の翌月VC保有は76人（12.2%・前月108人）へ▲32人減少。8月はほぼ対称（106人⇔108人）だったが、9月は<strong>VC→C+Dへの一方向の乗り換えが強まった</strong>（契約単位でもVC→C+D再分類125契約・C+D→VC 65契約）。平均定期単価はC+D（¥14,166）がVC（¥13,154）より約¥1,000高く、この乗り換えは客単価の上昇方向（アップセル）だが、VCの高い停止率（63.5%）を背景にした「VC離れ」の可能性もあり、10月度も追跡する。</li>
+      <li><strong>C+Ceraへの流出は、VC離脱者で25人（前月27人）と横ばい、C+D離脱者で42人（前月23人）と+19人増加。</strong>8月に「受け皿効果が完全に消滅」と評価したが、9月はC+D側で再増加した。MINERALionへの流出もVC離脱者18人（前月9人）と倍増。新興3ブランド（C+Cera・MINERALion・SKINBEAUTY）への流出は、延べ人数（重複保有を含む）でVC離脱者の5.7%（47人）・C+D離脱者の12.2%（76人）。</li>
+      <li><strong>クロスセル（ブランド追加）はVC 67人（前月74人）・C+D 60人（前月80人）とともに縮小が続く。</strong>C+Dは3ヶ月連続の減少（104→80→60人）。「継続+クロスセル」が離脱→他ブランド流出（VC 176人・C+D 160人）を下回る状態が続き、ブランドを「追加」するより「乗り換える」動きが優勢。</li>
+      <li><strong>【施策優先度】完全離脱層（VC 649人＋C+D 463人＝月1,112人）への引き留めは引き続き最大インパクト施策。</strong>併せて、C+D+Kへのアップグレード導線（C+D長期継続者・1ヶ月/2ヶ月定期層）を意図的に設計すれば、離脱ではなく単価アップ（C+D→C+D+K置換の実績で平均+¥2,851／契約）として取り込める余地がある。</li>
+    </ul>
+  </div>
+
+  <div class="notes">
+    <div class="nt">📌 定期便分析 総合注目ポイント（2026年9月度）</div>
+    <ul>
+      <li><strong>【ACTIVEは▲235件の純減に転換。主因は「新規獲得の減少」】</strong>全社ACTIVE 22,023件は2026年1月以来の大幅減。契約ユニークで新規アクティブが1,357件→1,147件（▲210件）、PAUSE・CANCELLED発生が1,350件→1,382件（+32件）。純減への寄与は新規減が約87%を占め、「離脱が増えた」より「入ってこない」ことが課題。VC・C+Dの主力2ブランドでも新規が約2割減（VC 544件・C+D 445件）。</li>
+      <li><strong>【CYS定期引き上げは下支えにとどまり、自然獲得が▲17.8%】</strong>CYS定期引き上げ（cys_11cp_get）経由の新規ACTIVE契約は8月144件→9月150件で横ばい（新規ACTIVEの13.1%・C+Dでは19.1%）。CYSを除く自然獲得は1,213件→997件に減少。タブ⑤のGoogle自社運用クリック急減（GSA指名▲69.7%・P-MAX▲72.3%・要因未特定）との関連は<strong>仮説段階</strong>で、広告運用担当への確認と、10月の新規ACTIVE水準（同様に低迷するか）の確認が必要。</li>
+      <li><strong>【C+Cera：停止率25.1%（前月19.6%）・ACTIVE▲85件の2ヶ月連続純減】</strong>新規アクティブ51件（施策終了後の最低）に対しPAUSE・CANCELLED発生118件（過去最大）。全コースで停止率が上昇（3ヶ月定期は30.5%）。SKINBEAUTY（停止率37.6%・ACTIVE▲18件）・MINERALion（停止率19.9%・新規58件＜マイナス61件で初めて純減）にも悪化の兆し。施策終了後に獲得した契約の早期離脱が新興ブランド全体に広がりつつある。</li>
+      <li><strong>【C+D+Kは138件で立ち上がるも約半数（71件）は既存契約の置換】</strong>新規契約・復帰は67件、置換71件（C+D 37・Mixed 19・C+Cera 10・VC 5）。置換契約は平均単価が¥18,623→¥21,584（+¥2,962）とアップグレード型。顧客の51.1%が複数ブランド併用の上位クロスセル層が中心で、C+Dファミリー合算ACTIVEは+60件（9,855→9,915）。C+Dへのカニバリは前月ACTIVE契約の0.5%（51契約）と限定的。10月度は新規契約の積み上がりと、2回目決済到達・停止率を確認。</li>
+      <li><strong>【最優先施策：VC PAUSEDへの再開設計（21,474件）は変わらず最大の打ち手】</strong>VC PAUSEDは+305件と積み上がりが続き、VC ACTIVE（12,333件）の1.74倍。再開施策の潜在インパクトは最大で、緊急性はむしろ高まっている。</li>
+      <li><strong>【FY2027末ACTIVE目標達成見通し】</strong>現在22,023件に対し目標27,000件（残4,977件・達成率81.6%・前月82.4%から後退）。新規契約の獲得力（9月ユニーク1,147件/月）が離脱（月1,382件）を下回る限り純減が続くため、①自然獲得の回復、②C+D+Kの新規契約拡大、③VC PAUSED再開の3本立てでの対策が焦点。</li>
+    </ul>
+  </div>
+
+  <div class="frozen-divider"><span class="fd-badge">🧊 更新停止（凍結） ─ 最終更新：2026年6月度</span></div>
+  <div class="frozen-note">以下2セクションは2026年6月度をもって更新を停止し凍結扱いとする。今後は指示があるまで毎月の更新は不要。内容は2026年6月度時点のまま保持。</div>
+  <div class="frozen-section">
+  <!-- 解約理由 -->
+  <div class="stitle">解約理由 構成比（VC・C+D）<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view（snapshot_ym = 2026-06）<br>
+  <strong>集計方法：</strong>has_vc / has_cd = 1でフィルタ → status='CANCELLED'の解約理由でGROUP BY COUNT。累計件数ベースのため当月解約のみではなく全期間累積の構成比を示す。</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px">
+    <div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:6px"><span class="dot" style="background:var(--vc)"></span>VC 解約理由（比率・2026年6月末）</div>
+      <table>
+        <thead><tr><th>解約理由</th><th>累計件数</th><th>構成比</th></tr></thead>
+        <tbody>
+          <tr><td>高いから</td><td>4,288</td><td>21.0%</td></tr>
+          <tr><td>商品が余っている</td><td>3,655</td><td>17.9%</td></tr>
+          <tr><td>他サプリを試す</td><td>2,137</td><td>10.5%</td></tr>
+          <tr><td>実感・変化なし</td><td>1,466</td><td>7.2%</td></tr>
+          <tr><td>美味しくない</td><td>1,165</td><td>5.7%</td></tr>
+          <tr><td>特典が期待はずれ</td><td>455</td><td>2.2%</td></tr>
+          <tr class="tot"><td>上記合計（有理由）</td><td>13,166</td><td>64.5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:6px"><span class="dot" style="background:var(--cd)"></span>C+D 解約理由（比率・2026年6月末）</div>
+      <table>
+        <thead><tr><th>解約理由</th><th>累計件数</th><th>構成比</th></tr></thead>
+        <tbody>
+          <tr><td>商品が余っている</td><td>1,434</td><td>22.3%</td></tr>
+          <tr><td>高いから</td><td>1,115</td><td>17.3%</td></tr>
+          <tr><td>他サプリを試す</td><td>809</td><td>12.6%</td></tr>
+          <tr><td>実感・変化なし</td><td>379</td><td>5.9%</td></tr>
+          <tr><td>美味しくない</td><td>322</td><td>5.0%</td></tr>
+          <tr><td>特典が期待はずれ</td><td>141</td><td>2.2%</td></tr>
+          <tr class="tot"><td>上記合計（有理由）</td><td>4,200</td><td>65.2%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 継続回数別解約理由 -->
+  <div class="stitle" style="margin-top:28px">継続回数（F）別 解約理由分析<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+  <div class="ssub">データソース：sandbox_nishimori.subscription_history_view（snapshot_ym = 2026-06）<br>
+  <strong>集計方法：</strong>has_vc / has_cd = 1・status='CANCELLED'でフィルタ → completed_payments（解約時点の累計決済回数）を F=1/2/3〜4/5〜6/7〜12/13回以上 にグルーピング → cancel_reasonでCROSS集計し構成比（%）を算出。各セルは理由記入者を分母とした構成比。</div>
+
+  <div style="font-size:13px;font-weight:600;margin-bottom:6px;margin-top:16px"><span class="dot" style="background:var(--vc)"></span>VC — 継続回数セグメント別 解約理由構成比</div>
+  <div style="overflow-x:auto;margin-bottom:8px">
+  <table style="min-width:700px">
+    <thead>
+      <tr>
+        <th>解約理由</th>
+        <th>1回<br><span style="font-weight:400;font-size:10px">3,697件</span></th>
+        <th>2回<br><span style="font-weight:400;font-size:10px">2,404件</span></th>
+        <th>3〜4回<br><span style="font-weight:400;font-size:10px">2,648件</span></th>
+        <th>5〜6回<br><span style="font-weight:400;font-size:10px">1,412件</span></th>
+        <th>7〜12回<br><span style="font-weight:400;font-size:10px">1,836件</span></th>
+        <th>13回以上<br><span style="font-weight:400;font-size:10px">1,169件</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>高いから</td><td id="vc_price_1"></td><td id="vc_price_2"></td><td id="vc_price_3"></td><td id="vc_price_5"></td><td id="vc_price_7"></td><td id="vc_price_13"></td></tr>
+      <tr><td>商品が余っている</td><td id="vc_over_1"></td><td id="vc_over_2"></td><td id="vc_over_3"></td><td id="vc_over_5"></td><td id="vc_over_7"></td><td id="vc_over_13"></td></tr>
+      <tr><td>他サプリを試す</td><td id="vc_trial_1"></td><td id="vc_trial_2"></td><td id="vc_trial_3"></td><td id="vc_trial_5"></td><td id="vc_trial_7"></td><td id="vc_trial_13"></td></tr>
+      <tr><td>実感・変化なし</td><td id="vc_feel_1"></td><td id="vc_feel_2"></td><td id="vc_feel_3"></td><td id="vc_feel_5"></td><td id="vc_feel_7"></td><td id="vc_feel_13"></td></tr>
+      <tr><td>美味しくない</td><td id="vc_taste_1"></td><td id="vc_taste_2"></td><td id="vc_taste_3"></td><td id="vc_taste_5"></td><td id="vc_taste_7"></td><td id="vc_taste_13"></td></tr>
+      <tr><td>特典が期待はずれ</td><td id="vc_tokuten_1"></td><td id="vc_tokuten_2"></td><td id="vc_tokuten_3"></td><td id="vc_tokuten_5"></td><td id="vc_tokuten_7"></td><td id="vc_tokuten_13"></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div style="font-size:13px;font-weight:600;margin-bottom:6px;margin-top:16px"><span class="dot" style="background:var(--cd)"></span>C+D — 継続回数セグメント別 解約理由構成比</div>
+  <div style="overflow-x:auto;margin-bottom:8px">
+  <table style="min-width:700px">
+    <thead>
+      <tr>
+        <th>解約理由</th>
+        <th>1回<br><span style="font-weight:400;font-size:10px">1,090件</span></th>
+        <th>2回<br><span style="font-weight:400;font-size:10px">698件</span></th>
+        <th>3〜4回<br><span style="font-weight:400;font-size:10px">765件</span></th>
+        <th>5〜6回<br><span style="font-weight:400;font-size:10px">457件</span></th>
+        <th>7〜12回<br><span style="font-weight:400;font-size:10px">705件</span></th>
+        <th>13回以上<br><span style="font-weight:400;font-size:10px">485件</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>商品が余っている</td><td id="cd_over_1"></td><td id="cd_over_2"></td><td id="cd_over_3"></td><td id="cd_over_5"></td><td id="cd_over_7"></td><td id="cd_over_13"></td></tr>
+      <tr><td>高いから</td><td id="cd_price_1"></td><td id="cd_price_2"></td><td id="cd_price_3"></td><td id="cd_price_5"></td><td id="cd_price_7"></td><td id="cd_price_13"></td></tr>
+      <tr><td>他サプリを試す</td><td id="cd_trial_1"></td><td id="cd_trial_2"></td><td id="cd_trial_3"></td><td id="cd_trial_5"></td><td id="cd_trial_7"></td><td id="cd_trial_13"></td></tr>
+      <tr><td>実感・変化なし</td><td id="cd_feel_1"></td><td id="cd_feel_2"></td><td id="cd_feel_3"></td><td id="cd_feel_5"></td><td id="cd_feel_7"></td><td id="cd_feel_13"></td></tr>
+      <tr><td>美味しくない</td><td id="cd_taste_1"></td><td id="cd_taste_2"></td><td id="cd_taste_3"></td><td id="cd_taste_5"></td><td id="cd_taste_7"></td><td id="cd_taste_13"></td></tr>
+      <tr><td>特典が期待はずれ</td><td id="cd_tokuten_1"></td><td id="cd_tokuten_2"></td><td id="cd_tokuten_3"></td><td id="cd_tokuten_5"></td><td id="cd_tokuten_7"></td><td id="cd_tokuten_13"></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 継続回数（F）別 解約理由 考察<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
+    <ul>
+      <li><strong>浅いF（1〜2回）の特徴</strong> ─ VC1回目で「美味しくない」14.6%・「高いから」30.5%と第一印象・コスパ課題が顕著。前月比で「美味しくない」は若干低下傾向にあるが、引き続き初回申込直後（M+0）の「飲み方・味サポート」コンテンツ配信が離脱防止の優先施策。C+D1回目では「余っている」が33.2%と最大値で、申込直後の消費ペースガイダンスが必要。</li>
+      <li><strong>中間F（3〜6回）の特徴</strong> ─ VC・C+D共通で「高いから」が最重要因（VC 3〜4回:34.0%・5〜6回:34.1%）。3〜4回目は定期継続によるコスト感が積み上がり始めるフェーズ。継続特典・ロイヤルティポイント付与などの価格負担軽減策が有効。C+Dは3〜6回で「余っている」が30〜35%と依然高水準で、コース変更（2〜3ヶ月）の早期提案が効く層。</li>
+      <li><strong>深いF（7回以上）の特徴</strong> ─ VC・C+D共に「他サプリを試す」が上昇し、F13以上ではVC23.4%・C+D25.8%に達する。長期継続者の飽き・乗り換え動機への対策として、C+D・C+Ceraへのクロスセル提案を先手で打つことが有効。7〜12回の層（VC1,836件・C+D705件）は「高いから」も30%超で依然重いため、継続感謝特典の設計が必要。</li>
+      <li><strong>C+D特有の構造継続</strong> ─ 全Fセグメントで「余っている」が1位または高位。VCと異なりC+Dは消費ペース問題が継続回数を問わず根深い。コース変更誘導（2〜3ヶ月定期）をF1〜2の早期から実施することが構造的解決策。28日定期（停止率18.0%）が相対的に停止率低く消費サイクル適合の証左。</li>
+    </ul>
+  </div>
+
+  <!-- PAUSED再開インパクト試算セクションは削除済み（ユーザー指示・2026-09） -->
+
+  </div>
+</div>
+<!-- /TAB 4 -->
+<!-- @@SPLIT:tab4:END@@ -->
+
+
+<div class="footer">
+  <span>【データソース】<strong>KGI①②④売上：</strong>spic-core.public.ne_order_items（ship_date出荷基準・cancel_date IS NULL）　<strong>KGI③⑥⑦⑧顧客：</strong>spic-core.public.sn_shopify_customer_master / shopify_orders（customer_idベース・Shopify受注）　<strong>KGI⑤定期便：</strong>spic-core.public.sn_subscription_history_view（月末スナップショット・snapshot_ym='2026-09'・has_cdk対応済み）　<strong>CYS定期引き上げ：</strong>spic-core.public.shopify_orders（cys_11cp_getタグ）×定期DB　⚠️ receive_order（旧テーブル）は廃止済み・使用禁止</span>
+  <span>【集計基準】出荷基準 ｜ データ取得日：2026-10-08 ｜ 対象月：2026年9月（2026-09-01〜2026-09-30・月末締め）｜ spic-com-2025-apr-00</span>
+</div>
+
+</div><!-- /page-wrap -->
+<script>
+// ===== PART FILE: tab4 / 更新2番目 =====
+// switchTab はno-op（このファイルはシングルタブ）
+function switchTab(id, btn) {}
+
+// @@SPLIT:tab4_sub:START@@
+const subMonths = ["2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"];
+new Chart(document.getElementById('chartSubStatus'), {
+  type: 'line',
+  data: {
+    labels: subMonths,
+    datasets: [
+      {label:'ACTIVE', data:[20715, 21239, 22023, 23667, 23967, 23585, 23055, 22666, 22267, 22131, 22036, 22003, 22102, 22061, 22251, 22258, 22023], borderColor:'#16a34a', backgroundColor:'rgba(22,163,74,0.1)', fill:true, tension:0.3, pointRadius:4},
+      {label:'PAUSED', data:[18822, 19395, 19841, 20395, 21263, 22072, 22748, 23522, 24425, 25104, 25820, 26327, 26860, 27437, 27970, 28599, 29251], borderColor:'#f59e0b', backgroundColor:'rgba(245,158,11,0.05)', fill:false, tension:0.3, pointRadius:4},
+      {label:'CANCELLED', data:[16257, 16748, 17400, 18204, 19138, 20018, 20872, 21601, 22279, 22955, 23664, 24275, 24927, 25546, 26219, 26882, 27499], borderColor:'#dc2626', backgroundColor:'rgba(220,38,38,0.05)', fill:false, tension:0.3, pointRadius:4},
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw.toLocaleString()}件`}}},
+    scales: {y: {ticks:{callback:v=>`${(v/1000).toFixed(0)}K件`}}}
+  }
+});
+
+// Brand active trend
+const subActive = {
+  VC:   [14045, 14426, 15090, 16405, 16554, 15965, 15295, 14492, 13957, 13529, 13057, 12882, 12812, 12625, 12592, 12553, 12333],
+  CD:   [9605, 9772, 9939, 10206, 10265, 10407, 10504, 10746, 10610, 10391, 10190, 10059, 10032, 9926, 9849, 9855, 9778],
+  CDK:  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 138],
+  CCera:[null, null, null, null, null, null, null, null, null, 323, 645, 784, 878, 1019, 1150, 1111, 1026],
+  SB:   [null, null, null, null, null, null, null, 68, 222, 348, 380, 395, 418, 442, 459, 465, 447],
+  MI:   [null, null, null, null, null, null, null, null, null, null, 256, 371, 439, 507, 642, 664, 669]
+};
+new Chart(document.getElementById('chartSubActive'), {
+  type: 'line',
+  data: {
+    labels: subMonths,
+    datasets: [
+      { label: 'VC',         data: subActive.VC,    borderColor: '#FF7A30', backgroundColor: 'rgba(255,122,48,0.07)', borderWidth: 2.5, pointRadius: 4, fill: false, tension: 0.2 },
+      { label: 'C+D',        data: subActive.CD,    borderColor: '#7ED8A0', backgroundColor: 'rgba(126,216,160,0.07)', borderWidth: 2.5, pointRadius: 4, fill: false, tension: 0.2 },
+      { label: 'C+D+K',      data: subActive.CDK,   borderColor: '#1B7A4A', backgroundColor: 'rgba(27,122,74,0.07)', borderWidth: 2, pointRadius: 5, fill: false, tension: 0.2, spanGaps: true },
+      { label: 'C+Cera',     data: subActive.CCera, borderColor: '#FF6B9D', backgroundColor: 'rgba(255,107,157,0.07)', borderWidth: 2, pointRadius: 4, fill: false, tension: 0.2, spanGaps: true },
+      { label: 'SKINBEAUTY', data: subActive.SB,    borderColor: '#C4934A', backgroundColor: 'rgba(196,147,74,0.07)',  borderWidth: 2, pointRadius: 4, fill: false, tension: 0.2, spanGaps: true },
+      { label: 'MINERALion', data: subActive.MI,    borderColor: '#1E3A8A', backgroundColor: 'rgba(30,58,138,0.07)',   borderWidth: 2, pointRadius: 4, fill: false, tension: 0.2, spanGaps: true }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw ? ctx.raw.toLocaleString() : '—'}件` } }
+    },
+    scales: {
+      y: { min: 0, ticks: { callback: v => `${v.toLocaleString()}件`, font: { size: 11 } }, grid: { color: '#f0eeec' } },
+      x: { ticks: { font: { size: 10 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// Loyalty charts
+new Chart(document.getElementById('chartLoyaltyVC'), {
+  type: 'bar',
+  data: {
+    labels: ['1回','2回','3〜6回','7回以上'],
+    datasets: [{ data: [835, 716, 2070, 6735], backgroundColor: ['#fecaca','#fde68a','#86efac','#16a34a'], borderRadius: 4 }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.raw.toLocaleString()}件 (${(ctx.raw/10356*100).toFixed(1)}%)` } } },
+    scales: { y: { ticks: { callback: v => `${v.toLocaleString()}件`, font: { size: 10 } } }, x: { ticks: { font: { size: 11 } } } }
+  }
+});
+new Chart(document.getElementById('chartLoyaltyCD'), {
+  type: 'bar',
+  data: {
+    labels: ['1回','2回','3〜6回','7回以上'],
+    datasets: [{ data: [618, 497, 1452, 5130], backgroundColor: ['#fecaca','#fde68a','#86efac','#7ED8A0'], borderRadius: 4 }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.raw.toLocaleString()}件 (${(ctx.raw/7697*100).toFixed(1)}%)` } } },
+    scales: { y: { ticks: { callback: v => `${v.toLocaleString()}件`, font: { size: 10 } } }, x: { ticks: { font: { size: 11 } } } }
+  }
+});
+
+
+// 複数ブランド保有比率
+new Chart(document.getElementById('chartBrandItemCount'), {
+  type: 'bar',
+  data: {
+    labels: ['1種のみ','2種','3種','4種'],
+    datasets: [{ data: [18084, 2689, 192, 22], backgroundColor: ['#d1d5db','#378ADD','#1D9E75','#0F6E56'], borderRadius: 4 }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.raw.toLocaleString()}人 (${(ctx.raw/20987*100).toFixed(1)}%)` } }
+    },
+    scales: {
+      y: { ticks: { callback: v => `${v.toLocaleString()}人`, font: { size: 10 } } },
+      x: { ticks: { font: { size: 11 } } }
+    }
+  }
+});
+
+// ===== 新規アクティブ / PAUSE・CANCELLED発生 月次推移 =====
+const flowMonths13 = ["2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"];
+
+new Chart(document.getElementById('chartNewActive'), {
+  type: 'line',
+  data: {
+    labels: flowMonths13,
+    datasets: [
+      { label: 'VC',         data: [1487, 2295, 1534, 908, 645, 560, 681, 592, 589, 653, 760, 628, 695, 678, 544], borderColor: '#FF7A30', backgroundColor: 'rgba(255,122,48,0.07)', borderWidth: 2.5, pointRadius: 3, fill: false, tension: 0.2 },
+      { label: 'C+D',        data: [610, 686, 608, 505, 494, 604, 494, 497, 486, 479, 509, 410, 444, 519, 445],     borderColor: '#7ED8A0', backgroundColor: 'rgba(126,216,160,0.07)', borderWidth: 2.5, pointRadius: 3, fill: false, tension: 0.2 },
+      { label: 'C+D+K',      data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, 67], borderColor: '#1B7A4A', backgroundColor: 'rgba(27,122,74,0.07)', borderWidth: 2, pointRadius: 5, fill: false, tension: 0.2, spanGaps: true },
+      { label: 'C+Cera',     data: [null, null, null, null, null, null, null, 106, 174, 120, 133, 156, 191, 77, 51], borderColor: '#FF6B9D', backgroundColor: 'rgba(255,107,157,0.07)', borderWidth: 2, pointRadius: 3, fill: false, tension: 0.2, spanGaps: true },
+      { label: 'SKINBEAUTY', data: [null, null, null, null, null, 58, 141, 148, 80, 55, 68, 60, 66, 67, 42],     borderColor: '#C4934A', backgroundColor: 'rgba(196,147,74,0.07)',  borderWidth: 2, pointRadius: 3, fill: false, tension: 0.2, spanGaps: true },
+      { label: 'MINERALion', data: [null, null, null, null, null, null, null, null, 168, 94, 70, 80, 162, 78, 58], borderColor: '#1E3A8A', backgroundColor: 'rgba(30,58,138,0.07)',   borderWidth: 2, pointRadius: 3, fill: false, tension: 0.2, spanGaps: true }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw != null ? ctx.raw.toLocaleString() : '—'}件` } }
+    },
+    scales: {
+      y: { min: 0, ticks: { callback: v => `${v.toLocaleString()}件`, font: { size: 11 } }, grid: { color: '#f0eeec' } },
+      x: { ticks: { font: { size: 10 }, maxRotation: 45 } }
+    }
+  }
+});
+
+new Chart(document.getElementById('chartPauseCancel'), {
+  type: 'line',
+  data: {
+    labels: flowMonths13,
+    datasets: [
+      { label: 'VC（PAUSE+CANCEL）',         data: [783, 898, 1319, 1288, 1160, 1041, 1079, 832, 913, 776, 776, 722, 696, 710, 695], borderColor: '#FF7A30', backgroundColor: 'rgba(255,122,48,0.07)', borderWidth: 2.5, pointRadius: 3, fill: false, tension: 0.2 },
+      { label: 'C+D（PAUSE+CANCEL）',        data: [496, 479, 629, 576, 572, 634, 710, 647, 608, 520, 541, 511, 476, 496, 517],     borderColor: '#7ED8A0', backgroundColor: 'rgba(126,216,160,0.07)', borderWidth: 2.5, pointRadius: 3, fill: false, tension: 0.2 },
+      { label: 'C+D+K（PAUSE+CANCEL）',      data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1], borderColor: '#1B7A4A', backgroundColor: 'rgba(27,122,74,0.07)', borderWidth: 2, pointRadius: 5, fill: false, tension: 0.2, spanGaps: true },
+      { label: 'C+Cera（PAUSE+CANCEL）',     data: [null, null, null, null, null, 0, 0, 8, 26, 35, 50, 69, 90, 96, 118], borderColor: '#FF6B9D', backgroundColor: 'rgba(255,107,157,0.07)', borderWidth: 2, pointRadius: 3, fill: false, tension: 0.2, spanGaps: true },
+      { label: 'SKINBEAUTY（PAUSE+CANCEL）', data: [null, null, null, null, null, 1, 11, 31, 48, 37, 47, 47, 54, 59, 57], borderColor: '#C4934A', backgroundColor: 'rgba(196,147,74,0.07)',  borderWidth: 2, pointRadius: 3, fill: false, tension: 0.2, spanGaps: true },
+      { label: 'MINERALion（PAUSE+CANCEL）', data: [null, null, null, null, null, null, null, null, 0, 21, 27, 31, 48, 66, 61], borderColor: '#1E3A8A', backgroundColor: 'rgba(30,58,138,0.07)',   borderWidth: 2, pointRadius: 3, fill: false, tension: 0.2, spanGaps: true }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 10 }, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw != null ? ctx.raw.toLocaleString() : '—'}件` } }
+    },
+    scales: {
+      y: { min: 0, ticks: { callback: v => `${v.toLocaleString()}件`, font: { size: 11 } }, grid: { color: '#f0eeec' } },
+      x: { ticks: { font: { size: 10 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// ===== VC/C+D起点：クロスセル vs 離脱 月次推移（全期間・2026-09度に「離脱→他ブランド流出」を上表定義へ統一） =====
+new Chart(document.getElementById('vcCrossFlowChart'), {
+  type: 'line',
+  data: {
+    labels: flowMonths13,
+    datasets: [
+      { label: 'VC離脱→他ブランド流出', data: [169, 164, 198, 288, 256, 411, 244, 293, 274, 171, 224, 222, 176, 128, 176], borderColor: '#dc2626', backgroundColor: 'rgba(220,38,38,0.1)', tension: 0.3, fill: false, pointRadius: 3 },
+      { label: 'VC継続+クロスセル',     data: [84, 60, 79, 91, 67, 114, 94, 144, 153, 84, 99, 74, 105, 74, 67],           borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.1)', tension: 0.3, fill: false, pointRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { font: { size: 10 } } }, tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw}人` } } },
+    scales: { x: { ticks: { font: { size: 9 }, maxRotation: 45 } }, y: { ticks: { font: { size: 10 } } } }
+  }
+});
+
+new Chart(document.getElementById('cdCrossFlowChart'), {
+  type: 'line',
+  data: {
+    labels: flowMonths13,
+    datasets: [
+      { label: 'C+D離脱→他ブランド流出（C+D+K含む）', data: [141, 104, 134, 81, 90, 81, 125, 230, 234, 194, 167, 174, 197, 147, 160], borderColor: '#dc2626', backgroundColor: 'rgba(220,38,38,0.1)', tension: 0.3, fill: false, pointRadius: 3 },
+      { label: 'C+D継続+クロスセル',     data: [47, 46, 44, 43, 49, 56, 86, 148, 213, 133, 111, 107, 104, 80, 60], borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.1)', tension: 0.3, fill: false, pointRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { font: { size: 10 } } }, tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw}人` } } },
+    scales: { x: { ticks: { font: { size: 9 }, maxRotation: 45 } }, y: { ticks: { font: { size: 10 } } } }
+  }
+});
+
+// ===== VC/C+D離脱者の行先内訳推移（月次・直近6ヶ月） =====
+const destMonths6 = ["2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"];
+
+new Chart(document.getElementById('vcDestFlowChart'), {
+  type: 'bar',
+  data: {
+    labels: destMonths6,
+    datasets: [
+      { label: '完全離脱',     data: [724, 671, 659, 631, 641, 649], backgroundColor: '#d1d5db', stack: 'a' },
+      { label: 'C+D保有',      data: [138, 192, 169, 129, 106, 139],  backgroundColor: '#7ED8A0', stack: 'a' },
+      { label: 'C+D+K保有',    data: [0, 0, 0, 0, 0, 16],  backgroundColor: '#1B7A4A', stack: 'a' },
+      { label: 'C+Cera保有',   data: [45, 34, 59, 48, 27, 25],        backgroundColor: '#FF6B9D', stack: 'a' },
+      { label: 'MI保有',       data: [11, 17, 20, 17, 9, 18],          backgroundColor: '#1E3A8A', stack: 'a' },
+      { label: 'SB保有',       data: [1, 6, 11, 9, 7, 4],          backgroundColor: '#C4934A', stack: 'a' }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { font: { size: 10 } } } },
+    scales: { x: { stacked: true, ticks: { font: { size: 10 } } }, y: { stacked: true, ticks: { font: { size: 10 } } } }
+  }
+});
+
+new Chart(document.getElementById('cdDestFlowChart'), {
+  type: 'bar',
+  data: {
+    labels: destMonths6,
+    datasets: [
+      { label: '完全離脱',     data: [480, 480, 441, 426, 446, 463], backgroundColor: '#d1d5db', stack: 'a' },
+      { label: 'VC保有',       data: [148, 125, 118, 137, 108, 76], backgroundColor: '#FF7A30', stack: 'a' },
+      { label: 'C+D+K保有',    data: [0, 0, 0, 0, 0, 64],  backgroundColor: '#1B7A4A', stack: 'a' },
+      { label: 'C+Cera保有',   data: [38, 36, 47, 46, 23, 42],        backgroundColor: '#FF6B9D', stack: 'a' },
+      { label: 'MI保有',       data: [20, 14, 21, 26, 20, 22],         backgroundColor: '#1E3A8A', stack: 'a' },
+      { label: 'SB保有',       data: [11, 7, 10, 9, 9, 12],         backgroundColor: '#C4934A', stack: 'a' }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { font: { size: 10 } } } },
+    scales: { x: { stacked: true, ticks: { font: { size: 10 } } }, y: { stacked: true, ticks: { font: { size: 10 } } } }
+  }
+});
+
+// @@SPLIT:tab4_sub:END@@
+// @@SPLIT:tab4_cancel:START@@
+// ===== 継続回数別 解約理由テーブル（動的生成）=====
+(function() {
+  // VC F別実数（2026-06）
+  const vcData = {
+    price:   [1127, 791, 900, 482, 595, 393],
+    over:    [ 975, 709, 768, 381, 516, 306],
+    trial:   [ 514, 303, 392, 256, 398, 274],
+    feel:    [ 340, 301, 341, 177, 200, 108],
+    taste:   [ 540, 238, 177,  88,  83,  43],
+    tokuten: [ 200,  65,  71,  30,  44,  46],
+  };
+  const vcTotals = [3697, 2404, 2648, 1412, 1836, 1169];
+  const vcKeys   = ['price','over','trial','feel','taste','tokuten'];
+  const vcSuffix = ['_1','_2','_3','_5','_7','_13'];
+
+  function cellStyle(pct) {
+    if (pct >= 30) return 'background:#fecaca;color:#dc2626;font-weight:700';
+    if (pct >= 20) return 'background:#fed7aa;color:#c2410c;font-weight:600';
+    if (pct >= 12) return 'background:#fef9c3;color:#854d0e';
+    return 'color:var(--muted)';
+  }
+
+  vcKeys.forEach(key => {
+    vcSuffix.forEach((suf, i) => {
+      const el = document.getElementById('vc_' + key + suf);
+      if (!el) return;
+      const pct = Math.round(vcData[key][i] / vcTotals[i] * 1000) / 10;
+      el.style.cssText = cellStyle(pct);
+      el.textContent = pct.toFixed(1) + '%';
+      el.title = vcData[key][i].toLocaleString() + '件';
+    });
+  });
+
+  // C+D F別実数（2026-06）
+  const cdData = {
+    over:    [362, 293, 251, 155, 217, 156],
+    price:   [279, 171, 225, 122, 191, 127],
+    trial:   [183, 102, 145,  97, 157, 125],
+    feel:    [ 81,  52,  79,  35,  85,  47],
+    taste:   [147,  61,  42,  33,  29,  10],
+    tokuten: [ 38,  19,  23,  15,  26,  20],
+  };
+  const cdTotals = [1090, 698, 765, 457, 705, 485];
+  const cdKeys   = ['over','price','trial','feel','taste','tokuten'];
+
+  cdKeys.forEach(key => {
+    vcSuffix.forEach((suf, i) => {
+      const el = document.getElementById('cd_' + key + suf);
+      if (!el) return;
+      const pct = Math.round(cdData[key][i] / cdTotals[i] * 1000) / 10;
+      el.style.cssText = cellStyle(pct);
+      el.textContent = pct.toFixed(1) + '%';
+      el.title = cdData[key][i].toLocaleString() + '件';
+    });
+  });
+})();
+
+// ===== ⑤ 施策効果 =====
+// @@SPLIT:tab4_cancel:END@@
+
+</script>
+</body>
+</html>

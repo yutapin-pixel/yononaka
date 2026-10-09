@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lypo-C 月次分析レポート 2026-09 ｜ ① 基礎データ</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--cdk:#5BC882;--cbd:#1B7A4A;
+  --ccera:#FF6B9D;--sb:#C4934A;--mi:#1E3A8A;--lypo:#FFB070;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0;max-width:1200px;margin:0 auto}
+.page-wrap{padding:24px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted)}
+.month-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 14px;border-radius:4px;font-size:13px;font-weight:700;margin-bottom:20px;letter-spacing:0.3px}
+.stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px;align-items:stretch}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+thead th.c{text-align:center}
+tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid #f5f5f4;font-size:13px}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td.c{text-align:center}
+tbody tr:last-child td{border-bottom:none}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.tot td{border-top:2px solid var(--border)}
+tr.ogs{background:#fff8f0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600}
+.badge.a{background:#dcfce7;color:#15803d}.badge.b{background:#fef2f2;color:#dc2626}
+.badge.n{background:#eff6ff;color:#2563eb}.badge.w{background:#fff8f0;color:#92400e}
+.monthly-insight{background:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0284c7;border-radius:8px;padding:14px 18px;margin-top:12px;margin-bottom:20px;font-size:13px;line-height:1.9}
+.monthly-insight .mi-title{font-weight:700;font-size:12px;margin-bottom:6px;color:#0369a1;display:flex;align-items:center;gap:6px}
+.monthly-insight ul{padding-left:18px}.monthly-insight li{margin-bottom:5px}
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.9}
+.notes .nt{font-weight:700;font-size:12px;margin-bottom:6px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:4px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;position:relative;height:290px}
+.chart-wrap canvas{display:block;width:100% !important}
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;overflow-x:auto}
+.tab-btn{background:none;border:none;padding:10px 18px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.cohort-wrap{overflow-x:auto;margin-bottom:12px}
+.cohort-table{border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:900px}
+.cohort-table th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cohort-table th:first-child{text-align:left;min-width:90px}
+.cohort-table td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11px;line-height:1.4}
+.cohort-table td:first-child{text-align:left;font-weight:500;padding:5px 10px;font-size:12px}
+.cohort-table tr.ogs-row td:first-child{color:#92400e;font-weight:700}
+.cohort-table tr.highlight-row td{background:#fafafa}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.insight-card .ic-num{font-size:30px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:-1px}
+.insight-card .ic-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.insight-card .ic-body{font-size:13px;color:var(--muted);line-height:1.7}
+.insight-card.positive .ic-num{color:var(--green)}
+.insight-card.negative .ic-num{color:var(--red)}
+.insight-card.warning .ic-num{color:#f59e0b}
+.crm-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px}
+.crm-card .crm-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.crm-card .crm-priority{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.crm-card .crm-priority.p1{background:#fef2f2;color:#dc2626}
+.crm-card .crm-priority.p2{background:#fff8f0;color:#92400e}
+.crm-card .crm-priority.p3{background:#eff6ff;color:#2563eb}
+.crm-card .crm-title{font-size:14px;font-weight:700}
+.crm-card .crm-body{font-size:13px;color:var(--muted);line-height:1.7}
+.crm-card .crm-kpi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:500}
+.crm-card .crm-update{font-size:11px;margin-top:6px;padding:4px 8px;background:#f0fdf4;border-radius:4px;color:#15803d;font-weight:500}
+.kpi-change{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;margin-left:6px}
+.kpi-change.up{background:#dcfce7;color:#15803d}
+.kpi-change.dn{background:#fef2f2;color:#dc2626}
+.kpi-change.flat{background:#f5f5f4;color:#78716c}
+.analysis{border-radius:8px;margin:10px 0 20px;overflow:hidden;font-size:13px;line-height:1.8}
+.analysis-head{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.analysis-body{padding:12px 16px 14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.an-col{padding:0 14px;border-right:1px solid rgba(0,0,0,0.07)}
+.an-col:first-child{padding-left:0}
+.an-col:last-child{border-right:none;padding-right:0}
+.an-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;opacity:0.7}
+.an-text{font-size:12.5px;line-height:1.75}
+.an-text strong{font-weight:700}
+.analysis.blue{background:#eff6ff;border:1px solid #bfdbfe}
+.analysis.blue .analysis-head{background:#dbeafe;color:#1e40af}
+.analysis.blue .an-col{color:#1e3a8a}
+.analysis.green{background:#f0fdf4;border:1px solid #bbf7d0}
+.analysis.green .analysis-head{background:#dcfce7;color:#14532d}
+.analysis.green .an-col{color:#166534}
+.analysis.orange{background:#fff7ed;border:1px solid #fed7aa}
+.analysis.orange .analysis-head{background:#ffedd5;color:#7c2d12}
+.analysis.orange .an-col{color:#9a3412}
+.teiki-funnel{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.teiki-stage{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.teiki-stage .ts-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:4px}
+.teiki-stage .ts-count{font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.teiki-stage .ts-ltv{font-size:11px;color:var(--muted);margin-top:2px}
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ship{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-mixed{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f8fafc;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-ship,.sc .lb .ds-order,.sc .lb .ds-mixed{font-size:9px;padding:1px 5px;margin-left:3px}
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-snap{font-size:9px;padding:1px 5px;margin-left:3px}
+.ds-adebis{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-click{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-adebis,.sc .lb .ds-click{font-size:9px;padding:1px 5px;margin-left:3px}
+.adebis-rank{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-right:4px;flex-shrink:0}
+.adebis-rank.r1{background:#f59e0b;color:#fff}
+.adebis-rank.r2{background:#9ca3af;color:#fff}
+.adebis-rank.r3{background:#b45309;color:#fff}
+.adebis-rank.rx{background:#f3f4f6;color:#6b7280}
+.adebis-warn{font-size:10px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.adebis-new{font-size:10px;background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px}
+.cvr-high{color:#15803d;font-weight:700}
+.cvr-mid{color:#92400e}
+.cvr-low{color:#9ca3af}
+td.adebis-name{text-align:left;font-size:12px;max-width:220px;word-break:break-all;line-height:1.4}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .analysis-body{grid-template-columns:1fr}
+  .an-col{border-right:none;border-bottom:1px solid rgba(0,0,0,0.07);padding:8px 0;margin:0}
+  .an-col:last-child{border-bottom:none}
+  .teiki-funnel{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ===== tab6 (まとめと提言) 固有CSS ===== */
+/* 総評セクション */
+.summary-section{margin-bottom:40px}
+.summary-header{display:flex;align-items:baseline;gap:10px;margin:28px 0 6px}
+.summary-header-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.summary-header-title::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.summary-header-badge{font-size:12px;font-weight:400;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:3px;margin-left:8px}
+.summary-verdict{background:#1c1917;border-radius:10px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.summary-verdict-icon{font-size:22px;flex-shrink:0}
+.summary-verdict-text{font-size:13.5px;font-weight:600;color:#fff;line-height:1.65;letter-spacing:0.1px}
+.summary-verdict-text em{font-style:normal;color:#FFB070}
+.finding-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.finding-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.finding-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.finding-card.fc-green::before{background:#16a34a}
+.finding-card.fc-red::before{background:#dc2626}
+.finding-card.fc-amber::before{background:#f59e0b}
+.finding-card.fc-orange::before{background:var(--accent)}
+.finding-card.fc-blue::before{background:#2563eb}
+.finding-card.fc-slate::before{background:#64748b}
+.fc-index{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.fc-metric{font-size:26px;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.finding-card.fc-green .fc-metric{color:#16a34a}
+.finding-card.fc-red .fc-metric{color:#dc2626}
+.finding-card.fc-amber .fc-metric{color:#d97706}
+.finding-card.fc-orange .fc-metric{color:var(--accent)}
+.finding-card.fc-blue .fc-metric{color:#2563eb}
+.finding-card.fc-slate .fc-metric{color:#475569}
+.fc-title{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.4}
+.fc-body{font-size:12px;color:var(--muted);line-height:1.75;flex:1}
+.fc-body strong{color:var(--text)}
+.fc-insight{margin-top:4px;padding:6px 10px;border-radius:5px;font-size:11.5px;font-weight:600;line-height:1.5}
+.finding-card.fc-green .fc-insight{background:#f0fdf4;color:#15803d}
+.finding-card.fc-red .fc-insight{background:#fff5f5;color:#dc2626}
+.finding-card.fc-amber .fc-insight{background:#fffbeb;color:#92400e}
+.finding-card.fc-orange .fc-insight{background:#fff8f0;color:#c2410c}
+.finding-card.fc-blue .fc-insight{background:#eff6ff;color:#1e40af}
+.finding-card.fc-slate .fc-insight{background:#f8fafc;color:#475569}
+/* スコアカード */
+.scorecard-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px}
+.sc-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.sc-item-axis{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.sc-item-label{font-size:11.5px;font-weight:600;color:var(--text);line-height:1.35}
+.sc-item-value{font-size:17px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-top:2px}
+.sc-item-sub{font-size:10.5px;color:var(--muted);line-height:1.5}
+.sc-item-rationale{font-size:10.5px;color:var(--muted);line-height:1.55;margin-top:2px;border-top:1px solid var(--border);padding-top:5px}
+.sc-item-verdict{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;width:fit-content;margin-top:2px}
+.sc-v-ok{background:#dcfce7;color:#15803d}
+.sc-v-warn{background:#fff7ed;color:#c2410c}
+.sc-v-bad{background:#fff5f5;color:#dc2626}
+.sc-v-ref{background:#eff6ff;color:#1e40af}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .finding-grid{grid-template-columns:1fr}
+  .scorecard-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ===== タブ固有CSS（tab2〜tab7） ===== */
+/* ===== VC/C+D フロー分析 統合セクション 追加CSS ===== */
+.flow-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px}
+.flow-kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.flow-kpi .lb{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.03em;margin-bottom:6px}
+.flow-kpi .vl{font-size:24px;font-weight:700;letter-spacing:-0.02em}
+.flow-kpi .sb{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+.flow-group-label{font-size:12px;font-weight:700;color:var(--muted);margin:18px 0 8px;padding-left:2px}
+.th-vc{background:#fff3e0 !important;color:#c2410c}
+.th-cd{background:#f0fdf4 !important;color:#166534}
+.th-ccera{background:#fdf2f8 !important;color:#9d174d}
+.th-mi{background:#eff6ff !important;color:#1e40af}
+.th-sb{background:#fefce8 !important;color:#92400e}
+.flow-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:8px}
+.flow-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px}
+.flow-label{width:110px;font-weight:600;text-align:right;flex-shrink:0}
+.flow-bar-wrap{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.flow-bar{height:24px;border-radius:5px;min-width:4px;flex-shrink:0}
+.flow-num{font-size:12.5px;color:var(--text);white-space:nowrap;font-weight:600}
+.flow-num .pct{color:var(--muted);font-weight:400;margin-left:4px}
+.frozen-divider{display:flex;align-items:center;gap:14px;margin:44px 0 28px}
+.frozen-divider::before,.frozen-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.frozen-divider .fd-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#78716c;background:#f5f5f4;border:1px solid var(--border);padding:5px 14px;border-radius:99px;white-space:nowrap}
+.frozen-section{opacity:0.92}
+.frozen-note{font-size:11.5px;color:var(--muted);background:#f5f5f4;border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:18px;line-height:1.7}
+@media(max-width:768px){
+  .flow-kpi-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<div class="hdr">
+  <h1>🔬 Lypo-C 月次分析レポート</h1>
+  <div class="meta">データ取得：2026年10月8日 ｜ 売上：NE受注（shop_id=17）出荷基準 ｜ 顧客：Shopify受注基準（spic-core.public.sn_shopify_customer_master・snapshot 2026-10-01）｜ 定期：spic-core.public.sn_subscription_history_view（snapshot_ym='2026-09'）｜ 月末締め：2026-09-30までのデータのみ使用（ne_order_items／shopify_orders／マスター／定期DBはいずれもspic-core.public参照）</div>
+</div>
+<div class="month-badge">📅 2026年9月度</div>
+
+<div class="tab-nav" style="overflow-x:auto;white-space:nowrap">
+  <button class="tab-btn active" onclick="void(0)">① 基礎データ（2026年9月度）</button>
+  <span style="font-size:11px;color:#9a9088;padding:10px 14px;display:inline-block">⚠️ part ファイル（更新5番目）― merge_monthly.py で結合後に noindex 確認</span>
+</div>
+
+<div id="tab1" class="tab-pane active">
+
+  <div class="stitle">2026年9月 月次KPIサマリー
+    <span style="font-size:12px;font-weight:400;background:#dcfce7;color:#15803d;padding:2px 7px;border-radius:3px;margin-left:8px">今月フォーカス</span>
+  </div>
+  <p style="font-size:11px;color:#78716c;margin:-8px 0 12px 0;padding:4px 10px;background:#f5f5f4;border-left:3px solid #a78bfa;border-radius:0 4px 4px 0;"><strong>📌 新規顧客数（v10）注釈：</strong>1,137人（初回注文月基準・タブ③の9月新規コホート1,137人と一致）の内訳＝<strong>純粋新規936人＋初回が試供のみ201人</strong>。ブランド別CRMレポートと同じ3区分では、<strong>純粋新規936人（顧客単位・1顧客1回）</strong>、<strong>アイテム新規1,830件</strong>（ブランド別の初回有償購入の延べ・前月2,172件）、<strong>トライアル購入659件</strong>（注文単位の延べ・前月953件）。集計単位が異なるため3区分は合算しない。</p>
+
+  <div class="sg4">
+    <div class="sc">
+      <div class="lb">2026年9月 出荷売上（税抜）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+      <div class="vl">¥206.2M</div>
+      <div class="sb"><span class="dn">▲9.7%</span> 前年同月比（YoY）（2025-09：¥228.4M）<span class="kpi-change dn">前月比▲6.3%</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">2026年9月 有償注文件数<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+      <div class="vl">17,052件</div>
+      <div class="sb"><span class="dn">▲4.8%</span> 前月比（2026-08：17,910件） ｜ AOV（有償注文） <strong>¥12,376</strong>（税抜・前月¥12,325／<span class="up">+0.4%</span>） ｜ 参考：NE出荷件数17,483件（CYS送料のみ注文864件を含む）・NE受注件数17,850件</div>
+    </div>
+    <div class="sc">
+      <div class="lb">2026年9月 新規顧客数（v10）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+      <div class="vl">1,137人</div>
+      <div class="sb"><span class="dn">▲33.1%</span> 前月比（2026-08：1,700人）｜ 純粋新規936人（<span class="dn">▲28.1%</span>）・アイテム新規1,830件・トライアル購入659件（いずれも延べ） ｜ FY2027目標1,900人/月の59.8%</div>
+    </div>
+    <div class="sc">
+      <div class="lb">ACTIVE定期便<span class="ds-shopify">Shopify</span><span class="ds-snap">月末スナップショット</span></div>
+      <div class="vl">22,023件</div>
+      <div class="sb">FY2027末目標 27,000件まで <strong>+4,977件</strong> ｜ 総契約 78,773件 <span class="kpi-change dn">前月比▲235件（2026-01以来の大幅減）</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">累計顧客数（全期間）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+      <div class="vl">198,389人</div>
+      <div class="sb">リピート率（2回以上） <span class="up"><strong>45.7%</strong></span>（90,650人）<br><span style="font-size:10px;color:var(--muted)">※spic-core.public.sn_shopify_customer_master（snapshot 2026-10-01）</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">平均LTV（全顧客・税抜累計）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+      <div class="vl">¥54,041</div>
+      <div class="sb">中央値（P50） ¥11,078 ｜ P80 ¥68,520<br><span style="font-size:10px;color:var(--muted)">※全顧客198,389人ベース（total_ltv＝Shopify受注。LTV0円の顧客49,300人〔OGS等の無償獲得を含む〕を含む）</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">VC+C+D 売上シェア（2026-09）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+      <div class="vl" style="color:var(--vc)">88.0%</div>
+      <div class="sb">VC 49.8% ＋ C+D 38.2%（うちC+D+K 1.5%） ｜ 前月比（2026-08：87.3%）<span class="kpi-change up">+0.7pt（新ブランド3社の縮小が主因の構成比変化）</span></div>
+    </div>
+    <div class="sc">
+      <div class="lb">新ブランド売上（2026-09）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+      <div class="vl" style="color:var(--ccera)">¥24.7M</div>
+      <div class="sb">C+Cera¥14.2M+SKINBEAUTY¥5.6M+MINERALion¥4.9M <span class="kpi-change dn">前月比▲11.8%</span></div>
+    </div>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 2026年9月度 KPIサマリー 考察（集計方法：NE受注出荷基準＋Shopify受注基準の混在）</div>
+    <ul>
+      <li><strong>NE出荷売上¥206.2M（YoY▲9.7%・前月比▲6.3%）は2026年2月（¥206.0M）以来の低水準。</strong>前月差▲¥13.9Mのうち<strong>VCが▲¥10.5M（約75%）</strong>を占め、C+D（C+D+K含む）は▲¥0.5Mと小幅、新ブランド3社計は▲¥3.3M（▲11.8%）。<strong>減収の主因は有償注文件数の減少で、AOVは横ばい</strong>：Shopify受注基準の有償注文は17,910→17,052件（▲4.8%）、AOVは¥12,325→¥12,376（+¥51）で、受注売上差▲¥9.7Mは件数要因▲¥10.6M・単価要因+¥0.9M。NE出荷AOVの¥12,341→¥11,797（▲4.4%）は見かけ上の低下で、9/3受注からNEに載り始めたCYS送料のみ注文864件（¥200）が出荷件数に混入したことによる（これを除くNE出荷の有償注文AOVは¥12,400・+0.5%、有償注文件数は約16,600件で▲6.9%。VCの有償注文は9,410→8,537件・▲9.3%）。Shopify上の送料のみ注文は7月1,477件・8月792件・9月913件と従来から存在し、NEに載る時期が変わっただけ。データチームが9/3から0円・送料のみの受注もNEへ取り込む仕様に変更したため（確認済み）。過去分は来週以降に遡及取込される予定で、取込後はNE出荷件数・AOVの過去月値が変動する（Shopify受注基準の主指標は影響を受けない）。</li>
+      <li><strong>VC+C+Dシェアは88.0%（前月87.3%→+0.7pt）へ上昇したが、主力が伸びたのではなく、VCの縮小幅（▲9.3%）より新ブランド3社の縮小幅（▲11.8%）が大きかったことによる構成比変化。</strong>C+D（C+D+K含む）は¥78.5Mで前月比▲0.6%・YoY+7.2%と主力で唯一ほぼ横ばいを維持（C+D+Kが¥3.02M上乗せされた結果で、C+D単体は¥75.4M・▲4.4%）。</li>
+      <li><strong>新規顧客1,137人（前月比▲33.1%）は2025年12月（978人）以来の低水準。うち純粋新規936人（▲28.1%）は表示期間（2024年4月〜）の最低。</strong>トライアル購入（延べ）は953件→659件（▲30.8%）とCYS施策終了（9/17）の反動が出ているが、純粋新規の減少は施策終了だけでは説明できない。<strong>純粋新規の1日あたり人数は、CYS前（7/1〜7/21）56.7人→CYS期（7/22〜8/31）43.1人→9/1〜9/17の32.3人→CYS終了後（9/18〜9/30）29.8人</strong>と段階的に低下しており、タブ⑤のGoogle自社運用クリック急減（要因未特定）と時期は整合するが、因果は未検証。</li>
+      <li><strong>ACTIVE定期は22,023件（前月比▲235件）と2026年1月以来の大幅な純減に転じた。</strong>タブ④指摘の通り、前月の純増+7件から▲235件へ悪化した差（▲242件）の約87%は新規ACTIVE契約の減少（1,357→1,147件）で、PAUSE・CANCELLED発生の増加（1,350→1,382件）は約13%。新規獲得の減速が定期の積み上げ（＝将来の出荷売上）に波及するまでのタイムラグを考えると、10月以降も出荷面の下押しが続くリスクがある。FY2027末目標27,000件の達成率は81.6%（前月82.4%）へ後退。</li>
+    </ul>
+  </div>
+
+  <!-- 月次売上推移グラフ -->
+  <div class="stitle">月次出荷売上推移（2024年4月〜2026年9月）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+  <div class="ssub">データソース：spic-core.public.ne_order_items（shop_id=17）・ship_date基準・税抜（salesカラム）｜ 橙色ハイライト = OGSキャンペーン期間（2025年7〜9月）｜ 黄緑枠 = 今月（2026年9月）<br>
+  <strong>集計方法：</strong>ship_dateで月次グルーピング・cancel_date IS NULLでキャンセル除外・salesカラム税抜確定値をSUM</div>
+  <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 月次出荷売上推移 考察（2026年9月・NE出荷基準）</div>
+    <ul>
+      <li><strong>2026年9月 NE出荷¥206.2M（YoY▲9.7%・前月比▲6.3%）。</strong>FY2027上期（4〜9月）の月平均¥218.9Mに対して▲5.8%で、上期6ヶ月のうち最低。VC▲¥10.5Mが減少の大半を占め、全5ブランドが前月比マイナスだった（C+D＋C+D+K合算は▲0.6%と軽微）。</li>
+      <li><strong>前年同月（2025-09：¥228.4M・OGSキャンペーン末期）比▲9.7%。</strong>前年同月はOGS特需の余波が残る月で、VCの前年比（▲34.1%）が主因。一方、C+D系は前年比+7.2%と成長を維持しており、「VCの特需剥落＋定期の自然減」と「C+Dの底堅さ」が同居する構図。</li>
+      <li><strong>受注売上¥210.7Mは出荷売上¥206.2Mを¥4.5M上回った。</strong>8月は受注¥219.1Mが出荷¥220.2Mを下回っており（逆転）、9月末の受注の一部が10月出荷へ繰り越されている可能性がある（要確認・10月度で出荷側の戻りを検証）。</li>
+    </ul>
+  </div>
+
+  <!-- 直近12ヶ月 月次サマリーテーブル -->
+  <div class="stitle">直近12ヶ月 月次サマリー<span class="ds-ne">NE</span><span class="ds-shopify">Shopify</span></div>
+  <div class="ssub">
+    出荷件数・出荷売上・受注売上：spic-core.public.ne_order_items（shop_id=17）・cancel_date IS NULL<br>
+    有償注文件数・AOV（主指標）：spic-core.public.shopify_orders（Shopify受注基準・test=0 AND subtotal_price&gt;0・created_at基準・キャンセル除外なし／AOV＝AVG(total_price−current_total_tax)＝KGI⑦と同定義）<br>
+    当月購入顧客数：spic-core.public.shopify_orders（Shopify受注基準）｜ 新規顧客数（v10・初回注文月）：Shopify受注（sn_shopify_customer_master.first_paid_order_dtと全月一致〔9月のみ後述の1件差〕）
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>月</th>
+        <th>出荷件数<br><span style="font-weight:400;font-size:10px" class="ds-ne">NE</span><span class="ds-ship" style="font-size:9px">出荷</span></th>
+        <th>出荷売上（税抜）<br><span style="font-weight:400;font-size:10px" class="ds-ne">NE</span><span class="ds-ship" style="font-size:9px">出荷</span></th>
+        <th>受注売上（税抜）<br><span style="font-weight:400;font-size:10px" class="ds-ne">NE</span><span class="ds-order" style="font-size:9px">受注</span></th>
+        <th>当月購入顧客数<br><span style="font-weight:400;font-size:10px" class="ds-shopify">Shopify</span><span class="ds-order" style="font-size:9px">受注</span></th>
+        <th>新規顧客数（v10）<br><span style="font-weight:400;font-size:10px" class="ds-shopify">Shopify</span><span class="ds-order" style="font-size:9px">受注</span></th>
+        <th>有償注文件数（主指標）<br><span style="font-weight:400;font-size:10px" class="ds-shopify">Shopify</span><span class="ds-order" style="font-size:9px">受注</span></th>
+        <th>AOV（主指標・有償注文）<br><span style="font-weight:400;font-size:10px" class="ds-shopify">Shopify</span><span class="ds-order" style="font-size:9px">受注</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2025-10</td>
+        <td>20,425</td><td>¥243.7M</td><td>¥228.6M</td><td>18,355</td><td>1,248</td>
+        <td>19,268</td><td>¥11,991</td>
+      </tr>
+      <tr><td>2025-11</td>
+        <td>17,339</td><td>¥211.0M</td><td>¥222.5M</td><td>17,527</td><td>985</td>
+        <td>18,424</td><td>¥12,214</td>
+      </tr>
+      <tr><td>2025-12</td>
+        <td>17,280</td><td>¥217.9M</td><td>¥230.3M</td><td>17,369</td><td>978</td>
+        <td>18,560</td><td>¥12,575</td>
+      </tr>
+      <tr><td>2026-01</td>
+        <td>19,168</td><td>¥226.5M</td><td>¥208.5M</td><td>17,740</td><td>1,323</td>
+        <td>17,692</td><td>¥11,875</td>
+      </tr>
+      <tr><td>2026-02</td>
+        <td>16,901</td><td>¥206.0M</td><td>¥211.7M</td><td>16,415</td><td>1,215</td>
+        <td>17,631</td><td>¥12,115</td>
+      </tr>
+      <tr><td>2026-03</td>
+        <td>18,176</td><td>¥223.6M</td><td>¥211.3M</td><td>16,734</td><td>1,203</td>
+        <td>17,313</td><td>¥12,377</td>
+      </tr>
+      <tr><td>2026-04</td>
+        <td>17,195</td><td>¥210.9M</td><td>¥214.7M</td><td>16,516</td><td>1,103</td>
+        <td>17,678</td><td>¥12,226</td>
+      </tr>
+      <tr><td>2026-05</td>
+        <td>17,860</td><td>¥224.4M</td><td>¥231.9M</td><td>17,227</td><td>1,456</td>
+        <td>18,447</td><td>¥12,627</td>
+      </tr>
+      <tr><td>2026-06</td>
+        <td>17,440</td><td>¥217.2M</td><td>¥210.8M</td><td>16,859</td><td>1,438</td>
+        <td>17,230</td><td>¥12,329</td>
+      </tr>
+      <tr><td>2026-07</td>
+        <td>19,154</td><td>¥234.4M</td><td>¥231.2M</td><td>18,403</td><td>1,947</td>
+        <td>19,110</td><td>¥12,181</td>
+      </tr>
+      <tr><td>2026-08</td>
+        <td>17,842</td><td>¥220.2M</td><td>¥219.1M</td><td>17,298</td><td>1,700</td>
+        <td>17,910</td><td>¥12,325</td>
+      </tr>
+      <tr style="background:#fff8e8"><td><strong>2026-09 ★今月</strong></td>
+        <td><strong>17,483</strong></td>
+        <td><strong>¥206.2M</strong></td>
+        <td><strong>¥210.7M</strong></td>
+        <td><strong>16,586</strong></td>
+        <td><strong>1,137</strong></td>
+        <td><strong>17,052</strong></td>
+        <td><strong>¥12,376</strong></td>
+      </tr>
+      <tr class="tot"><td>合計（12ヶ月）</td>
+        <td>216,263</td>
+        <td>¥2,642.1M</td>
+        <td>¥2,631.5M</td>
+        <td>—</td>
+        <td>15,733</td>
+        <td>216,315</td>
+        <td>¥12,267</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="ssub" style="margin-top:4px;margin-bottom:4px">
+    ※新規顧客数（v10）：初回の有料注文日（first_paid_order_dt相当）の月次カウント。MINERALionトライアル（SKU 3016）・CYSトライアル（3023-cp／3031-cp）・2025年OGS等、送料のみ負担の顧客を含む（無償含む新規）。<strong>3区分（純粋新規／アイテム新規／トライアル購入）は後段「月次新規顧客獲得数 推移表」を参照。</strong>2026-09は、9/30付の注文がその後キャンセルされ初回が10/1にずれた1名がマスター上9/30扱いで残っていたため、注文ベースの1,137人（タブ③と一致）を採用（マスター直接集計は1,138人）。<br>
+    <strong>【件数・AOVの主指標について（2026-10-09確定）】</strong>件数・AOVはShopify受注基準の有償注文を主指標とする。NE出荷件数（左から2列目）は参考値で、<strong>2026-07に¥1,000未満の注文317件（SKINBEAUTY FIRST KIT・7/22単日出荷）、2026-09にCYS送料のみ注文864件（¥200・商品明細なし）を含む</strong>。送料のみ注文はShopify上では7月1,477件・8月792件・9月913件と従来から存在するが、NE（shop_id=17）には9/3受注以降のみ載る（7〜8月は0件）ため、NE出荷件数・AOVの月間比較には使わない（理由：データチームが9/3から0円・送料のみの受注もNEへ取り込む仕様に変更したため〔確認済み〕。過去分は来週以降に遡及取込される予定で、取込後は過去月のNE出荷件数・AOVが変動する）。<br>
+    【集計方法】出荷件数/出荷売上：ship_dateで月次グルーピング。受注売上：order_dateで月次グルーピング。いずれもcancel_date IS NULLでキャンセル除外。当月購入顧客数：shopify_ordersのcustomer_idユニーク数（test=0・cancelled_at IS NULL・売上>0）。※本表の各月値は今回のBQ再実行に伴う僅少なドリフトを含む（2026-08の受注売上¥219.9M→¥219.1M、出荷件数17,853→17,842件など、後続キャンセル・返品の反映。それ以外の月は前月公開値と一致）。
+  </div>
+
+  <!-- ブランド別売上推移グラフ -->
+  <div class="stitle">ブランド別出荷売上推移（2025年4月〜2026年9月）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+  <div class="ssub">データソース：spic-core.public.ne_order_items（shop_id=17）・goods_tagベースブランド判別・ship_date基準・税抜（salesカラム）<br>
+  <strong>集計方法：</strong>TRIM(goods_tag)でブランド判別→ship_dateで月次グルーピング→SUM(sales)（salesは税抜確定値のため÷1.08等の逆算不要）。<strong>C+Dには[Lypo-C C+D+K]を集約（2026-09に¥3.02M）</strong>＝出荷売上の集計仕様。※定期便コース別ヘルスではC+D+KをC+Dと別ブランドとして扱う</div>
+  <div class="chart-wrap"><canvas id="chartBrand"></canvas></div>
+
+  <!-- ブランド別月次テーブル -->
+  <div class="stitle">ブランド別月次出荷売上・直近6ヶ月（単位：百万円・税抜）<span class="ds-ne">NE</span><span class="ds-ship">出荷</span></div>
+  <table>
+    <thead>
+      <tr><th>ブランド</th><th>2026-04</th><th>2026-05</th><th>2026-06</th><th>2026-07</th><th>2026-08</th><th style="background:#fff8e8">2026-09 ★今月</th><th>前月比</th><th>前年同月比(YoY)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot" style="background:var(--vc)"></span>VC</td>
+        <td>110.1</td><td>118.8</td><td>108.8</td><td>115.1</td><td>112.9</td><td style="background:#fff8e8;font-weight:700;">102.4</td>
+        <td><span class="badge b">▲9.3%</span></td>
+        <td><span class="badge b">▲34.1%</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--cd)"></span>C+D <span style="font-size:10px;color:var(--muted);font-weight:400">※C+D+K含む</span></td>
+        <td>76.0</td><td>80.5</td><td>77.5</td><td>80.8</td><td>78.9</td><td style="background:#fff8e8;font-weight:700;">78.5</td>
+        <td><span class="badge b">▲0.6%</span></td>
+        <td><span class="badge a">+7.2%</span></td>
+      </tr>
+      <tr style="color:var(--muted);font-size:12px">
+        <td style="padding-left:22px"><span class="dot" style="background:var(--cdk)"></span>うちC+D+K（9月新規）</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td style="background:#fff8e8;font-weight:700">3.0</td>
+        <td><span class="badge n">新規</span></td><td>—</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--ccera)"></span>C+Cera</td>
+        <td>15.2</td><td>15.4</td><td>19.7</td><td>23.5</td><td>16.2</td><td style="background:#fff8e8;font-weight:700;">14.2</td>
+        <td><span class="badge b">▲12.1%</span></td>
+        <td><span class="badge n">新規</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--sb)"></span>SKINBEAUTY</td>
+        <td>5.5</td><td>5.9</td><td>6.2</td><td>6.9</td><td>6.5</td><td style="background:#fff8e8;font-weight:700;">5.6</td>
+        <td><span class="badge b">▲14.5%</span></td>
+        <td><span class="badge n">新規</span></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--mi)"></span>MINERALion</td>
+        <td>4.0</td><td>3.4</td><td>4.6</td><td>7.6</td><td>5.3</td><td style="background:#fff8e8;font-weight:700;">4.9</td>
+        <td><span class="badge b">▲7.8%</span></td>
+        <td><span class="badge n">新規</span></td>
+      </tr>
+      <tr class="tot">
+        <td>合計（主要ブランド）</td>
+        <td>210.7</td><td>224.1</td><td>216.8</td><td>233.9</td><td>219.8</td><td style="background:#fff0d8;font-weight:700">205.6</td>
+        <td><span class="badge b">▲6.5%</span></td>
+        <td><span class="badge b">▲10.1%</span></td>
+      </tr>
+      <tr style="background:#fdf4ff">
+        <td style="color:var(--ccera);font-weight:600">新ブランド3社計（C+Cera+SB+MI）</td>
+        <td style="color:var(--ccera)">24.7</td><td style="color:var(--ccera)">24.8</td><td style="color:var(--ccera)">30.6</td><td style="color:var(--ccera)">38.0</td><td style="color:var(--ccera)">28.0</td><td style="background:#fff8e8;font-weight:700;color:var(--ccera)">24.7</td>
+        <td><span class="badge b">▲11.8%</span></td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="ssub" style="color:#78716c;margin-top:4px;margin-bottom:4px">
+    【集計方法・抽出条件】spic-core.public.ne_order_items（shop_id=17）・ship_date基準・cancel_date IS NULL。ブランド判別：TRIM(goods_tag)。例：'[Lypo-C]'→VC、'[Lypo-C C+D]'・'[Lypo-C C+D+K]'→C+D、'[Lypo-C C＋Cera]'→C+Cera（＋は全角U+FF0B）、'[Lypo-C SKINBEAUTY]'→SKINBEAUTY、'[MINERALion]'→MINERALion。salesカラムは税抜確定済みのため÷1.08等の逆算不要。合計（主要ブランド）は上記5ブランドの合算で、総出荷売上（¥206.2M）との差（¥0.69M）は上記以外のgoods_tag分。前月（2026-08）値はBQ再実行により一部微修正（VC 112.98→112.87、C+D 78.94→78.92）。
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 ブランド別出荷売上 考察（2026年9月・NE出荷基準）</div>
+    <ul>
+      <li><strong>VC（¥102.42M）は前月比▲9.3%・前年同月比▲34.1%で、全社の前月差の約75%を占める最大の押し下げ要因。</strong>定期ACTIVE 12,333件（▲220件・2ヶ月連続の純減幅拡大）・停止率63.5%（前月62.8%）と整合しており、定期の自然減に新規獲得の鈍化（純粋新規▲28.1%）が重なっている。</li>
+      <li><strong>C+D（¥78.46M・C+D+K含む）は前月比▲0.6%・YoY+7.2%と主力で唯一ほぼ横ばい。</strong>9/16に本格ローンチしたC+D+Kが¥3.02M上乗せされており、C+D単体（¥75.44M）は▲4.4%。C+D→C+D+Kへの置換（タブ④：置換71件中C+D由来37件）が単体の減少に含まれるため、評価はC+D＋C+D+K合算で見るのが妥当。</li>
+      <li><strong>C+Cera（¥14.21M）は前月比▲12.1%で2026年3月（¥13.79M）以来の低水準。</strong>CTC施策反動の継続に加え、定期ACTIVE 1,026件（▲85件・2ヶ月連続純減）・停止率19.6%→25.1%と、出荷・定期の両面で下押しが続く。</li>
+      <li><strong>SKINBEAUTY（¥5.58M）は前月比▲14.5%で2026年4月（¥5.55M）以来の低水準、MINERALion（¥4.88M）は前月比▲7.8%。</strong>MINERALionは7月の施策特需（¥7.58M）が一巡し、施策前（3〜6月）の¥3.4〜4.8M帯の上限付近へ収束。定期ACTIVEは669件（+5件）で純増を維持したが、新規アクティブは低水準（タブ④）。</li>
+    </ul>
+  </div>
+
+  <!-- 定期便コース別ヘルス -->
+  <div class="stitle">定期便コース別ヘルス（2026年9月末スナップショット）<span class="ds-mixed">subscription_history_view</span></div>
+  <div class="ssub">データソース：spic-core.public.sn_subscription_history_view（snapshot_ym='2026-09'・月末スナップショット）｜ has_*フラグ集計（VC・C+D・C+D+K・C+Cera・SKINBEAUTY・MINERALionは各フラグ=1の契約。<strong>C+D+K（has_cdk）は独立フラグで、C+D（has_cd）には含めない</strong>）｜ Mixed＝VC+C+D複合（has_vc=1 AND has_cd=1・各ブランド行に重複計上済）｜ 停止率＝PAUSED÷（ACTIVE+PAUSED）｜ PAUSED = 一時停止中（再アクティベーション対象）｜ FY2027末目標：Lypo-C定期便ACTIVE 27,000件（全コース合計）</div>
+  <table>
+    <thead><tr><th>コース</th><th>ACTIVE</th><th>PAUSED</th><th>CANCELLED</th><th>合計</th><th class="c">前月比変化</th><th class="c">備考</th></tr></thead>
+    <tbody>
+      <tr><td>VC（has_vc=1）</td><td>12,333</td><td>21,474</td><td>21,429</td><td>55,236</td><td class="c"><span class="badge b">▲220件</span></td><td class="c"><span class="badge b">停止率63.5%（前月62.8%）→ 再アクティベーション最優先（ACTIVE減少幅が拡大）</span></td></tr>
+      <tr><td>C+D（has_cd=1）</td><td>9,778</td><td>9,248</td><td>7,151</td><td>26,177</td><td class="c"><span class="badge b">▲77件</span></td><td class="c"><span class="badge w">停止率48.6%（前月47.8%）・C+D+Kへの置換を含む（C+D＋C+D+K合算は9,915件・前月比+60件）</span></td></tr>
+      <tr><td>C+D+K（has_cdk=1）<br><span style="font-size:10px;color:var(--muted)">※9/16本格ローンチ・C+Dとは別ブランド扱い</span></td><td>138</td><td>4</td><td>3</td><td>145</td><td class="c"><span class="badge n">新規+138件</span></td><td class="c"><span class="badge n">新規</span> <span style="font-size:11px;color:var(--muted)">停止率2.8%・出自：新規契約65＋PAUSED復帰2＝67件／既存契約からの置換71件（C+D 37・Mixed 19・C+Cera 10・VC 5）</span></td></tr>
+      <tr><td>Mixed（VC+C+D複合）<br><span style="font-size:10px;color:var(--muted)">※ has_*カウントに包含済</span></td><td>1,817</td><td>2,193</td><td>1,657</td><td>5,667</td><td class="c"><span class="badge b">▲44件</span></td><td class="c"><span style="font-size:10px;color:var(--muted)">VC・C+Dに重複計上済</span></td></tr>
+      <tr><td>C+Cera <span style="font-size:11px;color:var(--muted);font-weight:400">※28日定期含む</span></td><td>1,026</td><td>344</td><td>238</td><td>1,608</td><td class="c"><span class="badge b">▲85件</span></td><td class="c"><span class="badge b">⚠️ ACTIVE 2ヶ月連続純減（▲39→▲85件）・停止率19.6%→25.1%</span></td></tr>
+      <tr><td>SKINBEAUTY <span style="font-size:11px;color:var(--muted);font-weight:400">※28日定期主体</span></td><td>447</td><td>269</td><td>222</td><td>938</td><td class="c"><span class="badge b">▲18件</span></td><td class="c"><span class="badge w">停止率37.6%（前月33.1%）・要注視</span></td></tr>
+      <tr><td>MINERALion</td><td>669</td><td>166</td><td>138</td><td>973</td><td class="c"><span class="badge a">+5件</span></td><td class="c"><span class="badge w">純増維持も停止率16.3%→19.9%へ上昇</span></td></tr>
+      <tr class="tot"><td>合計</td><td>22,023</td><td>29,251</td><td>27,499</td><td>78,773</td><td class="c"><span class="badge b">▲235件</span></td><td class="c"><span style="font-size:11px;color:var(--muted)">2026-01以来の大幅減・PAUSED+652件（ACTIVE比132.8%）・FY2027末目標まで +4,977件（達成率81.6%）</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 定期便ヘルス 考察（2026年9月）<span class="ds-shopify" style="font-size:9px;vertical-align:middle">Shopify</span><span class="ds-snap" style="font-size:9px;vertical-align:middle">月末スナップショット</span></div>
+    <ul>
+      <li><strong>全社ACTIVE 22,023件は前月比▲235件と、2026年1月以来の大幅な純減。</strong>PAUSEDは+652件（29,251件・ACTIVE比132.8%）、累計解約は+617件（27,499件）。タブ④の分解では、新規ACTIVE契約が1,357→1,147件（▲210）、PAUSE・CANCELLED発生が1,350→1,382件（+32）で、差▲235件はACTIVE純増減と一致。新規ACTIVEのうちCYS定期引き上げ経由は144→150件でほぼ横ばいのため、<strong>CYSを除く自然獲得が1,213→997件（▲17.8%）と減っている</strong>（Google自社運用のクリック急減〔タブ⑤〕との関連は仮説・要確認）。</li>
+      <li><strong>C+D+K（独立ブランド）は9月末で138件・停止率2.8%。出自は新規契約・復帰が67件（48.6%）、既存契約からの置換が71件（51.4%）と約半々。</strong>置換契約の平均単価は¥18,623→¥21,584（+¥2,962・78.9%の契約が上昇）で、C+D→C+D+K単独28契約は¥14,868→¥17,719（+19.2%）＝アップグレード型の動き（タブ④）。C+D単体のACTIVE▲77件にはこの置換が含まれ、C+D＋C+D+K合算では9,915件（+60件）と増加。純粋な上積みは新規契約分（約67件）にとどまる点に注意。</li>
+      <li><strong>C+Cera（ACTIVE 1,026件）は2ヶ月連続の純減（8月▲39件→9月▲85件）。</strong>停止率は19.6%→25.1%と上昇し、PAUSE・CANCELLED発生118件は過去最大、新規ACTIVE契約51件は施策終了後で最低（タブ④）。全コースで停止率が上昇しており、CTC施策由来の契約の早期離脱と新規流入の枯渇が同時に進んでいる。</li>
+      <li><strong>VC PAUSED 21,474件（停止率63.5%）は最大の構造課題で、積み上がりが続く（+305件）。</strong>VC離脱→C+D保有が139件（前月106件）、C+D離脱→VC保有が76件（前月108件）とVC→C+Dの一方向化が進んでおり（タブ④）、VCのACTIVE減少（▲220件）の一部はブランド内移動。再開インパクト試算は2026年6月度時点で凍結中。</li>
+    </ul>
+  </div>
+
+  <!-- 新規顧客獲得推移グラフ -->
+  <div class="stitle">月次新規顧客獲得数（2024年4月〜2026年9月）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：spic-core.public.shopify_orders × shopify_sku_brand_master（v10整合の検証：sn_shopify_customer_master.first_paid_order_dt）｜ 橙色の帯 = OGSキャンペーン期間（2025年7〜9月）<br>
+  <strong>グラフの見方：</strong>3本の棒（左から）＝純粋新規（人）／アイテム新規（ブランド別延べ件数）／トライアル購入（延べ件数・転換済／未転換）。集計単位が異なるため積み上げ・合算はしない／折れ線＝新規顧客数（v10・初回注文月・無償含む）。未転換は2026-09-30時点。</div>
+  <div style="font-size:12px;line-height:1.7;background:#f5f5f4;border-left:3px solid #a78bfa;border-radius:0 4px 4px 0;padding:8px 12px;margin-bottom:10px">
+    <strong>【3区分の定義】</strong>ブランド別CRMレポート（4-16・4-18章）と同一ロジック。対象ブランドはVC・C+D・C+D+K（独立）・C+Cera・SKINBEAUTY・MINERALion（Shopify受注×SKUブランドマスター。有償注文条件＝純額＞0、有償品＝price＞0の明細。2025年OGS特例〔SKU 1004496＋クーポンOGS2025_11〕とCYS0810注文の明細はprice=0扱い）<br>
+    ・<strong>純粋新規</strong>：生涯初の有償注文日に有償品を購入した顧客。<strong>1顧客につき理論上1回</strong>。計上月＝初回注文月<br>
+    ・<strong>アイテム新規</strong>：あるブランドを有償で初めて購入した顧客（<strong>生涯初の有償注文での購入を含む</strong>。トライアルの有無は無関係）。計上月＝そのブランドの初回有償購入月。<strong>1顧客がブランドごとに1回ずつ計上されうる延べ件数</strong>（VC→C+D→C+Ceraと広げれば3件）。純粋新規は必ずアイテム新規にも計上されるため、<strong>アイテム新規は純粋新規以上になる</strong>（例：生涯初の有償購入がVCの商品なら、純粋新規・VCのアイテム新規・Shopify新規のすべてに計上）<br>
+    ・<strong>トライアル購入</strong>：トライアル商品（MINERALion 3016／VC 3023-cp・2025年OGS／C+D 3031-cp）を送料のみの注文で購入し、その注文時点で当該ブランドの有償購入歴がないもの。<strong>同一顧客が何度でも該当しうる</strong>延べ件数（注文単位）。計上月＝注文月。「うち未転換」は9/30時点で当該ブランドの有償購入が一度もないもの<br>
+    ・<strong>3区分は集計単位が異なる（人／ブランド別延べ／注文別延べ）ため合算しない。</strong><strong>v10新規顧客数</strong>（顧客単位）＝純粋新規＋初回が試供のみの顧客で、全月一致を検証済み<br>
+    ・<strong>旧表との差異：</strong>旧「有償新規」（初回当日の最初の注文のsubtotal&gt;0で判定）は純粋新規と判定方法が異なり、8月で1,287人→1,301人など十数人の差。旧推移表は一部月でマスター値と乖離していたため全期間を再計算して置換。初回日はv10整合のためCYS0810注文を除外しない（ブランド別CRMは除外するため初回日が異なる場合がある）
+  </div>
+  <div class="chart-wrap"><canvas id="chartNewCust"></canvas></div>
+
+  <div class="stitle">月次新規顧客獲得数 ─ 通常スケール（直近トレンド確認用）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">縦軸を 0〜3,000に固定（OGS月は範囲外）｜ 2026年9月をハイライト ｜ アイテム新規・トライアル購入は延べ件数</div>
+  <div class="chart-wrap"><canvas id="chartNewCustNorm"></canvas></div>
+
+  <div class="stitle" style="margin-top:20px">月次新規顧客獲得数 推移表（2024年4月〜2026年9月）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">
+    <strong>データソース：</strong>spic-core.public.shopify_orders ／ shopify_sku_brand_master（Shopify受注）。全期間を2026-10-08時点で再計算<br>
+    橙背景：OGSキャンペーン期間（2025年7〜9月）｜ 青背景：FY2027（2026年4月〜）｜ <span style="color:#1E3A8A;font-weight:600">MION</span>：MINERALionトライアル施策月 ｜ <span style="color:#db2777;font-weight:600">CYS</span>：CYSキャンペーン月（7/22〜9/17）<br>
+    純粋新規は顧客数、アイテム新規・トライアル購入は延べ件数（合算しない）。前年同月比・前月比は純粋新規ベース（旧「有償ベース」の後継）。2024-04はTVCM連動の特需月
+  </div>
+  <div style="overflow-x:auto;margin-bottom:20px">
+    <table style="min-width:960px;font-size:13px">
+      <thead>
+        <tr>
+          <th style="min-width:110px;text-align:left">年月</th>
+          <th style="min-width:110px;text-align:right">新規顧客数<br><span style="font-weight:400;font-size:10px;color:#78716c">（v10・顧客単位）</span></th>
+          <th style="min-width:90px;text-align:right">純粋新規<br><span style="font-weight:400;font-size:10px;color:#78716c">（人・1顧客1回）</span></th>
+          <th style="min-width:100px;text-align:right">アイテム新規<br><span style="font-weight:400;font-size:10px;color:#78716c">（延べ・ブランド別）</span></th>
+          <th style="min-width:100px;text-align:right">トライアル購入<br><span style="font-weight:400;font-size:10px;color:#78716c">（延べ・別枠）</span></th>
+          <th style="min-width:110px;text-align:right">うち未転換<br><span style="font-weight:400;font-size:10px;color:#78716c">（9/30時点）</span></th>
+          <th style="min-width:100px;text-align:right">前年同月比<br><span style="font-weight:400;font-size:10px;color:#78716c">（純粋新規）</span></th>
+          <th style="min-width:90px;text-align:right">前月比<br><span style="font-weight:400;font-size:10px;color:#78716c">（純粋新規）</span></th>
+        </tr>
+      </thead>
+      <tbody>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-04</td>
+                <td style="text-align:right">8,163人</td>
+                <td style="text-align:right;font-weight:600">8,163人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">9,112人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-05</td>
+                <td style="text-align:right">2,407人</td>
+                <td style="text-align:right;font-weight:600">2,407人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">3,092人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-70.5%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-06</td>
+                <td style="text-align:right">2,348人</td>
+                <td style="text-align:right;font-weight:600">2,348人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">3,005人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-2.5%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-07</td>
+                <td style="text-align:right">2,696人</td>
+                <td style="text-align:right;font-weight:600">2,696人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">3,341人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+14.8%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-08</td>
+                <td style="text-align:right">2,663人</td>
+                <td style="text-align:right;font-weight:600">2,663人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">3,290人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-1.2%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-09</td>
+                <td style="text-align:right">2,062人</td>
+                <td style="text-align:right;font-weight:600">2,062人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,613人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-22.6%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-10</td>
+                <td style="text-align:right">1,431人</td>
+                <td style="text-align:right;font-weight:600">1,431人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">1,989人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-30.6%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-11</td>
+                <td style="text-align:right">1,610人</td>
+                <td style="text-align:right;font-weight:600">1,610人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,201人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+12.5%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2024-12</td>
+                <td style="text-align:right">1,573人</td>
+                <td style="text-align:right;font-weight:600">1,573人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,103人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-2.3%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-01</td>
+                <td style="text-align:right">2,271人</td>
+                <td style="text-align:right;font-weight:600">2,271人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,932人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+44.4%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-02</td>
+                <td style="text-align:right">1,837人</td>
+                <td style="text-align:right;font-weight:600">1,837人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,432人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-19.1%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-03</td>
+                <td style="text-align:right">2,212人</td>
+                <td style="text-align:right;font-weight:600">2,212人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,825人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+20.4%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-04</td>
+                <td style="text-align:right">1,689人</td>
+                <td style="text-align:right;font-weight:600">1,689人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,148人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-79.3%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-23.6%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-05</td>
+                <td style="text-align:right">1,911人</td>
+                <td style="text-align:right;font-weight:600">1,911人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,380人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-20.6%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+13.1%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-06</td>
+                <td style="text-align:right">2,352人</td>
+                <td style="text-align:right;font-weight:600">2,352人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,875人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--green);font-weight:600">+0.2%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+23.1%</span></td>
+              </tr>
+              <tr style="background:#fff7ed">
+                <td style="font-weight:500;white-space:nowrap">2025-07 <span style="font-size:9px;background:#ea580c;color:#fff;padding:1px 5px;border-radius:3px">OGS</span></td>
+                <td style="text-align:right">27,185人</td>
+                <td style="text-align:right;font-weight:600">2,613人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">3,383人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">25,007人</span></td>
+                <td style="text-align:right">23,318人（93%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-3.1%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+11.1%</span></td>
+              </tr>
+              <tr style="background:#fff7ed">
+                <td style="font-weight:500;white-space:nowrap">2025-08 <span style="font-size:9px;background:#ea580c;color:#fff;padding:1px 5px;border-radius:3px">OGS</span></td>
+                <td style="text-align:right">16,519人</td>
+                <td style="text-align:right;font-weight:600">1,900人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">4,301人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">14,991人</span></td>
+                <td style="text-align:right">13,522人（90%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-28.7%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-27.3%</span></td>
+              </tr>
+              <tr style="background:#fff7ed">
+                <td style="font-weight:500;white-space:nowrap">2025-09 <span style="font-size:9px;background:#ea580c;color:#fff;padding:1px 5px;border-radius:3px">OGS</span></td>
+                <td style="text-align:right">6,511人</td>
+                <td style="text-align:right;font-weight:600">1,439人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">3,108人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">5,219人</span></td>
+                <td style="text-align:right">4,658人（89%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-30.2%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-24.3%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-10</td>
+                <td style="text-align:right">1,248人</td>
+                <td style="text-align:right;font-weight:600">1,248人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,340人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-12.8%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-13.3%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-11</td>
+                <td style="text-align:right">985人</td>
+                <td style="text-align:right;font-weight:600">985人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">1,803人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-38.8%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-21.1%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2025-12</td>
+                <td style="text-align:right">978人</td>
+                <td style="text-align:right;font-weight:600">978人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,272人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-37.8%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-0.7%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2026-01 <span style="font-size:9px;background:#1E3A8A;color:#fff;padding:1px 5px;border-radius:3px" title="MINERALionトライアル施策月">MION</span></td>
+                <td style="text-align:right">1,323人</td>
+                <td style="text-align:right;font-weight:600">1,081人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,559人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">1,868人</span></td>
+                <td style="text-align:right">1,578人（84%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-52.4%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+10.5%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2026-02 <span style="font-size:9px;background:#1E3A8A;color:#fff;padding:1px 5px;border-radius:3px" title="MINERALionトライアル施策月">MION</span></td>
+                <td style="text-align:right">1,215人</td>
+                <td style="text-align:right;font-weight:600">1,175人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,927人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">225人</span></td>
+                <td style="text-align:right">160人（71%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-36.0%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+8.7%</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:500;white-space:nowrap">2026-03 <span style="font-size:9px;background:#1E3A8A;color:#fff;padding:1px 5px;border-radius:3px" title="MINERALionトライアル施策月">MION</span></td>
+                <td style="text-align:right">1,203人</td>
+                <td style="text-align:right;font-weight:600">1,071人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,240人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">827人</span></td>
+                <td style="text-align:right">691人（84%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-51.6%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-8.9%</span></td>
+              </tr>
+              <tr style="background:#eff6ff">
+                <td style="font-weight:500;white-space:nowrap">2026-04 <span style="font-size:9px;background:#1E3A8A;color:#fff;padding:1px 5px;border-radius:3px" title="MINERALionトライアル施策月">MION</span></td>
+                <td style="text-align:right">1,103人</td>
+                <td style="text-align:right;font-weight:600">1,102人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,326人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">6人</span></td>
+                <td style="text-align:right">5人（83%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-34.8%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+2.9%</span></td>
+              </tr>
+              <tr style="background:#eff6ff">
+                <td style="font-weight:500;white-space:nowrap">2026-05</td>
+                <td style="text-align:right">1,456人</td>
+                <td style="text-align:right;font-weight:600">1,456人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,501人</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:#9ca3af">—</span></td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-23.8%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+32.1%</span></td>
+              </tr>
+              <tr style="background:#eff6ff">
+                <td style="font-weight:500;white-space:nowrap">2026-06 <span style="font-size:9px;background:#1E3A8A;color:#fff;padding:1px 5px;border-radius:3px" title="MINERALionトライアル施策月">MION</span></td>
+                <td style="text-align:right">1,438人</td>
+                <td style="text-align:right;font-weight:600">1,277人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,340人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">1,238人</span></td>
+                <td style="text-align:right">1,057人（85%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-45.7%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-12.3%</span></td>
+              </tr>
+              <tr style="background:#eff6ff">
+                <td style="font-weight:500;white-space:nowrap">2026-07 <span style="font-size:9px;background:#db2777;color:#fff;padding:1px 5px;border-radius:3px" title="CYSキャンペーン（7/22〜9/17）VC/C+D 3包トライアル">CYS</span></td>
+                <td style="text-align:right">1,947人</td>
+                <td style="text-align:right;font-weight:600">1,656人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">3,308人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">1,480人</span></td>
+                <td style="text-align:right">1,244人（84%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-36.6%</span></td>
+                <td style="text-align:right"><span style="color:var(--green)">+29.7%</span></td>
+              </tr>
+              <tr style="background:#eff6ff">
+                <td style="font-weight:500;white-space:nowrap">2026-08 <span style="font-size:9px;background:#db2777;color:#fff;padding:1px 5px;border-radius:3px" title="CYSキャンペーン（7/22〜9/17）VC/C+D 3包トライアル">CYS</span></td>
+                <td style="text-align:right">1,700人</td>
+                <td style="text-align:right;font-weight:600">1,301人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">2,172人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">953人</span></td>
+                <td style="text-align:right">649人（68%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-31.5%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-21.4%</span></td>
+              </tr>
+              <tr style="background:#f0fdf4">
+                <td style="font-weight:500;white-space:nowrap">2026-09 <span style="font-size:9px;background:#16a34a;color:#fff;padding:1px 5px;border-radius:3px;font-weight:700">最新</span> <span style="font-size:9px;background:#db2777;color:#fff;padding:1px 5px;border-radius:3px" title="CYSキャンペーン（7/22〜9/17）VC/C+D 3包トライアル">CYS</span></td>
+                <td style="text-align:right">1,137人</td>
+                <td style="text-align:right;font-weight:600">936人</td>
+                <td style="text-align:right"><span style="color:#1d4ed8;font-weight:600">1,830人</span></td>
+                <td style="text-align:right"><span style="color:#c2410c;font-weight:600">659人</span></td>
+                <td style="text-align:right">516人（78%）</td>
+                <td style="text-align:right"><span style="color:var(--red);font-weight:600">-35.0%</span></td>
+                <td style="text-align:right"><span style="color:var(--red)">-28.1%</span></td>
+              </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="stitle" style="margin-top:8px">アイテム新規・トライアル購入 ブランド別内訳（直近12ヶ月・延べ件数）<span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">C+D+Kは独立ブランド（9月ローンチ）。トライアル商品が存在するのはVC（CYS 3023-cp・2025年OGS）・C+D（CYS 3031-cp）・MINERALion（3016）。トライアル購入の％は未転換率。</div>
+  <div style="overflow-x:auto;margin-bottom:20px">
+    <table style="min-width:900px;font-size:12px">
+      <thead>
+        <tr><th rowspan="2" style="text-align:left">年月</th><th colspan="7" style="text-align:center;background:#eff6ff">アイテム新規（延べ）</th><th colspan="5" style="text-align:center;background:#fff7ed">トライアル購入（延べ）</th></tr>
+        <tr><th>VC</th><th>C+D</th><th>C+D+K</th><th>C+Cera</th><th>SB</th><th>MI</th><th>計</th><th>VC</th><th>C+D</th><th>MI</th><th>計</th><th>うち未転換</th></tr>
+      </thead>
+      <tbody>
+<tr><td style="font-weight:500;white-space:nowrap">2025-10</td><td style="text-align:right"><span style=color:#1d4ed8>1,044</span></td><td style="text-align:right"><span style=color:#1d4ed8>805</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>491</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right;font-weight:600">2,340</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right;font-weight:600">0</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td></tr>
+<tr><td style="font-weight:500;white-space:nowrap">2025-11</td><td style="text-align:right"><span style=color:#1d4ed8>673</span></td><td style="text-align:right"><span style=color:#1d4ed8>698</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>247</span></td><td style="text-align:right"><span style=color:#1d4ed8>185</span></td><td style="text-align:right;font-weight:600">1,803</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right;font-weight:600">0</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td></tr>
+<tr><td style="font-weight:500;white-space:nowrap">2025-12</td><td style="text-align:right"><span style=color:#1d4ed8>594</span></td><td style="text-align:right"><span style=color:#1d4ed8>939</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>376</span></td><td style="text-align:right"><span style=color:#1d4ed8>363</span></td><td style="text-align:right;font-weight:600">2,272</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right;font-weight:600">0</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td></tr>
+<tr><td style="font-weight:500;white-space:nowrap">2026-01</td><td style="text-align:right"><span style=color:#1d4ed8>722</span></td><td style="text-align:right"><span style=color:#1d4ed8>741</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>426</span></td><td style="text-align:right"><span style=color:#1d4ed8>221</span></td><td style="text-align:right"><span style=color:#1d4ed8>449</span></td><td style="text-align:right;font-weight:600">2,559</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#c2410c>1,868</span></td><td style="text-align:right;font-weight:600">1,868</td><td style="text-align:right">1,578（84%）</td></tr>
+<tr><td style="font-weight:500;white-space:nowrap">2026-02</td><td style="text-align:right"><span style=color:#1d4ed8>739</span></td><td style="text-align:right"><span style=color:#1d4ed8>671</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>1,013</span></td><td style="text-align:right"><span style=color:#1d4ed8>238</span></td><td style="text-align:right"><span style=color:#1d4ed8>266</span></td><td style="text-align:right;font-weight:600">2,927</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#c2410c>225</span></td><td style="text-align:right;font-weight:600">225</td><td style="text-align:right">160（71%）</td></tr>
+<tr><td style="font-weight:500;white-space:nowrap">2026-03</td><td style="text-align:right"><span style=color:#1d4ed8>697</span></td><td style="text-align:right"><span style=color:#1d4ed8>602</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>547</span></td><td style="text-align:right"><span style=color:#1d4ed8>110</span></td><td style="text-align:right"><span style=color:#1d4ed8>284</span></td><td style="text-align:right;font-weight:600">2,240</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#c2410c>827</span></td><td style="text-align:right;font-weight:600">827</td><td style="text-align:right">691（84%）</td></tr>
+<tr><td style="font-weight:500;white-space:nowrap">2026-04</td><td style="text-align:right"><span style=color:#1d4ed8>810</span></td><td style="text-align:right"><span style=color:#1d4ed8>546</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>702</span></td><td style="text-align:right"><span style=color:#1d4ed8>109</span></td><td style="text-align:right"><span style=color:#1d4ed8>159</span></td><td style="text-align:right;font-weight:600">2,326</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#c2410c>6</span></td><td style="text-align:right;font-weight:600">6</td><td style="text-align:right">5（83%）</td></tr>
+<tr><td style="font-weight:500;white-space:nowrap">2026-05</td><td style="text-align:right"><span style=color:#1d4ed8>1,113</span></td><td style="text-align:right"><span style=color:#1d4ed8>710</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>396</span></td><td style="text-align:right"><span style=color:#1d4ed8>145</span></td><td style="text-align:right"><span style=color:#1d4ed8>137</span></td><td style="text-align:right;font-weight:600">2,501</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right;font-weight:600">0</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td></tr>
+<tr><td style="font-weight:500;white-space:nowrap">2026-06</td><td style="text-align:right"><span style=color:#1d4ed8>855</span></td><td style="text-align:right"><span style=color:#1d4ed8>619</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>490</span></td><td style="text-align:right"><span style=color:#1d4ed8>159</span></td><td style="text-align:right"><span style=color:#1d4ed8>217</span></td><td style="text-align:right;font-weight:600">2,340</td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#c2410c>1,238</span></td><td style="text-align:right;font-weight:600">1,238</td><td style="text-align:right">1,057（85%）</td></tr>
+<tr><td style="font-weight:500;white-space:nowrap">2026-07</td><td style="text-align:right"><span style=color:#1d4ed8>1,089</span></td><td style="text-align:right"><span style=color:#1d4ed8>706</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>626</span></td><td style="text-align:right"><span style=color:#1d4ed8>447</span></td><td style="text-align:right"><span style=color:#1d4ed8>440</span></td><td style="text-align:right;font-weight:600">3,308</td><td style="text-align:right"><span style=color:#c2410c>110</span></td><td style="text-align:right"><span style=color:#c2410c>339</span></td><td style="text-align:right"><span style=color:#c2410c>1,031</span></td><td style="text-align:right;font-weight:600">1,480</td><td style="text-align:right">1,244（84%）</td></tr>
+<tr><td style="font-weight:500;white-space:nowrap">2026-08</td><td style="text-align:right"><span style=color:#1d4ed8>1,006</span></td><td style="text-align:right"><span style=color:#1d4ed8>653</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right"><span style=color:#1d4ed8>166</span></td><td style="text-align:right"><span style=color:#1d4ed8>138</span></td><td style="text-align:right"><span style=color:#1d4ed8>209</span></td><td style="text-align:right;font-weight:600">2,172</td><td style="text-align:right"><span style=color:#c2410c>354</span></td><td style="text-align:right"><span style=color:#c2410c>599</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right;font-weight:600">953</td><td style="text-align:right">649（68%）</td></tr>
+<tr style="background:#f0fdf4"><td style="font-weight:500;white-space:nowrap">2026-09</td><td style="text-align:right"><span style=color:#1d4ed8>670</span></td><td style="text-align:right"><span style=color:#1d4ed8>613</span></td><td style="text-align:right"><span style=color:#1d4ed8>203</span></td><td style="text-align:right"><span style=color:#1d4ed8>110</span></td><td style="text-align:right"><span style=color:#1d4ed8>98</span></td><td style="text-align:right"><span style=color:#1d4ed8>136</span></td><td style="text-align:right;font-weight:600">1,830</td><td style="text-align:right"><span style=color:#c2410c>160</span></td><td style="text-align:right"><span style=color:#c2410c>499</span></td><td style="text-align:right"><span style=color:#9ca3af>–</span></td><td style="text-align:right;font-weight:600">659</td><td style="text-align:right">516（78%）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="monthly-insight">
+    <div class="mi-title">💡 新規顧客獲得 考察（2026年9月）</div>
+    <ul>
+      <li><strong>2026年9月の新規顧客は1,137人（前月比▲33.1%）、うち純粋新規936人（▲28.1%・YoY▲35.0%）は表示期間で最低。</strong>FY2027上期（4〜9月）の月平均はv10で1,464人（目標1,900人/月の77%）、純粋新規で1,288人。9月の1,137人は目標の60%で、7月（1,947人）に一度届いた後は2ヶ月連続で大きく下回った。9月の1,137人はタブ③の9月新規コホートと一致。</li>
+      <li><strong>純粋新規の1日あたり人数がCYS前→期中→終盤→終了後で56.7→43.1→32.3→29.8人と段階的に低下。</strong>CYS終了（9/17）後は初回が試供のみの顧客が0人になり、新規は純粋新規のみ（1日29.8人）。この水準が続くと10月の新規は単純外挿で約923人/月にとどまる。低下はCYS終了前の9/1〜9/17（32.3人/日）から始まっており、タブ⑤のGoogle自社運用クリック急減（要因未特定）と時期は整合するが、因果は未検証。</li>
+      <li><strong>アイテム新規（ブランド別の初回有償購入・延べ）は1,830件（前月2,172件・▲15.7%）。</strong>純粋新規（▲28.1%）とは別軸の指標で合算はしないが、動きは連動している（純粋新規は常にアイテム新規にも計上される）。前月差▲342件の主因は<strong>VC（1,006→670件・▲33.4%）</strong>で、C+D+Kのローンチ203件（独立ブランドとして初計上）が下支えした形。C+D 653→613件（▲6.1%）は底堅い。C+Cera（7月626→8月166→9月110件）・SB（447→138→98件）・MI（440→209→136件）は7月の施策期から大きく低下している。</li>
+      <li><strong>トライアル購入（延べ）は659件（前月953件・▲30.8%）。内訳はC+D 499件・VC 160件（いずれもCYS）。</strong>CYS（7/22〜9/17）の終了で減少。9/30時点の未転換率は9月分78%（C+D 80%・VC 72%）、8月分68%、7月分84%（MINERALion含む）。CYSトライアルは既存顧客の他ブランド体験が中心（9月の初回が試供のみの新規は201人）で、ブランド別CRMのトライアル→本品転換の評価と併せて見る必要がある。観測期間が短い9月分は今後転換が上積みされる。</li>
+      <li><strong>⚠️ 9月新規コホートの質は要検証。</strong>タブ③指摘のとおり9月コホートには¥220主体の低LTV層が混在する。M+1継続率・LTVの評価は純粋新規に絞った10月度での再確認が必要。</li>
+    </ul>
+  </div>
+
+  <div class="notes">
+    <div class="nt">📌 基礎データ 総合注目ポイント（2026年9月度）</div>
+    <ul>
+      <li><strong>NE出荷売上¥206.2M（YoY▲9.7%・前月比▲6.3%）は2026年2月以来の低水準。</strong>前月差の約75%がVC、減収の主因は有償注文件数の減少（Shopify受注▲4.8%・AOVは+¥51の横ばい）。NE出荷AOVの低下（¥12,341→¥11,797）は送料のみ注文864件の混入による見かけの低下。C+D（C+D+K含む）のみ横ばいを維持した。</li>
+      <li><strong>ACTIVE定期は▲235件の純減に転換（22,023件・達成率81.6%）。</strong>主因は新規ACTIVE契約の減少で、CYSを除く自然獲得は▲17.8%（タブ④）。C+D+K（138件）は新規と既存契約の置換が約半々で、C+Dファミリー合算でも純粋な上積みは約67件にとどまる。</li>
+      <li><strong>新規顧客は1,137人（目標1,900人/月の60%）、純粋新規936人は表示期間で最低。</strong>CYS終了後は新規が純粋新規のみとなり1日29.8人と、7月前半（65.4人/日）の半分以下。アイテム新規（ブランド別初回有償購入の延べ）は1,830件で前月比▲15.7%。VC▲336件が主因で、C+D+Kのローンチ203件が下支え。獲得チャネル側（タブ⑤のGoogle自社運用クリック急減）の要因特定が最優先。</li>
+      <li><strong>10月度の確認指標：</strong>①純粋新規が約900〜1,000人で底打ちするか ②有償注文件数（9月17,052件）の下げ止まりとAOV（Shopify受注・9月¥12,376）の維持 ③受注が出荷を上回った分（¥4.5M）の10月出荷への反映 ④ACTIVE定期の純減が続くか ⑤C+D＋C+D+K、C+D+Kのアイテム新規の2ヶ月目以降の推移 ⑥来週以降のNE過去分遡及取込（0円・送料のみ受注）後の、12ヶ月表NE出荷列（件数・AOV・出荷売上）の再抽出。</li>
+    </ul>
+  </div>
+</div>
+<!-- /TAB 1 -->
+<!-- @@SPLIT:tab1:END@@ -->
+
+
+<div class="footer">
+  <span>【データソース】<strong>KGI①②④売上：</strong>spic-core.public.ne_order_items（ship_date出荷基準・cancel_date IS NULL）　<strong>KGI③⑥⑦⑧顧客：</strong>spic-core.public.sn_shopify_customer_master（snapshot 2026-10-01）／shopify_orders／shopify_sku_brand_master（customer_idベース・Shopify受注）　<strong>KGI⑤定期便：</strong>spic-core.public.sn_subscription_history_view（月末スナップショット・snapshot_ym='2026-09'）　⚠️ receive_order（旧テーブル）は廃止済み・使用禁止</span>
+  <span>【集計基準】出荷基準 ｜ データ取得日：2026-10-08 ｜ 対象月：2026年9月（2026-09-01〜2026-09-30）｜ spic-com-2025-apr-00</span>
+</div>
+
+</div><!-- /page-wrap -->
+<script>
+// ===== PART FILE: tab1 / 更新5番目 =====
+// switchTab はno-op（このファイルはシングルタブ）
+function switchTab(id, btn) {}
+
+// @@SPLIT:tab1_data:START@@
+const allMonths = ["2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"];
+const totalRev = [220.6, 214.7, 204.5, 237.1, 225.6, 204.6, 217.7, 202.4, 198.6, 224.3, 195.0, 229.8, 202.9, 211.3, 210.8, 234.8, 234.5, 228.4, 243.7, 211.0, 217.9, 226.5, 206.0, 223.6, 210.9, 224.4, 217.2, 234.4, 220.2, 206.2]; // NE出荷基準（ship_date）・spic-core.public.ne_order_items（shop_id=17）・BQ実行日2026-10-08（全期間再取得のため前月公開値との僅少なドリフトあり・仕様通り）
+
+// ===== 新規顧客数（Shopify受注・Lypo-C全体＝全ブランド合算・BQ実行日2026-10-08）=====
+// newCusts＝v10（初回注文月・無償含む）＝純粋新規＋初回が試供のみ（全月一致検証済み）
+// 3区分：純粋新規（顧客単位）／アイテム新規（ブランド別初回有償購入の延べ）／トライアル購入（注文単位の延べ。合算しない）。6ブランド（C+D+K独立）
+const newCusts = [8163, 2407, 2348, 2696, 2663, 2062, 1431, 1610, 1573, 2271, 1837, 2212, 1689, 1911, 2352, 27185, 16519, 6511, 1248, 985, 978, 1323, 1215, 1203, 1103, 1456, 1438, 1947, 1700, 1137];
+const pureNew = [8163, 2407, 2348, 2696, 2663, 2062, 1431, 1610, 1573, 2271, 1837, 2212, 1689, 1911, 2352, 2613, 1900, 1439, 1248, 985, 978, 1081, 1175, 1071, 1102, 1456, 1277, 1656, 1301, 936];
+const itemNew = [9112, 3092, 3005, 3341, 3290, 2613, 1989, 2201, 2103, 2932, 2432, 2825, 2148, 2380, 2875, 3383, 4301, 3108, 2340, 1803, 2272, 2559, 2927, 2240, 2326, 2501, 2340, 3308, 2172, 1830];
+const trialBuyers = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25007, 14991, 5219, 0, 0, 0, 1868, 225, 827, 6, 0, 1238, 1480, 953, 659];
+const trialNotConv = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23318, 13522, 4658, 0, 0, 0, 1578, 160, 691, 5, 0, 1057, 1244, 649, 516]; // 2026-09-30時点で当該ブランドの有償購入なし（延べ）
+const trialConv = trialBuyers.map((v,i) => v - trialNotConv[i]);
+
+const isOGS   = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false];
+const isThis  = allMonths.map(m => m === '2026-09');
+
+// ===== ブランド別売上データ（NE出荷基準・ship_date・spic-core.public.ne_order_items shop_id=17）=====
+// データソース: BQクエリ③ 実行日 2026-10-08 ・ TRIM(goods_tag)でブランド判別（C+DはC+D+Kを含む。C+D+K単体は2026-09 ¥3.02M）
+const brandMonths = ["2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"];
+const vcRev    = [134.22, 142.08, 141.62, 160.98, 161.69, 155.45, 151.49, 128.93, 119.64, 131.8, 104.94, 118.09, 110.09, 118.84, 108.76, 115.09, 112.87, 102.42]; // [Lypo-C]
+const cdRev    = [68.78, 69.12, 69.02, 74.88, 73.9, 73.17, 76.94, 75.39, 88.95, 84.27, 71.05, 81.3, 75.97, 80.49, 77.49, 80.81, 78.92, 78.46]; // [Lypo-C C+D]＋[Lypo-C C+D+K]
+const sbRev    = [0, 0, 0, 0, 0, 0, 15.2, 5.48, 6.73, 5.78, 5.71, 5.99, 5.55, 5.93, 6.23, 6.87, 6.53, 5.58];  // [Lypo-C SKINBEAUTY]
+const miRev    = [0, 0, 0, 0, 0, 0, 0, 1.02, 2.51, 4.67, 3.63, 4.75, 3.96, 3.43, 4.63, 7.58, 5.29, 4.88];  // [MINERALion]
+const ceraRev  = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20.79, 13.79, 15.15, 15.45, 19.74, 23.54, 16.16, 14.21]; // [Lypo-C C＋Cera]
+
+// ===== OGS期間の帯（橙）を描くプラグイン =====
+const ogsBand = {
+  id: 'ogsBand',
+  beforeDatasetsDraw(chart) {
+    const xs = chart.scales.x, ca = chart.chartArea, ctx = chart.ctx;
+    const idx = allMonths.map((m,i) => isOGS[i] ? i : -1).filter(i => i >= 0);
+    if (!idx.length) return;
+    const w = (xs.getPixelForValue(1) - xs.getPixelForValue(0)) / 2;
+    ctx.save(); ctx.fillStyle = 'rgba(255,122,48,0.10)';
+    ctx.fillRect(xs.getPixelForValue(idx[0]) - w, ca.top, xs.getPixelForValue(idx[idx.length-1]) - xs.getPixelForValue(idx[0]) + 2*w, ca.bottom - ca.top);
+    ctx.restore();
+  }
+};
+
+// ===== 月次売上推移チャート =====
+// @@SPLIT:tab1_data:END@@
+// @@SPLIT:tab1_charts:START@@
+new Chart(document.getElementById('chartRevenue'), {
+  type: 'bar',
+  data: {
+    labels: allMonths,
+    datasets: [{
+      data: totalRev,
+      backgroundColor: allMonths.map((m,i) => isThis[i] ? 'rgba(255,122,48,0.8)' : isOGS[i] ? 'rgba(255,122,48,0.4)' : 'rgba(37,99,235,0.15)'),
+      borderColor: allMonths.map((m,i) => isThis[i] ? '#FF7A30' : isOGS[i] ? '#FF7A30' : '#2563eb'),
+      borderWidth: allMonths.map((m,i) => isThis[i] ? 2.5 : 1.5),
+      borderRadius: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `¥${ctx.raw.toFixed(1)}M` } }
+    },
+    scales: {
+      y: { min: 150, ticks: { callback: v => `¥${v}M`, font: { size: 11 } }, grid: { color: '#f0eeec' } },
+      x: { ticks: { font: { size: 10 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// ===== ブランド別積み上げ棒グラフ =====
+new Chart(document.getElementById('chartBrand'), {
+  type: 'bar',
+  data: {
+    labels: brandMonths,
+    datasets: [
+      { label: 'VC',         data: vcRev,   backgroundColor: '#FF7A3099', borderColor: '#FF7A30', borderWidth: 1, stack: 's' },
+      { label: 'C+D',        data: cdRev,   backgroundColor: '#7ED8A099', borderColor: '#7ED8A0', borderWidth: 1, stack: 's' },
+      { label: 'C+Cera',     data: ceraRev, backgroundColor: '#FF6B9D99', borderColor: '#FF6B9D', borderWidth: 1, stack: 's' },
+      { label: 'SKINBEAUTY', data: sbRev,   backgroundColor: '#C4934A99', borderColor: '#C4934A', borderWidth: 1, stack: 's' },
+      { label: 'MINERALion', data: miRev,   backgroundColor: '#1E3A8A99', borderColor: '#1E3A8A', borderWidth: 1, stack: 's' },
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ¥${ctx.raw.toFixed(1)}M` } }
+    },
+    scales: {
+      y: { stacked: true, ticks: { callback: v => `¥${v}M`, font: { size: 11 } }, grid: { color: '#f0eeec' } },
+      x: { stacked: true, ticks: { font: { size: 10 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// ===== 新規顧客推移チャート（3区分・フルスケール／通常スケール共通ビルダー）=====
+function buildNewCustChart(id, norm) {
+  const hl = (c, w) => allMonths.map((m,i) => isThis[i] ? '#FF7A30' : c);
+  return new Chart(document.getElementById(id), {
+    data: {
+      labels: allMonths,
+      datasets: [
+        { type: 'bar', label: '純粋新規（人）', data: pureNew, stack: 'pure', backgroundColor: 'rgba(22,163,74,0.55)', borderColor: hl('#16a34a'), borderWidth: allMonths.map((m,i) => isThis[i] ? 2.5 : 1), order: 2 },
+        { type: 'bar', label: 'アイテム新規（延べ）', data: itemNew, stack: 'item', backgroundColor: 'rgba(37,99,235,0.55)', borderColor: hl('#2563eb'), borderWidth: allMonths.map((m,i) => isThis[i] ? 2.5 : 1), order: 2 },
+        { type: 'bar', label: 'トライアル購入（転換済・延べ）', data: trialConv, stack: 'trial', backgroundColor: 'rgba(251,191,36,0.55)', borderColor: '#d97706', borderWidth: 1, order: 3 },
+        { type: 'bar', label: 'トライアル購入（未転換・延べ）', data: trialNotConv, stack: 'trial', backgroundColor: 'rgba(194,65,12,0.55)', borderColor: '#9a3412', borderWidth: 1, order: 3 },
+        { type: 'line', label: '新規顧客数（v10・初回注文月）', data: newCusts, borderColor: '#44403c', backgroundColor: '#44403c', borderWidth: 1.5, pointRadius: 2, tension: 0, order: 1 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 12 } },
+        tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw.toLocaleString()}人`,
+                                footer: items => { const i = items[0].dataIndex; return ''; } } }
+      },
+      scales: {
+        y: norm ? { min: 0, max: 3000, ticks: { stepSize: 500, font: { size: 11 }, callback: v => `${v.toLocaleString()}人` }, grid: { color: '#f0eeec' } }
+                : { ticks: { font: { size: 11 } }, grid: { color: '#f0eeec' } },
+        x: { stacked: true, ticks: { font: { size: 10 }, maxRotation: 45 } }
+      }
+    },
+    plugins: [ogsBand]
+  });
+}
+buildNewCustChart('chartNewCust', false);
+buildNewCustChart('chartNewCustNorm', true);
+
+// ===== ② LTV詳細分析 =====
+// @@SPLIT:tab1_charts:END@@
+
+</script>
+</body>
+</html>

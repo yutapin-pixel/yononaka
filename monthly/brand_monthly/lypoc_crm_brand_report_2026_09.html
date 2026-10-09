@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lypo-C（VC＋C+D＋C+D+K）CRMブランドレポート 2026-09</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  --bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+  --accent:#FF7A30;--green:#16a34a;--red:#dc2626;--blue:#2563eb;
+  --vc:#FF7A30;--cd:#7ED8A0;--ccera:#DB2777;--sb:#C4934A;--mi:#1E3A8A;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0;max-width:1200px;margin:0 auto}
+.page-wrap{padding:24px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--text);padding-bottom:12px;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.hdr h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.hdr .meta{font-size:13px;color:var(--muted)}
+.month-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 14px;border-radius:4px;font-size:13px;font-weight:700;margin-bottom:20px;letter-spacing:0.3px}
+.stitle{font-size:14px;font-weight:700;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+.stitle::before{content:'';display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px}
+.ssub{font-size:12px;color:var(--muted);margin:-6px 0 12px 12px}
+.sg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px;align-items:stretch}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column}
+.sc .lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.sc .vl{font-size:26px;font-weight:700;letter-spacing:-1px}
+.sc .sb{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+thead th{background:#f5f5f4;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+thead th.c{text-align:center}
+tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid #f5f5f4;font-size:13px}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td.c{text-align:center}
+tbody tr:last-child td{border-bottom:none}
+tr.tot{background:#f5f5f4;font-weight:700}
+tr.tot td{border-top:2px solid var(--border)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600}
+.badge.a{background:#dcfce7;color:#15803d}.badge.b{background:#fef2f2;color:#dc2626}
+.badge.n{background:#eff6ff;color:#2563eb}.badge.w{background:#fff8f0;color:#92400e}
+.monthly-insight{background:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0284c7;border-radius:8px;padding:14px 18px;margin-top:12px;margin-bottom:20px;font-size:13px;line-height:1.9}
+.monthly-insight .mi-title{font-weight:700;font-size:12px;margin-bottom:6px;color:#0369a1;display:flex;align-items:center;gap:6px}
+.monthly-insight ul{padding-left:18px}.monthly-insight li{margin-bottom:5px}
+.notes{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.9}
+.notes .nt{font-weight:700;font-size:12px;margin-bottom:6px;color:#92400e}
+.notes ul{padding-left:18px}.notes li{margin-bottom:4px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;position:relative;height:290px}
+.chart-wrap canvas{display:block;width:100% !important}
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.cohort-wrap{overflow-x:auto;margin-bottom:12px}
+.cohort-table{border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:900px}
+.cohort-table th{background:#f5f5f4;font-weight:600;font-size:10.5px;color:var(--muted);padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cohort-table th:first-child{text-align:left;min-width:90px}
+.cohort-table td{padding:5px 8px;text-align:center;border-bottom:1px solid #f5f5f4;border-right:1px solid #f5f5f4;font-size:11px;line-height:1.4}
+.cohort-table td:first-child{text-align:left;font-weight:500;padding:5px 10px;font-size:12px}
+.cohort-table tr.ogs-row td:first-child{color:#92400e;font-weight:700}
+.cohort-table tr.highlight-row td{background:#fafafa}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.insight-card .ic-num{font-size:30px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:-1px}
+.insight-card .ic-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.insight-card .ic-body{font-size:13px;color:var(--muted);line-height:1.7}
+.insight-card.positive .ic-num{color:var(--green)}
+.insight-card.negative .ic-num{color:var(--red)}
+.insight-card.warning .ic-num{color:#f59e0b}
+.crm-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px}
+.crm-card .crm-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.crm-card .crm-priority{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.crm-card .crm-priority.p1{background:#fef2f2;color:#dc2626}
+.crm-card .crm-priority.p2{background:#fff8f0;color:#92400e}
+.crm-card .crm-priority.p3{background:#eff6ff;color:#2563eb}
+.crm-card .crm-title{font-size:14px;font-weight:700}
+.crm-card .crm-body{font-size:13px;color:var(--muted);line-height:1.7}
+.crm-card .crm-kpi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:500}
+.crm-card .crm-update{font-size:11px;margin-top:6px;padding:4px 8px;background:#f0fdf4;border-radius:4px;color:#15803d;font-weight:500}
+.kpi-change{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;margin-left:6px}
+.kpi-change.up{background:#dcfce7;color:#15803d}
+.kpi-change.dn{background:#fef2f2;color:#dc2626}
+.kpi-change.flat{background:#f5f5f4;color:#78716c}
+.summary-verdict{background:#1c1917;border-radius:10px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.summary-verdict-icon{font-size:22px;flex-shrink:0}
+.summary-verdict-text{font-size:13.5px;font-weight:600;color:#fff;line-height:1.65;letter-spacing:0.1px}
+.summary-verdict-text em{font-style:normal;color:#FFB27F}
+.finding-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.finding-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.finding-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.finding-card.fc-green::before{background:#16a34a}
+.finding-card.fc-red::before{background:#dc2626}
+.finding-card.fc-amber::before{background:#f59e0b}
+.finding-card.fc-orange::before{background:var(--accent)}
+.finding-card.fc-blue::before{background:#2563eb}
+.finding-card.fc-slate::before{background:#64748b}
+.fc-index{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.fc-metric{font-size:26px;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.finding-card.fc-green .fc-metric{color:#16a34a}
+.finding-card.fc-red .fc-metric{color:#dc2626}
+.finding-card.fc-amber .fc-metric{color:#d97706}
+.finding-card.fc-orange .fc-metric{color:var(--accent)}
+.finding-card.fc-blue .fc-metric{color:#2563eb}
+.finding-card.fc-slate .fc-metric{color:#475569}
+.fc-title{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.4}
+.fc-body{font-size:12px;color:var(--muted);line-height:1.75;flex:1}
+.fc-body strong{color:var(--text)}
+.fc-insight{margin-top:4px;padding:6px 10px;border-radius:5px;font-size:11.5px;font-weight:600;line-height:1.5}
+.finding-card.fc-green .fc-insight{background:#f0fdf4;color:#15803d}
+.finding-card.fc-red .fc-insight{background:#fff5f5;color:#dc2626}
+.finding-card.fc-amber .fc-insight{background:#fffbeb;color:#92400e}
+.finding-card.fc-orange .fc-insight{background:#fff8f0;color:#c2410c}
+.finding-card.fc-blue .fc-insight{background:#eff6ff;color:#1e40af}
+.finding-card.fc-slate .fc-insight{background:#f8fafc;color:#475569}
+.ds-shopify{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;margin-left:4px;white-space:nowrap}
+.ds-ne{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;margin-left:4px;white-space:nowrap}
+.ds-order{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe;margin-left:4px;white-space:nowrap}
+.ds-snap{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;margin-left:4px;white-space:nowrap}
+.ds-cust{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;background:#fdf4ff;color:#a21caf;border:1px solid #f0abfc;margin-left:4px;white-space:nowrap}
+.sc .lb .ds-ne,.sc .lb .ds-shopify,.sc .lb .ds-order,.sc .lb .ds-snap,.sc .lb .ds-cust{font-size:9px;padding:1px 5px;margin-left:3px}
+.ltv-all{display:inline-flex;align-items:center;gap:2px;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;margin-left:4px;white-space:nowrap}
+.ltv-brand{display:inline-flex;align-items:center;gap:2px;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:#fff1f2;color:#be123c;border:1px solid #fecdd3;margin-left:4px;white-space:nowrap}
+.sc .lb .ltv-all,.sc .lb .ltv-brand{font-size:9px;padding:1px 5px;margin-left:3px}
+th .ltv-all,th .ltv-brand{margin-left:2px;font-size:9px;padding:0 4px;font-weight:700}
+.ltv-rev-row td{background:#fafaf9;border-top:none}
+.correction{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid #dc2626;border-radius:8px;padding:12px 16px;margin:12px 0;font-size:12.5px;line-height:1.8;color:#7f1d1d}
+.correction .cr-title{font-weight:700;color:#dc2626;margin-bottom:4px}
+@media(max-width:768px){
+  .sg4{grid-template-columns:1fr 1fr}
+  .sg3{grid-template-columns:1fr}
+  .sg2{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .finding-grid{grid-template-columns:1fr}
+}
+
+/* ===== Report tabs（基本レポート／コホートチャート） ===== */
+.tab-nav{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);overflow-x:auto;white-space:nowrap}
+.tab-btn{padding:9px 22px;font-size:14px;font-weight:700;font-family:'Noto Sans JP',sans-serif;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ===== チャート直下に「x軸の月」と列を揃えて並べる表（3章・3-1章） ===== */
+.ct-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 16px 10px;margin-bottom:12px}
+.ct-scroll{overflow-x:auto}
+.ct-inner{min-width:var(--ct-min,940px)}
+.ct-canvas{position:relative;height:290px}
+.ct-canvas canvas{display:block;width:100% !important}
+table.ct-table{table-layout:fixed;width:100%;border:none;border-radius:0;background:transparent;margin:6px 0 0;font-size:11px;border-top:1px solid var(--border)}
+table.ct-table td{padding:5px 2px;text-align:center;font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums;border-bottom:1px solid #f5f5f4}
+table.ct-table td:first-child{text-align:left;font-weight:600;white-space:normal;line-height:1.35;padding:5px 6px 5px 4px}
+table.ct-table tr.sub td{color:var(--muted);font-size:10.5px}
+table.ct-table tr.sub td:first-child{font-weight:500}
+table.ct-table tr.tot td{background:#f5f5f4;font-weight:700;border-top:1px solid var(--border)}
+table.ct-table td.last{background:#fff3e0;font-weight:700}
+table.ct-table tr.tot td.last{background:#ffe8c7}
+table.ct-table tr td.up{color:var(--green);font-weight:600}
+table.ct-table tr td.dn{color:var(--red);font-weight:600}
+.ct-note{font-size:11px;color:var(--muted);line-height:1.7;margin:-4px 0 12px 2px}
+
+/* ===== 4章 新規コホート表：列幅固定・スクロールなし ===== */
+.q-wrap{overflow-x:auto;margin-bottom:6px}
+table.tbl-q{table-layout:fixed;width:100%;min-width:720px;font-size:12.5px}
+table.tbl-q thead th{white-space:normal;text-align:center;line-height:1.35;padding:7px 4px;font-size:11px;text-transform:none;letter-spacing:0}
+table.tbl-q thead th.l{text-align:left;padding-left:10px}
+table.tbl-q thead th.grp{border-bottom:1px solid var(--border)}
+table.tbl-q thead th.g2{font-weight:500}
+table.tbl-q tbody td{padding:6px 4px;text-align:center;font-variant-numeric:tabular-nums;line-height:1.35}
+table.tbl-q tbody td:first-child{text-align:left;padding-left:10px;white-space:nowrap}
+table.tbl-q .sub{display:block;font-weight:400;font-size:10px;color:var(--muted);line-height:1.3}
+table.tbl-q tbody td .sub{margin-top:1px}
+table.tbl-q .now{font-size:10px;color:#c2410c;font-weight:700}
+table.tbl-q sup{font-size:9px;color:var(--muted);margin-left:2px}
+table.tbl-q tr.r8 td{background:#f5f3ff}
+table.tbl-q tr.r9 td{background:#fff3e0}
+table.tbl-q tr.tot td{background:#f5f5f4;font-weight:700}
+.q-note{font-size:11px;color:var(--muted);line-height:1.7;margin:2px 2px 14px}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="hdr">
+    <h1>Lypo-C（VC＋C+D＋C+D+K）CRMブランドレポート</h1>
+    <div class="meta">作成日：2026-10-08 ｜ 対象データ：月次確定分は2026年9月末まで／週次は2026年9月28日週（3日分）まで（基準日2026-09-30） ｜ データソース：NE出荷／Shopify受注／Shopify定期DB</div>
+  </div>
+  <div class="month-badge">Lypo-C一体版（3アイテム和集合）基本レポート（2026-09月次確定＋直近週次）</div>
+
+
+  <div class="tab-nav">
+    <button id="tabBtn1" class="tab-btn active" onclick="switchReportTab('tab1', this)">基本レポート</button>
+    <button id="tabBtn2" class="tab-btn" onclick="switchReportTab('tab2', this)">コホートチャート（5章）</button>
+  </div>
+
+  <div id="tab1" class="tab-pane active">
+
+  <!-- ===== 1. 現在地サマリー ===== -->
+  <div class="stitle">1. 現在地サマリー（2026年9月度確定）</div><div class="ssub">対象：Lypo-C一体版＝VC＋C+D＋C+D+K（3アイテムの和集合・アイテム間の移動は無視）。データソース：NE出荷＝ne_order_items（shop_id=17・ship_date基準・税抜）／Shopify受注＝shopify_orders×shopify_sku_brand_master／Shopify定期DB＝subscription_history_view（月末スナップショット）／顧客マスター＝sn_shopify_customer_master。基準日2026-09-30（BQ実行日2026-10-08）</div>
+<div class="sg3"><div class="sc"><div class="lb">定期ACTIVE（顧客単位・和集合・月末）<span class="ds-shopify">Shopify定期DB</span><span class="ds-snap">月末SS</span></div><div class="vl">19,972人<span class="kpi-change dn">▲158人</span></div><div class="sb">8月20,130人。2025-09のピーク23,557人から▲15.2%（3章・7-2章）。契約単位（参考）20,412件（タグ別：VC 12,333・C+D 9,778・C+D+K 138。Mix契約はVC・C+D双方に計上されるためタグ別合計は和集合より多い。契約単位は同一顧客の複数契約を重複計上する）</div></div><div class="sc"><div class="lb">保有顧客数（累計・有償・和集合）<span class="ds-shopify">Shopify受注</span><span class="ds-cust">顧客マスター</span></div><div class="vl">146,793人<span class="kpi-change up">+985人</span></div><div class="sb">受注ベース9/30末。8月末145,808人（＋985人＝9月の和集合M0 985人）。顧客マスター（2026-10-01時点）は146,800人で、差7人は10/1 08:08までの注文を含むため。<code>has_*=1</code>のみの定義は無償モニターを含むため不採用</div></div><div class="sc"><div class="lb">NE出荷売上（2026年9月・税抜）<span class="ds-ne">NE出荷</span></div><div class="vl">¥180,592,468<span class="kpi-change dn">▲5.6%</span></div><div class="sb">前月差▲10,735,219円。18ヶ月で最低から2番目（最低は2026-02の¥175,581,017）。内訳：VC ¥102,204,241／C+D ¥75,363,478／C+D+K ¥3,024,749（9/17出荷開始）</div></div></div>
+<div class="sg3"><div class="sc"><div class="lb">新規獲得（2026年9月・純粋新規＝M0）<span class="ds-shopify">Shopify受注</span><span class="ds-order">受注</span></div><div class="vl">850人<span class="kpi-change dn">▲27.2%</span></div><div class="sb">8月1,167人。参考：アイテム新規135人（既存扱い・M0に含めない）、トライアル購入者（CYS）313人（別枠・参考）</div></div><div class="sc"><div class="lb">純粋新規の初回定期選択率<span class="ds-shopify">Shopify受注</span><span class="ds-order">受注</span></div><div class="vl">26.5%<span class="kpi-change up">+2.1pt</span></div><div class="sb">225／850人。8月24.3%（284／1,167人）。初回有償注文に3アイテムの定期SKUを含む率</div></div><div class="sc"><div class="lb">純粋新規の比率（累計・保有顧客に占める）<span class="ds-shopify">Shopify受注</span></div><div class="vl">97.5%</div><div class="sb">143,073／146,793人。8月末97.5%（142,223／145,808人）。前月差は実質ゼロ</div></div></div>
+<div style="font-size:11px;color:var(--muted);margin-top:-4px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">ℹ️ 平均定期単価・停止率／解約率（VC単体版の7-A）は、一体版では7章を「ブランド分割しない」方針のため<strong>未定義・非掲載</strong>。載せる場合は一体版の定義を別途確定する必要がある。</div>
+
+  <!-- ===== 2. 総評 ===== -->
+  <div class="stitle">2. 総評</div><div class="summary-verdict"><div class="summary-verdict-icon">📊</div><div class="summary-verdict-text">9月は<em>「入口（純粋新規）が約3割縮み、定期の土台（ACTIVE）も純減が続いて、NE出荷売上が18ヶ月で2番目に低くなった月」</em>だった。NE出荷売上は¥180.59M（前月比▲5.6%・▲10,735,219円）で、前月差のうち純粋新規が▲2,722,755円（寄与25%）、既存側（アイテム新規・未突合を含む）が▲8,012,464円（75%）。タグ別ではVC ▲10,272,247円・C+D ▲3,487,721円で、C+D+K（9/17出荷開始）が+3,024,749円上乗せされた（3・3-1章）。新規比率（純粋新規÷合計）は8月6.4%→9月5.2%。<br><br>定期の土台は、顧客単位のACTIVEが20,130→19,972人（▲158人）で、ピーク（2025-09）から▲15.2%。新規ACTIVE945人のうち<em>『初出』は506人（54%）</em>で、2026-02〜08の月平均567人を下回り、2026-04（495）・2025-12（503）に次ぐ低水準。残りはPAUSE／解約からの復帰391人（310＋81）と他ブランド由来48人。離脱は1,103人（8月1,076人）で、PAUSEは716→754人と増え、解約は331→316人と減った。PAUSE復帰はマルチサイクラー（落とし穴②）を含むため、<em>真の新規は『初出』で見る</em>。ストック差＝ネット（新規−PAUSE＋解約）＋他ブランド系離脱＋消滅で、残差は全16ヶ月で0（7-2章）。<br><br>入口では、純粋新規が1,167→850人（▲27.2%）と<em>2026年の単月で最小</em>（2026-03の895人を下回り、2025-12の835人以来の低さ）。純粋新規の初回定期選択率は2026-01の42.4%・2026-02の42.0%から2026-04に28.5%へ下がり、以降24〜30%台で推移（9月26.5%）。別枠の<em>トライアル購入者（CYS・参考）</em>は7月194→8月625→9月313人（計1,132人）で、基準日までの転換502人（44.3%）・未転換630人。週次では7/20週〜9/14週に82〜151人、CYS終了（9/17）後の9/21週以降は0人。<em>転換者は転換月のアイテム新規（既存扱い）に現れ、M0には入らない</em>。アイテム新規の初回定期選択率は9月68.1%（92／135人）と純粋新規（26.5%）の約2.6倍。<em>CYS参加者との個別突合は未実施で、因果は断定しない</em>。<br><br><em>tab2（5章）との接続：</em>9月の入口縮小（純粋新規▲27.2%）と、直近コホートのM+1継続率の低下（2026-06 36.7%→2026-08 33.1%）が重なり、<em>「入口の量と定期継続の両面が弱い」</em>と読める。ただし因果は未検証。tab1の4章M0とtab2のM0（純粋新規のみ）は同定義で29コホート全月一致している。</div></div>
+<div class="correction"><div class="cr-title">🆕 VC単体版（〜9月版）との関係：数値は連続しない</div>本版は<strong>VC＋C+D＋C+D+Kの3アイテムの和集合</strong>で、M0（純粋新規）・継続率・定期ACTIVE・NE出荷売上の母集団が変わる。例：2026-09の純粋新規はVC単体版530人／一体版850人、NE出荷売上はVCタグのみ¥102,204,241／3タグ合計¥180,592,468。アイテム間の移動（VC⇄C+D⇄C+D+K）は全章で無視し、他アイテムの新規は<strong>アイテム新規＝既存扱い</strong>（M0に含めない）とする。前月の単体版数値との前月比は取らない。</div>
+
+  <!-- ===== 3. 月次NE出荷売上×定期ACTIVE ===== -->
+  <div class="stitle">3. 月次成長トレンド：NE出荷売上×定期ACTIVE（顧客単位）<span class="ds-ne">NE出荷</span><span class="ds-shopify">Shopify定期DB</span></div><div class="ssub">データソース：NE出荷＝spic-core.public.ne_order_items（shop_id=17・ship_date基準・cancel_date IS NULL・<code>TRIM(goods_tag) IN ('[Lypo-C]','[Lypo-C C+D]','[Lypo-C C+D+K]')</code>・税抜sales）／Shopify定期DB＝sandbox_nishimori.subscription_history_view（<code>has_vc=1 OR has_cd=1 OR has_cdk=1</code>・ACTIVE・<strong>顧客単位の重複排除</strong>・月末スナップショット）。2025-04〜2026-09の18ヶ月。BQ実行日2026-10-08</div><div class="ct-card"><div class="ct-scroll"><div class="ct-inner" style="--ct-min:960px"><div class="ct-canvas"><canvas id="chartMonthlyRevActive"></canvas></div><table class="ct-table" id="tblMonthlyRevActive"></table></div></div></div><div class="ct-note">表の出典：NE出荷売上＝ne_order_items（上記3タグ・税抜・千円未満四捨五入）／定期ACTIVE＝Shopify定期DB（顧客単位・和集合・月末SS。<strong>2025-04は定期DB収集開始前のため非表示</strong>）。<code>[Lypo-C for SPORTS]</code>（115行）・<code>[Lypo-C for SPORTS C+D]</code>（43行）は含めない（VC単体版・C+D単体版の扱いを踏襲）。2025-07〜09はOGS期。参考行の契約単位ACTIVE（和集合の契約数。Mix契約は1件）は同一顧客の複数契約を重複計上するため顧客単位より多い。</div><div style="font-size:11px;color:var(--muted);margin-top:-4px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">⚠️ <strong>NE出荷の事後変動：</strong>2026-09のNE出荷売上は取得のたびに減少した（VC単体版〔10/6実行〕¥102,218,129→本版3章クエリ¥102,211,185→3-1クエリ時点¥102,204,241。いずれもVCタグで、減少は¥6,944の1行ずつ＝計2行・¥13,888）。事後キャンセル等の反映と思われ原因は未調査。<strong>本版の3章・3-1章・3-2章は同一時点（2026-10-08）で統一</strong>（9月合計¥180,592,468・15,619行）。VCタグの2025-04〜2026-08の17ヶ月はVC単体版と全月一致。</div><div class="monthly-insight"><div class="mi-title">💡 月次トレンド 考察</div><ul><li><strong>2026-09は¥180,592,468（前月比▲5.6%）で、18ヶ月で2番目に低い。</strong>最低は2026-02の¥175,581,017。タグ別の前月差はVC ▲10,272,247円・C+D ▲3,487,721円・C+D+K +3,024,749円で、<strong>C+D+Kの9/17出荷開始分が減少の一部を相殺</strong>した形（VC＋C+Dだけなら▲13,759,968円）。出荷月基準のため、月末注文の翌月出荷は翌月計上になる。</li><li><strong>顧客単位の定期ACTIVEは2025-09のピーク23,557人から▲15.2%の19,972人。</strong>2025-10以降の減少は続いているが、2026-05（▲60）・07（▲44）・08（+19）は小幅で、9月（▲158）で再び幅が拡大した。この増減の内訳は7-2章（新規945−離脱1,103＝▲158、残差0）。</li><li>最高値は2025-07の¥235,858,306（OGS期。2025-08は¥235,587,956）で、OGS（無償モニター配布）後の2025-11〜2026-09は¥175,581,017〜¥215,771,466のレンジ。9月はこのレンジの下限寄り（最低は2026-02）。</li></ul></div>
+
+  <!-- ===== 3-1. 月次売上の内訳 ===== -->
+  <div class="stitle">3-1. 月次売上の内訳：新規売上（純粋新規）× 既存売上の2段<span class="ds-ne">NE出荷</span><span class="ds-shopify">Shopify受注</span></div><div class="ssub">データソース：売上＝ne_order_items（shop_id=17・ship_date基準・上記3タグ・税抜sales）。新規／既存の判定＝同テーブルのshop_order_id（<code>-fk-N</code>接尾辞を除去）をshopify_orders.nameに突合し<strong>注文単位</strong>で判定（顧客ごとの「3アイテムのいずれかの初回有償購入日」当日の注文＝新規。その日が生涯初の有償注文日と一致すれば<strong>純粋新規</strong>）。<strong>アイテム新規（他ブランド有償購入歴あり・OGS／CYS転換者を含む）と未突合は「既存」へ合算</strong>（和集合では他アイテムの新規は既存扱い）。2025年OGSの<code>1004496</code>＋<code>OGS2025_11</code>明細はprice=0扱い。月は出荷日基準のため3章の棒グラフと<strong>18ヶ月全月で合計が一致</strong>（assert済み）。金額は千円単位（税抜）。</div><div class="ct-card"><div class="ct-scroll"><div class="ct-inner" style="--ct-min:960px"><div class="ct-canvas"><canvas id="chartMonthlyRevBreakdown"></canvas></div><table class="ct-table" id="tblMonthlyRevBreakdown"></table></div></div></div><div class="ct-note">金額は千円単位（税抜・千円未満四捨五入）。<strong>「既存」＝既存注文＋アイテム新規＋未突合</strong>。参考行（既存注文のみ／アイテム新規／未突合）は既存の内数。月末の注文は翌月出荷＝翌月の新規売上（出荷日基準）のため、注文日基準の4章・4-2章と月境界がずれる。Mix同梱SKU（<code>875511-teiki-*</code>等）は和集合内のためNE上VC計上で自然に含まれ、二重計上はない。</div>
+<details class="notes"><summary class="nt" style="cursor:pointer;margin-bottom:0">📎 「既存」の内訳（既存注文のみ／アイテム新規／未突合）と未突合の注記（クリックで開閉）</summary><ul><li>突合ロジック：NE <code>shop_order_id</code>の<code>-fk-N</code>接尾辞を除去→<code>shopify_orders.name</code>。判定は注文単位。</li><li><strong>2025-10〜12の未突合（計257行・¥4,621,558）</strong>：NE商品<code>875</code>（VC）だが注文のSKUが<code>875121-set</code>（VC×SKINBEAUTY同梱・SKUマスターではSKINBEAUTY）・<code>121-set-A</code>・<code>130-set</code>・<code>120</code>で、和集合ブランドの有償明細がなく判定不能（各月の0.98%／0.73%／0.44%）。既存へ合算し注記する。</li><li>2026-08（17行・¥47,209）・2026-09（8行・¥22,216）の未突合は送料のみ・CYS0810の無償系（純額≦0）。いずれも既存へ合算。</li><li>2025-08〜09の「アイテム新規」大型値（¥13.5M／¥7.9M）はOGS転換者の初回有償注文が転換月のアイテム新規に入るため（OGS特例）。</li></ul><div style="overflow-x:auto"><div style="min-width:760px"><table><thead><tr><th>月</th><th class="c">既存注文のみ（円）</th><th class="c">アイテム新規（円）</th><th class="c">未突合（円）</th><th class="c">未突合（行数）</th><th class="c">既存 計（円）</th></tr></thead><tbody><tr><td>2025-04</td><td class="c">185,479,051</td><td class="c">0</td><td class="c">0</td><td class="c">0</td><td class="c">185,479,051</td></tr><tr><td>2025-05</td><td class="c">192,832,336</td><td class="c">13,888</td><td class="c">0</td><td class="c">0</td><td class="c">192,846,224</td></tr><tr><td>2025-06</td><td class="c">191,994,206</td><td class="c">0</td><td class="c">0</td><td class="c">0</td><td class="c">191,994,206</td></tr><tr><td>2025-07</td><td class="c">211,801,845</td><td class="c">1,231,732</td><td class="c">0</td><td class="c">0</td><td class="c">213,033,577</td></tr><tr><td>2025-08</td><td class="c">203,190,316</td><td class="c">13,511,305</td><td class="c">0</td><td class="c">0</td><td class="c">216,701,621</td></tr><tr><td>2025-09</td><td class="c">205,879,494</td><td class="c">7,923,194</td><td class="c">0</td><td class="c">0</td><td class="c">213,802,688</td></tr><tr><td>2025-10</td><td class="c">211,142,576</td><td class="c">2,500,922</td><td class="c">2,226,444</td><td class="c">126</td><td class="c">215,869,942</td></tr><tr><td>2025-11</td><td class="c">191,740,217</td><td class="c">587,435</td><td class="c">1,484,296</td><td class="c">84</td><td class="c">193,811,948</td></tr><tr><td>2025-12</td><td class="c">197,775,437</td><td class="c">375,310</td><td class="c">910,818</td><td class="c">47</td><td class="c">199,061,565</td></tr><tr><td>2026-01</td><td class="c">204,515,982</td><td class="c">299,533</td><td class="c">0</td><td class="c">0</td><td class="c">204,815,515</td></tr><tr><td>2026-02</td><td class="c">164,430,234</td><td class="c">460,117</td><td class="c">0</td><td class="c">0</td><td class="c">164,890,351</td></tr><tr><td>2026-03</td><td class="c">188,588,718</td><td class="c">341,975</td><td class="c">0</td><td class="c">0</td><td class="c">188,930,693</td></tr><tr><td>2026-04</td><td class="c">175,470,007</td><td class="c">631,018</td><td class="c">0</td><td class="c">0</td><td class="c">176,101,025</td></tr><tr><td>2026-05</td><td class="c">184,583,149</td><td class="c">899,005</td><td class="c">0</td><td class="c">0</td><td class="c">185,482,154</td></tr><tr><td>2026-06</td><td class="c">173,394,019</td><td class="c">468,949</td><td class="c">0</td><td class="c">0</td><td class="c">173,862,968</td></tr><tr><td>2026-07</td><td class="c">181,112,203</td><td class="c">456,340</td><td class="c">0</td><td class="c">0</td><td class="c">181,568,543</td></tr><tr><td>2026-08</td><td class="c">177,570,426</td><td class="c">1,553,256</td><td class="c">47,209</td><td class="c">17</td><td class="c">179,170,891</td></tr><tr><td>2026-09</td><td class="c">169,586,899</td><td class="c">1,549,312</td><td class="c">22,216</td><td class="c">8</td><td class="c">171,158,427</td></tr></tbody></table></div></div></details>
+<div class="monthly-insight"><div class="mi-title">💡 売上内訳 考察</div><ul><li><strong>9月の純粋新規売上は¥9,434,041（新規比率5.2%）で、8月の¥12,156,796（6.4%）から▲22.4%。</strong>前月差▲10,735,219円の内訳は、純粋新規▲2,722,755円（寄与25%）・既存▲8,012,464円（75%）で、<strong>売上減の約75%は既存（定期の継続・都度の既存顧客）側</strong>。</li><li><strong>既存売上は¥171,158,427（前月比▲4.5%）で、売上の94.8%。</strong>内数のアイテム新規は¥1,549,312（8月¥1,553,256）で、CYSトライアルからの転換者を含む可能性があるが、個別突合は未実施。</li><li><strong>新規比率は2025-07の9.7%から2025-12の4.5%まで低下し、2026-05の6.8%・07の7.1%まで戻った後、9月は5.2%。</strong>出荷月基準のため、9月末の注文は10月の売上に入る。月の境目の増減は注文日基準の4章・4-2章と併せて読むこと。</li></ul></div>
+
+  <!-- ===== 3-2. 週次売上 ===== -->
+  <div class="stitle">3-2. 週次売上推移（施策の影響を詳細化）<span class="ds-ne">NE出荷</span></div><div class="ssub">集計方法：ship_date基準・週境界は月曜始まり。2026-03-02週〜2026-09-28週（31週・BQ実行日2026-10-08）。データソース：ne_order_items（shop_id=17・上記3タグ・税抜）。灰色棒は部分週（9/28〜9/30の3日分）、橙の淡色は出荷日数が3日以下の週（祝日週）。<strong>週次合計は3章の2026-03〜09月次合計と一致（¥1,337,399,208・差0）</strong>。</div><div class="chart-wrap"><canvas id="chartWeeklyRev"></canvas></div><details class="notes"><summary class="nt" style="cursor:pointer;margin-bottom:0">📎 週次の数値表（31週・円・税抜・VC／C+D／C+D+K別・出荷日数）（クリックで開閉）</summary><div style="overflow-x:auto"><div style="min-width:760px"><table><thead><tr><th>週（月曜）</th><th class="c">NE出荷売上 合計</th><th class="c">VC</th><th class="c">C+D</th><th class="c">C+D+K</th><th>出荷日数（週内の最初〜最後の出荷日）</th></tr></thead><tbody><tr><td>2026-03-02</td><td class="c">53,344,902</td><td class="c">32,625,891</td><td class="c">20,719,011</td><td class="c">0</td><td>6日（2026-03-02〜2026-03-07）</td></tr><tr><td>2026-03-09</td><td class="c">40,681,546</td><td class="c">23,417,907</td><td class="c">17,263,639</td><td class="c">0</td><td>6日（2026-03-09〜2026-03-14）</td></tr><tr><td>2026-03-16</td><td class="c">39,935,061</td><td class="c">23,851,246</td><td class="c">16,083,815</td><td class="c">0</td><td>5日（2026-03-16〜2026-03-21）</td></tr><tr><td>2026-03-23</td><td class="c">45,974,678</td><td class="c">26,550,387</td><td class="c">19,424,291</td><td class="c">0</td><td>6日（2026-03-23〜2026-03-28）</td></tr><tr><td>2026-03-30</td><td class="c">39,716,612</td><td class="c">23,534,937</td><td class="c">16,181,675</td><td class="c">0</td><td>5日（2026-03-30〜2026-04-04）</td></tr><tr><td>2026-04-06</td><td class="c">42,919,564</td><td class="c">25,124,751</td><td class="c">17,794,813</td><td class="c">0</td><td>6日（2026-04-06〜2026-04-11）</td></tr><tr><td>2026-04-13</td><td class="c">43,802,367</td><td class="c">26,015,921</td><td class="c">17,786,446</td><td class="c">0</td><td>6日（2026-04-13〜2026-04-18）</td></tr><tr><td>2026-04-20</td><td class="c">42,882,917</td><td class="c">25,476,135</td><td class="c">17,406,782</td><td class="c">0</td><td>6日（2026-04-20〜2026-04-25）</td></tr><tr><td>2026-04-27</td><td class="c">47,883,157</td><td class="c">28,744,588</td><td class="c">19,138,569</td><td class="c">0</td><td>5日（2026-04-27〜2026-05-02）</td></tr><tr><td>2026-05-04</td><td class="c">44,832,917</td><td class="c">27,226,550</td><td class="c">17,606,367</td><td class="c">0</td><td>3日（2026-05-07〜2026-05-09）←出荷日数少（祝日週または部分週）</td></tr><tr><td>2026-05-11</td><td class="c">44,105,932</td><td class="c">26,113,172</td><td class="c">17,992,760</td><td class="c">0</td><td>6日（2026-05-11〜2026-05-16）</td></tr><tr><td>2026-05-18</td><td class="c">44,353,452</td><td class="c">26,406,238</td><td class="c">17,947,214</td><td class="c">0</td><td>6日（2026-05-18〜2026-05-23）</td></tr><tr><td>2026-05-25</td><td class="c">53,544,266</td><td class="c">31,351,981</td><td class="c">22,192,285</td><td class="c">0</td><td>6日（2026-05-25〜2026-05-30）</td></tr><tr><td>2026-06-01</td><td class="c">40,572,402</td><td class="c">24,296,552</td><td class="c">16,275,850</td><td class="c">0</td><td>6日（2026-06-01〜2026-06-06）</td></tr><tr><td>2026-06-08</td><td class="c">40,635,516</td><td class="c">23,340,805</td><td class="c">17,294,711</td><td class="c">0</td><td>6日（2026-06-08〜2026-06-13）</td></tr><tr><td>2026-06-15</td><td class="c">42,037,682</td><td class="c">24,530,447</td><td class="c">17,507,235</td><td class="c">0</td><td>6日（2026-06-15〜2026-06-20）</td></tr><tr><td>2026-06-22</td><td class="c">42,238,922</td><td class="c">24,598,121</td><td class="c">17,640,801</td><td class="c">0</td><td>6日（2026-06-22〜2026-06-27）</td></tr><tr><td>2026-06-29</td><td class="c">46,159,275</td><td class="c">26,863,236</td><td class="c">19,296,039</td><td class="c">0</td><td>6日（2026-06-29〜2026-07-04）</td></tr><tr><td>2026-07-06</td><td class="c">43,696,463</td><td class="c">25,882,808</td><td class="c">17,813,655</td><td class="c">0</td><td>6日（2026-07-06〜2026-07-11）</td></tr><tr><td>2026-07-13</td><td class="c">44,038,897</td><td class="c">25,666,083</td><td class="c">18,372,814</td><td class="c">0</td><td>6日（2026-07-13〜2026-07-18）</td></tr><tr><td>2026-07-20</td><td class="c">39,530,043</td><td class="c">23,148,292</td><td class="c">16,381,751</td><td class="c">0</td><td>5日（2026-07-21〜2026-07-25）</td></tr><tr><td>2026-07-27</td><td class="c">46,788,809</td><td class="c">27,794,369</td><td class="c">18,994,440</td><td class="c">0</td><td>6日（2026-07-27〜2026-08-01）</td></tr><tr><td>2026-08-03</td><td class="c">44,838,298</td><td class="c">26,770,476</td><td class="c">18,067,822</td><td class="c">0</td><td>6日（2026-08-03〜2026-08-08）</td></tr><tr><td>2026-08-10</td><td class="c">35,925,498</td><td class="c">21,366,881</td><td class="c">14,558,617</td><td class="c">0</td><td>2日（2026-08-10〜2026-08-15）←出荷日数少（祝日週または部分週）</td></tr><tr><td>2026-08-17</td><td class="c">48,298,225</td><td class="c">27,754,115</td><td class="c">20,544,110</td><td class="c">0</td><td>6日（2026-08-17〜2026-08-22）</td></tr><tr><td>2026-08-24</td><td class="c">48,557,515</td><td class="c">28,591,774</td><td class="c">19,965,741</td><td class="c">0</td><td>6日（2026-08-24〜2026-08-29）</td></tr><tr><td>2026-08-31</td><td class="c">36,658,735</td><td class="c">21,073,448</td><td class="c">15,585,287</td><td class="c">0</td><td>6日（2026-08-31〜2026-09-05）</td></tr><tr><td>2026-09-07</td><td class="c">41,805,979</td><td class="c">24,266,689</td><td class="c">17,539,290</td><td class="c">0</td><td>6日（2026-09-07〜2026-09-12）</td></tr><tr><td>2026-09-14</td><td class="c">42,177,325</td><td class="c">23,208,241</td><td class="c">17,726,989</td><td class="c">1,242,095</td><td>6日（2026-09-14〜2026-09-19）</td></tr><tr><td>2026-09-21</td><td class="c">41,751,493</td><td class="c">23,186,005</td><td class="c">17,412,485</td><td class="c">1,153,003</td><td>3日（2026-09-24〜2026-09-26）←出荷日数少（祝日週または部分週）</td></tr><tr style="color:var(--muted)"><td>2026-09-28</td><td class="c">27,710,760</td><td class="c">15,756,389</td><td class="c">11,324,720</td><td class="c">629,651</td><td>3日（2026-09-28〜2026-09-30）←出荷日数少（祝日週または部分週）</td></tr></tbody></table></div></div></details><div class="ct-note">施策注記の候補（<code>reference_campaign_history.md</code>）：ESS施策（VC購入特典）2026-04-27〜05-31（4/27週・5/25週が山）／CYS施策 2026-07-22〜09-17／C+D+K自社EC発売（NE出荷は9/17から）。<strong>週次の施策影響の因果は未検証</strong>。</div>
+<div class="monthly-insight"><div class="mi-title">💡 週次売上 考察</div><ul><li><strong>最高週は2026-05-25週の¥53,544,266、次いで集計開始週の2026-03-02週¥53,344,902。</strong>8月の確定週は8/17週¥48,298,225・8/24週¥48,557,515と高かったのに対し、9月の確定週は9/7週¥41,805,979・9/14週¥42,177,325・9/21週¥41,751,493（9/21週は出荷3日）と一段低い水準。</li><li>C+D+Kは9/14週¥1,242,095・9/21週¥1,153,003・9/28週¥629,651（3日分）で、9/17出荷開始から週¥1M前後が上乗せされている。9/28週（¥27,710,760）は3日分の部分週で、前週との比較には使わない。</li></ul></div>
+
+  <!-- ===== 4. 新規獲得の質 ===== -->
+  <div class="stitle">4. 新規獲得の質：純粋新規コホート × 初回定期選択率（月次）＋トライアル購入者（参考）<span class="ds-shopify">Shopify受注</span><span class="ds-order">受注</span></div><div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders）×sandbox_nishimori.shopify_sku_brand_master（<code>brand IN ('VC','C+D','C+D+K')</code>・item_price&gt;0・有償注文条件<code>(total_price−current_total_tax)&gt;0</code>・CYS0810除外）。<strong>純粋新規（M0）＝生涯初の有償注文日が3アイテムいずれかの初回有償購入日</strong>。初回定期選択率＝その<strong>初回有償注文</strong>（同日複数注文は日付・注文名昇順で先頭）に3アイテムの定期SKU（<code>product_type='定期'</code>）を含む率（<code>source_name</code>判定は使用禁止：pitfalls㉘）。別枠の<strong>トライアル購入者</strong>（<code>3023-cp</code>／<code>3031-cp</code>／2025年OGS特例）は、起点時点で3アイテムの有償購入歴がない顧客を起点月で数えた参考値で、M0には加算しない。OGS特例＝<code>1004496</code>＋<code>OGS2025_11</code>の明細をprice=0扱い（OGS期の2025-07〜09も除外せず表示）。基準日2026-09-30。表示は2025-04〜2026-09の18行。<strong>tab2の5章M0と29コホート全一致</strong>。</div><div class="chart-wrap"><canvas id="chartSubSelectTrend"></canvas></div><div class="q-wrap"><table class="tbl-q"><colgroup><col style="width:13%"><col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:12%"><col style="width:11%"><col style="width:12%"><col style="width:12%"></colgroup><thead><tr><th class="l">コホート月</th><th>純粋新規（M0）</th><th>初回定期選択数</th><th>初回定期選択率</th><th style="color:var(--muted)">参考：アイテム新規</th><th style="color:var(--muted)">参考：アイテム新規の定期選択数</th><th style="color:var(--muted)">参考：アイテム新規の選択率</th><th style="color:var(--muted)">参考：和集合M0（純粋＋アイテム）</th><th>トライアル購入者<span class="sub">参考・M0に含まない</span></th></tr></thead><tbody><tr><td>2025-04</td><td>1,687</td><td>578</td><td><span class="badge w">34.3%</span></td><td style="color:var(--muted)">0</td><td style="color:var(--muted)">0</td><td style="color:var(--muted)">—</td><td style="color:var(--muted)">1,687</td><td>—</td></tr><tr><td>2025-05</td><td>1,910</td><td>632</td><td><span class="badge w">33.1%</span></td><td style="color:var(--muted)">1</td><td style="color:var(--muted)">0</td><td style="color:var(--muted)">0.0%</td><td style="color:var(--muted)">1,911</td><td>—</td></tr><tr><td>2025-06</td><td>2,343</td><td>646</td><td><span class="badge w">27.6%</span></td><td style="color:var(--muted)">0</td><td style="color:var(--muted)">0</td><td style="color:var(--muted)">—</td><td style="color:var(--muted)">2,343</td><td>—</td></tr><tr><td>2025-07<sup>★OGS</sup></td><td>2,611</td><td>593</td><td><span class="badge b">22.7%</span></td><td style="color:var(--muted)">182</td><td style="color:var(--muted)">173</td><td style="color:var(--muted)">95.1%</td><td style="color:var(--muted)">2,793</td><td>25,007<span class="sub">未転換23,114</span></td></tr><tr><td>2025-08<sup>★OGS</sup></td><td>1,856</td><td>574</td><td><span class="badge w">30.9%</span></td><td style="color:var(--muted)">1,638</td><td style="color:var(--muted)">1,531</td><td style="color:var(--muted)">93.5%</td><td style="color:var(--muted)">3,494</td><td>14,991<span class="sub">未転換13,355</span></td></tr><tr><td>2025-09<sup>★OGS</sup></td><td>1,345</td><td>461</td><td><span class="badge w">34.3%</span></td><td style="color:var(--muted)">892</td><td style="color:var(--muted)">823</td><td style="color:var(--muted)">92.3%</td><td style="color:var(--muted)">2,237</td><td>5,219<span class="sub">未転換4,577</span></td></tr><tr><td>2025-10</td><td>1,142</td><td>423</td><td><span class="badge a">37.0%</span></td><td style="color:var(--muted)">220</td><td style="color:var(--muted)">181</td><td style="color:var(--muted)">82.3%</td><td style="color:var(--muted)">1,362</td><td>—</td></tr><tr><td>2025-11</td><td>874</td><td>380</td><td><span class="badge a">43.5%</span></td><td style="color:var(--muted)">41</td><td style="color:var(--muted)">24</td><td style="color:var(--muted)">58.5%</td><td style="color:var(--muted)">915</td><td>—</td></tr><tr><td>2025-12</td><td>835</td><td>309</td><td><span class="badge a">37.0%</span></td><td style="color:var(--muted)">36</td><td style="color:var(--muted)">15</td><td style="color:var(--muted)">41.7%</td><td style="color:var(--muted)">871</td><td>—</td></tr><tr><td>2026-01</td><td>953</td><td>404</td><td><span class="badge a">42.4%</span></td><td style="color:var(--muted)">31</td><td style="color:var(--muted)">8</td><td style="color:var(--muted)">25.8%</td><td style="color:var(--muted)">984</td><td>—</td></tr><tr><td>2026-02</td><td>991</td><td>416</td><td><span class="badge a">42.0%</span></td><td style="color:var(--muted)">40</td><td style="color:var(--muted)">16</td><td style="color:var(--muted)">40.0%</td><td style="color:var(--muted)">1,031</td><td>—</td></tr><tr><td>2026-03</td><td>895</td><td>344</td><td><span class="badge a">38.4%</span></td><td style="color:var(--muted)">37</td><td style="color:var(--muted)">15</td><td style="color:var(--muted)">40.5%</td><td style="color:var(--muted)">932</td><td>—</td></tr><tr><td>2026-04</td><td>925</td><td>264</td><td><span class="badge w">28.5%</span></td><td style="color:var(--muted)">64</td><td style="color:var(--muted)">18</td><td style="color:var(--muted)">28.1%</td><td style="color:var(--muted)">989</td><td>—</td></tr><tr><td>2026-05</td><td>1,311</td><td>327</td><td><span class="badge b">24.9%</span></td><td style="color:var(--muted)">85</td><td style="color:var(--muted)">30</td><td style="color:var(--muted)">35.3%</td><td style="color:var(--muted)">1,396</td><td>—</td></tr><tr><td>2026-06</td><td>1,044</td><td>315</td><td><span class="badge w">30.2%</span></td><td style="color:var(--muted)">36</td><td style="color:var(--muted)">6</td><td style="color:var(--muted)">16.7%</td><td style="color:var(--muted)">1,080</td><td>—</td></tr><tr><td>2026-07<sup>◆CYS</sup></td><td>1,314</td><td>348</td><td><span class="badge w">26.5%</span></td><td style="color:var(--muted)">58</td><td style="color:var(--muted)">31</td><td style="color:var(--muted)">53.4%</td><td style="color:var(--muted)">1,372</td><td>194<span class="sub">未転換114</span></td></tr><tr><td>2026-08<sup>◆CYS</sup></td><td>1,167</td><td>284</td><td><span class="badge b">24.3%</span></td><td style="color:var(--muted)">150</td><td style="color:var(--muted)">88</td><td style="color:var(--muted)">58.7%</td><td style="color:var(--muted)">1,317</td><td>625<span class="sub">未転換322</span></td></tr><tr class="r9"><td>2026-09<sup>◆CYS</sup> <span class="now">今月</span></td><td>850</td><td>225</td><td><span class="badge w">26.5%</span></td><td style="color:var(--muted)">135</td><td style="color:var(--muted)">92</td><td style="color:var(--muted)">68.1%</td><td style="color:var(--muted)">985</td><td>313<span class="sub">未転換194</span></td></tr></tbody></table></div><div class="q-note"><strong>★OGS（2025-07〜09）：</strong>OGS特例適用後の値（M0 2,611／1,856／1,345）。OGS顧客はトライアル購入者（25,007／14,991／5,219人）に分類され、<strong>転換者は転換月のアイテム新規＝本版では既存扱い（M0・コホート外）</strong>。2025-08のアイテム新規1,638人などはOGS転換者を含む。<br><strong>◆CYS（2026-07〜09）：</strong>2026-07＝CYS開始(7/22)／2026-08＝トライアル購入者625人に急増／2026-09＝CYS終了(9/17)。9月M0は2026年の単月で最小。<br><strong>灰色の「参考」列：</strong>アイテム新規（既存扱い・M0に含めない）。n小の月は選択率が振れやすい。</div><div class="ssub" style="margin-top:16px">トライアル購入者（起点月別・参考・別枠）。転換＝基準日までに3アイテムの有償購入あり（同日購入を含む）</div><div style="overflow-x:auto"><div style="min-width:640px"><table><thead><tr><th>起点月</th><th class="c">トライアル購入者</th><th class="c">未転換</th><th class="c">転換</th><th class="c">転換率</th><th class="c">うち起点日と同日に本品購入</th><th class="c">うちOGS特例</th></tr></thead><tbody><tr><td>2025-07</td><td class="c">25,007</td><td class="c">23,114</td><td class="c">1,893</td><td class="c">7.6%</td><td class="c">435</td><td class="c">25,007</td></tr><tr><td>2025-08</td><td class="c">14,991</td><td class="c">13,355</td><td class="c">1,636</td><td class="c">10.9%</td><td class="c">370</td><td class="c">14,991</td></tr><tr><td>2025-09</td><td class="c">5,219</td><td class="c">4,577</td><td class="c">642</td><td class="c">12.3%</td><td class="c">146</td><td class="c">5,219</td></tr><tr><td>2026-07</td><td class="c">194</td><td class="c">114</td><td class="c">80</td><td class="c">41.2%</td><td class="c">55</td><td class="c">0</td></tr><tr><td>2026-08</td><td class="c">625</td><td class="c">322</td><td class="c">303</td><td class="c">48.5%</td><td class="c">210</td><td class="c">0</td></tr><tr><td>2026-09</td><td class="c">313</td><td class="c">194</td><td class="c">119</td><td class="c">38.0%</td><td class="c">77</td><td class="c">0</td></tr><tr class="tot"><td><strong>CYS期（2026-07〜09）計</strong></td><td class="c">1,132</td><td class="c">630</td><td class="c">502</td><td class="c">44.3%</td><td class="c">342</td><td class="c">0</td></tr><tr class="tot"><td><strong>OGS期（2025-07〜09）計</strong></td><td class="c">45,217</td><td class="c">41,046</td><td class="c">4,171</td><td class="c">9.2%</td><td class="c">951</td><td class="c">45,217</td></tr></tbody></table></div></div><details class="notes"><summary class="nt" style="cursor:pointer;margin-bottom:0">📌 参考：2024-05〜2025-03のコホート（表示外・クリックで開閉）</summary><div style="overflow-x:auto"><div style="min-width:640px"><table><thead><tr><th>コホート月</th><th class="c">純粋新規（M0）</th><th class="c">初回定期選択数</th><th class="c">初回定期選択率</th><th class="c">アイテム新規</th><th class="c">アイテム新規の定期選択数</th><th class="c">和集合M0</th></tr></thead><tbody><tr><td>2024-05（参考）</td><td class="c">2,406</td><td class="c">798</td><td class="c">33.2%</td><td class="c">0</td><td class="c">0</td><td class="c">2,406</td></tr><tr><td>2024-06（参考）</td><td class="c">2,345</td><td class="c">715</td><td class="c">30.5%</td><td class="c">0</td><td class="c">0</td><td class="c">2,345</td></tr><tr><td>2024-07（参考）</td><td class="c">2,668</td><td class="c">879</td><td class="c">32.9%</td><td class="c">1</td><td class="c">0</td><td class="c">2,669</td></tr><tr><td>2024-08（参考）</td><td class="c">2,661</td><td class="c">1,057</td><td class="c">39.7%</td><td class="c">3</td><td class="c">1</td><td class="c">2,664</td></tr><tr><td>2024-09（参考）</td><td class="c">2,062</td><td class="c">654</td><td class="c">31.7%</td><td class="c">0</td><td class="c">0</td><td class="c">2,062</td></tr><tr><td>2024-10（参考）</td><td class="c">1,431</td><td class="c">494</td><td class="c">34.5%</td><td class="c">1</td><td class="c">0</td><td class="c">1,432</td></tr><tr><td>2024-11（参考）</td><td class="c">1,608</td><td class="c">534</td><td class="c">33.2%</td><td class="c">0</td><td class="c">0</td><td class="c">1,608</td></tr><tr><td>2024-12（参考）</td><td class="c">1,571</td><td class="c">515</td><td class="c">32.8%</td><td class="c">1</td><td class="c">0</td><td class="c">1,572</td></tr><tr><td>2025-01（参考）</td><td class="c">2,266</td><td class="c">806</td><td class="c">35.6%</td><td class="c">1</td><td class="c">0</td><td class="c">2,267</td></tr><tr><td>2025-02（参考）</td><td class="c">1,835</td><td class="c">712</td><td class="c">38.8%</td><td class="c">0</td><td class="c">0</td><td class="c">1,835</td></tr><tr><td>2025-03（参考）</td><td class="c">2,210</td><td class="c">701</td><td class="c">31.7%</td><td class="c">0</td><td class="c">0</td><td class="c">2,210</td></tr></tbody></table></div></div></details>
+<div class="monthly-insight"><div class="mi-title">💡 このデータが示すCRM上の意味</div><ul><li><strong>2026-09の純粋新規は850人（前月1,167人・▲27.2%）で、初回定期選択率は26.5%（225／850人）。</strong>8月（24.3%）から+2.1ptだが、<strong>入口の人数が減ったため初回定期の人数は284→225人（▲20.8%）</strong>。選択率が上がっても入口が細れば、新規ACTIVEの絶対数は増えない（7-2章の初出657→506人と方向が一致。ただし4章は初回注文、7-2章は契約単位のイベントで定義が異なり直接比較はしない）。</li><li><strong>選択率は2026-01の42.4%・2026-02の42.0%から2026-04に28.5%へ低下し、以降24.3〜30.2%で推移している。</strong>2025-11〜2026-03の37.0〜43.5%（OGS後の高水準期）から1段下がったまま。</li><li><strong>別枠のトライアル購入者（CYS）は7月194→8月625→9月313人。</strong>基準日までの転換は502人（44.3%）・未転換630人。<strong>転換者は転換月のアイテム新規（既存扱い）に現れ、M0には入らない</strong>。アイテム新規の初回定期選択率は9月68.1%（92／135人）と純粋新規（26.5%）の約2.6倍だが、CYS参加者との個別突合は未実施で因果は断定しない。</li></ul></div>
+
+  <!-- ===== 4-2. 週次新規獲得数 ===== -->
+  <div class="stitle">4-2. 週次新規獲得数（純粋新規／トライアル購入者〔参考〕）<span class="ds-shopify">Shopify受注</span><span class="ds-order">受注</span></div><div class="ssub">集計方法：shopify_ordersから直接MIN(created_at)で算出（顧客マスター非依存・有償注文条件・CYS0810除外）。<strong>純粋新規＝M0</strong>。週は月曜起算で、<strong>月またぎ週は分割せず週単位で表示</strong>（月別突合は月またぎ分割行で実施）。グラフは2025-12-29週〜09-28週の全40週、表は直近16週（2026-06-15週〜09-28週）。基準日2026-09-30。アイテム新規は参考（既存扱い・M0に含めない）、トライアル購入者は起点週で数えた参考値でM0に含まない。</div><div class="chart-wrap"><canvas id="chartWeeklyNew"></canvas></div><div style="overflow-x:auto"><div style="min-width:640px"><table><thead><tr><th>週（月曜起算）</th><th class="c">純粋新規</th><th class="c" style="color:var(--muted)">参考：アイテム新規</th><th class="c">トライアル購入者<br><span style="font-weight:400;font-size:10px">（参考・M0に含まない）</span></th><th>備考</th></tr></thead><tbody><tr><td>2026-06-15</td><td class="c">228</td><td class="c" style="color:var(--muted)">9</td><td class="c">0</td><td></td></tr><tr><td>2026-06-22</td><td class="c">331</td><td class="c" style="color:var(--muted)">7</td><td class="c">0</td><td></td></tr><tr><td>2026-06-29</td><td class="c">430</td><td class="c" style="color:var(--muted)">9</td><td class="c">0</td><td>6/29〜7/5（月跨ぎ）</td></tr><tr><td>2026-07-06</td><td class="c">246</td><td class="c" style="color:var(--muted)">8</td><td class="c">0</td><td></td></tr><tr><td>2026-07-13</td><td class="c">240</td><td class="c" style="color:var(--muted)">14</td><td class="c">0</td><td></td></tr><tr style="background:#f5f3ff"><td>2026-07-20</td><td class="c">314</td><td class="c" style="color:var(--muted)">14</td><td class="c">101</td><td></td></tr><tr style="background:#f5f3ff"><td>2026-07-27</td><td class="c">264</td><td class="c" style="color:var(--muted)">21</td><td class="c">149</td><td></td></tr><tr style="background:#f5f3ff"><td>2026-08-03</td><td class="c">284</td><td class="c" style="color:var(--muted)">43</td><td class="c">141</td><td>CYS最盛期入り</td></tr><tr style="background:#f5f3ff"><td>2026-08-10</td><td class="c">269</td><td class="c" style="color:var(--muted)">29</td><td class="c">112</td><td></td></tr><tr style="background:#f5f3ff"><td>2026-08-17</td><td class="c">269</td><td class="c" style="color:var(--muted)">28</td><td class="c">144</td><td></td></tr><tr style="background:#f5f3ff"><td>2026-08-24</td><td class="c">229</td><td class="c" style="color:var(--muted)">41</td><td class="c">151</td><td></td></tr><tr style="background:#f5f3ff"><td>2026-08-31</td><td class="c">206</td><td class="c" style="color:var(--muted)">41</td><td class="c">129</td><td>8/31〜9/6（月跨ぎ）</td></tr><tr style="background:#f5f3ff"><td>2026-09-07</td><td class="c">198</td><td class="c" style="color:var(--muted)">36</td><td class="c">123</td><td></td></tr><tr style="background:#f5f3ff"><td>2026-09-14</td><td class="c">192</td><td class="c" style="color:var(--muted)">30</td><td class="c">82</td><td>CYS最終週（9/17終了）</td></tr><tr><td>2026-09-21</td><td class="c">200</td><td class="c" style="color:var(--muted)">23</td><td class="c">0</td><td>CYS終了後の確定週</td></tr><tr style="color:var(--muted)"><td>2026-09-28</td><td class="c">83</td><td class="c" style="color:var(--muted)">8</td><td class="c">0</td><td>部分週（9/28〜9/30の3日分）</td></tr></tbody></table></div></div><details class="notes"><summary class="nt" style="cursor:pointer;margin-bottom:0">📎 4章月次との突合（月またぎ分割の月別合計・2026-01〜09・クリックで開閉）</summary><div style="overflow-x:auto"><div style="min-width:640px"><table><thead><tr><th>月</th><th class="c">週次（分割）純粋新規</th><th class="c">4章 純粋新規</th><th class="c">判定</th><th class="c">週次（分割）アイテム新規</th><th class="c">4章 アイテム新規</th><th class="c">トライアル購入者（週次／4章）</th></tr></thead><tbody><tr><td>2026-01</td><td class="c">953</td><td class="c">953</td><td class="c">✅一致</td><td class="c">31</td><td class="c">31</td><td class="c">—</td></tr><tr><td>2026-02</td><td class="c">991</td><td class="c">991</td><td class="c">✅一致</td><td class="c">40</td><td class="c">40</td><td class="c">—</td></tr><tr><td>2026-03</td><td class="c">895</td><td class="c">895</td><td class="c">✅一致</td><td class="c">37</td><td class="c">37</td><td class="c">—</td></tr><tr><td>2026-04</td><td class="c">925</td><td class="c">925</td><td class="c">✅一致</td><td class="c">64</td><td class="c">64</td><td class="c">—</td></tr><tr><td>2026-05</td><td class="c">1311</td><td class="c">1311</td><td class="c">✅一致</td><td class="c">85</td><td class="c">85</td><td class="c">—</td></tr><tr><td>2026-06</td><td class="c">1044</td><td class="c">1044</td><td class="c">✅一致</td><td class="c">36</td><td class="c">36</td><td class="c">—</td></tr><tr><td>2026-07</td><td class="c">1314</td><td class="c">1314</td><td class="c">✅一致</td><td class="c">58</td><td class="c">58</td><td class="c">194 / 194 ✅</td></tr><tr><td>2026-08</td><td class="c">1167</td><td class="c">1167</td><td class="c">✅一致</td><td class="c">150</td><td class="c">150</td><td class="c">625 / 625 ✅</td></tr><tr><td>2026-09</td><td class="c">850</td><td class="c">850</td><td class="c">✅一致</td><td class="c">135</td><td class="c">135</td><td class="c">313 / 313 ✅</td></tr></tbody></table></div></div></details>
+<div class="monthly-insight"><div class="mi-title">💡 週次新規獲得 考察（9月）</div><ul><li><strong>トライアル購入者（CYS・参考）は2026-07-20週〜2026-09-14週に週82〜151人で推移し、CYS終了（9/17）後の9/21週・9/28週（3日分）は0人になった。</strong>（7/20週101人／8/3週141人／9/7週123人／9/14週82人）。</li><li><strong>9月の純粋新規は9/7週198人・9/14週192人・9/21週200人</strong>で、8月の週229〜284人（8/3〜8/24週）から一段低い水準での横ばい。5月（週277〜328人）や6/29週（430人・7月分337人を含む）のような獲得の山がない月だった。</li><li>9/28週（83人）は9/28〜9/30の3日分の部分週で、10月のコホートに効いてくる。月跨ぎ週は月別行で4章と突合し、純粋新規・アイテム新規・トライアル購入者の全項目で一致を確認している。</li></ul></div>
+
+  <!-- ===== 7-2. グロスフロー ===== -->
+  <div class="stitle">7-2. 毎月の新規ACTIVE vs PAUSE+CANCELLED発生（グロスフロー・顧客単位×和集合）<span class="ds-shopify">Shopify定期DB</span><span class="ds-snap">月末SS</span></div><div class="ssub">2025-06〜2026-09の16ヶ月（前月比較のため。2025-05は初月でフロー不可・2025-04は定期DB収集前でACTIVE null：pitfalls⑯）。データソース：Shopify定期DB（sandbox_nishimori.subscription_history_view・<strong>顧客単位×和集合<code>has_vc=1 OR has_cd=1 OR has_cdk=1</code>のACTIVE</strong>の前月比較・BQ実行日2026-10-08）。真の健全性は「新規と離脱のどちらが多いか」で判断する。</div><details class="notes" open><summary class="nt" style="cursor:pointer;margin-bottom:0">📌 集計ルール（二重計上防止・必読）（クリックで開閉）</summary><ul><li><strong>PAUSED経由の解約は数えない：</strong>「離脱（PAUSE＋解約）」は<strong>前月がACTIVE（顧客単位）だった人が当月PAUSEDまたはCANCELLEDになった件数のみ</strong>をカウントする。PAUSEDを経由してからCANCELLEDになった顧客は、PAUSEDになった月に既に1件としてカウント済みのため、解約月には再カウントしない（reference_subscription_history.md 落とし穴①②）。</li><li><strong>状態の定義（顧客×月）：</strong>和集合契約のうちACTIVEがあれば<code>A</code>、なければPAUSED→<code>P</code>、CANCELLED→<code>C</code>、和集合契約なし（他ブランドのみ）→<code>N</code>、前月／当月のスナップショットに存在しない→<code>X</code>。<strong>新規ACTIVE</strong>＝当月A・前月A以外（初出＝前月X／PAUSE復帰＝前月P／解約復帰＝前月C／他ブランド由来＝前月N）。<strong>離脱</strong>＝前月A・当月A以外（PAUSE＝当月P／解約＝当月C／他ブランドへ付替＝当月NかつACTIVE他ブランドあり／他ブランドで停止・解約＝NでACTIVEなし／消滅＝X）。</li><li><strong>アイテム間の乗り換え（VC⇄C+D⇄C+D+K）はイベントにならない</strong>（ブランドタグ切替の行は不要）。C+Cera等の<strong>他ブランドとの入れ替わり</strong>のみ別イベントとして表に残す。</li></ul></details><div class="chart-wrap"><canvas id="chartGrossFlow"></canvas></div><div style="overflow-x:auto"><div style="min-width:900px"><table><thead><tr><th>月</th><th class="c">新規ACTIVE<br><span style="font-weight:400;font-size:10px">（初出／復帰）</span></th><th class="c">PAUSE+CANCELLED<br><span style="font-weight:400;font-size:10px">（PAUSE／CANC）</span></th><th class="c">ネット</th><th class="c">ストック</th><th class="c">ストック差</th><th class="c">他ブランド系離脱<br><span style="font-weight:400;font-size:10px">付替（他ACTIVE）／停止・解約</span></th><th class="c">消滅</th><th class="c">残差</th></tr></thead><tbody><tr><td>2025-06</td><td class="c">1,636（1,239／397）</td><td class="c">1,121（788／333）</td><td class="c"><span class="up">+515</span></td><td class="c">20,904</td><td class="c">+515</td><td class="c">0／0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-07</td><td class="c">1,833（1,415／418）</td><td class="c">1,071（673／398）</td><td class="c"><span class="up">+762</span></td><td class="c">21,666</td><td class="c">+762</td><td class="c">0／0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-08</td><td class="c">2,764（2,393／371）</td><td class="c">1,155（700／455）</td><td class="c"><span class="up">+1,609</span></td><td class="c">23,275</td><td class="c">+1,609</td><td class="c">0／0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-09</td><td class="c">1,927（1,592／335）</td><td class="c">1,645（991／654）</td><td class="c"><span class="up">+282</span></td><td class="c">23,557</td><td class="c">+282</td><td class="c">0／0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-10</td><td class="c">1,192（849／343）</td><td class="c">1,607（988／619）</td><td class="c"><span class="dn">▲415</span></td><td class="c">23,142</td><td class="c">▲415</td><td class="c">0／0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-11</td><td class="c">963（648／315）</td><td class="c">1,461（858／603）</td><td class="c"><span class="dn">▲498</span></td><td class="c">22,644</td><td class="c">▲498</td><td class="c">0／0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-12</td><td class="c">853（503／350）</td><td class="c">1,362（936／426）</td><td class="c"><span class="dn">▲509</span></td><td class="c">22,134</td><td class="c">▲510</td><td class="c">1／0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2026-01</td><td class="c">1,001（634／367）</td><td class="c">1,500（1,045／455）</td><td class="c"><span class="dn">▲499</span></td><td class="c">21,633</td><td class="c">▲501</td><td class="c">2／0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2026-02</td><td class="c">925（578／347）</td><td class="c">1,270（838／432）</td><td class="c"><span class="dn">▲345</span></td><td class="c">21,175</td><td class="c">▲458</td><td class="c">105／8</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2026-03</td><td class="c">944（542／402）</td><td class="c">1,348（894／454）</td><td class="c"><span class="dn">▲404</span></td><td class="c">20,658</td><td class="c">▲517</td><td class="c">111／2</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2026-04</td><td class="c">981（495／486）</td><td class="c">1,139（738／401）</td><td class="c"><span class="dn">▲158</span></td><td class="c">20,432</td><td class="c">▲226</td><td class="c">44／3</td><td class="c">21</td><td class="c">0</td></tr><tr><td>2026-05</td><td class="c">1,122（576／546）</td><td class="c">1,100（748／352）</td><td class="c"><span class="up">+22</span></td><td class="c">20,372</td><td class="c">▲60</td><td class="c">38／2</td><td class="c">42</td><td class="c">0</td></tr><tr><td>2026-06</td><td class="c">909（530／379）</td><td class="c">1,062（713／349）</td><td class="c"><span class="dn">▲153</span></td><td class="c">20,155</td><td class="c">▲217</td><td class="c">63／1</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2026-07</td><td class="c">1,045（594／451）</td><td class="c">1,023（675／348）</td><td class="c"><span class="up">+22</span></td><td class="c">20,111</td><td class="c">▲44</td><td class="c">56／10</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2026-08</td><td class="c">1,095（657／438）</td><td class="c">1,047（716／331）</td><td class="c"><span class="up">+48</span></td><td class="c">20,130</td><td class="c">+19</td><td class="c">27／2</td><td class="c">0</td><td class="c">0</td></tr><tr style="background:#fff3e0"><td>2026-09</td><td class="c">945（506／439）</td><td class="c">1,070（754／316）</td><td class="c"><span class="dn">▲125</span></td><td class="c">19,972</td><td class="c">▲158</td><td class="c">25／8</td><td class="c">0</td><td class="c">0</td></tr></tbody></table></div></div><div style="font-size:11px;color:var(--muted);margin-top:-4px;margin-bottom:16px;line-height:1.7;padding:8px 12px;background:#fafaf9;border:1px solid var(--border);border-radius:6px">※ストック差（前月比）＝ネット＋他ブランド系離脱（▲）＋消滅（▲）＋残差。2026-09：▲158＝▲125＋（▲25＋▲8＝▲33）＋0＋0。ネット＝新規ACTIVE−PAUSE+CANCELLED。<strong>復帰＝PAUSE復帰＋解約復帰＋他ブランド由来</strong>（内訳は下の折りたたみ）。ストック＝3章の顧客単位ACTIVE（2025-05〜2026-09全月一致）。<strong>残差は全16ヶ月で0</strong>（assert済み）。2026-04・05の「消滅」21・42人は、前月ACTIVEの顧客がその月のスナップショットに存在しないケース（2026-04は過去データ一括登録月・原因は未調査）。</div><details class="notes"><summary class="nt" style="cursor:pointer;margin-bottom:0">📎 内訳の全項目（新規ACTIVE＝初出＋PAUSE復帰＋解約復帰＋他ブランド由来／離脱＝PAUSE＋解約＋他ブランド系＋消滅）（クリックで開閉）</summary><div style="overflow-x:auto"><div style="min-width:900px"><table><thead><tr><th>月</th><th class="c">新規ACTIVE</th><th class="c">初出</th><th class="c">PAUSE復帰</th><th class="c">解約復帰</th><th class="c">他ブランド由来</th><th class="c">離脱</th><th class="c">PAUSE</th><th class="c">解約</th><th class="c">他ブランドへ付替</th><th class="c">他ブランドで停止・解約</th><th class="c">消滅</th></tr></thead><tbody><tr><td>2025-06</td><td class="c">1,636</td><td class="c">1,239</td><td class="c">340</td><td class="c">57</td><td class="c">0</td><td class="c">1,121</td><td class="c">788</td><td class="c">333</td><td class="c">0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-07</td><td class="c">1,833</td><td class="c">1,415</td><td class="c">355</td><td class="c">63</td><td class="c">0</td><td class="c">1,071</td><td class="c">673</td><td class="c">398</td><td class="c">0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-08</td><td class="c">2,764</td><td class="c">2,393</td><td class="c">306</td><td class="c">65</td><td class="c">0</td><td class="c">1,155</td><td class="c">700</td><td class="c">455</td><td class="c">0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-09</td><td class="c">1,927</td><td class="c">1,592</td><td class="c">261</td><td class="c">74</td><td class="c">0</td><td class="c">1,645</td><td class="c">991</td><td class="c">654</td><td class="c">0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-10</td><td class="c">1,192</td><td class="c">849</td><td class="c">275</td><td class="c">68</td><td class="c">0</td><td class="c">1,607</td><td class="c">988</td><td class="c">619</td><td class="c">0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-11</td><td class="c">963</td><td class="c">648</td><td class="c">254</td><td class="c">61</td><td class="c">0</td><td class="c">1,461</td><td class="c">858</td><td class="c">603</td><td class="c">0</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2025-12</td><td class="c">853</td><td class="c">503</td><td class="c">283</td><td class="c">67</td><td class="c">0</td><td class="c">1,363</td><td class="c">936</td><td class="c">426</td><td class="c">1</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2026-01</td><td class="c">1,001</td><td class="c">634</td><td class="c">289</td><td class="c">78</td><td class="c">0</td><td class="c">1,502</td><td class="c">1,045</td><td class="c">455</td><td class="c">2</td><td class="c">0</td><td class="c">0</td></tr><tr><td>2026-02</td><td class="c">925</td><td class="c">578</td><td class="c">272</td><td class="c">73</td><td class="c">2</td><td class="c">1,383</td><td class="c">838</td><td class="c">432</td><td class="c">105</td><td class="c">8</td><td class="c">0</td></tr><tr><td>2026-03</td><td class="c">944</td><td class="c">542</td><td class="c">316</td><td class="c">76</td><td class="c">10</td><td class="c">1,461</td><td class="c">894</td><td class="c">454</td><td class="c">111</td><td class="c">2</td><td class="c">0</td></tr><tr><td>2026-04</td><td class="c">981</td><td class="c">495</td><td class="c">383</td><td class="c">80</td><td class="c">23</td><td class="c">1,207</td><td class="c">738</td><td class="c">401</td><td class="c">44</td><td class="c">3</td><td class="c">21</td></tr><tr><td>2026-05</td><td class="c">1,122</td><td class="c">576</td><td class="c">408</td><td class="c">103</td><td class="c">35</td><td class="c">1,182</td><td class="c">748</td><td class="c">352</td><td class="c">38</td><td class="c">2</td><td class="c">42</td></tr><tr><td>2026-06</td><td class="c">909</td><td class="c">530</td><td class="c">282</td><td class="c">72</td><td class="c">25</td><td class="c">1,126</td><td class="c">713</td><td class="c">349</td><td class="c">63</td><td class="c">1</td><td class="c">0</td></tr><tr><td>2026-07</td><td class="c">1,045</td><td class="c">594</td><td class="c">333</td><td class="c">75</td><td class="c">43</td><td class="c">1,089</td><td class="c">675</td><td class="c">348</td><td class="c">56</td><td class="c">10</td><td class="c">0</td></tr><tr><td>2026-08</td><td class="c">1,095</td><td class="c">657</td><td class="c">308</td><td class="c">94</td><td class="c">36</td><td class="c">1,076</td><td class="c">716</td><td class="c">331</td><td class="c">27</td><td class="c">2</td><td class="c">0</td></tr><tr><td>2026-09</td><td class="c">945</td><td class="c">506</td><td class="c">310</td><td class="c">81</td><td class="c">48</td><td class="c">1,103</td><td class="c">754</td><td class="c">316</td><td class="c">25</td><td class="c">8</td><td class="c">0</td></tr></tbody></table></div></div></details><div class="ssub" style="margin-top:4px">チャート用（新規ACTIVE発生 vs PAUSE＋解約発生）。PAUSE＋解約＝離脱のうち「PAUSE」＋「解約」（他ブランド系・消滅は表のみに残す）</div><div style="overflow-x:auto"><div style="min-width:480px"><table><thead><tr><th>月</th><th class="c">新規ACTIVE</th><th class="c">PAUSE＋解約</th><th class="c">差（新規−PAUSE＋解約）</th></tr></thead><tbody><tr><td>2025-06</td><td class="c">1,636</td><td class="c">1,121</td><td class="c"><span class="up">+515</span></td></tr><tr><td>2025-07</td><td class="c">1,833</td><td class="c">1,071</td><td class="c"><span class="up">+762</span></td></tr><tr><td>2025-08</td><td class="c">2,764</td><td class="c">1,155</td><td class="c"><span class="up">+1,609</span></td></tr><tr><td>2025-09</td><td class="c">1,927</td><td class="c">1,645</td><td class="c"><span class="up">+282</span></td></tr><tr><td>2025-10</td><td class="c">1,192</td><td class="c">1,607</td><td class="c"><span class="dn">▲415</span></td></tr><tr><td>2025-11</td><td class="c">963</td><td class="c">1,461</td><td class="c"><span class="dn">▲498</span></td></tr><tr><td>2025-12</td><td class="c">853</td><td class="c">1,362</td><td class="c"><span class="dn">▲509</span></td></tr><tr><td>2026-01</td><td class="c">1,001</td><td class="c">1,500</td><td class="c"><span class="dn">▲499</span></td></tr><tr><td>2026-02</td><td class="c">925</td><td class="c">1,270</td><td class="c"><span class="dn">▲345</span></td></tr><tr><td>2026-03</td><td class="c">944</td><td class="c">1,348</td><td class="c"><span class="dn">▲404</span></td></tr><tr><td>2026-04</td><td class="c">981</td><td class="c">1,139</td><td class="c"><span class="dn">▲158</span></td></tr><tr><td>2026-05</td><td class="c">1,122</td><td class="c">1,100</td><td class="c"><span class="up">+22</span></td></tr><tr><td>2026-06</td><td class="c">909</td><td class="c">1,062</td><td class="c"><span class="dn">▲153</span></td></tr><tr><td>2026-07</td><td class="c">1,045</td><td class="c">1,023</td><td class="c"><span class="up">+22</span></td></tr><tr><td>2026-08</td><td class="c">1,095</td><td class="c">1,047</td><td class="c"><span class="up">+48</span></td></tr><tr><td>2026-09</td><td class="c">945</td><td class="c">1,070</td><td class="c"><span class="dn">▲125</span></td></tr></tbody></table></div></div>
+<div class="monthly-insight"><div class="mi-title">💡 グロスフロー 考察（顧客単位・和集合）</div><ul><li><strong>9月は新規ACTIVE945人（8月1,095人・▲150人）に対し、PAUSE＋解約1,070人（8月1,047人）で、ネット▲125人（8月+48人）。</strong>ストック差▲158人は、ネットに他ブランド系離脱▲33人を加えたもの（残差0）。新規ACTIVE945人のうち<strong>『初出』は506人（54%）</strong>で、2026-02〜08の月平均567人を下回り、2026-04（495）・2025-12（503）に次ぐ低水準。</li><li><strong>離脱の内訳は、PAUSEが716→754人と増え、解約は331→316人と減った。</strong>PAUSE復帰（310）はマルチサイクラー（落とし穴②）を含むため、<strong>真の新規は『初出』で見る</strong>。解約復帰は81、他ブランド由来は48。他ブランドへの付替（他ACTIVE）は25人・他ブランドで停止・解約は8人。</li><li><strong>PAUSE＋解約の月次は2025-09の1,645人・2025-10の1,607人をピークに、2026-04以降は1023〜1139人のレンジ。</strong>9月の1,070人はそのレンジ内で、ネットのマイナスは離脱の急増ではなく<strong>新規（特に初出）の細り</strong>が主因。4章の純粋新規縮小（1,167→850人）と方向が一致するが、定義が異なり直接比較はしない。</li></ul></div>
+
+  <!-- ===== 付記：定義・データソース ===== -->
+  <details class="notes"><summary class="nt" style="cursor:pointer;margin-bottom:0">📎 付記：一体版の定義・データソース・VC単体版との差（クリックで開閉）</summary><ul><li><strong>対象：</strong>VC＋C+D＋C+D+Kの<strong>3アイテム和集合</strong>（SKUマスター<code>brand IN ('VC','C+D','C+D+K')</code>）。アイテム間の移動は全章で無視（継続・購入回数に通算）／新規は純粋新規のみ（アイテム新規は既存へ統合）／ブランド分割表示なし／OGS特例適用／判定窓31・62・93日（表示30／60／90日）／税抜＝÷1.08。</li><li><strong>本版の章構成：</strong>tab1＝1・2・3・3-1・3-2・4・4-2・7-2、tab2＝5・5-3・5-3-2・5-3-3・5-4（章番号はVC単体版のまま）。VC単体版の4-3・6・7・7-1・7-3・7-4・8・9系・10〜13は一体版の対象外。</li><li><strong>データソース：</strong>NE出荷＝ne_order_items（shop_id=17）／Shopify受注＝shopify_orders×shopify_sku_brand_master／Shopify定期DB＝sandbox_nishimori.subscription_history_view（月初当日は<code>sn_*</code>が未反映のためsandbox側を参照。<code>sn_subscription_history_view</code>との一致は未検証）／顧客マスター＝sn_shopify_customer_master（保有顧客数のマスター値は10/1 08:08までの注文を含む）。</li><li><strong>VC単体版との数値差：</strong>M0・継続率・定期ACTIVE・NE出荷売上は母集団が変わるため連続しない。ナレッジ（values.md）には新章として別建てで記録し、VC単体版・C+D単体版の確定値は上書きしない。</li></ul></details>
+  </div>
+
+
+  <div id="tab2" class="tab-pane">
+  <!-- ===== 5. コホート継続率 ===== -->
+  <div class="stitle">5. コホート継続率（M+1〜M+12ヒートマップ・純粋新規）<span class="ltv-brand">Lypo-C一体集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders）× SKUブランドマスター（spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master・brand IN ('VC','C+D','C+D+K')・有償明細price&gt;0）。<strong>対象＝VC＋C+D＋C+D+Kの3アイテムの和集合。</strong>コホート（M0）＝<strong>純粋新規のみ</strong>（生涯初の有償注文日が、3アイテムいずれかの初回有償購入日である顧客）。アイテム新規（他ブランド購入歴のある顧客が後から3アイテムを初購入）は既存扱いでコホートに含めない。M+N＝コホート月からN暦月後に3アイテムのいずれかを有償購入した顧客数（アイテム間の移動は無視し、継続に通算）。「—」は観測期間外（0ではない）。基準日2026-09-30以前の注文のみ集計。</div>
+
+  <details class="notes" open><summary class="nt" style="cursor:pointer;margin-bottom:0">📌 集計定義・注記（全章共通・クリックで開閉）</summary>
+    <ul>
+      <li><strong>アイテム間の移動は無視：</strong>VC・C+D・C+D+K間の乗り換えは、継続（M+N）・購入回数（F2〜F8）・LTVのいずれにも通算する。ブランド別の分割表示は行わない。</li>
+      <li><strong>M0＝純粋新規のみ：</strong>アイテム新規は既存扱いのため、本版のM0はVC単独版の「アイテム新規」とは一致しない。5章M0＝5-3章M0＝5-4章の顧客数は全29コホートで一致を確認済み。5-3-3章のみ母集団が異なる（初回定期注文月基準・純粋新規に限定しない）。</li>
+      <li><strong>OGS特例を適用して表示：</strong>OGS2025期（2025-07〜09）も除外せず表示する。商品1004496（OGSモニター品）で割引コードOGS2025_11の明細は価格0として扱い、OGS顧客はトライアル購入者に分類する。転換者は転換月のアイテム新規＝本版では既存扱い（コホート外）。旧版の「OGS汚染のため除外」の注記は適用しない。</li>
+      <li><strong>判定窓：</strong>画面の「30日／60日／90日」は内部で31／62／93日以内の判定（暦月の日数差を避けるプロジェクト共通原則）。120／180／365日は従来の日数のまま。</li>
+      <li><strong>基準日：</strong>2026-09-30（全章共通）。税抜換算は÷1.08（3アイテムとも）。除外条件：テスト注文・キャンセル・総額（税抜）0円以下・割引コードCYS0810。</li>
+      <li><strong>データソース：</strong>Shopify受注 × SKUブランドマスター（5-3-3章の定期／都度判定はproduct_type＝'定期'）。★は2026-07＝CYS開始（7/22）・2026-08＝CYS・2026-09＝CYS終了（9/17）の施策期間の目印で、変動要因がCYSであると断定するものではない。</li>
+      <li><strong>今回対象外：</strong>5章の周期別（1ヶ月／2ヶ月／3ヶ月／都度買いのみ）・5-1（入口別F2転換率）・5-2（アイテム新規 vs 純粋新規）は一体版では作成していない。</li>
+    </ul>
+  </details>
+
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortLc"></table></div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortLc"></canvas></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 コホート 考察</div>
+    <ul>
+      <li><strong>M+1継続率（時間軸・暦月内に2回目が発生した比率）は、成熟した2025-10〜2026-03の6コホートで36.3%〜41.3%。</strong>2024-05〜2025-06は32.0%〜41.9%で、直近の成熟コホートは過去レンジの中〜上位にある。直近は2026-04 35.0%、05 29.8%、06 36.7%、07 32.5%、08 33.1%。</li>
+      <li><strong>表示コホートのうちM+1が最も低いのは2026-05の29.8%（391/1,311人）。</strong>次いで2025-07（31.8%・OGS特例適用行）、2024-09（32.0%）。2026-05はM0が1,311人と直前（2026-04 925人）から増えた月で、M0の増加と継続率の低下が同時に起きているが、入口構成（5-1章は今回対象外）を見ていないため要因は断定しない。</li>
+      <li><strong>M+6継続率は2025-10〜2026-03で23.5%〜28.1%、2024-05〜2025-06は21.2%〜28.4%。</strong>M+12は2024-05〜2025-09の確定17コホートで13.2%〜19.8%で、1年後の定着はおおむね1〜2割。M+12が観測できるのは2025-09コホートまで。</li>
+      <li><strong>M0（純粋新規）は2026-07 1,314人→08 1,167人→09 850人と縮小した。</strong>2026-09は2026-08比-27.2%で、2025-10以降では2025-12（835人）に次ぐ少なさ。CYS（2026-07-22〜09-17）期間と重なるが、広告・季節要因と分離できていないため要因は断定しない。M+1は2026-10-31に確定する。</li>
+      <li><strong>OGS期（2025-07〜09）は特例適用後の値で表示している。</strong>M0は2,611／1,856／1,345人、M+1は31.8%／34.4%／37.8%。2025-07のM+1は表示29行で2番目に低く、他の月と同列には比較せず参考値として見る（OGS顧客はトライアル購入者に分類され、転換者は転換月のアイテム新規＝本版では既存扱いでコホート外）。</li>
+    </ul>
+  </div>
+
+  <details class="notes" style="margin-top:12px"><summary class="nt" style="cursor:pointer;margin-bottom:0">📌 参考：VC単独版（9月版）との差分確認（純粋新規M0・M+1）（クリックで開閉）</summary>
+    <ul>
+      <li>一体版の純粋新規M0は、VC単独版の純粋新規M0以上になる（全比較月で確認済み）。差は、初回有償注文日にVC SKUの購入がなく、C+D／C+D+K SKUの購入がある純粋新規の人数。差の構成比（一体版M0のうちVC単独版に含まれない人数の割合）は表示月で18.2%〜38.7%。例：2026-06はVC単独759人に対し一体版1,044人（+285人）。</li>
+      <li>VC単独版は2025-07〜09をOGS汚染月として除外していたため比較対象外。VC単独版の値は2026-10-06作成の9月版掲載値。</li>
+    </ul>
+    <div class="cohort-wrap"><table class="cohort-table" style="min-width:680px">
+      <thead><tr><th>コホート月</th><th>VC単独 純粋新規M0</th><th>一体版 純粋新規M0</th><th>差（C+D／C+D+K起点）</th><th>差の構成比</th><th>VC単独 M+1</th><th>一体版 M+1</th></tr></thead>
+      <tbody><tr><td>2024-05</td><td>1,886</td><td>2,406</td><td>+520</td><td>21.6%</td><td>31.3%</td><td>35.2%</td></tr><tr><td>2024-06</td><td>1,826</td><td>2,345</td><td>+519</td><td>22.1%</td><td>30.3%</td><td>34.8%</td></tr><tr><td>2024-07</td><td>1,986</td><td>2,668</td><td>+682</td><td>25.6%</td><td>31.3%</td><td>35.1%</td></tr><tr><td>2024-08</td><td>1,969</td><td>2,661</td><td>+692</td><td>26.0%</td><td>31.5%</td><td>35.4%</td></tr><tr><td>2024-09</td><td>1,558</td><td>2,062</td><td>+504</td><td>24.4%</td><td>25.9%</td><td>32.0%</td></tr><tr><td>2024-10</td><td>994</td><td>1,431</td><td>+437</td><td>30.5%</td><td>29.1%</td><td>35.6%</td></tr><tr><td>2024-11</td><td>1,066</td><td>1,608</td><td>+542</td><td>33.7%</td><td>30.4%</td><td>37.0%</td></tr><tr><td>2024-12</td><td>1,011</td><td>1,571</td><td>+560</td><td>35.6%</td><td>29.8%</td><td>37.0%</td></tr><tr><td>2025-01</td><td>1,547</td><td>2,266</td><td>+719</td><td>31.7%</td><td>31.7%</td><td>37.9%</td></tr><tr><td>2025-02</td><td>1,160</td><td>1,835</td><td>+675</td><td>36.8%</td><td>32.6%</td><td>40.3%</td></tr><tr><td>2025-03</td><td>1,577</td><td>2,210</td><td>+633</td><td>28.6%</td><td>30.8%</td><td>36.2%</td></tr><tr><td>2025-04</td><td>1,256</td><td>1,687</td><td>+431</td><td>25.5%</td><td>35.0%</td><td>39.4%</td></tr><tr><td>2025-05</td><td>1,496</td><td>1,910</td><td>+414</td><td>21.7%</td><td>35.5%</td><td>41.9%</td></tr><tr><td>2025-06</td><td>1,916</td><td>2,343</td><td>+427</td><td>18.2%</td><td>36.2%</td><td>40.2%</td></tr><tr><td>2025-07</td><td colspan="1" style="color:#999">VC版は除外月</td><td>2,611</td><td>—</td><td>—</td><td>—</td><td>31.8%</td></tr><tr><td>2025-08</td><td colspan="1" style="color:#999">VC版は除外月</td><td>1,856</td><td>—</td><td>—</td><td>—</td><td>34.4%</td></tr><tr><td>2025-09</td><td colspan="1" style="color:#999">VC版は除外月</td><td>1,345</td><td>—</td><td>—</td><td>—</td><td>37.8%</td></tr><tr><td>2025-10</td><td>798</td><td>1,142</td><td>+344</td><td>30.1%</td><td>35.3%</td><td>41.0%</td></tr><tr><td>2025-11</td><td>586</td><td>874</td><td>+288</td><td>33.0%</td><td>38.4%</td><td>41.3%</td></tr><tr><td>2025-12</td><td>512</td><td>835</td><td>+323</td><td>38.7%</td><td>35.2%</td><td>36.3%</td></tr><tr><td>2026-01</td><td>644</td><td>953</td><td>+309</td><td>32.4%</td><td>35.7%</td><td>38.7%</td></tr><tr><td>2026-02</td><td>658</td><td>991</td><td>+333</td><td>33.6%</td><td>33.7%</td><td>41.1%</td></tr><tr><td>2026-03</td><td>599</td><td>895</td><td>+296</td><td>33.1%</td><td>36.2%</td><td>39.8%</td></tr><tr><td>2026-04</td><td>687</td><td>925</td><td>+238</td><td>25.7%</td><td>31.3%</td><td>35.0%</td></tr><tr><td>2026-05</td><td>963</td><td>1,311</td><td>+348</td><td>26.5%</td><td>25.4%</td><td>29.8%</td></tr><tr><td>2026-06</td><td>759</td><td>1,044</td><td>+285</td><td>27.3%</td><td>33.6%</td><td>36.7%</td></tr><tr><td>2026-07</td><td>986</td><td>1,314</td><td>+328</td><td>25.0%</td><td>30.9%</td><td>32.5%</td></tr><tr><td>2026-08</td><td>837</td><td>1,167</td><td>+330</td><td>28.3%</td><td>27.2%</td><td>33.1%</td></tr><tr><td>2026-09</td><td>530</td><td>850</td><td>+320</td><td>37.6%</td><td>—</td><td>—</td></tr></tbody>
+    </table></div>
+  </details>
+
+  <!-- ===== 5-3. F2/F3/F4コホート転換率（累計到達ベース） ===== -->
+  <div class="stitle" style="margin-top:24px">5-3. F2〜F8コホート転換率（累計到達ベース・回数基準・純粋新規）<span class="ltv-brand">Lypo-C一体集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders）× SKUブランドマスター（spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master・brand IN ('VC','C+D','C+D+K')・有償明細price&gt;0）。<strong>5章のM+1〜M+12は「暦月内に注文が発生したか」（時間軸基準）だが、本章は「何ヶ月かかっても通算N回目の注文（F2＝2回目…）が発生したか」（回数基準・時間を問わない）を見る。</strong>母集団は5章と同一の純粋新規。購入回数は3アイテム合算の有償注文を注文単位で数え、アイテム間の移動も通算する。「—」は右側打ち切り（観測期間不足。実測値が0になった段階以降は全て打ち切り扱い・ゼロ確定ではない）。基準日2026-09-30。</div>
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortLcFreq"></table></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 F2〜F4（累計到達）考察</div>
+    <ul>
+      <li><strong>成熟した2025-10〜2026-03の6コホートでF2累計60.6%〜63.7%・F3累計45.7%〜50.4%・F4累計34.2%〜41.8%。</strong>2024-05〜2025-06はF2累計57.3%〜65.0%・F3累計46.4%〜53.0%・F4累計38.6%〜45.6%。F2は過去レンジ内だが、F4累計は2025-10の41.8%から2026-03の34.2%へ低下している（2026-03は経過6ヶ月でF4が未成熟の可能性を含む）。</li>
+      <li><strong>M+1（5章）とF2累計（本章）の違い：</strong>2025-10コホートはM+1が41.0%、F2累計が63.2%（722/1,142人）。F2は「いつでも2回目が来たか」を見るため、暦月をまたいだ2回目・2〜3ヶ月周期の2回目もカウントされ、M+1より高く出る。</li>
+      <li><strong>直近コホート（2026-04以降）のF2累計は55.0%／51.0%／55.0%／45.2%／38.6%／8.2%（04〜09）と低下して見えるが、観測期間が短いことによる未成熟分を含む。</strong>2026-08・09のF2累計を成熟コホートと同条件で比較するには、31／62／93日以内F2転換率（5-1章）が必要だが、今回の一体版は5-1章を対象外としているため本章では水準比較を行わない。</li>
+      <li><strong>OGS期（2025-07〜09）のF2累計は49.7%／55.1%／58.0%</strong>で、2025-07は2026-06コホートまでの中で最も低い。特例適用後の値だが、他月とは分けて参考扱いとする。</li>
+    </ul>
+  </div>
+  <div class="ssub" style="margin-top:16px">F2／F3／F4転換率の推移（コホート月別・累計到達ベース）。破線＝観測期間が短い直近3コホート（2026-07〜09・未成熟）</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortLcFreqTrend"></canvas></div>
+
+  <!-- ===== 5-3-2. F2→F3→F4 段階別残存率（前段階基準） ===== -->
+  <div class="stitle" style="margin-top:24px">5-3-2. F2→F3→F4 段階別残存率（前段階基準・回数基準・純粋新規）<span class="ltv-brand">Lypo-C一体集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：5-3章と同一データ（5-3章から派生）。<strong>5-3章は全て初回購入者数（M0）を分母とした累積到達率だが、本章は分母を1段階前の到達者数に置き換えた段階別残存率。</strong>F2＝f2/M0（5-3章と同じ）、F3＝f3/f2、F4＝f4/f3、以降F5〜F8も直前段階を分母とする。「—」は5-3章と同じ右側打ち切り。</div>
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortLcFreqStep"></table></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 累積到達率と段階別残存率の見え方の違い</div>
+    <ul>
+      <li><strong>離脱はF2（初回→2回目）に集中し、2回目に到達した後の定着は強い。</strong>2025-10〜2026-03でF2段階（＝F2累計）は60.6%〜63.7%にとどまる一方、F3段階（2回目→3回目）は74.4%〜79.8%、F4段階（3回目→4回目）は74.8%〜82.8%。</li>
+      <li><strong>ただし直近の成熟コホートではF3段階・F4段階が低下している。</strong>F3段階は2024-05〜2025-06の77.2%〜84.2%に対し、2025-12が76.9%・2026-02が75.0%・2026-03が74.4%と、2024-05〜2025-06の最小（77.2%）を下回った。F4段階は2024-05〜2025-06の82.7%〜86.6%に対し、2025-11以降は74.8%〜79.7%。3回目以降の到来が遅い2〜3ヶ月周期の顧客は未到来分として含まれるため、次月以降の更新で再確認する。</li>
+      <li><strong>2026-04以降のF3段階（66.6%／63.6%／58.7%）は観測期間が短い分の未成熟を含む</strong>ため、成熟コホートとの優劣は判断しない。</li>
+    </ul>
+  </div>
+  <div class="ssub" style="margin-top:16px">F2／F3／F4段階別残存率の推移（コホート月別）。破線＝直近3コホート（未成熟）</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortLcFreqStepTrend"></canvas></div>
+
+  <!-- ===== 5-3-3. 初回定期注文月コホート：F2→F3→F4 段階別残存率 ===== -->
+  <div class="stitle" style="margin-top:24px">5-3-3. 初回定期注文月コホート：F2→F3→F4 段階別残存率（前段階基準・回数基準）<span class="ltv-brand">Lypo-C一体集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders）× SKUブランドマスター（spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master・brand IN ('VC','C+D','C+D+K')・有償明細price&gt;0）。定期／都度はSKUブランドマスターのproduct_type＝'定期'で判定。<strong>コホートの基準を「3アイテムの定期SKU（複数箱・Mixを含む）を含む最初の注文の月」（初回定期注文月）に置き換え、そこを起点（F1）として通算2回目・3回目…の注文発生を5-3-2章と同じ前段階基準で見る。</strong>F2以降は都度買い・定期便いずれも再購入としてカウント。<strong>母集団は純粋新規に限定せず（それ以前に都度買いで初購入していた顧客・OGS転換者を含む）、5章のM0とは一致しない。</strong>「—」は前段階が0人になった時点からの右側打ち切り。</div>
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortLcTeikiFreqStep"></table></div>
+  <div class="monthly-insight">
+    <div class="mi-title">💡 「初回購入月」基準と「初回定期注文」基準の残存率の違い</div>
+    <ul>
+      <li><strong>初回定期注文月コホートのF2段階残存率は、2025-10〜2026-03で86.7%〜89.3%。</strong>5-3-2章（初回購入月基準）のF2段階（60.6%〜63.7%）より高く、初回から定期便を選んだ顧客は2回目への到達ハードルが低い。2024-05〜2025-06は88.0%〜92.8%で、2025-10・2025-12・2026-01・2026-02・2026-03は過去最小（88.0%）を下回る。</li>
+      <li><strong>F3段階・F4段階は2026-01以降のコホートで低下が目立つ。</strong>F4段階は2024-05〜2025-06の85.9%〜91.7%に対し、2026-01 78.4%・02 78.2%・03 77.6%。2026-03は経過6ヶ月のためF4の未成熟分を含む可能性があるが、2026-01（経過8ヶ月）でも同水準にある。</li>
+      <li><strong>2025-08（初回定期顧客2,637人）・2025-09（1,720人）は他月（2025-06 1,280人・2025-10 911人）より突出して多く、F2段階も78.8%／82.7%と前後の月（2025-07 86.0%・2025-10 86.7%）より低い。</strong>OGS転換者の初回定期注文がこの2ヶ月に集中した可能性があるが、個別突合は未実施のため仮説にとどまる（要検証）。本章は純粋新規に限定しないため、5章のM0とは母集団が異なる。</li>
+    </ul>
+  </div>
+  <div class="ssub" style="margin-top:16px">初回定期注文月コホート：F2／F3／F4段階別残存率の推移。破線＝直近3コホート（未成熟）</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="chartCohortLcTeikiFreqStepTrend"></canvas></div>
+
+  <!-- ===== 5-4. コホート別 期間別LTV推移マップ ===== -->
+  <div class="stitle" style="margin-top:24px">5-4. コホート別 期間別LTV推移マップ（Lypo-C一体版・純粋新規）<span class="ltv-brand">Lypo-C一体集計</span><span class="ds-shopify">Shopify</span><span class="ds-order">受注</span></div>
+  <div class="ssub">データソース：Shopify受注（spic-core.public.shopify_orders）× SKUブランドマスター（spic-com-2025-apr-00.sandbox_nishimori.shopify_sku_brand_master・brand IN ('VC','C+D','C+D+K')・有償明細price&gt;0）。<strong>LTVはLypo-C 3アイテム合算の購入額のみ</strong>（他ブランドへのクロスセル分を含まない・税抜÷1.08）。集計方法：純粋新規の起点日（生涯初の有償注文日）から<strong>31／62／93日（表示30／60／90日）</strong>および120／180／365日以内の3アイテム購入額を、コホート別に1人当たり平均（AVG）で表示。各行の下に同期間の累計受注金額（SUM）を表示。<strong>確定判定：コホート月末日＋期間日数 ≦ 2026-09-30のセルのみ確定表示</strong>。未確定セルは値を代用せず「未確定」（サブ行は「—」）とし、グレー表示する。アイテム新規／純粋新規の切替は行わず純粋新規のみの単一表示。</div>
+  <div class="cohort-wrap"><table class="cohort-table" id="cohortLcLtvMap" style="min-width:800px"></table></div>
+  <div class="monthly-insight" style="margin-top:12px">
+    <div class="mi-title">💡 Lypo-C一体版LTVコホート 考察</div>
+    <ul>
+      <li><strong>31日LTV（表示30日）は2025-10〜2026-07の確定10コホートで¥14,227（2026-05）〜¥16,430（2025-11）。</strong>2024-05〜2025-06は¥12,555（2025-06）〜¥15,076（2025-02）で、2025-10以降はやや高めの水準。2025-07（OGS特例適用行）の¥11,674は表示コホートの最低値。</li>
+      <li><strong>93日LTV（表示90日）は2025-10〜2026-05の確定8コホートで¥20,947（2026-05）〜¥25,197（2025-11）。</strong>2026-04（¥21,271）・2026-05（¥20,947）が2025-10以降で低い。2026-05は5章のM+1も表示コホートで最低（29.8%）で、同一コホートで継続率とLTVがともに低い（因果は未検証）。180日LTVは2025-10〜2026-03で¥30,500（2026-02）〜¥33,552（2025-11）。</li>
+      <li><strong>365日LTVは2025-09コホートまで確定。</strong>確定コホートの範囲は¥32,996（2025-07）〜¥49,869（2025-02）。2025-10以降は観測期間が未到達で「未確定」。2026-08の31日LTVは2026-10-01以降、2026-09は2026-10-31以降に確定する。</li>
+      <li><strong>本表のLTVはLypo-C（VC＋C+D＋C+D+K）3アイテム合算の購入額のみ</strong>（他ブランドへのクロスセル分を含まない）。純粋新規のみの集計のため、アイテム新規（既存扱い）の購入は母集団に含まれない。未確定セルは値を代用せず「未確定」と表示し、累計受注金額のサブ行も「—」としている。</li>
+    </ul>
+  </div>
+
+  </div>
+
+</div>
+
+<script>
+// ===== タブ切替（基本レポート／コホートチャート） =====
+function switchReportTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  var el = document.getElementById(id);
+  if (el) el.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ===== 3. 月次NE出荷売上×定期ACTIVE（顧客単位・和集合） =====
+const t1Months = ["2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"];
+const t1RevM = [203.0, 211.2, 210.64, 235.86, 235.59, 228.5, 228.34, 204.15, 208.44, 215.77, 175.58, 199.14, 185.79, 199.04, 186.05, 195.45, 191.33, 180.59];
+const t1RevYen = [203002316, 211197564, 210639394, 235858306, 235587956, 228504564, 228341944, 204154120, 208442332, 215771466, 175581017, 199144705, 185794969, 199037697, 186050306, 195451376, 191327687, 180592468];
+const t1RevVc = [134218242, 142077108, 141624222, 160982627, 161688451, 155337571, 151406392, 128765056, 119540218, 131611557, 104667386, 117921194, 109908469, 118610041, 108634412, 114779590, 112476488, 102204241];
+const t1RevCd = [68784074, 69120456, 69015172, 74875679, 73899505, 73166993, 76935552, 75389064, 88902114, 84159909, 70913631, 81223511, 75886500, 80427656, 77415894, 80671786, 78851199, 75363478];
+const t1RevCdk = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3024749];
+const t1Active = [null, 20389, 20904, 21666, 23275, 23557, 23142, 22644, 22134, 21633, 21175, 20658, 20432, 20372, 20155, 20111, 20130, 19972];   // 2025-04は定期DB収集開始前のためnull（顧客単位・和集合）
+const t1ActiveContract = [null, 20715, 21239, 22023, 23667, 23967, 23585, 23055, 22607, 22076, 21604, 21068, 20856, 20803, 20579, 20534, 20547, 20412];   // 参考：契約単位（同一顧客・Mix契約を重複計上）
+
+// ---- チャート直下の月次表（x軸カテゴリと列を揃える共通ヘルパー） ----
+const CT_LABEL_W = 92;    // 左軸領域＝表の見出し列の幅(px)
+const CT_RIGHT_W = 64;    // 右軸領域（3章の定期ACTIVE軸）の幅(px)
+function ctFixAxisWidth(w){ return function(scale){ scale.width = w; }; }
+function ctYen(n){ return n>0 ? Math.round(n/1000).toLocaleString('ja-JP') : '–'; }
+function ctSignPct(v){ return v===null ? {t:'–'} : (v<0 ? {t:'▲'+Math.abs(v).toFixed(1)+'%', cls:'dn'} : {t:'+'+v.toFixed(1)+'%', cls:'up'}); }
+function ctSignInt(v){ return v===null ? {t:'–'} : (v<0 ? {t:'▲'+Math.abs(v).toLocaleString('ja-JP'), cls:'dn'} : {t:'+'+v.toLocaleString('ja-JP'), cls:'up'}); }
+function renderCtTable(id, months, rows, rightW){
+  const tbl = document.getElementById(id); if(!tbl) return;
+  let h = '<colgroup><col style="width:'+CT_LABEL_W+'px">'+months.map(function(){return '<col>';}).join('')+(rightW?'<col style="width:'+rightW+'px">':'')+'</colgroup><tbody>';
+  rows.forEach(function(r){
+    h += '<tr'+(r.tr?' class="'+r.tr+'"':'')+'><td>'+(r.dot?'<span class="dot" style="background:'+r.dot+'"></span>':'')+r.label+'</td>';
+    r.cells.forEach(function(c,i){
+      const cls = ((c.cls||'')+(i===months.length-1?' last':'')).trim();
+      h += '<td'+(cls?' class="'+cls+'"':'')+'>'+c.t+'</td>';
+    });
+    h += (rightW?'<td></td>':'')+'</tr>';
+  });
+  tbl.innerHTML = h+'</tbody>';
+}
+new Chart(document.getElementById('chartMonthlyRevActive'), {
+  data: {
+    labels: t1Months,
+    datasets: [
+      { type:'bar', label:'NE出荷売上(¥M・3タグ合計)', data: t1RevM, backgroundColor:'rgba(255,122,48,0.55)', borderColor:'#FF7A30', borderWidth:1, yAxisID:'y' },
+      { type:'line', label:'定期ACTIVE(人・顧客単位)', data: t1Active, borderColor:'#1c1917', backgroundColor:'transparent', borderWidth:2, pointRadius:4, yAxisID:'y1', spanGaps:true }
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=> ctx.dataset.yAxisID==='y' ? `${ctx.dataset.label}: ¥${ctx.raw}M` : `${ctx.dataset.label}: ${ctx.raw===null?'—':ctx.raw.toLocaleString()}人` }} },
+    scales:{
+      x:{ ticks:{ autoSkip:false, maxRotation:0, font:{size:10} } },
+      y:{ position:'left', min:0, title:{display:true,text:'¥M'}, ticks:{callback:v=>`¥${v}M`}, afterFit: ctFixAxisWidth(CT_LABEL_W) },
+      y1:{ position:'right', title:{display:true,text:'人'}, grid:{drawOnChartArea:false}, ticks:{callback:v=>`${v}人`}, afterFit: ctFixAxisWidth(CT_RIGHT_W) }
+    }
+  }
+});
+// 3章：チャート直下の表（NE出荷売上・定期ACTIVE）
+(function(){
+  const rev = t1RevYen.map(v=> ({t:Math.round(v/1000).toLocaleString('ja-JP')}));
+  const revMom = t1RevYen.map((v,i)=> i>0 ? ctSignPct((v/t1RevYen[i-1]-1)*100) : {t:'–'});
+  const act = t1Active.map(v=> v===null ? {t:'–'} : {t:v.toLocaleString('ja-JP')});
+  const actDiff = t1Active.map((v,i)=> (i>1 && v!==null && t1Active[i-1]!==null) ? ctSignInt(v-t1Active[i-1]) : {t:'–'});
+  const actC = t1ActiveContract.map(v=> v===null ? {t:'–'} : {t:v.toLocaleString('ja-JP')});
+  renderCtTable('tblMonthlyRevActive', t1Months, [
+    { label:'NE出荷売上<br>（千円・税抜）', dot:'#FF7A30', tr:'tot', cells:rev },
+    { label:'前月比', tr:'sub', cells:revMom },
+    { label:'うちVC', cells:t1RevVc.map(v=>({t:ctYen(v)})) },
+    { label:'うちC+D', cells:t1RevCd.map(v=>({t:ctYen(v)})) },
+    { label:'うちC+D+K', cells:t1RevCdk.map(v=>({t:ctYen(v)})) },
+    { label:'定期ACTIVE<br>（人・顧客単位）', dot:'#1c1917', cells:act },
+    { label:'前月差（人）', tr:'sub', cells:actDiff },
+    { label:'参考：契約単位<br>（件）', tr:'sub', cells:actC }
+  ], CT_RIGHT_W);
+})();
+
+// ===== 3-1. 月次売上の内訳（純粋新規／既存） =====
+// 出所：ne_order_items(shop_id=17,ship_date基準) × shopify_orders（注文単位判定・和集合＋OGS2025特例・BQ実行日2026-10-08）。3章の月次売上と18ヶ月全月で一致（assert済み）。既存＝既存注文＋アイテム新規＋未突合。
+const t1BrkPure  = [17523265, 18351340, 18645188, 22824729, 18886335, 14701876, 12472002, 10342172, 9380767, 10955951, 10690666, 10214012, 9693944, 13555543, 12187338, 13882833, 12156796, 9434041];   // 純粋新規（円）
+const t1BrkExist = [185479051, 192846224, 191994206, 213033577, 216701621, 213802688, 215869942, 193811948, 199061565, 204815515, 164890351, 188930693, 176101025, 185482154, 173862968, 181568543, 179170891, 171158427];   // 既存（円・合算）
+const t1BrkExistOnly = [185479051, 192832336, 191994206, 211801845, 203190316, 205879494, 211142576, 191740217, 197775437, 204515982, 164430234, 188588718, 175470007, 184583149, 173394019, 181112203, 177570426, 169586899];   // 参考：既存注文のみ
+const t1BrkItem  = [0, 13888, 0, 1231732, 13511305, 7923194, 2500922, 587435, 375310, 299533, 460117, 341975, 631018, 899005, 468949, 456340, 1553256, 1549312];   // 参考：アイテム新規（既存の内数）
+const t1BrkUnm   = [0, 0, 0, 0, 0, 0, 2226444, 1484296, 910818, 0, 0, 0, 0, 0, 0, 0, 47209, 22216];   // 参考：未突合（既存の内数）
+new Chart(document.getElementById('chartMonthlyRevBreakdown'), {
+  type:'bar',
+  data:{
+    labels: t1Months,
+    datasets:[
+      { label:'既存売上（既存注文＋アイテム新規＋未突合）', data: t1BrkExist.map(v=>v/1e6), backgroundColor:'#78716c', stack:'rev' },
+      { label:'新規：純粋新規（生涯初の有償購入）', data: t1BrkPure.map(v=>v/1e6), backgroundColor:'#FF7A30', stack:'rev' }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{ position:'bottom', reverse:true },
+      tooltip:{ callbacks:{
+        label:ctx=>`${ctx.dataset.label}: ¥${Math.round(ctx.raw*1e6).toLocaleString('ja-JP')}`,
+        footer:items=>`合計: ¥${Math.round(items.reduce((s,x)=>s+x.raw,0)*1e6).toLocaleString('ja-JP')}`
+      } }
+    },
+    scales:{
+      x:{ stacked:true, ticks:{ autoSkip:false, maxRotation:0, font:{size:10} } },
+      y:{ stacked:true, min:0, title:{display:true,text:'¥M'}, ticks:{callback:v=>`¥${v}M`}, afterFit: ctFixAxisWidth(CT_LABEL_W) }
+    }
+  }
+});
+(function(){
+  const tot = t1Months.map((m,i)=> t1BrkPure[i]+t1BrkExist[i]);
+  renderCtTable('tblMonthlyRevBreakdown', t1Months, [
+    { label:'純粋新規', dot:'#FF7A30', cells:t1BrkPure.map(v=>({t:ctYen(v)})) },
+    { label:'既存売上（合算）', dot:'#78716c', cells:t1BrkExist.map(v=>({t:ctYen(v)})) },
+    { label:'合計（千円）', tr:'tot', cells:tot.map(v=>({t:ctYen(v)})) },
+    { label:'新規比率', tr:'sub', cells:t1BrkPure.map((v,i)=>({t:(v/tot[i]*100).toFixed(1)+'%'})) },
+    { label:'参考：既存注文のみ', tr:'sub', cells:t1BrkExistOnly.map(v=>({t:ctYen(v)})) },
+    { label:'参考：アイテム新規', tr:'sub', cells:t1BrkItem.map(v=>({t:ctYen(v)})) },
+    { label:'参考：未突合', tr:'sub', cells:t1BrkUnm.map(v=>({t:ctYen(v)})) }
+  ], 0);
+})();
+
+// ===== 3-2. 週次売上 =====
+const t1WkLabels = ["03/02", "03/09", "03/16", "03/23", "03/30", "04/06", "04/13", "04/20", "04/27", "05/04", "05/11", "05/18", "05/25", "06/01", "06/08", "06/15", "06/22", "06/29", "07/06", "07/13", "07/20", "07/27", "08/03", "08/10", "08/17", "08/24", "08/31", "09/07", "09/14", "09/21", "09/28"];
+const t1WkRev = [53.345, 40.682, 39.935, 45.975, 39.717, 42.92, 43.802, 42.883, 47.883, 44.833, 44.106, 44.353, 53.544, 40.572, 40.636, 42.038, 42.239, 46.159, 43.696, 44.039, 39.53, 46.789, 44.838, 35.925, 48.298, 48.558, 36.659, 41.806, 42.177, 41.751, 27.711];
+const t1WkDays = [6, 6, 5, 6, 5, 6, 6, 6, 5, 3, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 2, 6, 6, 6, 6, 6, 3, 3];
+const t1WkColors = t1WkLabels.map((w,i)=> i===t1WkLabels.length-1 ? 'rgba(156,163,175,0.6)' : (t1WkDays[i]<=3 ? 'rgba(255,122,48,0.35)' : 'rgba(255,122,48,0.75)'));
+const t1WkBorders = t1WkLabels.map((w,i)=> i===t1WkLabels.length-1 ? '#9ca3af' : '#FF7A30');
+new Chart(document.getElementById('chartWeeklyRev'), {
+  type:'bar',
+  data:{ labels: t1WkLabels, datasets:[{ label:'週次NE出荷売上(¥M)', data: t1WkRev, backgroundColor:t1WkColors, borderColor:t1WkBorders, borderWidth:1 }] },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=> (ctx.dataIndex===t1WkLabels.length-1 ? `¥${ctx.raw}M（9/28〜9/30の3日分のみ・部分週）` : `¥${ctx.raw}M（出荷${t1WkDays[ctx.dataIndex]}日）`)}}}, scales:{ y:{ min:0, ticks:{callback:v=>`¥${v}M`} }, x:{ticks:{font:{size:10},maxRotation:45}} } }
+});
+
+// ===== 4. 初回定期便選択率 月次トレンド（純粋新規・2025-04〜2026-09の18コホート） =====
+const t1CohortMonths = ["2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"];
+const t1CohortPure = [1687, 1910, 2343, 2611, 1856, 1345, 1142, 874, 835, 953, 991, 895, 925, 1311, 1044, 1314, 1167, 850];   // 純粋新規M0（人）
+const t1SelPure = [34.3, 33.1, 27.6, 22.7, 30.9, 34.3, 37.0, 43.5, 37.0, 42.4, 42.0, 38.4, 28.5, 24.9, 30.2, 26.5, 24.3, 26.5];   // 純粋新規の初回定期選択率（%）
+new Chart(document.getElementById('chartSubSelectTrend'), {
+  data:{ labels: t1CohortMonths, datasets:[
+    { type:'bar', label:'純粋新規（M0・人）', data: t1CohortPure, backgroundColor:'rgba(255,122,48,0.45)', borderColor:'#FF7A30', borderWidth:1, yAxisID:'y' },
+    { type:'line', label:'初回定期選択率（純粋新規・%）', data: t1SelPure, borderColor:'#1c1917', backgroundColor:'transparent', tension:0.3, pointRadius:4, borderWidth:3, yAxisID:'y1' }
+  ] },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=> ctx.raw===null ? `${ctx.dataset.label}: —` : (ctx.dataset.yAxisID==='y1' ? `${ctx.dataset.label}: ${ctx.raw}%` : `${ctx.dataset.label}: ${ctx.raw.toLocaleString()}人`)}}}, scales:{ y:{ position:'left', min:0, title:{display:true,text:'人'}, ticks:{callback:v=>`${v}人`} }, y1:{ position:'right', min:0, max:60, title:{display:true,text:'%'}, grid:{drawOnChartArea:false}, ticks:{callback:v=>`${v}%`} }, x:{ticks:{font:{size:10},maxRotation:60}} } }
+});
+
+// ===== 4-2. 週次新規獲得数（純粋新規／アイテム新規〔参考〕＋トライアル購入者〔参考〕） =====
+const t1NewWkLabels = ["12/29", "01/05", "01/12", "01/19", "01/26", "02/02", "02/09", "02/16", "02/23", "03/02", "03/09", "03/16", "03/23", "03/30", "04/06", "04/13", "04/20", "04/27", "05/04", "05/11", "05/18", "05/25", "06/01", "06/08", "06/15", "06/22", "06/29", "07/06", "07/13", "07/20", "07/27", "08/03", "08/10", "08/17", "08/24", "08/31", "09/07", "09/14", "09/21", "09/28"];
+const t1NewWkPure = [183, 203, 207, 227, 256, 239, 269, 208, 261, 166, 201, 199, 228, 184, 191, 229, 222, 242, 299, 277, 322, 328, 198, 194, 228, 331, 430, 246, 240, 314, 264, 284, 269, 269, 229, 206, 198, 192, 200, 83];
+const t1NewWkItem = [5, 6, 11, 5, 6, 9, 11, 12, 9, 6, 7, 7, 13, 10, 9, 16, 14, 28, 14, 9, 17, 35, 9, 9, 9, 7, 9, 8, 14, 14, 21, 43, 29, 28, 41, 41, 36, 30, 23, 8];   // アイテム新規（参考・既存扱い・OGS/CYS転換者を含む）
+const t1NewWkTb = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 101, 149, 141, 112, 144, 151, 129, 123, 82, 0, 0];   // トライアル購入者（起点週・参考。M0に含まない）
+new Chart(document.getElementById('chartWeeklyNew'), {
+  type:'bar',
+  data:{
+    labels: t1NewWkLabels,
+    datasets:[
+      { label:'純粋新規（生涯初のLypo-C購入＝M0）', data: t1NewWkPure, backgroundColor:'#FF7A30', stack:'s', order:1 },
+      { label:'参考：アイテム新規（既存扱い・OGS/CYS転換者を含む）', data: t1NewWkItem, backgroundColor:'#FFC9A3', stack:'s', order:1 },
+      { type:'line', label:'トライアル購入者（参考・M0に含まない）', data: t1NewWkTb, borderColor:'#7c3aed', backgroundColor:'#7c3aed', borderWidth:2, pointRadius:2, tension:0.2, order:0 }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{sort:(a,b)=>a.datasetIndex-b.datasetIndex}}}, scales:{ x:{stacked:true, ticks:{font:{size:10},maxRotation:60}}, y:{stacked:true, ticks:{callback:v=>`${v}人`}} } }
+});
+
+// ===== 7-2. グロスフロー（顧客単位×和集合） =====
+const t1FlowMonths = ["2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"];
+const t1FlowNew = [1636, 1833, 2764, 1927, 1192, 963, 853, 1001, 925, 944, 981, 1122, 909, 1045, 1095, 945];   // 新規ACTIVE（初出＋PAUSE復帰＋解約復帰＋他ブランド由来）
+const t1FlowPc = [1121, 1071, 1155, 1645, 1607, 1461, 1362, 1500, 1270, 1348, 1139, 1100, 1062, 1023, 1047, 1070];   // PAUSE＋解約（他ブランド系・消滅は表のみ）
+new Chart(document.getElementById('chartGrossFlow'), {
+  type:'line',
+  data:{
+    labels: t1FlowMonths,
+    datasets:[
+      { label:'新規ACTIVE発生', data:t1FlowNew, borderColor:'#15803d', backgroundColor:'rgba(21,128,61,0.08)', borderWidth:2.5, pointRadius:4, fill:false, tension:0.2 },
+      { label:'PAUSE＋解約発生', data:t1FlowPc, borderColor:'#dc2626', backgroundColor:'rgba(220,38,38,0.08)', borderWidth:2.5, pointRadius:4, fill:false, tension:0.2 }
+    ]
+  },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw.toLocaleString()}人`}}}, scales:{ y:{ min:0, ticks:{callback:v=>`${v}人`} }, x:{ticks:{font:{size:10},maxRotation:60}} } }
+});
+
+// @@TAB2_JS_START@@
+// ===== 5. コホートテーブル（M+1〜M+12・純粋新規） =====
+// データソース：Shopify受注（shopify_orders）× SKUブランドマスター（sandbox_nishimori.shopify_sku_brand_master・brand IN ('VC','C+D','C+D+K')・有償明細）
+// 基準日2026-09-30。コホート＝純粋新規のみ。OGS特例適用。月ラベルは必ず文字列。null＝観測未到達（0ではない）。
+const LC_DATA = {"R5": [{"m": "2024-05", "m0": 2406, "m1": 847, "m2": 806, "m3": 694, "m4": 605, "m5": 487, "m6": 510, "m7": 395, "m8": 401, "m9": 373, "m10": 381, "m11": 316, "m12": 362}, {"m": "2024-06", "m0": 2345, "m1": 815, "m2": 781, "m3": 639, "m4": 603, "m5": 483, "m6": 538, "m7": 425, "m8": 433, "m9": 425, "m10": 405, "m11": 359, "m12": 372}, {"m": "2024-07", "m0": 2668, "m1": 937, "m2": 847, "m3": 738, "m4": 669, "m5": 551, "m6": 617, "m7": 424, "m8": 478, "m9": 418, "m10": 427, "m11": 373, "m12": 462}, {"m": "2024-08", "m0": 2661, "m1": 942, "m2": 932, "m3": 772, "m4": 693, "m5": 563, "m6": 646, "m7": 518, "m8": 499, "m9": 498, "m10": 475, "m11": 426, "m12": 514}, {"m": "2024-09", "m0": 2062, "m1": 659, "m2": 660, "m3": 569, "m4": 531, "m5": 438, "m6": 493, "m7": 366, "m8": 376, "m9": 380, "m10": 350, "m11": 330, "m12": 348}, {"m": "2024-10", "m0": 1431, "m1": 509, "m2": 497, "m3": 466, "m4": 399, "m5": 338, "m6": 350, "m7": 282, "m8": 295, "m9": 287, "m10": 279, "m11": 254, "m12": 270}, {"m": "2024-11", "m0": 1608, "m1": 595, "m2": 581, "m3": 517, "m4": 487, "m5": 385, "m6": 422, "m7": 339, "m8": 379, "m9": 348, "m10": 323, "m11": 286, "m12": 303}, {"m": "2024-12", "m0": 1571, "m1": 581, "m2": 570, "m3": 528, "m4": 449, "m5": 362, "m6": 416, "m7": 344, "m8": 347, "m9": 337, "m10": 309, "m11": 262, "m12": 311}, {"m": "2025-01", "m0": 2266, "m1": 858, "m2": 867, "m3": 699, "m4": 649, "m5": 544, "m6": 607, "m7": 503, "m8": 491, "m9": 453, "m10": 460, "m11": 394, "m12": 423}, {"m": "2025-02", "m0": 1835, "m1": 740, "m2": 709, "m3": 648, "m4": 561, "m5": 478, "m6": 521, "m7": 424, "m8": 400, "m9": 394, "m10": 370, "m11": 328, "m12": 343}, {"m": "2025-03", "m0": 2210, "m1": 800, "m2": 727, "m3": 693, "m4": 597, "m5": 523, "m6": 560, "m7": 467, "m8": 456, "m9": 431, "m10": 400, "m11": 353, "m12": 360}, {"m": "2025-04", "m0": 1687, "m1": 664, "m2": 641, "m3": 586, "m4": 532, "m5": 440, "m6": 445, "m7": 382, "m8": 365, "m9": 328, "m10": 318, "m11": 288, "m12": 319}, {"m": "2025-05", "m0": 1910, "m1": 801, "m2": 722, "m3": 652, "m4": 591, "m5": 482, "m6": 494, "m7": 435, "m8": 388, "m9": 366, "m10": 347, "m11": 344, "m12": 338}, {"m": "2025-06", "m0": 2343, "m1": 943, "m2": 832, "m3": 723, "m4": 608, "m5": 538, "m6": 551, "m7": 412, "m8": 422, "m9": 401, "m10": 398, "m11": 344, "m12": 354}, {"m": "2025-07", "m0": 2611, "m1": 830, "m2": 738, "m3": 630, "m4": 552, "m5": 484, "m6": 462, "m7": 374, "m8": 378, "m9": 367, "m10": 365, "m11": 295, "m12": 344}, {"m": "2025-08", "m0": 1856, "m1": 639, "m2": 611, "m3": 533, "m4": 509, "m5": 412, "m6": 410, "m7": 331, "m8": 323, "m9": 305, "m10": 265, "m11": 274, "m12": 277}, {"m": "2025-09", "m0": 1345, "m1": 509, "m2": 464, "m3": 414, "m4": 365, "m5": 303, "m6": 322, "m7": 246, "m8": 261, "m9": 248, "m10": 239, "m11": 215, "m12": 232}, {"m": "2025-10", "m0": 1142, "m1": 468, "m2": 444, "m3": 377, "m4": 324, "m5": 288, "m6": 297, "m7": 258, "m8": 243, "m9": 248, "m10": 225, "m11": 222, "m12": null}, {"m": "2025-11", "m0": 874, "m1": 361, "m2": 320, "m3": 296, "m4": 254, "m5": 214, "m6": 230, "m7": 184, "m8": 189, "m9": 189, "m10": 175, "m11": null, "m12": null}, {"m": "2025-12", "m0": 835, "m1": 303, "m2": 282, "m3": 261, "m4": 228, "m5": 205, "m6": 196, "m7": 181, "m8": 160, "m9": 151, "m10": null, "m11": null, "m12": null}, {"m": "2026-01", "m0": 953, "m1": 369, "m2": 353, "m3": 331, "m4": 291, "m5": 236, "m6": 268, "m7": 193, "m8": 220, "m9": null, "m10": null, "m11": null, "m12": null}, {"m": "2026-02", "m0": 991, "m1": 407, "m2": 369, "m3": 346, "m4": 294, "m5": 255, "m6": 272, "m7": 210, "m8": null, "m9": null, "m10": null, "m11": null, "m12": null}, {"m": "2026-03", "m0": 895, "m1": 356, "m2": 337, "m3": 283, "m4": 272, "m5": 234, "m6": 238, "m7": null, "m8": null, "m9": null, "m10": null, "m11": null, "m12": null}, {"m": "2026-04", "m0": 925, "m1": 324, "m2": 267, "m3": 271, "m4": 238, "m5": 211, "m6": null, "m7": null, "m8": null, "m9": null, "m10": null, "m11": null, "m12": null}, {"m": "2026-05", "m0": 1311, "m1": 391, "m2": 378, "m3": 351, "m4": 287, "m5": null, "m6": null, "m7": null, "m8": null, "m9": null, "m10": null, "m11": null, "m12": null}, {"m": "2026-06", "m0": 1044, "m1": 383, "m2": 362, "m3": 331, "m4": null, "m5": null, "m6": null, "m7": null, "m8": null, "m9": null, "m10": null, "m11": null, "m12": null}, {"m": "2026-07", "m0": 1314, "m1": 427, "m2": 395, "m3": null, "m4": null, "m5": null, "m6": null, "m7": null, "m8": null, "m9": null, "m10": null, "m11": null, "m12": null}, {"m": "2026-08", "m0": 1167, "m1": 386, "m2": null, "m3": null, "m4": null, "m5": null, "m6": null, "m7": null, "m8": null, "m9": null, "m10": null, "m11": null, "m12": null}, {"m": "2026-09", "m0": 850, "m1": null, "m2": null, "m3": null, "m4": null, "m5": null, "m6": null, "m7": null, "m8": null, "m9": null, "m10": null, "m11": null, "m12": null}], "R53": [{"m": "2024-05", "m0": 2406, "f2": 1440, "f3": 1121, "f4": 929, "f5": 785, "f6": 682, "f7": 599, "f8": 528}, {"m": "2024-06", "m0": 2345, "f2": 1404, "f3": 1114, "f4": 935, "f5": 807, "f6": 722, "f7": 640, "f8": 578}, {"m": "2024-07", "m0": 2668, "f2": 1640, "f3": 1266, "f4": 1063, "f5": 910, "f6": 785, "f7": 689, "f8": 601}, {"m": "2024-08", "m0": 2661, "f2": 1730, "f3": 1393, "f4": 1152, "f5": 996, "f6": 854, "f7": 752, "f8": 689}, {"m": "2024-09", "m0": 2062, "f2": 1293, "f3": 1063, "f4": 916, "f5": 793, "f6": 668, "f7": 594, "f8": 516}, {"m": "2024-10", "m0": 1431, "f2": 900, "f3": 730, "f4": 617, "f5": 533, "f6": 457, "f7": 414, "f8": 370}, {"m": "2024-11", "m0": 1608, "f2": 1012, "f3": 805, "f4": 693, "f5": 617, "f6": 541, "f7": 484, "f8": 438}, {"m": "2024-12", "m0": 1571, "f2": 981, "f3": 796, "f4": 689, "f5": 607, "f6": 534, "f7": 466, "f8": 405}, {"m": "2025-01", "m0": 2266, "f2": 1402, "f3": 1135, "f4": 947, "f5": 842, "f6": 735, "f7": 659, "f8": 572}, {"m": "2025-02", "m0": 1835, "f2": 1192, "f3": 972, "f4": 836, "f5": 720, "f6": 623, "f7": 553, "f8": 474}, {"m": "2025-03", "m0": 2210, "f2": 1266, "f3": 1026, "f4": 853, "f5": 741, "f6": 653, "f7": 585, "f8": 502}, {"m": "2025-04", "m0": 1687, "f2": 1046, "f3": 862, "f4": 740, "f5": 651, "f6": 560, "f7": 480, "f8": 414}, {"m": "2025-05", "m0": 1910, "f2": 1200, "f3": 1011, "f4": 856, "f5": 726, "f6": 607, "f7": 508, "f8": 444}, {"m": "2025-06", "m0": 2343, "f2": 1375, "f3": 1100, "f4": 917, "f5": 773, "f6": 664, "f7": 541, "f8": 469}, {"m": "2025-07", "m0": 2611, "f2": 1298, "f3": 998, "f4": 813, "f5": 685, "f6": 569, "f7": 477, "f8": 408}, {"m": "2025-08", "m0": 1856, "f2": 1022, "f3": 810, "f4": 674, "f5": 564, "f6": 461, "f7": 399, "f8": 326}, {"m": "2025-09", "m0": 1345, "f2": 780, "f3": 624, "f4": 526, "f5": 447, "f6": 361, "f7": 305, "f8": 247}, {"m": "2025-10", "m0": 1142, "f2": 722, "f3": 576, "f4": 477, "f5": 390, "f6": 321, "f7": 264, "f8": 218}, {"m": "2025-11", "m0": 874, "f2": 557, "f3": 434, "f4": 341, "f5": 276, "f6": 229, "f7": 191, "f8": 157}, {"m": "2025-12", "m0": 835, "f2": 506, "f3": 389, "f4": 310, "f5": 235, "f6": 183, "f7": 148, "f8": 120}, {"m": "2026-01", "m0": 953, "f2": 601, "f3": 466, "f4": 356, "f5": 290, "f6": 217, "f7": 181, "f8": 148}, {"m": "2026-02", "m0": 991, "f2": 631, "f3": 473, "f4": 359, "f5": 278, "f6": 211, "f7": 168, "f8": 127}, {"m": "2026-03", "m0": 895, "f2": 550, "f3": 409, "f4": 306, "f5": 224, "f6": 188, "f7": 125, "f8": 28}, {"m": "2026-04", "m0": 925, "f2": 509, "f3": 339, "f4": 240, "f5": 164, "f6": 121, "f7": 29, "f8": 11}, {"m": "2026-05", "m0": 1311, "f2": 668, "f3": 425, "f4": 247, "f5": 165, "f6": 38, "f7": 12, "f8": 7}, {"m": "2026-06", "m0": 1044, "f2": 574, "f3": 337, "f4": 226, "f5": 27, "f6": 5, "f7": 2, "f8": 1}, {"m": "2026-07", "m0": 1314, "f2": 594, "f3": 314, "f4": 61, "f5": 12, "f6": 2, "f7": 1, "f8": null}, {"m": "2026-08", "m0": 1167, "f2": 450, "f3": 76, "f4": 4, "f5": null, "f6": null, "f7": null, "f8": null}, {"m": "2026-09", "m0": 850, "f2": 70, "f3": 2, "f4": null, "f5": null, "f6": null, "f7": null, "f8": null}], "R533": [{"m": "2024-05", "m0": 1312, "f2": 1184, "f3": 1045, "f4": 921, "f5": 822, "f6": 734, "f7": 663, "f8": 595}, {"m": "2024-06", "m0": 1149, "f2": 1039, "f3": 912, "f4": 810, "f5": 716, "f6": 642, "f7": 580, "f8": 533}, {"m": "2024-07", "m0": 1364, "f2": 1232, "f3": 1074, "f4": 949, "f5": 831, "f6": 734, "f7": 653, "f8": 577}, {"m": "2024-08", "m0": 1665, "f2": 1466, "f3": 1278, "f4": 1110, "f5": 978, "f6": 874, "f7": 794, "f8": 723}, {"m": "2024-09", "m0": 1027, "f2": 944, "f3": 839, "f4": 748, "f5": 671, "f6": 620, "f7": 575, "f8": 519}, {"m": "2024-10", "m0": 830, "f2": 770, "f3": 698, "f4": 637, "f5": 571, "f6": 518, "f7": 466, "f8": 414}, {"m": "2024-11", "m0": 837, "f2": 751, "f3": 661, "f4": 592, "f5": 541, "f6": 483, "f7": 441, "f8": 408}, {"m": "2024-12", "m0": 859, "f2": 790, "f3": 709, "f4": 650, "f5": 581, "f6": 530, "f7": 472, "f8": 426}, {"m": "2025-01", "m0": 1221, "f2": 1096, "f3": 977, "f4": 875, "f5": 785, "f6": 701, "f7": 642, "f8": 568}, {"m": "2025-02", "m0": 1067, "f2": 987, "f3": 879, "f4": 788, "f5": 689, "f6": 610, "f7": 549, "f8": 474}, {"m": "2025-03", "m0": 1149, "f2": 1045, "f3": 917, "f4": 788, "f5": 703, "f6": 632, "f7": 559, "f8": 478}, {"m": "2025-04", "m0": 983, "f2": 902, "f3": 810, "f4": 723, "f5": 642, "f6": 570, "f7": 490, "f8": 427}, {"m": "2025-05", "m0": 1089, "f2": 987, "f3": 891, "f4": 796, "f5": 693, "f6": 590, "f7": 501, "f8": 436}, {"m": "2025-06", "m0": 1280, "f2": 1154, "f3": 1003, "f4": 882, "f5": 766, "f6": 662, "f7": 555, "f8": 491}, {"m": "2025-07", "m0": 1507, "f2": 1296, "f3": 1097, "f4": 924, "f5": 799, "f6": 681, "f7": 590, "f8": 513}, {"m": "2025-08", "m0": 2637, "f2": 2078, "f3": 1709, "f4": 1428, "f5": 1221, "f6": 1014, "f7": 869, "f8": 722}, {"m": "2025-09", "m0": 1720, "f2": 1422, "f3": 1187, "f4": 992, "f5": 825, "f6": 675, "f7": 567, "f8": 457}, {"m": "2025-10", "m0": 911, "f2": 790, "f3": 670, "f4": 579, "f5": 472, "f6": 389, "f7": 328, "f8": 271}, {"m": "2025-11", "m0": 684, "f2": 611, "f3": 515, "f4": 440, "f5": 369, "f6": 318, "f7": 270, "f8": 235}, {"m": "2025-12", "m0": 541, "f2": 469, "f3": 397, "f4": 333, "f5": 261, "f6": 207, "f7": 171, "f8": 147}, {"m": "2026-01", "m0": 645, "f2": 567, "f3": 467, "f4": 366, "f5": 314, "f6": 237, "f7": 196, "f8": 167}, {"m": "2026-02", "m0": 642, "f2": 564, "f3": 450, "f4": 352, "f5": 277, "f6": 221, "f7": 182, "f8": 136}, {"m": "2026-03", "m0": 587, "f2": 514, "f3": 428, "f4": 332, "f5": 246, "f6": 211, "f7": 148, "f8": 22}, {"m": "2026-04", "m0": 483, "f2": 406, "f3": 310, "f4": 226, "f5": 175, "f6": 131, "f7": 17, "f8": 7}, {"m": "2026-05", "m0": 584, "f2": 483, "f3": 331, "f4": 213, "f5": 160, "f6": 23, "f7": 6, "f8": 2}, {"m": "2026-06", "m0": 557, "f2": 472, "f3": 314, "f4": 233, "f5": 18, "f6": 7, "f7": null, "f8": null}, {"m": "2026-07", "m0": 637, "f2": 461, "f3": 287, "f4": 25, "f5": 4, "f6": 1, "f7": null, "f8": null}, {"m": "2026-08", "m0": 707, "f2": 397, "f3": 16, "f4": 2, "f5": null, "f6": null, "f7": null, "f8": null}, {"m": "2026-09", "m0": 564, "f2": 15, "f3": null, "f4": null, "f5": null, "f6": null, "f7": null, "f8": null}], "R54": [{"m": "2024-05", "cust": 2406, "d30": 14276, "r30": 34348187, "d60": 18322, "r60": 44081626, "d90": 22056, "r90": 53067392, "d120": 23717, "r120": 57064101, "d180": 28923, "r180": 69588114, "d365": 41779, "r365": 100520457}, {"m": "2024-06", "cust": 2345, "d30": 14477, "r30": 33949231, "d60": 18874, "r60": 44259270, "d90": 22396, "r90": 52519158, "d120": 24163, "r120": 56663232, "d180": 29600, "r180": 69411236, "d365": 43837, "r365": 102797135}, {"m": "2024-07", "cust": 2668, "d30": 14665, "r30": 39126137, "d60": 18752, "r60": 50031338, "d90": 22318, "r90": 59545259, "d120": 24096, "r120": 64287280, "d180": 29418, "r180": 78486160, "d365": 42952, "r365": 114596480}, {"m": "2024-08", "cust": 2661, "d30": 14525, "r30": 38650594, "d60": 19047, "r60": 50682869, "d90": 22875, "r90": 60870801, "d120": 24530, "r120": 65273523, "d180": 29981, "r180": 79778802, "d365": 45247, "r365": 120402761}, {"m": "2024-09", "cust": 2062, "d30": 14003, "r30": 28875210, "d60": 18014, "r60": 37144084, "d90": 21511, "r90": 44355783, "d120": 23131, "r120": 47696955, "d180": 28738, "r180": 59257044, "d365": 42610, "r365": 87862200}, {"m": "2024-10", "cust": 1431, "d30": 14429, "r30": 20648429, "d60": 18816, "r60": 26925556, "d90": 22853, "r90": 32702594, "d120": 24795, "r120": 35481416, "d180": 30801, "r180": 44075621, "d365": 46843, "r365": 67032714}, {"m": "2024-11", "cust": 1608, "d30": 14133, "r30": 22725235, "d60": 18521, "r60": 29780983, "d90": 22315, "r90": 35882519, "d120": 25700, "r120": 41326292, "d180": 30265, "r180": 48666305, "d365": 46047, "r365": 74043353}, {"m": "2024-12", "cust": 1571, "d30": 14392, "r30": 22609351, "d60": 19166, "r60": 30109373, "d90": 23349, "r90": 36681722, "d120": 25336, "r120": 39802903, "d180": 31213, "r180": 49035282, "d365": 48034, "r365": 75460842}, {"m": "2025-01", "cust": 2266, "d30": 14358, "r30": 32534926, "d60": 18801, "r60": 42604044, "d90": 22644, "r90": 51310556, "d120": 25786, "r120": 58431849, "d180": 30467, "r180": 69038811, "d365": 46369, "r365": 105072090}, {"m": "2025-02", "cust": 1835, "d30": 15076, "r30": 27664794, "d60": 19716, "r60": 36179056, "d90": 24293, "r90": 44578558, "d120": 27740, "r120": 50903080, "d180": 32805, "r180": 60197544, "d365": 49869, "r365": 91510190}, {"m": "2025-03", "cust": 2210, "d30": 14396, "r30": 31815647, "d60": 18093, "r60": 39985292, "d90": 21666, "r90": 47881935, "d120": 23513, "r120": 51963591, "d180": 29038, "r180": 64173297, "d365": 43609, "r365": 96375349}, {"m": "2025-04", "cust": 1687, "d30": 13787, "r30": 23259238, "d60": 18195, "r60": 30695591, "d90": 22337, "r90": 37683265, "d120": 24325, "r120": 41036828, "d180": 30428, "r180": 51332067, "d365": 45994, "r365": 77592345}, {"m": "2025-05", "cust": 1910, "d30": 14129, "r30": 26985863, "d60": 18280, "r60": 34914906, "d90": 22107, "r90": 42223914, "d120": 24108, "r120": 46047110, "d180": 29908, "r180": 57125223, "d365": 44495, "r365": 84984915}, {"m": "2025-06", "cust": 2343, "d30": 12555, "r30": 29416060, "d60": 16274, "r60": 38129442, "d90": 19862, "r90": 46537465, "d120": 21694, "r120": 50829494, "d180": 26724, "r180": 62614484, "d365": 38982, "r365": 91335410}, {"m": "2025-07", "cust": 2611, "d30": 11674, "r30": 30480288, "d60": 14683, "r60": 38336740, "d90": 17380, "r90": 45378906, "d120": 18868, "r120": 49265534, "d180": 23078, "r180": 60257408, "d365": 32996, "r365": 86153681}, {"m": "2025-08", "cust": 1856, "d30": 13464, "r30": 24988840, "d60": 16959, "r60": 31476608, "d90": 20275, "r90": 37630333, "d120": 22121, "r120": 41056589, "d180": 26778, "r180": 49700197, "d365": 38242, "r365": 70977692}, {"m": "2025-09", "cust": 1345, "d30": 14214, "r30": 19117238, "d60": 18135, "r60": 24391470, "d90": 21959, "r90": 29535424, "d120": 23520, "r120": 31634778, "d180": 28912, "r180": 38886682, "d365": 42191, "r365": 56746802}, {"m": "2025-10", "cust": 1142, "d30": 14830, "r30": 16935985, "d60": 19477, "r60": 22243039, "d90": 23161, "r90": 26450339, "d120": 25389, "r120": 28994022, "d180": 31224, "r180": 35657352, "d365": null, "r365": null}, {"m": "2025-11", "cust": 874, "d30": 16430, "r30": 14359725, "d60": 20836, "r60": 18210405, "d90": 25197, "r90": 22021863, "d120": 28461, "r120": 24875299, "d180": 33552, "r180": 29324226, "d365": null, "r365": null}, {"m": "2025-12", "cust": 835, "d30": 16243, "r30": 13562731, "d60": 20265, "r60": 16921587, "d90": 24194, "r90": 20201855, "d120": 25987, "r120": 21699403, "d180": 31929, "r180": 26660394, "d365": null, "r365": null}, {"m": "2026-01", "cust": 953, "d30": 14604, "r30": 13917444, "d60": 18884, "r60": 17996113, "d90": 22953, "r90": 21873930, "d120": 26204, "r120": 24972315, "d180": 31338, "r180": 29864774, "d365": null, "r365": null}, {"m": "2026-02", "cust": 991, "d30": 14791, "r30": 14657863, "d60": 18770, "r60": 18600994, "d90": 22775, "r90": 22569969, "d120": 25800, "r120": 25567744, "d180": 30500, "r180": 30225571, "d365": null, "r365": null}, {"m": "2026-03", "cust": 895, "d30": 15345, "r30": 13733591, "d60": 19545, "r60": 17492832, "d90": 23528, "r90": 21057720, "d120": 25404, "r120": 22736531, "d180": 31198, "r180": 27922619, "d365": null, "r365": null}, {"m": "2026-04", "cust": 925, "d30": 14392, "r30": 13312752, "d60": 17775, "r60": 16442249, "d90": 21271, "r90": 19675645, "d120": 23053, "r120": 21324390, "d180": null, "r180": null, "d365": null, "r365": null}, {"m": "2026-05", "cust": 1311, "d30": 14227, "r30": 18651522, "d60": 17567, "r60": 23030334, "d90": 20947, "r90": 27460985, "d120": 22593, "r120": 29619948, "d180": null, "r180": null, "d365": null, "r365": null}, {"m": "2026-06", "cust": 1044, "d30": 14616, "r30": 15259516, "d60": 18405, "r60": 19214670, "d90": null, "r90": null, "d120": null, "r120": null, "d180": null, "r180": null, "d365": null, "r365": null}, {"m": "2026-07", "cust": 1314, "d30": 14388, "r30": 18905643, "d60": null, "r60": null, "d90": null, "r90": null, "d120": null, "r120": null, "d180": null, "r180": null, "d365": null, "r365": null}, {"m": "2026-08", "cust": 1167, "d30": null, "r30": null, "d60": null, "r60": null, "d90": null, "r90": null, "d120": null, "r120": null, "d180": null, "r180": null, "d365": null, "r365": null}, {"m": "2026-09", "cust": 850, "d30": null, "r30": null, "d60": null, "r60": null, "d90": null, "r90": null, "d120": null, "r120": null, "d180": null, "r180": null, "d365": null, "r365": null}]};
+const lcR5 = LC_DATA.R5;
+const lcR53 = LC_DATA.R53;
+const lcR533 = LC_DATA.R533;
+const lcR54 = LC_DATA.R54;
+const LC_OGS = ['2025-07','2025-08','2025-09'];
+const LC_CYS = {'2026-07':'★CYS開始(7/22)','2026-08':'★CYS','2026-09':'★CYS終了(9/17)'};
+const LC_THIS = '2026-09';
+const LC_IMMATURE_FROM = '2026-07';
+
+function lcBadge(txt, bg) {
+  return ' <span style="font-size:10px;background:' + bg + ';color:#fff;padding:1px 4px;border-radius:2px">' + txt + '</span>';
+}
+function lcRowLabel(m) {
+  let s = m;
+  if (LC_OGS.indexOf(m) >= 0) s += lcBadge('OGS特例', '#a16207');
+  if (LC_CYS[m]) s += ' <span style="font-size:10px;color:var(--muted)">' + LC_CYS[m] + '</span>';
+  if (m === LC_THIS) s += lcBadge('今月', 'var(--accent)');
+  return s;
+}
+function lcChartLabel(m) { return LC_CYS[m] ? m + ' ' + LC_CYS[m] : m; }
+function lcRowClass(m) { return m === LC_THIS ? 'highlight-row' : ''; }
+function lcHeatColor(pct) {
+  if (pct >= 45) return ['#bbf7d0', '#15803d'];
+  if (pct >= 35) return ['#dcfce7', '#166534'];
+  if (pct >= 25) return ['#fef9c3', '#854d0e'];
+  if (pct >= 15) return ['#fef3c7', '#92400e'];
+  return ['#fecaca', '#dc2626'];
+}
+const LC_DASH = '<td style="background:#f9f9f9;color:#ccc">—</td>';
+
+// 累計到達ヒートマップ（5章M+N・5-3章F2〜F8共通）。分母＝M0
+function buildLcHeatTable(tableId, rows, keys, labels) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  let h = '<thead><tr><th>コホート月</th><th>純粋新規数</th>';
+  labels.forEach(k => { h += '<th>' + k + '</th>'; });
+  h += '</tr></thead><tbody>';
+  rows.forEach(row => {
+    h += '<tr class="' + lcRowClass(row.m) + '"><td>' + lcRowLabel(row.m) + '</td><td style="font-weight:600">' + row.m0.toLocaleString() + '</td>';
+    keys.forEach(k => {
+      const v = row[k];
+      if (v === null || v === undefined) { h += LC_DASH; return; }
+      const pct = Math.round(v / row.m0 * 100);
+      const c = lcHeatColor(pct);
+      h += '<td style="background:' + c[0] + ';color:' + c[1] + '">' + pct + '%<br><span style="color:var(--muted);font-size:10px">' + v.toLocaleString() + '</span></td>';
+    });
+    h += '</tr>';
+  });
+  h += '</tbody>';
+  t.innerHTML = h;
+}
+const lcMKeys = ['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11','m12'];
+const lcMLabels = ['M+1','M+2','M+3','M+4','M+5','M+6','M+7','M+8','M+9','M+10','M+11','M+12'];
+buildLcHeatTable('cohortLc', lcR5, lcMKeys, lcMLabels);
+
+function lcPct1(v, base) { return (v === null || v === undefined || !base) ? null : Math.round(v / base * 1000) / 10; }
+function lcLineChart(canvasId, labels, datasets, yMax, immIdx) {
+  const ds = datasets.map(d => {
+    const o = Object.assign({ tension: 0.3, fill: false, pointRadius: 4 }, d);
+    if (immIdx !== null && immIdx !== undefined) {
+      o.segment = { borderDash: ctx => (ctx.p1DataIndex >= immIdx ? [5, 4] : undefined) };
+    }
+    return o;
+  });
+  new Chart(document.getElementById(canvasId), {
+    type: 'line',
+    data: { labels: labels, datasets: ds },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.raw !== null ? ctx.raw + '%' : '未確定') } } },
+      scales: { y: { min: 0, max: yMax, ticks: { callback: v => v + '%' } }, x: { ticks: { font: { size: 9 } } } }
+    }
+  });
+}
+const lcMonths = lcR5.map(r => r.m);
+const lcLabels = lcMonths.map(lcChartLabel);
+const lcImmIdx = lcMonths.indexOf(LC_IMMATURE_FROM);
+const lcM1 = lcR5.map(r => lcPct1(r.m1, r.m0));
+const lcM6 = lcR5.map(r => lcPct1(r.m6, r.m0));
+lcLineChart('chartCohortLc', lcLabels, [
+  { label: 'M+1継続率', data: lcM1, borderColor: '#FF7A30', backgroundColor: 'rgba(255,122,48,0.1)', pointRadius: 5 },
+  { label: 'M+6継続率', data: lcM6, borderColor: '#FF7A30', backgroundColor: 'transparent', borderDash: [4, 4] }
+], 50, null);
+
+// ===== 5-3. F2〜F8コホート転換率（累計到達ベース） =====
+// 5-3章は5章M0と全コホートで一致。null＝右側打ち切り（実測値が0になった段階以降）。
+buildLcHeatTable('cohortLcFreq', lcR53, ['f2','f3','f4','f5','f6','f7','f8'], ['F2','F3','F4','F5','F6','F7','F8']);
+const lcF2 = lcR53.map(r => lcPct1(r.f2, r.m0));
+const lcF3 = lcR53.map(r => lcPct1(r.f3, r.m0));
+const lcF4 = lcR53.map(r => lcPct1(r.f4, r.m0));
+lcLineChart('chartCohortLcFreqTrend', lcLabels, [
+  { label: 'F2転換率', data: lcF2, borderColor: '#FF7A30', backgroundColor: 'rgba(255,122,48,0.1)', pointRadius: 5 },
+  { label: 'F3転換率', data: lcF3, borderColor: '#1E7A5C', backgroundColor: 'rgba(30,122,92,0.1)', pointRadius: 5 },
+  { label: 'F4転換率', data: lcF4, borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.1)', pointRadius: 5 }
+], 70, lcImmIdx);
+
+// ===== 5-3-2. F2→F3→F4 段階別残存率（前段階基準） =====
+// 使用データは5-3章（lcR53）と完全同一。F2=f2/m0、F3=f3/f2、F4=f4/f3、…、F8=f8/f7
+function buildLcStepTable(tableId, rows, keys, labels, monthLabel, m0Label) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  let h = '<thead><tr><th>' + monthLabel + '</th><th>' + m0Label + '</th>';
+  labels.forEach(k => { h += '<th>' + k + '</th>'; });
+  h += '</tr></thead><tbody>';
+  rows.forEach(row => {
+    h += '<tr class="' + lcRowClass(row.m) + '"><td>' + lcRowLabel(row.m) + '</td><td style="font-weight:600">' + row.m0.toLocaleString() + '</td>';
+    let prev = row.m0;
+    keys.forEach(k => {
+      const v = row[k];
+      if (v === null || v === undefined) { h += LC_DASH; return; }
+      const pct = Math.round(v / prev * 1000) / 10;
+      let bg, tc;
+      if (pct >= 75) { bg = '#bbf7d0'; tc = '#15803d'; }
+      else if (pct >= 60) { bg = '#dcfce7'; tc = '#166534'; }
+      else if (pct >= 45) { bg = '#fef9c3'; tc = '#854d0e'; }
+      else if (pct >= 30) { bg = '#fef3c7'; tc = '#92400e'; }
+      else { bg = '#fecaca'; tc = '#dc2626'; }
+      h += '<td style="background:' + bg + ';color:' + tc + '">' + pct.toFixed(1) + '%<br><span style="color:var(--muted);font-size:10px">' + v.toLocaleString() + '/' + prev.toLocaleString() + '人</span></td>';
+      prev = v;
+    });
+    h += '</tr>';
+  });
+  h += '</tbody>';
+  t.innerHTML = h;
+}
+const lcFKeys = ['f2','f3','f4','f5','f6','f7','f8'];
+const lcFLabels = ['F2','F3','F4','F5','F6','F7','F8'];
+buildLcStepTable('cohortLcFreqStep', lcR53, lcFKeys, lcFLabels, 'コホート月', '純粋新規数');
+function lcStepSeries(rows) {
+  return [
+    rows.map(r => lcPct1(r.f2, r.m0)),
+    rows.map(r => (r.f3 !== null && r.f2) ? lcPct1(r.f3, r.f2) : null),
+    rows.map(r => (r.f4 !== null && r.f3) ? lcPct1(r.f4, r.f3) : null)
+  ];
+}
+function lcStepChart(canvasId, rows, l2) {
+  const s = lcStepSeries(rows);
+  lcLineChart(canvasId, rows.map(r => lcChartLabel(r.m)), [
+    { label: 'F2段階残存率（' + l2 + '→2回目）', data: s[0], borderColor: '#FF7A30', backgroundColor: 'rgba(255,122,48,0.1)', pointRadius: 5 },
+    { label: 'F3段階残存率（2回目→3回目）', data: s[1], borderColor: '#1E7A5C', backgroundColor: 'rgba(30,122,92,0.1)', pointRadius: 5 },
+    { label: 'F4段階残存率（3回目→4回目）', data: s[2], borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.1)', pointRadius: 5 }
+  ], 100, rows.map(r => r.m).indexOf(LC_IMMATURE_FROM));
+}
+lcStepChart('chartCohortLcFreqStepTrend', lcR53, '初回');
+
+// ===== 5-3-3. 初回定期注文月コホート：F2→F3→F4 段階別残存率 =====
+// コホート基準＝3アイテムの定期SKUを含む最初の注文の月。純粋新規に限定しない（5章M0とは一致しない）。
+// 到達人数が0になった段階以降は右側打ち切りとしてnull（未確定＝ゼロ確定ではない）。
+buildLcStepTable('cohortLcTeikiFreqStep', lcR533, lcFKeys, lcFLabels, '初回定期注文月', '初回定期顧客数');
+lcStepChart('chartCohortLcTeikiFreqStepTrend', lcR533, '初回定期');
+
+// ===== 5-4. コホート別期間別LTV推移マップ（Lypo-C一体版・純粋新規） =====
+// データソース：Shopify受注 line_items × SKUブランドマスター（brand IN ('VC','C+D','C+D+K')・有償明細）。税抜÷1.08。3アイテム合算LTV。
+// d30/d60/d90は内部で31/62/93日以内の1人当たり平均（AVG）、r30/r60/r90は同期間の累計受注金額（SUM）。120/180/365は従来の日数。
+// 確定判定＝コホート月末日＋期間日数≦2026-09-30。未確定セル（null）は値を代用しない。
+const lcLtvKeys = ['d30','d60','d90','d120','d180','d365'];
+const lcLtvRevKeys = ['r30','r60','r90','r120','r180','r365'];
+const lcLtvHeaders = ['30日LTV','60日LTV','90日LTV','120日LTV','180日LTV','365日LTV'];
+function lcLtvColStats(data, key) {
+  return data.map(r => r[key]).filter(v => v !== null && v !== undefined).sort((a, b) => a - b);
+}
+function lcLtvColorFor(v, sorted) {
+  const n = sorted.length;
+  if (n <= 1) return { bg: '#dcfce7', tc: '#166534' };
+  const pct = sorted.indexOf(v) / (n - 1);
+  if (pct >= 0.8) return { bg: '#bbf7d0', tc: '#15803d' };
+  if (pct >= 0.6) return { bg: '#dcfce7', tc: '#166534' };
+  if (pct >= 0.4) return { bg: '#fef9c3', tc: '#854d0e' };
+  if (pct >= 0.2) return { bg: '#fef3c7', tc: '#92400e' };
+  return { bg: '#fed7aa', tc: '#c2410c' };
+}
+function buildLcLtvMapTable(tableId, data) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const stats = lcLtvKeys.map(k => lcLtvColStats(data, k));
+  let h = '<thead><tr><th style="text-align:left;min-width:110px">初回購入月</th><th style="text-align:right">純粋新規数</th>';
+  lcLtvHeaders.forEach(x => { h += '<th style="text-align:right">' + x + '</th>'; });
+  h += '</tr></thead><tbody>';
+  data.forEach(row => {
+    const isThis = row.m === LC_THIS;
+    h += '<tr class="' + lcRowClass(row.m) + '"><td style="font-size:11px;font-weight:' + (isThis ? 700 : 400) + '">' + lcRowLabel(row.m) + '</td><td style="text-align:right;font-weight:600;font-size:11px">' + row.cust.toLocaleString() + '人</td>';
+    lcLtvKeys.forEach((k, i) => {
+      const v = row[k];
+      if (v === null || v === undefined) { h += '<td style="background:#f9f9f9;color:#bbb;font-size:11px;text-align:right">未確定</td>'; return; }
+      const c = lcLtvColorFor(v, stats[i]);
+      h += '<td style="background:' + c.bg + ';color:' + c.tc + ';font-size:11px;text-align:right">¥' + v.toLocaleString() + '</td>';
+    });
+    h += '</tr>';
+    h += '<tr class="ltv-rev-row"><td style="font-size:10px;color:var(--muted);padding-top:2px;padding-bottom:6px">└ 累計受注金額</td><td></td>';
+    lcLtvRevKeys.forEach(rk => {
+      const rv = row[rk];
+      if (rv === null || rv === undefined) { h += '<td style="font-size:10px;color:#ccc;text-align:right;padding-top:2px;padding-bottom:6px">—</td>'; return; }
+      h += '<td style="font-size:10px;color:var(--muted);text-align:right;padding-top:2px;padding-bottom:6px">¥' + rv.toLocaleString() + '</td>';
+    });
+    h += '</tr>';
+  });
+  h += '</tbody>';
+  t.innerHTML = h;
+}
+buildLcLtvMapTable('cohortLcLtvMap', lcR54);
+
+// @@TAB2_JS_END@@
+</script>
+</body>
+</html>
